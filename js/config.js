@@ -7,5 +7,5 @@ window.SUPABASE_CONFIG = {
   anonKey: 'sb_publishable_ZF67r4UX91_n180NPFQuvA_0D_-8Ya2',
   // Telegram Mini App (необязательно): имя бота без @ и короткое имя приложения из BotFather.
   // Ссылки-приглашения открывают игру прямо в Telegram: t.me/<bot>/<app>?startapp=… или, без app, t.me/<bot>?startapp=…
-  telegram: { bot: 'Survivefridaybot', app: '' },  // app пусто — ссылки ведут на главное мини-приложение бота
+  telegram: { bot: 'Survivefridaybot', app: 'play' },  // ссылки: t.me/Survivefridaybot/play?startapp=…
 };
