@@ -1712,7 +1712,7 @@
     let team = null;
     if (kind === 'team' && registered()) team = myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0] || null;
     const tg = window.SUPABASE_CONFIG?.telegram;
-    if (tg?.bot && tg?.app) return { url: `https://t.me/${tg.bot}/${tg.app}?startapp=ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
+    if (tg?.bot) return { url: `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
     return { url: `${gameUrl()}?ref=${ref}${team ? `&join=${team.code}` : ''}`, team };
   }
   function shareText(kind, team) {

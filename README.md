@@ -143,9 +143,11 @@ python3 -m http.server 8000
 Игра работает внутри Telegram: тёмная шапка, имя подставляется из Telegram, вибрация через Telegram, кнопка «Назад», приглашения отправляются в чат одной кнопкой.
 
 1. В Telegram откройте [@BotFather](https://t.me/BotFather) → `/newbot` → придумайте имя и username бота.
-2. `/newapp` → выберите бота → название, описание, картинка 640×360 → **Web App URL**: `https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/` → короткое имя приложения, например `play`.
-3. Впишите username бота (без @) и короткое имя в `js/config.js`: `telegram: { bot: 'vyzhit_bot', app: 'play' }`.
-   После этого все ссылки-приглашения выглядят как `https://t.me/vyzhit_bot/play?startapp=ref-ID_join-КОД` и открывают игру прямо в Telegram.
+2. Подключите игру к боту одним из способов:
+   - **Главное мини-приложение** (проще): `/mybots` → бот → **Bot Settings → Configure Mini App → Enable Mini App** → адрес `https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/`. Ссылки: `https://t.me/Survivefridaybot?startapp=ref-ID_join-КОД`.
+   - **Отдельное приложение:** `/newapp` → бот → название, описание, картинка 640×360 → тот же адрес → короткое имя, например `play`. Ссылки: `https://t.me/Survivefridaybot/play?startapp=…`.
+3. В `js/config.js` указано `telegram: { bot: 'Survivefridaybot', app: '' }`. Если используете отдельное приложение, впишите его короткое имя в `app`.
+   Кнопку игры в меню чата бота можно добавить там же: **Bot Settings → Menu Button** → тот же адрес.
 4. Вход по почте внутри Telegram открывает письмо в браузере; в самом Telegram удобнее играть гостем.
 
 ## Структура
