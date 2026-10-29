@@ -61,7 +61,8 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
     del(k) { try { localStorage.removeItem(k); } catch {} },
   };
-  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs' };
+  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career' };
+  const YEAR = 52;
   const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', sound: true }, store.get(KEY.prefs, {}));
   const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
   if (!prefs.playerId) {
@@ -188,12 +189,21 @@
     radio.checked = true;
     setPhase('day');
     const best = store.get(KEY.best, { step: 0, wins: 0 });
-    $('record').textContent = best.wins ? `неделя пройдена · побед: ${best.wins}` :
-      best.step ? `дожили до: ${DAYS[Math.floor(best.step / 3)]}, ${PHASES[best.step % 3].name.toLowerCase()}` : 'пока нет';
-    let save = store.get(KEY.save, null);
-    if (save && !save.deck?.every(x => byId[x.id])) { store.del(KEY.save); save = null; } // сохранение от старой колоды
-    $('resume').hidden = !save;
-    if (save) $('resume').textContent = `Продолжить: ${DAYS[Math.floor(save.step / 3)]}, ${PHASES[save.step % 3].name.toLowerCase()}`;
+    $('record').textContent = best.wins ? `недель закрыто: ${best.wins}` : best.step ? `дольше всего: ${DAYS[Math.floor(best.step / 3)]}, ${PHASES[best.step % 3].name.toLowerCase()}` : 'пока нет';
+    const save = store.get(KEY.save, null);
+    if (save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
+    const C = store.get(KEY.career, null);
+    $('careerCard').hidden = !C; $('profField').hidden = !!C; $('newCareer').hidden = !C;
+    $('newCareer').textContent = 'Начать карьеру заново'; delete $('newCareer').dataset.armed;
+    if (C) {
+      const where = C.stage === 'search' ? 'ищет работу' : C.company;
+      $('careerCard').innerHTML = `<div class="cc-head"><b>Неделя ${Math.min(C.week, YEAR)}/${YEAR}</b><span>${esc(where)}</span></div>
+        <div class="cc-bar"><i style="width:${(Math.min(C.week - 1, YEAR) / YEAR) * 100}%"></i></div>
+        <div class="stat-box"><b>${C.worked}</b><span>отработано</span></div>
+        <div class="stat-box"><b>${C.firings}</b><span>увольнений</span></div>
+        <div class="stat-box"><b>${C.companies.length}</b><span>компаний</span></div>`;
+      $('start').textContent = save ? 'Продолжить неделю' : C.stage === 'search' ? 'Продолжить поиск работы' : `Начать неделю ${C.week}`;
+    } else $('start').textContent = 'Начать карьеру';
     renderSound(); show('menu');
     board.touch('menu').catch(() => {});
   }
@@ -227,8 +237,13 @@
     prefs.avatar = document.querySelector('input[name=ava]:checked').value;
     store.set(KEY.prefs, prefs); renderMenu();
   };
-  $('start').onclick = () => newGame();
-  $('resume').onclick = () => { S = store.get(KEY.save, null); if (S) enterGame(); };
+  $('start').onclick = () => continueCareer();
+  // «Начать заново» срабатывает со второго нажатия: окна подтверждения в браузере тут нет
+  $('newCareer').onclick = () => {
+    const b = $('newCareer');
+    if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Весь прогресс года сотрётся. Нажмите ещё раз'; return; }
+    store.del(KEY.career); store.del(KEY.save); newCareer();
+  };
 
   // ---------- игра ----------
   let S = null, busy = false, splashOn = false, splashFor = -1;
@@ -251,17 +266,39 @@
     return deck;
   }
 
-  function newGame() {
-    prefs.prof = getProf(); store.set(KEY.prefs, prefs);
+  // ---------- карьера: 52 недели ----------
+  let C = null;
+  const saveCareer = () => store.set(KEY.career, C);
+  const vacancy = id => VACANCIES.find(v => v.id === id);
+  const freshRes = perk => {
     const res = { psyche: 50, energy: 50, boss: 50, colleagues: 50 };
-    for (const [k, v] of Object.entries(PROF[prefs.prof].bonus)) res[k] = clamp(res[k] + v);
-    S = { name: prefs.name, dept: prefs.dept, prof: prefs.prof, res, step: 0, deck: buildDeck(prefs.prof) };
-    splashFor = -1;
+    for (const b of [PROF[C.prof].bonus, perk || {}]) for (const [k, v] of Object.entries(b)) res[k] = clamp(res[k] + v);
+    return res;
+  };
+  function newCareer() {
+    prefs.prof = getProf(); store.set(KEY.prefs, prefs);
+    const first = rnd(VACANCIES.filter(v => v.level === 1));
+    C = { prof: prefs.prof, week: 1, stage: 'work', company: first.name, companies: [first.name], res: null,
+      worked: 0, firings: 0, passed: 0, failed: 0 };
+    C.res = freshRes(first.perk);
+    saveCareer(); startWeek();
+  }
+  function continueCareer() {
+    C = store.get(KEY.career, null);
+    if (!C) return newCareer();
+    const save = store.get(KEY.save, null);
+    if (save && save.deck?.every(x => byId[x.id])) { S = save; return enterGame(); }
+    if (C.week > YEAR) return yearEnd();
+    if (C.stage === 'search') return jobSearch();
+    startWeek();
+  }
+  function startWeek() {
+    S = { name: prefs.name, dept: prefs.dept, prof: C.prof, res: { ...C.res }, step: 0, deck: buildDeck(C.prof) };
     store.set(KEY.save, S);
     enterGame();
   }
 
-  function enterGame() { show('game'); splashFor = -1; renderBars(); renderCard(); }
+  function enterGame() { busy = false; show('game'); splashFor = -1; renderBars(); renderCard(); }
 
   function renderBars() {
     for (const r of RES) {
@@ -285,6 +322,7 @@
     $('btnL').innerHTML = `<span class="ar">←</span><span>${esc(c.answers.left.label)}</span>`;
     $('btnR').innerHTML = `<span>${esc(c.answers.right.label)}</span><span class="ar">→</span>`;
     $('clock').textContent = slot.time;
+    $('gCareer').textContent = C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : '';
     $('gDay').textContent = DAYS[d]; $('gPhase').textContent = ph.name.toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
     $('dots').innerHTML = S.deck.map((_, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}"></i>`).join('');
     clearPreview();
@@ -295,7 +333,7 @@
   // Заставка перед началом каждого дня
   function showSplash(d) {
     const el = $('splash');
-    el.innerHTML = `<div class="splash-in"><small>День ${d + 1} из 5</small><h2>${DAYS[d]}</h2><p>${DAY_QUIP[d]}</p><span class="tap">нажмите, чтобы начать</span></div>`;
+    el.innerHTML = `<div class="splash-in"><small>${C ? `Неделя ${C.week} из ${YEAR} · ` : ''}День ${d + 1} из 5</small><h2>${DAYS[d]}</h2><p>${DAY_QUIP[d]}</p><span class="tap">нажмите, чтобы начать</span></div>`;
     el.hidden = false; splashOn = true;
     const close = () => { if (!splashOn) return; splashOn = false; el.hidden = true; clearTimeout(t); };
     const t = setTimeout(close, 2200);
@@ -332,10 +370,10 @@
       clearPreview(); renderBars();
       const dead = RES.find(r => S.res[r.k] <= 0);
       const best = store.get(KEY.best, { step: 0, wins: 0 });
-      if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); busy = false; setTimeout(() => lose(dead.k), 450); return; }
+      if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); setTimeout(() => lose(dead.k), 450); return; } // busy остаётся до следующей недели
       S.step++;
       best.step = Math.max(best.step, S.step);
-      if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); busy = false; setTimeout(win, 350); return; }
+      if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 350); return; }
       store.set(KEY.best, best); store.set(KEY.save, S);
       renderCard(); busy = false;
     }, 380);
@@ -382,42 +420,144 @@
   function finalGrid(zeroKey) {
     return `<div class="final">${RES.map(r => `<div class="${r.k === zeroKey ? 'zero' : ''}"><b>${S.res[r.k]}%</b><span>${r.name}</span></div>`).join('')}</div>`;
   }
+  function nextButtons(primaryId, primaryText) {
+    return `<div class="stack"><button class="btn-main" id="${primaryId}">${primaryText}</button>
+      <button class="btn-ghost" id="toBoard">Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>`;
+  }
+  function bindCommon() { $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end', 'rating'); }
+
   function lose(k) {
     sfx.lose();
     const D = DEATH[k], d = Math.floor(S.step / 3), ph = PHASES[S.step % 3];
+    const company = C.company;
+    C.firings++; C.week++; C.stage = 'search'; C.res = null; saveCareer();
     views.end.innerHTML = `<div class="end-sheet glass">
-      <span class="kicker">Неделя закончилась досрочно · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()}</span>
+      <span class="kicker">Вас уволили · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()} · ${esc(company)}</span>
       <h1 class="lose">НЕДЕЛЯ ЗАВАЛЕНА</h1>
       <p class="cause">${D.title} · ${esc(S.name)}, ${PROF[S.prof].name.toLowerCase()}</p>
       <p>${D.text}</p>
       ${finalGrid(k)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
-      <div class="stack"><button class="btn-main" id="retry">Попробовать снова</button><button class="btn-ghost" id="toBoard">Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+      ${C.week > YEAR ? nextButtons('next', 'Итоги года') : nextButtons('next', 'Искать работу')}
     </div>`;
-    show('end');
-    $('retry').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end', 'rating');
+    show('end'); bindCommon();
+    $('next').onclick = () => C.week > YEAR ? yearEnd() : jobSearch();
     record(false, k);
-    $('retry').focus({ preventScroll: true });
+    $('next').focus({ preventScroll: true });
   }
   function rank(total) { return total >= 280 ? 'Легенда опенспейса' : total >= 220 ? 'Сеньор по выживанию' : total >= 160 ? 'Крепкий мидл' : 'Чудом уцелевший стажёр'; }
   function win() {
-    sfx.win(); confetti();
-    const total = RES.reduce((a, r) => a + S.res[r.k], 0);
-    setPhase('evening');
+    sfx.win();
+    const total = RES.reduce((a, r) => a + S.res[r.k], 0), week = C.week;
+    // выходные: каждая шкала сдвигается к 50 наполовину
+    C.worked++; C.week++; C.res = Object.fromEntries(RES.map(r => [r.k, Math.round((S.res[r.k] + 50) / 2)])); saveCareer();
+    const last = C.week > YEAR;
+    if (last) confetti();
     views.end.innerHTML = `<div class="end-sheet glass">
-      <span class="kicker">Пятница · 18:00 · неделя закрыта</span>
-      <h1>Вы выжили!</h1>
-      <p>15 решений позади. Выключайте ноутбук и не открывайте рабочий чат до понедельника.</p>
+      <span class="kicker">Неделя ${week} из ${YEAR} · ${esc(C.company)} · пятница, 18:00</span>
+      <h1>${last ? 'Год позади!' : 'Неделя закрыта!'}</h1>
+      <p>${last ? 'Последняя пятница года. Выключайте ноутбук и посмотрите итоги.' : 'Выходные сгладят всё наполовину: в понедельник каждая шкала сдвинется к 50%.'}</p>
       <span class="rank">${rank(total)}</span>
       ${finalGrid()}
-      <div class="total"><span>Итоговый счёт</span><b>${total} / 400</b></div>
+      <div class="total"><span>Счёт недели</span><b>${total} / 400</b></div>
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
-      <div class="stack"><button class="btn-main" id="share">Поделиться результатом</button><button class="btn-ghost" id="again">Новая неделя</button><button class="btn-ghost" id="toBoard">Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+      <div class="stack"><button class="btn-main" id="next">${last ? 'Итоги года' : `Неделя ${C.week} →`}</button>
+        <button class="btn-ghost" id="share">Поделиться результатом</button>
+        <button class="btn-ghost" id="toBoard">Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+    </div>`;
+    show('end'); bindCommon();
+    $('share').onclick = () => share(total);
+    $('next').onclick = () => last ? yearEnd() : startWeek();
+    record(true, null);
+    $('next').focus({ preventScroll: true });
+  }
+
+  // Поиск работы: три вакансии, кроме места, откуда только что уволили
+  function jobSearch() {
+    if (C.week > YEAR) return yearEnd();
+    if (!C.offers?.length) { C.offers = [...VACANCIES].filter(v => v.name !== C.company).sort(() => Math.random() - .5).slice(0, 3).map(v => v.id); saveCareer(); }
+    const perkText = p => Object.entries(p).map(([k, v]) => `${RES.find(r => r.k === k).name} ${v > 0 ? '+' : '−'}${Math.abs(v)}`).join(' · ');
+    views.end.innerHTML = `<div class="end-sheet glass">
+      <span class="kicker">Неделя ${C.week} из ${YEAR} · поиск работы</span>
+      <h1>Вакансии</h1>
+      <p>Выберите, куда откликнуться. Собеседование займёт неделю: 4 вопроса от HR.</p>
+      <div class="vacancies">${C.offers.map(id => { const v = vacancy(id);
+        return `<button class="vac" data-id="${v.id}"><b>${esc(v.name)}</b><span class="lvl">${'●'.repeat(v.level)}${'○'.repeat(3 - v.level)}</span>
+          <small>${esc(v.vibe)}</small><span class="perk">старт: ${perkText(v.perk)}</span></button>`; }).join('')}</div>
+      <div class="stack"><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
-    $('share').onclick = () => share(total); $('again').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end', 'rating');
-    record(true, null);
-    $('share').focus({ preventScroll: true });
+    $('toMenu').onclick = renderMenu;
+    views.end.querySelectorAll('.vac').forEach(b => b.onclick = () => interview(vacancy(b.dataset.id)));
+    board.touch('menu').catch(() => {});
+  }
+
+  // Собеседование: 3 случайных вопроса + финальный, проходной балл зависит от сложности
+  function interview(v) {
+    const qs = [...INTERVIEW].sort(() => Math.random() - .5).slice(0, 3).concat(INTERVIEW_LAST);
+    const need = { 1: 4, 2: 5, 3: 6 }[v.level];
+    let i = 0, score = 0;
+    const step = () => {
+      const q = qs[i];
+      views.end.innerHTML = `<div class="end-sheet glass">
+        <span class="kicker">Неделя ${C.week} из ${YEAR} · собеседование · ${esc(v.name)}</span>
+        <div class="iv-dots">${qs.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'now' : ''}"></i>`).join('')}</div>
+        <div class="iv-q"><span class="who">HR · вопрос ${i + 1} из ${qs.length}</span><div class="text">${esc(q.q)}</div><div class="iv-reply" id="ivReply" aria-live="polite"></div></div>
+        <div class="iv-answers">${[...q.a].sort(() => Math.random() - .5).map(a => `<button class="ans" data-s="${a.score}" data-r="${esc(a.reply)}">${esc(a.label)}</button>`).join('')}</div>
+      </div>`;
+      show('end');
+      const btns = [...views.end.querySelectorAll('.iv-answers .ans')];
+      btns.forEach(b => b.onclick = () => {
+        btns.forEach(x => x.disabled = true); b.classList.add('picked');
+        score += +b.dataset.s; $('ivReply').textContent = `HR: ${b.dataset.r}`; sfx.swipe();
+        setTimeout(() => { i++; i < qs.length ? step() : verdict(); }, 1500);
+      });
+      btns[0].focus({ preventScroll: true });
+    };
+    const verdict = () => {
+      const ok = score >= need;
+      C.week++; C.offers = [];
+      if (ok) { C.passed++; C.stage = 'work'; C.company = v.name; if (!C.companies.includes(v.name)) C.companies.push(v.name); C.res = freshRes(v.perk); sfx.win(); }
+      else { C.failed++; sfx.lose(); }
+      saveCareer();
+      const over = C.week > YEAR;
+      views.end.innerHTML = `<div class="end-sheet glass">
+        <span class="kicker">Собеседование · ${esc(v.name)} · ${score} из ${qs.length * 2} баллов, нужно ${need}</span>
+        <h1 class="${ok ? '' : 'lose'}">${ok ? 'Оффер!' : 'Мы вам перезвоним'}</h1>
+        <p>${ok ? `${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%.` : '…но не перезвонили. Поиск продолжается, впереди новые вакансии.'}</p>
+        <div class="stack"><button class="btn-main" id="next">${over ? 'Итоги года' : ok ? `Выйти на работу · неделя ${C.week}` : `Искать дальше · неделя ${C.week}`}</button>
+          <button class="btn-ghost" id="toMenu">В главное меню</button></div>
+      </div>`;
+      show('end');
+      $('toMenu').onclick = renderMenu;
+      $('next').onclick = () => over ? yearEnd() : ok ? startWeek() : jobSearch();
+      $('next').focus({ preventScroll: true });
+      if (ok) confetti();
+    };
+    step();
+  }
+
+  function yearRank(w) { return w >= 52 ? 'Железный сотрудник года' : w >= 40 ? 'Опора офиса' : w >= 26 ? 'Опытный выживальщик' : w >= 10 ? 'Вечный соискатель' : 'Свободный художник'; }
+  function yearEnd() {
+    store.del(KEY.save);
+    const all = C.passed + C.failed;
+    views.end.innerHTML = `<div class="end-sheet glass">
+      <span class="kicker">Год позади · ${YEAR} недель · ${esc(prefs.name)}, ${PROF[C.prof].name.toLowerCase()}</span>
+      <h1>Итоги года</h1>
+      <span class="rank">${yearRank(C.worked)}</span>
+      <div class="career-card" style="width:100%">
+        <div class="stat-box"><b>${C.worked}</b><span>недель отработано</span></div>
+        <div class="stat-box"><b>${C.firings}</b><span>увольнений</span></div>
+        <div class="stat-box"><b>${C.passed}/${all}</b><span>собеседований пройдено</span></div>
+      </div>
+      <p>Где вы успели поработать:</p>
+      <ul class="companies">${C.companies.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
+      <div class="stack"><button class="btn-main" id="again">Новый год карьеры</button>
+        <button class="btn-ghost" id="toBoard">Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+    </div>`;
+    show('end'); bindCommon();
+    $('again').onclick = () => { store.del(KEY.career); newCareer(); };
+    if (C.worked >= 40) confetti();
   }
 
   // запись результата недели и место в рейтинге

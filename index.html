@@ -43,7 +43,7 @@
         <path d="M56 50c-4-6 4-8 0-14M68 50c-4-6 4-8 0-14M80 50c-4-6 4-8 0-14"/>
       </svg>
       <h1 class="title"><span class="t1">Выжить</span><span class="t2">до пятницы</span></h1>
-      <p class="tagline">5 дней, 15 решений. Тяни карточку влево или вправо и не дай ни одной шкале упасть до нуля.</p>
+      <p class="tagline">Целый год — 52 рабочие недели. Тяни карточку влево или вправо, а если уволят — ищи новую работу и проходи собеседование.</p>
     </div>
     <div class="panel form">
       <div class="me-card">
@@ -51,12 +51,13 @@
         <span class="me-who"><b id="meName">Сотрудник</b><small id="meDept">без отдела</small></span>
         <button class="btn-chip" type="button" id="meEdit">Изменить</button>
       </div>
-      <fieldset class="field">
+      <div class="career-card" id="careerCard" hidden></div>
+      <fieldset class="field" id="profField">
         <legend>Ваша профессия</legend>
         <div class="profs" id="profs"></div>
       </fieldset>
-      <button class="btn-main" id="start">Начать неделю</button>
-      <button class="btn-ghost" id="resume" hidden></button>
+      <button class="btn-main" id="start">Начать карьеру</button>
+      <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
       <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
     </div>
     <div class="menu-foot">
@@ -68,7 +69,7 @@
   <!-- Экран 2: игра -->
   <section class="view game" id="game" hidden>
     <header class="g-top">
-      <span class="g-brand">ВЫЖИТЬ <em>ДО ПЯТНИЦЫ</em></span>
+      <span class="g-brand">ВЫЖИТЬ <em>ДО ПЯТНИЦЫ</em><small id="gCareer">Неделя 1/52</small></span>
       <div class="g-clock"><span class="time" id="clock">09:00</span><div class="segs" id="dots" aria-hidden="true"></div></div>
       <div class="g-day"><div><span id="gDay">Понедельник</span><small><span id="gPhase">утро</span> · <span id="gNum">01</span>/15</small></div><button class="icon-btn" id="soundGame" aria-label="Звук"></button></div>
     </header>

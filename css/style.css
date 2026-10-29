@@ -224,6 +224,39 @@ button { cursor: pointer; }
 .place b { font-family: var(--f-mono); font-size: 22px; color: var(--cyan-l); text-shadow: 0 0 10px rgba(45,226,230,.8); }
 .stack { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 10px; }
 
+/* ---------- карьера ---------- */
+.g-brand small { display: block; margin-top: 5px; font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: .08em; color: var(--cyan-l); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 46vw; }
+.career-card { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.career-card .cc-head { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.career-card .cc-head b { font-family: var(--f-display); font-weight: 800; font-size: 20px; color: #fff; text-shadow: 0 0 14px rgba(255,59,212,.7); }
+.career-card .cc-head span { font-weight: 800; color: var(--cyan-xl); font-size: 13px; text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.career-card .cc-bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); overflow: hidden; }
+.career-card .cc-bar i { display: block; height: 100%; background: var(--cyan-l); box-shadow: 0 0 10px var(--cyan); border-radius: 3px; }
+.stat-box { border: 1.5px solid var(--line); border-radius: 14px; padding: 9px 6px; text-align: center; }
+.stat-box b { display: block; font-family: var(--f-mono); font-weight: 700; font-size: 18px; color: var(--cyan-l); text-shadow: 0 0 10px rgba(45,226,230,.6); }
+.stat-box span { font-size: 11px; color: var(--text-2); font-weight: 800; }
+.vacancies { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.vac { width: 100%; text-align: left; padding: 14px 16px; border-radius: 18px; background: transparent; border: 1.5px solid var(--line); color: var(--text); display: grid; grid-template-columns: 1fr auto; gap: 4px 10px;
+  transition: border-color .15s, box-shadow .15s, background .15s; }
+.vac:hover, .vac:focus-visible { border-color: var(--cyan); box-shadow: 0 0 22px rgba(45,226,230,.35); background: rgba(45,226,230,.06); }
+.vac b { font-weight: 900; font-size: 16px; }
+.vac .lvl { font-family: var(--f-mono); font-size: 11px; color: var(--magenta-l); white-space: nowrap; align-self: center; }
+.vac small { grid-column: 1 / -1; color: var(--text-2); font-size: 13px; }
+.vac .perk { grid-column: 1 / -1; font-family: var(--f-mono); font-size: 11px; color: var(--up); text-shadow: 0 0 8px rgba(212,255,58,.4); }
+.iv-q { width: 100%; text-align: left; display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 22px; border: 1.5px solid rgba(255,59,212,.45); box-shadow: 0 0 30px rgba(255,59,212,.18); }
+.iv-q .text { font-size: clamp(19px, 5vw, 26px); font-weight: 800; line-height: 1.3; }
+.iv-reply { min-height: 1.4em; font-family: var(--f-mono); font-size: 13px; color: var(--cyan-xl); text-shadow: 0 0 8px rgba(45,226,230,.5); }
+.iv-dots { display: flex; gap: 5px; justify-content: center; }
+.iv-dots i { width: 24px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); }
+.iv-dots i.done { background: var(--cyan-l); box-shadow: 0 0 8px var(--cyan); } .iv-dots i.now { background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+.iv-answers { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.iv-answers .ans { width: 100%; text-align: left; justify-content: flex-start; color: var(--text); border: 1.5px solid var(--line); box-shadow: none; min-height: 0; }
+.iv-answers .ans:hover:not(:disabled) { border-color: var(--cyan); background: rgba(45,226,230,.1); box-shadow: 0 0 22px rgba(45,226,230,.4); color: #fff; }
+.iv-answers .ans.picked { border-color: var(--magenta); background: rgba(255,59,212,.14); box-shadow: 0 0 22px rgba(255,59,212,.45); color: #fff; }
+.iv-answers .ans:disabled:not(.picked) { opacity: .4; cursor: default; }
+.companies { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.companies li { border: 1px solid rgba(255,59,212,.5); color: var(--magenta-l); border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 800; }
+
 /* ---------- рейтинг и участники ---------- */
 .board { overflow: hidden; }
 .board-head { display: flex; align-items: center; gap: 10px; }
