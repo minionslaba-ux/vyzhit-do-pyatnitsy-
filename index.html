@@ -7,55 +7,62 @@
 <title>Выжить до пятницы</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Nunito:wght@600;800;900&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-sizing: border-box; height: 100%; } body { margin: 0; }</style>
 </head>
-<body>
+<body data-phase="day">
+<!-- Небо: меняется по фазе дня -->
+<div class="sky" aria-hidden="true">
+  <div class="sky-l sky-morning"></div><div class="sky-l sky-day"></div><div class="sky-l sky-evening"></div>
+  <div class="sun"></div>
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+  <svg class="city" id="city" viewBox="0 0 400 120" preserveAspectRatio="xMidYMax slice"></svg>
+</div>
+
 <div class="app">
   <!-- Экран 1: меню -->
   <section class="view menu" id="menu">
-    <svg class="logo" viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <g transform="rotate(-14 30 30)"><rect x="12" y="14" width="30" height="38" rx="2" fill="var(--panel)"/><path d="M18 24h18M18 31h18M18 38h11"/></g>
-      <g transform="rotate(12 128 26)"><rect x="114" y="8" width="26" height="34" rx="2" fill="var(--panel)"/><path d="M119 17h16M119 24h16M119 31h9"/></g>
-      <circle cx="118" cy="82" r="24" fill="var(--panel)"/><path d="M118 68v14l9 6"/>
-      <path d="M44 62h44v30a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="var(--accent)"/>
-      <path d="M88 70h6a9 9 0 0 1 0 18h-6"/>
-      <path d="M56 50c-4-6 4-8 0-14M68 50c-4-6 4-8 0-14M80 50c-4-6 4-8 0-14"/>
-    </svg>
-    <h1 class="title">Выжить <span class="mark">до пятницы</span></h1>
-    <p class="tagline">Пять рабочих дней, пятнадцать решений. Свайп влево — «нет», вправо — «да». Не дайте ни одной шкале упасть до нуля.</p>
-    <div class="form">
-      <div class="field"><label for="name">Имя или ник</label><input id="name" maxlength="24" placeholder="Сотрудник месяца" autocomplete="off"></div>
-      <div class="field"><label for="prof">Ваша профессия</label>
-        <select id="prof">
-          <option value="marketer">Маркетолог</option>
-          <option value="accountant">Бухгалтер</option>
-          <option value="dev">Программист</option>
-          <option value="sales">Продажник</option>
-        </select>
-      </div>
-      <div class="perk" id="perk"></div>
+    <div class="papers" aria-hidden="true"><span style="left:8%;animation-duration:9s">📄</span><span style="left:30%;animation-duration:12s;animation-delay:-4s">📎</span><span style="left:55%;animation-duration:10s;animation-delay:-7s">📄</span><span style="left:78%;animation-duration:13s;animation-delay:-2s">🗂️</span><span style="left:92%;animation-duration:11s;animation-delay:-9s">📄</span></div>
+    <div class="hero">
+      <svg class="logo" viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <g transform="rotate(-14 30 30)"><rect x="12" y="14" width="30" height="38" rx="3" fill="#fff"/><path d="M18 24h18M18 31h18M18 38h11"/></g>
+        <g transform="rotate(12 128 26)"><rect x="114" y="8" width="26" height="34" rx="3" fill="#fff"/><path d="M119 17h16M119 24h16M119 31h9"/></g>
+        <circle cx="118" cy="82" r="24" fill="#fff"/><path d="M118 68v14l9 6"/>
+        <path d="M44 62h44v30a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="#ffd23f"/>
+        <path d="M88 70h6a9 9 0 0 1 0 18h-6"/>
+        <path d="M56 50c-4-6 4-8 0-14M68 50c-4-6 4-8 0-14M80 50c-4-6 4-8 0-14"/>
+      </svg>
+      <h1 class="title"><span class="t1">Выжить</span><span class="t2">до пятницы</span></h1>
+      <p class="tagline">5 дней, 15 решений. Свайп влево или вправо. Не дайте ни одной шкале упасть до нуля.</p>
+    </div>
+    <div class="panel form">
+      <div class="field"><label for="name">Имя или ник</label><input id="name" type="text" maxlength="24" placeholder="Сотрудник месяца" autocomplete="off"></div>
+      <fieldset class="field">
+        <legend>Ваша профессия</legend>
+        <div class="profs" id="profs"></div>
+      </fieldset>
       <button class="btn-main" id="start">Начать неделю</button>
       <button class="btn-ghost" id="resume" hidden></button>
     </div>
     <div class="menu-foot">
-      <div class="record"><b>Рекорд</b><span id="record">пока нет</span></div>
-      <button class="sound" id="soundMenu" aria-label="Звук"></button>
+      <div class="record panel"><b>Рекорд</b><span id="record">пока нет</span></div>
+      <button class="sound panel" id="soundMenu" aria-label="Звук"></button>
     </div>
   </section>
 
   <!-- Экран 2: игра -->
   <section class="view" id="game" hidden>
-    <header class="hud">
-      <div class="bars" id="bars"></div>
-      <div class="when"><span id="when">ПОНЕДЕЛЬНИК | УТРО (09:00)</span><span style="display:flex;gap:8px;align-items:center"><span class="dots" id="dots"></span><button class="icon-btn" id="soundGame" aria-label="Звук"></button></span></div>
-    </header>
+    <header class="hud panel"><div class="bars" id="bars"></div><div class="week" id="dots" aria-hidden="true"></div></header>
+    <div class="clock-row">
+      <div class="clock pill"><span class="ph-ico" id="phIco" aria-hidden="true">🌅</span><span id="when">ПОНЕДЕЛЬНИК | УТРО (09:00)</span></div>
+      <button class="icon-btn pill" id="soundGame" aria-label="Звук"></button>
+    </div>
     <div class="table">
-      <div class="card-back"></div>
+      <div class="card-back b2"></div><div class="card-back b1"></div>
       <article class="card" id="card" tabindex="-1"></article>
     </div>
-    <div class="hint" id="hint">свайп или ← → на клавиатуре</div>
+    <div class="hint"><span>тяните карточку или жмите ← →</span></div>
     <div class="answers">
       <button class="ans no" id="btnL"></button>
       <button class="ans yes" id="btnR"></button>
@@ -65,6 +72,7 @@
   <!-- Экран 3: финал -->
   <section class="view end" id="end" hidden></section>
 </div>
+<div class="splash" id="splash" hidden></div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
 <script src="js/cards.js"></script>
