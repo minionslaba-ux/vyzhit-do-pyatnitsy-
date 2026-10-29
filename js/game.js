@@ -39,9 +39,11 @@
   const CHAIN_CARDS = CHAINS.map(ch => ({ ...norm(ch.card), chain: ch.origin }));
   const TYPE_CARDS = Object.values(WEEK_TYPES).flatMap(t => (t.cards || []).map(norm));
   const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
+  const POOL = POOL_JSON.map(norm);  // большой пул из js/pool.js: каждая карточка выпадает один раз
   const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
   let PACK = null, PACK_CARDS = [];
-  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL].map(c => [c.id, c]));
+  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...POOL].map(c => [c.id, c]));
+  const TOTAL_CARDS = CARDS.length + RANDOM_CARDS.length + TYPE_CARDS.length + PROF_ALL.length + POOL.length;
 
   function getRandomCard(standardCard, randomPack, percent = 15, random = Math.random) {
     // Генерируем случайное число от 1 до 100
@@ -63,7 +65,7 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
     del(k) { try { localStorage.removeItem(k); } catch {} },
   };
-  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily' };
+  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen' };
   const YEAR = 52;
   const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', trait: 'workaholic', sound: true }, store.get(KEY.prefs, {}));
   const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
@@ -284,7 +286,9 @@
     (document.querySelector(`input[name=trait][value=${prefs.trait}]`) || document.querySelector('input[name=trait]')).checked = true;
     setPhase('evening');
     const best = store.get(KEY.best, { step: 0, wins: 0 });
-    $('record').textContent = best.wins ? `недель закрыто: ${best.wins}` : best.step ? `дольше всего: ${DAYS[Math.floor(best.step / 3)]}, ${PHASES[best.step % 3].name.toLowerCase()}` : 'пока нет';
+    const seenN = store.get(KEY.seen, []).filter(id => byId[id]).length;
+    $('record').textContent = (best.wins ? `недель закрыто: ${best.wins}` : best.step ? `дольше всего: ${DAYS[Math.floor(best.step / 3)]}, ${PHASES[best.step % 3].name.toLowerCase()}` : 'пока нет')
+      + ` · карточек открыто: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`;
     const save = store.get(KEY.save, null);
     if (save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
     const Cm = store.get(KEY.career, null), careerSave = save && (save.mode || 'career') === 'career';
@@ -355,22 +359,27 @@
   const slotOf = (day, phase) => DAYS.indexOf(day) * 3 + PHASES.findIndex(p => p.name === phase);
 
   // Неделя: карточки по расписанию → карточки вида недели (или пакета) → одна карточка профессии → случайные события
-  function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [], profCard = true, packCards = [] }) {
-    const used = new Set(), deck = [], randomPack = [...RANDOM_CARDS, ...extraRandom]; // свежая копия на каждую неделю
+  // classic — классическая неделя из cards.js; иначе карточки берутся из большого пула.
+  // seen — уже показанные карточки: из них ничего не берётся, так карточки не повторяются
+  function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [], profCard = true, packCards = [], classic = true, seen = null }) {
+    const unseen = c => !seen || !seen.has(c.id);
+    const used = new Set(), deck = [], randomPack = [...RANDOM_CARDS, ...extraRandom].filter(unseen); // свежая копия на каждую неделю
     const rules = WEEK_TYPES[type].rules, fixed = new Map();
-    for (const c of [...(WEEK_TYPES[type].cards || []), ...packCards]) fixed.set(slotOf(c.day, c.phase), c.id);
+    for (const c of [...(WEEK_TYPES[type].cards || []).filter(unseen), ...packCards]) fixed.set(slotOf(c.day, c.phase), c.id);
     for (let i = 0; i < 15; i++) {
       const d = Math.floor(i / 3), ph = PHASES[i % 3];
       if (fixed.has(i)) { const c = byId[fixed.get(i)]; deck.push({ id: c.id, time: c.time || PHASE_TIME[i % 3], fixed: true }); continue; }
       const ok = c => c.phase === ph.name && !used.has(c.id);
+      const fresh = classic ? [] : POOL.filter(c => ok(c) && unseen(c));
       const special = CARDS.filter(c => ok(c) && c.day === DAYS[d]);
-      const pool = special.length ? special : CARDS.filter(c => ok(c) && !c.day);
+      const pool = fresh.length ? fresh : special.length ? special : CARDS.filter(c => ok(c) && !c.day);
       const standard = rnd(pool, rng); used.add(standard.id);
       deck.push({ id: standard.id, time: standard.time || PHASE_TIME[i % 3] });
     }
-    if (profCard && prof && PROF_CARDS[prof]) {
+    const profLeft = profCard && prof && PROF_CARDS[prof] ? PROF_CARDS[prof].filter(unseen) : [];
+    if (profLeft.length) {
       const free = deck.map((s, i) => s.fixed ? -1 : i).filter(i => i > 0 && i !== 14 && i >= 0);
-      const i = rnd(free, rng), c = byId[rnd(PROF_CARDS[prof], rng).id];
+      const i = rnd(free, rng), c = byId[rnd(profLeft, rng).id];
       deck[i] = { id: c.id, time: PHASE_TIME[i % 3], fixed: true };
     }
     deck.forEach((s, i) => {
@@ -425,11 +434,24 @@
     if (C.stage === 'search') return jobSearch();
     startWeek();
   }
+  // Показанные карточки копятся между карьерами; когда в фазе дня почти не остаётся новых, круг начинается заново
+  function seenSet() {
+    const seen = new Set(store.get(KEY.seen, []));
+    for (const ph of PHASES) {
+      const left = POOL.filter(c => c.phase === ph.name && !seen.has(c.id)).length;
+      if (POOL.length && left < 5) POOL.filter(c => c.phase === ph.name).forEach(c => seen.delete(c.id));
+    }
+    return seen;
+  }
   function startWeek() {
     const type = weekTypeFor(C.week, C.newJob);
     C.newJob = false; saveCareer();
     S = newWeekState({ mode: 'career', res: C.res, type, extra: { prof: C.prof, trait: C.trait } });
-    S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED });
+    const seen = seenSet(), classic = !seen.has('__classic') || !POOL.length;  // классическая неделя — только в самый первый раз
+    S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen });
+    for (const s of S.deck) seen.add(s.id);
+    if (classic) seen.add('__classic');
+    store.set(KEY.seen, [...seen]);
     store.set(KEY.save, S);
     enterGame();
   }
@@ -439,7 +461,7 @@
     const day = today(), rng = seeded('vdp-daily-' + day);
     C = null;
     S = newWeekState({ mode: 'daily', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { day } });
-    S.deck = buildDeck({ type: 'normal', rng, profCard: false });
+    S.deck = buildDeck({ type: 'normal', rng, profCard: false, classic: !POOL.length });
     S.ranked = !store.get(KEY.daily, {})[day];
     enterGame();
   }
@@ -447,7 +469,7 @@
     if (!PACK) return;
     C = null;
     S = newWeekState({ mode: 'pack', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal' });
-    S.deck = buildDeck({ type: 'normal', profCard: false, packCards: PACK_CARDS });
+    S.deck = buildDeck({ type: 'normal', profCard: false, packCards: PACK_CARDS, classic: !POOL.length });
     enterGame();
   }
 
