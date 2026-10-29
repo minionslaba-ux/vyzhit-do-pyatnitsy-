@@ -12,6 +12,8 @@
 <style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-sizing: border-box; height: 100%; } body { margin: 0; }</style>
 </head>
 <body data-phase="day">
+<!-- Офис за окном: меняется по фазе дня -->
+<div class="office" id="office" aria-hidden="true"></div>
 
 <div class="app">
   <!-- Экран 0: пропуск в офис (имя, отдел, аватар) -->
@@ -33,7 +35,7 @@
 
   <!-- Экран 1: меню -->
   <section class="view menu" id="menu">
-        <div class="hero">
+    <div class="hero">
       <svg class="logo" viewBox="0 0 160 120" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <g transform="rotate(-14 30 30)"><rect x="12" y="14" width="30" height="38" rx="3"/><path d="M18 24h18M18 31h18M18 38h11"/></g>
         <g transform="rotate(12 128 26)"><rect x="114" y="8" width="26" height="34" rx="3"/><path d="M119 17h16M119 24h16M119 31h9"/></g>
@@ -43,7 +45,7 @@
         <path d="M56 50c-4-6 4-8 0-14M68 50c-4-6 4-8 0-14M80 50c-4-6 4-8 0-14"/>
       </svg>
       <h1 class="title"><span class="t1">Выжить</span><span class="t2">до пятницы</span></h1>
-      <p class="tagline">Целый год — 52 рабочие недели. Тяни карточку влево или вправо, а если уволят — ищи новую работу и проходи собеседование.</p>
+      <p class="tagline">Год из 52 недель. Держите все четыре шкалы в балансе: и ноль, и сто процентов — это конец недели.</p>
     </div>
     <div class="panel form">
       <div class="me-card">
@@ -56,9 +58,16 @@
         <legend>Ваша профессия</legend>
         <div class="profs" id="profs"></div>
       </fieldset>
+      <fieldset class="field" id="traitField">
+        <legend>Черта характера</legend>
+        <div class="profs traits" id="traits"></div>
+      </fieldset>
       <button class="btn-main" id="start">Начать карьеру</button>
       <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
+      <button class="btn-ghost btn-daily" id="startDaily">Неделя дня</button>
+      <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
+      <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
     </div>
     <div class="menu-foot">
       <div class="record glass"><b>Рекорд</b><span id="record">пока нет</span></div>
@@ -70,11 +79,12 @@
   <section class="view game" id="game" hidden>
     <header class="g-top">
       <span class="g-brand">ВЫЖИТЬ <em>ДО ПЯТНИЦЫ</em><small id="gCareer">Неделя 1/52</small></span>
-      <div class="g-clock"><span class="time" id="clock">09:00</span><div class="segs" id="dots" aria-hidden="true"></div></div>
-      <div class="g-day"><div><span id="gDay">Понедельник</span><small><span id="gPhase">утро</span> · <span id="gNum">01</span>/15</small></div><button class="icon-btn" id="soundGame" aria-label="Звук"></button></div>
+      <div class="g-clock"><span class="time" id="clock">09:00</span><div class="segs" id="dots" aria-hidden="true"></div><div class="inv" id="inv"></div></div>
+      <div class="g-day"><div><span id="gDay">Понедельник</span><small><span id="gPhase">утро</span> · <span id="gNum">01</span>/15</small><small class="g-type" id="gType"></small></div><button class="icon-btn" id="soundGame" aria-label="Звук"></button></div>
     </header>
     <div class="g-stats"><div class="tubes left" id="tubesL"></div><div class="tubes right" id="tubesR"></div></div>
     <div class="g-center">
+      <div class="react" id="react" aria-live="polite"></div>
       <article class="card" id="card" tabindex="-1"></article>
       <div class="answers">
         <button class="ans no" id="btnL"></button>
@@ -91,26 +101,30 @@
       <h2 id="boardTitle">Рейтинг офиса</h2>
       <button class="icon-btn pill" id="boardRefresh" aria-label="Обновить">↻</button>
     </div>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="modeRating" aria-selected="true">Рейтинг</button>
-      <button class="tab" role="tab" id="modePeople" aria-selected="false">Участники</button>
+    <div class="tabs tabs4" role="tablist">
+      <button class="tab" role="tab" id="modeRating" aria-selected="true">Недели</button>
+      <button class="tab" role="tab" id="modeDaily" aria-selected="false">День</button>
+      <button class="tab" role="tab" id="modeDepts" aria-selected="false">Отделы</button>
+      <button class="tab" role="tab" id="modePeople" aria-selected="false">Люди</button>
     </div>
     <div class="board-bar">
       <span id="boardSummary"></span>
-      <label class="chk"><input type="checkbox" id="onlyDept"> Только мой отдел</label>
+      <label class="chk" id="onlyDeptBox"><input type="checkbox" id="onlyDept"> Только мой отдел</label>
     </div>
     <div class="panel board-list" id="boardList"></div>
     <p class="board-note" id="boardNote"></p>
   </section>
 
-  <!-- Экран 3: финал -->
+  <!-- Экран 3: финалы, поиск работы, собеседование, коллекция, форма карточки -->
   <section class="view end" id="end" hidden></section>
 </div>
 <div class="splash" id="splash" hidden></div>
+<div class="toast-bar" id="toastBar" aria-live="polite"></div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>
+<script src="js/content.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

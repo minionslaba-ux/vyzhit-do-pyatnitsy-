@@ -1,0 +1,17 @@
+{
+  "title": "Неделя «Рога и копыта»",
+  "company": "«Рога и копыта»",
+  "intro": "Специальная неделя для тимбилдинга. Ситуации придумала команда HR.",
+  "accent": "#ffb02e",
+  "cards": [
+    { "id": "pack_kickoff", "day": "Понедельник", "phase": "Утро", "who": "HR", "text": "Общий кик-офф квартала: каждый должен рассказать о своей суперсиле. Ваша очередь.",
+      "answers": { "left":  { "label": "Отшутиться и сесть", "effects": { "psyche": 5, "energy": 0, "boss": -10, "colleagues": 10 } },
+                   "right": { "label": "Честно рассказать", "effects": { "psyche": -5, "energy": -5, "boss": 10, "colleagues": 5 } } } },
+    { "id": "pack_quest", "day": "Среда", "phase": "День", "who": "HR", "text": "Вместо обеда — квест по офису: найти пять спрятанных степлеров.",
+      "answers": { "left":  { "label": "Пообедать, как человек", "effects": { "psyche": 10, "energy": 10, "boss": 0, "colleagues": -10 } },
+                   "right": { "label": "Найти все пять первыми", "effects": { "psyche": 5, "energy": -15, "boss": 5, "colleagues": 15 } } } },
+    { "id": "pack_award", "day": "Пятница", "phase": "Вечер", "who": "Директор", "text": "На вечерней церемонии вас номинировали на «Сотрудника квартала». Нужна речь.",
+      "answers": { "left":  { "label": "Скромно сказать спасибо", "effects": { "psyche": 5, "energy": 0, "boss": 5, "colleagues": 5 } },
+                   "right": { "label": "Речь на десять минут", "effects": { "psyche": 10, "energy": -10, "boss": 10, "colleagues": -10 } } } }
+  ]
+}
