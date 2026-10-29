@@ -83,7 +83,9 @@
     const cfg = window.SUPABASE_CONFIG || {};
     const online = !!(cfg.url && cfg.anonKey);
     const base = online ? cfg.url.replace(/\/+$/, '') + '/rest/v1' : '';
-    const headers = online ? { apikey: cfg.anonKey, Authorization: `Bearer ${cfg.anonKey}`, 'Content-Type': 'application/json' } : {};
+    // Ключ нового формата (sb_publishable_…) передаётся только в apikey; старый anon-ключ (JWT) — ещё и как Bearer
+    const headers = online ? { apikey: cfg.anonKey, 'Content-Type': 'application/json',
+      ...(cfg.anonKey.startsWith('eyJ') ? { Authorization: `Bearer ${cfg.anonKey}` } : {}) } : {};
     const better = (a, b) => (b.won - a.won) || (b.step - a.step) || (b.total - a.total) || (a.created_at < b.created_at ? -1 : 1);
     const LOCAL = 'vdp-board', PEOPLE = 'vdp-people';
     const req = async (path, opts = {}) => {
