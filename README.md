@@ -146,7 +146,7 @@ python3 -m http.server 8000
 2. Подключите игру к боту одним из способов:
    - **Главное мини-приложение** (проще): `/mybots` → бот → **Bot Settings → Configure Mini App → Enable Mini App** → адрес `https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/`. Ссылки: `https://t.me/Survivefridaybot?startapp=ref-ID_join-КОД`.
    - **Отдельное приложение:** `/newapp` → бот → название, описание, картинка 640×360 → тот же адрес → короткое имя, например `play`. Ссылки: `https://t.me/Survivefridaybot/play?startapp=…`.
-3. В `js/config.js` указано `telegram: { bot: 'Survivefridaybot', app: 'play' }` — ссылки вида `https://t.me/Survivefridaybot/play?startapp=…`.
+3. В `js/config.js` указано `telegram: { bot: 'Survivefridaybot', app: '' }` — ссылки ведут на главное мини-приложение: `https://t.me/Survivefridaybot?startapp=…` (так надёжнее всего открывается сразу игра). Чтобы вести на отдельное приложение, впишите его короткое имя в `app`.
    Кнопку игры в меню чата бота можно добавить там же: **Bot Settings → Menu Button** → тот же адрес.
 4. Вход по почте внутри Telegram открывает письмо в браузере; в самом Telegram удобнее играть гостем.
 
