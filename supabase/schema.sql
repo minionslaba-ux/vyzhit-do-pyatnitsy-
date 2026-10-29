@@ -350,12 +350,40 @@ begin
   else update players set player_id = p_to where player_id = p_from; end if;
 end $$;
 
+-- ====================== Приглашения в игру (рефералы) ======================
+-- Кто по чьей ссылке пришёл: один пригласивший на игрока, себя пригласить нельзя
+create table if not exists public.referrals (
+  player_id   uuid primary key,
+  ref_player  uuid not null,
+  created_at  timestamptz not null default now()
+);
+alter table public.referrals enable row level security;
+revoke all on public.referrals from anon, authenticated;
+
+create or replace function public.claim_referral(p_id uuid, p_ref text) returns boolean
+language plpgsql security definer set search_path = public as $$
+declare v_ref uuid;
+begin
+  if public.is_registered(p_id) then perform public.require_player(p_id); end if;
+  if not exists (select 1 from players where player_id = p_id) then return false; end if;
+  select pl.player_id into v_ref from players pl where public.short_id(pl.player_id) = upper(trim(p_ref)) limit 1;
+  if v_ref is null or v_ref = p_id then return false; end if;
+  insert into referrals (player_id, ref_player) values (p_id, v_ref) on conflict (player_id) do nothing;
+  return found;
+end $$;
+
+-- Сколько игроков пришло по ссылкам игрока (только число)
+create or replace function public.referral_count(p_id uuid) returns integer
+language sql stable security definer set search_path = public as $$
+  select count(*)::int from referrals where ref_player = p_id;
+$$;
+
 do $$
 declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
     'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
-    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)'] loop
+    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)'] loop
     execute format('revoke all on function public.%s from public', f);
     execute format('grant execute on function public.%s to anon, authenticated', f);
   end loop;
@@ -364,10 +392,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 18 строк
+-- Проверка: должны вернуться 20 строк
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count');

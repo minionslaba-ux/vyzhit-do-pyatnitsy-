@@ -414,6 +414,29 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 .office-cta .btn-main { width: auto; padding: 11px 14px; font-size: 13px; }
 .lb-row .btn-chip { align-self: center; }
 
+/* ---------- приглашения в игру ---------- */
+.btn-invite { border-color: var(--magenta); color: var(--magenta-xl); box-shadow: 0 0 18px rgba(255,59,212,.3); }
+.btn-invite:hover { background: rgba(255,59,212,.14); box-shadow: 0 0 28px rgba(255,59,212,.55); color: #fff; }
+.viral-pop { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 35; width: min(460px, calc(100% - 24px)); translate: -50% 0;
+  display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 20px; border: 1.5px solid var(--magenta); background: rgba(12,10,22,.96);
+  box-shadow: 0 0 34px rgba(255,59,212,.4); animation: popup-in .45s var(--ease) both; }
+.viral-pop b { font-family: var(--f-display); font-weight: 800; font-size: 15px; color: #fff; text-shadow: 0 0 12px rgba(255,59,212,.7); padding-right: 28px; }
+.viral-pop span { font-size: 13px; color: var(--text-3); font-weight: 700; line-height: 1.4; }
+.viral-pop .btn-main, .viral-pop .btn-ghost { padding: 11px 10px; font-size: 12.5px; }
+.viral-x { position: absolute; top: 8px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--text-2); font-size: 18px; line-height: 1; }
+@keyframes popup-in { from { transform: translateY(40px); opacity: 0; } }
+.viral { width: 100%; display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 18px; border: 1.5px dashed rgba(255,59,212,.6); }
+.viral b { font-weight: 900; color: #fff; font-size: 14.5px; }
+.viral .btn-main, .viral .btn-ghost { padding: 12px 10px; font-size: 12.5px; }
+.share-box { text-align: center; }
+.share-box h2 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 20px; color: #fff; text-shadow: 0 0 16px rgba(255,59,212,.7); }
+.share-text { margin: 0; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.04); text-align: left; font-size: 13.5px; line-height: 1.45; color: var(--text-3); overflow-wrap: anywhere; user-select: text; }
+.share-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.share-grid a, .share-grid button { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 14px; border: 1.5px solid var(--line); background: transparent; color: var(--text); font-weight: 900; font-size: 14px; text-decoration: none; }
+.share-grid a:hover, .share-grid button:hover { border-color: var(--cyan); box-shadow: 0 0 18px rgba(45,226,230,.4); color: #fff; }
+.share-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 4px; border-radius: 999px; border: 1.5px solid var(--line); }
+.share-count { font-family: var(--f-mono); font-size: 12px; color: var(--up); text-shadow: 0 0 8px rgba(212,255,58,.5); }
+
 /* ---------- рейтинг и участники ---------- */
 .board { overflow: hidden; }
 .board-head { display: flex; align-items: center; gap: 10px; }

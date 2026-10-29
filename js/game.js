@@ -359,7 +359,8 @@
     $('startPack').hidden = !PACK; if (PACK) $('startPack').textContent = PACK.title;
     $('openCollection').textContent = `Коллекция ${Object.keys(endingsGot()).length}/${ENDINGS.length}`;
     renderSound(); show('menu');
-    board.touch('menu').catch(() => {});
+    board.touch('menu').catch(() => {}).then(() => { claimReferral(); checkReferrals(); });
+    maybeViralPop();
   }
   $('profs').onchange = () => { prefs.prof = getProf(); store.set(KEY.prefs, prefs); };
   $('traits').onchange = () => { prefs.trait = getTrait(); store.set(KEY.prefs, prefs); };
@@ -375,6 +376,7 @@
   $('openChat').onclick = needAccount(() => showChat('team'), 'Чаты доступны после регистрации — так коллеги будут знать, кто пишет.');
   $('meRegister').onclick = () => prefs.email ? renderJoin('login', 'Пришлём новую ссылку для входа на вашу почту.') : renderJoin('register');
   $('ctaOffice').onclick = () => showOffice();
+  $('openInvite').onclick = () => openShare(registered() ? 'team' : 'friends');
   // Зарегистрированному без офиса — предложение создать свой; с офисом — его название под именем
   let myTeamCache = null;
   async function renderOfficeLine() {
@@ -545,8 +547,10 @@
     for (const [k, v] of Object.entries(rules.start || {})) res[k] = clamp(res[k] + v);
     if (rules.bossStart) res.boss = rules.bossStart;
     for (const k in res) res[k] = Math.max(5, Math.min(95, res[k]));
+    let n = rules.items || (rng() < .5 ? 1 : 2);
+    if (mode === 'career' && prefs.bonusItems > 0) { const add = Math.min(prefs.bonusItems, 4 - n); n += add; prefs.bonusItems -= add; store.set(KEY.prefs, prefs); }
     return { mode, name: prefs.name, dept: prefs.dept, prof: extra.prof || prefs.prof, trait: extra.trait || prefs.trait, res, step: 0, type,
-      items: giveItems(rules.items || (rng() < .5 ? 1 : 2), rng), used: [], flags: {}, ...extra };
+      items: giveItems(n, rng), used: [], flags: {}, ...extra };
   }
 
   // ---------- карьера: 52 недели ----------
@@ -847,7 +851,9 @@
   function finalGrid(zeroKey) {
     return `<div class="final">${RES.map(r => `<div class="${r.k === zeroKey ? 'zero' : ''}"><b>${S.res[r.k]}%</b><span>${r.name}</span></div>`).join('')}</div>`;
   }
-  function bindCommon() { $('toMenu').onclick = renderMenu; if ($('toBoard')) $('toBoard').onclick = () => openBoard('end', S?.mode === 'daily' ? 'daily' : 'rating'); }
+  const viralHtml = () => `<div class="viral"><b>Позовите коллег — проверим, кто дольше продержится до пятницы</b>
+    <div class="row2"><button class="btn-main" data-share="team">Позвать коллег</button><button class="btn-ghost" data-share="friends">Рассказать друзьям</button></div></div>`;
+  function bindCommon() { bindShare(views.end); $('toMenu').onclick = renderMenu; if ($('toBoard')) $('toBoard').onclick = () => openBoard('end', S?.mode === 'daily' ? 'daily' : 'rating'); }
   const traitText = (kind, trait) => TRAITS[trait || 'workaholic'][kind];
   function rank(total) { return total >= 280 ? 'Легенда опенспейса' : total >= 220 ? 'Сеньор по выживанию' : total >= 160 ? 'Крепкий мидл' : 'Чудом уцелевший стажёр'; }
 
@@ -887,6 +893,7 @@
       ${finalGrid(k)}
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
+      ${viralHtml()}
       <div class="stack">${career ? `<button class="btn-main" id="next">${next}</button>` : `<button class="btn-main" id="next">${S.mode === 'daily' ? 'Сыграть неделю дня ещё раз' : 'Сыграть ещё раз'}</button>`}
         <button class="btn-ghost" id="share">Мем-карточка для чата</button>
         <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
@@ -920,6 +927,7 @@
       <div class="total"><span>Счёт недели</span><b>${total} / 400</b></div>
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
+      ${viralHtml()}
       <div class="stack"><button class="btn-main" id="next">${career ? (last ? 'Итоги года' : `Неделя ${C.week} →`) : 'В главное меню'}</button>
         <button class="btn-ghost" id="share">Мем-карточка для чата</button>
         <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
@@ -1073,6 +1081,7 @@
   // ---------- запись результата и место в рейтинге ----------
   async function record(won, death, high) {
     const total = RES.reduce((a, r) => a + S.res[r.k], 0);
+    prefs.gamesPlayed = (prefs.gamesPlayed || 0) + 1; store.set(KEY.prefs, prefs);
     if (S.mode === 'daily') {
       const all = store.get(KEY.daily, {});
       if (!all[S.day]) { all[S.day] = { won, total }; store.set(KEY.daily, all); }
@@ -1244,12 +1253,20 @@
     m.innerHTML = `<div class="modal-box glass" role="dialog" aria-modal="true" aria-label="Мем-карточка">
       <img src="${url}" alt="Мем-карточка: ${esc(memeLine(won))}">
       <p>Нажмите и удерживайте картинку (на компьютере — правый клик → «Сохранить изображение»), чтобы отправить её в рабочий чат.</p>
-      <button class="btn-main" id="copyTxt">Скопировать текст для чата</button>
+      ${navigator.canShare ? '<button class="btn-main" id="shareImg">Отправить картинку</button>' : ''}
+      <button class="${navigator.canShare ? 'btn-ghost' : 'btn-main'}" id="copyTxt">Скопировать текст для чата</button>
       <div class="toast" id="toast" aria-live="polite"></div>
       <button class="btn-ghost" id="closeM">Закрыть</button></div>`;
     m.hidden = false;
     $('closeM').onclick = () => { m.hidden = true; $('share')?.focus(); };
     m.onclick = e => { if (e.target === m) m.hidden = true; };
+    if ($('shareImg')) $('shareImg').onclick = async () => {
+      try {
+        const blob = await (await fetch(url)).blob(), file = new File([blob], 'vyzhit-do-pyatnitsy.png', { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text });
+        else await navigator.share({ text });
+      } catch {}
+    };
     $('copyTxt').onclick = () => {
       navigator.clipboard.writeText(text).then(() => $('toast').textContent = 'Текст скопирован',
         () => { $('toast').textContent = text; });
@@ -1377,6 +1394,83 @@
     await load();
     chatTimer = setInterval(() => { if (!document.hidden) load(); }, 4000);
   }
+
+  // ---------- приглашения в игру: ссылки с ID, плашка, бонус за пришедших ----------
+  const gameUrl = () => /^https?:/.test(location.href) ? location.origin + location.pathname : 'https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/';
+  async function referralLink(kind) {
+    const ref = shortId(await myTag);
+    let team = null;
+    if (kind === 'team' && registered()) team = myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0] || null;
+    return { url: `${gameUrl()}?ref=${ref}${team ? `&join=${team.code}` : ''}`, team };
+  }
+  function shareText(kind, team) {
+    return kind === 'team'
+      ? (team ? `Я в нашем офисе «${team.name}» в игре «Выжить до пятницы». Заходи в команду — проверим, кто дольше продержится до пятницы!`
+              : 'Играю в «Выжить до пятницы» — офисный симулятор, где Босс на 100% хуже увольнения. Давай сыграем всем отделом и сравним, кто дольше продержится!')
+      : 'Затягивает: «Выжить до пятницы» — офисный симулятор в духе Reigns. Держи Кукуху, Энергию, Босса и Коллег в балансе до пятницы, 18:00. Попробуй!';
+  }
+  function bindShare(root) { root.querySelectorAll('[data-share]').forEach(b => b.onclick = () => { snoozeViral(7); openShare(b.dataset.share); }); }
+  async function openShare(kind) {
+    const m = $('modal');
+    const { url, team } = await referralLink(kind), text = shareText(kind, team), full = `${text} ${url}`;
+    const enc = encodeURIComponent;
+    m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+      <h2 id="shTitle">Позвать в игру</h2>
+      <div class="share-tabs" role="tablist"><button class="tab" role="tab" data-k="team" aria-selected="${kind === 'team'}">Коллег</button><button class="tab" role="tab" data-k="friends" aria-selected="${kind === 'friends'}">Друзей</button></div>
+      ${kind === 'team' && !team ? `<p class="field-note">${registered() ? 'Создайте офис в «Мой офис» — тогда ссылка сразу приведёт коллег в вашу команду.' : 'Зарегистрируйтесь и создайте офис — тогда ссылка сразу приведёт коллег в вашу команду.'}</p>` : ''}
+      <p class="share-text" id="shText">${esc(full)}</p>
+      <div class="share-grid">
+        ${navigator.share ? '<button id="shNative">Отправить…</button>' : ''}
+        <a href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://wa.me/?text=${enc(full)}" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}" target="_blank" rel="noopener">ВКонтакте</a>
+        <a href="mailto:?subject=${enc('Выжить до пятницы')}&body=${enc(full)}">Почта</a>
+        <button id="shCopy">Скопировать ссылку</button>
+      </div>
+      <p class="share-count" id="shCount"></p>
+      <p class="field-note">За каждого, кто впервые придёт по вашей ссылке, — +1 предмет на следующую неделю карьеры.</p>
+      <button class="btn-ghost" id="shClose">Закрыть</button></div>`;
+    m.hidden = false;
+    m.querySelectorAll('.share-tabs .tab').forEach(t => t.onclick = () => openShare(t.dataset.k));
+    $('shClose').onclick = () => { m.hidden = true; };
+    m.onclick = e => { if (e.target === m) m.hidden = true; };
+    $('shCopy').onclick = () => copy(full, 'Приглашение скопировано — вставьте его в чат');
+    if ($('shNative')) $('shNative').onclick = () => navigator.share({ title: 'Выжить до пятницы', text, url }).catch(() => {});
+    if (board.online) board.rpc('referral_count', { p_id: prefs.playerId }).then(n => { if ($('shCount')) $('shCount').textContent = `По вашим ссылкам пришло: ${n || 0}`; }).catch(() => {});
+  }
+  // Плашка в меню: после первой сыгранной недели, не чаще раза в двое суток после закрытия
+  const snoozeViral = days => { prefs.viralSnooze = Date.now() + days * 864e5; store.set(KEY.prefs, prefs); $('viralPop').hidden = true; };
+  function maybeViralPop() {
+    const pop = $('viralPop');
+    pop.hidden = !((prefs.gamesPlayed || 0) >= 1 && Date.now() > (prefs.viralSnooze || 0));
+  }
+  $('viralX').onclick = () => snoozeViral(2);
+  bindShare($('viralPop'));
+  // Кто пришёл по ссылке ?ref=ID — засчитываем пригласившему
+  function rememberRef() {
+    const q = new URLSearchParams(location.search), ref = q.get('ref');
+    if (!ref) return;
+    if (!prefs.refClaimed) { prefs.refBy = ref.toUpperCase(); store.set(KEY.prefs, prefs); }
+    q.delete('ref'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+  }
+  async function claimReferral() {
+    if (!board.online || !prefs.refBy || prefs.refClaimed || !prefs.name) return;
+    if (prefs.refBy === shortId(await myTag)) { delete prefs.refBy; store.set(KEY.prefs, prefs); return; }
+    try { await board.rpc('claim_referral', { p_id: prefs.playerId, p_ref: prefs.refBy }); prefs.refClaimed = true; store.set(KEY.prefs, prefs); } catch {}
+  }
+  // Бонус пригласившему: новые пришедшие → +1 предмет на следующую неделю за каждого
+  async function checkReferrals() {
+    if (!board.online || !prefs.name) return;
+    try {
+      const n = await board.rpc('referral_count', { p_id: prefs.playerId }) || 0, seen = prefs.refSeen || 0;
+      if (n > seen) {
+        prefs.bonusItems = (prefs.bonusItems || 0) + (n - seen); prefs.refSeen = n; store.set(KEY.prefs, prefs);
+        toast(`По вашей ссылке ${n - seen === 1 ? 'пришёл новый игрок' : `пришли ${n - seen} новых игрока`}: +${n - seen} предм. на следующую неделю`);
+      }
+      if (n >= 3) unlock(['recruiter']);
+    } catch {}
+  }
+  rememberRef();
 
   // ---------- старт: брендированная неделя (?pack=имя) и карточки от коллег ----------
   (async () => {

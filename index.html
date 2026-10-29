@@ -101,6 +101,7 @@
       <button class="btn-main" id="start">Начать карьеру</button>
       <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
       <button class="btn-ghost btn-daily" id="startDaily">Неделя дня</button>
+      <button class="btn-ghost btn-invite" id="openInvite">Позвать коллег и друзей</button>
       <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
       <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
@@ -158,6 +159,11 @@
 <div class="splash" id="splash" hidden></div>
 <div class="quiz" id="quiz" role="dialog" aria-modal="true" aria-labelledby="quizTitle" hidden></div>
 <div class="toast-bar" id="toastBar" aria-live="polite"></div>
+<div class="viral-pop" id="viralPop" role="region" aria-label="Позвать коллег" hidden>
+  <button class="viral-x" id="viralX" aria-label="Скрыть">×</button>
+  <b>Вместе веселее</b><span>Позовите коллег в свой офис или расскажите друзьям — за каждого пришедшего +1 предмет на неделю.</span>
+  <div class="row2"><button class="btn-main" data-share="team">Позвать коллег</button><button class="btn-ghost" data-share="friends">Рассказать друзьям</button></div>
+</div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
 <script src="js/config.js"></script>
