@@ -53,12 +53,17 @@
   const TOTAL_BASE = CARDS.length + RANDOM_CARDS.length + TYPE_CARDS.length + PROF_ALL.length;
   let TOTAL_CARDS = TOTAL_BASE;
   let POOL_CHAINS = [];
+  // Баланс: эффекты карточек пула усилены в 1,5 раза — по симуляции (tools/balance.js) внимательный игрок
+  // закрывает около 90% недель, а играющий наугад — около 20%; без усиления было 100% и 60%
+  const POOL_BOOST = 1.5;
+  const boost = c => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
+    effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * POOL_BOOST / 5) * 5))])) }])) });
   const dataReady = (async () => {
     const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
     try {
       const [p, q, ch] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => [])]);
-      POOL = p.map(norm); QUIZ = q;
-      POOL_CHAINS = ch.map(x => ({ ...x, card: norm(x.card) }));
+      POOL = p.map(c => boost(norm(c))); QUIZ = q;
+      POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
       for (const c of POOL) byId[c.id] = c;
       for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };
       TOTAL_CARDS = TOTAL_BASE + POOL.length;
@@ -400,6 +405,7 @@
     } else $('start').textContent = 'Начать карьеру';
     const daily = store.get(KEY.daily, {})[today()];
     $('startDaily').textContent = daily ? `Неделя дня ${dayLabel(today())} · ${daily.won ? 'пройдена' : 'завалена'}, сыграть ещё` : `Неделя дня ${dayLabel(today())} · одна на весь офис`;
+    const sk = streakNow(); $('streakLine').textContent = sk ? `Серия: ${sk} дн. подряд${daily ? '' : ' — сыграйте сегодня, чтобы не прервать'}` : 'Играйте каждый день — растёт серия и бонус в карьеру';
     $('startPack').hidden = !PACK; if (PACK) $('startPack').textContent = PACK.title;
     $('openCollection').textContent = `Коллекция ${Object.keys(endingsGot()).length}/${ENDINGS.length}`;
     renderSound(); show('menu');
@@ -612,12 +618,20 @@
   const VAC_YEAR = 28, VAC_PER_WEEK = VAC_YEAR / YEAR;  // 28 календарных дней в году → ≈0,54 дня за неделю
   const fmtDays = d => (Math.floor(d * 10) / 10).toLocaleString('ru-RU');
   function pay(amount) { C.bank += amount; C.earned += amount; saveCareer(); }
+  // Расходы недели: жильё и еда — 2 дневных оклада, плюс платёж по кредиту. Счёт ниже нуля — долг, он давит на Кукуху
+  function weekExpenses(share = 1) {  // share — доля недели: при увольнении расходы только за отработанные дни
+    const life = Math.round(C.salary * 2 * share), loanPay = Math.min(C.loan || 0, 6);
+    C.bank -= life + loanPay; C.loan = (C.loan || 0) - loanPay; C.spent = (C.spent || 0) + life + loanPay; saveCareer();
+    return { life, loanPay };
+  }
+  const expHtml = x => `<div class="money expense"><div><b>−${x.life} у.е.</b><span>жильё и еда</span></div><div><b>${x.loanPay ? `−${x.loanPay} у.е.` : '—'}</b><span>${C.loan ? `кредит, осталось ${C.loan}` : x.loanPay ? 'кредит погашен' : 'кредита нет'}</span></div></div>
+    ${C.bank < 0 ? `<p class="debt">На счёте ${C.bank} у.е. — долг. В понедельник Кукуха −10, пока не выйдете в плюс.</p>` : ''}`;
   function takeVacation() {
     if (!C || C.vacation < 7 || C.week > YEAR) return;
     const holidayPay = C.salary * 5;
     C.vacation = +(C.vacation - 7).toFixed(2); C.vacUsed += 7; C.week++;
     C.res = { psyche: 60, energy: 60, boss: 50, colleagues: 50 };
-    pay(holidayPay); store.del(KEY.save);
+    pay(holidayPay); weekExpenses(); store.del(KEY.save);
     const over = C.week > YEAR;
     views.end.innerHTML = `<div class="end-sheet glass">
       <span class="kicker">Неделя ${C.week - 1} из ${YEAR} · отпуск 7 дней</span>
@@ -665,6 +679,7 @@
     const type = weekTypeFor(C.week, C.newJob);
     C.newJob = false; saveCareer();
     S = newWeekState({ mode: 'career', res: C.res, type, extra: { prof: C.prof, trait: C.trait } });
+    if (C.bank < 0) { S.res.psyche = Math.max(5, S.res.psyche - 10); setTimeout(() => toast(`Долг ${C.bank} у.е. давит: Кукуха −10`), 400); }
     const seen = seenSet(), classic = !seen.has('__classic') || !POOL.length;  // классическая неделя — только в самый первый раз
     const season = type === 'normal' && !classic ? activeSeason() : null;
     if (season) S.season = season.id;
@@ -864,7 +879,9 @@
         <span class="shop-sec">Мощь +20% — шкала отходит от края на 20 пунктов</span>
         <div class="shop-list">${RES.map(r => `<button class="shop-item" data-power="${r.k}" ${C.bank < powerPrice() || Math.abs(S.res[r.k] - 50) < 5 ? 'disabled' : ''}>
           <b>${r.name} ${S.res[r.k]}% → ${S.res[r.k] > 50 ? Math.max(50, S.res[r.k] - 20) : Math.min(50, S.res[r.k] + 20)}%</b><span class="price">${powerPrice()} у.е.</span></button>`).join('')}</div>
-        <p class="field-note">Каждая следующая «мощь» на этой неделе вдвое дороже. Деньги — зарплата за отработанные дни.</p>
+        <span class="shop-sec">Банк</span>
+        <div class="shop-list"><button class="shop-item" id="loanBtn" ${C.loan ? 'disabled' : ''}><b>Кредит +20 у.е.</b><small>${C.loan ? `осталось вернуть ${C.loan} у.е.` : 'вернуть 24 у.е. — по 6 в неделю'}</small><span class="price">сразу на счёт</span></button></div>
+        <p class="field-note">Каждая следующая «мощь» на этой неделе вдвое дороже. Каждую неделю списываются расходы на жильё и еду — два дневных оклада.</p>
         <button class="btn-ghost" id="shopClose">Закрыть</button></div>`;
       m.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
         const id = b.dataset.item; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item();
@@ -877,6 +894,7 @@
         saveCareer(); store.set(KEY.save, S); sfx.item(); toast(`«${resName(k)}»: ${v}% → ${S.res[k]}%`); renderBars(); render();
       });
       $('shopClose').onclick = () => { m.hidden = true; };
+      $('loanBtn').onclick = () => { if (C.loan) return; C.bank += 20; C.loan = 24; saveCareer(); sfx.item(); toast('Кредит выдан: +20 у.е.'); renderBars(); render(); };
     };
     render(); m.hidden = false;
     m.onclick = e => { if (e.target === m) m.hidden = true; };
@@ -1022,6 +1040,7 @@
       var company = C.company, comp = Math.floor(C.vacation) * C.salary, paidDays = Math.floor(S.step / 3);
       C.firings++; C.week++; C.stage = 'search'; C.res = null; C.vacation = 0;
       if (comp) pay(comp); else saveCareer();
+      var exp = weekExpenses(paidDays / 5);
       next = C.week > YEAR ? 'Итоги года' : 'Искать работу';
     }
     views.end.innerHTML = `<div class="end-sheet glass">
@@ -1031,7 +1050,7 @@
       <p>${D.text}</p>
       <p class="trait-line">${TRAITS[S.trait || 'workaholic'].name}: ${traitText('lose', S.trait)}</p>
       ${finalGrid(k)}
-      ${career ? `<div class="money"><div><b>+${S.earned || 0} у.е.</b><span>за ${paidDays} отраб. дн.</span></div><div><b>+${comp} у.е.</b><span>компенсация отпуска</span></div></div>` : ''}
+      ${career ? `<div class="money"><div><b>+${S.earned || 0} у.е.</b><span>за ${paidDays} отраб. дн.</span></div><div><b>+${comp} у.е.</b><span>компенсация отпуска</span></div></div>${expHtml(exp)}` : ''}
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
@@ -1056,6 +1075,7 @@
       // выходные: каждая шкала сдвигается к 50 наполовину
       C.worked++; C.week++; C.res = Object.fromEntries(RES.map(r => [r.k, Math.round((S.res[r.k] + 50) / 2)]));
       C.vacation = +(C.vacation + VAC_PER_WEEK).toFixed(2); saveCareer();
+      var exp = weekExpenses();
       last = C.week > YEAR;
     }
     if (last || !career) confetti();
@@ -1069,7 +1089,7 @@
       <span class="rank">${rank(total)}</span>
       ${finalGrid()}
       <div class="total"><span>Счёт недели</span><b>${total} / 400</b></div>
-      ${career ? `<div class="money"><div><b>${C.bank} у.е.</b><span>на счёте (+${S.earned || 0} за неделю)</span></div><div><b>${fmtDays(C.vacation)} дн.</b><span>отпуска накоплено</span></div></div>` : ''}
+      ${career ? `<div class="money"><div><b>${C.bank} у.е.</b><span>на счёте (+${S.earned || 0} за неделю)</span></div><div><b>${fmtDays(C.vacation)} дн.</b><span>отпуска накоплено</span></div></div>${expHtml(exp)}` : ''}
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
@@ -1228,13 +1248,44 @@
     };
   }
 
+  // ---------- серия дней: неделя дня несколько дней подряд ----------
+  // Каждый день серии даёт в карьеру по 2 у.е. за день серии (максимум 14), семь дней подряд — концовка
+  function updateStreak(day) {
+    const st = prefs.streak || { last: '', count: 0 };
+    const y = new Date(day); y.setDate(y.getDate() - 1);
+    const yest = `${y.getFullYear()}-${String(y.getMonth() + 1).padStart(2, '0')}-${String(y.getDate()).padStart(2, '0')}`;
+    st.count = st.last === yest ? st.count + 1 : st.last === day ? st.count : 1; st.last = day;
+    prefs.streak = st; store.set(KEY.prefs, prefs);
+    const bonus = Math.min(14, 2 * st.count), Cc = store.get(KEY.career, null);
+    if (Cc && st.count > 1) { Cc.bank = (Cc.bank || 0) + bonus; Cc.earned = (Cc.earned || 0) + bonus; store.set(KEY.career, Cc); }
+    if (st.count >= 7) unlock(['streak7']);
+    setTimeout(() => toast(st.count > 1 ? `Серия: ${st.count} дн. подряд${Cc ? ` · +${bonus} у.е. на счёт карьеры` : ''}` : 'Серия началась: приходите завтра за бонусом'), 1200);
+  }
+  const streakNow = () => { const st = prefs.streak; if (!st) return 0; const d = (new Date(today()) - new Date(st.last)) / 864e5; return d <= 1 ? st.count : 0; };
+
+  // Напоминание о неделе дня: событие в календаре телефона по будням
+  function remindIcs() {
+    const time = '12:30';
+    const d = new Date(); const ymd = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+    const url = gameUrl();
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//vyzhit-do-pyatnitsy//RU', 'BEGIN:VEVENT', `UID:vdp-daily-${ymd}@vyzhit`, `DTSTAMP:${ymd}T000000`,
+      `DTSTART:${ymd}T${time.replace(':', '')}00`, 'DURATION:PT10M', 'RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR', 'SUMMARY:Неделя дня — «Выжить до пятницы»',
+      `DESCRIPTION:Новая неделя дня уже ждёт. Коллеги играют! ${url}`, `URL:${url}`, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Неделя дня ждёт', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    try {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'vyzhit-do-pyatnitsy.ics';
+      document.body.appendChild(a); a.click(); a.remove();
+      toast('Откройте скачанный файл — напоминание появится в календаре по будням в 12:30');
+    } catch { toast('Не получилось сохранить файл напоминания'); }
+  }
+  $('remindDaily').onclick = remindIcs;
+
   // ---------- запись результата и место в рейтинге ----------
   async function record(won, death, high) {
     const total = RES.reduce((a, r) => a + S.res[r.k], 0);
     prefs.gamesPlayed = (prefs.gamesPlayed || 0) + 1; store.set(KEY.prefs, prefs);
     if (S.mode === 'daily') {
       const all = store.get(KEY.daily, {});
-      if (!all[S.day]) { all[S.day] = { won, total }; store.set(KEY.daily, all); }
+      if (!all[S.day]) { all[S.day] = { won, total }; store.set(KEY.daily, all); updateStreak(S.day); }
     }
     const el = () => $('place');
     if (S.mode === 'tour') { const t = store.get('vdp-tours', {}); if (!t[S.tourId]) { t[S.tourId] = { won, total }; store.set('vdp-tours', t); } }

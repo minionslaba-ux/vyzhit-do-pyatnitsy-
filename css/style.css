@@ -487,6 +487,11 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 .scr-exit { align-self: center; width: auto; padding: 10px 22px; }
 @media (max-width: 600px) { .scr-row { grid-template-columns: 34px 34px 1fr; } .scr-res { grid-column: 2 / -1; } }
 
+.streak-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: -4px; }
+.streak-row span { font-family: var(--f-mono); font-size: 11.5px; color: var(--up); text-shadow: 0 0 8px rgba(212,255,58,.4); min-width: 0; }
+.money.expense div { border-color: rgba(255,59,107,.35); } .money.expense b { color: var(--magenta-xl); text-shadow: 0 0 8px rgba(255,59,212,.4); }
+.debt { color: var(--down) !important; font-weight: 800; font-size: 14px !important; }
+
 /* ---------- рейтинг и участники ---------- */
 .board { overflow: hidden; }
 .board-head { display: flex; align-items: center; gap: 10px; }
