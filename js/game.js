@@ -69,7 +69,41 @@
     del(k) { try { localStorage.removeItem(k); } catch {} },
   };
   const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs' };
-  const prefs = Object.assign({ name: '', prof: 'marketer', sound: true }, store.get(KEY.prefs, {}));
+  const prefs = Object.assign({ name: '', dept: '', prof: 'marketer', sound: true }, store.get(KEY.prefs, {}));
+  if (!prefs.playerId) {
+    prefs.playerId = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
+    store.set(KEY.prefs, prefs);
+  }
+
+  // ---------- общий рейтинг офиса ----------
+  // С ключами Supabase из js/config.js результаты уходят в общую таблицу, без них — хранятся в этом браузере
+  const board = (() => {
+    const cfg = window.SUPABASE_CONFIG || {};
+    const online = !!(cfg.url && cfg.anonKey);
+    const base = online ? cfg.url.replace(/\/+$/, '') + '/rest/v1' : '';
+    const headers = online ? { apikey: cfg.anonKey, Authorization: `Bearer ${cfg.anonKey}`, 'Content-Type': 'application/json' } : {};
+    const better = (a, b) => (b.won - a.won) || (b.step - a.step) || (b.total - a.total) || (a.created_at < b.created_at ? -1 : 1);
+    const LOCAL = 'vdp-board';
+    return {
+      online,
+      async submit(entry) {
+        if (!online) { const all = store.get(LOCAL, []); all.push({ ...entry, created_at: new Date().toISOString() }); store.set(LOCAL, all.slice(-200)); return; }
+        const r = await fetch(`${base}/scores`, { method: 'POST', headers: { ...headers, Prefer: 'return=minimal' }, body: JSON.stringify(entry) });
+        if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
+      },
+      async top(dept) {
+        if (!online) {
+          const bestOf = {};
+          for (const e of store.get(LOCAL, [])) if (!bestOf[e.player_id] || better(e, bestOf[e.player_id]) < 0) bestOf[e.player_id] = e;
+          return Object.values(bestOf).filter(e => !dept || e.dept === dept).sort(better).slice(0, 100);
+        }
+        const q = `select=*&order=won.desc,step.desc,total.desc,created_at.asc&limit=100${dept ? `&dept=eq.${encodeURIComponent(dept)}` : ''}`;
+        const r = await fetch(`${base}/leaderboard?${q}`, { headers });
+        if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
+        return r.json();
+      },
+    };
+  })();
 
   // ---------- звук ----------
   let actx;
@@ -91,7 +125,7 @@
 
   // ---------- DOM ----------
   const $ = id => document.getElementById(id);
-  const views = { menu: $('menu'), game: $('game'), end: $('end') };
+  const views = { menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
   const show = v => Object.entries(views).forEach(([k, el]) => el.hidden = k !== v);
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 
@@ -126,7 +160,7 @@
   const getProf = () => document.querySelector('input[name=prof]:checked')?.value || 'marketer';
 
   function renderMenu() {
-    $('name').value = prefs.name;
+    $('name').value = prefs.name; $('dept').value = prefs.dept;
     const radio = document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]');
     radio.checked = true;
     setPhase('day');
@@ -141,6 +175,8 @@
   }
   $('profs').onchange = () => { prefs.prof = getProf(); store.set(KEY.prefs, prefs); };
   $('name').oninput = () => { prefs.name = $('name').value.trim(); store.set(KEY.prefs, prefs); };
+  $('dept').oninput = () => { prefs.dept = $('dept').value.trim(); store.set(KEY.prefs, prefs); };
+  $('openBoard').onclick = () => openBoard('menu');
   $('start').onclick = () => newGame();
   $('resume').onclick = () => { S = store.get(KEY.save, null); if (S) enterGame(); };
 
@@ -166,10 +202,10 @@
   }
 
   function newGame() {
-    prefs.name = $('name').value.trim(); prefs.prof = getProf(); store.set(KEY.prefs, prefs);
+    prefs.name = $('name').value.trim(); prefs.dept = $('dept').value.trim(); prefs.prof = getProf(); store.set(KEY.prefs, prefs);
     const res = { psyche: 50, energy: 50, boss: 50, colleagues: 50 };
     for (const [k, v] of Object.entries(PROF[prefs.prof].bonus)) res[k] = clamp(res[k] + v);
-    S = { name: prefs.name || 'Сотрудник месяца', prof: prefs.prof, res, step: 0, deck: buildDeck(prefs.prof) };
+    S = { name: prefs.name || 'Сотрудник месяца', dept: prefs.dept, prof: prefs.prof, res, step: 0, deck: buildDeck(prefs.prof) };
     splashFor = -1;
     store.set(KEY.save, S);
     enterGame();
@@ -318,10 +354,12 @@
       <p class="cause">${D.title} · ${DAYS[d]}, ${ph.name.toLowerCase()} (${S.deck[S.step].time})</p>
       <p>${D.text}</p>
       ${finalGrid(k)}
-      <div class="stack"><button class="btn-main" id="retry">Попробовать снова</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+      <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
+      <div class="stack"><button class="btn-main" id="retry">Попробовать снова</button><button class="btn-ghost" id="toBoard">🏆 Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
-    $('retry').onclick = () => newGame(); $('toMenu').onclick = renderMenu;
+    $('retry').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end');
+    record(false, k);
     $('retry').focus({ preventScroll: true });
   }
   function rank(total) { return total >= 280 ? 'Легенда опенспейса' : total >= 220 ? 'Сеньор по выживанию' : total >= 160 ? 'Крепкий мидл' : 'Чудом уцелевший стажёр'; }
@@ -336,12 +374,61 @@
       <p>Ноутбук закрыт, уведомления выключены. Звание недели: <span class="rank">${rank(total)}</span></p>
       ${finalGrid()}
       <div class="total"><span>Итоговый счёт</span><b>${total} / 400</b></div>
-      <div class="stack"><button class="btn-main" id="share">Поделиться результатом</button><button class="btn-ghost" id="again">Ещё одна неделя</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
+      <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
+      <div class="stack"><button class="btn-main" id="share">Поделиться результатом</button><button class="btn-ghost" id="toBoard">🏆 Рейтинг офиса</button><button class="btn-ghost" id="again">Ещё одна неделя</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
-    $('share').onclick = () => share(total); $('again').onclick = () => newGame(); $('toMenu').onclick = renderMenu;
+    $('share').onclick = () => share(total); $('again').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end');
+    record(true, null);
     $('share').focus({ preventScroll: true });
   }
+
+  // запись результата недели и место в рейтинге
+  async function record(won, death) {
+    const total = RES.reduce((a, r) => a + S.res[r.k], 0);
+    const entry = { player_id: prefs.playerId, name: S.name.slice(0, 24), dept: (S.dept || '').slice(0, 24), prof: S.prof, won,
+      step: won ? 15 : S.step, total, psyche: S.res.psyche, energy: S.res.energy, boss: S.res.boss, colleagues: S.res.colleagues, death };
+    const el = () => $('place');
+    try {
+      await board.submit(entry);
+      const list = await board.top();
+      const pos = list.findIndex(e => e.player_id === prefs.playerId) + 1;
+      if (!el()) return;
+      el().innerHTML = pos ? `<b>#${pos}</b><span>ваше место в рейтинге${board.online ? ' офиса' : ' на этом устройстве'} (лучшая неделя)</span>` : '<span>Результат записан в рейтинг</span>';
+    } catch (err) {
+      if (el()) el().textContent = `Не удалось записать результат: ${err.message}. Проверьте ключи в js/config.js.`;
+    }
+  }
+
+  const resultText = e => e.won ? { main: `${e.total}/400`, sub: '🏆 выжил' } :
+    { main: `${DAYS[Math.floor(e.step / 3)].slice(0, 2)}, ${PHASES[e.step % 3].name.toLowerCase()}`, sub: `💀 ${RES.find(r => r.k === e.death)?.name || ''} 0%` };
+  let boardFrom = 'menu', boardTab = 'all';
+  function openBoard(from) { boardFrom = from; show('board'); setPhase(from === 'end' ? document.body.dataset.phase : 'day'); renderBoard(); }
+  async function renderBoard() {
+    $('tabAll').setAttribute('aria-selected', boardTab === 'all'); $('tabDept').setAttribute('aria-selected', boardTab === 'dept');
+    $('boardNote').textContent = board.online ? 'Лучшая неделя каждого игрока. Обновите, чтобы увидеть свежие результаты.'
+      : 'Общий рейтинг ещё не подключён — показаны результаты с этого устройства. Подключение: js/config.js.';
+    const list = $('boardList');
+    if (boardTab === 'dept' && !prefs.dept) {
+      list.innerHTML = '<div class="lb-empty"><span class="big">🏢</span>Укажите свой отдел в главном меню, чтобы сравнить результаты с коллегами по отделу.</div>'; return;
+    }
+    list.innerHTML = '<div class="lb-empty">Загружаю рейтинг…</div>';
+    try {
+      const rows = await board.top(boardTab === 'dept' ? prefs.dept : '');
+      if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">🪑</span>Пока никто не доиграл неделю. Станьте первым!</div>'; return; }
+      list.innerHTML = rows.map((e, i) => { const r = resultText(e), medal = ['🥇', '🥈', '🥉'][i];
+        return `<div class="lb-row${e.player_id === prefs.playerId ? ' me' : ''}">
+          <span class="lb-pos${medal ? ' medal' : ''}">${medal || i + 1}</span>
+          <span class="lb-who"><b>${PROF[e.prof]?.icon || ''} ${esc(e.name)}</b><small>${esc(e.dept || 'без отдела')} · ${PROF[e.prof]?.name || ''}</small></span>
+          <span class="lb-res ${e.won ? 'won' : 'lost'}"><b>${r.main}</b><small>${r.sub}</small></span></div>`; }).join('');
+    } catch (err) {
+      list.innerHTML = `<div class="lb-empty"><span class="big">📡</span>Не удалось загрузить рейтинг: ${esc(err.message)}</div>`;
+    }
+  }
+  $('boardBack').onclick = () => boardFrom === 'end' ? show('end') : renderMenu();
+  $('boardRefresh').onclick = renderBoard;
+  $('tabAll').onclick = () => { boardTab = 'all'; renderBoard(); };
+  $('tabDept').onclick = () => { boardTab = 'dept'; renderBoard(); };
 
   // конфетти
   function confetti() {

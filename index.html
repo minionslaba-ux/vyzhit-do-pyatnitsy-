@@ -37,13 +37,17 @@
       <p class="tagline">5 дней, 15 решений. Свайп влево или вправо. Не дайте ни одной шкале упасть до нуля.</p>
     </div>
     <div class="panel form">
-      <div class="field"><label for="name">Имя или ник</label><input id="name" type="text" maxlength="24" placeholder="Сотрудник месяца" autocomplete="off"></div>
+      <div class="row2">
+        <div class="field"><label for="name">Имя или ник</label><input id="name" type="text" maxlength="24" placeholder="Сотрудник месяца" autocomplete="off"></div>
+        <div class="field"><label for="dept">Отдел</label><input id="dept" type="text" maxlength="24" placeholder="Например, IT" autocomplete="off"></div>
+      </div>
       <fieldset class="field">
         <legend>Ваша профессия</legend>
         <div class="profs" id="profs"></div>
       </fieldset>
       <button class="btn-main" id="start">Начать неделю</button>
       <button class="btn-ghost" id="resume" hidden></button>
+      <button class="btn-ghost" id="openBoard">🏆 Рейтинг офиса</button>
     </div>
     <div class="menu-foot">
       <div class="record panel"><b>Рекорд</b><span id="record">пока нет</span></div>
@@ -69,12 +73,28 @@
     </div>
   </section>
 
+  <!-- Экран 4: рейтинг офиса -->
+  <section class="view board" id="board" hidden>
+    <div class="board-head">
+      <button class="icon-btn pill" id="boardBack" aria-label="Назад">←</button>
+      <h2>Рейтинг офиса</h2>
+      <button class="icon-btn pill" id="boardRefresh" aria-label="Обновить">↻</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabAll" aria-selected="true">Все</button>
+      <button class="tab" role="tab" id="tabDept" aria-selected="false">Мой отдел</button>
+    </div>
+    <div class="panel board-list" id="boardList"></div>
+    <p class="board-note" id="boardNote"></p>
+  </section>
+
   <!-- Экран 3: финал -->
   <section class="view end" id="end" hidden></section>
 </div>
 <div class="splash" id="splash" hidden></div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
+<script src="js/config.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/game.js"></script>
 </body>
