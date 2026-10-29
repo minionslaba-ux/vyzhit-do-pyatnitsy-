@@ -40,6 +40,7 @@
   const TYPE_CARDS = Object.values(WEEK_TYPES).flatMap(t => (t.cards || []).map(norm));
   const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
   const POOL = POOL_JSON.map(norm);  // большой пул из js/pool.js: каждая карточка выпадает один раз
+  const QUIZ = typeof QUIZ_JSON === 'undefined' ? [] : QUIZ_JSON;  // вопросы второго шанса из js/quiz.js
   const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
   let PACK = null, PACK_CARDS = [];
   const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...POOL].map(c => [c.id, c]));
@@ -65,7 +66,7 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
     del(k) { try { localStorage.removeItem(k); } catch {} },
   };
-  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen' };
+  const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen', qseen: 'vdp-quiz-seen' };
   const YEAR = 52;
   const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', trait: 'workaholic', sound: true }, store.get(KEY.prefs, {}));
   const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
@@ -328,6 +329,7 @@
     $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
     myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? 'войдите снова' : 'гость'}`; });
     $('meRegister').hidden = registered() || !board.online; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';
+    renderOfficeLine();
     for (const id of LOCKED) $(id).classList.toggle('locked', !registered());
     renderInvites();
     (document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]')).checked = true;
@@ -372,6 +374,18 @@
   $('openOffice').onclick = needAccount(showOffice, '«Мой офис» доступен после регистрации: соберите команду и позовите коллег.');
   $('openChat').onclick = needAccount(() => showChat('team'), 'Чаты доступны после регистрации — так коллеги будут знать, кто пишет.');
   $('meRegister').onclick = () => prefs.email ? renderJoin('login', 'Пришлём новую ссылку для входа на вашу почту.') : renderJoin('register');
+  $('ctaOffice').onclick = () => showOffice();
+  // Зарегистрированному без офиса — предложение создать свой; с офисом — его название под именем
+  let myTeamCache = null;
+  async function renderOfficeLine() {
+    $('officeCta').hidden = true;
+    if (!registered() || !board.online) { myTeamCache = null; return; }
+    try {
+      myTeamCache = (await board.rpc('my_team', { p_id: prefs.playerId }))[0] || null;
+      $('officeCta').hidden = !!myTeamCache;
+      $('meDept').textContent = (prefs.dept || 'без отдела') + (myTeamCache ? ` · офис «${myTeamCache.name}»` : '');
+    } catch {}
+  }
   $('meId').onclick = async () => {
     const id = shortId(await myTag);
     navigator.clipboard.writeText(id).then(() => toast(`ID ${id} скопирован — отправьте его тому, кто собирает офис`), () => toast(`Ваш ID: ${id}`));
@@ -719,13 +733,77 @@
       clearPreview(); renderBars(); react(c, eff);
       const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
       const best = store.get(KEY.best, { step: 0, wins: 0 });
+      if (dead && !S.chanceUsed && QUIZ.length) { setTimeout(() => secondChance(dead.k, !deadLow), 650); return; }  // второй шанс — раз в неделю
       if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); setTimeout(() => lose(dead.k, !deadLow), 650); return; } // busy остаётся до следующей недели
-      S.step++;
-      best.step = Math.max(best.step, S.step);
-      if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
-      store.set(KEY.best, best); if (S.mode === 'career') store.set(KEY.save, S);
-      renderCard(); busy = false;
+      advance();
     }, 380);
+  }
+  // Переход к следующей карточке (или к финалу недели)
+  function advance() {
+    const best = store.get(KEY.best, { step: 0, wins: 0 });
+    S.step++;
+    best.step = Math.max(best.step, S.step);
+    if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
+    store.set(KEY.best, best); if (S.mode === 'career') store.set(KEY.save, S);
+    renderCard(); busy = false;
+  }
+
+  // ---------- второй шанс: вопрос на эрудицию ----------
+  // Шкала дошла до 0 или 100 → вопрос с 4 вариантами и 20 секундами. Верно — шкала отступает от края на 20%, неделя продолжается
+  const QUIZ_TIME = 20;
+  function pickQuestion() {
+    let seen = new Set(store.get(KEY.qseen, []));
+    let left = QUIZ.filter(q => !seen.has(q.id));
+    if (!left.length) { seen = new Set(); left = QUIZ; }  // все вопросы заданы — круг начинается заново
+    const q = rnd(left); seen.add(q.id); store.set(KEY.qseen, [...seen]);
+    return q;
+  }
+  function secondChance(k, high) {
+    S.chanceUsed = true; if (S.mode === 'career') store.set(KEY.save, S);
+    const q = pickQuestion(), el = $('quiz');
+    el.innerHTML = `<div class="quiz-box">
+      <span class="kicker">Второй шанс · ${resName(k)} ${high ? '100' : '0'}%</span>
+      <h2 id="quizTitle">Вопрос на эрудицию</h2>
+      <p class="q-lead">Ответьте верно — и шкала «${resName(k)}» отступит от края на 20%. Ошибка — увольнение.</p>
+      <span class="q-topic">${esc(q.topic)}</span>
+      <div class="q-text">${esc(q.q)}</div>
+      <div class="q-timer" aria-hidden="true"><i id="qBar"></i></div>
+      <div class="q-opts">${q.options.map((o, i) => `<button class="q-opt" data-i="${i}"><span class="n">${i + 1}</span><span>${esc(o)}</span></button>`).join('')}</div>
+      <div id="qAfter" hidden><p class="q-result" id="qRes"></p><p class="q-fact">${esc(q.fact)}</p><div class="stack" style="margin-top:12px"><button class="btn-main" id="qNext"></button></div></div>
+    </div>`;
+    el.hidden = false; sfx.sigh();
+    const bar = $('qBar'); bar.style.setProperty('--qt', QUIZ_TIME + 's'); void bar.offsetWidth; bar.classList.add('run');
+    const btns = [...el.querySelectorAll('.q-opt')];
+    let done = false;
+    const finish = picked => {
+      if (done) return; done = true; clearTimeout(timer); document.removeEventListener('keydown', keys);
+      const ok = picked === q.answer;
+      btns.forEach((b, i) => { b.disabled = true; if (i === q.answer) b.classList.add('right'); else if (i === picked) b.classList.add('wrong'); });
+      bar.style.animationPlayState = 'paused';
+      $('qRes').className = 'q-result ' + (ok ? 'ok' : 'bad');
+      $('qRes').textContent = ok ? `Верно! «${resName(k)}» отступает от края на 20%.` : picked === -1 ? `Время вышло. Правильный ответ: «${q.options[q.answer]}».` : `Неверно. Правильный ответ: «${q.options[q.answer]}».`;
+      $('qNext').textContent = ok ? 'Продолжить неделю' : 'Принять судьбу';
+      $('qAfter').hidden = false; $('qNext').focus({ preventScroll: true });
+      ok ? sfx.item() : sfx.stamp();
+      $('qNext').onclick = () => {
+        el.hidden = true;
+        if (ok) {
+          S.res[k] = high ? 80 : 20; S.flags.saved = true;
+          const got = unlock(['quiz_saved']); if (got.length) toast(`Новая концовка: «${got[0].title}»`);
+          renderBars(); advance();
+        } else {
+          unlock(['quiz_fail']);
+          const best = store.get(KEY.best, { step: 0, wins: 0 });
+          best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save);
+          lose(k, high);
+        }
+      };
+    };
+    const timer = setTimeout(() => finish(-1), QUIZ_TIME * 1000);
+    const keys = e => { const n = +e.key; if (n >= 1 && n <= 4) { e.preventDefault(); finish(n - 1); } };
+    document.addEventListener('keydown', keys);
+    btns.forEach(b => b.onclick = () => finish(+b.dataset.i));
+    btns[0].focus({ preventScroll: true });
   }
 
   // свайп: превью после 40 px, выбор после 140 px (на узком экране — после 30 % ширины)
@@ -1062,6 +1140,7 @@
       const dept = onlyDept ? prefs.dept : '', tag = await myTag;
       if (boardMode === 'people') {
         const rows = await board.people(dept);
+        const canInvite = registered() && board.online && !!(myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0]);
         const live = rows.filter(p => Date.now() - new Date(p.updated_at) < 10 * 60000);
         $('boardSummary').textContent = `Участников: ${rows.length} · в сети: ${live.length}`;
         if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">Пусто</span>Пока никого нет.</div>'; return; }
@@ -1069,7 +1148,11 @@
           <span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
           <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? ' (вы)' : ''}</b><small>${esc(p.dept || 'без отдела')}</small>
             <small class="lb-meta">недель: ${p.games || 0} · побед: ${p.wins || 0}${p.games ? ` · лучшее: ${p.best_won ? `${p.best_total}/400` : stepName(p.best_step)}` : ''}</small></span>
-          <span class="lb-res">${personStatus(p)}</span></div>`).join('');
+          <span class="lb-res">${personStatus(p)}${canInvite && p.tag !== tag && p.short_id ? `<button class="btn-chip" data-invite="${p.short_id}">Позвать в офис</button>` : ''}</span></div>`).join('');
+        list.querySelectorAll('[data-invite]').forEach(b => b.onclick = async () => {
+          try { const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: b.dataset.invite }); b.textContent = 'Приглашён'; b.disabled = true; toast(`Приглашение отправлено: ${n}`); }
+          catch (err) { toast(err.message); }
+        });
       } else if (boardMode === 'depts') {
         const rows = await board.depts();
         $('boardSummary').textContent = cupTime() ? 'Кубок недели вручён' : 'Кубок вручат в пятницу в 18:00';
