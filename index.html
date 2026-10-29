@@ -97,7 +97,6 @@
       </div>
       <div class="invites" id="invites" hidden></div>
       <div class="office-cta" id="tourCta" hidden><span></span><button class="btn-main" type="button" id="tourCtaGo">К турниру</button></div>
-      <div class="office-cta" id="officeCta" hidden><span><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice">Создать офис</button></div>
       <div class="career-card" id="careerCard" hidden></div>
       <fieldset class="field" id="profField">
         <legend>Ваша профессия</legend>
@@ -107,16 +106,27 @@
         <legend>Черта характера</legend>
         <div class="profs traits" id="traits"></div>
       </fieldset>
-      <button class="btn-main" id="start">Начать карьеру</button>
-      <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
-      <button class="btn-ghost btn-daily" id="startDaily">Неделя дня</button>
-      <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily">Напомнить в календаре</button></div>
-      <button class="btn-ghost btn-invite" id="openInvite">Позвать коллег и друзей</button>
-      <button class="btn-ghost" id="installApp" hidden>Установить на телефон</button>
-      <button class="btn-ghost btn-pack" id="startPack" hidden></button>
-      <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
-      <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
-      <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
+      <div class="play2">
+        <button class="btn-main btn-play" id="start">Играть</button>
+        <button class="btn-main btn-day" id="startDaily">Неделя дня</button>
+      </div>
+      <div class="tabs menu-tabs" role="tablist">
+        <button class="tab" type="button" role="tab" id="tabOffice" aria-controls="paneOffice" aria-selected="true">Офис</button>
+        <button class="tab" type="button" role="tab" id="tabProfile" aria-controls="paneProfile" aria-selected="false">Профиль</button>
+      </div>
+      <div class="pane" id="paneOffice" role="tabpanel" aria-labelledby="tabOffice">
+        <div class="office-cta" id="officeCta" hidden><span><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice">Создать офис</button></div>
+        <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
+        <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
+        <button class="btn-ghost btn-invite" id="openInvite">Позвать коллег и друзей</button>
+        <button class="btn-ghost btn-pack" id="startPack" hidden></button>
+      </div>
+      <div class="pane" id="paneProfile" role="tabpanel" aria-labelledby="tabProfile" hidden>
+        <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily">Напомнить в календаре</button></div>
+        <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
+        <button class="btn-ghost" id="installApp" hidden>Установить на телефон</button>
+        <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
+      </div>
     </div>
     <div class="menu-foot">
       <div class="record glass"><b>Рекорд</b><span id="record">пока нет</span></div>
@@ -139,6 +149,7 @@
         <button class="ans no" id="btnL"></button>
         <button class="ans yes" id="btnR"></button>
       </div>
+      <div class="coach" id="coach" role="status" hidden></div>
       <div class="hint">тяни карточку влево или вправо · или жми ← →</div>
     </div>
   </section>
@@ -181,6 +192,11 @@
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/content.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/board.js"></script>
+<script src="js/audio.js"></script>
 <script src="js/game.js"></script>
+<script src="js/ui-menu.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

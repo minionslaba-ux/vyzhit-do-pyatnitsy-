@@ -589,3 +589,35 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 /* очень узкие экраны: звук переключается в меню */
 @media (max-width: 360px) { .g-day .icon-btn { display: none; } .g-top { grid-template-columns: minmax(0, 1fr) auto; } .g-brand { min-width: 0; } }
 
+
+/* ---------- меню: две главные кнопки и вкладки ---------- */
+.play2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.play2 .btn-main { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 18px 10px; font-size: 19px; line-height: 1.1; }
+.play2 .btn-main small { font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: .02em; opacity: .8; }
+.btn-day { background: var(--up); box-shadow: 0 0 30px rgba(212,255,58,.55); }
+.btn-day:hover { background: #e4ff7a; }
+.menu-tabs { margin-top: 4px; }
+.pane { display: flex; flex-direction: column; gap: 10px; }
+.pane[hidden] { display: none; }
+/* ---------- подписи опасных зон на шкалах ---------- */
+.tube-wrap .zone { min-height: 1.2em; margin-top: -6px; font-family: var(--f-mono); font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--down); text-shadow: 0 0 8px var(--down); }
+.tube-wrap.hot .zone { color: #ffb03b; text-shadow: 0 0 8px #ff8a3b; }
+/* ---------- заставка дня 2–5: баннер, не мешает играть ---------- */
+.splash.mini { inset: calc(10px + env(safe-area-inset-top, 0px)) 16px auto 16px; max-width: 560px; margin: 0 auto; padding: 10px 16px; border-radius: 18px; border: 1.5px solid rgba(45,226,230,.5); background: rgba(7,7,13,.94); pointer-events: none; }
+.splash.mini .splash-in { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 4px 10px; }
+.splash.mini h2 { font-size: 20px; }
+.splash.mini p { font-size: 13px; max-width: none; }
+.splash.mini small { font-size: 10.5px; flex-basis: 100%; }
+.splash.mini .tap:empty { display: none; }
+/* ---------- подсказки первой недели ---------- */
+.coach { position: relative; display: flex; gap: 6px; align-items: flex-start; max-width: 520px; width: 100%; margin: 0 auto 8px; padding: 9px 34px 9px 12px; border-radius: 14px; border: 1.5px dashed var(--cyan); background: rgba(45,226,230,.08); color: var(--text-3); font-size: 13px; line-height: 1.4; }
+.coach[hidden] { display: none; }
+.coach b { color: var(--cyan-l); flex: none; }
+.coach button { position: absolute; top: 4px; right: 6px; border: 0; background: transparent; color: var(--text-2); font-size: 18px; line-height: 1; padding: 2px 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .react.on, .react.long.on { animation: none; opacity: 1; }
+  .tube-wrap.danger .tube { animation: none; }
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.coach:not([hidden]) + .hint { display: none; }
+.coach { margin: 0 auto; }
