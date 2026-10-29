@@ -39,12 +39,33 @@
   const CHAIN_CARDS = CHAINS.map(ch => ({ ...norm(ch.card), chain: ch.origin }));
   const TYPE_CARDS = Object.values(WEEK_TYPES).flatMap(t => (t.cards || []).map(norm));
   const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
-  const POOL = POOL_JSON.map(norm);  // большой пул из js/pool.js: каждая карточка выпадает один раз
-  const QUIZ = typeof QUIZ_JSON === 'undefined' ? [] : QUIZ_JSON;  // вопросы второго шанса из js/quiz.js
+  // Большой пул карточек и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
+  let POOL = [], QUIZ = [], dataLoaded = false;
   const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
   let PACK = null, PACK_CARDS = [];
-  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...POOL].map(c => [c.id, c]));
-  const TOTAL_CARDS = CARDS.length + RANDOM_CARDS.length + TYPE_CARDS.length + PROF_ALL.length + POOL.length;
+  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL].map(c => [c.id, c]));
+  const TOTAL_BASE = CARDS.length + RANDOM_CARDS.length + TYPE_CARDS.length + PROF_ALL.length;
+  let TOTAL_CARDS = TOTAL_BASE;
+  let POOL_CHAINS = [];
+  const dataReady = (async () => {
+    const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
+    try {
+      const [p, q, ch] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => [])]);
+      POOL = p.map(norm); QUIZ = q;
+      POOL_CHAINS = ch.map(x => ({ ...x, card: norm(x.card) }));
+      for (const c of POOL) byId[c.id] = c;
+      for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };
+      TOTAL_CARDS = TOTAL_BASE + POOL.length;
+    } catch {}
+    dataLoaded = true;
+  })();
+  // Перед стартом недели ждём данные; кнопка показывает, что идёт загрузка
+  async function whenReady(btn) {
+    if (dataLoaded) return;
+    const t = btn?.textContent; if (btn) { btn.textContent = 'Загружаю карточки…'; btn.disabled = true; }
+    await dataReady;
+    if (btn) { btn.textContent = t; btn.disabled = false; }
+  }
 
   function getRandomCard(standardCard, randomPack, percent = 15, random = Math.random) {
     // Генерируем случайное число от 1 до 100
@@ -247,13 +268,27 @@
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + attack); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
     src.connect(f).connect(g).connect(a.destination); src.start(t); src.stop(t + dur);
   }
+  // Вибрация: в Telegram — родной отклик, в браузере телефона — navigator.vibrate
+  const TG = window.Telegram?.WebApp?.initData ? window.Telegram.WebApp : null;
+  function buzz(kind) {
+    if (!prefs.sound) return;
+    try {
+      if (TG?.HapticFeedback) {
+        if (kind === 'tap') TG.HapticFeedback.impactOccurred('light');
+        else if (kind === 'danger' || kind === 'lose') TG.HapticFeedback.notificationOccurred('error');
+        else if (kind === 'win' || kind === 'item') TG.HapticFeedback.notificationOccurred('success');
+        return;
+      }
+      navigator.vibrate?.({ tap: 12, item: 25, danger: [30, 40, 30], lose: [60, 40, 140], win: [20, 30, 20, 30, 60] }[kind] || 10);
+    } catch {}
+  }
   const sfx = {
     stapler: () => { noise(.03, .25, 'highpass', 2500); tone(1800, .025, 'square', .03); tone(140, .07, 'sine', .12, .02, 70); noise(.05, .12, 'bandpass', 900, .05); },
     stamp: () => { tone(95, .18, 'sine', .25, 0, 55); noise(.09, .3, 'lowpass', 500); },
     sigh: () => { noise(.75, .07, 'bandpass', 1100, .05, 380, .18); tone(230, .6, 'sine', .015, .05, 150); },
-    lose: () => { sfx.stamp(); [330, 262, 196, 147].forEach((f, i) => tone(f, .28, 'sawtooth', .035, .2 + i * .16)); },
-    win: () => { sfx.stamp(); [523, 659, 784, 1046].forEach((f, i) => tone(f, .25, 'triangle', .06, .15 + i * .12)); },
-    item: () => { [880, 1320].forEach((f, i) => tone(f, .12, 'triangle', .05, i * .07)); },
+    lose: () => { buzz('lose'); sfx.stamp(); [330, 262, 196, 147].forEach((f, i) => tone(f, .28, 'sawtooth', .035, .2 + i * .16)); },
+    win: () => { buzz('win'); sfx.stamp(); [523, 659, 784, 1046].forEach((f, i) => tone(f, .25, 'triangle', .06, .15 + i * .12)); },
+    item: () => { buzz('item'); [880, 1320].forEach((f, i) => tone(f, .12, 'triangle', .05, i * .07)); },
   };
 
   // ---------- DOM ----------
@@ -340,7 +375,7 @@
     $('record').textContent = (best.wins ? `недель закрыто: ${best.wins}` : best.step ? `дольше всего: ${DAYS[Math.floor(best.step / 3)]}, ${PHASES[best.step % 3].name.toLowerCase()}` : 'пока нет')
       + ` · карточек открыто: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`;
     const save = store.get(KEY.save, null);
-    if (save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
+    if (dataLoaded && save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
     const Cm = store.get(KEY.career, null), careerSave = save && (save.mode || 'career') === 'career';
     $('careerCard').hidden = !Cm; $('profField').hidden = !!Cm; $('traitField').hidden = !!Cm; $('newCareer').hidden = !Cm;
     $('newCareer').textContent = 'Начать карьеру заново'; delete $('newCareer').dataset.armed;
@@ -491,9 +526,9 @@
     if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Выйти? Нажмите ещё раз'; return; }
     board.logout().finally(() => { delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; delete prefs.session; store.set(KEY.prefs, prefs); location.reload(); });
   };
-  $('start').onclick = () => continueCareer();
-  $('startDaily').onclick = () => startDaily();
-  $('startPack').onclick = () => startPack();
+  $('start').onclick = async () => { await whenReady($('start')); continueCareer(); };
+  $('startDaily').onclick = async () => { await whenReady($('startDaily')); startDaily(); };
+  $('startPack').onclick = async () => { await whenReady($('startPack')); startPack(); };
   // «Начать заново» срабатывает со второго нажатия: окна подтверждения в браузере тут нет
   $('newCareer').onclick = () => {
     const b = $('newCareer');
@@ -747,7 +782,7 @@
 
   function choose(side) {
     if (busy || splashOn || !S) return;
-    busy = true; sfx.stapler();
+    busy = true; sfx.stapler(); buzz('tap');
     const card = $('card'), dir = side === 'left' ? -1 : 1, c = current();
     card.style.transition = `transform .38s ${EASE}, opacity .38s`;
     card.style.transform = `translateX(${dir * 1100}px) rotate(${dir * 26}deg)`;
@@ -757,10 +792,13 @@
       for (const b of blocked) { S.used.push(b.item); toast(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`); sfx.item(); }
       for (const [k, v] of Object.entries(eff)) S.res[k] = clamp(S.res[k] + v);
       if (Object.values(eff).some(v => v <= -15)) sfx.sigh();
+      if (RES.some(r => S.res[r.k] <= 15 || S.res[r.k] >= 85)) buzz('danger');
       if (c.id === 'rnd_cake' && side === 'right') S.flags.cake = true;
       // цепочка: решение вернётся в другой день недели
       const ch = CHAINS.find(x => x.from === c.id && x.side === side), at = ch && slotOf(ch.at.day, ch.at.phase);
       if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
+      const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
+      if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
       clearPreview(); renderBars(); react(c, eff);
       const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
       const best = store.get(KEY.best, { step: 0, wins: 0 });
@@ -846,7 +884,7 @@
     const btns = [...el.querySelectorAll('.q-opt')];
     let done = false;
     const finish = picked => {
-      if (done) return; done = true; clearTimeout(timer); document.removeEventListener('keydown', keys);
+      if (done) return; done = true; clearTimeout(timer); document.removeEventListener('keydown', keys); document.removeEventListener('visibilitychange', onVis);
       const ok = picked === q.answer;
       btns.forEach((b, i) => { b.disabled = true; if (i === q.answer) b.classList.add('right'); else if (i === picked) b.classList.add('wrong'); });
       bar.style.animationPlayState = 'paused';
@@ -869,7 +907,14 @@
         }
       };
     };
-    const timer = setTimeout(() => finish(-1), QUIZ_TIME * 1000);
+    // таймер с паузой: если свернуть приложение, время не идёт
+    let left = QUIZ_TIME * 1000, startedAt = Date.now(), timer = setTimeout(() => finish(-1), left);
+    const onVis = () => {
+      if (done) return document.removeEventListener('visibilitychange', onVis);
+      if (document.hidden) { clearTimeout(timer); left -= Date.now() - startedAt; bar.style.animationPlayState = 'paused'; }
+      else { startedAt = Date.now(); timer = setTimeout(() => finish(-1), Math.max(0, left)); bar.style.animationPlayState = 'running'; }
+    };
+    document.addEventListener('visibilitychange', onVis);
     const keys = e => { const n = +e.key; if (n >= 1 && n <= 4) { e.preventDefault(); finish(n - 1); } };
     document.addEventListener('keydown', keys);
     btns.forEach(b => b.onclick = () => finish(+b.dataset.i));
@@ -1475,6 +1520,8 @@
     const ref = shortId(await myTag);
     let team = null;
     if (kind === 'team' && registered()) team = myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0] || null;
+    const tg = window.SUPABASE_CONFIG?.telegram;
+    if (tg?.bot && tg?.app) return { url: `https://t.me/${tg.bot}/${tg.app}?startapp=ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
     return { url: `${gameUrl()}?ref=${ref}${team ? `&join=${team.code}` : ''}`, team };
   }
   function shareText(kind, team) {
@@ -1494,7 +1541,7 @@
       ${kind === 'team' && !team ? `<p class="field-note">${registered() ? 'Создайте офис в «Мой офис» — тогда ссылка сразу приведёт коллег в вашу команду.' : 'Зарегистрируйтесь и создайте офис — тогда ссылка сразу приведёт коллег в вашу команду.'}</p>` : ''}
       <p class="share-text" id="shText">${esc(full)}</p>
       <div class="share-grid">
-        ${navigator.share ? '<button id="shNative">Отправить…</button>' : ''}
+        ${TG ? '<button id="shTg">Отправить в чат Telegram</button>' : navigator.share ? '<button id="shNative">Отправить…</button>' : ''}
         <a href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">Telegram</a>
         <a href="https://wa.me/?text=${enc(full)}" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}" target="_blank" rel="noopener">ВКонтакте</a>
@@ -1510,6 +1557,7 @@
     m.onclick = e => { if (e.target === m) m.hidden = true; };
     $('shCopy').onclick = () => copy(full, 'Приглашение скопировано — вставьте его в чат');
     if ($('shNative')) $('shNative').onclick = () => navigator.share({ title: 'Выжить до пятницы', text, url }).catch(() => {});
+    if ($('shTg')) $('shTg').onclick = () => TG.openTelegramLink(`https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`);
     if (board.online) board.rpc('referral_count', { p_id: prefs.playerId }).then(n => { if ($('shCount')) $('shCount').textContent = `По вашим ссылкам пришло: ${n || 0}`; }).catch(() => {});
   }
   // Плашка в меню: после первой сыгранной недели, не чаще раза в двое суток после закрытия
@@ -1606,6 +1654,39 @@
   }
   const origSubmit = $('joinForm').onsubmit;
   $('joinForm').onsubmit = async e => { await origSubmit(e); if (prefs.name && !views.menu.hidden) joinFromLink(); };
+
+  // ---------- приложение на телефоне: офлайн, установка, Telegram Mini App ----------
+  if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON) navigator.serviceWorker.register('sw.js').catch(() => {});
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  let installEvt = null;
+  addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('installApp').hidden = false; });
+  $('installApp').hidden = standalone || TG || !(isIOS);  // на iOS кнопка с подсказкой, на Android — после события браузера
+  $('installApp').onclick = async () => {
+    if (installEvt) { installEvt.prompt(); const r = await installEvt.userChoice.catch(() => null); if (r?.outcome === 'accepted') $('installApp').hidden = true; installEvt = null; return; }
+    const m = $('modal');
+    m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="insTitle"><h2 id="insTitle">На экран «Домой»</h2>
+      <p class="share-text">1. Нажмите кнопку «Поделиться» внизу Safari (квадрат со стрелкой).<br>2. Выберите «На экран „Домой“».<br>3. Нажмите «Добавить» — игра откроется как приложение, на весь экран и даже без интернета.</p>
+      <button class="btn-ghost" id="insClose">Понятно</button></div>`;
+    m.hidden = false; $('insClose').onclick = () => { m.hidden = true; };
+  };
+  addEventListener('appinstalled', () => { $('installApp').hidden = true; toast('Игра установлена — ищите иконку на экране телефона'); });
+  // Telegram Mini App: тёмная шапка, имя из Telegram, приглашения через startapp=ref-ID_join-КОД, кнопка «Назад»
+  if (TG) {
+    try {
+      TG.ready(); TG.expand(); TG.setHeaderColor?.('#07070d'); TG.setBackgroundColor?.('#07070d');
+      const sp = TG.initDataUnsafe?.start_param || '';
+      const ref = sp.match(/ref-([A-Z0-9]{6})/i), join = sp.match(/join-([A-Z0-9]{6})/i);
+      if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
+      if (join) prefs.pendingJoin = join[1].toUpperCase();
+      store.set(KEY.prefs, prefs);
+      const u = TG.initDataUnsafe?.user;
+      if (u && !prefs.name) $('joinName').value = [u.first_name, u.last_name].filter(Boolean).join(' ').slice(0, 24);
+      TG.BackButton?.onClick(() => { $('modal').hidden = true; renderMenu(); });
+      new MutationObserver(() => { views.menu.hidden ? TG.BackButton?.show() : TG.BackButton?.hide(); }).observe(views.menu, { attributes: true, attributeFilter: ['hidden'] });
+    } catch {}
+  }
+  dataReady.then(() => { if (!views.menu.hidden) renderMenu(); });
 
   finishLogin().then(reloading => {
     if (reloading) return;

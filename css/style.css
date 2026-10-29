@@ -20,6 +20,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { height: 100%; }
+@supports (height: 100dvh) { html, body { height: 100dvh; } }  /* на телефоне учитывает панели браузера и клавиатуру */
 body {
   background:
     radial-gradient(900px 500px at 15% 110%, rgba(178,107,255,.22), transparent 60%),
@@ -509,3 +510,42 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
 @media (max-height: 700px) and (max-width: 999px) { .g-clock .time { font-size: 34px; } .tube { height: 60px; } .card .text { font-size: 18px; } .hint { display: none; } .menu .logo { display: none; } }
 @media (max-width: 370px) { .segs i { width: 12px; } .tube-wrap { width: 58px; } }
+
+/* ---------- маленькие телефоны (iPhone SE и т. п.) ---------- */
+@media (max-width: 999px) and (max-height: 620px) {
+  body { padding-block: 8px; }
+  .game { gap: 8px; }
+  .g-top { gap: 4px 10px; }
+  .g-brand { font-size: 12px; } .g-brand small { font-size: 10px; margin-top: 2px; }
+  .g-day { font-size: 11px; } .g-day small { font-size: 10px; } .g-day .icon-btn { width: 32px; height: 32px; }
+  .g-clock { gap: 6px; } .g-clock .time { font-size: 28px; }
+  .segs i { height: 5px; width: 13px; }
+  .inv { min-height: 0; } .item, .bank-chip { font-size: 10px; padding: 2px 7px; }
+  .tube-wrap { gap: 3px; } .tube { height: 46px; width: 34px; } .arrows { height: 14px; font-size: 11px; }
+  .tube-wrap .lbl { font-size: 11px; } .tube-wrap .pct { font-size: 10px; }
+  .card { padding: 14px; gap: 10px; min-height: 140px; border-radius: 22px; } .who { font-size: 10.5px; padding: 5px 10px; }
+  .card .text { font-size: 16px; line-height: 1.3; }
+  .answers { gap: 8px; } .ans { min-height: 50px; padding: 10px; font-size: 13.5px; }
+  .hint { display: none; }
+}
+/* ---------- телефон горизонтально: две колонки ---------- */
+@media (orientation: landscape) and (max-height: 520px) and (max-width: 999px) {
+  .app:has(#game:not([hidden])) { max-width: 900px; }
+  .game { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); grid-template-rows: auto 1fr; gap: 8px 18px; }
+  .g-top { grid-column: 1; grid-row: 1; }
+  .g-stats { grid-column: 1; grid-row: 2; align-self: start; justify-content: space-around; }
+  .g-center { grid-column: 2; grid-row: 1 / span 2; min-height: 0; }
+  .g-clock .time { font-size: 30px; }
+  .tube { height: 70px; }
+  .card { min-height: 0; padding: 14px 16px; } .card .text { font-size: 16px; }
+  .ans { min-height: 48px; padding: 9px 10px; font-size: 13px; }
+  .hint { display: none; }
+  .menu, .end, .join { justify-content: flex-start; }
+  .g-top { grid-template-columns: minmax(0, 1fr) auto; min-width: 0; }
+  .g-brand { font-size: 12px; min-width: 0; }
+  .g-day { font-size: 11px; min-width: 0; } .g-day .icon-btn { display: none; }
+  .g-day > div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+/* очень узкие экраны: звук переключается в меню */
+@media (max-width: 360px) { .g-day .icon-btn { display: none; } .g-top { grid-template-columns: minmax(0, 1fr) auto; } .g-brand { min-width: 0; } }
+

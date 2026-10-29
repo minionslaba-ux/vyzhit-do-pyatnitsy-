@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs>
+<radialGradient id="g1" cx="20%" cy="110%" r="90%"><stop offset="0" stop-color="#b26bff" stop-opacity=".45"/><stop offset="1" stop-color="#b26bff" stop-opacity="0"/></radialGradient>
+<radialGradient id="g2" cx="90%" cy="-10%" r="80%"><stop offset="0" stop-color="#2de2e6" stop-opacity=".35"/><stop offset="1" stop-color="#2de2e6" stop-opacity="0"/></radialGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="512" height="512" fill="#07070d"/><rect width="512" height="512" fill="url(#g1)"/><rect width="512" height="512" fill="url(#g2)"/>
+<g transform="translate(0 0) scale(1)" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+<path d="M120 230h190v120a60 60 0 0 1-60 60h-70a60 60 0 0 1-60-60z" stroke="#ff3bd4" stroke-width="22"/>
+<path d="M310 260h28a40 40 0 0 1 0 80h-28" stroke="#ff3bd4" stroke-width="22"/>
+<path d="M165 190c-18-26 18-36 0-62M215 190c-18-26 18-36 0-62M265 190c-18-26 18-36 0-62" stroke="#7df9ff" stroke-width="16"/>
+<circle cx="380" cy="150" r="70" stroke="#d4ff3a" stroke-width="16"/><path d="M380 110v40l28 18" stroke="#d4ff3a" stroke-width="16"/></g></svg>

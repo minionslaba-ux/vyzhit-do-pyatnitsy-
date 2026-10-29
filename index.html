@@ -2,7 +2,15 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#07070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="До пятницы">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="description" content="Карточная мини-игра про офисное выживание: продержитесь с понедельника до пятницы, 18:00.">
 <title>Выжить до пятницы</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,6 +110,7 @@
       <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
       <button class="btn-ghost btn-daily" id="startDaily">Неделя дня</button>
       <button class="btn-ghost btn-invite" id="openInvite">Позвать коллег и друзей</button>
+      <button class="btn-ghost" id="installApp" hidden>Установить на телефон</button>
       <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
       <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
@@ -166,11 +175,10 @@
 </div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/content.js"></script>
-<script src="js/pool.js"></script>
-<script src="js/quiz.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

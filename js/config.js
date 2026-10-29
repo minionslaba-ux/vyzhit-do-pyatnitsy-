@@ -5,4 +5,7 @@
 window.SUPABASE_CONFIG = {
   url: 'https://auequuxfcwdshblqrwbd.supabase.co',
   anonKey: 'sb_publishable_ZF67r4UX91_n180NPFQuvA_0D_-8Ya2',
+  // Telegram Mini App (необязательно): имя бота без @ и короткое имя приложения из BotFather.
+  // Если заполнено, ссылки-приглашения открывают игру прямо в Telegram: t.me/<bot>/<app>?startapp=…
+  telegram: { bot: '', app: '' },
 };

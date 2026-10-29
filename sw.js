@@ -1,0 +1,26 @@
+// Офлайн-режим «Выжить до пятницы»: игра и данные кэшируются на телефоне.
+// Свои файлы — «быстро из кэша, обновить в фоне»; Supabase, Telegram и прочие внешние запросы — только из сети.
+const CACHE = 'vdp-v1';
+const SHELL = ['./', 'index.html', 'css/style.css', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/game.js',
+  'data/pool.json', 'data/quiz.json', 'data/chains.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+});
+self.addEventListener('fetch', e => {
+  const req = e.request, url = new URL(req.url);
+  if (req.method !== 'GET') return;
+  const fonts = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
+  if (url.origin !== location.origin && !fonts) return;  // Supabase, Telegram — в сеть как есть
+  // страница с ?ref=… или ?join=… — та же index.html
+  const key = req.mode === 'navigate' ? new Request(new URL('index.html', location.href)) : req;
+  e.respondWith(caches.open(CACHE).then(async cache => {
+    const hit = await cache.match(key, { ignoreSearch: req.mode === 'navigate' });
+    const fresh = fetch(req).then(res => { if (res.ok || res.type === 'opaque') cache.put(key, res.clone()); return res; }).catch(() => null);
+    if (hit) { e.waitUntil(fresh); return hit; }
+    return (await fresh) || new Response('Нет сети', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+  }));
+});
