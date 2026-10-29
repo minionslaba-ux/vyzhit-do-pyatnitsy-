@@ -120,7 +120,7 @@ group by 1;
 drop view if exists public.participants;
 create view public.participants as
 select
-  encode(sha256(p.player_id::text::bytea), 'hex') as tag,
+  encode(sha256(p.player_id::text::bytea), 'hex') as tag, upper(left(encode(sha256(p.player_id::text::bytea), 'hex'), 6)) as short_id,
   p.name, p.dept, p.avatar, p.prof, p.status, p.step, p.created_at, p.updated_at,
   coalesce(g.games, 0) as games, coalesce(g.wins, 0) as wins,
   b.won as best_won, b.step as best_step, b.total as best_total
@@ -137,11 +137,207 @@ from public.suggestions where status = 'approved';
 
 grant select on public.leaderboard, public.daily_leaderboard, public.dept_week, public.participants, public.approved_cards to anon;
 
--- Обновить кэш схемы API, чтобы новые представления и функция сразу стали доступны (иначе бывает ошибка 404)
+-- ====================== Офисы, приглашения и чаты ======================
+-- Короткий ID игрока: первые 6 символов SHA-256 от player_id (его видно в игре)
+create or replace function public.short_id(p uuid) returns text language sql immutable as $$
+  select upper(left(encode(sha256(p::text::bytea), 'hex'), 6))
+$$;
+
+create table if not exists public.teams (
+  id          bigint generated always as identity primary key,
+  code        text not null unique check (code ~ '^[A-Z0-9]{6}$'),
+  name        text not null check (char_length(name) between 2 and 32),
+  owner       uuid not null,
+  created_at  timestamptz not null default now()
+);
+create table if not exists public.team_members (
+  player_id   uuid primary key,  -- один офис на игрока
+  team_id     bigint not null references public.teams(id) on delete cascade,
+  joined_at   timestamptz not null default now()
+);
+create table if not exists public.invites (
+  id          bigint generated always as identity primary key,
+  team_id     bigint not null references public.teams(id) on delete cascade,
+  from_player uuid not null,
+  to_player   uuid not null,
+  status      text not null default 'new' check (status in ('new', 'accepted', 'declined')),
+  created_at  timestamptz not null default now()
+);
+create table if not exists public.messages (
+  id          bigint generated always as identity primary key,
+  channel     text not null,  -- 'global' или 'team:<id офиса>'
+  player_id   uuid not null,
+  text        text not null check (char_length(text) between 1 and 300),
+  created_at  timestamptz not null default now()
+);
+create index if not exists messages_channel_idx on public.messages (channel, id desc);
+alter table public.teams enable row level security;
+alter table public.team_members enable row level security;
+alter table public.invites enable row level security;
+alter table public.messages enable row level security;
+revoke all on public.teams, public.team_members, public.invites, public.messages from anon, authenticated;
+
+-- Всё про офисы и чаты — только через функции ниже: они проверяют, кто что может
+create or replace function public.create_team(p_id uuid, p_name text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_code text; v_team bigint;
+begin
+  if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
+  loop
+    v_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
+    exit when not exists (select 1 from teams where code = v_code);
+  end loop;
+  insert into teams (code, name, owner) values (v_code, left(trim(p_name), 32), p_id) returning id into v_team;
+  insert into team_members (player_id, team_id) values (p_id, v_team)
+    on conflict (player_id) do update set team_id = excluded.team_id, joined_at = now();
+  return v_code;
+end $$;
+
+create or replace function public.join_team(p_id uuid, p_code text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_team bigint; v_name text;
+begin
+  if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
+  select t.id, t.name into v_team, v_name from teams t where t.code = upper(trim(p_code));
+  if v_team is null then raise exception 'Офис с таким кодом не найден'; end if;
+  insert into team_members (player_id, team_id) values (p_id, v_team)
+    on conflict (player_id) do update set team_id = excluded.team_id, joined_at = now();
+  return v_name;
+end $$;
+
+create or replace function public.leave_team(p_id uuid) returns void
+language sql security definer set search_path = public as $$
+  delete from team_members where player_id = p_id;
+$$;
+
+create or replace function public.my_team(p_id uuid) returns table (code text, name text, is_owner boolean)
+language sql security definer set search_path = public as $$
+  select t.code, t.name, t.owner = p_id from team_members m join teams t on t.id = m.team_id where m.player_id = p_id;
+$$;
+
+create or replace function public.team_members_list(p_id uuid)
+returns table (name text, dept text, avatar text, short_id text, status text, step smallint, updated_at timestamptz, is_owner boolean, is_me boolean)
+language sql security definer set search_path = public as $$
+  select p.name, p.dept, p.avatar, public.short_id(p.player_id), p.status, p.step, p.updated_at, t.owner = p.player_id, p.player_id = p_id
+  from team_members me
+  join team_members m on m.team_id = me.team_id
+  join teams t on t.id = m.team_id
+  join players p on p.player_id = m.player_id
+  where me.player_id = p_id
+  order by p.updated_at desc;
+$$;
+
+create or replace function public.invite_player(p_id uuid, p_short text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_team bigint; v_to uuid; v_name text;
+begin
+  select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
+  if v_team is null then raise exception 'Сначала создайте офис или вступите в него'; end if;
+  select pl.player_id, pl.name into v_to, v_name from players pl where public.short_id(pl.player_id) = upper(trim(p_short)) limit 1;
+  if v_to is null then raise exception 'Игрок с таким ID не найден'; end if;
+  if exists (select 1 from team_members tm where tm.player_id = v_to and tm.team_id = v_team) then raise exception 'Этот игрок уже в вашем офисе'; end if;
+  if exists (select 1 from invites i where i.to_player = v_to and i.team_id = v_team and i.status = 'new') then raise exception 'Приглашение уже отправлено'; end if;
+  insert into invites (team_id, from_player, to_player) values (v_team, p_id, v_to);
+  return v_name;
+end $$;
+
+create or replace function public.my_invites(p_id uuid) returns table (invite_id bigint, team_name text, code text, from_name text, created_at timestamptz)
+language sql security definer set search_path = public as $$
+  select i.id, t.name, t.code, coalesce(f.name, 'Игрок'), i.created_at
+  from invites i join teams t on t.id = i.team_id left join players f on f.player_id = i.from_player
+  where i.to_player = p_id and i.status = 'new' order by i.created_at desc;
+$$;
+
+create or replace function public.answer_invite(p_id uuid, p_invite bigint, p_accept boolean) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_team bigint;
+begin
+  select i.team_id into v_team from invites i where i.id = p_invite and i.to_player = p_id and i.status = 'new';
+  if v_team is null then raise exception 'Приглашение не найдено'; end if;
+  update invites set status = case when p_accept then 'accepted' else 'declined' end where id = p_invite;
+  if p_accept then
+    insert into team_members (player_id, team_id) values (p_id, v_team)
+      on conflict (player_id) do update set team_id = excluded.team_id, joined_at = now();
+  end if;
+  return (select t.name from teams t where t.id = v_team);
+end $$;
+
+create or replace function public.post_message(p_id uuid, p_channel text, p_text text) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_ch text; v_team bigint;
+begin
+  if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
+  if p_channel = 'global' then v_ch := 'global';
+  elsif p_channel = 'team' then
+    select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
+    if v_team is null then raise exception 'Вы пока не состоите в офисе'; end if;
+    v_ch := 'team:' || v_team;
+  else raise exception 'Неизвестный чат'; end if;
+  if exists (select 1 from messages m where m.player_id = p_id and m.created_at > now() - interval '2 seconds') then
+    raise exception 'Не так быстро: подождите пару секунд';
+  end if;
+  insert into messages (channel, player_id, text) values (v_ch, p_id, left(trim(p_text), 300));
+end $$;
+
+create or replace function public.get_messages(p_id uuid, p_channel text)
+returns table (msg_id bigint, name text, avatar text, short_id text, dept text, msg text, sent_at timestamptz, mine boolean)
+language plpgsql security definer set search_path = public as $$
+declare v_ch text; v_team bigint;
+begin
+  if p_channel = 'global' then v_ch := 'global';
+  else
+    select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
+    if v_team is null then return; end if;
+    v_ch := 'team:' || v_team;
+  end if;
+  return query
+    select m.id, coalesce(pl.name, 'Игрок'), coalesce(pl.avatar, ''), public.short_id(m.player_id), coalesce(pl.dept, ''), m.text, m.created_at, m.player_id = p_id
+    from messages m left join players pl on pl.player_id = m.player_id
+    where m.channel = v_ch order by m.id desc limit 60;
+end $$;
+
+-- Профиль для входа с другого устройства
+create or replace function public.get_profile(p_id uuid) returns table (name text, dept text, avatar text)
+language sql security definer set search_path = public as $$
+  select pl.name, pl.dept, pl.avatar from players pl where pl.player_id = p_id;
+$$;
+
+-- Перенос гостевого прогресса в аккаунт после входа по почте (только сам владелец аккаунта)
+create or replace function public.merge_player(p_from uuid, p_to uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is null or auth.uid() <> p_to then raise exception 'Нужен вход по почте'; end if;
+  if p_from = p_to then return; end if;
+  update scores set player_id = p_to where player_id = p_from;
+  update suggestions set player_id = p_to where player_id = p_from;
+  update messages set player_id = p_to where player_id = p_from;
+  update invites set to_player = p_to where to_player = p_from;
+  update invites set from_player = p_to where from_player = p_from;
+  update teams set owner = p_to where owner = p_from;
+  if exists (select 1 from team_members where player_id = p_to) then delete from team_members where player_id = p_from;
+  else update team_members set player_id = p_to where player_id = p_from; end if;
+  if exists (select 1 from players where player_id = p_to) then delete from players where player_id = p_from;
+  else update players set player_id = p_to where player_id = p_from; end if;
+end $$;
+
+do $$
+declare f text;
+begin
+  foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
+    'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
+    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)'] loop
+    execute format('revoke all on function public.%s from public', f);
+    execute format('grant execute on function public.%s to anon, authenticated', f);
+  end loop;
+end $$;
+
+, чтобы новые представления и функция сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 6 строк
+-- Проверка: должны вернуться 18 строк
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
-select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name = 'touch_player';
+select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
+  ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile');

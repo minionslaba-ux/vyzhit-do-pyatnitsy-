@@ -24,9 +24,12 @@
         <div class="pass-photo" id="joinAvatar" aria-hidden="true">😎</div>
         <div class="field"><label for="joinName">Ваше имя *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" autocomplete="nickname" required></div>
         <div class="field"><label for="joinDept">Отдел</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" autocomplete="off"></div>
+        <div class="field" id="joinEmailField"><label for="joinEmail">Почта — для регистрации</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" autocomplete="email" inputmode="email">
+          <small class="field-note">С почтой прогресс общий на всех устройствах: пришлём ссылку для входа. Можно не заполнять и играть как гость.</small></div>
         <fieldset class="field"><legend>Аватар</legend><div class="avatars" id="avatars"></div></fieldset>
         <p class="join-err" id="joinErr" role="alert"></p>
         <button class="btn-main" type="submit" id="joinGo">Войти в офис</button>
+        <button class="btn-ghost" type="button" id="joinLogout" hidden>Выйти из аккаунта</button>
         <button class="btn-ghost" type="button" id="joinCancel" hidden>Отмена</button>
         <p class="join-note">Имя и отдел увидят коллеги в рейтинге и списке участников.</p>
       </div>
@@ -50,9 +53,10 @@
     <div class="panel form">
       <div class="me-card">
         <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
-        <span class="me-who"><b id="meName">Сотрудник</b><small id="meDept">без отдела</small></span>
+        <span class="me-who"><b id="meName">Сотрудник</b><small id="meDept">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID">ID ······</button></span>
         <button class="btn-chip" type="button" id="meEdit">Изменить</button>
       </div>
+      <div class="invites" id="invites" hidden></div>
       <div class="career-card" id="careerCard" hidden></div>
       <fieldset class="field" id="profField">
         <legend>Ваша профессия</legend>
@@ -67,6 +71,7 @@
       <button class="btn-ghost btn-daily" id="startDaily">Неделя дня</button>
       <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
+      <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
       <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
     </div>
     <div class="menu-foot">

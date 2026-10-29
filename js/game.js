@@ -180,6 +180,27 @@
         await req('/suggestions', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ ...card, player_id: prefs.playerId }) });
       },
       async approved() { return online ? req('/approved_cards?select=*&limit=200') : []; },
+      // Функции офисов и чатов; ошибки из базы приходят готовым русским текстом
+      async rpc(name, args, token) {
+        if (!online) throw new Error('общий офис не подключён: нужны ключи Supabase в js/config.js');
+        const r = await fetch(`${base}/rpc/${name}`, { method: 'POST', body: JSON.stringify(args),
+          headers: { ...headers, ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
+        const t = await r.text();
+        if (!r.ok) { let m = ''; try { m = JSON.parse(t).message; } catch {} throw new Error(m || `Supabase ответил ${r.status}`); }
+        return t ? JSON.parse(t) : null;
+      },
+      // Регистрация: ссылка для входа на почту (Supabase Auth)
+      async sendLink(email) {
+        const redirect = location.origin + location.pathname;
+        const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/otp?redirect_to=${encodeURIComponent(redirect)}`, {
+          method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, create_user: true }) });
+        if (!r.ok) { let m = ''; try { const j = await r.json(); m = j.msg || j.message || j.error_description || ''; } catch {} throw new Error(m || `Supabase ответил ${r.status}`); }
+      },
+      async user(token) {
+        const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/user`, { headers: { apikey: cfg.anonKey, Authorization: `Bearer ${token}` } });
+        if (!r.ok) throw new Error(`вход не удался (${r.status})`);
+        return r.json();
+      },
     };
   })();
 
@@ -282,6 +303,8 @@
 
   function renderMenu() {
     $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
+    myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${prefs.email || 'гость'}`; });
+    renderInvites();
     (document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]')).checked = true;
     (document.querySelector(`input[name=trait][value=${prefs.trait}]`) || document.querySelector('input[name=trait]')).checked = true;
     setPhase('evening');
@@ -316,6 +339,12 @@
   $('openBoard').onclick = () => openBoard('menu', 'rating');
   $('openPeople').onclick = () => openBoard('menu', 'people');
   $('openCollection').onclick = showCollection;
+  $('openOffice').onclick = showOffice;
+  $('openChat').onclick = () => showChat('team');
+  $('meId').onclick = async () => {
+    const id = shortId(await myTag);
+    navigator.clipboard.writeText(id).then(() => toast(`ID ${id} скопирован — отправьте его тому, кто собирает офис`), () => toast(`Ваш ID: ${id}`));
+  };
   $('openSuggest').onclick = showSuggest;
   $('meEdit').onclick = () => renderJoin(true);
 
@@ -328,12 +357,17 @@
     $('joinAvatar').textContent = document.querySelector('input[name=ava]:checked').value;
     $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid');
     $('joinCancel').hidden = !editing; $('joinGo').textContent = editing ? 'Сохранить' : 'Войти в офис';
+    $('joinEmailField').hidden = !board.online;
+    $('joinEmail').value = prefs.email || prefs.pendingEmail || ''; $('joinEmail').disabled = !!prefs.email;
+    $('joinEmailField').querySelector('.field-note').textContent = prefs.email ? `Вы вошли по почте ${prefs.email}. Прогресс общий на всех устройствах.`
+      : 'С почтой прогресс общий на всех устройствах: пришлём ссылку для входа. Можно не заполнять и играть как гость.';
+    $('joinLogout').hidden = !prefs.email;
     setPhase('morning'); show('join');
     if (!editing) $('joinName').focus({ preventScroll: true });
   }
   $('joinName').oninput = () => { $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid'); };
   $('joinCancel').onclick = renderMenu;
-  $('joinForm').onsubmit = e => {
+  $('joinForm').onsubmit = async e => {
     e.preventDefault();
     const name = $('joinName').value.trim().replace(/\s+/g, ' ');
     if (name.length < 2) {
@@ -342,7 +376,23 @@
     }
     prefs.name = name; prefs.dept = $('joinDept').value.trim().replace(/\s+/g, ' ');
     prefs.avatar = document.querySelector('input[name=ava]:checked').value;
-    store.set(KEY.prefs, prefs); renderMenu();
+    const email = $('joinEmail').value.trim().toLowerCase();
+    if (board.online && email && !prefs.email) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('joinErr').textContent = 'Похоже, в почте опечатка. Проверьте адрес или оставьте поле пустым.'; return; }
+      $('joinGo').disabled = true;
+      try { await board.sendLink(email); prefs.pendingEmail = email; toast(`Ссылка для входа отправлена на ${email}. Пока можно играть как гость.`); }
+      catch (err) { $('joinErr').textContent = `Не удалось отправить ссылку: ${err.message}`; $('joinGo').disabled = false; return; }
+      $('joinGo').disabled = false;
+    }
+    store.set(KEY.prefs, prefs);
+    await board.touch('menu').catch(() => {});
+    renderMenu();
+  };
+  // Выход из аккаунта: на этом устройстве начинается новый гость
+  $('joinLogout').onclick = () => {
+    const b = $('joinLogout');
+    if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Выйти? Нажмите ещё раз'; return; }
+    delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; store.set(KEY.prefs, prefs); location.reload();
   };
   $('start').onclick = () => continueCareer();
   $('startDaily').onclick = () => startDaily();
@@ -1046,6 +1096,127 @@
     $('copyTxt').focus();
   }
 
+  // ---------- ID игрока, офис и чаты ----------
+  const shortId = tag => tag.slice(0, 6).toUpperCase();
+  const offline = title => {
+    views.end.innerHTML = `<div class="end-sheet glass"><span class="kicker">${title}</span><h1>Нужен общий офис</h1>
+      <p>Офисы, приглашения и чаты работают через Supabase. Впишите ключи в js/config.js и выполните supabase/schema.sql.</p>
+      <div class="stack"><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`;
+    show('end'); $('toMenu').onclick = renderMenu;
+  };
+  const inviteLink = code => `${location.origin}${location.pathname}?join=${code}`;
+  const copy = (text, ok) => navigator.clipboard.writeText(text).then(() => toast(ok), () => toast(text));
+
+  async function renderInvites() {
+    const box = $('invites');
+    if (!board.online || !prefs.name) { box.hidden = true; return; }
+    try {
+      const list = await board.rpc('my_invites', { p_id: prefs.playerId });
+      box.hidden = !list.length;
+      box.innerHTML = list.map(i => `<div class="invite"><span><b>${esc(i.from_name)}</b> зовёт вас в офис «${esc(i.team_name)}»</span>
+        <button class="btn-chip" data-a="1" data-id="${i.invite_id}">Принять</button><button class="btn-chip" data-a="0" data-id="${i.invite_id}">Нет</button></div>`).join('');
+      box.querySelectorAll('button').forEach(b => b.onclick = async () => {
+        try { const name = await board.rpc('answer_invite', { p_id: prefs.playerId, p_invite: +b.dataset.id, p_accept: b.dataset.a === '1' });
+          toast(b.dataset.a === '1' ? `Вы в офисе «${name}»` : 'Приглашение отклонено'); renderInvites(); }
+        catch (err) { toast(err.message); }
+      });
+    } catch { box.hidden = true; }
+  }
+
+  async function showOffice() {
+    if (!board.online) return offline('Мой офис');
+    setPhase('evening');
+    views.end.innerHTML = '<div class="end-sheet glass"><span class="kicker">Мой офис</span><p>Загружаю…</p></div>'; show('end');
+    let team;
+    try { await board.touch('menu'); team = (await board.rpc('my_team', { p_id: prefs.playerId }))[0]; }
+    catch (err) { views.end.innerHTML = `<div class="end-sheet glass"><span class="kicker">Мой офис</span><h1>Нет связи</h1><p>${esc(err.message)}</p><div class="stack"><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`; $('toMenu').onclick = renderMenu; return; }
+    const myId = shortId(await myTag);
+    if (!team) {
+      views.end.innerHTML = `<div class="end-sheet glass">
+        <span class="kicker">Мой офис · ваш ID ${myId}</span>
+        <h1>Соберите команду</h1>
+        <p>Создайте офис и позовите коллег по ссылке или по их ID. Или вступите в офис по коду, который вам прислали.</p>
+        <form class="inline-form" id="mkForm"><input id="mkName" maxlength="32" placeholder="Название офиса, например «Отдел продаж»" aria-label="Название офиса"><button class="btn-main" type="submit">Создать</button></form>
+        <form class="inline-form" id="jnForm"><input id="jnCode" maxlength="6" placeholder="Код офиса" aria-label="Код офиса" autocapitalize="characters"><button class="btn-ghost" type="submit">Вступить</button></form>
+        <p class="join-err" id="ofErr" role="alert"></p>
+        <div class="stack"><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`;
+      $('toMenu').onclick = renderMenu;
+      $('mkForm').onsubmit = async e => { e.preventDefault(); const n = $('mkName').value.trim();
+        if (n.length < 2) { $('ofErr').textContent = 'Название — хотя бы 2 символа.'; return; }
+        try { await board.rpc('create_team', { p_id: prefs.playerId, p_name: n }); showOffice(); } catch (err) { $('ofErr').textContent = err.message; } };
+      $('jnForm').onsubmit = async e => { e.preventDefault();
+        try { const n = await board.rpc('join_team', { p_id: prefs.playerId, p_code: $('jnCode').value }); toast(`Вы в офисе «${n}»`); showOffice(); } catch (err) { $('ofErr').textContent = err.message; } };
+      return;
+    }
+    const members = await board.rpc('team_members_list', { p_id: prefs.playerId }).catch(() => []);
+    views.end.innerHTML = `<div class="end-sheet glass">
+      <span class="kicker">Мой офис · ${members.length} ${members.length === 1 ? 'участник' : members.length < 5 ? 'участника' : 'участников'}</span>
+      <h1>${esc(team.name)}</h1>
+      <div class="office-code"><span class="kicker">Код офиса</span><b>${team.code}</b><small>${esc(inviteLink(team.code))}</small>
+        <button class="btn-ghost" id="cpLink">Скопировать ссылку-приглашение</button></div>
+      <form class="inline-form" id="invForm"><input id="invId" maxlength="6" placeholder="ID игрока, например 3FA9C1" aria-label="ID игрока" autocapitalize="characters"><button class="btn-main" type="submit">Позвать</button></form>
+      <p class="join-err" id="ofErr" role="alert"></p>
+      <div class="members panel board-list">${members.map(m => `<div class="lb-row person${m.is_me ? ' me' : ''}">
+        <span class="lb-ava" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
+        <span class="lb-who"><b>${esc(m.name)}${m.is_me ? ' (вы)' : ''}${m.is_owner ? ' · создатель' : ''}</b><small>${esc(m.dept || 'без отдела')} · ID ${m.short_id}</small></span>
+        <span class="lb-res">${personStatus(m)}</span></div>`).join('')}</div>
+      <div class="stack"><button class="btn-main" id="toChat">Чат офиса</button><button class="btn-ghost" id="leave">Покинуть офис</button><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`;
+    $('toMenu').onclick = renderMenu; $('toChat').onclick = () => showChat('team');
+    $('cpLink').onclick = () => copy(`Заходи в наш офис «${team.name}» в игре «Выжить до пятницы»: ${inviteLink(team.code)}`, 'Ссылка скопирована — отправьте её в рабочий чат');
+    $('invForm').onsubmit = async e => { e.preventDefault();
+      try { const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: $('invId').value }); $('invId').value = ''; $('ofErr').textContent = ''; toast(`Приглашение отправлено: ${n}`); }
+      catch (err) { $('ofErr').textContent = err.message; } };
+    $('leave').onclick = async () => { const b = $('leave');
+      if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Точно покинуть офис? Нажмите ещё раз'; return; }
+      await board.rpc('leave_team', { p_id: prefs.playerId }).catch(err => toast(err.message)); showOffice(); };
+  }
+
+  // Чаты: офиса (только участники) и общий для всех игроков; обновляются каждые 4 секунды
+  let chatTimer = null, chatLast = '';
+  async function showChat(channel) {
+    if (!board.online) return offline('Чат');
+    setPhase('evening'); clearInterval(chatTimer); chatLast = '';
+    views.end.innerHTML = `<div class="chat">
+      <div class="board-head"><button class="icon-btn pill" id="chBack" aria-label="Назад">←</button><h2>${channel === 'team' ? 'Чат офиса' : 'Общий чат'}</h2><span style="width:38px"></span></div>
+      <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">Офис</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">Все игроки</button></div>
+      <div class="chat-list panel" id="chList" aria-live="polite"><div class="lb-empty">Загружаю…</div></div>
+      <form class="chat-form" id="chForm"><input id="chText" maxlength="300" placeholder="Сообщение" autocomplete="off" aria-label="Сообщение"><button class="btn-main" type="submit">Отправить</button></form>
+    </div>`;
+    views.end.classList.add('chat-view'); show('end');
+    const leave = () => { clearInterval(chatTimer); views.end.classList.remove('chat-view'); };
+    $('chBack').onclick = () => { leave(); renderMenu(); };
+    $('chTeam').onclick = () => { leave(); showChat('team'); };
+    $('chAll').onclick = () => { leave(); showChat('global'); };
+    await board.touch('menu').catch(() => {});
+    const load = async () => {
+      if (!$('chList')) return clearInterval(chatTimer);
+      try {
+        const rows = (await board.rpc('get_messages', { p_id: prefs.playerId, p_channel: channel })).reverse();
+        const sig = rows.map(r => r.msg_id).join(',');
+        if (sig === chatLast) return;
+        chatLast = sig;
+        const list = $('chList'), atBottom = list.scrollHeight - list.scrollTop - list.clientHeight < 60;
+        if (channel === 'team' && !rows.length) {
+          const team = (await board.rpc('my_team', { p_id: prefs.playerId }))[0];
+          list.innerHTML = team ? `<div class="lb-empty"><span class="big">Тишина</span>В чате офиса «${esc(team.name)}» пока пусто. Напишите первым!</div>`
+            : '<div class="lb-empty"><span class="big">Нет офиса</span>Чат офиса появится, когда вы создадите офис или вступите в него. А пока есть общий чат.</div>';
+          return;
+        }
+        list.innerHTML = rows.length ? rows.map(m => `<div class="msg${m.mine ? ' mine' : ''}"><span class="ava-s" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
+          <span class="meta">${m.mine ? '' : `<b>${esc(m.name)}</b> · `}${new Date(m.sent_at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}${m.dept && !m.mine ? ` · ${esc(m.dept)}` : ''}</span>
+          <span class="bubble">${esc(m.msg)}</span></div>`).join('') : '<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первым!</div>';
+        if (atBottom || rows.some(r => r.mine)) list.scrollTop = list.scrollHeight;
+      } catch (err) { $('chList').innerHTML = `<div class="lb-empty"><span class="big">Нет связи</span>${esc(err.message)}</div>`; }
+    };
+    $('chForm').onsubmit = async e => {
+      e.preventDefault(); const t = $('chText').value.trim(); if (!t) return;
+      try { await board.rpc('post_message', { p_id: prefs.playerId, p_channel: channel, p_text: t }); $('chText').value = ''; chatLast = ''; load(); }
+      catch (err) { toast(err.message); }
+    };
+    await load();
+    chatTimer = setInterval(() => { if (!document.hidden) load(); }, 4000);
+  }
+
   // ---------- старт: брендированная неделя (?pack=имя) и карточки от коллег ----------
   (async () => {
     const pack = new URLSearchParams(location.search).get('pack');
@@ -1070,5 +1241,42 @@
     } catch {}
   })();
 
-  prefs.name ? renderMenu() : renderJoin(false);
+  // Вход по ссылке из письма: в адресе #access_token=… — игрок становится аккаунтом, гостевой прогресс переносится
+  async function finishLogin() {
+    const h = new URLSearchParams(location.hash.slice(1));
+    const clean = () => history.replaceState(null, '', location.pathname + location.search);
+    if (h.get('error')) { clean(); toast(`Вход не удался: ${h.get('error_description') || h.get('error')}. Отправьте ссылку ещё раз.`); return false; }
+    const token = h.get('access_token');
+    if (!token || !board.online) return false;
+    clean();
+    try {
+      const user = await board.user(token);
+      if (prefs.playerId !== user.id) {
+        if (prefs.name) await board.rpc('merge_player', { p_from: prefs.playerId, p_to: user.id }, token).catch(() => {});
+        prefs.playerId = user.id;
+      }
+      prefs.email = user.email; delete prefs.pendingEmail;
+      const prof = (await board.rpc('get_profile', { p_id: user.id }).catch(() => []))[0];
+      if (prof && !prefs.name) Object.assign(prefs, { name: prof.name, dept: prof.dept, avatar: prof.avatar || prefs.avatar });
+      store.set(KEY.prefs, prefs);
+      location.reload();  // ID игрока сменился — перезапускаем игру с ним
+      return true;
+    } catch (err) { toast(`Вход не удался: ${err.message}`); return false; }
+  }
+  // Приглашение по ссылке ?join=КОД
+  async function joinFromLink() {
+    const q = new URLSearchParams(location.search), code = q.get('join');
+    if (!code || !prefs.name || !board.online) return;
+    try { await board.touch('menu'); const n = await board.rpc('join_team', { p_id: prefs.playerId, p_code: code }); toast(`Вы в офисе «${n}». Загляните в чат офиса!`); }
+    catch (err) { toast(err.message); }
+    q.delete('join'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
+  }
+  const origSubmit = $('joinForm').onsubmit;
+  $('joinForm').onsubmit = async e => { await origSubmit(e); if (prefs.name) joinFromLink(); };
+
+  finishLogin().then(reloading => {
+    if (reloading) return;
+    prefs.name ? renderMenu() : renderJoin(false);
+    joinFromLink();
+  });
 })();
