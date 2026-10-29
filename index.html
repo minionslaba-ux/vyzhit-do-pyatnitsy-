@@ -16,24 +16,55 @@
 <div class="office" id="office" aria-hidden="true"></div>
 
 <div class="app">
-  <!-- Экран 0: пропуск в офис (имя, отдел, аватар) -->
+  <!-- Экран 0: приветствие → регистрация, вход или гость -->
   <section class="view join" id="join" hidden>
-    <form class="pass panel" id="joinForm" novalidate>
-      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b>Пропуск в офис</b><small>Выжить до пятницы</small></div>
+    <div class="pass panel" id="welcome">
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b>Добро пожаловать</b><small>Выжить до пятницы</small></div>
       <div class="pass-body">
+        <p class="welcome-lead">Зарегистрируйтесь, чтобы играть вместе с коллегами, — или начните как гость прямо сейчас.</p>
+        <ul class="perks">
+          <li>Свой офис: соберите команду по ссылке или по ID</li>
+          <li>Чат офиса и общий чат игроков</li>
+          <li>Прогресс общий на телефоне и компьютере</li>
+          <li>Можно предлагать свои ситуации для игры</li>
+        </ul>
+        <button class="btn-main" type="button" id="wRegister">Зарегистрироваться</button>
+        <button class="btn-ghost" type="button" id="wGuest">Играть как гость</button>
+        <button class="btn-link" type="button" id="wLogin">Уже есть аккаунт? Войти</button>
+        <p class="join-note" id="wNote"></p>
+      </div>
+    </div>
+
+    <form class="pass panel" id="joinForm" novalidate hidden>
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b id="joinTitle">Пропуск в офис</b><small id="joinSub">Выжить до пятницы</small></div>
+      <div class="pass-body">
+        <p class="welcome-lead" id="joinLead" hidden></p>
         <div class="pass-photo" id="joinAvatar" aria-hidden="true">😎</div>
-        <div class="field"><label for="joinName">Ваше имя *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" autocomplete="nickname" required></div>
-        <div class="field"><label for="joinDept">Отдел</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" autocomplete="off"></div>
-        <div class="field" id="joinEmailField"><label for="joinEmail">Почта — для регистрации</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" autocomplete="email" inputmode="email">
-          <small class="field-note">С почтой прогресс общий на всех устройствах: пришлём ссылку для входа. Можно не заполнять и играть как гость.</small></div>
-        <fieldset class="field"><legend>Аватар</legend><div class="avatars" id="avatars"></div></fieldset>
+        <div class="field" id="joinNameField"><label for="joinName">Ваше имя *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" autocomplete="nickname"></div>
+        <div class="field" id="joinDeptField"><label for="joinDept">Отдел</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" autocomplete="off"></div>
+        <div class="field" id="joinEmailField"><label for="joinEmail">Почта *</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" autocomplete="email" inputmode="email">
+          <small class="field-note" id="joinEmailNote">Пришлём ссылку для входа — пароль не нужен.</small></div>
+        <fieldset class="field" id="joinAvaField"><legend>Аватар</legend><div class="avatars" id="avatars"></div></fieldset>
         <p class="join-err" id="joinErr" role="alert"></p>
-        <button class="btn-main" type="submit" id="joinGo">Войти в офис</button>
+        <button class="btn-main" type="submit" id="joinGo">Зарегистрироваться</button>
+        <button class="btn-ghost" type="button" id="joinRegister" hidden>Зарегистрироваться</button>
         <button class="btn-ghost" type="button" id="joinLogout" hidden>Выйти из аккаунта</button>
-        <button class="btn-ghost" type="button" id="joinCancel" hidden>Отмена</button>
-        <p class="join-note">Имя и отдел увидят коллеги в рейтинге и списке участников.</p>
+        <button class="btn-ghost" type="button" id="joinCancel">Назад</button>
+        <p class="join-note" id="joinNote">Имя и отдел увидят коллеги в рейтинге и списке участников.</p>
       </div>
     </form>
+
+    <div class="pass panel" id="checkMail" hidden>
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b>Проверьте почту</b><small>Осталось подтвердить вход</small></div>
+      <div class="pass-body">
+        <p class="welcome-lead" id="mailText"></p>
+        <p class="field-note">Письмо приходит за минуту. Если его нет — загляните в «Спам» или отправьте ещё раз.</p>
+        <p class="join-err" id="mailErr" role="alert"></p>
+        <button class="btn-main" type="button" id="mailResend">Отправить ещё раз</button>
+        <button class="btn-ghost" type="button" id="mailGuest">Пока играть как гость</button>
+        <button class="btn-link" type="button" id="mailChange">Изменить почту</button>
+      </div>
+    </div>
   </section>
 
   <!-- Экран 1: меню -->
@@ -54,7 +85,7 @@
       <div class="me-card">
         <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
         <span class="me-who"><b id="meName">Сотрудник</b><small id="meDept">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID">ID ······</button></span>
-        <button class="btn-chip" type="button" id="meEdit">Изменить</button>
+        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden>Регистрация</button></span>
       </div>
       <div class="invites" id="invites" hidden></div>
       <div class="career-card" id="careerCard" hidden></div>
