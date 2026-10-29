@@ -109,9 +109,29 @@
       return r.status === 204 || opts.method === 'POST' ? null : r.json();
     };
     const me = async () => ({ tag: await myTag, name: prefs.name, dept: prefs.dept, avatar: prefs.avatar });
+    const authBase = online ? cfg.url.replace(/\/+$/, '') + '/auth/v1' : '';
+    // Токен входа: хранится в браузере и продлевается сам; база по нему проверяет, кто вы
+    let refreshing = null;
+    async function token() {
+      const ss = prefs.session;
+      if (!online || !ss) return null;
+      if (ss.exp - Date.now() > 60000) return ss.access;
+      refreshing = refreshing || (async () => {
+        const r = await fetch(`${authBase}/token?grant_type=refresh_token`, { method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refresh_token: ss.refresh }) });
+        if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast('Сессия входа истекла — войдите по почте ещё раз'); return null; }
+        const j = await r.json();
+        prefs.session = { access: j.access_token, refresh: j.refresh_token, exp: (j.expires_at ? j.expires_at * 1000 : Date.now() + j.expires_in * 1000) };
+        store.set(KEY.prefs, prefs);
+        return j.access_token;
+      })().finally(() => { refreshing = null; });
+      return refreshing;
+    }
+    const authHeaders = async (explicit) => { const t = explicit || await token(); return t ? { Authorization: `Bearer ${t}` } : {}; };
     const deptQ = dept => dept ? `&dept=eq.${encodeURIComponent(dept)}` : '';
     return {
-      online,
+      online, token,
+      async logout() { const t = prefs.session?.access; if (t) await fetch(`${authBase}/logout`, { method: 'POST', headers: { apikey: cfg.anonKey, Authorization: `Bearer ${t}` } }).catch(() => {}); },
       async touch(status, step = 0) {
         if (!prefs.name) return;
         if (!online) {
@@ -119,7 +139,7 @@
           all[m.tag] = { ...all[m.tag], ...m, prof: prefs.prof, status, step, updated_at: new Date().toISOString(), created_at: all[m.tag]?.created_at || new Date().toISOString() };
           store.set(PEOPLE, all); return;
         }
-        await req('/rpc/touch_player', { method: 'POST', body: JSON.stringify({ p_id: prefs.playerId, p_name: prefs.name, p_dept: prefs.dept,
+        await req('/rpc/touch_player', { method: 'POST', headers: await authHeaders(), body: JSON.stringify({ p_id: prefs.playerId, p_name: prefs.name, p_dept: prefs.dept,
           p_avatar: prefs.avatar, p_prof: prefs.prof, p_status: status, p_step: step }) });
       },
       async submit(entry) {
@@ -127,7 +147,8 @@
           const all = store.get(LOCAL, []); all.push({ ...entry, ...(await me()), created_at: new Date().toISOString() });
           store.set(LOCAL, all.slice(-300)); return;
         }
-        const post = body => req('/scores', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(body) });
+        const auth = await authHeaders();
+        const post = body => req('/scores', { method: 'POST', headers: { Prefer: 'return=minimal', ...auth }, body: JSON.stringify(body) });
         try { await post(entry); }
         catch (err) {
           // база со старой схемой: без колонок mode/day/overheat. Неделю дня так не записать — просим обновить schema.sql
@@ -177,14 +198,16 @@
       },
       async suggest(card) {
         if (!online) throw new Error('общий офис не подключён: предложения принимаются только с ключами Supabase');
-        await req('/suggestions', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ ...card, player_id: prefs.playerId }) });
+        const auth = await authHeaders();
+        if (!auth.Authorization) throw new Error('предлагать карточки можно после входа по почте');
+        await req('/suggestions', { method: 'POST', headers: { Prefer: 'return=minimal', ...auth }, body: JSON.stringify({ ...card, player_id: prefs.playerId }) });
       },
       async approved() { return online ? req('/approved_cards?select=*&limit=200') : []; },
       // Функции офисов и чатов; ошибки из базы приходят готовым русским текстом
       async rpc(name, args, token) {
         if (!online) throw new Error('общий офис не подключён: нужны ключи Supabase в js/config.js');
         const r = await fetch(`${base}/rpc/${name}`, { method: 'POST', body: JSON.stringify(args),
-          headers: { ...headers, ...(token ? { Authorization: `Bearer ${token}` } : {}) } });
+          headers: { ...headers, ...(await authHeaders(token)) } });
         const t = await r.text();
         if (!r.ok) { let m = ''; try { m = JSON.parse(t).message; } catch {} throw new Error(m || `Supabase ответил ${r.status}`); }
         return t ? JSON.parse(t) : null;
@@ -303,8 +326,8 @@
 
   function renderMenu() {
     $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
-    myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${prefs.email || 'гость'}`; });
-    $('meRegister').hidden = registered() || !board.online;
+    myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? 'войдите снова' : 'гость'}`; });
+    $('meRegister').hidden = registered() || !board.online; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';
     for (const id of LOCKED) $(id).classList.toggle('locked', !registered());
     renderInvites();
     (document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]')).checked = true;
@@ -342,12 +365,13 @@
   $('openPeople').onclick = () => openBoard('menu', 'people');
   $('openCollection').onclick = showCollection;
   // Только для зарегистрированных: офис, чаты, свои карточки. Гостю предлагаем регистрацию
-  const registered = () => !!prefs.email;
+  const registered = () => !!(prefs.email && prefs.session);
   const LOCKED = ['openOffice', 'openChat', 'openSuggest'];
-  const needAccount = (fn, why) => () => registered() || !board.online ? fn() : renderJoin('register', why);
+  const needAccount = (fn, why) => () => registered() || !board.online ? fn()
+    : prefs.email ? renderJoin('login', 'Сессия входа истекла. Пришлём новую ссылку на вашу почту.') : renderJoin('register', why);
   $('openOffice').onclick = needAccount(showOffice, '«Мой офис» доступен после регистрации: соберите команду и позовите коллег.');
   $('openChat').onclick = needAccount(() => showChat('team'), 'Чаты доступны после регистрации — так коллеги будут знать, кто пишет.');
-  $('meRegister').onclick = () => renderJoin('register');
+  $('meRegister').onclick = () => prefs.email ? renderJoin('login', 'Пришлём новую ссылку для входа на вашу почту.') : renderJoin('register');
   $('meId').onclick = async () => {
     const id = shortId(await myTag);
     navigator.clipboard.writeText(id).then(() => toast(`ID ${id} скопирован — отправьте его тому, кто собирает офис`), () => toast(`Ваш ID: ${id}`));
@@ -374,7 +398,7 @@
     $('joinSub').textContent = { register: 'Имя, отдел и почта', login: 'Пришлём ссылку на почту', guest: 'Без регистрации', edit: prefs.email || 'Гость', profile: prefs.email || '' }[mode];
     $('joinLead').hidden = !lead; $('joinLead').textContent = lead || '';
     $('joinName').value = prefs.name; $('joinDept').value = prefs.dept;
-    $('joinEmail').value = prefs.email || mailTo || prefs.pendingEmail || ''; $('joinEmail').disabled = !!prefs.email;
+    $('joinEmail').value = prefs.email || mailTo || prefs.pendingEmail || ''; $('joinEmail').disabled = !!prefs.email && !login;
     for (const id of ['joinNameField', 'joinDeptField', 'joinAvaField', 'joinAvatar']) $(id).hidden = login;
     $('joinEmailField').hidden = !(reg || login || (edit && prefs.email));
     $('joinEmailNote').textContent = prefs.email ? 'Вы вошли по почте — прогресс общий на всех устройствах.' : 'Пришлём ссылку для входа — пароль не нужен.';
@@ -446,7 +470,7 @@
   $('joinLogout').onclick = () => {
     const b = $('joinLogout');
     if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Выйти? Нажмите ещё раз'; return; }
-    delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; store.set(KEY.prefs, prefs); location.reload();
+    board.logout().finally(() => { delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; delete prefs.session; store.set(KEY.prefs, prefs); location.reload(); });
   };
   $('start').onclick = () => continueCareer();
   $('startDaily').onclick = () => startDaily();
@@ -1310,6 +1334,8 @@
         prefs.playerId = user.id;
       }
       prefs.email = user.email; delete prefs.pendingEmail;
+      const exp = +h.get('expires_at') ? +h.get('expires_at') * 1000 : Date.now() + (+h.get('expires_in') || 3600) * 1000;
+      prefs.session = { access: token, refresh: h.get('refresh_token'), exp };
       const prof = (await board.rpc('get_profile', { p_id: user.id }).catch(() => []))[0];
       if (prof && !prefs.name) Object.assign(prefs, { name: prof.name, dept: prof.dept, avatar: prof.avatar || prefs.avatar });
       store.set(KEY.prefs, prefs);

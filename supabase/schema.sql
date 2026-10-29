@@ -55,28 +55,52 @@ create table if not exists public.suggestions (
   status        text not null default 'new' check (status in ('new', 'approved', 'rejected'))
 );
 
+-- Проверки доступа. Зарегистрированный игрок — это пользователь Supabase Auth с тем же id.
+-- Всё, что делается от его имени, требует его токен (auth.uid() = player_id).
+create or replace function public.is_registered(p uuid) returns boolean
+language sql stable security definer set search_path = public, auth as $$
+  select exists (select 1 from auth.users u where u.id = p);
+$$;
+create or replace function public.require_player(p_id uuid) returns void
+language plpgsql stable security definer set search_path = public as $$
+begin
+  if auth.uid() is null then raise exception 'Эта функция доступна после регистрации: войдите по почте'; end if;
+  if auth.uid() <> p_id then raise exception 'Нет доступа: войдите по почте ещё раз'; end if;
+end $$;
+
 -- Доступ. Таблицы напрямую не читаются: так никто не узнает чужой player_id и не сможет писать от чужого имени.
 alter table public.scores enable row level security;
 alter table public.players enable row level security;
 alter table public.suggestions enable row level security;
 drop policy if exists "scores are readable" on public.scores;
 drop policy if exists "anyone can add a score" on public.scores;
-create policy "anyone can add a score" on public.scores for insert to anon with check (true);
+drop policy if exists "guests add own scores" on public.scores;
+drop policy if exists "users add own scores" on public.scores;
+-- гость пишет результат только за гостевой id, зарегистрированный — только за себя
+create policy "guests add own scores" on public.scores for insert to anon with check (not public.is_registered(player_id));
+create policy "users add own scores" on public.scores for insert to authenticated with check (player_id = auth.uid());
 drop policy if exists "anyone can suggest" on public.suggestions;
-create policy "anyone can suggest" on public.suggestions for insert to anon with check (status = 'new');
-revoke all on public.scores, public.players, public.suggestions from anon;
-grant insert on public.scores, public.suggestions to anon;
+drop policy if exists "users suggest" on public.suggestions;
+-- предлагать карточки могут только зарегистрированные
+create policy "users suggest" on public.suggestions for insert to authenticated with check (status = 'new' and player_id = auth.uid());
+revoke all on public.scores, public.players, public.suggestions from anon, authenticated;
+grant insert on public.scores to anon, authenticated;
+grant insert on public.suggestions to authenticated;
+grant execute on function public.is_registered(uuid) to anon, authenticated;
 
 -- Обновление своей записи участника (вызывается из игры)
-create or replace function public.touch_player(p_id uuid, p_name text, p_dept text, p_avatar text, p_prof text, p_status text, p_step int)
-returns void language sql security definer set search_path = public as $$
+drop function if exists public.touch_player(uuid, text, text, text, text, text, int);
+create function public.touch_player(p_id uuid, p_name text, p_dept text, p_avatar text, p_prof text, p_status text, p_step int)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if public.is_registered(p_id) then perform public.require_player(p_id); end if;
   insert into players (player_id, name, dept, avatar, prof, status, step, updated_at)
   values (p_id, left(trim(p_name), 24), left(coalesce(trim(p_dept), ''), 24), left(coalesce(p_avatar, ''), 16),
           p_prof, p_status, greatest(0, least(15, coalesce(p_step, 0))), now())
   on conflict (player_id) do update set
     name = excluded.name, dept = excluded.dept, avatar = excluded.avatar, prof = excluded.prof,
     status = excluded.status, step = excluded.step, updated_at = now();
-$$;
+end $$;
 revoke all on function public.touch_player(uuid, text, text, text, text, text, int) from public;
 grant execute on function public.touch_player(uuid, text, text, text, text, text, int) to anon;
 
@@ -135,7 +159,7 @@ create view public.approved_cards as
 select id, author, who, text, left_label, right_label, left_effects, right_effects
 from public.suggestions where status = 'approved';
 
-grant select on public.leaderboard, public.daily_leaderboard, public.dept_week, public.participants, public.approved_cards to anon;
+grant select on public.leaderboard, public.daily_leaderboard, public.dept_week, public.participants, public.approved_cards to anon, authenticated;
 
 -- ====================== Офисы, приглашения и чаты ======================
 -- Короткий ID игрока: первые 6 символов SHA-256 от player_id (его видно в игре)
@@ -182,6 +206,7 @@ create or replace function public.create_team(p_id uuid, p_name text) returns te
 language plpgsql security definer set search_path = public as $$
 declare v_code text; v_team bigint;
 begin
+  perform public.require_player(p_id);
   if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
   loop
     v_code := upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
@@ -197,6 +222,7 @@ create or replace function public.join_team(p_id uuid, p_code text) returns text
 language plpgsql security definer set search_path = public as $$
 declare v_team bigint; v_name text;
 begin
+  perform public.require_player(p_id);
   if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
   select t.id, t.name into v_team, v_name from teams t where t.code = upper(trim(p_code));
   if v_team is null then raise exception 'Офис с таким кодом не найден'; end if;
@@ -207,12 +233,12 @@ end $$;
 
 create or replace function public.leave_team(p_id uuid) returns void
 language sql security definer set search_path = public as $$
-  delete from team_members where player_id = p_id;
+  delete from team_members where player_id = p_id and p_id = auth.uid();
 $$;
 
 create or replace function public.my_team(p_id uuid) returns table (code text, name text, is_owner boolean)
 language sql security definer set search_path = public as $$
-  select t.code, t.name, t.owner = p_id from team_members m join teams t on t.id = m.team_id where m.player_id = p_id;
+  select t.code, t.name, t.owner = p_id from team_members m join teams t on t.id = m.team_id where m.player_id = p_id and p_id = auth.uid();
 $$;
 
 create or replace function public.team_members_list(p_id uuid)
@@ -223,7 +249,7 @@ language sql security definer set search_path = public as $$
   join team_members m on m.team_id = me.team_id
   join teams t on t.id = m.team_id
   join players p on p.player_id = m.player_id
-  where me.player_id = p_id
+  where me.player_id = p_id and p_id = auth.uid()
   order by p.updated_at desc;
 $$;
 
@@ -231,6 +257,7 @@ create or replace function public.invite_player(p_id uuid, p_short text) returns
 language plpgsql security definer set search_path = public as $$
 declare v_team bigint; v_to uuid; v_name text;
 begin
+  perform public.require_player(p_id);
   select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
   if v_team is null then raise exception 'Сначала создайте офис или вступите в него'; end if;
   select pl.player_id, pl.name into v_to, v_name from players pl where public.short_id(pl.player_id) = upper(trim(p_short)) limit 1;
@@ -245,13 +272,14 @@ create or replace function public.my_invites(p_id uuid) returns table (invite_id
 language sql security definer set search_path = public as $$
   select i.id, t.name, t.code, coalesce(f.name, 'Игрок'), i.created_at
   from invites i join teams t on t.id = i.team_id left join players f on f.player_id = i.from_player
-  where i.to_player = p_id and i.status = 'new' order by i.created_at desc;
+  where i.to_player = p_id and p_id = auth.uid() and i.status = 'new' order by i.created_at desc;
 $$;
 
 create or replace function public.answer_invite(p_id uuid, p_invite bigint, p_accept boolean) returns text
 language plpgsql security definer set search_path = public as $$
 declare v_team bigint;
 begin
+  perform public.require_player(p_id);
   select i.team_id into v_team from invites i where i.id = p_invite and i.to_player = p_id and i.status = 'new';
   if v_team is null then raise exception 'Приглашение не найдено'; end if;
   update invites set status = case when p_accept then 'accepted' else 'declined' end where id = p_invite;
@@ -266,6 +294,7 @@ create or replace function public.post_message(p_id uuid, p_channel text, p_text
 language plpgsql security definer set search_path = public as $$
 declare v_ch text; v_team bigint;
 begin
+  perform public.require_player(p_id);
   if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
   if p_channel = 'global' then v_ch := 'global';
   elsif p_channel = 'team' then
@@ -284,6 +313,7 @@ returns table (msg_id bigint, name text, avatar text, short_id text, dept text, 
 language plpgsql security definer set search_path = public as $$
 declare v_ch text; v_team bigint;
 begin
+  perform public.require_player(p_id);
   if p_channel = 'global' then v_ch := 'global';
   else
     select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
@@ -325,7 +355,7 @@ declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
     'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
-    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)'] loop
+    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)'] loop
     execute format('revoke all on function public.%s from public', f);
     execute format('grant execute on function public.%s to anon, authenticated', f);
   end loop;
