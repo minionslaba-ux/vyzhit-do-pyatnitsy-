@@ -710,7 +710,12 @@
   }
 
   // ---------- игровой экран ----------
-  function enterGame() { busy = false; show('game'); splashFor = -1; renderBars(); renderCard(); }
+  function enterGame() { busy = false; show('game'); splashFor = -1; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
+  // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
+  function track(kind, o = {}) {
+    if (!board.online || !prefs.name) return;
+    board.rpc('log_event', { p_id: prefs.playerId, p_kind: kind, p_mode: o.mode || null, p_card: o.card || null, p_won: o.won ?? null, p_step: o.step ?? null, p_detail: o.detail || null }).catch(() => {});
+  }
 
   function renderBars() {
     for (const r of RES) {
@@ -938,6 +943,7 @@
       $('qNext').textContent = ok ? 'Продолжить неделю' : 'Принять судьбу';
       $('qAfter').hidden = false; $('qNext').focus({ preventScroll: true });
       ok ? sfx.item() : sfx.stamp();
+      track('quiz', { won: ok, card: q.id, mode: S.mode });
       $('qNext').onclick = () => {
         el.hidden = true;
         if (ok) {
@@ -1063,6 +1069,7 @@
     $('share').onclick = () => share(false, k);
     $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : S.mode === 'tour' ? openScreen(S.tourCode) : startPack();
     record(false, k, high);
+    track('week_end', { mode: S.mode, won: false, step: S.step, card: S.deck[S.step]?.id, detail: `${k}${high ? ':100' : ':0'}` });
     $('next').focus({ preventScroll: true });
   }
 
@@ -1104,6 +1111,7 @@
     if ($('vac')) $('vac').onclick = takeVacation;
     $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : S.mode === 'tour' ? openScreen(S.tourCode) : renderMenu();
     record(true, null, false);
+    track('week_end', { mode: S.mode, won: true, step: 15 });
     $('next').focus({ preventScroll: true });
   }
 
@@ -1560,6 +1568,30 @@
       await board.rpc('leave_team', { p_id: prefs.playerId }).catch(err => toast(err.message)); showOffice(); };
   }
 
+  // ---------- статистика игры: ?stats ----------
+  async function showStats() {
+    views.end.classList.add('screen-view'); show('end'); setPhase('evening');
+    views.end.innerHTML = '<div class="screen"><div class="scr-head"><h1>Статистика</h1><p class="scr-when">Загружаю…</p></div></div>';
+    try {
+      const get = v => fetch(`${window.SUPABASE_CONFIG.url.replace(/\/+$/, '')}/rest/v1/${v}?select=*`, { headers: { apikey: window.SUPABASE_CONFIG.anonKey } }).then(r => r.ok ? r.json() : Promise.reject(new Error(`Supabase ответил ${r.status} на ${v}`)));
+      const [[o], killers, [f], modes] = await Promise.all(['stats_overview', 'stats_killers', 'stats_funnel', 'stats_modes'].map(get));
+      const box = (v, l) => `<div class="stat-box"><b>${v ?? 0}</b><span>${l}</span></div>`;
+      const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '—';
+      views.end.innerHTML = `<div class="screen stats">
+        <div class="scr-head"><span class="kicker">Только сводные цифры, без личных данных</span><h1>Статистика игры</h1></div>
+        <div class="stats-grid">${box(o.players, 'игроков всего')}${box(o.active_day, 'за сутки')}${box(o.active_week, 'за неделю')}${box(o.weeks, 'недель сыграно')}
+          ${box((o.win_rate ?? 0) + '%', 'недель закрыто')}${box((o.quiz_rate ?? 0) + '%', 'верных на втором шансе')}${box(o.shares, 'приглашений открыто')}${box(o.installs, 'установок на телефон')}</div>
+        <h2>Воронка</h2>
+        <div class="stats-grid">${box(f.opened, 'зашли в игру')}${box(`${f.week1} · ${pct(f.week1, f.opened)}`, 'доиграли 1 неделю')}${box(`${f.week3} · ${pct(f.week3, f.opened)}`, '3 недели')}${box(`${f.week10} · ${pct(f.week10, f.opened)}`, '10 недель')}${box(f.year, 'весь год')}</div>
+        <h2>По режимам</h2>
+        <div class="scr-list">${modes.map(m => `<div class="scr-row"><span class="scr-pos">${m.weeks}</span><span></span><span class="scr-name"><b>${({ career: 'Карьера', daily: 'Неделя дня', tour: 'Турнир', pack: 'Брендированная' })[m.mode] || m.mode}</b><small>в среднем ходов за неделю: ${m.avg_step} из 15</small></span><span class="scr-res won">${m.win_rate}%</span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
+        <h2>Карточки, на которых чаще всего увольняют</h2>
+        <div class="scr-list">${killers.map((k, i) => `<div class="scr-row"><span class="scr-pos">${i + 1}</span><span></span><span class="scr-name"><b>${esc(byId[k.card_id]?.text?.slice(0, 90) || k.card_id)}</b><small>${esc(k.card_id)}</small></span><span class="scr-res lost">${k.losses}</span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
+        <button class="btn-ghost scr-exit" id="stBack">Закрыть</button></div>`;
+    } catch (err) { views.end.innerHTML = `<div class="end-sheet glass"><h1>Нет данных</h1><p>${esc(err.message)}. Выполните свежий supabase/schema.sql.</p><div class="stack"><button class="btn-ghost" id="stBack">Закрыть</button></div></div>`; }
+    $('stBack').onclick = () => { views.end.classList.remove('screen-view'); history.replaceState(null, '', location.pathname); prefs.name ? renderMenu() : renderWelcome(); };
+  }
+
   // ---------- турнир офиса ----------
   // Создатель офиса назначает старт; все играют одну неделю (по общему seed), в зачёт — первая попытка
   const fmtTime = iso => new Date(iso).toLocaleString('ru-RU', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
@@ -1654,7 +1686,13 @@
         }
         list.innerHTML = rows.length ? rows.map(m => `<div class="msg${m.mine ? ' mine' : ''}"><span class="ava-s" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
           <span class="meta">${m.mine ? '' : `<b>${esc(m.name)}</b> · `}${new Date(m.sent_at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}${m.dept && !m.mine ? ` · ${esc(m.dept)}` : ''}</span>
-          <span class="bubble">${esc(m.msg)}</span></div>`).join('') : '<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первым!</div>';
+          <span class="bubble">${esc(m.msg)}</span>
+          <span class="msg-act">${m.can_hide ? `<button data-hide="${m.msg_id}">Скрыть</button>` : ''}${m.mine ? '' : `<button data-report="${m.msg_id}">Пожаловаться</button>`}</span></div>`).join('') : '<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первым!</div>';
+        list.querySelectorAll('[data-hide]').forEach(b => b.onclick = async () => {
+          try { await board.rpc('hide_message', { p_id: prefs.playerId, p_msg: +b.dataset.hide }); toast('Сообщение скрыто'); chatLast = ''; load(); } catch (err) { toast(err.message); } });
+        list.querySelectorAll('[data-report]').forEach(b => b.onclick = async () => {
+          try { await board.rpc('report_message', { p_id: prefs.playerId, p_msg: +b.dataset.report }); b.textContent = 'Жалоба отправлена'; b.disabled = true; toast('Спасибо. После трёх жалоб сообщение скроется'); chatLast = ''; }
+          catch (err) { toast(err.message); } });
         if (atBottom || rows.some(r => r.mine)) list.scrollTop = list.scrollHeight;
       } catch (err) { $('chList').innerHTML = `<div class="lb-empty"><span class="big">Нет связи</span>${esc(err.message)}</div>`; }
     };
@@ -1685,6 +1723,7 @@
   }
   function bindShare(root) { root.querySelectorAll('[data-share]').forEach(b => b.onclick = () => { snoozeViral(7); openShare(b.dataset.share); }); }
   async function openShare(kind) {
+    track('share', { detail: kind });
     const m = $('modal');
     const { url, team } = await referralLink(kind), text = shareText(kind, team), full = `${text} ${url}`;
     const enc = encodeURIComponent;
@@ -1731,7 +1770,7 @@
   async function claimReferral() {
     if (!board.online || !prefs.refBy || prefs.refClaimed || !prefs.name) return;
     if (prefs.refBy === shortId(await myTag)) { delete prefs.refBy; store.set(KEY.prefs, prefs); return; }
-    try { await board.rpc('claim_referral', { p_id: prefs.playerId, p_ref: prefs.refBy }); prefs.refClaimed = true; store.set(KEY.prefs, prefs); } catch {}
+    try { await board.rpc('claim_referral', { p_id: prefs.playerId, p_ref: prefs.refBy }); prefs.refClaimed = true; store.set(KEY.prefs, prefs); track('invite', { detail: prefs.refBy }); } catch {}
   }
   // Бонус пригласившему: новые пришедшие → +1 предмет на следующую неделю за каждого
   async function checkReferrals() {
@@ -1823,7 +1862,7 @@
       <button class="btn-ghost" id="insClose">Понятно</button></div>`;
     m.hidden = false; $('insClose').onclick = () => { m.hidden = true; };
   };
-  addEventListener('appinstalled', () => { $('installApp').hidden = true; toast('Игра установлена — ищите иконку на экране телефона'); });
+  addEventListener('appinstalled', () => { track('install'); $('installApp').hidden = true; toast('Игра установлена — ищите иконку на экране телефона'); });
   // Telegram Mini App: тёмная шапка, имя из Telegram, приглашения через startapp=ref-ID_join-КОД, кнопка «Назад»
   if (TG) {
     try {
@@ -1843,6 +1882,8 @@
 
   finishLogin().then(reloading => {
     if (reloading) return;
+    if (new URLSearchParams(location.search).has('stats') && board.online) return showStats();
+    track('open', { detail: TG ? 'telegram' : standalone ? 'app' : 'web' });
     const scr = new URLSearchParams(location.search).get('screen');
     if (scr && board.online) return openScreen(scr);
     if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');

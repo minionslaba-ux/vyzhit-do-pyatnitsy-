@@ -303,14 +303,16 @@ begin
     if v_team is null then raise exception 'Вы пока не состоите в офисе'; end if;
     v_ch := 'team:' || v_team;
   else raise exception 'Неизвестный чат'; end if;
+  if public.is_rude(p_text) then raise exception 'Сообщение не отправлено: давайте без грубостей'; end if;
   if exists (select 1 from messages m where m.player_id = p_id and m.created_at > now() - interval '2 seconds') then
     raise exception 'Не так быстро: подождите пару секунд';
   end if;
   insert into messages (channel, player_id, text) values (v_ch, p_id, left(trim(p_text), 300));
 end $$;
 
-create or replace function public.get_messages(p_id uuid, p_channel text)
-returns table (msg_id bigint, name text, avatar text, short_id text, dept text, msg text, sent_at timestamptz, mine boolean)
+drop function if exists public.get_messages(uuid, text);
+create function public.get_messages(p_id uuid, p_channel text)
+returns table (msg_id bigint, name text, avatar text, short_id text, dept text, msg text, sent_at timestamptz, mine boolean, can_hide boolean)
 language plpgsql security definer set search_path = public as $$
 declare v_ch text; v_team bigint;
 begin
@@ -322,9 +324,10 @@ begin
     v_ch := 'team:' || v_team;
   end if;
   return query
-    select m.id, coalesce(pl.name, 'Игрок'), coalesce(pl.avatar, ''), public.short_id(m.player_id), coalesce(pl.dept, ''), m.text, m.created_at, m.player_id = p_id
+    select m.id, coalesce(pl.name, 'Игрок'), coalesce(pl.avatar, ''), public.short_id(m.player_id), coalesce(pl.dept, ''), m.text, m.created_at, m.player_id = p_id,
+      m.player_id = p_id or exists (select 1 from teams t where 'team:' || t.id = v_ch and t.owner = p_id)
     from messages m left join players pl on pl.player_id = m.player_id
-    where m.channel = v_ch order by m.id desc limit 60;
+    where m.channel = v_ch and not m.hidden order by m.id desc limit 60;
 end $$;
 
 -- Профиль для входа с другого устройства
@@ -429,13 +432,122 @@ language sql stable security definer set search_path = public as $$
   order by f.won desc nulls last, f.step desc nulls last, f.total desc nulls last;
 $$;
 
+-- ====================== Модерация чата ======================
+alter table public.messages add column if not exists hidden boolean not null default false;
+create table if not exists public.message_reports (
+  message_id  bigint not null references public.messages(id) on delete cascade,
+  reporter    uuid not null,
+  created_at  timestamptz not null default now(),
+  primary key (message_id, reporter)
+);
+alter table public.message_reports enable row level security;
+revoke all on public.message_reports from anon, authenticated;
+
+-- Грубые слова: сообщение с ними не отправляется (корни, с границей слова слева)
+create or replace function public.is_rude(t text) returns boolean language sql immutable as $$
+  select lower(t) ~ '(^|[^а-яё])(х[уy][йеёияю]|п[иi]зд|[её]б[аеиоуыл]|бля|муд[аоие]к|сук[аи]|г[оа]ндон|залуп|пид[оа]р|шлюх|долбо[её]б)'
+$$;
+
+-- Пожаловаться на сообщение: после трёх жалоб от разных игроков оно скрывается
+create or replace function public.report_message(p_id uuid, p_msg bigint) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  perform public.require_player(p_id);
+  insert into message_reports (message_id, reporter) values (p_msg, p_id) on conflict do nothing;
+  update messages set hidden = true where id = p_msg and (select count(*) from message_reports r where r.message_id = p_msg) >= 3;
+end $$;
+
+-- Скрыть сообщение: своё — всегда, в чате офиса — любое, если вы создатель офиса
+create or replace function public.hide_message(p_id uuid, p_msg bigint) returns void
+language plpgsql security definer set search_path = public as $$
+declare v_ch text; v_author uuid;
+begin
+  perform public.require_player(p_id);
+  select m.channel, m.player_id into v_ch, v_author from messages m where m.id = p_msg;
+  if v_ch is null then raise exception 'Сообщение не найдено'; end if;
+  if v_author <> p_id and not exists (select 1 from teams t where 'team:' || t.id = v_ch and t.owner = p_id) then
+    raise exception 'Скрывать можно свои сообщения, а в чате офиса — его создатель';
+  end if;
+  update messages set hidden = true where id = p_msg;
+end $$;
+
+-- ====================== Проверки от накрутки ======================
+-- Результат недели должен быть согласован: счёт = сумма шкал, у победы нет шкал на краю, у проигрыша — есть;
+-- не чаще одного результата в 10 секунд и не больше 40 в сутки на игрока
+create or replace function public.check_score() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_edge boolean;
+begin
+  if new.total <> new.psyche + new.energy + new.boss + new.colleagues then raise exception 'Результат не сходится'; end if;
+  v_edge := least(new.psyche, new.energy, new.boss, new.colleagues) = 0 or greatest(new.psyche, new.energy, new.boss, new.colleagues) = 100;
+  if new.won and (new.step <> 15 or new.death is not null or v_edge) then raise exception 'Результат не сходится'; end if;
+  if not new.won and (new.death is null or not v_edge) then raise exception 'Результат не сходится'; end if;
+  if exists (select 1 from scores s where s.player_id = new.player_id and s.created_at > now() - interval '10 seconds') then
+    raise exception 'Слишком часто: подождите немного';
+  end if;
+  if (select count(*) from scores s where s.player_id = new.player_id and s.created_at > now() - interval '1 day') >= 40 then
+    raise exception 'Лимит результатов на сегодня исчерпан';
+  end if;
+  return new;
+end $$;
+drop trigger if exists scores_check on public.scores;
+create trigger scores_check before insert on public.scores for each row execute function public.check_score();
+
+-- ====================== Статистика ======================
+create table if not exists public.events (
+  id          bigint generated always as identity primary key,
+  created_at  timestamptz not null default now(),
+  player_id   uuid not null,
+  kind        text not null check (kind in ('open', 'week_start', 'week_end', 'quiz', 'share', 'install', 'invite')),
+  mode        text,
+  card_id     text,
+  won         boolean,
+  step        smallint,
+  detail      text
+);
+create index if not exists events_kind_idx on public.events (kind, created_at);
+alter table public.events enable row level security;
+revoke all on public.events from anon, authenticated;
+
+create or replace function public.log_event(p_id uuid, p_kind text, p_mode text, p_card text, p_won boolean, p_step int, p_detail text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if (select count(*) from events e where e.player_id = p_id and e.created_at > now() - interval '1 hour') >= 300 then return; end if;
+  insert into events (player_id, kind, mode, card_id, won, step, detail)
+  values (p_id, p_kind, left(p_mode, 12), left(p_card, 40), p_won, least(greatest(coalesce(p_step, 0), 0), 15), left(p_detail, 60));
+end $$;
+
+-- Сводка для страницы ?stats: только агрегаты, без личных данных
+create or replace view public.stats_overview as
+select
+  (select count(distinct player_id) from events) as players,
+  (select count(distinct player_id) from events where created_at > now() - interval '1 day') as active_day,
+  (select count(distinct player_id) from events where created_at > now() - interval '7 days') as active_week,
+  (select count(*) from events where kind = 'week_end') as weeks,
+  (select round(100.0 * avg(case when won then 1 else 0 end)) from events where kind = 'week_end') as win_rate,
+  (select round(100.0 * avg(case when won then 1 else 0 end)) from events where kind = 'quiz') as quiz_rate,
+  (select count(*) from events where kind = 'share') as shares,
+  (select count(*) from events where kind = 'install') as installs;
+create or replace view public.stats_killers as
+select card_id, count(*) as losses from events where kind = 'week_end' and not won and card_id is not null
+group by card_id order by losses desc limit 30;
+create or replace view public.stats_funnel as
+with w as (select player_id, count(*) filter (where kind = 'week_end') as weeks from events group by player_id)
+select count(*) as opened, count(*) filter (where weeks >= 1) as week1, count(*) filter (where weeks >= 3) as week3,
+       count(*) filter (where weeks >= 10) as week10, count(*) filter (where weeks >= 52) as year from w;
+create or replace view public.stats_modes as
+select mode, count(*) as weeks, round(100.0 * avg(case when won then 1 else 0 end)) as win_rate, round(avg(step), 1) as avg_step
+from events where kind = 'week_end' group by mode order by weeks desc;
+grant select on public.stats_overview, public.stats_killers, public.stats_funnel, public.stats_modes to anon, authenticated;
+
 do $$
 declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
     'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
     'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)',
-    'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)'] loop
+    'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)',
+    'report_message(uuid,bigint)', 'hide_message(uuid,bigint)', 'log_event(uuid,text,text,text,boolean,int,text)'] loop
     execute format('revoke all on function public.%s from public', f);
     execute format('grant execute on function public.%s to anon, authenticated', f);
   end loop;
@@ -444,10 +556,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 23 строки
+-- Проверка: должны вернуться 26 строк
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event');

@@ -492,6 +492,14 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 .money.expense div { border-color: rgba(255,59,107,.35); } .money.expense b { color: var(--magenta-xl); text-shadow: 0 0 8px rgba(255,59,212,.4); }
 .debt { color: var(--down) !important; font-weight: 800; font-size: 14px !important; }
 
+.msg-act { grid-column: 2; display: flex; gap: 10px; }
+.msg.mine .msg-act { grid-column: 1; justify-content: flex-end; }
+.msg-act button { background: none; border: 0; padding: 0; color: var(--text-2); font-size: 11px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; opacity: .7; }
+.msg-act button:hover { opacity: 1; color: var(--text); }
+.stats h2 { margin: 6px 0 0; font-family: var(--f-display); font-weight: 600; font-size: 16px; color: var(--cyan-l); text-transform: uppercase; letter-spacing: .06em; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stats-grid .stat-box b { font-size: 22px; }
+
 /* ---------- рейтинг и участники ---------- */
 .board { overflow: hidden; }
 .board-head { display: flex; align-items: center; gap: 10px; }
