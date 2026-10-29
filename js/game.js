@@ -69,38 +69,72 @@
     del(k) { try { localStorage.removeItem(k); } catch {} },
   };
   const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs' };
-  const prefs = Object.assign({ name: '', dept: '', prof: 'marketer', sound: true }, store.get(KEY.prefs, {}));
+  const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', sound: true }, store.get(KEY.prefs, {}));
+  const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
   if (!prefs.playerId) {
     prefs.playerId = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
     store.set(KEY.prefs, prefs);
   }
 
-  // ---------- общий рейтинг офиса ----------
-  // С ключами Supabase из js/config.js результаты уходят в общую таблицу, без них — хранятся в этом браузере
+  // ---------- общий рейтинг и участники ----------
+  // С ключами Supabase из js/config.js данные общие для всего офиса, без них — хранятся в этом браузере.
+  // Чужие player_id наружу не отдаются: строки узнаются по tag = SHA-256(player_id).
+  async function sha256hex(text) {
+    try {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch { return 'local-' + text; }
+  }
+  const myTag = sha256hex(prefs.playerId);
   const board = (() => {
     const cfg = window.SUPABASE_CONFIG || {};
     const online = !!(cfg.url && cfg.anonKey);
     const base = online ? cfg.url.replace(/\/+$/, '') + '/rest/v1' : '';
     const headers = online ? { apikey: cfg.anonKey, Authorization: `Bearer ${cfg.anonKey}`, 'Content-Type': 'application/json' } : {};
     const better = (a, b) => (b.won - a.won) || (b.step - a.step) || (b.total - a.total) || (a.created_at < b.created_at ? -1 : 1);
-    const LOCAL = 'vdp-board';
+    const LOCAL = 'vdp-board', PEOPLE = 'vdp-people';
+    const req = async (path, opts = {}) => {
+      const r = await fetch(`${base}${path}`, { ...opts, headers: { ...headers, ...(opts.headers || {}) } });
+      if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
+      return r.status === 204 || opts.method === 'POST' ? null : r.json();
+    };
+    const me = async () => ({ tag: await myTag, name: prefs.name, dept: prefs.dept, avatar: prefs.avatar });
     return {
       online,
+      async touch(status, step = 0) {
+        if (!prefs.name) return;
+        if (!online) {
+          const all = store.get(PEOPLE, {}), m = await me();
+          all[m.tag] = { ...all[m.tag], ...m, prof: prefs.prof, status, step, updated_at: new Date().toISOString(), created_at: all[m.tag]?.created_at || new Date().toISOString() };
+          store.set(PEOPLE, all); return;
+        }
+        await req('/rpc/touch_player', { method: 'POST', body: JSON.stringify({ p_id: prefs.playerId, p_name: prefs.name, p_dept: prefs.dept,
+          p_avatar: prefs.avatar, p_prof: prefs.prof, p_status: status, p_step: step }) });
+      },
       async submit(entry) {
-        if (!online) { const all = store.get(LOCAL, []); all.push({ ...entry, created_at: new Date().toISOString() }); store.set(LOCAL, all.slice(-200)); return; }
-        const r = await fetch(`${base}/scores`, { method: 'POST', headers: { ...headers, Prefer: 'return=minimal' }, body: JSON.stringify(entry) });
-        if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
+        if (!online) {
+          const all = store.get(LOCAL, []); all.push({ ...entry, ...(await me()), created_at: new Date().toISOString() });
+          store.set(LOCAL, all.slice(-200)); return;
+        }
+        await req('/scores', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(entry) });
       },
       async top(dept) {
         if (!online) {
           const bestOf = {};
-          for (const e of store.get(LOCAL, [])) if (!bestOf[e.player_id] || better(e, bestOf[e.player_id]) < 0) bestOf[e.player_id] = e;
+          for (const e of store.get(LOCAL, [])) if (!bestOf[e.tag] || better(e, bestOf[e.tag]) < 0) bestOf[e.tag] = e;
           return Object.values(bestOf).filter(e => !dept || e.dept === dept).sort(better).slice(0, 100);
         }
-        const q = `select=*&order=won.desc,step.desc,total.desc,created_at.asc&limit=100${dept ? `&dept=eq.${encodeURIComponent(dept)}` : ''}`;
-        const r = await fetch(`${base}/leaderboard?${q}`, { headers });
-        if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
-        return r.json();
+        return req(`/leaderboard?select=*&order=won.desc,step.desc,total.desc,created_at.asc&limit=100${dept ? `&dept=eq.${encodeURIComponent(dept)}` : ''}`);
+      },
+      async people(dept) {
+        if (!online) {
+          const games = store.get(LOCAL, []);
+          return Object.values(store.get(PEOPLE, {})).filter(p => !dept || p.dept === dept).map(p => {
+            const mine = games.filter(g => g.tag === p.tag), best = mine.sort(better)[0];
+            return { ...p, games: mine.length, wins: mine.filter(g => g.won).length, best_won: best?.won, best_step: best?.step, best_total: best?.total };
+          }).sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+        }
+        return req(`/participants?select=*&order=updated_at.desc&limit=200${dept ? `&dept=eq.${encodeURIComponent(dept)}` : ''}`);
       },
     };
   })();
@@ -125,7 +159,7 @@
 
   // ---------- DOM ----------
   const $ = id => document.getElementById(id);
-  const views = { menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
+  const views = { join: $('join'), menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
   const show = v => Object.entries(views).forEach(([k, el]) => el.hidden = k !== v);
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 
@@ -160,7 +194,7 @@
   const getProf = () => document.querySelector('input[name=prof]:checked')?.value || 'marketer';
 
   function renderMenu() {
-    $('name').value = prefs.name; $('dept').value = prefs.dept;
+    $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
     const radio = document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]');
     radio.checked = true;
     setPhase('day');
@@ -172,11 +206,38 @@
     $('resume').hidden = !save;
     if (save) $('resume').textContent = `Продолжить: ${DAYS[Math.floor(save.step / 3)]}, ${PHASES[save.step % 3].name.toLowerCase()}`;
     renderSound(); show('menu');
+    board.touch('menu').catch(() => {});
   }
   $('profs').onchange = () => { prefs.prof = getProf(); store.set(KEY.prefs, prefs); };
-  $('name').oninput = () => { prefs.name = $('name').value.trim(); store.set(KEY.prefs, prefs); };
-  $('dept').oninput = () => { prefs.dept = $('dept').value.trim(); store.set(KEY.prefs, prefs); };
-  $('openBoard').onclick = () => openBoard('menu');
+  $('openBoard').onclick = () => openBoard('menu', 'rating');
+  $('openPeople').onclick = () => openBoard('menu', 'people');
+  $('meEdit').onclick = () => renderJoin(true);
+
+  // ---------- пропуск в офис ----------
+  $('avatars').innerHTML = AVATARS.map(a => `<label class="ava"><input type="radio" name="ava" value="${a}"><span aria-hidden="true">${a}</span></label>`).join('');
+  $('avatars').onchange = () => { $('joinAvatar').textContent = document.querySelector('input[name=ava]:checked').value; };
+  function renderJoin(editing) {
+    $('joinName').value = prefs.name; $('joinDept').value = prefs.dept;
+    (document.querySelector(`input[name=ava][value="${prefs.avatar}"]`) || document.querySelector('input[name=ava]')).checked = true;
+    $('joinAvatar').textContent = document.querySelector('input[name=ava]:checked').value;
+    $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid');
+    $('joinCancel').hidden = !editing; $('joinGo').textContent = editing ? 'Сохранить' : 'Войти в офис';
+    setPhase('morning'); show('join');
+    if (!editing) $('joinName').focus({ preventScroll: true });
+  }
+  $('joinName').oninput = () => { $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid'); };
+  $('joinCancel').onclick = renderMenu;
+  $('joinForm').onsubmit = e => {
+    e.preventDefault();
+    const name = $('joinName').value.trim().replace(/\s+/g, ' ');
+    if (name.length < 2) {
+      $('joinErr').textContent = 'Введите имя — хотя бы 2 буквы. Его увидят коллеги в рейтинге.';
+      $('joinName').setAttribute('aria-invalid', 'true'); $('joinName').focus(); return;
+    }
+    prefs.name = name; prefs.dept = $('joinDept').value.trim().replace(/\s+/g, ' ');
+    prefs.avatar = document.querySelector('input[name=ava]:checked').value;
+    store.set(KEY.prefs, prefs); renderMenu();
+  };
   $('start').onclick = () => newGame();
   $('resume').onclick = () => { S = store.get(KEY.save, null); if (S) enterGame(); };
 
@@ -202,10 +263,10 @@
   }
 
   function newGame() {
-    prefs.name = $('name').value.trim(); prefs.dept = $('dept').value.trim(); prefs.prof = getProf(); store.set(KEY.prefs, prefs);
+    prefs.prof = getProf(); store.set(KEY.prefs, prefs);
     const res = { psyche: 50, energy: 50, boss: 50, colleagues: 50 };
     for (const [k, v] of Object.entries(PROF[prefs.prof].bonus)) res[k] = clamp(res[k] + v);
-    S = { name: prefs.name || 'Сотрудник месяца', dept: prefs.dept, prof: prefs.prof, res, step: 0, deck: buildDeck(prefs.prof) };
+    S = { name: prefs.name, dept: prefs.dept, prof: prefs.prof, res, step: 0, deck: buildDeck(prefs.prof) };
     splashFor = -1;
     store.set(KEY.save, S);
     enterGame();
@@ -250,6 +311,7 @@
       return `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}"></i>`; }).join('')}</span>`).join('');
     clearPreview();
     if (S.step % 3 === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
+    board.touch('playing', S.step).catch(() => {});
   }
 
   // Заставка перед началом каждого дня
@@ -358,7 +420,7 @@
       <div class="stack"><button class="btn-main" id="retry">Попробовать снова</button><button class="btn-ghost" id="toBoard">🏆 Рейтинг офиса</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
-    $('retry').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end');
+    $('retry').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end', 'rating');
     record(false, k);
     $('retry').focus({ preventScroll: true });
   }
@@ -378,7 +440,7 @@
       <div class="stack"><button class="btn-main" id="share">Поделиться результатом</button><button class="btn-ghost" id="toBoard">🏆 Рейтинг офиса</button><button class="btn-ghost" id="again">Ещё одна неделя</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
-    $('share').onclick = () => share(total); $('again').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end');
+    $('share').onclick = () => share(total); $('again').onclick = () => newGame(); $('toMenu').onclick = renderMenu; $('toBoard').onclick = () => openBoard('end', 'rating');
     record(true, null);
     $('share').focus({ preventScroll: true });
   }
@@ -391,8 +453,9 @@
     const el = () => $('place');
     try {
       await board.submit(entry);
-      const list = await board.top();
-      const pos = list.findIndex(e => e.player_id === prefs.playerId) + 1;
+      board.touch('finished', entry.step).catch(() => {});
+      const list = await board.top(), tag = await myTag;
+      const pos = list.findIndex(e => e.tag === tag) + 1;
       if (!el()) return;
       el().innerHTML = pos ? `<b>#${pos}</b><span>ваше место в рейтинге${board.online ? ' офиса' : ' на этом устройстве'} (лучшая неделя)</span>` : '<span>Результат записан в рейтинг</span>';
     } catch (err) {
@@ -402,33 +465,68 @@
 
   const resultText = e => e.won ? { main: `${e.total}/400`, sub: '🏆 выжил' } :
     { main: `${DAYS[Math.floor(e.step / 3)].slice(0, 2)}, ${PHASES[e.step % 3].name.toLowerCase()}`, sub: `💀 ${RES.find(r => r.k === e.death)?.name || ''} 0%` };
-  let boardFrom = 'menu', boardTab = 'all';
-  function openBoard(from) { boardFrom = from; show('board'); setPhase(from === 'end' ? document.body.dataset.phase : 'day'); renderBoard(); }
-  async function renderBoard() {
-    $('tabAll').setAttribute('aria-selected', boardTab === 'all'); $('tabDept').setAttribute('aria-selected', boardTab === 'dept');
-    $('boardNote').textContent = board.online ? 'Лучшая неделя каждого игрока. Обновите, чтобы увидеть свежие результаты.'
-      : 'Общий рейтинг ещё не подключён — показаны результаты с этого устройства. Подключение: js/config.js.';
+  const ago = iso => {
+    const m = Math.max(0, Math.round((Date.now() - new Date(iso)) / 60000));
+    return m < 1 ? 'только что' : m < 60 ? `${m} мин назад` : m < 1440 ? `${Math.floor(m / 60)} ч назад` : `${Math.floor(m / 1440)} дн. назад`;
+  };
+  const stepName = st => `${DAYS[Math.min(4, Math.floor(st / 3))].slice(0, 2)}, ${PHASES[st % 3].name.toLowerCase()}`;
+  function personStatus(p) {
+    const fresh = Date.now() - new Date(p.updated_at) < 10 * 60000;
+    if (fresh && p.status === 'playing') return `<span class="st play"><i></i>играет · ${stepName(p.step)}</span>`;
+    if (fresh) return '<span class="st on"><i></i>в сети</span>';
+    return `<span class="st"><i></i>${ago(p.updated_at)}</span>`;
+  }
+
+  let boardFrom = 'menu', boardMode = 'rating', boardTimer = null;
+  function openBoard(from, mode) {
+    boardFrom = from; boardMode = mode; show('board');
+    setPhase(from === 'end' ? document.body.dataset.phase : 'day'); renderBoard();
+    clearInterval(boardTimer);
+    boardTimer = setInterval(() => { if (views.board.hidden) clearInterval(boardTimer); else if (!document.hidden) renderBoard(true); }, 20000);
+  }
+  async function renderBoard(quiet) {
+    const people = boardMode === 'people', onlyDept = $('onlyDept').checked;
+    $('modeRating').setAttribute('aria-selected', !people); $('modePeople').setAttribute('aria-selected', people);
+    $('boardTitle').textContent = people ? 'Участники' : 'Рейтинг офиса';
+    $('boardNote').textContent = !board.online ? 'Общий офис ещё не подключён — показаны данные с этого устройства. Подключение: js/config.js.'
+      : people ? 'Список обновляется каждые 20 секунд.' : 'Лучшая неделя каждого игрока.';
     const list = $('boardList');
-    if (boardTab === 'dept' && !prefs.dept) {
-      list.innerHTML = '<div class="lb-empty"><span class="big">🏢</span>Укажите свой отдел в главном меню, чтобы сравнить результаты с коллегами по отделу.</div>'; return;
+    if (onlyDept && !prefs.dept) {
+      $('boardSummary').textContent = '';
+      list.innerHTML = '<div class="lb-empty"><span class="big">🏢</span>Укажите свой отдел (кнопка «Изменить» в меню), чтобы видеть коллег по отделу.</div>'; return;
     }
-    list.innerHTML = '<div class="lb-empty">Загружаю рейтинг…</div>';
+    if (!quiet) list.innerHTML = '<div class="lb-empty">Загружаю…</div>';
     try {
-      const rows = await board.top(boardTab === 'dept' ? prefs.dept : '');
-      if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">🪑</span>Пока никто не доиграл неделю. Станьте первым!</div>'; return; }
-      list.innerHTML = rows.map((e, i) => { const r = resultText(e), medal = ['🥇', '🥈', '🥉'][i];
-        return `<div class="lb-row${e.player_id === prefs.playerId ? ' me' : ''}">
-          <span class="lb-pos${medal ? ' medal' : ''}">${medal || i + 1}</span>
-          <span class="lb-who"><b>${PROF[e.prof]?.icon || ''} ${esc(e.name)}</b><small>${esc(e.dept || 'без отдела')} · ${PROF[e.prof]?.name || ''}</small></span>
-          <span class="lb-res ${e.won ? 'won' : 'lost'}"><b>${r.main}</b><small>${r.sub}</small></span></div>`; }).join('');
+      const dept = onlyDept ? prefs.dept : '', tag = await myTag;
+      if (people) {
+        const rows = await board.people(dept);
+        const live = rows.filter(p => Date.now() - new Date(p.updated_at) < 10 * 60000);
+        $('boardSummary').textContent = `Участников: ${rows.length} · в сети: ${live.length}`;
+        if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">🪑</span>Пока никого нет.</div>'; return; }
+        list.innerHTML = rows.map(p => `<div class="lb-row person${p.tag === tag ? ' me' : ''}">
+          <span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
+          <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? ' (вы)' : ''}</b><small>${esc(p.dept || 'без отдела')}</small>
+            <small class="lb-meta">недель: ${p.games || 0} · побед: ${p.wins || 0}${p.games ? ` · лучшее: ${p.best_won ? `${p.best_total}/400` : stepName(p.best_step)}` : ''}</small></span>
+          <span class="lb-res">${personStatus(p)}</span></div>`).join('');
+      } else {
+        const rows = await board.top(dept);
+        $('boardSummary').textContent = `В рейтинге: ${rows.length}`;
+        if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">🪑</span>Пока никто не доиграл неделю. Станьте первым!</div>'; return; }
+        list.innerHTML = rows.map((e, i) => { const r = resultText(e), medal = ['🥇', '🥈', '🥉'][i];
+          return `<div class="lb-row${e.tag === tag ? ' me' : ''}">
+            <span class="lb-pos${medal ? ' medal' : ''}">${medal || i + 1}</span>
+            <span class="lb-who"><b>${esc(e.avatar || PROF[e.prof]?.icon || '')} ${esc(e.name)}</b><small>${esc(e.dept || 'без отдела')} · ${PROF[e.prof]?.name || ''}</small></span>
+            <span class="lb-res ${e.won ? 'won' : 'lost'}"><b>${r.main}</b><small>${r.sub}</small></span></div>`; }).join('');
+      }
     } catch (err) {
-      list.innerHTML = `<div class="lb-empty"><span class="big">📡</span>Не удалось загрузить рейтинг: ${esc(err.message)}</div>`;
+      if (!quiet) list.innerHTML = `<div class="lb-empty"><span class="big">📡</span>Не удалось загрузить данные: ${esc(err.message)}</div>`;
     }
   }
-  $('boardBack').onclick = () => boardFrom === 'end' ? show('end') : renderMenu();
-  $('boardRefresh').onclick = renderBoard;
-  $('tabAll').onclick = () => { boardTab = 'all'; renderBoard(); };
-  $('tabDept').onclick = () => { boardTab = 'dept'; renderBoard(); };
+  $('boardBack').onclick = () => { clearInterval(boardTimer); boardFrom === 'end' ? show('end') : renderMenu(); };
+  $('boardRefresh').onclick = () => renderBoard();
+  $('modeRating').onclick = () => { boardMode = 'rating'; renderBoard(); };
+  $('modePeople').onclick = () => { boardMode = 'people'; renderBoard(); };
+  $('onlyDept').onchange = () => renderBoard();
 
   // конфетти
   function confetti() {
@@ -502,5 +600,5 @@
     $('copyTxt').focus();
   }
 
-  renderMenu();
+  prefs.name ? renderMenu() : renderJoin(false);
 })();
