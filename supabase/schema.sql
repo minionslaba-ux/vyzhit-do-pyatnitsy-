@@ -81,3 +81,11 @@ left join lateral (select won, step, total from public.scores s where s.player_i
                    order by won desc, step desc, total desc limit 1) b on true;
 
 grant select on public.leaderboard, public.participants to anon;
+
+-- Обновить кэш схемы API, чтобы новые представления и функция сразу стали доступны (иначе бывает ошибка 404)
+notify pgrst, 'reload schema';
+
+-- Проверка: должны вернуться 3 строки — leaderboard, participants, touch_player
+select 'view' as type, table_name as name from information_schema.views where table_schema = 'public' and table_name in ('leaderboard', 'participants')
+union all
+select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name = 'touch_player';

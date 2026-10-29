@@ -90,7 +90,11 @@
     const LOCAL = 'vdp-board', PEOPLE = 'vdp-people';
     const req = async (path, opts = {}) => {
       const r = await fetch(`${base}${path}`, { ...opts, headers: { ...headers, ...(opts.headers || {}) } });
-      if (!r.ok) throw new Error(`Supabase ответил ${r.status}`);
+      if (!r.ok) {
+        let detail = '';
+        try { const j = await r.json(); detail = [j.code, j.message].filter(Boolean).join(' '); } catch {}
+        throw new Error(`Supabase ответил ${r.status} на ${path.split('?')[0]}${detail ? ` (${detail})` : ''}`);
+      }
       return r.status === 204 || opts.method === 'POST' ? null : r.json();
     };
     const me = async () => ({ tag: await myTag, name: prefs.name, dept: prefs.dept, avatar: prefs.avatar });
