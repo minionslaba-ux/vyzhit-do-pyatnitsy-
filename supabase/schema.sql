@@ -23,7 +23,8 @@ alter table public.scores add column if not exists mode text not null default 'c
 alter table public.scores add column if not exists day date;
 alter table public.scores add column if not exists overheat boolean not null default false;
 alter table public.scores drop constraint if exists scores_mode_check;
-alter table public.scores add constraint scores_mode_check check (mode in ('career', 'daily', 'pack'));
+alter table public.scores add constraint scores_mode_check check (mode in ('career', 'daily', 'pack', 'tour'));
+alter table public.scores add column if not exists tour_id bigint;
 create index if not exists scores_player_idx on public.scores (player_id, won desc, step desc, total desc);
 create index if not exists scores_daily_idx on public.scores (mode, day, player_id, created_at);
 
@@ -378,12 +379,63 @@ language sql stable security definer set search_path = public as $$
   select count(*)::int from referrals where ref_player = p_id;
 $$;
 
+-- ====================== Турнир офиса ======================
+-- Создатель офиса назначает время старта; все участники играют одну и ту же неделю (seed), в зачёт — первая попытка
+create table if not exists public.tournaments (
+  id          bigint generated always as identity primary key,
+  team_id     bigint not null references public.teams(id) on delete cascade,
+  starts_at   timestamptz not null,
+  seed        text not null,
+  created_at  timestamptz not null default now()
+);
+create index if not exists tournaments_team_idx on public.tournaments (team_id, id desc);
+alter table public.tournaments enable row level security;
+revoke all on public.tournaments from anon, authenticated;
+
+create or replace function public.set_tournament(p_id uuid, p_starts timestamptz) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_team bigint; v_seed text;
+begin
+  perform public.require_player(p_id);
+  select t.id into v_team from teams t join team_members m on m.team_id = t.id where m.player_id = p_id and t.owner = p_id;
+  if v_team is null then raise exception 'Назначать турнир может только создатель офиса'; end if;
+  if p_starts < now() - interval '1 minute' then raise exception 'Время старта уже прошло'; end if;
+  v_seed := md5(random()::text || clock_timestamp()::text);
+  insert into tournaments (team_id, starts_at, seed) values (v_team, p_starts, v_seed);
+  return v_seed;
+end $$;
+
+-- Текущий (последний) турнир офиса игрока
+create or replace function public.my_tournament(p_id uuid) returns table (tour_id bigint, starts_at timestamptz, seed text, team_name text, code text, is_owner boolean)
+language sql security definer set search_path = public as $$
+  select tr.id, tr.starts_at, tr.seed, t.name, t.code, t.owner = p_id
+  from team_members m join teams t on t.id = m.team_id join tournaments tr on tr.team_id = t.id
+  where m.player_id = p_id and p_id = auth.uid()
+  order by tr.id desc limit 1;
+$$;
+
+-- Таблица турнира по коду офиса — для экрана итогов на проекторе (код знают только свои)
+create or replace function public.tournament_board(p_code text)
+returns table (team_name text, starts_at timestamptz, name text, avatar text, dept text, won boolean, step smallint, total smallint, death text, overheat boolean, played_at timestamptz)
+language sql stable security definer set search_path = public as $$
+  with tr as (
+    select tr.id, tr.starts_at, t.name from tournaments tr join teams t on t.id = tr.team_id
+    where t.code = upper(trim(p_code)) order by tr.id desc limit 1
+  ), first as (
+    select distinct on (s.player_id) s.* from scores s, tr where s.mode = 'tour' and s.tour_id = tr.id order by s.player_id, s.created_at asc
+  )
+  select tr.name, tr.starts_at, coalesce(p.name, f.name), coalesce(p.avatar, ''), coalesce(p.dept, f.dept), f.won, f.step, f.total, f.death, f.overheat, f.created_at
+  from tr left join first f on true left join players p on p.player_id = f.player_id
+  order by f.won desc nulls last, f.step desc nulls last, f.total desc nulls last;
+$$;
+
 do $$
 declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
     'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
-    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)'] loop
+    'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)',
+    'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)'] loop
     execute format('revoke all on function public.%s from public', f);
     execute format('grant execute on function public.%s to anon, authenticated', f);
   end loop;
@@ -392,10 +444,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 20 строк
+-- Проверка: должны вернуться 23 строки
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board');

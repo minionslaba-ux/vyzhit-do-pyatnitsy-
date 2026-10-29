@@ -38,12 +38,18 @@
   const RANDOM_CARDS = RANDOM_JSON.map(c => ({ ...norm(c), random: true }));
   const CHAIN_CARDS = CHAINS.map(ch => ({ ...norm(ch.card), chain: ch.origin }));
   const TYPE_CARDS = Object.values(WEEK_TYPES).flatMap(t => (t.cards || []).map(norm));
+  const SEASON_CARDS = (typeof SEASONS === 'undefined' ? [] : SEASONS).flatMap(z => z.cards.map(c => ({ ...norm(c), season: z.title })));
+  // Сезон по дате: ММ-ДД попадает в промежуток (новогодний переходит через 1 января)
+  function activeSeason(d = new Date()) {
+    const md = `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    return (typeof SEASONS === 'undefined' ? [] : SEASONS).find(z => z.from <= z.to ? md >= z.from && md <= z.to : md >= z.from || md <= z.to) || null;
+  }
   const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
   // Большой пул карточек и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
   let POOL = [], QUIZ = [], dataLoaded = false;
   const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
   let PACK = null, PACK_CARDS = [];
-  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL].map(c => [c.id, c]));
+  const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...SEASON_CARDS].map(c => [c.id, c]));
   const TOTAL_BASE = CARDS.length + RANDOM_CARDS.length + TYPE_CARDS.length + PROF_ALL.length;
   let TOTAL_CARDS = TOTAL_BASE;
   let POOL_CHAINS = [];
@@ -423,6 +429,11 @@
     try {
       myTeamCache = (await board.rpc('my_team', { p_id: prefs.playerId }))[0] || null;
       $('officeCta').hidden = !!myTeamCache;
+      const t = myTeamCache && (await board.rpc('my_tournament', { p_id: prefs.playerId }).catch(() => []))[0];
+      const fresh = t && Date.now() - new Date(t.starts_at) < 12 * 3600e3 && !store.get('vdp-tours', {})[t.tour_id];
+      $('tourCta').hidden = !fresh;
+      if (fresh) { $('tourCta').querySelector('span').innerHTML = `<b>Турнир офиса «${esc(t.team_name)}»</b> ${new Date(t.starts_at) <= Date.now() ? 'уже идёт — сыграйте свою неделю' : `старт ${until(t.starts_at)}`}`;
+        $('tourCtaGo').onclick = () => showOffice(); }
       $('meDept').textContent = (prefs.dept || 'без отдела') + (myTeamCache ? ` · офис «${myTeamCache.name}»` : '');
     } catch {}
   }
@@ -655,7 +666,9 @@
     C.newJob = false; saveCareer();
     S = newWeekState({ mode: 'career', res: C.res, type, extra: { prof: C.prof, trait: C.trait } });
     const seen = seenSet(), classic = !seen.has('__classic') || !POOL.length;  // классическая неделя — только в самый первый раз
-    S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen });
+    const season = type === 'normal' && !classic ? activeSeason() : null;
+    if (season) S.season = season.id;
+    S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title && !seen.has(c.id)) : [] });
     for (const s of S.deck) seen.add(s.id);
     if (classic) seen.add('__classic');
     store.set(KEY.seen, [...seen]);
@@ -668,7 +681,8 @@
     const day = today(), rng = seeded('vdp-daily-' + day);
     C = null;
     S = newWeekState({ mode: 'daily', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { day } });
-    S.deck = buildDeck({ type: 'normal', rng, profCard: false, classic: !POOL.length });
+    const season = activeSeason(); if (season) S.season = season.id;
+    S.deck = buildDeck({ type: 'normal', rng, profCard: false, classic: !POOL.length, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title) : [] });
     S.ranked = !store.get(KEY.daily, {})[day];
     enterGame();
   }
@@ -693,7 +707,8 @@
     const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
     $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
   }
-  const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}` : PACK?.company || '';
+  const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}`
+    : S.mode === 'tour' ? `Турнир · ${S.tourTeam}${S.ranked ? '' : ' · не в зачёт'}` : PACK?.company || '';
 
   function renderCard() {
     const slot = S.deck[S.step], c = byId[slot.id], d = Math.floor(S.step / 3), ph = PHASES[S.step % 3];
@@ -710,7 +725,8 @@
     $('btnR').innerHTML = `<span>${esc(c.answers.right.label)}</span><span class="ar">→</span>`;
     $('clock').textContent = slot.time;
     $('gCareer').textContent = headerLine();
-    $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : '';
+    const zs = S.season && SEASONS.find(z => z.id === S.season);
+    $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
     $('gDay').textContent = DAYS[d]; $('gPhase').textContent = ph.name.toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
     $('dots').innerHTML = S.deck.map((s, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}${s.origin && i > S.step ? ' chain' : ''}"></i>`).join('');
     clearPreview();
@@ -721,8 +737,10 @@
   // Заставка перед началом каждого дня; в понедельник — вид недели и выданные предметы
   function showSplash(d) {
     const el = $('splash'), T = WEEK_TYPES[S.type];
-    const top = S.mode === 'career' && C ? `Неделя ${C.week} из ${YEAR} · ` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)} · ` : '';
-    const extra = d === 0 ? `<div class="splash-week">${S.mode === 'pack' ? esc(PACK.intro) : `<b>${T.title}</b>${S.type !== 'normal' ? `<span>${T.rule}</span>` : ''}`}
+    const top = S.mode === 'career' && C ? `Неделя ${C.week} из ${YEAR} · ` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)} · ` : S.mode === 'tour' ? 'Турнир офиса · ' : '';
+    const zs = S.season && SEASONS.find(z => z.id === S.season);
+    const extra = d === 0 ? `<div class="splash-week">${S.mode === 'pack' ? esc(PACK.intro) : S.mode === 'tour' ? `<b>Турнир офиса «${esc(S.tourTeam)}»</b><span>Одна неделя для всех участников. В зачёт — первая попытка.</span>`
+      : zs && S.type === 'normal' ? `<b>${zs.title}</b><span>${zs.rule}</span>` : `<b>${T.title}</b>${S.type !== 'normal' ? `<span>${T.rule}</span>` : ''}`}
       <span class="splash-items">В сумке: ${S.items.map(i => ITEMS[i].name).join(', ')} — ${S.items.length > 1 ? 'каждый отменит' : 'отменит'} один сильный удар по своей шкале.</span></div>` : '';
     el.innerHTML = `<div class="splash-in"><small>${top}День ${d + 1} из 5</small><h2>${DAYS[d]}</h2><p>${DAY_QUIP[d]}</p>${extra}<span class="tap">нажмите, чтобы начать</span></div>`;
     el.hidden = false; splashOn = true;
@@ -771,7 +789,16 @@
     if (/коллег|чат|созвон|курьер|джун|отдел|бухгалтер|именин/i.test(who)) return ['colleagues', 'colleagues'];
     return ['self', 'psyche'];
   }
-  function react(card, eff) {
+  function react(card, eff, side) {
+    const note = card.answers?.[side]?.note;
+    if (note) {  // онбординг: вместо реплики — подсказка, как принято
+      const ok = card.correct ? card.correct === side : null, el = $('react');
+      if (card.correct) { S.flags.obTotal = (S.flags.obTotal || 0) + 1; if (ok) S.flags.obOk = (S.flags.obOk || 0) + 1; }
+      el.style.setProperty('--rc', ok === false ? '#ff3b6b' : '#d4ff3a');
+      el.innerHTML = `<b>${ok === false ? 'Не совсем.' : 'Как у нас принято.'}</b> ${esc(note.replace(/^(Верно|Так не надо|Это фишинг)[:.]\s*/, ''))}`;
+      el.classList.remove('on', 'long'); void el.offsetWidth; el.classList.add('on', 'long');
+      return;
+    }
     const [g, stat] = reactionGroup(card.who), R = REACTIONS[g];
     const mood = (eff[stat] || Object.values(eff).reduce((a, b) => a + b, 0)) >= 0 ? 'pos' : 'neg';
     const el = $('react');
@@ -799,7 +826,7 @@
       if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
       const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
       if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
-      clearPreview(); renderBars(); react(c, eff);
+      clearPreview(); renderBars(); react(c, eff, side);
       const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
       const best = store.get(KEY.best, { step: 0, wins: 0 });
       if (dead && !S.chanceUsed && QUIZ.length) { setTimeout(() => secondChance(dead.k, !deadLow), 650); return; }  // второй шанс — раз в неделю
@@ -966,6 +993,7 @@
     <div class="row2"><button class="btn-main" data-share="team">Позвать коллег</button><button class="btn-ghost" data-share="friends">Рассказать друзьям</button></div></div>`;
   function bindCommon() { bindShare(views.end); $('toMenu').onclick = renderMenu; if ($('toBoard')) $('toBoard').onclick = () => openBoard('end', S?.mode === 'daily' ? 'daily' : 'rating'); }
   const traitText = (kind, trait) => TRAITS[trait || 'workaholic'][kind];
+  const onboardingLine = () => S.flags.obTotal ? `<div class="place"><b>${S.flags.obOk || 0}/${S.flags.obTotal}</b><span>правильных решений в учебной неделе</span></div>` : '';
   function rank(total) { return total >= 280 ? 'Легенда опенспейса' : total >= 220 ? 'Сеньор по выживанию' : total >= 160 ? 'Крепкий мидл' : 'Чудом уцелевший стажёр'; }
 
   function weekEndings(won, k, high) {
@@ -1007,13 +1035,14 @@
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
-      <div class="stack">${career ? `<button class="btn-main" id="next">${next}</button>` : `<button class="btn-main" id="next">${S.mode === 'daily' ? 'Сыграть неделю дня ещё раз' : 'Сыграть ещё раз'}</button>`}
+      ${onboardingLine()}
+      <div class="stack">${career ? `<button class="btn-main" id="next">${next}</button>` : `<button class="btn-main" id="next">${S.mode === 'daily' ? 'Сыграть неделю дня ещё раз' : S.mode === 'tour' ? 'Экран итогов турнира' : 'Сыграть ещё раз'}</button>`}
         <button class="btn-ghost" id="share">Мем-карточка для чата</button>
         <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end'); bindCommon();
     $('share').onclick = () => share(false, k);
-    $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : startPack();
+    $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : S.mode === 'tour' ? openScreen(S.tourCode) : startPack();
     record(false, k, high);
     $('next').focus({ preventScroll: true });
   }
@@ -1030,7 +1059,8 @@
       last = C.week > YEAR;
     }
     if (last || !career) confetti();
-    const kicker = career ? `Неделя ${week} из ${YEAR} · ${esc(C.company)} · пятница, 18:00` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)} · пятница, 18:00` : `${esc(PACK.title)} · пятница, 18:00`;
+    const kicker = career ? `Неделя ${week} из ${YEAR} · ${esc(C.company)} · пятница, 18:00` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)} · пятница, 18:00`
+      : S.mode === 'tour' ? `Турнир офиса «${esc(S.tourTeam)}» · пятница, 18:00` : `${esc(PACK.title)} · пятница, 18:00`;
     views.end.innerHTML = `<div class="end-sheet glass">
       <span class="kicker">${kicker}</span>
       <h1>${last ? 'Год позади!' : 'Неделя закрыта!'}</h1>
@@ -1043,7 +1073,8 @@
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
-      <div class="stack"><button class="btn-main" id="next">${career ? (last ? 'Итоги года' : `Неделя ${C.week} →`) : 'В главное меню'}</button>
+      ${onboardingLine()}
+      <div class="stack"><button class="btn-main" id="next">${career ? (last ? 'Итоги года' : `Неделя ${C.week} →`) : S.mode === 'tour' ? 'Экран итогов турнира' : 'В главное меню'}</button>
         ${career && !last && C.vacation >= 7 ? '<button class="btn-ghost btn-vac" id="vac">Уйти в отпуск на неделю (7 дн.)</button>' : ''}
         <button class="btn-ghost" id="share">Мем-карточка для чата</button>
         <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
@@ -1051,7 +1082,7 @@
     show('end'); bindCommon();
     $('share').onclick = () => share(true);
     if ($('vac')) $('vac').onclick = takeVacation;
-    $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : renderMenu();
+    $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : S.mode === 'tour' ? openScreen(S.tourCode) : renderMenu();
     record(true, null, false);
     $('next').focus({ preventScroll: true });
   }
@@ -1206,13 +1237,21 @@
       if (!all[S.day]) { all[S.day] = { won, total }; store.set(KEY.daily, all); }
     }
     const el = () => $('place');
-    if (S.mode === 'pack' || (S.mode === 'daily' && !S.ranked)) { if (el()) el().textContent = S.mode === 'pack' ? 'Брендированная неделя в общий рейтинг не идёт.' : 'Повторная попытка: в рейтинг дня идёт только первая.'; return; }
+    if (S.mode === 'tour') { const t = store.get('vdp-tours', {}); if (!t[S.tourId]) { t[S.tourId] = { won, total }; store.set('vdp-tours', t); } }
+    if (S.mode === 'pack' || (S.mode === 'daily' && !S.ranked) || (S.mode === 'tour' && !S.ranked)) {
+      if (el()) el().textContent = S.mode === 'pack' ? 'Брендированная неделя в общий рейтинг не идёт.' : 'Повторная попытка: в зачёт идёт только первая.'; return; }
     const entry = { player_id: prefs.playerId, name: S.name.slice(0, 24), dept: (S.dept || '').slice(0, 24), prof: S.prof, won,
       step: won ? 15 : S.step, total, psyche: S.res.psyche, energy: S.res.energy, boss: S.res.boss, colleagues: S.res.colleagues, death,
-      mode: S.mode, day: S.mode === 'daily' ? S.day : null, overheat: !!high };
+      mode: S.mode, day: S.mode === 'daily' ? S.day : null, overheat: !!high, ...(S.mode === 'tour' ? { tour_id: S.tourId } : {}) };
     try {
       await board.submit(entry);
       board.touch('finished', entry.step).catch(() => {});
+      if (S.mode === 'tour') {
+        const rows = (await board.rpc('tournament_board', { p_code: S.tourCode })).filter(r => r.name);
+        const pos = rows.findIndex(r => r.name === prefs.name && r.played_at) + 1;
+        if (el()) el().innerHTML = pos ? `<b>#${pos}</b><span>место в турнире офиса из ${rows.length}</span>` : '<span>Результат записан в турнир</span>';
+        return;
+      }
       const list = S.mode === 'daily' ? await board.daily(S.day) : await board.top(), tag = await myTag;
       const pos = list.findIndex(e => e.tag === tag) + 1;
       if (!el()) return;
@@ -1457,8 +1496,10 @@
         <span class="lb-ava" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
         <span class="lb-who"><b>${esc(m.name)}${m.is_me ? ' (вы)' : ''}${m.is_owner ? ' · создатель' : ''}</b><small>${esc(m.dept || 'без отдела')} · ID ${m.short_id}</small></span>
         <span class="lb-res">${personStatus(m)}</span></div>`).join('')}</div>
+      <div class="tour-box" id="tourBox"><span class="kicker">Турнир офиса</span><p class="field-note">Загружаю…</p></div>
       <div class="stack"><button class="btn-main" id="toChat">Чат офиса</button><button class="btn-ghost" id="leave">Покинуть офис</button><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`;
     $('toMenu').onclick = renderMenu; $('toChat').onclick = () => showChat('team');
+    renderTourBox(team);
     $('cpLink').onclick = () => copy(`Заходи в наш офис «${team.name}» в игре «Выжить до пятницы»: ${inviteLink(team.code)}`, 'Ссылка скопирована — отправьте её в рабочий чат');
     $('invForm').onsubmit = async e => { e.preventDefault();
       try { const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: $('invId').value }); $('invId').value = ''; $('ofErr').textContent = ''; toast(`Приглашение отправлено: ${n}`); }
@@ -1466,6 +1507,67 @@
     $('leave').onclick = async () => { const b = $('leave');
       if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Точно покинуть офис? Нажмите ещё раз'; return; }
       await board.rpc('leave_team', { p_id: prefs.playerId }).catch(err => toast(err.message)); showOffice(); };
+  }
+
+  // ---------- турнир офиса ----------
+  // Создатель офиса назначает старт; все играют одну неделю (по общему seed), в зачёт — первая попытка
+  const fmtTime = iso => new Date(iso).toLocaleString('ru-RU', { weekday: 'short', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+  const until = iso => { const m = Math.round((new Date(iso) - Date.now()) / 60000); return m <= 0 ? 'уже идёт' : m < 60 ? `через ${m} мин` : m < 1440 ? `через ${Math.floor(m / 60)} ч ${m % 60} мин` : `через ${Math.floor(m / 1440)} дн.`; };
+  let tourTimer = null;
+  async function renderTourBox(team) {
+    const box = $('tourBox'); if (!box) return;
+    const t = (await board.rpc('my_tournament', { p_id: prefs.playerId }).catch(() => []))[0] || null;
+    const played = t && store.get('vdp-tours', {})[t.tour_id];
+    const started = t && new Date(t.starts_at) <= Date.now();
+    const pad = n => String(n).padStart(2, '0'), soon = new Date(Date.now() + 3600e3);
+    const def = `${soon.getFullYear()}-${pad(soon.getMonth() + 1)}-${pad(soon.getDate())}T${pad(soon.getHours())}:00`;
+    box.innerHTML = `<span class="kicker">Турнир офиса</span>
+      ${t ? `<p class="tour-when"><b>${started ? 'Турнир идёт' : `Старт ${until(t.starts_at)}`}</b><span>${fmtTime(t.starts_at)}</span></p>` : '<p class="field-note">Одна и та же неделя для всего офиса, общий старт и таблица итогов на большом экране.</p>'}
+      ${t && started ? `<button class="btn-main" id="tourPlay">${played ? 'Сыграть ещё раз (не в зачёт)' : 'Играть турнир'}</button>` : ''}
+      ${t ? `<button class="btn-ghost" id="tourScreen">Экран итогов для проектора</button>` : ''}
+      ${team.is_owner ? `<form class="inline-form" id="tourForm"><input id="tourAt" type="datetime-local" value="${def}" aria-label="Время старта турнира"><button class="btn-ghost" type="submit">${t ? 'Новый турнир' : 'Назначить'}</button></form>` : t ? '' : '<p class="field-note">Назначить турнир может создатель офиса.</p>'}
+      <p class="join-err" id="tourErr" role="alert"></p>`;
+    if ($('tourPlay')) $('tourPlay').onclick = async () => { await whenReady($('tourPlay')); startTournament(t, !played); };
+    if ($('tourScreen')) $('tourScreen').onclick = () => openScreen(t.code);
+    if ($('tourForm')) $('tourForm').onsubmit = async e => { e.preventDefault();
+      try { await board.rpc('set_tournament', { p_id: prefs.playerId, p_starts: new Date($('tourAt').value).toISOString() }); toast('Турнир назначен — коллеги увидят его в «Мой офис» и в меню'); renderTourBox(team); }
+      catch (err) { $('tourErr').textContent = err.message; } };
+    clearTimeout(tourTimer);
+    if (t && !started) tourTimer = setTimeout(() => renderTourBox(team), 30000);
+  }
+  function startTournament(t, ranked) {
+    const rng = seeded('vdp-tour-' + t.seed);
+    C = null;
+    S = newWeekState({ mode: 'tour', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { tourId: t.tour_id, tourCode: t.code, tourTeam: t.team_name } });
+    S.deck = buildDeck({ type: 'normal', rng, profCard: false, classic: !POOL.length });
+    S.ranked = ranked;
+    enterGame();
+  }
+  // Экран итогов: крупная таблица для проектора, обновляется каждые 10 секунд. Открывается и по ссылке ?screen=КОД
+  let screenTimer = null;
+  function openScreen(code) {
+    clearInterval(screenTimer);
+    views.end.classList.add('screen-view'); show('end'); setPhase('evening');
+    const load = async () => {
+      if (views.end.hidden || !views.end.classList.contains('screen-view')) return clearInterval(screenTimer);
+      let rows = [];
+      try { rows = await board.rpc('tournament_board', { p_code: code }); }
+      catch (err) { views.end.innerHTML = `<div class="end-sheet glass"><h1>Нет данных</h1><p>${esc(err.message)}</p><div class="stack"><button class="btn-ghost" id="scrBack">Назад</button></div></div>`; $('scrBack').onclick = closeScreen; return; }
+      const head = rows[0], players = rows.filter(r => r.name);
+      views.end.innerHTML = `<div class="screen">
+        <div class="scr-head"><span class="kicker">Турнир офиса · обновляется каждые 10 секунд</span>
+          <h1>${head ? esc(head.team_name) : 'Турнир не найден'}</h1>
+          ${head ? `<p class="scr-when">${new Date(head.starts_at) > Date.now() ? `Старт ${until(head.starts_at)} · ${fmtTime(head.starts_at)}` : `Идёт с ${fmtTime(head.starts_at)} · сыграли: ${players.length}`}</p>` : ''}</div>
+        <div class="scr-list">${players.length ? players.map((r, i) => `<div class="scr-row${i < 3 ? ' top' : ''}">
+          <span class="scr-pos">${i + 1}</span><span class="scr-ava" aria-hidden="true">${esc(r.avatar || '🙂')}</span>
+          <span class="scr-name"><b>${esc(r.name)}</b><small>${esc(r.dept || '')}</small></span>
+          <span class="scr-res ${r.won ? 'won' : 'lost'}">${r.won ? `${r.total}/400` : `${stepName(r.step)} · ${r.death ? resName(r.death) : ''} ${r.overheat ? '100' : '0'}%`}</span></div>`).join('')
+          : '<p class="scr-empty">Пока никто не сыграл. Ждём первых результатов!</p>'}</div>
+        <button class="btn-ghost scr-exit" id="scrBack">Закрыть экран</button></div>`;
+      $('scrBack').onclick = closeScreen;
+    };
+    const closeScreen = () => { clearInterval(screenTimer); views.end.classList.remove('screen-view'); history.replaceState(null, '', location.pathname); prefs.name ? renderMenu() : renderWelcome(); };
+    load(); screenTimer = setInterval(load, 10000);
   }
 
   // Чаты: офиса (только участники) и общий для всех игроков; обновляются каждые 4 секунды
@@ -1690,6 +1792,8 @@
 
   finishLogin().then(reloading => {
     if (reloading) return;
+    const scr = new URLSearchParams(location.search).get('screen');
+    if (scr && board.online) return openScreen(scr);
     if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');
     else if (prefs.name) renderMenu();
     else renderWelcome();
