@@ -259,7 +259,7 @@
   // ---------- DOM ----------
   const $ = id => document.getElementById(id);
   const views = { join: $('join'), menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
-  const show = v => Object.entries(views).forEach(([k, el]) => el.hidden = k !== v);
+  const show = v => { Object.entries(views).forEach(([k, el]) => el.hidden = k !== v); if (v !== 'menu') $('viralPop').hidden = true; };
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   const rnd = (a, r = Math.random) => a[Math.floor(r() * a.length)];
   const shuffle = (a, r = Math.random) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -351,7 +351,10 @@
         <div class="stat-box"><b>${Cm.worked}</b><span>отработано</span></div>
         <div class="stat-box"><b>${Cm.firings}</b><span>увольнений</span></div>
         <div class="stat-box"><b>${Cm.companies.length}</b><span>компаний</span></div>
-        <div class="cc-trait">${PROF[Cm.prof].name} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>`;
+        <div class="cc-trait">${PROF[Cm.prof].name} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>
+        <div class="money" style="grid-column:1/-1"><div><b>${Cm.bank || 0} у.е.</b><span>на счёте · оклад ${Cm.salary || 3}/день</span></div><div><b>${fmtDays(Cm.vacation || 0)} дн.</b><span>отпуска из ${VAC_YEAR}</span></div></div>
+        ${!careerSave && Cm.stage === 'work' && (Cm.vacation || 0) >= 7 && Cm.week <= YEAR ? '<button class="btn-ghost btn-vac" id="menuVac" style="grid-column:1/-1">Уйти в отпуск на неделю (7 дн.)</button>' : ''}`;
+      if ($('menuVac')) $('menuVac').onclick = () => { C = store.get(KEY.career, null); takeVacation(); };
       $('start').textContent = careerSave ? 'Продолжить неделю' : Cm.stage === 'search' ? 'Продолжить поиск работы' : `Начать неделю ${Cm.week}`;
     } else $('start').textContent = 'Начать карьеру';
     const daily = store.get(KEY.daily, {})[today()];
@@ -557,6 +560,28 @@
   let C = null;
   const saveCareer = () => store.set(KEY.career, C);
   const vacancy = id => VACANCIES.find(v => v.id === id);
+  // ---------- зарплата и отпуск ----------
+  // Оклад за рабочий день: 3 у.е. в простой компании, 4 и 5 — в компаниях посложнее
+  const salaryFor = v => 2 + (v?.level || 1);
+  const VAC_YEAR = 28, VAC_PER_WEEK = VAC_YEAR / YEAR;  // 28 календарных дней в году → ≈0,54 дня за неделю
+  const fmtDays = d => (Math.floor(d * 10) / 10).toLocaleString('ru-RU');
+  function pay(amount) { C.bank += amount; C.earned += amount; saveCareer(); }
+  function takeVacation() {
+    if (!C || C.vacation < 7 || C.week > YEAR) return;
+    const holidayPay = C.salary * 5;
+    C.vacation = +(C.vacation - 7).toFixed(2); C.vacUsed += 7; C.week++;
+    C.res = { psyche: 60, energy: 60, boss: 50, colleagues: 50 };
+    pay(holidayPay); store.del(KEY.save);
+    const over = C.week > YEAR;
+    views.end.innerHTML = `<div class="end-sheet glass">
+      <span class="kicker">Неделя ${C.week - 1} из ${YEAR} · отпуск 7 дней</span>
+      <h1>Вы в отпуске!</h1>
+      <p>Неделя без писем, созвонов и «срочно». В понедельник все шкалы вернутся к 50%, а Кукуха и Энергия — ещё и с запасом +10.</p>
+      <div class="money"><div><b>+${holidayPay} у.е.</b><span>отпускные</span></div><div><b>${fmtDays(C.vacation)} дн.</b><span>отпуска осталось</span></div></div>
+      <div class="stack"><button class="btn-main" id="next">${over ? 'Итоги года' : `Вернуться к работе · неделя ${C.week}`}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div></div>`;
+    setPhase('day'); show('end'); $('toMenu').onclick = renderMenu;
+    $('next').onclick = () => over ? yearEnd() : startWeek(); confetti();
+  }
   const freshRes = perk => {
     const res = { psyche: 50, energy: 50, boss: 50, colleagues: 50 };
     for (const b of [PROF[C.prof].bonus, perk || {}]) for (const [k, v] of Object.entries(b)) res[k] = clamp(res[k] + v);
@@ -566,7 +591,7 @@
     prefs.prof = getProf(); prefs.trait = getTrait(); store.set(KEY.prefs, prefs);
     const first = rnd(VACANCIES.filter(v => v.level === 1));
     C = { prof: prefs.prof, trait: prefs.trait, week: 1, stage: 'work', company: first.name, companies: [first.name], res: null,
-      worked: 0, firings: 0, passed: 0, failed: 0, newJob: false };
+      worked: 0, firings: 0, passed: 0, failed: 0, newJob: false, bank: 0, earned: 0, salary: salaryFor(first), vacation: 0, vacUsed: 0 };
     C.res = freshRes(first.perk);
     saveCareer(); startWeek();
   }
@@ -574,6 +599,7 @@
     C = store.get(KEY.career, null);
     if (!C) return newCareer();
     C.trait = C.trait || prefs.trait;
+    C.bank ??= 0; C.earned ??= 0; C.salary ??= 3; C.vacation ??= 0; C.vacUsed ??= 0;  // карьеры до появления зарплаты и отпуска
     const save = store.get(KEY.save, null);
     if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(); }
     if (C.week > YEAR) return yearEnd();
@@ -629,6 +655,7 @@
       $('pc-' + r.k).textContent = v + '%';
       $('st-' + r.k).classList.toggle('danger', v <= 20 || v >= 80);
     }
+    const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
     $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
   }
   const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}` : PACK?.company || '';
@@ -746,11 +773,50 @@
   function advance() {
     const best = store.get(KEY.best, { step: 0, wins: 0 });
     S.step++;
+    if (S.mode === 'career' && C && S.step % 3 === 0) {  // вечер прошёл — рабочий день оплачен
+      pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars();
+      toast(`+${C.salary} у.е. на счёт — зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}`);
+    }
     best.step = Math.max(best.step, S.step);
     if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
     store.set(KEY.best, best); if (S.mode === 'career') store.set(KEY.save, S);
     renderCard(); busy = false;
   }
+
+  // ---------- магазин мощей: деньги со счёта → предметы и подкрутка шкал ----------
+  const SHOP = { coffee: 6, headphones: 6, cookies: 6, sicknote: 9 };
+  const powerPrice = () => 12 * 2 ** (S.powerBuys || 0);
+  function openShop() {
+    if (!(S?.mode === 'career' && C) || busy || splashOn) return;
+    const m = $('modal');
+    const render = () => {
+      m.innerHTML = `<div class="modal-box glass shop-box" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
+        <h2 id="shopTitle">Магазин мощей</h2>
+        <p class="shop-bal">На счёте: <b>${C.bank} у.е.</b> · оклад ${C.salary} у.е./день</p>
+        <span class="shop-sec">Предметы — гасят один удар −10 и сильнее</span>
+        <div class="shop-list">${Object.entries(SHOP).map(([id, price]) => `<button class="shop-item" data-item="${id}" ${C.bank < price || S.items.length >= 6 ? 'disabled' : ''}>
+          <b>${ITEMS[id].name}</b><small>${ITEMS[id].text}</small><span class="price">${price} у.е.</span></button>`).join('')}</div>
+        <span class="shop-sec">Мощь +20% — шкала отходит от края на 20 пунктов</span>
+        <div class="shop-list">${RES.map(r => `<button class="shop-item" data-power="${r.k}" ${C.bank < powerPrice() || Math.abs(S.res[r.k] - 50) < 5 ? 'disabled' : ''}>
+          <b>${r.name} ${S.res[r.k]}% → ${S.res[r.k] > 50 ? Math.max(50, S.res[r.k] - 20) : Math.min(50, S.res[r.k] + 20)}%</b><span class="price">${powerPrice()} у.е.</span></button>`).join('')}</div>
+        <p class="field-note">Каждая следующая «мощь» на этой неделе вдвое дороже. Деньги — зарплата за отработанные дни.</p>
+        <button class="btn-ghost" id="shopClose">Закрыть</button></div>`;
+      m.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
+        const id = b.dataset.item; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item();
+        toast(`Куплено: ${ITEMS[id].name}`); renderBars(); render();
+      });
+      m.querySelectorAll('[data-power]').forEach(b => b.onclick = () => {
+        const k = b.dataset.power, v = S.res[k];
+        C.bank -= powerPrice(); S.powerBuys = (S.powerBuys || 0) + 1;
+        S.res[k] = v > 50 ? Math.max(50, v - 20) : Math.min(50, v + 20);
+        saveCareer(); store.set(KEY.save, S); sfx.item(); toast(`«${resName(k)}»: ${v}% → ${S.res[k]}%`); renderBars(); render();
+      });
+      $('shopClose').onclick = () => { m.hidden = true; };
+    };
+    render(); m.hidden = false;
+    m.onclick = e => { if (e.target === m) m.hidden = true; };
+  }
+  $('bankChip').onclick = openShop;
 
   // ---------- второй шанс: вопрос на эрудицию ----------
   // Шкала дошла до 0 или 100 → вопрос с 4 вариантами и 20 секундами. Верно — шкала отступает от края на 20%, неделя продолжается
@@ -880,8 +946,9 @@
     const got = weekEndings(false, k, high), career = S.mode === 'career' && C;
     let next = '';
     if (career) {
-      var company = C.company;
-      C.firings++; C.week++; C.stage = 'search'; C.res = null; saveCareer();
+      var company = C.company, comp = Math.floor(C.vacation) * C.salary, paidDays = Math.floor(S.step / 3);
+      C.firings++; C.week++; C.stage = 'search'; C.res = null; C.vacation = 0;
+      if (comp) pay(comp); else saveCareer();
       next = C.week > YEAR ? 'Итоги года' : 'Искать работу';
     }
     views.end.innerHTML = `<div class="end-sheet glass">
@@ -891,6 +958,7 @@
       <p>${D.text}</p>
       <p class="trait-line">${TRAITS[S.trait || 'workaholic'].name}: ${traitText('lose', S.trait)}</p>
       ${finalGrid(k)}
+      ${career ? `<div class="money"><div><b>+${S.earned || 0} у.е.</b><span>за ${paidDays} отраб. дн.</span></div><div><b>+${comp} у.е.</b><span>компенсация отпуска</span></div></div>` : ''}
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
@@ -912,7 +980,8 @@
     if (career) {
       week = C.week;
       // выходные: каждая шкала сдвигается к 50 наполовину
-      C.worked++; C.week++; C.res = Object.fromEntries(RES.map(r => [r.k, Math.round((S.res[r.k] + 50) / 2)])); saveCareer();
+      C.worked++; C.week++; C.res = Object.fromEntries(RES.map(r => [r.k, Math.round((S.res[r.k] + 50) / 2)]));
+      C.vacation = +(C.vacation + VAC_PER_WEEK).toFixed(2); saveCareer();
       last = C.week > YEAR;
     }
     if (last || !career) confetti();
@@ -925,15 +994,18 @@
       <span class="rank">${rank(total)}</span>
       ${finalGrid()}
       <div class="total"><span>Счёт недели</span><b>${total} / 400</b></div>
+      ${career ? `<div class="money"><div><b>${C.bank} у.е.</b><span>на счёте (+${S.earned || 0} за неделю)</span></div><div><b>${fmtDays(C.vacation)} дн.</b><span>отпуска накоплено</span></div></div>` : ''}
       ${endingsHtml(got)}
       <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
       ${viralHtml()}
       <div class="stack"><button class="btn-main" id="next">${career ? (last ? 'Итоги года' : `Неделя ${C.week} →`) : 'В главное меню'}</button>
+        ${career && !last && C.vacation >= 7 ? '<button class="btn-ghost btn-vac" id="vac">Уйти в отпуск на неделю (7 дн.)</button>' : ''}
         <button class="btn-ghost" id="share">Мем-карточка для чата</button>
         <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end'); bindCommon();
     $('share').onclick = () => share(true);
+    if ($('vac')) $('vac').onclick = takeVacation;
     $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : renderMenu();
     record(true, null, false);
     $('next').focus({ preventScroll: true });
@@ -950,7 +1022,7 @@
       <p>Выберите, куда откликнуться. Собеседование займёт неделю: 4 вопроса от HR. Первая неделя на новом месте — с новым боссом.</p>
       <div class="vacancies">${C.offers.map(id => { const v = vacancy(id);
         return `<button class="vac" data-id="${v.id}"><b>${esc(v.name)}</b><span class="lvl">${'●'.repeat(v.level)}${'○'.repeat(3 - v.level)}</span>
-          <small>${esc(v.vibe)}</small><span class="perk">старт: ${perkText(v.perk)}</span></button>`; }).join('')}</div>
+          <small>${esc(v.vibe)}</small><span class="perk">старт: ${perkText(v.perk)} · оклад ${salaryFor(v)} у.е./день</span></button>`; }).join('')}</div>
       <div class="stack"><button class="btn-ghost" id="toMenu">В главное меню</button></div>
     </div>`;
     show('end');
@@ -984,14 +1056,14 @@
     const verdict = () => {
       const ok = score >= need, got = unlock([score === qs.length * 2 ? 'perfect_iv' : null]);
       C.week++; C.offers = [];
-      if (ok) { C.passed++; C.stage = 'work'; C.newJob = true; C.company = v.name; if (!C.companies.includes(v.name)) C.companies.push(v.name); C.res = freshRes(v.perk); sfx.win(); }
+      if (ok) { C.passed++; C.stage = 'work'; C.newJob = true; C.company = v.name; C.salary = salaryFor(v); if (!C.companies.includes(v.name)) C.companies.push(v.name); C.res = freshRes(v.perk); sfx.win(); }
       else { C.failed++; sfx.lose(); }
       saveCareer();
       const over = C.week > YEAR;
       views.end.innerHTML = `<div class="end-sheet glass">
         <span class="kicker">Собеседование · ${esc(v.name)} · ${score} из ${qs.length * 2} баллов, нужно ${need}</span>
         <h1 class="${ok ? '' : 'lose'}">${ok ? 'Оффер!' : 'Мы вам перезвоним'}</h1>
-        <p>${ok ? `${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%.` : '…но не перезвонили. Поиск продолжается, впереди новые вакансии.'}</p>
+        <p>${ok ? `${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%. Оклад — ${C.salary} у.е. в день.` : '…но не перезвонили. Поиск продолжается, впереди новые вакансии.'}</p>
         ${endingsHtml(got)}
         <div class="stack"><button class="btn-main" id="next">${over ? 'Итоги года' : ok ? `Выйти на работу · неделя ${C.week}` : `Искать дальше · неделя ${C.week}`}</button>
           <button class="btn-ghost" id="toMenu">В главное меню</button></div>
@@ -1009,6 +1081,7 @@
   function yearEnd() {
     store.del(KEY.save);
     const all = C.passed + C.failed;
+    if (C.vacation >= 1 && !C.paidOut) { pay(Math.floor(C.vacation) * C.salary); C.paidOut = true; saveCareer(); }  // компенсация неиспользованного отпуска
     const got = unlock([C.companies.length >= 5 ? 'nomad' : null, C.worked >= YEAR && !C.firings ? 'iron' : null]);
     views.end.innerHTML = `<div class="end-sheet glass">
       <span class="kicker">Год позади · ${YEAR} недель · ${esc(prefs.name)}, ${PROF[C.prof].name.toLowerCase()}</span>
@@ -1020,6 +1093,7 @@
         <div class="stat-box"><b>${C.firings}</b><span>увольнений</span></div>
         <div class="stat-box"><b>${C.passed}/${all}</b><span>собеседований пройдено</span></div>
       </div>
+      <div class="money"><div><b>${C.earned} у.е.</b><span>заработано за год</span></div><div><b>${C.vacUsed} из ${VAC_YEAR} дн.</b><span>отпуска использовано</span></div></div>
       <p>Где вы успели поработать:</p>
       <ul class="companies">${C.companies.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
       ${endingsHtml(got)}
