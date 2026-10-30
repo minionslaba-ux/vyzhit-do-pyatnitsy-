@@ -374,6 +374,10 @@ async function pollSocial() {
       // новые сообщения в чатах: первый раз только запоминаем, где мы, звоним — на следующие
       const last = (await board.rpc('chat_latest', { p_id: prefs.playerId }).catch(() => [])) || [], cs = prefs.chatSeen ||= {};
       for (const r of last) {
+        if (r.channel === 'dm') {  // непрочитанное личное сообщение
+          if (r.last_id > (cs.dm || 0) && !dmOpen) ring(L(`${r.from_name} пишет вам`, `${r.from_name} sent you a message`), () => showDmInbox());
+          cs.dm = Math.max(cs.dm || 0, r.last_id); continue;
+        }
         const open = $('chList') && chatChannel === r.channel;
         if (cs[r.channel] != null && r.last_id > cs[r.channel] && !open)
           ring(L(`${r.from_name} пишет в ${r.channel === 'team' ? 'чате офиса' : 'общем чате'}`, `${r.from_name} posted in ${r.channel === 'team' ? 'the office chat' : 'the general chat'}`), () => showChat(r.channel), r.channel === 'team');
@@ -408,8 +412,11 @@ $('bell').onclick = () => {
 const onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
 const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
   <span class="lb-who"><b>${esc(p.name)}</b><small>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
-  <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
-const bindInvite = root => root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
+  <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-dm="${p.short_id}" data-name="${esc(p.name)}">${L('Написать', 'Message')}</button><button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
+const bindInvite = root => {
+  root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
+  root.querySelectorAll('[data-dm]').forEach(b => b.onclick = () => openDm(b.dataset.dm, b.dataset.name));
+};
 // Вкладка «Офис»: до 6 игроков в сети
 async function renderOnlineBox() {
   const box = $('onlineBox');
@@ -615,7 +622,7 @@ async function showChat(channel) {
   setPhase('evening'); clearInterval(chatTimer); chatLast = ''; chatChannel = channel;
   views.end.innerHTML = `<div class="chat">
     <div class="board-head"><button class="back-btn" id="chBack" type="button">${L('← Назад', '← Back')}</button><h2>${channel === 'team' ? L('Чат офиса', 'Office chat') : L('Общий чат', 'General chat')}</h2><span class="back-sp"></span></div>
-    <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">${L('Все игроки', 'Everyone')}</button></div>
+    <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="false">${L('Личные', 'Direct')}</button></div>
     <div class="chat-list panel" id="chList" aria-live="polite"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div>
     <form class="chat-form" id="chForm"><input id="chText" maxlength="300" placeholder="${L('Сообщение', 'Message')}" autocomplete="off" aria-label="${L('Сообщение', 'Message')}"><button class="btn-main" type="submit">${L('Отправить', 'Send')}</button></form>
   </div>`;
@@ -624,6 +631,7 @@ async function showChat(channel) {
   $('chBack').onclick = () => { leave(); renderMenu(); };
   $('chTeam').onclick = () => { leave(); showChat('team'); };
   $('chAll').onclick = () => { leave(); showChat('global'); };
+  $('chDm').onclick = () => { leave(); showDmInbox(); };
   await board.touch('menu').catch(() => {});
   const load = async () => {
     if (!$('chList')) return clearInterval(chatTimer);
@@ -660,6 +668,80 @@ async function showChat(channel) {
   };
   await load();
   chatTimer = setInterval(() => { if (!document.hidden) load(); }, 4000);
+}
+
+// ---------- личные сообщения ----------
+// Писать и читать могут зарегистрированные; окно переписки открывается поверх игры и не прерывает неделю
+let dmOpen = '', dmTimer = null;
+const dmNeedAccount = () => {
+  toast(L('Писать игрокам могут зарегистрированные игроки', 'Only registered players can send messages'));
+  if (views.game.hidden) { $('modal').hidden = true; renderJoin('register', L('Зарегистрируйтесь — и сможете переписываться с игроками и звать их в свой офис.', 'Sign up to message players and invite them to your office.')); }
+};
+async function openDm(short, name) {
+  if (!board.online) return toast(L('Сообщения работают, когда есть связь с сервером', 'Messages need a connection to the server'));
+  if (!registered()) return dmNeedAccount();
+  const m = $('modal'); clearInterval(dmTimer); dmOpen = short;
+  m.innerHTML = `<div class="modal-box glass dm-box" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
+    <div class="dm-head"><h2 id="dmTitle">✉ ${esc(name || L('Игрок', 'Player'))}</h2><button class="ip-x" type="button" id="dmClose" aria-label="${L('Закрыть', 'Close')}">×</button></div>
+    <div class="dm-list" id="dmList" aria-live="polite"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div>
+    <form class="chat-form" id="dmForm"><input id="dmText" maxlength="300" placeholder="${L('Сообщение', 'Message')}" autocomplete="off" aria-label="${L('Сообщение', 'Message')}"><button class="btn-main" type="submit">${L('Отправить', 'Send')}</button></form></div>`;
+  m.hidden = false;
+  const close = () => { clearInterval(dmTimer); dmOpen = ''; m.hidden = true; };
+  $('dmClose').onclick = close; m.onclick = e => { if (e.target === m) close(); };
+  let sig = '';
+  const load = async () => {
+    if (!$('dmList') || dmOpen !== short) return clearInterval(dmTimer);
+    try {
+      const rows = ((await board.rpc('dm_thread', { p_id: prefs.playerId, p_with: short })) || []).reverse();
+      const s2 = rows.map(r => r.msg_id).join(','); if (s2 === sig) return; sig = s2;
+      const list = $('dmList');
+      list.innerHTML = rows.length ? rows.map(r => `<div class="msg${r.mine ? ' mine' : ''}"><span class="meta">${new Date(r.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}</span><span class="bubble">${esc(r.msg)}</span></div>`).join('')
+        : `<div class="lb-empty">${L('Напишите первым — например, позовите в свой офис или вызовите на неделю дня.', 'Say hi first — invite them to your office or challenge them to the Daily Week.')}</div>`;
+      list.scrollTop = list.scrollHeight;
+    } catch (err) { $('dmList').innerHTML = `<div class="lb-empty">${esc(err.message)}</div>`; }
+  };
+  $('dmForm').onsubmit = async e => {
+    e.preventDefault(); const t = $('dmText').value.trim(); if (!t) return;
+    try { await board.rpc('send_dm', { p_id: prefs.playerId, p_to: short, p_text: t }); $('dmText').value = ''; sig = ''; load(); }
+    catch (err) { toast(err.message); }
+  };
+  await load(); dmTimer = setInterval(() => { if (!document.hidden) load(); }, 5000);
+  if (matchMedia('(pointer: fine)').matches) $('dmText').focus();
+}
+// Экран «Личные»: с кем переписка, сколько непрочитанных
+async function showDmInbox() {
+  if (!board.online) return offline(L('Чат', 'Chat'));
+  if (!registered()) return dmNeedAccount();
+  setPhase('evening'); clearInterval(chatTimer); chatChannel = 'dm';
+  views.end.innerHTML = `<div class="chat">
+    <div class="board-head"><button class="back-btn" id="chBack" type="button">${L('← Назад', '← Back')}</button><h2>${L('Личные сообщения', 'Direct messages')}</h2><span class="back-sp"></span></div>
+    <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="false">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="false">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="true">${L('Личные', 'Direct')}</button></div>
+    <div class="chat-list panel board-list" id="chList"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div></div>`;
+  views.end.classList.add('chat-view'); show('end');
+  const leave = () => { chatChannel = ''; views.end.classList.remove('chat-view'); };
+  $('chBack').onclick = () => { leave(); renderMenu(); };
+  $('chTeam').onclick = () => { leave(); showChat('team'); };
+  $('chAll').onclick = () => { leave(); showChat('global'); };
+  try {
+    const rows = (await board.rpc('dm_inbox', { p_id: prefs.playerId })) || [];
+    $('chList').innerHTML = rows.length ? rows.map((r, i) => `<button class="lb-row person dm-row" type="button" data-i="${i}"><span class="lb-ava" aria-hidden="true">${esc(r.with_avatar || '🙂')}</span>
+      <span class="lb-who"><b>${esc(r.with_name)}</b><small>${esc(r.last_msg.slice(0, 60))}</small></span><span class="lb-res">${r.unread ? `<b class="dm-unread">${r.unread}</b>` : ''}<small>${ago(r.last_at)}</small></span></button>`).join('')
+      : `<div class="lb-empty"><span class="big">${L('Пока пусто', 'Nothing yet')}</span>${L('Напишите тому, кто сейчас в игре: лента игроков есть в меню и прямо во время недели.', 'Message someone who’s playing now: the live strip is in the menu and right in the game.')}</div>`;
+    $('chList').querySelectorAll('[data-i]').forEach(b => b.onclick = async () => { const r = rows[+b.dataset.i]; await openDm(r.with_short, r.with_name); });
+  } catch (err) { $('chList').innerHTML = `<div class="lb-empty">${esc(err.message)}</div>`; }
+}
+// Карточка игрока из ленты «сейчас в игре»: написать или позвать в офис
+function personPop(p) {
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass person-pop" role="dialog" aria-modal="true" aria-labelledby="ppName">
+    <span class="pp-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span><h2 id="ppName">${esc(p.name)}</h2>
+    <p>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</p><p>${personStatus(p)}</p>
+    <div class="row2"><button class="btn-main" type="button" id="ppDm">✉ ${L('Написать', 'Message')}</button><button class="btn-ghost" type="button" id="ppInv">🏢 ${L('Позвать в офис', 'Invite to office')}</button></div>
+    <button class="btn-ghost" type="button" id="ppClose">${L('Вернуться к неделе', 'Back to the week')}</button></div>`;
+  m.hidden = false; m.onclick = e => { if (e.target === m) m.hidden = true; };
+  $('ppDm').onclick = () => openDm(p.short_id, p.name);
+  $('ppInv').onclick = () => inviteToOffice(p.short_id, $('ppInv'));
+  $('ppClose').onclick = () => { m.hidden = true; };
 }
 
 // ---------- приглашения в игру: ссылки с ID, плашка, бонус за пришедших ----------

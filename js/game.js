@@ -306,16 +306,17 @@ function livePick(c, side) {
 }
 // Кто сейчас играет: аватары тех, у кого статус «играет» последние 3 минуты
 let liveT = 0;
+// Лента «сейчас в игре» над карточкой: аватар и имя; нажатие — написать или позвать в офис
 async function liveTick() {
   clearTimeout(liveT);
-  const el = $('live');
+  const el = $('liveStrip'); $('live').hidden = true;
   if (views.game.hidden || !board.online) { el.hidden = true; return; }
   try {
-    const me = await myTag, now = Date.now();
-    const rows = (await board.people()).filter(p => p.status === 'playing' && p.tag !== me && now - new Date(p.updated_at) < 180000);
+    const rows = (await onlineNow()).filter(p => p.short_id).sort((a, b) => (b.status === 'playing') - (a.status === 'playing'));
     el.hidden = !rows.length;
-    el.innerHTML = rows.length ? `<i class="live-dot"></i><span class="live-ava">${rows.slice(0, 5).map(p => `<span title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}">${esc(p.avatar || '🙂')}</span>`).join('')}</span><small>${rows.length > 5 ? `+${rows.length - 5} ` : ''}${L('сейчас в игре', 'playing now')} ›</small>` : '';
-    el.onclick = showOnlineModal;
+    el.innerHTML = rows.length ? `<span class="ls-head"><i class="live-dot"></i>${rows.length}<small>${L('в игре', 'online')}</small></span>`
+      + rows.slice(0, 15).map((p, i) => `<button class="ls-p${p.status === 'playing' ? ' play' : ''}" type="button" data-i="${i}" title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}"><span class="ls-ava">${esc(p.avatar || '🙂')}</span><span class="ls-name">${esc(p.name)}</span></button>`).join('') : '';
+    el.querySelectorAll('[data-i]').forEach(b => b.onclick = () => personPop(rows[+b.dataset.i]));
   } catch { el.hidden = true; }
   liveT = setTimeout(liveTick, 30000);
 }

@@ -318,7 +318,11 @@ begin
     from (values ('global', 'global'), ('team', 'team:' || v_team)) as x(ch, real_ch)
     cross join lateral (select mm.id, mm.player_id from messages mm where mm.channel = x.real_ch and mm.player_id <> p_id and not mm.hidden order by mm.id desc limit 1) m
     left join players pl on pl.player_id = m.player_id
-    where x.real_ch is not null;
+    where x.real_ch is not null
+    union all
+    select 'dm'::text, d.id, coalesce(pl.name, 'Игрок')
+    from (select dd.id, dd.from_player from direct_messages dd where dd.to_player = p_id and dd.read_at is null order by dd.id desc limit 1) d
+    left join players pl on pl.player_id = d.from_player;
 end $$;
 
 create or replace function public.post_message(p_id uuid, p_channel text, p_text text) returns void
@@ -375,6 +379,8 @@ begin
   update scores set player_id = p_to where player_id = p_from;
   update suggestions set player_id = p_to where player_id = p_from;
   update messages set player_id = p_to where player_id = p_from;
+  update direct_messages set from_player = p_to where from_player = p_from;
+  update direct_messages set to_player = p_to where to_player = p_from;
   update invites set to_player = p_to where to_player = p_from;
   update invites set from_player = p_to where from_player = p_from;
   update teams set owner = p_to where owner = p_from;
@@ -608,11 +614,70 @@ begin
     from daily_picks d where d.day = p_day and d.step = p_step and d.card_id = left(p_card, 40);
 end $$;
 
+-- ====================== Личные сообщения ======================
+-- Написать игроку по короткому ID (из ленты «сейчас в игре»); читать — только двое участников переписки
+create table if not exists public.direct_messages (
+  id          bigint generated always as identity primary key,
+  from_player uuid not null,
+  to_player   uuid not null,
+  text        text not null check (char_length(text) between 1 and 300),
+  created_at  timestamptz not null default now(),
+  read_at     timestamptz
+);
+create index if not exists dm_to_idx on public.direct_messages (to_player, id desc);
+create index if not exists dm_from_idx on public.direct_messages (from_player, id desc);
+alter table public.direct_messages enable row level security;
+revoke all on public.direct_messages from anon, authenticated;
+
+create or replace function public.send_dm(p_id uuid, p_to text, p_text text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v_to uuid; v_name text;
+begin
+  perform public.require_player(p_id);
+  if not exists (select 1 from players where player_id = p_id) then raise exception 'Сначала войдите в игру'; end if;
+  select pl.player_id, pl.name into v_to, v_name from players pl where public.short_id(pl.player_id) = upper(trim(p_to)) limit 1;
+  if v_to is null then raise exception 'Игрок не найден'; end if;
+  if v_to = p_id then raise exception 'Нельзя написать самому себе'; end if;
+  if public.is_rude(p_text) then raise exception 'Сообщение не отправлено: давайте без грубостей'; end if;
+  if exists (select 1 from direct_messages d where d.from_player = p_id and d.created_at > now() - interval '2 seconds') then
+    raise exception 'Не так быстро: подождите пару секунд';
+  end if;
+  if (select count(*) from direct_messages d where d.from_player = p_id and d.created_at > now() - interval '1 hour') >= 120 then
+    raise exception 'Слишком много сообщений за час — передохните';
+  end if;
+  insert into direct_messages (from_player, to_player, text) values (p_id, v_to, left(trim(p_text), 300));
+  return v_name;
+end $$;
+
+create or replace function public.dm_thread(p_id uuid, p_with text) returns table (msg_id bigint, mine boolean, msg text, sent_at timestamptz)
+language plpgsql security definer set search_path = public as $$
+declare v_with uuid;
+begin
+  perform public.require_player(p_id);
+  select pl.player_id into v_with from players pl where public.short_id(pl.player_id) = upper(trim(p_with)) limit 1;
+  if v_with is null then return; end if;
+  update direct_messages set read_at = now() where to_player = p_id and from_player = v_with and read_at is null;
+  return query select d.id, d.from_player = p_id, d.text, d.created_at from direct_messages d
+    where (d.from_player = p_id and d.to_player = v_with) or (d.from_player = v_with and d.to_player = p_id)
+    order by d.id desc limit 60;
+end $$;
+
+create or replace function public.dm_inbox(p_id uuid) returns table (with_short text, with_name text, with_avatar text, last_msg text, last_at timestamptz, unread int)
+language sql security definer set search_path = public as $$
+  with mine as (
+    select d.*, case when d.from_player = p_id then d.to_player else d.from_player end as other
+    from direct_messages d where (d.from_player = p_id or d.to_player = p_id) and p_id = auth.uid()
+  ), last as (select distinct on (other) other, text, created_at from mine order by other, id desc)
+  select public.short_id(l.other), coalesce(pl.name, 'Игрок'), coalesce(pl.avatar, ''), l.text, l.created_at,
+    (select count(*)::int from mine m where m.other = l.other and m.to_player = p_id and m.read_at is null)
+  from last l left join players pl on pl.player_id = l.other order by l.created_at desc limit 30;
+$$;
+
 do $$
 declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
-    'invite_player(uuid,text)', 'my_invites(uuid)', 'my_sent_invites(uuid)', 'chat_latest(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
+    'invite_player(uuid,text)', 'my_invites(uuid)', 'my_sent_invites(uuid)', 'chat_latest(uuid)', 'send_dm(uuid,text,text)', 'dm_thread(uuid,text)', 'dm_inbox(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
     'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)',
     'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)',
     'report_message(uuid,bigint)', 'hide_message(uuid,bigint)', 'log_event(uuid,text,text,text,boolean,int,text)', 'pick_daily(uuid,date,int,text,text)'] loop
@@ -624,10 +689,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 29 строк
+-- Проверка: должны вернуться 32 строки
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites', 'chat_latest');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites', 'chat_latest', 'send_dm', 'dm_thread', 'dm_inbox');

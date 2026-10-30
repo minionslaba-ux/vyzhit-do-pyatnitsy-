@@ -978,3 +978,37 @@ html.light .coach, html.light .card-tools .ct-btn { background-color: rgba(255,2
 .credits { margin: 4px 0 0; text-align: center; font-size: 12px; color: var(--text-2); }
 .credits b { color: var(--text-3); }
 html[lang="en"] .btn-ghost.locked::after { content: "after sign-up"; }
+
+/* Лента «сейчас в игре» над карточкой */
+.live-strip { width: 100%; max-width: 600px; margin: 0 auto 6px; display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 4px; flex: none; }
+.live-strip::-webkit-scrollbar { display: none; }
+.ls-head { flex: none; display: flex; align-items: center; gap: 5px; font-family: var(--f-mono); font-size: 12px; font-weight: 700; color: var(--up); padding-right: 2px; }
+.ls-head small { font-size: 10px; color: var(--text-2); font-weight: 500; }
+.ls-p { flex: none; display: flex; align-items: center; gap: 5px; max-width: 132px; height: 32px; padding: 2px 10px 2px 3px; border-radius: 999px; border: 1.5px solid rgba(var(--c-rgb),.45);
+  background: rgba(var(--c-rgb),.08); color: var(--hi); font-size: 12.5px; font-weight: 800; }
+.ls-p.play { border-color: rgba(212,255,58,.6); }
+.ls-p:hover, .ls-p:focus-visible { background: rgba(var(--c-rgb),.2); }
+.ls-ava { width: 25px; height: 25px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--panel); font-size: 15px; }
+.ls-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-height: 700px) { .ls-p { height: 28px; font-size: 11.5px; } .ls-ava { width: 22px; height: 22px; font-size: 13px; } }
+
+/* Карточка игрока и личная переписка */
+.person-pop { text-align: center; align-items: center; gap: 8px; padding: 20px 18px; }
+.person-pop h2 { margin: 0; font-family: var(--f-display); font-size: 20px; color: var(--hi); }
+.person-pop .row2 { width: 100%; }
+.pp-ava { font-size: 44px; line-height: 1; }
+.dm-box { gap: 10px; max-height: min(560px, 92vh); }
+.dm-head { display: flex; align-items: center; justify-content: space-between; }
+.dm-head h2 { margin: 0; font-size: 18px; color: var(--hi); }
+.dm-head .ip-x { position: static; }
+.dm-list { flex: 1; min-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 4px; }
+.dm-list .msg { max-width: 85%; }
+.dm-row { width: 100%; text-align: left; background: transparent; border: 0; border-bottom: 1px solid var(--line); color: inherit; font: inherit; cursor: pointer; }
+.dm-unread { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--magenta); color: #fff; font-size: 11px; margin-right: 6px; }
+.dm-list .msg { grid-template-columns: 1fr; }
+/* лента занимает строку — на телефоне шкалы чуть ниже, чтобы карточке хватило места */
+@media (max-width: 999px) {
+  .game:has(.live-strip:not([hidden])) .tube { height: 62px; }
+  .live-strip { margin-bottom: 4px; }
+  .ls-p { height: 30px; }
+}
