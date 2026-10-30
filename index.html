@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
+<meta name="author" content="Konstantin Moiseenko (Константин Моисеенко)">
+<link rel="alternate" hreflang="ru" href="https://survivefriday.com/?lang=ru">
+<link rel="alternate" hreflang="en" href="https://survivefriday.com/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://survivefriday.com/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#07070d">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,7 +35,7 @@
 <meta name="twitter:title" content="Выжить до пятницы — офисная игра на 5 минут">
 <meta name="twitter:description" content="Доживите до пятницы, 18:00: свайпайте решения и держите четыре шкалы в балансе.">
 <meta name="twitter:image" content="https://survivefriday.com/icons/og-1200x630.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Выжить до пятницы","url":"https://survivefriday.com/","image":"https://survivefriday.com/icons/og-1200x630.jpg","description":"Офисная игра онлайн без регистрации: свайпайте решения, держите Кукуху, Энергию, Босса и Коллег в балансе и доживите до пятницы, 18:00. Неделя дня, рейтинг отделов, турниры офиса.","genre":["Карточная игра","Симулятор"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","inLanguage":"ru","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Выжить до пятницы","url":"https://survivefriday.com/","image":"https://survivefriday.com/icons/og-1200x630.jpg","description":"Офисная игра онлайн без регистрации: свайпайте решения, держите Кукуху, Энергию, Босса и Коллег в балансе и доживите до пятницы, 18:00. Неделя дня, рейтинг отделов, турниры офиса.","genre":["Карточная игра","Симулятор"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","inLanguage":["ru","en"],"author":{"@type":"Person","name":"Konstantin Moiseenko","alternateName":"Константин Моисеенко"},"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"}}</script>
 <title>Выжить до пятницы</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +46,7 @@
 <style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-sizing: border-box; height: 100%; } body { margin: 0; }</style>
 </head>
 <body data-phase="day">
-<noscript><div style="padding:24px;color:#f2f0ff;font-family:sans-serif"><h1>Выжить до пятницы — офисная игра онлайн</h1><p>Карточная игра про офис в духе Reigns: 15 решений с понедельника до пятницы, четыре шкалы — Кукуха, Энергия, Босс и Коллеги. Для игры включите JavaScript.</p><p><a href="igra-pro-ofis.html" style="color:#7df9ff">Об игре</a></p></div></noscript>
+<noscript><div style="padding:24px;color:#f2f0ff;font-family:sans-serif"><h1>Выжить до пятницы — офисная игра онлайн</h1><p>Карточная игра про офис в духе Reigns: 15 решений с понедельника до пятницы, четыре шкалы — Кукуха, Энергия, Босс и Коллеги. Для игры включите JavaScript.</p><p lang="en">Survive till Friday: a Reigns-style office card game. 15 decisions from Monday to Friday, four meters: Sanity, Energy, Boss and Team. Please enable JavaScript to play.</p><p><a href="igra-pro-ofis.html" style="color:#7df9ff">Об игре</a></p></div></noscript>
 <!-- Офис за окном: меняется по фазе дня -->
 <div class="office" id="office" aria-hidden="true"></div>
 
@@ -50,52 +54,52 @@
   <!-- Экран 0: приветствие → регистрация, вход или гость -->
   <section class="view join" id="join" hidden>
     <div class="pass panel" id="welcome">
-      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b>Добро пожаловать</b><small>Выжить до пятницы</small></div>
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b data-en="Welcome aboard">Добро пожаловать</b><small data-en="Survive till Friday">Выжить до пятницы</small></div>
       <div class="pass-body">
-        <p class="welcome-lead">Зарегистрируйтесь, чтобы играть вместе с коллегами, — или начните как гость прямо сейчас.</p>
-        <button class="promo-video" type="button" id="wVideo" aria-label="Смотреть видео об игре, 15 секунд"><img src="promo/video/poster-16x9.jpg" alt="" width="960" height="540" loading="lazy"><span>▶ Игра за 15 секунд</span></button>
+        <p class="welcome-lead" data-en="Sign up to play with your coworkers — or jump in as a guest right now.">Зарегистрируйтесь, чтобы играть вместе с коллегами, — или начните как гость прямо сейчас.</p>
+        <button class="promo-video" type="button" id="wVideo" aria-label="Смотреть видео об игре, 15 секунд" data-en-aria-label="Watch the 15-second game trailer"><img src="promo/video/poster-16x9.jpg" alt="" width="960" height="540" loading="lazy"><span data-en="▶ The game in 15 seconds">▶ Игра за 15 секунд</span></button>
         <ul class="perks">
-          <li>Свой офис: соберите команду по ссылке или по ID</li>
-          <li>Чат офиса и общий чат игроков</li>
-          <li>Прогресс общий на телефоне и компьютере</li>
-          <li>Можно предлагать свои ситуации для игры</li>
+          <li data-en="Your own Office: build a team via link or ID">Свой офис: соберите команду по ссылке или по ID</li>
+          <li data-en="Office chat plus a chat for all players">Чат офиса и общий чат игроков</li>
+          <li data-en="Progress syncs between phone and computer">Прогресс общий на телефоне и компьютере</li>
+          <li data-en="Pitch your own situations for the game">Можно предлагать свои ситуации для игры</li>
         </ul>
-        <button class="btn-main" type="button" id="wRegister">Зарегистрироваться</button>
-        <button class="btn-ghost" type="button" id="wGuest">Играть как гость</button>
-        <button class="btn-link" type="button" id="wLogin">Уже есть аккаунт? Войти</button>
-        <button class="btn-link" type="button" id="wHow">Как играть?</button>
+        <button class="btn-main" type="button" id="wRegister" data-en="Sign up">Зарегистрироваться</button>
+        <button class="btn-ghost" type="button" id="wGuest" data-en="Play as guest">Играть как гость</button>
+        <button class="btn-link" type="button" id="wLogin" data-en="Already have an account? Log in">Уже есть аккаунт? Войти</button>
+        <button class="btn-link" type="button" id="wHow" data-en="How to play?">Как играть?</button>
         <p class="join-note" id="wNote"></p>
       </div>
     </div>
 
     <form class="pass panel" id="joinForm" novalidate hidden>
-      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b id="joinTitle">Пропуск в офис</b><small id="joinSub">Выжить до пятницы</small></div>
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b id="joinTitle" data-en="Office pass">Пропуск в офис</b><small id="joinSub" data-en="Survive till Friday">Выжить до пятницы</small></div>
       <div class="pass-body">
         <p class="welcome-lead" id="joinLead" hidden></p>
         <div class="pass-photo" id="joinAvatar" aria-hidden="true">😎</div>
-        <div class="field" id="joinNameField"><label for="joinName">Ваше имя *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" autocomplete="nickname"></div>
-        <div class="field" id="joinDeptField"><label for="joinDept">Отдел</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" autocomplete="off"></div>
-        <div class="field" id="joinEmailField"><label for="joinEmail">Почта *</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" autocomplete="email" inputmode="email">
-          <small class="field-note" id="joinEmailNote">Пришлём ссылку для входа — пароль не нужен.</small></div>
-        <fieldset class="field" id="joinAvaField"><legend>Аватар</legend><div class="avatars" id="avatars"></div></fieldset>
+        <div class="field" id="joinNameField"><label for="joinName" data-en="Your name *">Ваше имя *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" data-en-placeholder="e.g. Kevin" autocomplete="nickname"></div>
+        <div class="field" id="joinDeptField"><label for="joinDept" data-en="Department">Отдел</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" data-en-placeholder="e.g. Sales" autocomplete="off"></div>
+        <div class="field" id="joinEmailField"><label for="joinEmail" data-en="Email *">Почта *</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" data-en-placeholder="name@company.com" autocomplete="email" inputmode="email">
+          <small class="field-note" id="joinEmailNote" data-en="We’ll email you a login link — no password needed.">Пришлём ссылку для входа — пароль не нужен.</small></div>
+        <fieldset class="field" id="joinAvaField"><legend data-en="Avatar">Аватар</legend><div class="avatars" id="avatars"></div></fieldset>
         <p class="join-err" id="joinErr" role="alert"></p>
-        <button class="btn-main" type="submit" id="joinGo">Зарегистрироваться</button>
-        <button class="btn-ghost" type="button" id="joinRegister" hidden>Зарегистрироваться</button>
-        <button class="btn-ghost" type="button" id="joinLogout" hidden>Выйти из аккаунта</button>
-        <button class="btn-ghost" type="button" id="joinCancel">Назад</button>
-        <p class="join-note" id="joinNote">Имя и отдел увидят коллеги в рейтинге и списке участников.</p>
+        <button class="btn-main" type="submit" id="joinGo" data-en="Sign up">Зарегистрироваться</button>
+        <button class="btn-ghost" type="button" id="joinRegister" hidden data-en="Sign up">Зарегистрироваться</button>
+        <button class="btn-ghost" type="button" id="joinLogout" hidden data-en="Log out">Выйти из аккаунта</button>
+        <button class="btn-ghost" type="button" id="joinCancel" data-en="Back">Назад</button>
+        <p class="join-note" id="joinNote" data-en="Coworkers will see your name and department in the rankings and player list.">Имя и отдел увидят коллеги в рейтинге и списке участников.</p>
       </div>
     </form>
 
     <div class="pass panel" id="checkMail" hidden>
-      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b>Проверьте почту</b><small>Осталось подтвердить вход</small></div>
+      <div class="pass-top"><span class="pass-hole" aria-hidden="true"></span><b data-en="Check your email">Проверьте почту</b><small data-en="Just confirm your login">Осталось подтвердить вход</small></div>
       <div class="pass-body">
         <p class="welcome-lead" id="mailText"></p>
-        <p class="field-note">Письмо приходит за минуту. Если его нет — загляните в «Спам» или отправьте ещё раз.</p>
+        <p class="field-note" data-en="The email usually arrives within a minute. Not there? Check your Spam folder or send it again.">Письмо приходит за минуту. Если его нет — загляните в «Спам» или отправьте ещё раз.</p>
         <p class="join-err" id="mailErr" role="alert"></p>
-        <button class="btn-main" type="button" id="mailResend">Отправить ещё раз</button>
-        <button class="btn-ghost" type="button" id="mailGuest">Пока играть как гость</button>
-        <button class="btn-link" type="button" id="mailChange">Изменить почту</button>
+        <button class="btn-main" type="button" id="mailResend" data-en="Send again">Отправить ещё раз</button>
+        <button class="btn-ghost" type="button" id="mailGuest" data-en="Play as guest for now">Пока играть как гость</button>
+        <button class="btn-link" type="button" id="mailChange" data-en="Change email">Изменить почту</button>
       </div>
     </div>
   </section>
@@ -111,69 +115,72 @@
         <path d="M88 70h6a9 9 0 0 1 0 18h-6"/>
         <path d="M56 50c-4-6 4-8 0-14M68 50c-4-6 4-8 0-14M80 50c-4-6 4-8 0-14"/>
       </svg>
-      <h1 class="title"><span class="t1">Выжить</span><span class="t2">до пятницы</span></h1>
-      <p class="tagline">Год из 52 недель. Держите все четыре шкалы в балансе: и ноль, и сто процентов — это конец недели.</p>
+      <h1 class="title"><span class="t1" data-en="Survive">Выжить</span><span class="t2" data-en="till Friday">до пятницы</span></h1>
+      <p class="tagline" data-en="A year of 52 weeks. Keep all four meters balanced: both zero and a hundred percent end your week.">Год из 52 недель. Держите все четыре шкалы в балансе: и ноль, и сто процентов — это конец недели.</p>
     </div>
     <div class="panel form">
       <div class="me-card">
         <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
-        <span class="me-who"><b id="meName">Сотрудник</b><small id="meDept">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID">ID ······</button></span>
-        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden>Регистрация</button></span>
+        <span class="me-who"><b id="meName" data-en="Employee">Сотрудник</b><small id="meDept" data-en="no department">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID" data-en-title="Copy ID">ID ······</button></span>
+        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit" data-en="Edit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden data-en="Sign up">Регистрация</button></span>
       </div>
-      <div class="install-cta" id="installCta" hidden><span class="ic-ico" aria-hidden="true">📲</span><span class="ic-text"><b>Игра на главном экране</b>Открывается в одно касание, на весь экран и даже без интернета</span>
-        <button class="btn-main" type="button" id="installCtaGo">Установить</button><button class="ip-x" type="button" id="installCtaX" aria-label="Скрыть">×</button></div>
+      <div class="install-cta" id="installCta" hidden><span class="ic-ico" aria-hidden="true">📲</span><span class="ic-text" data-en="<b>Put the game on your home screen</b>Opens in one tap, full screen, even offline"><b>Игра на главном экране</b>Открывается в одно касание, на весь экран и даже без интернета</span>
+        <button class="btn-main" type="button" id="installCtaGo" data-en="Install">Установить</button><button class="ip-x" type="button" id="installCtaX" aria-label="Скрыть" data-en-aria-label="Hide">×</button></div>
       <div class="invites" id="invites" hidden></div>
-      <div class="office-cta ch-cta" id="chCta" hidden><span></span><button class="btn-main" type="button" id="chGo">Принять вызов</button></div>
-      <div class="office-cta" id="tourCta" hidden><span></span><button class="btn-main" type="button" id="tourCtaGo">К турниру</button></div>
+      <div class="office-cta ch-cta" id="chCta" hidden><span></span><button class="btn-main" type="button" id="chGo" data-en="Accept the challenge">Принять вызов</button></div>
+      <div class="office-cta" id="tourCta" hidden><span></span><button class="btn-main" type="button" id="tourCtaGo" data-en="To the tournament">К турниру</button></div>
       <div class="career-card" id="careerCard" hidden></div>
       <fieldset class="field" id="profField">
-        <legend>Ваша профессия</legend>
+        <legend data-en="Your job">Ваша профессия</legend>
         <div class="profs" id="profs"></div>
       </fieldset>
       <fieldset class="field" id="traitField">
-        <legend>Черта характера</legend>
+        <legend data-en="Personality trait">Черта характера</legend>
         <div class="profs traits" id="traits"></div>
       </fieldset>
       <div class="play2">
-        <button class="btn-main btn-play" id="start">Играть</button>
-        <button class="btn-main btn-day" id="startDaily">Неделя дня</button>
+        <button class="btn-main btn-play" id="start" data-en="Play">Играть</button>
+        <button class="btn-main btn-day" id="startDaily" data-en="Daily Week">Неделя дня</button>
       </div>
       <div class="tabs menu-tabs" role="tablist">
-        <button class="tab" type="button" role="tab" id="tabOffice" aria-controls="paneOffice" aria-selected="true">Офис</button>
-        <button class="tab" type="button" role="tab" id="tabProfile" aria-controls="paneProfile" aria-selected="false">Профиль</button>
+        <button class="tab" type="button" role="tab" id="tabOffice" aria-controls="paneOffice" aria-selected="true" data-en="Office">Офис</button>
+        <button class="tab" type="button" role="tab" id="tabProfile" aria-controls="paneProfile" aria-selected="false" data-en="Profile">Профиль</button>
       </div>
       <div class="pane" id="paneOffice" role="tabpanel" aria-labelledby="tabOffice">
         <div class="online-box" id="onlineBox" hidden></div>
-        <div class="office-cta" id="officeCta" hidden><span><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice">Создать офис</button></div>
-        <div class="row2"><button class="btn-ghost" id="openOffice">Мой офис</button><button class="btn-ghost" id="openChat">Чат</button></div>
-        <div class="row2"><button class="btn-ghost" id="openBoard">Рейтинг</button><button class="btn-ghost" id="openPeople">Участники</button></div>
-        <button class="btn-ghost btn-invite" id="openInvite">Позвать коллег и друзей</button>
+        <div class="office-cta" id="officeCta" hidden><span data-en="<b>Your own Office</b> Build a team: create an Office and invite coworkers via link or ID."><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice" data-en="Create an Office">Создать офис</button></div>
+        <div class="row2"><button class="btn-ghost" id="openOffice" data-en="My Office">Мой офис</button><button class="btn-ghost" id="openChat" data-en="Chat">Чат</button></div>
+        <div class="row2"><button class="btn-ghost" id="openBoard" data-en="Rankings">Рейтинг</button><button class="btn-ghost" id="openPeople" data-en="Players">Участники</button></div>
+        <button class="btn-ghost btn-invite" id="openInvite" data-en="Invite coworkers and friends">Позвать коллег и друзей</button>
         <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       </div>
       <div class="pane" id="paneProfile" role="tabpanel" aria-labelledby="tabProfile" hidden>
-        <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily">Напомнить в календаре</button></div>
-        <button class="btn-ghost btn-how" type="button" id="openHow">Как играть: цель, шкалы, деньги</button>
-        <button class="btn-ghost btn-how" type="button" id="openVideo">▶ Видео об игре, 15 секунд</button>
+        <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Напомнить в календаре</button></div>
+        <button class="btn-ghost btn-how" type="button" id="openHow" data-en="How to play: goal, meters, money">Как играть: цель, шкалы, деньги</button>
+        <button class="btn-ghost btn-how" type="button" id="openVideo" data-en="▶ Game trailer, 15 seconds">▶ Видео об игре, 15 секунд</button>
         <div class="cast-list" id="castList" hidden></div>
-        <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
-        <button class="btn-ghost" id="installApp" hidden>Установить на телефон</button>
-        <button class="btn-ghost" id="newCareer" hidden>Начать карьеру заново</button>
-        <button class="btn-ghost btn-logout" type="button" id="profLogout" hidden>Выйти из аккаунта</button>
+        <div class="row2"><button class="btn-ghost" id="openCollection" data-en="Collection">Коллекция</button><button class="btn-ghost" id="openSuggest" data-en="Suggest a situation">Предложить ситуацию</button></div>
+        <button class="btn-ghost" id="installApp" hidden data-en="Install on your phone">Установить на телефон</button>
+        <button class="btn-ghost" id="newCareer" hidden data-en="Start a new Career">Начать карьеру заново</button>
+        <button class="btn-ghost btn-logout" type="button" id="profLogout" hidden data-en="Log out">Выйти из аккаунта</button>
+        <div class="lang-row" role="group" aria-label="Язык" data-en-aria-label="Language"><span data-en="Language">Язык</span>
+          <button class="btn-chip" type="button" id="langRu">Русский</button><button class="btn-chip" type="button" id="langEn">English</button></div>
+        <p class="credits"><span data-en="«Survive till Friday» · created by">«Выжить до пятницы» · автор и разработчик</span> <b data-en="Konstantin Moiseenko">Константин Моисеенко</b></p>
       </div>
     </div>
     <div class="menu-foot">
-      <div class="record glass"><b>Рекорд</b><span id="record">пока нет</span></div>
-      <button class="sound glass" id="soundMenu" aria-label="Звук"></button>
+      <div class="record glass"><b data-en="Best">Рекорд</b><span id="record" data-en="none yet">пока нет</span></div>
+      <button class="sound glass" id="soundMenu" aria-label="Звук" data-en-aria-label="Sound"></button>
     </div>
   </section>
 
   <!-- Экран 2: игра -->
   <section class="view game" id="game" hidden>
     <header class="g-top">
-      <span class="g-brand">ВЫЖИТЬ <em>ДО ПЯТНИЦЫ</em><small id="gCareer">Неделя 1/52</small></span>
-      <button class="exit-btn" id="gExit" type="button">← Выйти</button>
-      <div class="g-clock"><span class="time" id="clock">09:00</span><div class="segs" id="dots" aria-hidden="true"></div><div class="inv"><span id="inv" class="inv-items"></span><button class="bank-chip" id="bankChip" type="button" hidden></button></div><button class="live" id="live" type="button" hidden aria-label="Кто сейчас в игре — позвать в офис"></button></div>
-      <div class="g-day"><div><span id="gDay">Понедельник</span><small><span id="gPhase">утро</span> · <span id="gNum">01</span>/15</small><small class="g-type" id="gType"></small></div><button class="icon-btn" id="soundGame" aria-label="Звук"></button></div>
+      <span class="g-brand"><span data-en="SURVIVE <em>TILL FRIDAY</em>">ВЫЖИТЬ <em>ДО ПЯТНИЦЫ</em></span><small id="gCareer" data-en="Week 1/52">Неделя 1/52</small></span>
+      <button class="exit-btn" id="gExit" type="button" data-en="← Exit">← Выйти</button>
+      <div class="g-clock"><span class="time" id="clock">09:00</span><div class="segs" id="dots" aria-hidden="true"></div><div class="inv"><span id="inv" class="inv-items"></span><button class="bank-chip" id="bankChip" type="button" hidden></button></div><button class="live" id="live" type="button" hidden aria-label="Кто сейчас в игре — позвать в офис" data-en-aria-label="Who’s playing now — invite to your Office"></button></div>
+      <div class="g-day"><div><span id="gDay" data-en="Monday">Понедельник</span><small><span id="gPhase" data-en="morning">утро</span> · <span id="gNum">01</span>/15</small><small class="g-type" id="gType"></small></div><button class="icon-btn" id="soundGame" aria-label="Звук" data-en-aria-label="Sound"></button></div>
     </header>
     <div class="g-stats"><div class="tubes left" id="tubesL"></div><div class="tubes right" id="tubesR"></div></div>
     <div class="g-center">
@@ -185,26 +192,26 @@
       </div>
       <div class="pick-stat" id="pickStat" aria-live="polite" hidden></div>
       <div class="coach" id="coach" role="status" hidden></div>
-      <div class="hint">тяните карточку влево или вправо · или жмите ← →</div>
+      <div class="hint" data-en="drag the card left or right · or press ← →">тяните карточку влево или вправо · или жмите ← →</div>
     </div>
   </section>
 
   <!-- Экран 4: рейтинг офиса -->
   <section class="view board" id="board" hidden>
     <div class="board-head">
-      <button class="back-btn" id="boardBack" type="button">← Назад</button>
-      <h2 id="boardTitle">Рейтинг офиса</h2>
-      <button class="icon-btn pill" id="boardRefresh" aria-label="Обновить">↻</button>
+      <button class="back-btn" id="boardBack" type="button" data-en="← Back">← Назад</button>
+      <h2 id="boardTitle" data-en="Office rankings">Рейтинг офиса</h2>
+      <button class="icon-btn pill" id="boardRefresh" aria-label="Обновить" data-en-aria-label="Refresh">↻</button>
     </div>
     <div class="tabs tabs4" role="tablist">
-      <button class="tab" role="tab" id="modeRating" aria-selected="true">Недели</button>
-      <button class="tab" role="tab" id="modeDaily" aria-selected="false">День</button>
-      <button class="tab" role="tab" id="modeDepts" aria-selected="false">Отделы</button>
-      <button class="tab" role="tab" id="modePeople" aria-selected="false">Люди</button>
+      <button class="tab" role="tab" id="modeRating" aria-selected="true" data-en="Weeks">Недели</button>
+      <button class="tab" role="tab" id="modeDaily" aria-selected="false" data-en="Day">День</button>
+      <button class="tab" role="tab" id="modeDepts" aria-selected="false" data-en="Depts">Отделы</button>
+      <button class="tab" role="tab" id="modePeople" aria-selected="false" data-en="People">Люди</button>
     </div>
     <div class="board-bar">
       <span id="boardSummary"></span>
-      <label class="chk" id="onlyDeptBox"><input type="checkbox" id="onlyDept"> Только мой отдел</label>
+      <label class="chk" id="onlyDeptBox"><input type="checkbox" id="onlyDept"><span data-en=" My department only"> Только мой отдел</span></label>
     </div>
     <div class="panel board-list" id="boardList"></div>
     <p class="board-note" id="boardNote"></p>
@@ -216,18 +223,18 @@
 <div class="splash" id="splash" hidden></div>
 <div class="quiz" id="quiz" role="dialog" aria-modal="true" aria-labelledby="quizTitle" hidden></div>
 <div class="toast-bar" id="toastBar" aria-live="polite"></div>
-<div class="viral-pop" id="viralPop" role="region" aria-label="Позвать коллег" hidden>
-  <button class="viral-x" id="viralX" aria-label="Скрыть">×</button>
-  <b>Вместе веселее</b><span>Позовите коллег в свой офис или расскажите друзьям — за каждого пришедшего +1 предмет на неделю.</span>
-  <div class="row2"><button class="btn-main" data-share="team">Позвать коллег</button><button class="btn-ghost" data-share="friends">Рассказать друзьям</button></div>
+<div class="viral-pop" id="viralPop" role="region" aria-label="Позвать коллег" data-en-aria-label="Invite coworkers" hidden>
+  <button class="viral-x" id="viralX" aria-label="Скрыть" data-en-aria-label="Hide">×</button>
+  <b data-en="Better together">Вместе веселее</b><span data-en="Invite coworkers to your Office or tell your friends — every newcomer gets you +1 item for the week.">Позовите коллег в свой офис или расскажите друзьям — за каждого пришедшего +1 предмет на неделю.</span>
+  <div class="row2"><button class="btn-main" data-share="team" data-en="Invite coworkers">Позвать коллег</button><button class="btn-ghost" data-share="friends" data-en="Tell friends">Рассказать друзьям</button></div>
 </div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
 <div class="intro" id="intro" hidden></div>
 <div class="invite-pop" id="invitePop" role="status" aria-live="polite" hidden></div>
-<div class="invite-pop install-pop" id="installPop" role="status" hidden><span class="ip-ico" aria-hidden="true">📲</span><span class="ip-text"><b>Поставьте игру на телефон</b> — открывается в одно касание, как приложение, и работает без интернета.</span>
-  <span class="ip-btns"><button class="btn-main" type="button" id="installPopGo">Установить</button><button class="btn-ghost" type="button" id="installPopNo">Не сейчас</button></span></div>
-<button class="bell" id="bell" type="button" hidden aria-label="Новые уведомления"><span class="bell-ico" aria-hidden="true">🔔</span><b id="bellN"></b></button>
+<div class="invite-pop install-pop" id="installPop" role="status" hidden><span class="ip-ico" aria-hidden="true">📲</span><span class="ip-text" data-en="<b>Get the game on your phone</b> — opens in one tap like an app and works offline."><b>Поставьте игру на телефон</b> — открывается в одно касание, как приложение, и работает без интернета.</span>
+  <span class="ip-btns"><button class="btn-main" type="button" id="installPopGo" data-en="Install">Установить</button><button class="btn-ghost" type="button" id="installPopNo" data-en="Not now">Не сейчас</button></span></div>
+<button class="bell" id="bell" type="button" hidden aria-label="Новые уведомления" data-en-aria-label="New notifications"><span class="bell-ico" aria-hidden="true">🔔</span><b id="bellN"></b></button>
 <script>
   // Скрипт Telegram нужен только внутри Telegram. В обычном браузере не грузим: если telegram.org медленный
   // или недоступен (у части провайдеров), синхронный скрипт держал бы всю игру и страница не открывалась.
@@ -237,6 +244,7 @@
     if (tg) document.write('<script src="https://telegram.org/js/telegram-web-app.js"><\/script>');
   })();
 </script>
+<script src="js/i18n.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>
 <script src="js/content.js"></script>

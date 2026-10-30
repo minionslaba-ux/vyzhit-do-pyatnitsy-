@@ -26,7 +26,7 @@ const board = (() => {
     if (!r.ok) {
       let detail = '';
       try { const j = await r.json(); detail = [j.code, j.message].filter(Boolean).join(' '); } catch {}
-      throw new Error(`Supabase ответил ${r.status} на ${path.split('?')[0]}${detail ? ` (${detail})` : ''}`);
+      throw new Error(L(`Supabase ответил ${r.status} на ${path.split('?')[0]}`, `Supabase returned ${r.status} for ${path.split('?')[0]}`) + (detail ? ` (${detail})` : ''));
     }
     return r.status === 204 || opts.method === 'POST' ? null : r.json();
   };
@@ -41,7 +41,7 @@ const board = (() => {
     refreshing = refreshing || (async () => {
       const r = await fetch(`${authBase}/token?grant_type=refresh_token`, { method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: ss.refresh }) });
-      if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast('Сессия входа истекла — войдите по почте ещё раз'); return null; }
+      if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast(L('Сессия входа истекла — войдите по почте ещё раз', 'Your session expired — sign in by email again')); return null; }
       const j = await r.json();
       prefs.session = { access: j.access_token, refresh: j.refresh_token, exp: (j.expires_at ? j.expires_at * 1000 : Date.now() + j.expires_in * 1000) };
       store.set(KEY.prefs, prefs);
@@ -75,7 +75,7 @@ const board = (() => {
       catch (err) {
         // база со старой схемой: без колонок mode/day/overheat. Неделю дня так не записать — просим обновить schema.sql
         if (!/PGRST204|column/i.test(err.message)) throw err;
-        if (entry.mode !== 'career') throw new Error('обновите базу: выполните свежий supabase/schema.sql');
+        if (entry.mode !== 'career') throw new Error(L('обновите базу: выполните свежий supabase/schema.sql', 'update the database: run the latest supabase/schema.sql'));
         const { mode, day, overheat, ...old } = entry; await post(old);
       }
     },
@@ -119,19 +119,19 @@ const board = (() => {
       return req(`/participants?select=*&order=updated_at.desc&limit=200${deptQ(dept)}`);
     },
     async suggest(card) {
-      if (!online) throw new Error('общий офис не подключён: предложения принимаются только с ключами Supabase');
+      if (!online) throw new Error(L('общий офис не подключён: предложения принимаются только с ключами Supabase', 'shared office isn’t connected: suggestions only work with Supabase keys'));
       const auth = await authHeaders();
-      if (!auth.Authorization) throw new Error('предлагать карточки можно после входа по почте');
+      if (!auth.Authorization) throw new Error(L('предлагать карточки можно после входа по почте', 'sign in by email to suggest cards'));
       await req('/suggestions', { method: 'POST', headers: { Prefer: 'return=minimal', ...auth }, body: JSON.stringify({ ...card, player_id: prefs.playerId }) });
     },
     async approved() { return online ? req('/approved_cards?select=*&limit=200') : []; },
     // Функции офисов и чатов; ошибки из базы приходят готовым русским текстом
     async rpc(name, args, token) {
-      if (!online) throw new Error('общий офис не подключён: нужны ключи Supabase в js/config.js');
+      if (!online) throw new Error(L('общий офис не подключён: нужны ключи Supabase в js/config.js', 'shared office isn’t connected: add Supabase keys to js/config.js'));
       const r = await fetch(`${base}/rpc/${name}`, { method: 'POST', body: JSON.stringify(args),
         headers: { ...headers, ...(await authHeaders(token)) } });
       const t = await r.text();
-      if (!r.ok) { let m = ''; try { m = JSON.parse(t).message; } catch {} throw new Error(m || `Supabase ответил ${r.status}`); }
+      if (!r.ok) { let m = ''; try { m = JSON.parse(t).message; } catch {} throw new Error(m || L(`Supabase ответил ${r.status}`, `Supabase returned ${r.status}`)); }
       return t ? JSON.parse(t) : null;
     },
     // Регистрация: ссылка для входа на почту (Supabase Auth)
@@ -139,11 +139,11 @@ const board = (() => {
       const redirect = location.origin + location.pathname;
       const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/otp?redirect_to=${encodeURIComponent(redirect)}`, {
         method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, create_user: true }) });
-      if (!r.ok) { let m = ''; try { const j = await r.json(); m = j.msg || j.message || j.error_description || ''; } catch {} throw new Error(m || `Supabase ответил ${r.status}`); }
+      if (!r.ok) { let m = ''; try { const j = await r.json(); m = j.msg || j.message || j.error_description || ''; } catch {} throw new Error(m || L(`Supabase ответил ${r.status}`, `Supabase returned ${r.status}`)); }
     },
     async user(token) {
       const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/user`, { headers: { apikey: cfg.anonKey, Authorization: `Bearer ${token}` } });
-      if (!r.ok) throw new Error(`вход не удался (${r.status})`);
+      if (!r.ok) throw new Error(L(`вход не удался (${r.status})`, `sign-in failed (${r.status})`));
       return r.json();
     },
   };

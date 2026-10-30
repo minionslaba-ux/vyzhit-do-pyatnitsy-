@@ -2,6 +2,8 @@
 // «Выжить до пятницы». Скрипты подключаются по порядку: engine → board → audio → game → ui-menu → app;
 // у них общее глобальное пространство имён, как у cards.js и content.js.
 
+applyStaticLang();  // английский текст из data-en в index.html
+
 // ---------- старт: брендированная неделя (?pack=имя) и карточки от коллег ----------
 (async () => {
   const pack = new URLSearchParams(location.search).get('pack');
@@ -19,7 +21,7 @@
   }
   try {
     for (const s of await board.approved()) {
-      const c = { id: 'sug_' + s.id, who: s.who || 'Коллега', text: s.text, author: s.author, random: true,
+      const c = { id: 'sug_' + s.id, who: s.who || L('Коллега', 'Coworker'), text: s.text, author: s.author, random: true,
         answers: { left: { label: s.left_label, effects: s.left_effects || {} }, right: { label: s.right_label, effects: s.right_effects || {} } } };
       byId[c.id] = c; SUGGESTED.push(c);
     }
@@ -30,7 +32,7 @@
 async function finishLogin() {
   const h = new URLSearchParams(location.hash.slice(1));
   const clean = () => history.replaceState(null, '', location.pathname + location.search);
-  if (h.get('error')) { clean(); toast(`Вход не удался: ${h.get('error_description') || h.get('error')}. Отправьте ссылку ещё раз.`); return false; }
+  if (h.get('error')) { clean(); toast(L(`Вход не удался: ${h.get('error_description') || h.get('error')}. Отправьте ссылку ещё раз.`, `Sign-in failed: ${h.get('error_description') || h.get('error')}. Please send the link again.`)); return false; }
   const token = h.get('access_token');
   if (!token || !board.online) return false;
   clean();
@@ -49,7 +51,7 @@ async function finishLogin() {
     store.set(KEY.prefs, prefs);
     location.reload();  // ID игрока сменился — перезапускаем игру с ним
     return true;
-  } catch (err) { toast(`Вход не удался: ${err.message}`); return false; }
+  } catch (err) { toast(L(`Вход не удался: ${err.message}`, `Sign-in failed: ${err.message}`)); return false; }
 }
 // После перехода по ссылке из письма: регистрация подтверждена — короткое приветствие и кнопка в игру
 function loginWelcome() {
@@ -58,10 +60,10 @@ function loginWelcome() {
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass welcome-box" role="dialog" aria-modal="true" aria-labelledby="lwTitle">
     <span class="lw-ico" aria-hidden="true">${fresh ? '🎉' : '👋'}</span>
-    <h2 id="lwTitle">${fresh ? 'Регистрация подтверждена!' : `С возвращением, ${esc(prefs.name)}!`}</h2>
-    <p>${fresh ? `Почта ${esc(prefs.email)} подтверждена. Гостевой прогресс перенесён в аккаунт — теперь он с вами на любом устройстве.` : 'Вход выполнен. Карьера, офис и коллеги на месте.'}</p>
-    ${fresh ? '<ul class="lw-list"><li>🏢 Создайте офис и позовите коллег</li><li>💬 Пишите в чат офиса</li><li>🏆 Ваш отдел — в рейтинге</li></ul>' : ''}
-    <button class="btn-main" type="button" id="lwGo">${fresh ? 'Начать игру' : 'Продолжить'}</button></div>`;
+    <h2 id="lwTitle">${fresh ? L('Регистрация подтверждена!', 'You’re all signed up!') : L(`С возвращением, ${esc(prefs.name)}!`, `Welcome back, ${esc(prefs.name)}!`)}</h2>
+    <p>${fresh ? L(`Почта ${esc(prefs.email)} подтверждена. Гостевой прогресс перенесён в аккаунт — теперь он с вами на любом устройстве.`, `${esc(prefs.email)} is confirmed. Your guest progress has moved to your account — now it follows you to any device.`) : L('Вход выполнен. Карьера, офис и коллеги на месте.', 'You’re signed in. Your career, office and coworkers are right where you left them.')}</p>
+    ${fresh ? `<ul class="lw-list"><li>${L('🏢 Создайте офис и позовите коллег', '🏢 Start an Office and invite your coworkers')}</li><li>${L('💬 Пишите в чат офиса', '💬 Chat with your Office')}</li><li>${L('🏆 Ваш отдел — в рейтинге', '🏆 Get your department on the leaderboard')}</li></ul>` : ''}
+    <button class="btn-main" type="button" id="lwGo">${fresh ? L('Начать игру', 'Start playing') : L('Продолжить', 'Continue')}</button></div>`;
   m.hidden = false;
   if (fresh) { sfx.win?.(); confetti(); }
   $('lwGo').onclick = () => { m.hidden = true; };
@@ -71,8 +73,8 @@ async function joinFromLink() {
   const q = new URLSearchParams(location.search), code = q.get('join') || prefs.pendingJoin;
   if (q.get('join')) { prefs.pendingJoin = q.get('join'); store.set(KEY.prefs, prefs); q.delete('join'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '')); }
   if (!code || !prefs.name || !board.online) return;
-  if (!registered()) { toast('Чтобы вступить в офис по приглашению, зарегистрируйтесь — после входа вы окажетесь в нём сами'); return; }
-  try { await board.touch('menu'); const n = await board.rpc('join_team', { p_id: prefs.playerId, p_code: code }); toast(`Вы в офисе «${n}». Загляните в чат офиса!`); }
+  if (!registered()) { toast(L('Чтобы вступить в офис по приглашению, зарегистрируйтесь — после входа вы окажетесь в нём сами', 'To join an Office by invite, sign up — once you’re in, you’ll land there automatically')); return; }
+  try { await board.touch('menu'); const n = await board.rpc('join_team', { p_id: prefs.playerId, p_code: code }); toast(L(`Вы в офисе «${n}». Загляните в чат офиса!`, `You’re in the “${n}” Office. Say hi in the Office chat!`)); }
   catch (err) { toast(err.message); }
   delete prefs.pendingJoin; store.set(KEY.prefs, prefs);
 }
@@ -92,18 +94,20 @@ function installUi() {
   $('installCta').hidden = !canInstall() || Date.now() < (prefs.installSnooze || 0);
 }
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; installUi(); });
-addEventListener('appinstalled', () => { installEvt = null; prefs.installed = 1; store.set(KEY.prefs, prefs); $('installPop').hidden = true; installUi(); toast('Игра установлена — ищите её на главном экране'); });
+addEventListener('appinstalled', () => { installEvt = null; prefs.installed = 1; store.set(KEY.prefs, prefs); $('installPop').hidden = true; installUi(); toast(L('Игра установлена — ищите её на главном экране', 'Game installed — find it on your home screen')); });
 async function doInstall() {
   $('installPop').hidden = true;
   track('install', { detail: installEvt ? 'prompt' : isIOS ? 'ios' : 'manual' });
   if (installEvt) { installEvt.prompt(); const r = await installEvt.userChoice.catch(() => null); if (r?.outcome === 'accepted') { prefs.installed = 1; store.set(KEY.prefs, prefs); } installEvt = null; installUi(); return; }
   const m = $('modal');
   const steps = isIOS
-    ? '1. Нажмите кнопку «Поделиться» внизу Safari (квадрат со стрелкой).<br>2. Выберите «На экран „Домой“».<br>3. Нажмите «Добавить».'
-    : '1. Откройте меню браузера — три точки ⋮ справа вверху.<br>2. Выберите «Установить приложение» или «Добавить на главный экран».<br>3. Подтвердите — значок игры появится рядом с другими приложениями.';
-  m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="insTitle"><h2 id="insTitle">На главный экран</h2>
-    <p class="share-text">${steps}<br><br>Игра будет открываться как приложение: на весь экран и даже без интернета.</p>
-    <button class="btn-ghost" id="insClose">Понятно</button></div>`;
+    ? L('1. Нажмите кнопку «Поделиться» внизу Safari (квадрат со стрелкой).<br>2. Выберите «На экран „Домой“».<br>3. Нажмите «Добавить».',
+      '1. Tap the Share button at the bottom of Safari (the square with an arrow).<br>2. Choose “Add to Home Screen”.<br>3. Tap “Add”.')
+    : L('1. Откройте меню браузера — три точки ⋮ справа вверху.<br>2. Выберите «Установить приложение» или «Добавить на главный экран».<br>3. Подтвердите — значок игры появится рядом с другими приложениями.',
+      '1. Open the browser menu — the three dots ⋮ in the top right.<br>2. Choose “Install app” or “Add to Home screen”.<br>3. Confirm — the game icon will show up next to your other apps.');
+  m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="insTitle"><h2 id="insTitle">${L('На главный экран', 'Add to home screen')}</h2>
+    <p class="share-text">${steps}<br><br>${L('Игра будет открываться как приложение: на весь экран и даже без интернета.', 'The game will open like an app: full screen, even offline.')}</p>
+    <button class="btn-ghost" id="insClose">${L('Понятно', 'Got it')}</button></div>`;
   m.hidden = false; $('insClose').onclick = () => { m.hidden = true; };
 }
 $('installApp').onclick = doInstall;
@@ -146,7 +150,7 @@ finishLogin().then(reloading => {
   track('open', { detail: (TG ? 'telegram' : standalone ? 'app' : 'web') + (utm ? ':' + utm : '') });
   const scr = new URLSearchParams(location.search).get('screen');
   if (scr && board.online) return openScreen(scr);
-  if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');
+  if (prefs.email && !prefs.name) renderJoin('profile', L('Вход выполнен. Осталось представиться коллегам.', 'You’re signed in. Now just introduce yourself to your coworkers.'));
   else if (prefs.name) renderMenu();
   else renderWelcome();
   if (prefs.loginWelcome && prefs.name) loginWelcome();
