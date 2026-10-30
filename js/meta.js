@@ -132,9 +132,9 @@ function openDesk() {
     m.innerHTML = `<div class="modal-box glass desk-box" role="dialog" aria-modal="true" aria-labelledby="deskTitle">
       <h2 id="deskTitle">🗄️ ${L('Мой рабочий стол', 'My desk')}</h2>
       <div class="desk-view" aria-label="${L('Стол', 'Desk')}">${deskIcons() || `<span class="desk-empty">${L('Пока пусто. Обставьте стол — его увидят коллеги.', 'Empty for now. Decorate it — your coworkers will see it.')}</span>`}</div>
-      <p class="shop-bal">${Cm ? L(`На счёте: <b>${money(bank)}</b>`, `Balance: <b>${money(bank)}</b>`) : L('Украшения покупаются на деньги карьеры — начните карьеру.', 'Decorations cost career money — start a career first.')}</p>
-      <div class="shop-list">${DESK.map(d => `<button class="shop-item" data-desk="${d.id}" ${own.includes(d.id) || !Cm || bank < d.price ? 'disabled' : ''}>
-        <b>${d.icon} ${d.name}</b><span class="price">${own.includes(d.id) ? L('есть', 'owned') : money(d.price)}</span></button>`).join('')}</div>
+      <p class="shop-bal">${Cm ? L(`На счёте: <b>${money(bank)}</b> `, `Balance: <b>${money(bank)}</b> `) + topupBtn(0, 'desk') : L('Украшения покупаются на деньги карьеры — начните карьеру.', 'Decorations cost career money — start a career first.')}</p>
+      <div class="shop-list">${DESK.map(d => { const short = Cm && !own.includes(d.id) && bank < d.price; return `<button class="shop-item${short ? ' short' : ''}" data-desk="${d.id}" ${own.includes(d.id) || !Cm ? 'disabled' : ''} ${short ? `data-topup="${lackOf(d.price)}" data-topup-back="desk"` : ''}>
+        <b>${d.icon} ${d.name}</b><span class="price">${own.includes(d.id) ? L('есть', 'owned') : short ? `💰 ${L('не хватает', 'short')} ${lackOf(d.price)}` : money(d.price)}</span></button>`; }).join('')}</div>
       <button class="btn-ghost" type="button" id="deskClose">${L('Закрыть', 'Close')}</button></div>`;
     m.querySelectorAll('[data-desk]').forEach(b => b.onclick = () => {
       const d = DESK.find(x => x.id === b.dataset.desk);

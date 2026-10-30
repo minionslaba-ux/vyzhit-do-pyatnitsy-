@@ -197,7 +197,7 @@ function weekExpenses(share = 1) {  // share — доля недели: при �
   return { life, loanPay };
 }
 const expHtml = x => `<div class="money expense"><div><b>−${money(x.life)}</b><span>${L('жильё и еда', 'rent & food')}</span></div><div><b>${x.loanPay ? `−${money(x.loanPay)}` : '—'}</b><span>${C.loan ? L(`кредит, осталось ${C.loan}`, `loan, $${C.loan} left`) : x.loanPay ? L('кредит погашен', 'loan paid off') : L('кредита нет', 'no loan')}</span></div></div>
-  ${C.bank < 0 ? `<p class="debt">${L(`На счёте ${C.bank} у.е. — долг. В понедельник Кукуха −10, пока не выйдете в плюс.`, `Balance: ${money(C.bank)}. You’re in debt — Sanity −10 every Monday until you’re back in the black.`)}</p>` : ''}`;
+  ${C.bank < 0 ? `<p class="debt">${L(`На счёте ${C.bank} у.е. — долг. В понедельник Кукуха −10, пока не выйдете в плюс.`, `Balance: ${money(C.bank)}. You’re in debt — Sanity −10 every Monday until you’re back in the black.`)} ${topupBtn(-C.bank, '', L('Закройте долг, чтобы он не давил на Кукуху.', 'Clear the debt so it stops hurting your Sanity.'))}</p>` : ''}`;
 function takeVacation() {
   if (!C || C.vacation < 7 || C.week > YEAR) return;
   const holidayPay = C.salary * 5;
@@ -681,23 +681,24 @@ function openShop() {
   const render = () => {
     m.innerHTML = `<div class="modal-box glass shop-box" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
       <h2 id="shopTitle">${L('Магазин мощей', 'Power Shop')}</h2>
-      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${C.salary} у.е./день`, `pay $${C.salary}/day`)}</p>
+      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${C.salary} у.е./день`, `pay $${C.salary}/day`)} ${topupBtn(0, 'shop')}</p>
       <span class="shop-sec">${L('Предметы — гасят один удар −10 и сильнее', 'Items — each blocks one hit of −10 or worse')}</span>
-      <div class="shop-list">${Object.entries(SHOP).map(([id, price]) => `<button class="shop-item" data-item="${id}" ${C.bank < price || S.items.length >= 6 ? 'disabled' : ''}>
-        <b>${ITEMS[id].name}</b><small>${ITEMS[id].text}</small><span class="price">${money(price)}</span></button>`).join('')}</div>
+      <div class="shop-list">${Object.entries(SHOP).map(([id, price]) => `<button class="shop-item${C.bank < price ? ' short' : ''}" data-item="${id}" ${S.items.length >= 6 ? 'disabled' : ''} ${C.bank < price ? `data-topup="${lackOf(price)}" data-topup-back="shop"` : ''}>
+        <b>${ITEMS[id].name}</b><small>${ITEMS[id].text}</small><span class="price">${C.bank < price ? `💰 ${L('не хватает', 'short')} ${lackOf(price)}` : money(price)}</span></button>`).join('')}</div>
       <span class="shop-sec">${L('Мощь +20% — шкала отходит от края на 20 пунктов', 'Power +20% — pulls a meter 20 points back from the edge')}</span>
-      <div class="shop-list">${RES.map(r => `<button class="shop-item" data-power="${r.k}" ${C.bank < powerPrice() || Math.abs(S.res[r.k] - 50) < 5 ? 'disabled' : ''}>
-        <b>${r.name} ${S.res[r.k]}% → ${S.res[r.k] > 50 ? Math.max(50, S.res[r.k] - 20) : Math.min(50, S.res[r.k] + 20)}%</b><span class="price">${money(powerPrice())}</span></button>`).join('')}</div>
+      <div class="shop-list">${RES.map(r => `<button class="shop-item${C.bank < powerPrice() ? ' short' : ''}" data-power="${r.k}" ${Math.abs(S.res[r.k] - 50) < 5 ? 'disabled' : ''} ${C.bank < powerPrice() ? `data-topup="${lackOf(powerPrice())}" data-topup-back="shop"` : ''}>
+        <b>${r.name} ${S.res[r.k]}% → ${S.res[r.k] > 50 ? Math.max(50, S.res[r.k] - 20) : Math.min(50, S.res[r.k] + 20)}%</b><span class="price">${C.bank < powerPrice() ? `💰 ${L('не хватает', 'short')} ${lackOf(powerPrice())}` : money(powerPrice())}</span></button>`).join('')}</div>
       <span class="shop-sec">${L('Банк', 'Bank')}</span>
       <div class="shop-list"><button class="shop-item" id="loanBtn" ${C.loan ? 'disabled' : ''}><b>${L('Кредит +20 у.е.', 'Loan +$20')}</b><small>${C.loan ? L(`осталось вернуть ${C.loan} у.е.`, `$${C.loan} left to repay`) : L('вернуть 24 у.е. — по 6 в неделю', 'repay $24 — $6 a week')}</small><span class="price">${L('сразу на счёт', 'cash right now')}</span></button></div>
       <p class="field-note">${L('Каждая следующая «мощь» на этой неделе вдвое дороже. Каждую неделю списываются расходы на жильё и еду — два дневных оклада.', 'Each extra “power” this week costs twice as much. Every week, rent and food eat two days’ pay.')}</p>
       <button class="btn-ghost" id="shopClose">${L('Закрыть', 'Close')}</button></div>`;
     m.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
-      const id = b.dataset.item; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item(); bus.emit('buy', id);
+      const id = b.dataset.item; if (C.bank < SHOP[id]) return; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item(); bus.emit('buy', id);
       toast(L(`Куплено: ${ITEMS[id].name}`, `Bought: ${ITEMS[id].name}`)); renderBars(); render();
     });
     m.querySelectorAll('[data-power]').forEach(b => b.onclick = () => {
       const k = b.dataset.power, v = S.res[k];
+      if (C.bank < powerPrice()) return;
       C.bank -= powerPrice(); S.powerBuys = (S.powerBuys || 0) + 1;
       S.res[k] = v > 50 ? Math.max(50, v - 20) : Math.min(50, v + 20);
       saveCareer(); store.set(KEY.save, S); sfx.item(); toast(L(`«${resName(k)}»: ${v}% → ${S.res[k]}%`, `${resName(k)}: ${v}% → ${S.res[k]}%`)); renderBars(); render();
@@ -760,7 +761,8 @@ function hintBar() {
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
   const can = C.bank >= hintPriceNow();
   el.className = 'card-tools ask';
-  el.innerHTML = `<button class="ct-btn ct-hint" type="button" id="hbYes" ${can ? '' : 'disabled'}>💡 ${L('Получить', 'Get it')} <b>${can ? money(hintPriceNow()) : L('нет денег', 'no cash')}</b></button>
+  el.innerHTML = (can ? `<button class="ct-btn ct-hint" type="button" id="hbYes">💡 ${L('Получить', 'Get it')} <b>${money(hintPriceNow())}</b></button>`
+    : `<button class="ct-btn ct-hint" type="button" id="hbYes" data-topup="${lackOf(hintPriceNow())}" data-topup-back="tools" data-topup-why="${esc(L(`Подсказка стоит ${money(hintPriceNow())} · на счёте ${money(C.bank)}`, `A hint costs ${money(hintPriceNow())} · you have ${money(C.bank)}`))}">💰 ${L('Пополнить', 'Top up')} <b>${L(`не хватает ${lackOf(hintPriceNow())}`, `$${lackOf(hintPriceNow())} short`)}</b></button>`) + `
     <button class="ct-btn ct-no" type="button" id="hbNo">${L('Отказаться', 'No thanks')}</button>`;
   FX.pulse(el, 'on', 500);
   $('hbNo').onclick = cardTools;
@@ -776,9 +778,9 @@ function hintBar() {
     el.innerHTML = `<span class="ct-q">💡 ${L('Лучше', 'Better go')} <b>${best.side === 'left' ? L('← влево', '← left') : L('вправо →', 'right →')}</b> · ${best.edge < 0 ? L('но и он заканчивает неделю', 'but it still ends your week') : L(`${w.name} станет ${best.weak.v}%`, `${w.name} ends up at ${best.weak.v}%`)}</span>`;
   };
 }
-// Сама предлагает подсказку, когда шкала у края: раз в игровой день и только если хватает денег
+// Сама предлагает подсказку, когда шкала у края: раз в игровой день; не хватает денег — с кнопкой «Пополнить»
 function hintOffer() {
-  if (!(S?.mode === 'career' && C) || C.bank < hintPriceNow() || prefs.hintOff) return;
+  if (!(S?.mode === 'career' && C) || prefs.hintOff) return;  // без денег — предложит пополнить
   const day = dayOf(S.step);
   if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
   S.hintDay = day;

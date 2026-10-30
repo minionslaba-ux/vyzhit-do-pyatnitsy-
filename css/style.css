@@ -1217,3 +1217,25 @@ body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .v
 .site-legal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .join-consent { font-size: 11.5px; opacity: .85; }
 .join-consent a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Пополнение баланса */
+.topup-box { width: min(460px, 100%); }
+.tu-why { margin: 0 0 6px; padding: 8px 12px; border-radius: 12px; background: rgba(var(--m-rgb),.12); font-weight: 700; font-size: 14px; }
+.tu-packs { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; margin: 10px 0; }
+.tu-pack { display: grid; gap: 2px; padding: 10px 6px; border-radius: 14px; border: 1.5px solid rgba(var(--w-rgb),.16); background: rgba(var(--w-rgb),.04); color: var(--text); font: inherit; cursor: pointer; text-align: center; }
+.tu-pack b { font-size: 16px; font-weight: 900; }
+.tu-pack span { font-weight: 800; color: var(--lime, #d4ff3a); }
+.tu-pack small { font-size: 11px; color: var(--text-2); font-weight: 700; }
+.tu-pack.on { border-color: var(--magenta); box-shadow: 0 0 16px rgba(var(--m-rgb),.45); }
+.tu-custom { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 4px 0 6px; font-weight: 800; }
+.tu-custom .btn-chip { width: 40px; height: 40px; font-size: 20px; padding: 0; }
+.tu-tiers, .tu-alt { font-size: 12px; color: var(--text-2); margin: 4px 0; text-align: center; }
+.tu-agree { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin: 8px 0; text-align: left; }
+.tu-agree input { margin-top: 3px; width: 18px; height: 18px; flex: none; }
+.tu-agree a { color: var(--cyan-l, #7ff3ff); }
+.tu-btn { border-color: #e8c25a !important; color: #ffe08a !important; }
+html.light .tu-btn { color: #8a6400 !important; }
+.btn-main.tu-btn { background: linear-gradient(135deg, #f5c84b, #e89b2c); color: #2a1a00 !important; }
+.shop-item.short { opacity: .85; border-style: dashed; }
+.shop-item.short .price { color: #ffe08a; }
+.shop-bal .tu-btn { margin-left: 6px; padding: 4px 10px; font-size: 12px; }
