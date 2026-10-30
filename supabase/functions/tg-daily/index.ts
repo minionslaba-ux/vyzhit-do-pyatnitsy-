@@ -1,10 +1,11 @@
 // Раз в день (pg_cron, 12:31 по Москве) — напоминание в Telegram тем, кто сам включил его в игре,
-// и в группы, где админ написал боту /remind (в группу — с итогами вчерашней недели дня).
+// и в группы, где админ написал боту /remind: поровну — позвать играть (с итогами вчерашней недели дня) или привлечь новых игроков.
 // Каждому — не больше одного сообщения в день (last_sent), поэтому лишний вызов ничего не ломает.
 // Заблокировали бота или удалили из группы — подписка выключается сама.
 // Разработчикам (dev_admins) — отчёт по игре за вчера, тоже раз в день.
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
+import { PLAY_RU, RECRUIT_RU } from './messages.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -16,16 +17,39 @@ const TEXT = {
        '☕ Lunch break? Perfect time to make it to Friday. The Daily Week is up.',
        '📌 Your story continues and a new Daily Week is up. Who lasts longest today?'],
 };
-const GROUP = {
-  ru: ['📅 Неделя дня готова! 25 решений до пятницы, 18:00 — одна неделя на всех. Кто из группы продержится дольше?',
-       '☕ Обед — время дожить до пятницы. Новая неделя дня уже в игре.',
-       '🏢 Офис открыт: новая неделя дня. Сыграйте и сравните результаты с группой.',
-       '⏰ Пятница сама себя не дождётся. Неделя дня готова — кто первый?'],
-  en: ['📅 The Daily Week is live! 25 decisions until Friday, 6 PM — the same week for everyone. Who here lasts longest?',
-       '☕ Lunch break — time to make it to Friday. A new Daily Week is up.',
-       '🏢 The office is open: a new Daily Week. Play and compare with the group.',
-       '⏰ Friday won’t come by itself. The Daily Week is ready — who’s first?'],
+// Группы: раз в день — привлечь новых игроков или позвать играть, поровну (расписание по дням недели — ниже).
+// Русские тексты — по 250 на каждое направление (messages.ts из data/bot/*.json), у понедельника, пятницы и субботы — свои.
+// Английских пока меньше. Текст выбирается по дате: подряд не повторяются, весь набор проходится по кругу.
+const RECRUIT_EN = [
+  '📣 Share the game with your coworkers! The more people in the office, the hotter the department leaderboard. The button below sends it to any chat.',
+  '🤝 Who from work is missing here? Invite the one who always says “got a minute?” — let them try to make it to Friday.',
+  '🏆 Department vs department: the leaderboard counts the average score. Bring your team and leave Accounting behind.',
+  '🎁 Every new player who joins via your link earns you +$15 and an item for the week. Find your link in the game: “Invite coworkers and friends”.',
+  '☕ Best water-cooler opener: “Which card did you make it to?” Send the game to your coworkers — button below.',
+  '👥 The Daily Week is the same for everyone. Play it with coworkers and see who made the bolder calls. Share the game in your work chat.',
+  '📲 Got a friend who’s always complaining about deadlines? We made a game about exactly that. Send it — let them survive at least till Wednesday.',
+  '🏢 Build your own Office in the game: create it in “My Office” and invite coworkers by link. You get a shared chat and tournaments.',
+];
+const PLAY_EN = [
+  '📅 The Daily Week is live! 25 decisions until Friday, 6 PM — the same week for everyone. Who here lasts longest?',
+  '👑 The fight for the crown is on! Who has today’s best Daily Week score? See if you can beat the leader.',
+  '☕ Lunch break — time to make it to Friday. A new Daily Week is up.',
+  '🎯 Three daily quests are waiting: XP and cash for each, an item for all three. Finish them before midnight.',
+  '⏰ Friday won’t come by itself. The Daily Week is ready — who’s first?',
+  '🧠 Keep every meter between 20% and 80% and Friday is yours. The Daily Week is waiting.',
+];
+const PLAY_DOW_EN: Record<number, string> = {
+  1: '🗓 It’s Monday — time to start surviving till Friday! The Daily Week is waiting, and the Boss is already typing “got a minute?”.',
+  5: '🎉 It’s Friday! 6 PM is within reach. Play the Daily Week and see if you make it to the weekend — at least in the game.',
+  6: '🛋 Saturday, the office is closed… except in the game. The Daily Week works weekends — perfect time to beat your record.',
 };
+// Текст для группы: day — номер дня с 1970 года, week — номер недели, dow — день недели по Москве (0 — воскресенье)
+function groupText(en: boolean, recruit: boolean, dow: number, day: number, week: number) {
+  if (recruit) return en ? RECRUIT_EN[day % RECRUIT_EN.length] : RECRUIT_RU[day % RECRUIT_RU.length];
+  if (en) return PLAY_DOW_EN[dow] || PLAY_EN[day % PLAY_EN.length];
+  const k = dow === 1 ? 'monday' : dow === 5 ? 'friday' : dow === 6 ? 'saturday' : 'any', list = PLAY_RU[k];
+  return list[(k === 'any' ? day : week) % list.length];
+}
 
 Deno.serve(async () => {
   const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
@@ -49,7 +73,7 @@ Deno.serve(async () => {
     await pause();
   }
 
-  // группы: итоги вчерашней недели дня — сколько сыграло и лучший результат
+  // группы: поровну — позвать играть (с итогами вчерашней недели дня: сколько сыграло, лучший результат) или привлечь игроков
   const { data: gs } = await db.from('tg_groups').select('chat_id, lang').eq('enabled', true).or(`last_sent.is.null,last_sent.lt.${today}`).limit(1000);
   if (gs?.length) {
     const yday = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
@@ -60,10 +84,18 @@ Deno.serve(async () => {
     const recap = (en: boolean) => !count || !best ? '' : '\n\n' + (en
       ? `Yesterday ${count} ${count === 1 ? 'person' : 'people'} played. Best: ${best.name} — ${best.won ? `made it to Friday, ${best.total} pts` : `${best.step} of 25 decisions`}.`
       : `Вчера сыграли: ${count}. Лучший — ${best.name}: ${best.won ? `дожил(а) до пятницы, ${best.total} очков` : `${best.step} из 25 решений`}.`);
+    const msk = new Date(Date.now() + 3 * 3600e3), dow = msk.getUTCDay();
+    // пн, ср, пт — позвать играть; вт, чт, вс — привлечь игроков; суббота — по очереди: за две недели ровно 7 на 7
+    const week = Math.floor((day + 3) / 7);  // 1 января 1970 — четверг: так неделя начинается с понедельника
+    const recruit = [2, 4, 0].includes(dow) || (dow === 6 && week % 2 === 0);
+    const shareUrl = (en: boolean) => 'https://t.me/share/url?' + new URLSearchParams({ url: 'https://t.me/Survivefridaybot?startapp',
+      text: en ? 'Survive till Friday — an office survival game. Can you make it to 6 PM?' : '«Выжить до пятницы» — игра про офис. Доживёшь до 18:00?' });
     for (const g of gs) {
-      const en = g.lang === 'en', list = en ? GROUP.en : GROUP.ru;
-      const r = await send({ chat_id: g.chat_id, text: list[day % list.length] + recap(en),
-        reply_markup: { inline_keyboard: [[{ text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' }]] } });
+      const en = g.lang === 'en';
+      const play = { text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
+      const text = groupText(en, recruit, dow, day, week) + (recruit ? '' : recap(en));
+      const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться игрой', url: shareUrl(en) }], [play]] : [[play]];
+      const r = await send({ chat_id: g.chat_id, text, reply_markup: { inline_keyboard: keyboard } });
       const j = await r.json().catch(() => ({}));
       if (r.ok) { groups++; await db.from('tg_groups').update({ last_sent: today }).eq('chat_id', g.chat_id); }
       else if (j.parameters?.migrate_to_chat_id) await db.from('tg_groups').update({ chat_id: j.parameters.migrate_to_chat_id }).eq('chat_id', g.chat_id);  // письмо уйдёт в следующий вызов
