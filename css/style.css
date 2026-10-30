@@ -1159,3 +1159,46 @@ body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .v
 .ps-box .btn-ghost, .ps-box .btn-how { min-height: 0; padding: 10px 14px; font-size: 14px; }
 .ps-box .credits { margin: 0; }
 .btn-maillink { width: 100%; margin-top: 8px; padding: 10px 14px; font-size: 14px; border-color: var(--cyan); color: var(--cyan-l); }
+
+/* Аватар: карточка в меню, выбор персонажа, просьбы */
+.hero-card { display: grid; grid-template-columns: 112px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 18px; border: 1.5px solid rgba(var(--c-rgb),.35);
+  background: radial-gradient(160px 120px at 20% 30%, rgba(var(--c-rgb),.14), transparent 70%), rgba(var(--w-rgb),.03); }
+.hero-card[hidden] { display: none; }
+.hero-cv { display: block; width: 100%; touch-action: pan-y; cursor: grab; }
+.hero-mini { height: 140px; border-radius: 14px; background: radial-gradient(circle at 50% 40%, rgba(var(--m-rgb),.18), transparent 70%); }
+.hero-info { display: grid; gap: 5px; min-width: 0; }
+.hero-info > b { font-size: 17px; font-weight: 900; }
+.hero-info small { color: var(--text-2); font-size: 12px; font-weight: 700; }
+.hero-mood { height: 8px; border-radius: 99px; background: rgba(var(--w-rgb),.1); overflow: hidden; }
+.hero-mood i { display: block; height: 100%; width: calc(var(--v) * 1%); background: linear-gradient(90deg, #ff3b6b, #ffd23b 45%, #2de28a); border-radius: inherit; }
+.hero-req { padding: 9px 12px; font-size: 13.5px; text-align: left; animation: heroPulse 1.8s ease-in-out infinite; }
+@keyframes heroPulse { 50% { box-shadow: 0 0 22px rgba(var(--m-rgb),.7); } }
+.hero-ok { color: var(--up) !important; }
+.hero-owned { font-size: 18px; letter-spacing: 2px; }
+.hero-box { width: min(520px, 100%); }
+.hero-lead { color: var(--text-2); font-size: 14px; margin: 0 0 8px; }
+.hero-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; }
+.hero-pick .hero-cv, .hero-ask .hero-cv { height: 290px; border-radius: 18px; background: radial-gradient(circle at 50% 35%, rgba(var(--c-rgb),.18), transparent 65%); }
+.hero-side { display: grid; gap: 8px; }
+.hero-nm { font-size: 22px; font-weight: 900; }
+.hero-side small { color: var(--text-2); font-weight: 700; }
+.hero-side .field span { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .08em; }
+.hero-side select, .hero-side input { width: 100%; padding: 10px 12px; border-radius: 12px; border: 1.5px solid rgba(var(--w-rgb),.18); background: rgba(var(--w-rgb),.05); color: var(--text); font: inherit; font-weight: 800; font-size: 15px; }
+.hero-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 12px 0; }
+.hero-thumb { padding: 4px 2px 6px; border-radius: 12px; border: 1.5px solid rgba(var(--w-rgb),.14); background: rgba(var(--w-rgb),.03); color: var(--text); font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; display: grid; gap: 2px; }
+.hero-thumb img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 9px; background: rgba(var(--w-rgb),.05); }
+.hero-thumb.on { border-color: var(--magenta); box-shadow: 0 0 14px rgba(var(--m-rgb),.5); }
+.hero-thumb small { margin-left: 2px; }
+.hero-ask { display: grid; grid-template-columns: 1fr 1.1fr; gap: 10px; align-items: center; }
+.hero-bubble { position: relative; padding: 14px; border-radius: 18px; background: rgba(var(--w-rgb),.07); border: 1.5px solid rgba(var(--m-rgb),.45); }
+.hero-bubble::before { content: ''; position: absolute; left: -9px; top: 40%; border: 9px solid transparent; border-right-color: rgba(var(--m-rgb),.45); border-left: 0; }
+.hero-bubble b { display: block; font-size: 17px; font-weight: 900; margin-bottom: 6px; }
+.hero-bubble p { margin: 0 0 6px; font-size: 14.5px; color: var(--text); }
+.hero-bubble span { font-size: 12px; color: var(--text-2); }
+.hero-acts { display: grid; gap: 8px; margin-top: 10px; }
+.hero-fallback { height: 200px; display: grid; place-items: center; font-size: 90px; }
+@media (max-width: 420px) {
+  .hero-pick, .hero-ask { grid-template-columns: 1fr; }
+  .hero-pick .hero-cv, .hero-ask .hero-cv { height: 230px; }
+  .hero-bubble::before { display: none; }
+}

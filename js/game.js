@@ -192,7 +192,7 @@ const fmtDays = d => (Math.floor(d * 10) / 10).toLocaleString(LOCALE);
 function pay(amount) { C.bank += amount; C.earned += amount; saveCareer(); }
 // Расходы недели: жильё и еда — 2 дневных оклада, плюс платёж по кредиту. Счёт ниже нуля — долг, он давит на Кукуху
 function weekExpenses(share = 1) {  // share — доля недели: при увольнении расходы только за отработанные дни
-  const life = Math.round(C.salary * 2 * share), loanPay = Math.min(C.loan || 0, 6);
+  const life = Math.round(C.salary * 2 * share), loanPay = Math.min(C.loan || 0, Math.max(6, Math.ceil((C.loan || 0) / 8)));  // большой кредит — платёж больше
   C.bank -= life + loanPay; C.loan = (C.loan || 0) - loanPay; C.spent = (C.spent || 0) + life + loanPay; saveCareer();
   return { life, loanPay };
 }
@@ -225,7 +225,7 @@ function newCareer() {
   C = { prof: prefs.prof, trait: prefs.trait, week: 1, stage: 'work', company: first.name, companies: [first.name], res: null,
     worked: 0, firings: 0, passed: 0, failed: 0, newJob: false, bank: 0, earned: 0, salary: salaryFor(first), vacation: 0, vacUsed: 0 };
   C.res = freshRes(first.perk);
-  saveCareer(); startWeek();
+  saveCareer(); heroCreate(startWeek);  // сначала — выбрать персонажа (js/hero.js)
 }
 function continueCareer() {
   C = store.get(KEY.career, null);
@@ -235,6 +235,7 @@ function continueCareer() {
   const save = store.get(KEY.save, null);
   if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(); }
   if (C.week > YEAR) return yearEnd();
+  if (!C.hero) return heroCreate(continueCareer);  // карьеры до появления аватара — создать его один раз
   if (C.stage === 'search') return jobSearch();
   startWeek();
 }
@@ -597,7 +598,8 @@ function deadlineOffer() {
   if (!(S?.mode === 'career' && C) || S.deadline || S.step % PER_DAY || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
   S.dlAsked = S.step;
   const day = S.step / PER_DAY, rnd = Math.random;
-  if (rnd() > (S.step ? .4 : .25)) return;
+  if (!S.forceDeadline && rnd() > (S.step ? .4 : .25)) return;  // forceDeadline — аватар попросил «задачу на премию»
+  S.forceDeadline = false;
   const tiers = DEADLINE_TIERS.filter(t => day + t.days <= 4), t = tiers[Math.floor(rnd() * tiers.length)];
   const [who, title] = t.days ? DEADLINE_TASKS[Math.floor(rnd() * (DEADLINE_TASKS.length - 1))] : DEADLINE_TASKS[10];
   S.dlOffers = (S.dlOffers || 0) + 1;
