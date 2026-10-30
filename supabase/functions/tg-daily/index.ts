@@ -5,7 +5,6 @@
 // Разработчикам (dev_admins) — отчёт по игре за вчера, тоже раз в день.
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
-import { PLAY_RU, RECRUIT_RU } from './messages.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -18,8 +17,9 @@ const TEXT = {
        '📌 Your story continues and a new Daily Week is up. Who lasts longest today?'],
 };
 // Группы: раз в день — привлечь новых игроков или позвать играть, поровну (расписание по дням недели — ниже).
-// Русские тексты — по 250 на каждое направление (messages.ts из data/bot/*.json), у понедельника, пятницы и субботы — свои.
-// Английских пока меньше. Текст выбирается по дате: подряд не повторяются, весь набор проходится по кругу.
+// Русские тексты — по 250 на каждое направление, лежат на сайте: data/bot/recruit_ru.json и data/bot/play_ru.json
+// (у «играть» свои наборы для понедельника, пятницы и субботы). Править можно прямо в репозитории — функцию перевыкладывать не нужно.
+// Сайт не ответил — берём запасные тексты ниже. Английских пока меньше. Текст выбирается по дате: подряд не повторяются.
 const RECRUIT_EN = [
   '📣 Share the game with your coworkers! The more people in the office, the hotter the department leaderboard. The button below sends it to any chat.',
   '🤝 Who from work is missing here? Invite the one who always says “got a minute?” — let them try to make it to Friday.',
@@ -43,12 +43,22 @@ const PLAY_DOW_EN: Record<number, string> = {
   5: '🎉 It’s Friday! 6 PM is within reach. Play the Daily Week and see if you make it to the weekend — at least in the game.',
   6: '🛋 Saturday, the office is closed… except in the game. The Daily Week works weekends — perfect time to beat your record.',
 };
+const RECRUIT_RU_SPARE = [
+  '📣 Поделитесь игрой с коллегами! Чем больше людей в офисе, тем жарче рейтинг отделов. Кнопка ниже отправит игру в любой чат.',
+  '🤝 Кого из коллег не хватает в этой группе? Позовите того, кто громче всех говорит «есть минутка?» — пусть попробует дожить до пятницы.',
+];
+const PLAY_RU_SPARE = [
+  '📅 Неделя дня готова! 25 решений до пятницы, 18:00 — одна неделя на всех. Кто из группы продержится дольше?',
+  '👑 Борьба за корону началась! Лучший результат недели дня — у кого он сегодня? Проверьте, сможете ли обойти лидера.',
+];
+const getJson = (name: string) => fetch(`https://survivefriday.com/data/bot/${name}`).then(r => r.ok ? r.json() : null).catch(() => null);
 // Текст для группы: day — номер дня с 1970 года, week — номер недели, dow — день недели по Москве (0 — воскресенье)
-function groupText(en: boolean, recruit: boolean, dow: number, day: number, week: number) {
-  if (recruit) return en ? RECRUIT_EN[day % RECRUIT_EN.length] : RECRUIT_RU[day % RECRUIT_RU.length];
+function groupText(ru: { recruit: string[] | null; play: Record<string, string[]> | null }, en: boolean, recruit: boolean, dow: number, day: number, week: number) {
+  if (recruit) { const l = en ? RECRUIT_EN : ru.recruit?.length ? ru.recruit : RECRUIT_RU_SPARE; return l[day % l.length]; }
   if (en) return PLAY_DOW_EN[dow] || PLAY_EN[day % PLAY_EN.length];
-  const k = dow === 1 ? 'monday' : dow === 5 ? 'friday' : dow === 6 ? 'saturday' : 'any', list = PLAY_RU[k];
-  return list[(k === 'any' ? day : week) % list.length];
+  const k = dow === 1 ? 'monday' : dow === 5 ? 'friday' : dow === 6 ? 'saturday' : 'any';
+  const l = ru.play?.[k]?.length ? ru.play[k] : PLAY_RU_SPARE;
+  return l[(k === 'any' ? day : week) % l.length];
 }
 
 Deno.serve(async () => {
@@ -88,12 +98,13 @@ Deno.serve(async () => {
     // пн, ср, пт — позвать играть; вт, чт, вс — привлечь игроков; суббота — по очереди: за две недели ровно 7 на 7
     const week = Math.floor((day + 3) / 7);  // 1 января 1970 — четверг: так неделя начинается с понедельника
     const recruit = [2, 4, 0].includes(dow) || (dow === 6 && week % 2 === 0);
+    const ru = recruit ? { recruit: await getJson('recruit_ru.json'), play: null } : { recruit: null, play: await getJson('play_ru.json') };
     const shareUrl = (en: boolean) => 'https://t.me/share/url?' + new URLSearchParams({ url: 'https://t.me/Survivefridaybot?startapp',
       text: en ? 'Survive till Friday — an office survival game. Can you make it to 6 PM?' : '«Выжить до пятницы» — игра про офис. Доживёшь до 18:00?' });
     for (const g of gs) {
       const en = g.lang === 'en';
       const play = { text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
-      const text = groupText(en, recruit, dow, day, week) + (recruit ? '' : recap(en));
+      const text = groupText(ru, en, recruit, dow, day, week) + (recruit ? '' : recap(en));
       const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться игрой', url: shareUrl(en) }], [play]] : [[play]];
       const r = await send({ chat_id: g.chat_id, text, reply_markup: { inline_keyboard: keyboard } });
       const j = await r.json().catch(() => ({}));
