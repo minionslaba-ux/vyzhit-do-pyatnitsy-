@@ -885,17 +885,24 @@ button.live:hover { background: rgba(212,255,58,.16); color: #fff; }
 .ip-form input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: rgba(255,255,255,.05); color: #fff; font: inherit; font-weight: 800; }
 
 /* Подсказка за 3 у.е. */
-.hint-chip { border-color: var(--up); color: var(--up); background: rgba(212,255,58,.08); text-shadow: 0 0 6px rgba(212,255,58,.5); }
-.hint-chip:hover { box-shadow: 0 0 14px rgba(212,255,58,.5); color: #fff; }
-.hint-bar { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; max-width: 520px; width: 100%; margin: 0 auto 8px; padding: 10px 12px;
-  border-radius: 14px; border: 1.5px solid var(--up); background: rgba(212,255,58,.07); box-shadow: 0 0 18px rgba(212,255,58,.18); font-size: 13px; line-height: 1.4; color: var(--text-3); }
-.hint-bar[hidden] { display: none; }
-.hint-bar.on { animation: slidein .35s; }
-.hint-bar b { color: #fff; }
-.hb-ico { font-size: 22px; }
-.hb-btns { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
-.hb-btns .btn-main, .hb-btns .btn-ghost { padding: 10px; font-size: 13px; }
-.hb-btns .btn-main:disabled { opacity: .45; box-shadow: none; }
+.card-tools { margin-top: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; cursor: default; }
+.ct-btn { min-width: 0; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 8px 6px; border-radius: 14px; font-weight: 800; font-size: 15px; line-height: 1.15; color: #fff; white-space: nowrap; }
+.ct-btn b { font-family: var(--f-mono); font-size: 13px; font-weight: 700; }
+.ct-hint { border: 2px solid var(--up); background: rgba(212,255,58,.1); box-shadow: 0 0 16px rgba(212,255,58,.3); }
+.ct-hint b { color: var(--up); }
+.ct-hint.done { opacity: .55; box-shadow: none; }
+.ct-shop { border: 2px solid var(--cyan); background: rgba(45,226,230,.1); box-shadow: 0 0 16px rgba(45,226,230,.3); }
+.ct-shop b { color: var(--cyan-l); }
+.ct-btn:hover, .ct-btn:focus-visible { filter: brightness(1.25); }
+.card-tools.said { padding: 8px 10px; min-height: 44px; align-items: center; border-radius: 16px; border: 2px solid var(--up); background: rgba(212,255,58,.09); box-shadow: 0 0 18px rgba(212,255,58,.25); }
+.card-tools.on { animation: slidein .35s; }
+.ct-q { grid-column: 1 / -1; font-size: 14px; font-weight: 600; line-height: 1.35; color: var(--text-3); }
+.ct-q b { color: #fff; }
+.card-tools.ask .ct-hint { background: rgba(212,255,58,.22); animation: tip 1.2s ease-in-out 3; }
+.card-tools.ask .ct-hint:disabled { opacity: .5; animation: none; }
+.ct-no { border: 2px solid var(--line); background: rgba(255,255,255,.05); }
+@media (max-width: 420px) { .ct-btn { font-size: 14px; gap: 4px; } .ct-btn b { font-size: 11px; } }
+@media (max-width: 350px) { .ct-btn { font-size: 12px; } }
 .ans.tip { border-color: var(--up) !important; box-shadow: 0 0 0 2px var(--up), 0 0 26px rgba(212,255,58,.55) !important; animation: tip 1.2s ease-in-out infinite; }
 @keyframes tip { 50% { box-shadow: 0 0 0 2px var(--up), 0 0 8px rgba(212,255,58,.25); } }
 
@@ -925,3 +932,9 @@ button.live:hover { background: rgba(212,255,58,.16); color: #fff; }
 .install-cta .btn-main { grid-column: 1 / -1; padding: 12px; font-size: 15px; }
 .install-pop { border-color: var(--cyan); box-shadow: 0 0 28px rgba(45,226,230,.35); }
 @media (prefers-reduced-motion: reduce) { .ans.tip, .bell.ring .bell-ico { animation: none; } }
+/* с кнопками внизу карточка не прокручивается целиком: листается только текст, кнопки всегда видны */
+.card:has(.card-tools) { overflow: hidden; gap: 10px; padding: 18px 18px 14px; }
+.card:has(.card-tools) .text { font-size: clamp(18px, 4.8vw, 30px); }
+.game.pro .g-center > .hint { display: none; }
+.card:has(.card-tools) .text { flex: 1 1 auto; min-height: 0; overflow: auto; }
+.card-tools { flex: none; }

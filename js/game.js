@@ -304,7 +304,7 @@ function renderBars() {
     w.setAttribute('aria-valuenow', v); w.setAttribute('aria-valuetext', `${r.name}: ${v}%${z ? ', ' + z : ''}`);
   }
   const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
-  $('hintChip').hidden = bc.hidden;
+  if ($('ctBank')) $('ctBank').textContent = `${C.bank} у.е.`;
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
 const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}`
@@ -316,7 +316,11 @@ function renderCard() {
   const tag = slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">ОТ КОЛЛЕГИ · ${esc(c.author)}</span>`
     : c.random ? '<span class="rnd-tag">! СЛУЧАЙНОЕ СОБЫТИЕ</span>' : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
   const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="Отношение: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
-  card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div><div class="stamp" aria-hidden="true"></div>`;
+  // в карьере внизу карточки — кнопки «Подсказка» и «Магазин»; там же появляется предложение подсказки
+  const tools = S.mode === 'career' && C ? '<div class="card-tools" id="ctools"></div>' : '';
+  card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div>${tools}<div class="stamp" aria-hidden="true"></div>`;
+  if (tools) cardTools();
+  views.game.classList.toggle('pro', (prefs.gamesPlayed || 0) >= 2);  // опытным не нужна строка «тяните карточку…» — больше места карточке
   // вход новой карточки: последствие — перемотка, случайное событие — помехи, новый день — лист календаря, иначе — снизу
   const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % 3 === 0 && S.step > 0 ? 'page' : null;
   card.style.transition = 'none'; card.style.transform = RM.matches || kind ? '' : 'translateY(28px) scale(.95)'; card.style.opacity = RM.matches || kind ? '' : '0';
@@ -460,7 +464,7 @@ function choose(side) {
   card.style.transition = RM.matches ? 'opacity .12s' : `transform .38s ${EASE}, opacity .38s`;
   if (!RM.matches) card.style.transform = `translateX(${dir * 1100}px) rotate(${dir * 26}deg)`;
   card.style.opacity = '0';
-  $('coach').hidden = true; $('hintBar').hidden = true;
+  $('coach').hidden = true;
   setTimeout(() => {
     const { eff, blocked } = effectsOf(side);
     for (const b of blocked) { S.used.push(b.item); toast(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`); sfx.item(); FX.shield(ITEMS[b.item].name, b.stat); }
@@ -550,37 +554,45 @@ function hintAdvice() {
   const best = a.edge !== b.edge ? (a.edge > b.edge ? a : b) : a.spread !== b.spread ? (a.spread < b.spread ? a : b) : null;
   return best;
 }
-function hintBar(auto) {
-  if (!(S?.mode === 'career' && C) || busy || splashOn) return;
-  const el = $('hintBar'), danger = RES.find(r => S.res[r.k] <= 20 || S.res[r.k] >= 80);
-  const why = auto && danger ? `«${danger.name}» ${S.res[danger.k] <= 20 ? 'на грани' : 'на перегреве'}. ` : '';
+function cardTools() {
+  const el = $('ctools'); if (!el) return;
+  const got = S.hintStep === S.step;
+  el.className = 'card-tools';
+  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 Подсказка <b>${got ? '✓' : HINT_PRICE + ' у.е.'}</b></button>
+    <button class="ct-btn ct-shop" type="button" id="ctShop">🛒 Магазин <b id="ctBank">${C.bank} у.е.</b></button>`;
+  $('ctHint').onclick = () => hintBar();
+  $('ctShop').onclick = openShop;
+}
+function hintBar() {
+  const el = $('ctools');
+  if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
+  // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
   const can = C.bank >= HINT_PRICE;
-  el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">${why}Подсказать, какой ответ лучше держит баланс? <b>${HINT_PRICE} у.е.</b>${can ? '' : ` На счёте только ${C.bank} у.е.`}</span>
-    <span class="hb-btns"><button class="btn-main" type="button" id="hbYes" ${can ? '' : 'disabled'}>Получить</button><button class="btn-ghost" type="button" id="hbNo">Отказаться</button></span>`;
-  el.hidden = false; FX.pulse(el, 'on', 500);
-  $('hbNo').onclick = () => { el.hidden = true; };
+  el.className = 'card-tools ask';
+  el.innerHTML = `<button class="ct-btn ct-hint" type="button" id="hbYes" ${can ? '' : 'disabled'}>💡 Получить <b>${can ? HINT_PRICE + ' у.е.' : 'нет денег'}</b></button>
+    <button class="ct-btn ct-no" type="button" id="hbNo">Отказаться</button>`;
+  FX.pulse(el, 'on', 500);
+  $('hbNo').onclick = cardTools;
   $('hbYes').onclick = () => {
     if (C.bank < HINT_PRICE || busy) return;
     C.bank -= HINT_PRICE; C.spent = (C.spent || 0) + HINT_PRICE; saveCareer(); renderBars(); sfx.item();
-    const best = hintAdvice(), c = current();
+    const best = hintAdvice();
     S.hintStep = S.step;
-    if (!best) { el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">Оба ответа примерно одинаково влияют на баланс — выбирайте по душе.</span>`; return; }
-    const btn = $(best.side === 'left' ? 'btnL' : 'btnR'), w = RES.find(r => r.k === best.weak.k);
-    btn.classList.add('tip');
-    el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">Безопаснее ${best.side === 'left' ? '← влево' : 'вправо →'}: <b>«${esc(c.answers[best.side].label)}»</b>.
-      ${best.edge < 0 ? 'Но и он заканчивает неделю — держитесь за второй шанс.' : `Самая слабая шкала после него — ${w.name} ${best.weak.v}%.`}</span>`;
+    el.className = 'card-tools said';
+    if (!best) { el.innerHTML = '<span class="ct-q">💡 Оба ответа примерно одинаково влияют на баланс — выбирайте по душе.</span>'; return; }
+    const w = RES.find(r => r.k === best.weak.k);
+    $(best.side === 'left' ? 'btnL' : 'btnR').classList.add('tip');
+    el.innerHTML = `<span class="ct-q">💡 Лучше <b>${best.side === 'left' ? '← влево' : 'вправо →'}</b> · ${best.edge < 0 ? 'но и он заканчивает неделю' : `${w.name} станет ${best.weak.v}%`}</span>`;
   };
 }
 // Сама предлагает подсказку, когда шкала у края: раз в игровой день и только если хватает денег
 function hintOffer() {
-  $('hintBar').hidden = true;
   if (!(S?.mode === 'career' && C) || C.bank < HINT_PRICE || prefs.hintOff) return;
   const day = Math.floor(S.step / 3);
   if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
   S.hintDay = day;
-  setTimeout(() => { if (S && !busy) hintBar(true); }, 700);
+  setTimeout(() => { if (S && !busy) hintBar(); }, 700);
 }
-$('hintChip').onclick = () => $('hintBar').hidden ? hintBar(false) : ($('hintBar').hidden = true);
 
 // ---------- второй шанс: вопрос на эрудицию ----------
 // Шкала дошла до 0 или 100 → вопрос с 4 вариантами и 20 секундами. Верно — шкала отступает от края на 20%, неделя продолжается
@@ -652,7 +664,7 @@ function secondChance(k, high) {
 (() => {
   const card = $('card'); let x0 = 0, dx = 0, t0 = 0, drag = false, pid = null;
   card.addEventListener('pointerdown', e => {
-    if (busy || splashOn) return; drag = true; pid = e.pointerId; x0 = e.clientX; dx = 0; t0 = performance.now();
+    if (busy || splashOn || e.target.closest('.card-tools')) return; drag = true; pid = e.pointerId; x0 = e.clientX; dx = 0; t0 = performance.now();
     card.setPointerCapture(pid); card.style.transition = 'border-color .2s, box-shadow .2s'; card.classList.remove('idle');
   });
   card.addEventListener('pointermove', e => {
