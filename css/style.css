@@ -1122,3 +1122,34 @@ body:has(#menu:not([hidden])) .bell { top: calc(12px + env(safe-area-inset-top, 
 .share-big b { white-space: nowrap; margin-left: 6px; padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,.22); font-size: .9em; }
 .btn-rules { display: block; text-align: center; text-decoration: none; }
 a.btn-link { display: block; text-align: center; }
+
+/* «Мой профиль»: плашка справа вверху и выезжающая панель */
+.me-badge { position: fixed; top: calc(12px + env(safe-area-inset-top, 0px)); right: 12px; z-index: 27; display: flex; align-items: center; gap: 7px; max-width: 46vw;
+  padding: 5px 12px 5px 5px; border-radius: 999px; border: 1.5px solid rgba(var(--c-rgb),.5); background: rgba(var(--bg-rgb),.78); backdrop-filter: blur(8px);
+  color: var(--text); font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; box-shadow: 0 0 16px rgba(var(--c-rgb),.25); }
+.me-badge:hover { border-color: var(--cyan); }
+.me-badge .mb-ava { width: 32px; height: 32px; flex: none; display: grid; place-items: center; font-size: 19px; border-radius: 50%; background: rgba(var(--w-rgb),.08); }
+.me-badge .mb-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-badge .mb-caret { font-size: 11px; opacity: .7; }
+.me-badge.guest { border-color: rgba(var(--m-rgb),.6); box-shadow: 0 0 16px rgba(var(--m-rgb),.3); }
+body:has(#menu[hidden]) .me-badge { display: none; }
+.prof-sheet { position: fixed; inset: 0; z-index: 28; background: rgba(var(--bg-rgb),.55); backdrop-filter: blur(3px); display: flex; justify-content: flex-end; align-items: flex-start;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 8px 8px; }
+.prof-sheet[hidden] { display: none; }
+.ps-box { width: min(400px, 100%); max-height: calc(100dvh - 16px); overflow-y: auto; display: grid; gap: 12px; padding: 14px; border-radius: 22px; animation: psIn .18s ease-out; }
+@keyframes psIn { from { opacity: 0; transform: translateY(-8px) scale(.98); } }
+.ps-head { display: flex; align-items: center; justify-content: space-between; }
+.ps-head b { font-size: 18px; font-weight: 900; }
+.ps-x { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--text); font-size: 22px; line-height: 1; cursor: pointer; }
+.ps-sec { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ps-cap { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-2); }
+.btn-danger { color: #ff5b7f !important; }
+/* в меню колокольчик слева, справа — плашка профиля */
+body:has(#menu:not([hidden])) .bell { right: auto; left: 12px; }
+@media (prefers-reduced-motion: reduce) { .ps-box { animation: none; } }
+.btn-main.btn-del { background: #ff3b6b; border-color: #ff3b6b; color: #fff; box-shadow: 0 0 18px rgba(255,59,107,.4); }
+/* всплывающие плашки внизу не перекрывают панель профиля и окна */
+body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .viral-pop { display: none; }
+.ps-box { background: linear-gradient(rgba(var(--w-rgb),.05), rgba(var(--w-rgb),.05)), rgb(var(--bg-rgb)); border: 1.5px solid rgba(var(--c-rgb),.35); box-shadow: 0 18px 50px rgba(0,0,0,.55); }
+.ps-box .btn-ghost, .ps-box .btn-how { min-height: 0; padding: 10px 14px; font-size: 14px; }
+.ps-box .credits { margin: 0; }

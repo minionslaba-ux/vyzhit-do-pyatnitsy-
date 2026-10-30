@@ -128,11 +128,6 @@
       <p class="tagline" data-en="A year of 52 weeks. Keep all four meters balanced: both zero and a hundred percent end your week.">Год из 52 недель. Держите все четыре шкалы в балансе: и ноль, и сто процентов — это конец недели.</p>
     </div>
     <div class="panel form">
-      <div class="me-card">
-        <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
-        <span class="me-who"><b id="meName" data-en="Employee">Сотрудник</b><small id="meDept" data-en="no department">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID" data-en-title="Copy ID">ID ······</button></span>
-        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit" data-en="Edit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meLogin" hidden data-en="Log in">Войти</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden data-en="Sign up">Регистрация</button></span>
-      </div>
       <div class="install-cta" id="installCta" hidden><span class="ic-ico" aria-hidden="true">📲</span><span class="ic-text" data-en="<b>Put the game on your home screen</b>Opens in one tap, full screen, even offline"><b>Игра на главном экране</b>Открывается в одно касание, на весь экран и даже без интернета</span>
         <button class="btn-main" type="button" id="installCtaGo" data-en="Install">Установить</button><button class="ip-x" type="button" id="installCtaX" aria-label="Скрыть" data-en-aria-label="Hide">×</button></div>
       <div class="invites" id="invites" hidden></div>
@@ -152,11 +147,7 @@
         <button class="btn-main btn-play" id="start" data-en="Play">Играть</button>
         <button class="btn-main btn-day" id="startDaily" data-en="Daily Week">Неделя дня</button>
       </div>
-      <div class="tabs menu-tabs" role="tablist">
-        <button class="tab" type="button" role="tab" id="tabOffice" aria-controls="paneOffice" aria-selected="true" data-en="Office">Офис</button>
-        <button class="tab" type="button" role="tab" id="tabProfile" aria-controls="paneProfile" aria-selected="false" data-en="Profile">Профиль</button>
-      </div>
-      <div class="pane" id="paneOffice" role="tabpanel" aria-labelledby="tabOffice">
+      <div class="pane" id="paneOffice">
         <div class="online-box" id="onlineBox" hidden></div>
         <div class="office-cta" id="officeCta" hidden><span data-en="<b>Your own Office</b> Build a team: create an Office and invite coworkers via link or ID."><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice" data-en="Create an Office">Создать офис</button></div>
         <div class="row2"><button class="btn-ghost" id="openOffice" data-en="My Office">Мой офис</button><button class="btn-ghost" id="openChat" data-en="Chat">Чат</button></div>
@@ -165,27 +156,47 @@
         <button class="btn-ghost btn-tggroup" type="button" id="tgGroup" hidden></button>
         <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       </div>
-      <div class="pane" id="paneProfile" role="tabpanel" aria-labelledby="tabProfile" hidden>
-        <div class="acct-box" id="acctBox" hidden></div>
-        <button class="btn-ghost btn-how" type="button" id="tgRemind" data-en="🔔 Daily reminder in Telegram">🔔 Напоминать в Telegram о неделе дня</button>
-        <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Напомнить в календаре</button></div>
-        <button class="btn-ghost btn-how" type="button" id="openHow" data-en="How to play: goal, meters, money">Как играть: цель, шкалы, деньги</button>
-        <a class="btn-ghost btn-how btn-rules" href="pravila.html" target="_blank" rel="noopener" data-en="📖 Full game rules" data-en-href="rules.html">📖 Полные правила игры</a>
-        <button class="btn-ghost btn-how" type="button" id="openVideo" data-en="▶ Game trailer, 15 seconds">▶ Видео об игре, 15 секунд</button>
-        <div class="cast-list" id="castList" hidden></div>
-        <div class="row2"><button class="btn-ghost" id="openCollection" data-en="Collection">Коллекция</button><button class="btn-ghost" id="openSuggest" data-en="Suggest a situation">Предложить ситуацию</button></div>
-        <button class="btn-ghost" id="installApp" hidden data-en="Install on your phone">Установить на телефон</button>
-        <button class="btn-ghost" id="newCareer" hidden data-en="Start a new Career">Начать карьеру заново</button>
-        <button class="btn-ghost btn-logout" type="button" id="profLogout" hidden data-en="Log out">Выйти из аккаунта</button>
-        <div class="lang-row" role="group" aria-label="Язык" data-en-aria-label="Language"><span data-en="Language">Язык</span>
-          <button class="btn-chip" type="button" id="langRu">Русский</button><button class="btn-chip" type="button" id="langEn">English</button></div>
-        <p class="credits"><span data-en="«Survive till Friday» · created by">«Выжить до пятницы» · автор и разработчик</span> <b data-en="Konstantin Moiseenko">Константин Моисеенко</b></p>
-      </div>
     </div>
     <div class="menu-foot">
       <div class="record glass"><b data-en="Best">Рекорд</b><span id="record" data-en="none yet">пока нет</span></div>
       <button class="sound glass" id="soundMenu" aria-label="Звук" data-en-aria-label="Sound"></button>
     </div>
+  <!-- «Мой профиль»: плашка справа вверху открывает панель со всем, что про игрока и аккаунт -->
+  <button class="me-badge" type="button" id="meBadge" aria-haspopup="dialog" aria-controls="profSheet"><span class="mb-ava" id="mbAva" aria-hidden="true">😎</span><span class="mb-name" id="mbName" data-en="Profile">Профиль</span><span class="mb-caret" aria-hidden="true">▾</span></button>
+  <div class="prof-sheet" id="profSheet" hidden>
+    <div class="ps-box panel" role="dialog" aria-modal="true" aria-labelledby="psTitle">
+      <div class="ps-head"><b id="psTitle" data-en="My profile">Мой профиль</b><button class="ps-x" type="button" id="psClose" aria-label="Закрыть" data-en-aria-label="Close">×</button></div>
+      <div class="me-card">
+        <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
+        <span class="me-who"><b id="meName" data-en="Employee">Сотрудник</b><small id="meDept" data-en="no department">без отдела</small><button class="id-chip" type="button" id="meId" title="Скопировать ID" data-en-title="Copy ID">ID ······</button></span>
+        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit" data-en="Edit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meLogin" hidden data-en="Log in">Войти</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden data-en="Sign up">Регистрация</button></span>
+      </div>
+      <div class="ps-sec">
+        <button class="btn-ghost btn-invite" type="button" id="psInvite" data-en="Invite coworkers and friends">Позвать коллег и друзей</button>
+        <button class="btn-ghost btn-tggroup" type="button" id="psGroup" hidden></button>
+        <button class="btn-ghost" id="installApp" hidden data-en="Install on your phone">Установить на телефон</button>
+        <button class="btn-ghost btn-how" type="button" id="tgRemind" data-en="🔔 Daily reminder in Telegram">🔔 Напоминать в Telegram о неделе дня</button>
+      </div>
+      <div class="ps-sec">
+        <button class="btn-ghost btn-how" type="button" id="openHow" data-en="How to play: goal, meters, money">Как играть: цель, шкалы, деньги</button>
+        <a class="btn-ghost btn-how btn-rules" href="pravila.html" target="_blank" rel="noopener" data-en="📖 Full game rules" data-en-href="rules.html">📖 Полные правила игры</a>
+        <button class="btn-ghost btn-how" type="button" id="openVideo" data-en="▶ Game trailer, 15 seconds">▶ Видео об игре, 15 секунд</button>
+        <div class="row2"><button class="btn-ghost" id="openCollection" data-en="Collection">Коллекция</button><button class="btn-ghost" id="openSuggest" data-en="Suggest a situation">Предложить ситуацию</button></div>
+        <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Напомнить в календаре</button></div>
+        <div class="cast-list" id="castList" hidden></div>
+      </div>
+      <div class="ps-sec">
+        <b class="ps-cap" data-en="Account">Аккаунт</b>
+        <div class="acct-box" id="acctBox" hidden></div>
+        <div class="lang-row" role="group" aria-label="Язык" data-en-aria-label="Language"><span data-en="Language">Язык</span>
+          <button class="btn-chip" type="button" id="langRu">Русский</button><button class="btn-chip" type="button" id="langEn">English</button></div>
+        <button class="btn-ghost" id="newCareer" hidden data-en="Start a new Career">Начать карьеру заново</button>
+        <button class="btn-ghost btn-logout" type="button" id="profLogout" hidden data-en="Log out">Выйти из аккаунта</button>
+        <button class="btn-link btn-danger" type="button" id="delAcct" hidden data-en="Delete account">Удалить аккаунт</button>
+      </div>
+      <p class="credits"><span data-en="«Survive till Friday» · created by">«Выжить до пятницы» · автор и разработчик</span> <b data-en="Konstantin Moiseenko">Константин Моисеенко</b></p>
+    </div>
+  </div>
   </section>
 
   <!-- Экран 2: игра -->

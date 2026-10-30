@@ -158,6 +158,7 @@ finishLogin().then(reloading => {
   else if (prefs.name) renderMenu();
   else renderWelcome();
   if (prefs.loginWelcome && prefs.name) loginWelcome();
+  setTimeout(checkDelete, prefs.loginWelcome ? 1500 : 300);  // подтверждённый запрос на удаление аккаунта — спросить окончательно
   if (!prefs.introSeen && !prefs.gamesPlayed) showIntro();  // первый вход: сначала коротко, в чём смысл игры
   joinFromLink();
   flushOutbox();

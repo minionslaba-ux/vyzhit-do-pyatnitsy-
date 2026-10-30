@@ -348,13 +348,15 @@ async function tgGroup() {
   const label = () => b.innerHTML = prefs.groupClaimed ? L('👥 Группа игры в Telegram', '👥 Game group on Telegram')
     : L(`👥 Вступить в группу игры в Telegram <b>+${money(GROUP_REWARD)}</b>`, `👥 Join the game’s Telegram group <b>+${money(GROUP_REWARD)}</b>`);
   label(); b.hidden = false;
+  const mirror = () => { const c = $('psGroup'); if (c) { c.hidden = b.hidden; c.innerHTML = b.innerHTML; } };  // копия в «Моём профиле»
+  mirror();
   const go = () => TG ? TG.openTelegramLink(link) : window.open(link, '_blank', 'noopener');
   const claim = async () => {
     const res = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
       body: JSON.stringify({ action: 'group_claim', ...(await tgWho()), player_id: prefs.playerId }) });
     const j = await res.json().catch(() => ({}));
     if (j.ok) {
-      prefs.groupClaimed = true; const now = addCash(GROUP_REWARD); label(); $('modal').hidden = true;
+      prefs.groupClaimed = true; const now = addCash(GROUP_REWARD); label(); mirror(); $('modal').hidden = true;
       sfx.coins?.(); toast(L(`🎉 Спасибо, что с нами! +${money(GROUP_REWARD)}${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎉 Thanks for joining! +${money(GROUP_REWARD)}${now ? '' : ' — paid once you get a job'}`));
     } else if (j.error === 'claimed') { prefs.groupClaimed = true; store.set(KEY.prefs, prefs); label(); $('modal').hidden = true; toast(L('Награда за группу уже получена', 'You’ve already got the group reward')); }
     else if (j.error === 'no_telegram' || j.error === 'bad_session') tgLogin('group');

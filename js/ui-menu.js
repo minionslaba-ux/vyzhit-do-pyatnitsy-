@@ -16,6 +16,11 @@ function renderMenu() {
   myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? acctLabel() : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
   $('meRegister').hidden = registered() || !board.online;
   $('meLogin').hidden = !!prefs.email || !board.online; renderAcctBox();
+  $('mbAva').textContent = prefs.avatar || '😎';
+  $('mbName').textContent = prefs.name ? prefs.name.split(' ')[0] : L('Профиль', 'Profile');
+  $('meBadge').classList.toggle('guest', !registered());
+  $('delAcct').hidden = !registered() || !!window.VDP_PLATFORM;
+  $('psGroup').hidden = $('tgGroup').hidden; $('psGroup').innerHTML = $('tgGroup').innerHTML;
   $('profLogout').hidden = !prefs.email; $('profLogout').textContent = L('Выйти из аккаунта', 'Log out'); delete $('profLogout').dataset.armed; $('meRegister').textContent = prefs.email ? L('Войти', 'Sign in') : L('Регистрация', 'Sign up');
   renderOfficeLine();
   renderChallengeCta();
@@ -233,17 +238,23 @@ $('langRu').onclick = () => EN && setLang('ru');
 $('langEn').onclick = () => !EN && setLang('en');
 $(EN ? 'langEn' : 'langRu').classList.add('on');
 $('start').onclick = async () => { await whenReady($('start')); continueCareer(); };
-// Вкладки меню: «Офис» (команда, чат, рейтинг) и «Профиль» (серия, коллекция, установка)
-function menuTab(name) {
-  prefs.menuTab = name; store.set(KEY.prefs, prefs);
-  for (const [t, p] of [['tabOffice', 'paneOffice'], ['tabProfile', 'paneProfile']]) {
-    const on = t === (name === 'profile' ? 'tabProfile' : 'tabOffice');
-    $(t).setAttribute('aria-selected', on); $(p).hidden = !on;
-  }
-}
-$('tabOffice').onclick = () => menuTab('office');
-$('tabProfile').onclick = () => menuTab('profile');
-menuTab(prefs.menuTab || 'office');
+// «Мой профиль»: плашка справа вверху открывает панель — данные игрока, аккаунт, справка, второстепенные кнопки.
+// Кнопки, которые продвигают игру (позвать друзей, группа в Telegram, установка), — и в меню, и здесь
+const profSheet = $('profSheet');
+function openProfile() { try { renderMenu(); } catch {} profSheet.hidden = false; $('meBadge').setAttribute('aria-expanded', 'true'); $('psClose').focus({ preventScroll: true }); }
+function closeProfile() { if (profSheet.hidden) return; profSheet.hidden = true; $('meBadge').setAttribute('aria-expanded', 'false'); }
+$('meBadge').onclick = () => profSheet.hidden ? openProfile() : closeProfile();
+$('psClose').onclick = closeProfile;
+// клик мимо панели или по кнопке, которая ведёт дальше (новый экран или окно), — панель закрывается
+const KEEP_OPEN = ['profLogout', 'tgRemind', 'meId', 'langRu', 'langEn', 'remindDaily'];
+profSheet.addEventListener('click', e => {
+  if (e.target === profSheet) return closeProfile();
+  const b = e.target.closest('button, a');
+  if (b && !KEEP_OPEN.includes(b.id) && b.id !== 'psClose') setTimeout(closeProfile, 0);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProfile(); });
+$('psInvite').onclick = () => openShare(registered() ? 'team' : 'friends');
+$('psGroup').onclick = () => $('tgGroup').click();
 $('startDaily').onclick = async () => { await whenReady($('startDaily')); startDaily(); };
 $('startPack').onclick = async () => { await whenReady($('startPack')); startPack(); };
 // «Начать заново» срабатывает со второго нажатия: окна подтверждения в браузере тут нет

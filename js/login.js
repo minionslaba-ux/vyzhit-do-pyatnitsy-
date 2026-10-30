@@ -63,7 +63,8 @@ const linkToken = async () => (typeof registered === 'function' && registered())
 
 async function tgLogin(after) {
   try {
-    if (TG) return await socialDone(await fnPost('tg-login', { initData: TG.initData, access_token: await linkToken() }), 'tg');
+    // для подтверждения удаления нужен именно новый вход, а не привязка к текущему аккаунту
+    if (TG) return await socialDone(await fnPost('tg-login', { initData: TG.initData, access_token: after === 'delete' ? undefined : await linkToken() }), 'tg');
     if (!TG_BOT_ID) return toast(L('Вход через Telegram ещё настраивается.', 'Telegram sign-in isn’t set up yet.'));
     sessionStorage.setItem('vdp-social', JSON.stringify({ via: 'tg', after }));
     const back = location.origin + location.pathname;
@@ -96,11 +97,11 @@ async function finishSocial() {
       const raw = tgRes[1].replace(/-/g, '+').replace(/_/g, '/');
       const bytes = Uint8Array.from(atob(raw + '='.repeat((4 - raw.length % 4) % 4)), c => c.charCodeAt(0));
       const tgAuth = JSON.parse(new TextDecoder().decode(bytes));
-      return await socialDone(await fnPost('tg-login', { tgAuth, access_token: await linkToken() }), 'tg');
+      return await socialDone(await fnPost('tg-login', { tgAuth, access_token: st?.after === 'delete' ? undefined : await linkToken() }), 'tg');
     }
     if (vk.get('state') !== st.state) { toast(L('Вход через VK не удался — попробуйте ещё раз.', 'VK sign-in failed — please try again.')); return false; }
     return await socialDone(await fnPost('tg-login', { vk: { code: vk.get('code'), code_verifier: st.verifier, device_id: vk.get('device_id') || '',
-      state: st.state, redirect_uri: location.origin + location.pathname, client_id: VK_APP }, access_token: await linkToken() }), 'vk');
+      state: st.state, redirect_uri: location.origin + location.pathname, client_id: VK_APP }, access_token: st.after === 'delete' ? undefined : await linkToken() }), 'vk');
   } catch (err) { toast(socialError(err, tgRes ? 'tg' : 'vk')); return false; }
 }
 
@@ -147,3 +148,72 @@ function passModal() {
     catch (err) { $('pwErr').textContent = L(`Не получилось: ${err.message}`, `Didn’t work: ${err.message}`); }
   };
 }
+
+// ---------- удаление аккаунта: с подтверждением по почте (или повторным входом через Telegram/VK) ----------
+// Сервер (account-delete) удаляет только если после запроса игрок заново вошёл по ссылке из письма — не старше 15 минут
+async function delCall(action) {
+  return fnPost('account-delete', { action, access_token: await board.accessToken(), redirect: location.origin + location.pathname });
+}
+function delModal(html) {
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="delTitle"><span class="lvl-ico" aria-hidden="true">🗑️</span>${html}</div>`;
+  m.hidden = false;
+  return m;
+}
+function askDelete() {
+  const via = socialVia(), n = via ? viaName(via) : '';
+  const m = delModal(`<h2 id="delTitle">${L('Удалить аккаунт?', 'Delete your account?')}</h2>
+    <p>${L('Удалятся аккаунт, профиль и рабочий стол, результаты в рейтингах, сообщения, участие в офисах (свой офис перейдёт самому давнему коллеге), привязки Telegram и VK, напоминания. Прогресс на этом устройстве тоже сотрётся. <b>Восстановить будет нельзя.</b>',
+      'This deletes your account, profile and desk, leaderboard results, messages, Office memberships (your own Office goes to its longest-serving member), Telegram and VK links and reminders. Progress on this device is wiped too. <b>This can’t be undone.</b>')}</p>
+    <p>${via ? L(`Для подтверждения войдите ещё раз через ${n}.`, `To confirm, sign in with ${n} once more.`)
+      : L(`Для подтверждения пришлём письмо на <b>${esc(prefs.email)}</b>. Откройте ссылку из письма на этом устройстве — игра попросит окончательно подтвердить удаление.`, `To confirm, we’ll email <b>${esc(prefs.email)}</b>. Open the link from that email on this device and the game will ask you to confirm the deletion.`)}</p>
+    <p class="join-err" id="delErr" role="alert"></p>
+    <button class="btn-main btn-del" type="button" id="delGo">${via ? L(`Подтвердить через ${n}`, `Confirm with ${n}`) : L('Отправить письмо', 'Send the email')}</button>
+    <button class="btn-ghost" type="button" id="delNo">${L('Отмена', 'Cancel')}</button>`);
+  $('delNo').onclick = () => { m.hidden = true; };
+  $('delGo').onclick = async () => {
+    $('delGo').disabled = true;
+    try {
+      await delCall('request');
+      if (via === 'tg') return tgLogin('delete');
+      if (via === 'vk') return vkLogin('delete');
+      delModal(`<h2 id="delTitle">${L('Проверьте почту', 'Check your email')}</h2>
+        <p>${L(`Письмо отправлено на <b>${esc(prefs.email)}</b>. Это письмо со ссылкой для входа: откройте её — и игра попросит окончательно подтвердить удаление. Запрос действует сутки.`, `We emailed <b>${esc(prefs.email)}</b>. It’s a sign-in link: open it and the game will ask you to confirm the deletion. The request is valid for 24 hours.`)}</p>
+        <button class="btn-ghost" type="button" id="delOk">${L('Понятно', 'Got it')}</button>`);
+      $('delOk').onclick = () => { $('modal').hidden = true; };
+    } catch (err) {
+      $('delErr').textContent = err.code === 'too_often' ? L('Письмо уже отправлено — подождите минуту и попробуйте снова.', 'An email was just sent — wait a minute and try again.') : L(`Не получилось: ${err.message}`, `Didn’t work: ${err.message}`);
+      $('delGo').disabled = false;
+    }
+  };
+}
+// Стереть всё игровое на этом устройстве (язык оставить) и начать с экрана входа
+function wipeDevice() {
+  try {
+    for (const k of Object.keys(localStorage)) if (k.startsWith('vdp-') && k !== 'vdp-lang') localStorage.removeItem(k);
+    localStorage.setItem(KEY.prefs, JSON.stringify({ introSeen: 1, accountDeleted: 1 }));
+  } catch {}
+  location.reload();
+}
+// После входа по ссылке из письма (или через Telegram/VK): есть подтверждённый запрос — спросить окончательно
+async function checkDelete() {
+  if (prefs.accountDeleted) { delete prefs.accountDeleted; store.set(KEY.prefs, prefs); toast(L('Аккаунт удалён. Спасибо, что играли!', 'Account deleted. Thanks for playing!')); return; }
+  if (!(typeof registered === 'function' && registered()) || !board.online || window.VDP_PLATFORM) return;
+  let st; try { st = await delCall('status'); } catch { return; }
+  if (!st.pending || !st.fresh) return;
+  const m = delModal(`<h2 id="delTitle">${L('Удалить аккаунт навсегда?', 'Delete your account for good?')}</h2>
+    <p>${L(`Вход подтверждён. Аккаунт <b>${esc(acctLabel())}</b> и все его данные будут удалены без возможности восстановления.`, `Sign-in confirmed. The account <b>${esc(acctLabel())}</b> and all its data will be deleted permanently.`)}</p>
+    <p class="join-err" id="delErr" role="alert"></p>
+    <button class="btn-main btn-del" type="button" id="delYes">${L('Удалить навсегда', 'Delete for good')}</button>
+    <button class="btn-ghost" type="button" id="delNo">${L('Не удалять', 'Keep my account')}</button>`);
+  $('delNo').onclick = async () => { m.hidden = true; await delCall('cancel').catch(() => {}); toast(L('Удаление отменено', 'Deletion cancelled')); };
+  $('delYes').onclick = async () => {
+    $('delYes').disabled = true;
+    try { await delCall('delete'); wipeDevice(); }
+    catch (err) {
+      $('delErr').textContent = err.code === 'not_confirmed' ? L('Подтверждение устарело — запросите удаление ещё раз.', 'The confirmation expired — request deletion again.') : L(`Не получилось: ${err.message}`, `Didn’t work: ${err.message}`);
+      $('delYes').disabled = false;
+    }
+  };
+}
+$('delAcct').onclick = askDelete;
