@@ -1,5 +1,5 @@
 // Язык игры: русский (ru) или английский (en). Подключается первым — до cards.js.
-// Выбор: ?lang=en / ?lang=ru в адресе, переключатель в профиле, иначе — язык браузера (русский для ru/uk/be/kk).
+// Выбор: ?lang=en / ?lang=ru в адресе, переключатель в профиле; кто уже играл — русский; иначе — по языкам браузера.
 // В коде текст пишется парой: L('по-русски', 'in English'). Данные (карточки, вопросы) — в data/en/*.json поверх русских по id.
 const LANG = (() => {
   try {
@@ -7,8 +7,13 @@ const LANG = (() => {
     if (q === 'en' || q === 'ru') { localStorage.setItem('vdp-lang', q); return q; }
     const s = localStorage.getItem('vdp-lang');
     if (s === 'en' || s === 'ru') return s;
+    if (localStorage.getItem('vdp-prefs')) return 'ru';  // кто уже играл до английской версии — остаётся на русском
   } catch {}
-  return /^(ru|uk|be|kk)\b/i.test(navigator.language || 'ru') ? 'ru' : 'en';
+  // английский — только если среди языков браузера нет русского (и украинского, белорусского, казахского)
+  const langs = navigator.languages?.length ? navigator.languages : [navigator.language || 'ru'];
+  const l = langs.some(x => /^(ru|uk|be|kk)\b/i.test(x)) ? 'ru' : 'en';
+  try { localStorage.setItem('vdp-lang', l); } catch {}  // запомнить: на следующем входе уже есть vdp-prefs, но язык тот же
+  return l;
 })();
 const EN = LANG === 'en';
 const L = (ru, en) => EN ? en : ru;
