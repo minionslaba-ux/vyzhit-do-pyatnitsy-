@@ -1,0 +1,3302 @@
+[
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What is the trial period at the start of a job, when either side can end employment more easily?",
+  "a": [
+   "Probation period",
+   "Notice period",
+   "Sabbatical",
+   "Garden leave"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What is work performed beyond an employee's normal contracted hours usually called?",
+  "a": [
+   "Overtime",
+   "Downtime",
+   "Flextime",
+   "Part-time"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "In a company, what does the abbreviation HR stand for?",
+  "a": [
+   "Human Resources",
+   "Hiring and Recruitment",
+   "Holiday Register",
+   "Health Requirements"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What is the period between announcing a resignation and the last working day called?",
+  "a": [
+   "Notice period",
+   "Probation period",
+   "Grace period",
+   "Cooling-off period"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 3,
+  "q": "What is meant by 'garden leave'?",
+  "a": [
+   "Paid notice period spent away from work",
+   "Unpaid leave taken for personal hobbies",
+   "Leave granted to care for a relative",
+   "Holiday days carried over to next year"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What does the abbreviation CV stand for?",
+  "a": [
+   "Curriculum vitae",
+   "Career value",
+   "Certified vocation",
+   "Corporate vacancy"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What is it called when an employee leaves a job by their own choice?",
+  "a": [
+   "Resignation",
+   "Dismissal",
+   "Redundancy",
+   "Layoff"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What is it called when jobs are cut because the role is no longer needed?",
+  "a": [
+   "Redundancy",
+   "Resignation",
+   "Misconduct",
+   "Secondment"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 3,
+  "q": "What is the temporary transfer of an employee to another department or organization called?",
+  "a": [
+   "Secondment",
+   "Probation",
+   "Onboarding",
+   "Furlough"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What is the process of integrating a new hire into a company called?",
+  "a": [
+   "Onboarding",
+   "Offboarding",
+   "Headhunting",
+   "Outsourcing"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What do you call a recruiter who approaches already-employed candidates for senior roles?",
+  "a": [
+   "Headhunter",
+   "Ombudsman",
+   "Actuary",
+   "Auditor"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What does 'gross salary' mean?",
+  "a": [
+   "Pay before taxes and deductions",
+   "Pay after taxes and deductions",
+   "Pay consisting only of bonuses",
+   "Pay received only in cash"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 3,
+  "q": "A clause forbidding an ex-employee from working for a competitor for a set period is a...",
+  "a": [
+   "Non-compete clause",
+   "Force majeure clause",
+   "Arbitration clause",
+   "Penalty clause"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What is an employee who exposes wrongdoing inside their organization called?",
+  "a": [
+   "Whistleblower",
+   "Headhunter",
+   "Freelancer",
+   "Shareholder"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 3,
+  "q": "Temporarily laying off staff who remain employed but do not work is called a...",
+  "a": [
+   "Furlough",
+   "Sabbatical",
+   "Secondment",
+   "Tenure"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "An extended leave, often granted for study or rest after years of service, is a...",
+  "a": [
+   "Sabbatical",
+   "Furlough",
+   "Probation",
+   "Internship"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 1,
+  "q": "What do we call a self-employed person who works for different clients?",
+  "a": [
+   "Freelancer",
+   "Intern",
+   "Trainee",
+   "Apprentice"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "What is an interview held with an employee who is leaving the company called?",
+  "a": [
+   "Exit interview",
+   "Stress interview",
+   "Panel interview",
+   "Screening interview"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 2,
+  "q": "In management, what does the abbreviation KPI stand for?",
+  "a": [
+   "Key performance indicator",
+   "Key personnel index",
+   "Known payroll item",
+   "Key profit increment"
+  ]
+ },
+ {
+  "t": "labor",
+  "d": 3,
+  "q": "Performance feedback gathered from managers, peers and subordinates is called...",
+  "a": [
+   "360-degree feedback",
+   "Exit interview",
+   "Peer bonus",
+   "Probation review"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "In a civil lawsuit, what is the party who brings the case to court called?",
+  "a": [
+   "Plaintiff",
+   "Defendant",
+   "Witness",
+   "Juror"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "What is the person accused or sued in court called?",
+  "a": [
+   "Defendant",
+   "Plaintiff",
+   "Prosecutor",
+   "Bailiff"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "What is the principle 'innocent until proven guilty' known as?",
+  "a": [
+   "Presumption of innocence",
+   "Double jeopardy",
+   "Habeas corpus",
+   "Statute of limitations"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "Separation of powers divides government into the legislative, the executive and the...",
+  "a": [
+   "Judicial branch",
+   "Military branch",
+   "Municipal branch",
+   "Financial branch"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "Which branch of government is primarily responsible for making laws?",
+  "a": [
+   "Legislative",
+   "Executive",
+   "Judicial",
+   "Administrative"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "What is a document authorizing someone to act on another person's behalf called?",
+  "a": [
+   "Power of attorney",
+   "Affidavit",
+   "Subpoena",
+   "Warrant"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "What is the official who certifies signatures and authenticates documents called?",
+  "a": [
+   "Notary",
+   "Bailiff",
+   "Coroner",
+   "Arbiter"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "What is a written statement confirmed by oath, for use as evidence, called?",
+  "a": [
+   "Affidavit",
+   "Indictment",
+   "Injunction",
+   "Appeal"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "What is a court order requiring a person to appear and testify as a witness?",
+  "a": [
+   "Subpoena",
+   "Injunction",
+   "Verdict",
+   "Indictment"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "What is asking a higher court to review a lower court's decision called?",
+  "a": [
+   "Appeal",
+   "Acquittal",
+   "Arraignment",
+   "Alibi"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "A defense claiming the accused was somewhere else when the crime happened is an...",
+  "a": [
+   "Alibi",
+   "Appeal",
+   "Affidavit",
+   "Amnesty"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 3,
+  "q": "The legal principle of 'habeas corpus' protects people against...",
+  "a": [
+   "Unlawful detention",
+   "Double taxation",
+   "Defamation",
+   "Breach of contract"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 3,
+  "q": "The rule that a person cannot be tried twice for the same offence is called...",
+  "a": [
+   "Double jeopardy",
+   "Habeas corpus",
+   "Stare decisis",
+   "Mens rea"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 3,
+  "q": "In criminal law, what does the Latin term 'mens rea' refer to?",
+  "a": [
+   "Guilty mind",
+   "Guilty act",
+   "Burden of proof",
+   "Statute of limitations"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 3,
+  "q": "What is the legal doctrine of following previous court decisions (precedent) called?",
+  "a": [
+   "Stare decisis",
+   "Habeas corpus",
+   "Pro bono",
+   "Ultra vires"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "Legal work done free of charge for the public good is described as...",
+  "a": [
+   "Pro bono",
+   "Ad hoc",
+   "Ex officio",
+   "In absentia"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 2,
+  "q": "A false spoken statement that damages someone's reputation is called...",
+  "a": [
+   "Slander",
+   "Libel",
+   "Perjury",
+   "Fraud"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "What is the crime of deliberately lying under oath called?",
+  "a": [
+   "Perjury",
+   "Slander",
+   "Bribery",
+   "Extortion"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 1,
+  "q": "Who presides over a trial and rules on questions of law?",
+  "a": [
+   "Judge",
+   "Juror",
+   "Clerk",
+   "Prosecutor"
+  ]
+ },
+ {
+  "t": "law",
+  "d": 3,
+  "q": "A trial held without the defendant being present is said to be held...",
+  "a": [
+   "In absentia",
+   "Pro forma",
+   "De facto",
+   "Ad hoc"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "What is a proposal to enter into a contract on specific terms called?",
+  "a": [
+   "Offer",
+   "Acceptance",
+   "Invoice",
+   "Warranty"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "What is unconditional agreement to all the terms of an offer called?",
+  "a": [
+   "Acceptance",
+   "Consideration",
+   "Rescission",
+   "Novation"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "In contract law, the thing of value that each party gives or promises is called...",
+  "a": [
+   "Consideration",
+   "Collateral",
+   "Indemnity",
+   "Equity"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "What is failing to perform obligations under a contract without lawful excuse called?",
+  "a": [
+   "Breach of contract",
+   "Force majeure",
+   "Novation",
+   "Ratification"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "A sum paid when a deal is made, which may be forfeited if the payer backs out, is a...",
+  "a": [
+   "Deposit",
+   "Dividend",
+   "Royalty",
+   "Rebate"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "What is the legal time limit for bringing a claim to court called?",
+  "a": [
+   "Statute of limitations",
+   "Grace period",
+   "Cooling-off period",
+   "Probation period"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "A clause excusing parties for unforeseeable events such as natural disasters is...",
+  "a": [
+   "Force majeure",
+   "Indemnity",
+   "Non-compete",
+   "Arbitration"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 3,
+  "q": "A reply to an offer that changes its terms is legally treated as a...",
+  "a": [
+   "Counter-offer",
+   "Acceptance",
+   "Invitation to treat",
+   "Waiver"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 3,
+  "q": "In English common law, goods displayed in a shop with price tags are usually an...",
+  "a": [
+   "Invitation to treat",
+   "Binding offer",
+   "Acceptance",
+   "Consideration"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "Replacing a party to a contract with a new party, with everyone's consent, is called...",
+  "a": [
+   "Novation",
+   "Rescission",
+   "Ratification",
+   "Arbitration"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "Resolving a dispute through a private neutral third party instead of a court is...",
+  "a": [
+   "Arbitration",
+   "Litigation",
+   "Prosecution",
+   "Indemnification"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "What is a contractual promise to compensate the other party for certain losses?",
+  "a": [
+   "Indemnity",
+   "Annuity",
+   "Equity",
+   "Amnesty"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 3,
+  "q": "A pre-agreed sum payable on breach, set as a genuine estimate of loss, is called...",
+  "a": [
+   "Liquidated damages",
+   "Punitive damages",
+   "Nominal damages",
+   "Exemplary damages"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "Changing an existing contract by mutual agreement is usually done with an...",
+  "a": [
+   "Amendment",
+   "Appeal",
+   "Acquittal",
+   "Audit"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "A person who promises to pay another's debt if that person defaults is a...",
+  "a": [
+   "Guarantor",
+   "Beneficiary",
+   "Debtor",
+   "Executor"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 3,
+  "q": "Cancelling a contract and restoring the parties to their original positions is...",
+  "a": [
+   "Rescission",
+   "Novation",
+   "Ratification",
+   "Acceleration"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "What is a contract by which a landlord lets property to a tenant called?",
+  "a": [
+   "Lease",
+   "Mortgage",
+   "Patent",
+   "Franchise"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 1,
+  "q": "What is a contract made only by spoken words, with nothing in writing, called?",
+  "a": [
+   "Oral contract",
+   "Implied contract",
+   "Written contract",
+   "Smart contract"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "A confidentiality agreement is commonly known by which abbreviation?",
+  "a": [
+   "NDA",
+   "SLA",
+   "MOU",
+   "KPI"
+  ]
+ },
+ {
+  "t": "contract",
+  "d": 2,
+  "q": "What is the legal ability of a person to enter into a binding contract called?",
+  "a": [
+   "Capacity",
+   "Consideration",
+   "Jurisdiction",
+   "Equity"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 1,
+  "q": "What does the abbreviation VAT stand for?",
+  "a": [
+   "Value added tax",
+   "Variable asset tax",
+   "Verified account tax",
+   "Volume adjusted tax"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 1,
+  "q": "What is the form a taxpayer files to report income and calculate tax due?",
+  "a": [
+   "Tax return",
+   "Tax receipt",
+   "Tax haven",
+   "Tax holiday"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "What is an amount subtracted from taxable income to reduce the tax owed?",
+  "a": [
+   "Deduction",
+   "Surcharge",
+   "Levy",
+   "Tariff"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "VAT is an example of what kind of tax?",
+  "a": [
+   "Indirect tax",
+   "Direct tax",
+   "Wealth tax",
+   "Poll tax"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 1,
+  "q": "What is a tax charged on goods brought into a country called?",
+  "a": [
+   "Customs duty",
+   "Income tax",
+   "Property tax",
+   "Inheritance tax"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 1,
+  "q": "What is a country or territory with very low taxes, used to shelter money?",
+  "a": [
+   "Tax haven",
+   "Tax bracket",
+   "Tax shield",
+   "Tax credit"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "Under a progressive income tax system, the tax rate...",
+  "a": [
+   "Rises as income rises",
+   "Is the same for everyone",
+   "Falls as income rises",
+   "Depends only on age"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "Illegal non-payment of tax is evasion. What is legal minimization of tax called?",
+  "a": [
+   "Tax avoidance",
+   "Tax evasion",
+   "Tax amnesty",
+   "Tax arbitrage"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "Tax residency is often triggered by spending at least how many days a year in a country?",
+  "a": [
+   "183",
+   "90",
+   "120",
+   "365"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 3,
+  "q": "What is a reduction subtracted directly from tax owed, rather than from income?",
+  "a": [
+   "Tax credit",
+   "Tax deduction",
+   "Tax base",
+   "Tax bracket"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 3,
+  "q": "What is a treaty preventing the same income from being taxed in two countries?",
+  "a": [
+   "Double taxation agreement",
+   "Free trade agreement",
+   "Customs union",
+   "Most favoured nation clause"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "What is a 'flat tax'?",
+  "a": [
+   "A single rate for all income levels",
+   "Rates that rise with income",
+   "A tax levied only on property",
+   "A tax paid only by companies"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 1,
+  "q": "Income tax is a tax levied on what?",
+  "a": [
+   "Earnings",
+   "Purchases",
+   "Imports",
+   "Inheritances"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 2,
+  "q": "A range of income taxed at a particular rate is called a tax...",
+  "a": [
+   "Bracket",
+   "Credit",
+   "Haven",
+   "Holiday"
+  ]
+ },
+ {
+  "t": "tax",
+  "d": 3,
+  "q": "A temporary exemption from taxes offered to attract investment is a tax...",
+  "a": [
+   "Holiday",
+   "Haven",
+   "Bracket",
+   "Return"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "Under Incoterms 2020 EXW, where does the seller make the goods available?",
+  "a": [
+   "At its own premises",
+   "On board the vessel",
+   "At the buyer's door, duties paid",
+   "At the destination port"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "Which Incoterms 2020 rule puts the most obligations on the seller, including import duties?",
+  "a": [
+   "DDP",
+   "EXW",
+   "FOB",
+   "FCA"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 3,
+  "q": "Under Incoterms 2020 FOB, risk passes to the buyer when the goods are...",
+  "a": [
+   "Placed on board the vessel",
+   "Leaving the seller's warehouse",
+   "Arriving at the destination port",
+   "Cleared through import customs"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "In Incoterms, what does CIF stand for?",
+  "a": [
+   "Cost, Insurance and Freight",
+   "Carriage, Insurance and Fees",
+   "Customs, Import and Freight",
+   "Cargo Insured in Full"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 3,
+  "q": "Under Incoterms 2020 CIF, when does risk pass from seller to buyer?",
+  "a": [
+   "When goods are on board at the port of shipment",
+   "When goods arrive at the destination port",
+   "When the buyer takes delivery",
+   "When import duties are paid"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "In Incoterms 2020, what does DAP stand for?",
+  "a": [
+   "Delivered at Place",
+   "Duty and Postage",
+   "Delivered after Payment",
+   "Direct Air Parcel"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 3,
+  "q": "Under Incoterms 2020 DAP, who is normally responsible for import clearance and duties?",
+  "a": [
+   "The buyer",
+   "The seller",
+   "The carrier",
+   "The insurer"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "A document issued by a carrier acknowledging receipt of cargo for shipment by sea is a...",
+  "a": [
+   "Bill of lading",
+   "Letter of credit",
+   "Proforma invoice",
+   "Certificate of origin"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "A bank's undertaking to pay the seller on presentation of compliant documents is a...",
+  "a": [
+   "Letter of credit",
+   "Bill of lading",
+   "Packing list",
+   "Customs declaration"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "A preliminary invoice sent before goods are shipped or delivered is a...",
+  "a": [
+   "Proforma invoice",
+   "Credit note",
+   "Sales receipt",
+   "Bill of exchange"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 1,
+  "q": "Which government service controls goods crossing a country's border?",
+  "a": [
+   "Customs",
+   "Notary",
+   "Treasury",
+   "Ombudsman"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "Which organization publishes the Incoterms rules?",
+  "a": [
+   "International Chamber of Commerce",
+   "World Trade Organization",
+   "United Nations",
+   "International Monetary Fund"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 1,
+  "q": "Goods sold and shipped from a country to buyers abroad are called...",
+  "a": [
+   "Exports",
+   "Imports",
+   "Quotas",
+   "Tariffs"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 2,
+  "q": "A document certifying the country in which goods were produced is a...",
+  "a": [
+   "Certificate of origin",
+   "Bill of lading",
+   "Letter of credit",
+   "Packing list"
+  ]
+ },
+ {
+  "t": "ved",
+  "d": 3,
+  "q": "Which Incoterms 2020 rule replaced DAT from Incoterms 2010?",
+  "a": [
+   "DPU",
+   "DDP",
+   "DAP",
+   "CPT"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is 7 multiplied by 8?",
+  "a": [
+   "56",
+   "54",
+   "58",
+   "64"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is the square root of 144?",
+  "a": [
+   "12",
+   "14",
+   "11",
+   "16"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "How many degrees are in a right angle?",
+  "a": [
+   "90",
+   "180",
+   "45",
+   "60"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is 15% of 200?",
+  "a": [
+   "30",
+   "15",
+   "20",
+   "35"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "How many sides does a hexagon have?",
+  "a": [
+   "6",
+   "5",
+   "7",
+   "8"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is the sum of the interior angles of a triangle, in degrees?",
+  "a": [
+   "180",
+   "360",
+   "90",
+   "270"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is 2 raised to the power of 10?",
+  "a": [
+   "1024",
+   "1000",
+   "512",
+   "2048"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is 1/4 written as a decimal?",
+  "a": [
+   "0.25",
+   "0.4",
+   "0.14",
+   "0.75"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is the next prime number after 7?",
+  "a": [
+   "11",
+   "9",
+   "13",
+   "10"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "How many minutes are there in 3 hours?",
+  "a": [
+   "180",
+   "120",
+   "240",
+   "150"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "Which Roman numeral represents 50?",
+  "a": [
+   "L",
+   "C",
+   "D",
+   "X"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is the value of pi rounded to two decimal places?",
+  "a": [
+   "3.14",
+   "3.16",
+   "3.12",
+   "3.41"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the formula for the area of a circle with radius r?",
+  "a": [
+   "πr²",
+   "2πr",
+   "πr",
+   "2πr²"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "Solve for x: 3x + 5 = 20",
+  "a": [
+   "5",
+   "4",
+   "6",
+   "3"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is 13 squared?",
+  "a": [
+   "169",
+   "156",
+   "163",
+   "196"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "What is the smallest prime number?",
+  "a": [
+   "2",
+   "1",
+   "3",
+   "0"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "Which year is written in Roman numerals as MCMXC?",
+  "a": [
+   "1990",
+   "1940",
+   "2090",
+   "1890"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "A right triangle has legs of 3 and 4. How long is the hypotenuse?",
+  "a": [
+   "5",
+   "6",
+   "7",
+   "8"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is 5 factorial (5!)?",
+  "a": [
+   "120",
+   "60",
+   "25",
+   "720"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 1,
+  "q": "How many faces does a cube have?",
+  "a": [
+   "6",
+   "8",
+   "12",
+   "4"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "What is the derivative of x² with respect to x?",
+  "a": [
+   "2x",
+   "x",
+   "2x²",
+   "x³/3"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the least common multiple of 4 and 6?",
+  "a": [
+   "12",
+   "24",
+   "2",
+   "10"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the greatest common divisor of 48 and 36?",
+  "a": [
+   "12",
+   "6",
+   "18",
+   "4"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the sum of the interior angles of a quadrilateral, in degrees?",
+  "a": [
+   "360",
+   "180",
+   "540",
+   "720"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What comes next in the Fibonacci sequence 1, 1, 2, 3, 5, 8, 13, ...?",
+  "a": [
+   "21",
+   "20",
+   "18",
+   "26"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "What is the base-10 logarithm of 1000?",
+  "a": [
+   "3",
+   "10",
+   "100",
+   "4"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "What is the sum of the interior angles of a hexagon, in degrees?",
+  "a": [
+   "720",
+   "540",
+   "900",
+   "1080"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "How many diagonals does a convex pentagon have?",
+  "a": [
+   "5",
+   "10",
+   "4",
+   "6"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "Which of these is a perfect number (equal to the sum of its proper divisors)?",
+  "a": [
+   "28",
+   "24",
+   "30",
+   "32"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "Which of these is the approximate value of Euler's number e?",
+  "a": [
+   "2.718",
+   "3.142",
+   "1.618",
+   "1.414"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the volume of a cube with an edge of 3 cm, in cubic centimetres?",
+  "a": [
+   "27",
+   "9",
+   "18",
+   "81"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the binary number 1010 in decimal?",
+  "a": [
+   "10",
+   "8",
+   "12",
+   "5"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "By definition, what is the value of 0! (zero factorial)?",
+  "a": [
+   "1",
+   "0",
+   "Undefined",
+   "Infinity"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 2,
+  "q": "What is the probability of getting two heads in two tosses of a fair coin?",
+  "a": [
+   "1/4",
+   "1/2",
+   "1/3",
+   "3/4"
+  ]
+ },
+ {
+  "t": "math",
+  "d": 3,
+  "q": "What is the approximate value of the golden ratio?",
+  "a": [
+   "1.618",
+   "1.414",
+   "1.732",
+   "2.718"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Which pigment gives plants their green color?",
+  "a": [
+   "Chlorophyll",
+   "Hemoglobin",
+   "Melanin",
+   "Carotene"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Which organelle is known as the powerhouse of the cell?",
+  "a": [
+   "Mitochondrion",
+   "Nucleus",
+   "Ribosome",
+   "Golgi apparatus"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Which gas do plants absorb from the air for photosynthesis?",
+  "a": [
+   "Carbon dioxide",
+   "Oxygen",
+   "Nitrogen",
+   "Hydrogen"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "What does the abbreviation DNA stand for?",
+  "a": [
+   "Deoxyribonucleic acid",
+   "Deoxyribose nitric acid",
+   "Dinitrogen nucleic acid",
+   "Diribonucleic acid"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "Which nucleobase is found in RNA but not in DNA?",
+  "a": [
+   "Uracil",
+   "Thymine",
+   "Adenine",
+   "Guanine"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Who wrote 'On the Origin of Species', setting out the theory of natural selection?",
+  "a": [
+   "Charles Darwin",
+   "Gregor Mendel",
+   "Louis Pasteur",
+   "Carl Linnaeus"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "Which scientist, known as the father of genetics, experimented with pea plants?",
+  "a": [
+   "Gregor Mendel",
+   "Charles Darwin",
+   "Jean-Baptiste Lamarck",
+   "James Watson"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "Who devised the binomial (two-part Latin name) system for naming species?",
+  "a": [
+   "Carl Linnaeus",
+   "Charles Darwin",
+   "Gregor Mendel",
+   "Jean-Baptiste Lamarck"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "How many chromosomes does a typical human body cell contain?",
+  "a": [
+   "46",
+   "23",
+   "44",
+   "48"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Which blood cells carry oxygen around the body?",
+  "a": [
+   "Red blood cells",
+   "White blood cells",
+   "Platelets",
+   "Plasma cells"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "What is cell division producing two genetically identical daughter cells called?",
+  "a": [
+   "Mitosis",
+   "Meiosis",
+   "Osmosis",
+   "Photosynthesis"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "To which class of animals does the frog belong?",
+  "a": [
+   "Amphibians",
+   "Reptiles",
+   "Fish",
+   "Mammals"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "What are animals that eat only plants called?",
+  "a": [
+   "Herbivores",
+   "Carnivores",
+   "Omnivores",
+   "Detritivores"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "In plant cells, which organelle is the site of photosynthesis?",
+  "a": [
+   "Chloroplast",
+   "Mitochondrion",
+   "Vacuole",
+   "Lysosome"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "Movement of water across a semipermeable membrane is called...",
+  "a": [
+   "Osmosis",
+   "Mitosis",
+   "Transpiration",
+   "Respiration"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 2,
+  "q": "Which two scientists described the double-helix structure of DNA in 1953?",
+  "a": [
+   "Watson and Crick",
+   "Mendel and Darwin",
+   "Pasteur and Koch",
+   "Hooke and Leeuwenhoek"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "What is the largest organ of the human body?",
+  "a": [
+   "Skin",
+   "Liver",
+   "Brain",
+   "Lungs"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "Which plant tissue carries water and minerals up from the roots?",
+  "a": [
+   "Xylem",
+   "Phloem",
+   "Cambium",
+   "Epidermis"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "In biological classification, which rank lies directly above genus?",
+  "a": [
+   "Family",
+   "Order",
+   "Species",
+   "Class"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "Which of these animals is a monotreme, an egg-laying mammal?",
+  "a": [
+   "Platypus",
+   "Kangaroo",
+   "Koala",
+   "Armadillo"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 1,
+  "q": "Which organs do fish use to extract oxygen from water?",
+  "a": [
+   "Gills",
+   "Lungs",
+   "Swim bladder",
+   "Fins"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "What is the scientific study of fungi called?",
+  "a": [
+   "Mycology",
+   "Entomology",
+   "Ornithology",
+   "Ichthyology"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "Which molecule is known as the main energy currency of the cell?",
+  "a": [
+   "ATP",
+   "DNA",
+   "RNA",
+   "Glycogen"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "What do ribosomes in a cell synthesize?",
+  "a": [
+   "Proteins",
+   "Lipids",
+   "Carbohydrates",
+   "DNA"
+  ]
+ },
+ {
+  "t": "bio",
+  "d": 3,
+  "q": "What is the approximate gestation period of an African elephant?",
+  "a": [
+   "About 22 months",
+   "About 9 months",
+   "About 12 months",
+   "About 36 months"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "What is the chemical symbol for gold?",
+  "a": [
+   "Au",
+   "Ag",
+   "Gd",
+   "Go"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "What is the chemical formula of water?",
+  "a": [
+   "H2O",
+   "CO2",
+   "H2O2",
+   "HO2"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "Which gas makes up most of Earth's atmosphere?",
+  "a": [
+   "Nitrogen",
+   "Oxygen",
+   "Argon",
+   "Carbon dioxide"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "Which element has the chemical symbol Fe?",
+  "a": [
+   "Iron",
+   "Fluorine",
+   "Lead",
+   "Tin"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "What is the pH of pure water at 25 °C?",
+  "a": [
+   "7",
+   "0",
+   "14",
+   "1"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "Which element has the chemical symbol Na?",
+  "a": [
+   "Sodium",
+   "Nitrogen",
+   "Neon",
+   "Nickel"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "What is the atomic number of carbon?",
+  "a": [
+   "6",
+   "12",
+   "8",
+   "14"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "Who published the first widely recognized periodic table in 1869?",
+  "a": [
+   "Dmitri Mendeleev",
+   "Antoine Lavoisier",
+   "John Dalton",
+   "Niels Bohr"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "What is the lightest chemical element?",
+  "a": [
+   "Hydrogen",
+   "Helium",
+   "Lithium",
+   "Oxygen"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "What is the chemical formula of table salt?",
+  "a": [
+   "NaCl",
+   "KCl",
+   "NaOH",
+   "CaCl2"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "Which of these is a noble gas?",
+  "a": [
+   "Argon",
+   "Nitrogen",
+   "Chlorine",
+   "Hydrogen"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "At 25 °C, acidic solutions have a pH that is...",
+  "a": [
+   "Less than 7",
+   "Exactly 7",
+   "Greater than 7",
+   "Exactly 14"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "Which metal is liquid at normal room temperature?",
+  "a": [
+   "Mercury",
+   "Lead",
+   "Tin",
+   "Sodium"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "What is the approximate value of the Avogadro constant (per mole)?",
+  "a": [
+   "6.022 × 10^23",
+   "3.0 × 10^8",
+   "6.626 × 10^-34",
+   "1.6 × 10^-19"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "What is the hardest naturally occurring mineral?",
+  "a": [
+   "Diamond",
+   "Quartz",
+   "Corundum",
+   "Topaz"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "Which element is the most electronegative?",
+  "a": [
+   "Fluorine",
+   "Oxygen",
+   "Chlorine",
+   "Nitrogen"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "Which element has the chemical symbol W?",
+  "a": [
+   "Tungsten",
+   "Vanadium",
+   "Xenon",
+   "Zinc"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "Which element has the chemical symbol Pb?",
+  "a": [
+   "Lead",
+   "Platinum",
+   "Palladium",
+   "Phosphorus"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "Isotopes of the same element differ in their number of...",
+  "a": [
+   "Neutrons",
+   "Protons",
+   "Electrons",
+   "Positrons"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "What type of chemical bond is formed by sharing pairs of electrons?",
+  "a": [
+   "Covalent",
+   "Ionic",
+   "Metallic",
+   "Hydrogen"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 1,
+  "q": "Rust is mainly an oxide of which metal?",
+  "a": [
+   "Iron",
+   "Copper",
+   "Aluminium",
+   "Zinc"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "Which gas is released when baking soda reacts with vinegar?",
+  "a": [
+   "Carbon dioxide",
+   "Oxygen",
+   "Hydrogen",
+   "Nitrogen"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 2,
+  "q": "Who discovered the elements polonium and radium?",
+  "a": [
+   "Marie and Pierre Curie",
+   "Ernest Rutherford",
+   "Henri Becquerel",
+   "Niels Bohr"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "Which chemist is best known for establishing the law of conservation of mass?",
+  "a": [
+   "Antoine Lavoisier",
+   "John Dalton",
+   "Robert Boyle",
+   "Amedeo Avogadro"
+  ]
+ },
+ {
+  "t": "chem",
+  "d": 3,
+  "q": "At constant temperature, Boyle's law relates the pressure of a gas to its...",
+  "a": [
+   "Volume",
+   "Temperature",
+   "Mass",
+   "Color"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "How many chambers does the human heart have?",
+  "a": [
+   "4",
+   "2",
+   "3",
+   "6"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "What is the approximate normal human body temperature?",
+  "a": [
+   "About 37 °C",
+   "About 39 °C",
+   "About 35 °C",
+   "About 40 °C"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "Which organs filter the blood to produce urine?",
+  "a": [
+   "Kidneys",
+   "Liver",
+   "Lungs",
+   "Spleen"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "Who discovered penicillin in 1928?",
+  "a": [
+   "Alexander Fleming",
+   "Louis Pasteur",
+   "Edward Jenner",
+   "Robert Koch"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Who developed the first vaccine, against smallpox, in 1796?",
+  "a": [
+   "Edward Jenner",
+   "Louis Pasteur",
+   "Alexander Fleming",
+   "Jonas Salk"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "How many bones are in a typical adult human skeleton?",
+  "a": [
+   "206",
+   "212",
+   "198",
+   "230"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "What is the longest bone in the human body?",
+  "a": [
+   "Femur",
+   "Tibia",
+   "Humerus",
+   "Fibula"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Which organ produces the hormone insulin?",
+  "a": [
+   "Pancreas",
+   "Liver",
+   "Kidney",
+   "Thyroid"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 1,
+  "q": "Which vitamin does human skin produce when exposed to sunlight?",
+  "a": [
+   "Vitamin D",
+   "Vitamin A",
+   "Vitamin C",
+   "Vitamin K"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Scurvy is caused by a lack of which vitamin?",
+  "a": [
+   "Vitamin C",
+   "Vitamin D",
+   "Vitamin B12",
+   "Vitamin A"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Which blood type is known as the universal red-cell donor?",
+  "a": [
+   "O negative",
+   "AB positive",
+   "A positive",
+   "B negative"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 3,
+  "q": "What is the smallest bone in the human body?",
+  "a": [
+   "Stapes",
+   "Incus",
+   "Malleus",
+   "Hyoid"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 3,
+  "q": "Which part of the brain is chiefly responsible for balance and coordination?",
+  "a": [
+   "Cerebellum",
+   "Medulla oblongata",
+   "Hypothalamus",
+   "Frontal lobe"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "What does an electrocardiogram (ECG) record?",
+  "a": [
+   "Electrical activity of the heart",
+   "Electrical activity of the brain",
+   "Blood oxygen level",
+   "Lung capacity"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Which ancient Greek physician is often called the father of medicine?",
+  "a": [
+   "Hippocrates",
+   "Galen",
+   "Avicenna",
+   "Aristotle"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Which metal is contained in hemoglobin?",
+  "a": [
+   "Iron",
+   "Copper",
+   "Zinc",
+   "Magnesium"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 3,
+  "q": "Who first fully described the circulation of the blood, in 1628?",
+  "a": [
+   "William Harvey",
+   "Andreas Vesalius",
+   "Galen",
+   "Paracelsus"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 3,
+  "q": "Which gland is often called the 'master gland' of the endocrine system?",
+  "a": [
+   "Pituitary",
+   "Thyroid",
+   "Adrenal",
+   "Pineal"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 2,
+  "q": "Which part of the eye controls how much light enters it?",
+  "a": [
+   "Iris",
+   "Retina",
+   "Lens",
+   "Cornea"
+  ]
+ },
+ {
+  "t": "med",
+  "d": 3,
+  "q": "Who invented the stethoscope in 1816?",
+  "a": [
+   "René Laennec",
+   "William Harvey",
+   "Robert Koch",
+   "Joseph Lister"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "In which year did World War II end?",
+  "a": [
+   "1945",
+   "1944",
+   "1946",
+   "1939"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Who was the first President of the United States?",
+  "a": [
+   "George Washington",
+   "Thomas Jefferson",
+   "Abraham Lincoln",
+   "John Adams"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "In which year did Christopher Columbus first reach the Americas?",
+  "a": [
+   "1492",
+   "1498",
+   "1488",
+   "1504"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Which ancient civilization built the Great Pyramid of Giza?",
+  "a": [
+   "Ancient Egyptians",
+   "Ancient Romans",
+   "Maya",
+   "Persians"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Who was the first person to walk on the Moon?",
+  "a": [
+   "Neil Armstrong",
+   "Buzz Aldrin",
+   "Yuri Gagarin",
+   "Michael Collins"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "In which year did the Berlin Wall fall?",
+  "a": [
+   "1989",
+   "1991",
+   "1987",
+   "1961"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Who was the first human to travel into space?",
+  "a": [
+   "Yuri Gagarin",
+   "Neil Armstrong",
+   "John Glenn",
+   "Gherman Titov"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Which ocean liner sank in 1912 after hitting an iceberg?",
+  "a": [
+   "Titanic",
+   "Lusitania",
+   "Britannic",
+   "Olympic"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "In which year did World War I begin?",
+  "a": [
+   "1914",
+   "1912",
+   "1917",
+   "1918"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Which Roman leader was assassinated on the Ides of March, 44 BC?",
+  "a": [
+   "Julius Caesar",
+   "Augustus",
+   "Nero",
+   "Caligula"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year did the French Revolution begin with the storming of the Bastille?",
+  "a": [
+   "1789",
+   "1776",
+   "1799",
+   "1812"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year was the United States Declaration of Independence adopted?",
+  "a": [
+   "1776",
+   "1789",
+   "1783",
+   "1812"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Who was crowned Emperor of the French in 1804?",
+  "a": [
+   "Napoleon Bonaparte",
+   "Louis XIV",
+   "Charlemagne",
+   "Louis XVI"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year was the Battle of Hastings fought?",
+  "a": [
+   "1066",
+   "1215",
+   "1086",
+   "1415"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year was Magna Carta sealed by King John?",
+  "a": [
+   "1215",
+   "1066",
+   "1415",
+   "1349"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Which English queen reigned when the Spanish Armada was defeated in 1588?",
+  "a": [
+   "Elizabeth I",
+   "Mary I",
+   "Victoria",
+   "Anne"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Who led the Soviet Union throughout World War II?",
+  "a": [
+   "Joseph Stalin",
+   "Vladimir Lenin",
+   "Nikita Khrushchev",
+   "Leon Trotsky"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Which 1919 treaty formally ended World War I between Germany and the Allies?",
+  "a": [
+   "Treaty of Versailles",
+   "Treaty of Paris",
+   "Peace of Westphalia",
+   "Treaty of Tordesillas"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Who co-wrote 'The Communist Manifesto' with Friedrich Engels?",
+  "a": [
+   "Karl Marx",
+   "Vladimir Lenin",
+   "Pierre-Joseph Proudhon",
+   "Mikhail Bakunin"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 1,
+  "q": "Which empire was founded by Genghis Khan?",
+  "a": [
+   "Mongol Empire",
+   "Ottoman Empire",
+   "Mughal Empire",
+   "Persian Empire"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year did Constantinople fall to the Ottoman Turks?",
+  "a": [
+   "1453",
+   "1492",
+   "1204",
+   "1389"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "Who was the first woman to win a Nobel Prize?",
+  "a": [
+   "Marie Curie",
+   "Florence Nightingale",
+   "Ada Lovelace",
+   "Rosalind Franklin"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 2,
+  "q": "In which year was the Soviet Union dissolved?",
+  "a": [
+   "1991",
+   "1989",
+   "1993",
+   "1985"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "Who was the first emperor of Rome?",
+  "a": [
+   "Augustus",
+   "Julius Caesar",
+   "Nero",
+   "Tiberius"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "The Hundred Years' War was fought mainly between which two kingdoms?",
+  "a": [
+   "England and France",
+   "Spain and Portugal",
+   "France and the Holy Roman Empire",
+   "England and Scotland"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "In which year was the Battle of Waterloo fought?",
+  "a": [
+   "1815",
+   "1812",
+   "1805",
+   "1821"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "Whose nearly intact tomb did Howard Carter discover in 1922?",
+  "a": [
+   "Tutankhamun",
+   "Ramesses II",
+   "Khufu",
+   "Akhenaten"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "The Peace of Westphalia of 1648 ended which war?",
+  "a": [
+   "Thirty Years' War",
+   "Hundred Years' War",
+   "Seven Years' War",
+   "Wars of the Roses"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "Who was the first emperor of a unified China, founder of the Qin dynasty?",
+  "a": [
+   "Qin Shi Huang",
+   "Kublai Khan",
+   "Sun Yat-sen",
+   "Wu Zetian"
+  ]
+ },
+ {
+  "t": "history",
+  "d": 3,
+  "q": "Which Wonder of the Ancient World stood at the harbor of Alexandria?",
+  "a": [
+   "Lighthouse (Pharos)",
+   "Hanging Gardens",
+   "Colossus",
+   "Mausoleum"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the capital of Australia?",
+  "a": [
+   "Canberra",
+   "Sydney",
+   "Melbourne",
+   "Perth"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the largest ocean on Earth?",
+  "a": [
+   "Pacific Ocean",
+   "Atlantic Ocean",
+   "Indian Ocean",
+   "Arctic Ocean"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "Which major river flows through Cairo?",
+  "a": [
+   "Nile",
+   "Congo",
+   "Niger",
+   "Tigris"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the capital of Japan?",
+  "a": [
+   "Tokyo",
+   "Kyoto",
+   "Osaka",
+   "Yokohama"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "Which is the largest continent by area?",
+  "a": [
+   "Asia",
+   "Africa",
+   "North America",
+   "Antarctica"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the highest mountain on Earth above sea level?",
+  "a": [
+   "Mount Everest",
+   "K2",
+   "Kangchenjunga",
+   "Kilimanjaro"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the capital of Canada?",
+  "a": [
+   "Ottawa",
+   "Toronto",
+   "Montreal",
+   "Vancouver"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "Which is the largest country in the world by area?",
+  "a": [
+   "Russia",
+   "Canada",
+   "China",
+   "United States"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "In which country is the ancient Inca site of Machu Picchu?",
+  "a": [
+   "Peru",
+   "Mexico",
+   "Bolivia",
+   "Chile"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the largest hot desert in the world?",
+  "a": [
+   "Sahara",
+   "Gobi",
+   "Kalahari",
+   "Arabian Desert"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the capital of Brazil?",
+  "a": [
+   "Brasília",
+   "Rio de Janeiro",
+   "São Paulo",
+   "Salvador"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "What is the capital of Turkey?",
+  "a": [
+   "Ankara",
+   "Istanbul",
+   "Izmir",
+   "Antalya"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the deepest lake in the world?",
+  "a": [
+   "Lake Baikal",
+   "Lake Tanganyika",
+   "Lake Superior",
+   "Lake Victoria"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "Which strait separates Europe from Africa?",
+  "a": [
+   "Strait of Gibraltar",
+   "Bosphorus",
+   "Strait of Hormuz",
+   "Strait of Malacca"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the line of 0° longitude called?",
+  "a": [
+   "Prime Meridian",
+   "Equator",
+   "Tropic of Cancer",
+   "International Date Line"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the capital of New Zealand?",
+  "a": [
+   "Wellington",
+   "Auckland",
+   "Christchurch",
+   "Hamilton"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "In which country is Mount Kilimanjaro located?",
+  "a": [
+   "Tanzania",
+   "Kenya",
+   "Uganda",
+   "Ethiopia"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "Which is the most populous country in South America?",
+  "a": [
+   "Brazil",
+   "Argentina",
+   "Colombia",
+   "Peru"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Which city is the seat of Switzerland's federal government?",
+  "a": [
+   "Bern",
+   "Zurich",
+   "Geneva",
+   "Basel"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "What is the longest river in Europe?",
+  "a": [
+   "Volga",
+   "Danube",
+   "Rhine",
+   "Dnieper"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Angel Falls, the world's highest uninterrupted waterfall, is in which country?",
+  "a": [
+   "Venezuela",
+   "Brazil",
+   "Colombia",
+   "Guyana"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "Which of these South American countries is landlocked?",
+  "a": [
+   "Bolivia",
+   "Peru",
+   "Chile",
+   "Ecuador"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "What is the capital of Morocco?",
+  "a": [
+   "Rabat",
+   "Casablanca",
+   "Marrakesh",
+   "Fez"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Where is the lowest point on dry land on Earth?",
+  "a": [
+   "Shore of the Dead Sea",
+   "Death Valley",
+   "Caspian Depression",
+   "Qattara Depression"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Which African country was historically known as Abyssinia?",
+  "a": [
+   "Ethiopia",
+   "Eritrea",
+   "Somalia",
+   "Sudan"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "Which strait separates Asia (Russia) from North America (Alaska)?",
+  "a": [
+   "Bering Strait",
+   "Davis Strait",
+   "Strait of Magellan",
+   "Cook Strait"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Which river flows through Baghdad?",
+  "a": [
+   "Tigris",
+   "Euphrates",
+   "Jordan",
+   "Nile"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 2,
+  "q": "What is the largest island in the world that is not a continent?",
+  "a": [
+   "Greenland",
+   "New Guinea",
+   "Borneo",
+   "Madagascar"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 3,
+  "q": "Which two countries share the longest international land border in the world?",
+  "a": [
+   "Canada and United States",
+   "Russia and Kazakhstan",
+   "Chile and Argentina",
+   "China and Mongolia"
+  ]
+ },
+ {
+  "t": "geo",
+  "d": 1,
+  "q": "Which ocean lies between Africa and Australia?",
+  "a": [
+   "Indian Ocean",
+   "Pacific Ocean",
+   "Atlantic Ocean",
+   "Southern Ocean"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 1,
+  "q": "How many lines does a standard musical staff have?",
+  "a": [
+   "5",
+   "4",
+   "6",
+   "7"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "How many keys does a standard modern piano have?",
+  "a": [
+   "88",
+   "76",
+   "92",
+   "100"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 1,
+  "q": "Who composed 'The Four Seasons'?",
+  "a": [
+   "Antonio Vivaldi",
+   "Johann Sebastian Bach",
+   "Wolfgang Amadeus Mozart",
+   "George Frideric Handel"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 1,
+  "q": "Which band did John Lennon and Paul McCartney belong to?",
+  "a": [
+   "The Beatles",
+   "The Rolling Stones",
+   "The Who",
+   "Queen"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 1,
+  "q": "How many strings does a standard classical or acoustic guitar have?",
+  "a": [
+   "6",
+   "4",
+   "7",
+   "12"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "Who composed the 'Moonlight Sonata'?",
+  "a": [
+   "Ludwig van Beethoven",
+   "Frédéric Chopin",
+   "Wolfgang Amadeus Mozart",
+   "Franz Schubert"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "Who composed the ballet 'Swan Lake'?",
+  "a": [
+   "Pyotr Tchaikovsky",
+   "Sergei Rachmaninoff",
+   "Igor Stravinsky",
+   "Sergei Prokofiev"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "Which Italian musical term means 'very loud'?",
+  "a": [
+   "Fortissimo",
+   "Pianissimo",
+   "Allegro",
+   "Adagio"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 1,
+  "q": "Who was the lead singer of the rock band Queen?",
+  "a": [
+   "Freddie Mercury",
+   "Brian May",
+   "Roger Taylor",
+   "David Bowie"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "How many different notes make up a major scale, not counting the octave repeat?",
+  "a": [
+   "7",
+   "8",
+   "5",
+   "12"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "Who composed the opera 'The Magic Flute'?",
+  "a": [
+   "Wolfgang Amadeus Mozart",
+   "Richard Wagner",
+   "Giuseppe Verdi",
+   "Gioachino Rossini"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 3,
+  "q": "How many symphonies did Beethoven complete?",
+  "a": [
+   "9",
+   "7",
+   "10",
+   "12"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 3,
+  "q": "How many operas make up Wagner's 'Der Ring des Nibelungen' cycle?",
+  "a": [
+   "4",
+   "3",
+   "5",
+   "6"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 2,
+  "q": "To which instrument family does the oboe belong?",
+  "a": [
+   "Woodwind",
+   "Brass",
+   "Strings",
+   "Percussion"
+  ]
+ },
+ {
+  "t": "music",
+  "d": 3,
+  "q": "Which tempo marking means 'slowly, at ease'?",
+  "a": [
+   "Adagio",
+   "Presto",
+   "Allegro",
+   "Vivace"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "Which designer popularized the 'little black dress' in the 1920s?",
+  "a": [
+   "Coco Chanel",
+   "Christian Dior",
+   "Yves Saint Laurent",
+   "Hubert de Givenchy"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 3,
+  "q": "Riveted denim jeans were patented in 1873 by Levi Strauss and which tailor?",
+  "a": [
+   "Jacob Davis",
+   "Calvin Klein",
+   "Ralph Lauren",
+   "Tommy Hilfiger"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 1,
+  "q": "Which fabric is made from the cocoons of silkworms?",
+  "a": [
+   "Silk",
+   "Wool",
+   "Linen",
+   "Cotton"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "Linen fabric is made from fibers of which plant?",
+  "a": [
+   "Flax",
+   "Cotton",
+   "Hemp",
+   "Jute"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "What does 'haute couture' refer to?",
+  "a": [
+   "Exclusive custom-made high fashion",
+   "Mass-market clothing",
+   "Second-hand clothing",
+   "Casual sportswear"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 1,
+  "q": "Which garment is a traditional Japanese robe?",
+  "a": [
+   "Kimono",
+   "Sari",
+   "Poncho",
+   "Kilt"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 1,
+  "q": "The kilt is a traditional garment of which country?",
+  "a": [
+   "Scotland",
+   "Ireland",
+   "Wales",
+   "Norway"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "Cashmere wool comes from which animal?",
+  "a": [
+   "Goat",
+   "Sheep",
+   "Alpaca",
+   "Rabbit"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 3,
+  "q": "What was Christian Dior's 1947 debut collection nicknamed?",
+  "a": [
+   "The New Look",
+   "The Mod Look",
+   "The Flapper Style",
+   "The Grunge Look"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 3,
+  "q": "Which British designer is widely credited with popularizing the miniskirt in the 1960s?",
+  "a": [
+   "Mary Quant",
+   "Vivienne Westwood",
+   "Stella McCartney",
+   "Alexander McQueen"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "The trench coat became famous as a garment worn by whom in World War I?",
+  "a": [
+   "Army officers",
+   "Fishermen",
+   "Farmers",
+   "Railway workers"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 3,
+  "q": "Mohair is made from the hair of which animal?",
+  "a": [
+   "Angora goat",
+   "Angora rabbit",
+   "Llama",
+   "Merino sheep"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 1,
+  "q": "What is a fedora?",
+  "a": [
+   "A hat",
+   "A shoe",
+   "A scarf",
+   "A handbag"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 1,
+  "q": "In footwear, what is a stiletto?",
+  "a": [
+   "A thin high heel",
+   "A flat sandal",
+   "A rubber boot",
+   "A wooden clog"
+  ]
+ },
+ {
+  "t": "fashion",
+  "d": 2,
+  "q": "What does the French term 'prêt-à-porter' mean?",
+  "a": [
+   "Ready-to-wear",
+   "Made-to-measure",
+   "Second-hand",
+   "Hand-embroidered"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "Which professional designs buildings?",
+  "a": [
+   "Architect",
+   "Plumber",
+   "Electrician",
+   "Carpenter"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "What is a doctor who treats teeth called?",
+  "a": [
+   "Dentist",
+   "Optician",
+   "Dermatologist",
+   "Podiatrist"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 2,
+  "q": "Who was the first woman to fly in space, in 1963?",
+  "a": [
+   "Valentina Tereshkova",
+   "Sally Ride",
+   "Svetlana Savitskaya",
+   "Mae Jemison"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "On older buses, who sold and checked tickets on board?",
+  "a": [
+   "Conductor",
+   "Driver",
+   "Dispatcher",
+   "Porter"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "Which tool does a carpenter typically use to drive nails?",
+  "a": [
+   "Hammer",
+   "Wrench",
+   "Trowel",
+   "Scalpel"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 2,
+  "q": "Which tool does a bricklayer use to spread mortar?",
+  "a": [
+   "Trowel",
+   "Chisel",
+   "Plane",
+   "Awl"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 2,
+  "q": "What does a cartographer make?",
+  "a": [
+   "Maps",
+   "Furniture",
+   "Pottery",
+   "Clocks"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 2,
+  "q": "A sommelier is a professional expert in what?",
+  "a": [
+   "Wine",
+   "Cheese",
+   "Perfume",
+   "Tea"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 3,
+  "q": "In airline crews, what is the official title of the second pilot?",
+  "a": [
+   "First officer",
+   "Purser",
+   "Flight engineer",
+   "Navigator"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 3,
+  "q": "What did a cooper traditionally make?",
+  "a": [
+   "Barrels",
+   "Horseshoes",
+   "Candles",
+   "Ropes"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 3,
+  "q": "What does a farrier specialize in?",
+  "a": [
+   "Shoeing horses",
+   "Making barrels",
+   "Thatching roofs",
+   "Tanning hides"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 2,
+  "q": "In a restaurant kitchen, who is second in command after the head chef?",
+  "a": [
+   "Sous-chef",
+   "Commis chef",
+   "Maître d'",
+   "Sommelier"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "What are Russian (and Soviet) astronauts traditionally called?",
+  "a": [
+   "Cosmonauts",
+   "Taikonauts",
+   "Spationauts",
+   "Aeronauts"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 3,
+  "q": "Who was the first American in space, in 1961?",
+  "a": [
+   "Alan Shepard",
+   "John Glenn",
+   "Gus Grissom",
+   "Neil Armstrong"
+  ]
+ },
+ {
+  "t": "jobs",
+  "d": 1,
+  "q": "Which tradesperson installs and repairs water pipes?",
+  "a": [
+   "Plumber",
+   "Electrician",
+   "Glazier",
+   "Roofer"
+  ]
+ }
+]
