@@ -32,4 +32,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://survivefriday.com/pravila.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://survivefriday.com/rules.html"/>
   </url>
+  <url>
+    <loc>https://survivefriday.com/oferta.html</loc><lastmod>2026-10-30</lastmod><changefreq>yearly</changefreq><priority>0.3</priority>
+  </url>
 </urlset>

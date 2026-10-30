@@ -1214,3 +1214,4 @@ body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .v
 .hs-row.owned em, .hs-row.paid em { color: var(--up); }
 .hs-row.locked { opacity: .6; }
 .site-legal { margin: 10px 0 0; text-align: center; font-size: 11.5px; font-weight: 700; color: var(--text-2); opacity: .8; }
+.site-legal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
