@@ -419,6 +419,9 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(var(--c-rgb),.25); fi
 /* ---------- приглашения в игру ---------- */
 .btn-invite { border-color: var(--magenta); color: var(--magenta-xl); box-shadow: 0 0 18px rgba(var(--m-rgb),.3); }
 .btn-invite:hover { background: rgba(var(--m-rgb),.14); box-shadow: 0 0 28px rgba(var(--m-rgb),.55); color: var(--hi); }
+.btn-tggroup { border-color: #2aabee; color: #8fd3ff; }
+.btn-tggroup b { color: var(--hi); margin-left: 4px; }
+html.light .btn-tggroup { color: #0b6fa8; }
 .viral-pop { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 35; width: min(460px, calc(100% - 24px)); translate: -50% 0;
   display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 20px; border: 1.5px solid var(--magenta); background: rgba(12,10,22,.96);
   box-shadow: 0 0 34px rgba(var(--m-rgb),.4); animation: popup-in .45s var(--ease) both; }

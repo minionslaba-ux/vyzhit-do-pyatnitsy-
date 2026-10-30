@@ -325,9 +325,61 @@ async function tgButton() {
   };
 }
 
+// ---------- группа игры в Telegram: +10 у.е. за вступление (один раз) ----------
+// Бот проверяет, что игрок действительно в группе (getChatMember), — поэтому награда выдаётся только в игре внутри Telegram
+const GROUP_REWARD = 10;
+function groupCash(n) {  // нет карьеры — деньги дождутся её
+  const C2 = careerNow();
+  if (C2) { C2.bank = (C2.bank || 0) + n; careerSave(C2); }
+  else prefs.pendingCash = (prefs.pendingCash || 0) + n;
+  store.set(KEY.prefs, prefs);
+  return !!C2;
+}
+async function tgGroup() {
+  const b = $('tgGroup'); if (!b) return;
+  if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; groupCash(n); }
+  if (window.VDP_PLATFORM || !board.online) return;
+  const r = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
+    body: JSON.stringify({ action: 'group_link' }) }).then(r => r.json()).catch(() => ({}));
+  const link = r.link; if (!link) return;
+  const label = () => b.innerHTML = prefs.groupClaimed ? L('👥 Группа игры в Telegram', '👥 Game group on Telegram')
+    : L(`👥 Вступить в группу игры в Telegram <b>+${money(GROUP_REWARD)}</b>`, `👥 Join the game’s Telegram group <b>+${money(GROUP_REWARD)}</b>`);
+  label(); b.hidden = false;
+  const go = () => TG ? TG.openTelegramLink(link) : window.open(link, '_blank', 'noopener');
+  const claim = async () => {
+    const res = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
+      body: JSON.stringify({ action: 'group_claim', initData: TG.initData, player_id: prefs.playerId }) });
+    const j = await res.json().catch(() => ({}));
+    if (j.ok) {
+      prefs.groupClaimed = true; const now = groupCash(GROUP_REWARD); label(); $('modal').hidden = true;
+      sfx.coins?.(); toast(L(`🎉 Спасибо, что с нами! +${money(GROUP_REWARD)}${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎉 Thanks for joining! +${money(GROUP_REWARD)}${now ? '' : ' — paid once you get a job'}`));
+    } else if (j.error === 'claimed') { prefs.groupClaimed = true; store.set(KEY.prefs, prefs); label(); $('modal').hidden = true; toast(L('Награда за группу уже получена', 'You’ve already got the group reward')); }
+    else if (j.error === 'not_member') toast(L('Пока не видим вас в группе. Вступите и нажмите ещё раз', 'We don’t see you in the group yet. Join and tap again'));
+    else toast(L('Не получилось, попробуйте позже', 'Didn’t work — try again later'));
+  };
+  const open = () => {
+    if (prefs.groupClaimed) return go();
+    const m = $('modal');
+    m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="tgGrTitle"><span class="lvl-ico" aria-hidden="true">👥</span>
+      <h2 id="tgGrTitle">${L('Группа игры в Telegram', 'The game’s Telegram group')}</h2>
+      <p>${L(`Каждый день — напоминание о неделе дня и кто вчера продержался лучше всех. За вступление — <b>+${money(GROUP_REWARD)}</b>, один раз.`,
+        `A daily Daily Week reminder and who lasted longest yesterday. Join and get <b>+${money(GROUP_REWARD)}</b>, once.`)}</p>
+      <button class="btn-main" type="button" id="tgGrGo">${L('1. Вступить в группу', '1. Join the group')}</button>
+      <button class="btn-ghost" type="button" id="tgGrClaim">${TG ? L(`2. Я вступил — получить ${money(GROUP_REWARD)}`, `2. I’ve joined — get ${money(GROUP_REWARD)}`) : L('2. Получить награду в Telegram', '2. Get the reward in Telegram')}</button>
+      ${TG ? '' : `<p style="opacity:.7;font-size:13px">${L('Награду выдаёт бот: он проверяет, что вы в группе. Поэтому её получают в игре внутри Telegram.', 'The bot checks that you’re in the group, so the reward is claimed in the game inside Telegram.')}</p>`}
+      <button class="btn-ghost" type="button" id="tgGrClose">${L('Закрыть', 'Close')}</button></div>`;
+    m.hidden = false;
+    $('tgGrGo').onclick = go;
+    $('tgGrClaim').onclick = () => TG ? claim() : (location.href = 'https://t.me/Survivefridaybot?startapp=group');
+    $('tgGrClose').onclick = () => { m.hidden = true; };
+  };
+  b.onclick = open;
+  if (TG && /(^|_)group\b/.test(TG.initDataUnsafe?.start_param || '') && !prefs.groupClaimed) setTimeout(open, 1200);
+}
+
 // старт: после загрузки данных
 dataReady.then(() => eventsReady).then(() => {
-  todayQuests(); missYou(); syncDesk(); tgButton();
+  todayQuests(); missYou(); syncDesk(); tgButton(); tgGroup();
   if (!views.menu.hidden) { renderMeta(); setTimeout(whatsNew, 800); }
   setTimeout(rivals, 4000);
 });
