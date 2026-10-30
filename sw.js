@@ -1,6 +1,6 @@
 // Офлайн-режим «Выжить до пятницы»: игра и данные кэшируются на телефоне.
 // Свои файлы — «быстро из кэша, обновить в фоне»; Supabase, Telegram и прочие внешние запросы — только из сети.
-const CACHE = 'vdp-v27';
+const CACHE = 'vdp-v28';
 const SHELL = ['./', 'index.html', 'css/style.css', 'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js', 'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/app.js',
   'data/pool.json', 'data/pool2.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png'];
 

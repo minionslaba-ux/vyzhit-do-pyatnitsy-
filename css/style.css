@@ -1018,3 +1018,16 @@ html[lang="en"] .btn-ghost.locked::after { content: "after sign-up"; }
 .npc-tag { margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--text-2); }
 .npc-note { font-size: 12px !important; color: var(--text-2); }
 .msg.typing .bubble { opacity: .6; letter-spacing: 2px; }
+/* SMS о зарплате — как уведомление на телефоне */
+.sms-pop { position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 44; width: min(400px, calc(100% - 24px));
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 18px; background: rgba(var(--bg-rgb),.94); border: 1px solid rgba(var(--w-rgb),.16);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45), 0 0 18px rgba(212,255,58,.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); cursor: pointer; }
+.sms-pop[hidden] { display: none; }
+.sms-pop.on { animation: smsin .45s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes smsin { from { transform: translate(-50%, -130%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+.sms-ico { flex: none; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: linear-gradient(135deg, #2fb36b, #0f7a45); font-size: 18px; }
+.sms-body { display: grid; grid-template-columns: 1fr auto; gap: 1px 8px; font-size: 13.5px; line-height: 1.35; color: var(--text-3); }
+.sms-body b { color: var(--hi); font-size: 13px; }
+.sms-body small { color: var(--text-2); font-size: 11px; }
+.sms-body > span { grid-column: 1 / -1; }
+@media (prefers-reduced-motion: reduce) { .sms-pop.on { animation: none; } }

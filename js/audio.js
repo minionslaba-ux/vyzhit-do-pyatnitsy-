@@ -41,6 +41,10 @@ const sfx = {
   sigh: () => { noise(.75, .07, 'bandpass', 1100, .05, 380, .18); tone(230, .6, 'sine', .015, .05, 150); },
   lose: () => { buzz('lose'); sfx.stamp(); [330, 262, 196, 147].forEach((f, i) => tone(f, .28, 'sawtooth', .035, .2 + i * .16)); },
   win: () => { buzz('win'); sfx.stamp(); [523, 659, 784, 1046].forEach((f, i) => tone(f, .25, 'triangle', .06, .15 + i * .12)); },
+  // звон монет: несколько коротких металлических «дзынь» и кассовое «чик»
+  coins: () => { buzz('item'); [2093, 2637, 3136, 2349, 2794].forEach((f, i) => { tone(f, .16, 'triangle', .045, i * .07); tone(f * 2.01, .09, 'sine', .015, i * .07); });
+    noise(.05, .12, 'highpass', 5000, .02); noise(.05, .1, 'highpass', 6000, .3); },
+  sms: () => { [1568, 2093].forEach((f, i) => tone(f, .12, 'sine', .05, i * .13)); },
   bell: () => { [1318, 1760, 1318].forEach((f, i) => tone(f, .35, 'triangle', .05, i * .14)); tone(2637, .5, 'sine', .015, .05); },
   item: () => { buzz('item'); [880, 1320].forEach((f, i) => tone(f, .12, 'triangle', .05, i * .07)); },
 };

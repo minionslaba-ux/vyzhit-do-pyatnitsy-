@@ -541,13 +541,24 @@ function choose(side) {
     advance();
   }, RM.matches ? 120 : 380);
 }
+// Уведомление как SMS на телефоне: сверху, само исчезает
+let smsT = 0;
+function smsPop(from, text) {
+  const el = $('smsPop');
+  el.innerHTML = `<span class="sms-ico" aria-hidden="true">🏦</span><span class="sms-body"><b>${esc(from)}</b><small>${L('сейчас', 'now')}</small><span>${esc(text)}</span></span>`;
+  el.hidden = false; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+  setTimeout(() => sfx.sms(), 350);
+  clearTimeout(smsT); smsT = setTimeout(() => { el.hidden = true; }, 3400);
+  el.onclick = () => { el.hidden = true; };
+}
 // Переход к следующей карточке (или к финалу недели)
 function advance() {
   const best = store.get(KEY.best, { step: 0, wins: 0 });
   S.step++;
   if (S.mode === 'career' && C && S.step % 3 === 0) {  // вечер прошёл — рабочий день оплачен
-    pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary);
-    toast(L(`+${C.salary} у.е. на счёт — зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}`, `+$${C.salary} in the bank — ${dayName(S.step / 3 - 1)}’s pay`));
+    pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary); sfx.coins();
+    smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}: +${money(C.salary)} · баланс ${money(C.bank)}`,
+      `${dayName(S.step / 3 - 1)} salary deposited: +${money(C.salary)} · balance ${money(C.bank)}`));
   }
   best.step = Math.max(best.step, S.step);
   if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
