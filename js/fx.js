@@ -97,7 +97,7 @@ const FX = {
   relNote(name, d) {
     const r = document.getElementById('react');
     if (!r) return;
-    const el = this.temp(r.parentElement, `rel-note ${d > 0 ? 'up' : 'down'}`, `${d > 0 ? '♥' : '💢'} ${name}: ${d > 0 ? 'отношение лучше' : 'отношение хуже'}`, 2200);
+    const el = this.temp(r.parentElement, `rel-note ${d > 0 ? 'up' : 'down'}`, `${d > 0 ? '♥' : '💢'} ${name}: ${d > 0 ? L('отношение лучше', 'likes you more') : L('отношение хуже', 'likes you less')}`, 2200);
     if (this.off) el.style.animation = 'none';
   },
   // Пятница, 18:00: двери офиса разъезжаются, в офисе гаснет свет
