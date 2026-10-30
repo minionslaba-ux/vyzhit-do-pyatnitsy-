@@ -32,11 +32,15 @@ const PHASE_NAMES = EN ? ['Morning', 'Afternoon', 'Evening'] : ['Утро', 'Д�
 const dayName = i => DAY_NAMES[i];
 const phaseName = i => PHASE_NAMES[i];
 // Сменить язык и перезапустить игру
+// На сайте у английской версии своя страница en.html (для поисковиков), в сборках для каталогов — та же страница
 function setLang(l) {
   try { localStorage.setItem('vdp-lang', l); } catch {}
   const q = new URLSearchParams(location.search); q.delete('lang');
-  location.href = location.pathname + (q.toString() ? '?' + q : '') + location.hash;
+  const site = /survivefriday\.com$|^localhost$/.test(location.hostname) && !window.VDP_PLATFORM;
+  const path = site ? location.pathname.replace(/(en\.html|index\.html)?$/, l === 'en' ? 'en.html' : '') : location.pathname;
+  location.href = path + (q.toString() ? '?' + q : '') + location.hash;
 }
+if (EN && /^Выжить/.test(document.title)) document.title = 'Survive till Friday — free office survival game';
 document.documentElement.lang = LANG;
 // Статичный текст в index.html: <b data-en="Play">Играть</b>; атрибуты — data-en-aria-label, data-en-placeholder, data-en-title
 function applyStaticLang(root = document) {

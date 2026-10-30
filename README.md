@@ -247,3 +247,10 @@ supabase/schema.sql  таблицы, представления и доступ�
 ## Английская версия
 
 Язык выбирается сам по языку браузера, вручную — «Профиль» → «Язык» или `?lang=en` / `?lang=ru`. Тексты в коде — парами `L('русский', 'English')` (js/i18n.js), в index.html — атрибуты `data-en`. Карточки и вопросы — `data/en/*.json` поверх русских по id; в английскую игру попадают только переведённые. Переведено: интерфейс, классическая неделя, профессии, концовки, обучение и 1000 карточек `data/en/pool.json`; дальше — `pool2`, собеседования, викторина, коллеги.
+
+## Поисковики
+
+- `index.html` — русская страница игры, `en.html` — английская (собирается из index.html: `python3 tools/make-en.py` — запускать после каждого изменения index.html).
+- Теги: title, description, keywords, robots, canonical, hreflang (ru / en / x-default), Open Graph и Twitter (картинки `icons/og-1200x630.jpg` и `icons/og-en-1200x630.jpg`), JSON-LD VideoGame + WebSite с автором и трейлером.
+- Страницы об игре: `igra-pro-ofis.html` (ru) и `office-game.html` (en), с FAQ для поисковой выдачи.
+- `robots.txt` и `sitemap.xml` с языковыми версиями страниц.

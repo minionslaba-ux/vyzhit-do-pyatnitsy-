@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dist/
+Disallow: /tools/
+Disallow: /supabase/
+
+Sitemap: https://survivefriday.com/sitemap.xml
