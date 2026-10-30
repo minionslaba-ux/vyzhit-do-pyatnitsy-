@@ -23,29 +23,37 @@ $('tubesL').innerHTML = RES.slice(0, 2).map(tube).join('');
 $('tubesR').innerHTML = RES.slice(2).map(tube).join('');
 const setPhase = p => { document.body.dataset.phase = p; };
 
-// ---------- 17 цветовых тем: каждую неделю — своя ----------
+// ---------- 23 цветовых тем (17 тёмных и 6 светлых): каждую неделю — своя ----------
 // m — главный акцент (кнопки, заголовки), c — второй (рамки, часы), p — свечение фона. Цвета шкал и ▲▼ не меняются: у них свой смысл
+// light — светлая тема: тёмный текст, светлые панели (html.light в css/style.css)
 const THEMES = [
-  { name: 'Ночной неон', m: '#ff3bd4', c: '#2de2e6', p: '#b26bff', bg: '#07070d' },
-  { name: 'Закат',       m: '#ff6a3d', c: '#ffc53d', p: '#ff3d7f', bg: '#0d0707' },
-  { name: 'Океан',       m: '#3d8bff', c: '#3dffd0', p: '#2b5cff', bg: '#050a12' },
-  { name: 'Лес',         m: '#2fe07a', c: '#e8d36a', p: '#1f8a4c', bg: '#050d08' },
-  { name: 'Лаванда',     m: '#c48bff', c: '#ff9de2', p: '#7a5cff', bg: '#0a0712' },
-  { name: 'Мандарин',    m: '#ff9a2e', c: '#2ec4ff', p: '#ff5e2e', bg: '#0d0905' },
-  { name: 'Мята',        m: '#3de8c0', c: '#ff7aa8', p: '#2fb38f', bg: '#060d0c' },
-  { name: 'Рубин',       m: '#ff2e55', c: '#ffb02e', p: '#b3122f', bg: '#0e0508' },
-  { name: 'Электрик',    m: '#5c6bff', c: '#00e5ff', p: '#3a2bff', bg: '#06061a' },
-  { name: 'Золото',      m: '#ffcf3d', c: '#ff8a3d', p: '#b38a1f', bg: '#0d0b05' },
-  { name: 'Фуксия',      m: '#ff2ea6', c: '#ffe14d', p: '#a3125f', bg: '#0e050b' },
-  { name: 'Аврора',      m: '#4dffb5', c: '#9b6bff', p: '#2bb3ff', bg: '#050c10' },
-  { name: 'Коралл',      m: '#ff7b6b', c: '#6be4ff', p: '#ff4d6d', bg: '#0e0708' },
-  { name: 'Сакура',      m: '#ffa3cf', c: '#fff0a3', p: '#ff6bab', bg: '#0f080c' },
-  { name: 'Индиго',      m: '#8b7bff', c: '#ff6be1', p: '#4b2bff', bg: '#07061a' },
-  { name: 'Токсик',      m: '#7cff2e', c: '#2ee8ff', p: '#2e8b1f', bg: '#060d05' },
-  { name: 'Лёд',         m: '#e6f0ff', c: '#8fd3ff', p: '#5c7cff', bg: '#08090d' },
+  { name: 'Ночной неон',  m: '#ff3bd4', c: '#2de2e6', p: '#b26bff', bg: '#07070d' },
+  { name: 'Закат',        m: '#ff6a3d', c: '#ffc53d', p: '#ff3d7f', bg: '#0d0707' },
+  { name: 'Утро в офисе', m: '#d6189c', c: '#0a8fa8', p: '#b26bff', bg: '#f6f3ff', light: true },
+  { name: 'Океан',        m: '#3d8bff', c: '#3dffd0', p: '#2b5cff', bg: '#050a12' },
+  { name: 'Лес',          m: '#2fe07a', c: '#e8d36a', p: '#1f8a4c', bg: '#050d08' },
+  { name: 'Бумага',       m: '#c2410c', c: '#1d4ed8', p: '#f59e0b', bg: '#f7f2e8', light: true },
+  { name: 'Лаванда',      m: '#c48bff', c: '#ff9de2', p: '#7a5cff', bg: '#0a0712' },
+  { name: 'Мандарин',     m: '#ff9a2e', c: '#2ec4ff', p: '#ff5e2e', bg: '#0d0905' },
+  { name: 'Мятный день',  m: '#0f9d6f', c: '#7c3aed', p: '#34d399', bg: '#eefaf5', light: true },
+  { name: 'Мята',         m: '#3de8c0', c: '#ff7aa8', p: '#2fb38f', bg: '#060d0c' },
+  { name: 'Рубин',        m: '#ff2e55', c: '#ffb02e', p: '#b3122f', bg: '#0e0508' },
+  { name: 'Небо',         m: '#2563eb', c: '#db2777', p: '#60a5fa', bg: '#eef5ff', light: true },
+  { name: 'Электрик',     m: '#5c6bff', c: '#00e5ff', p: '#3a2bff', bg: '#06061a' },
+  { name: 'Золото',       m: '#ffcf3d', c: '#ff8a3d', p: '#b38a1f', bg: '#0d0b05' },
+  { name: 'Персик',       m: '#e8590c', c: '#0d9488', p: '#fb923c', bg: '#fff3ec', light: true },
+  { name: 'Фуксия',       m: '#ff2ea6', c: '#ffe14d', p: '#a3125f', bg: '#0e050b' },
+  { name: 'Аврора',       m: '#4dffb5', c: '#9b6bff', p: '#2bb3ff', bg: '#050c10' },
+  { name: 'Сирень',       m: '#7c3aed', c: '#e11d48', p: '#a78bfa', bg: '#f5f0ff', light: true },
+  { name: 'Коралл',       m: '#ff7b6b', c: '#6be4ff', p: '#ff4d6d', bg: '#0e0708' },
+  { name: 'Сакура',       m: '#ffa3cf', c: '#fff0a3', p: '#ff6bab', bg: '#0f080c' },
+  { name: 'Индиго',       m: '#8b7bff', c: '#ff6be1', p: '#4b2bff', bg: '#07061a' },
+  { name: 'Токсик',       m: '#7cff2e', c: '#2ee8ff', p: '#2e8b1f', bg: '#060d05' },
+  { name: 'Лёд',          m: '#e6f0ff', c: '#8fd3ff', p: '#5c7cff', bg: '#08090d' },
 ];
 const rgbOf = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
 const mixW = (h, k) => '#' + rgbOf(h).map(v => Math.round(v + (255 - v) * k).toString(16).padStart(2, '0')).join('');
+const mixB = (h, k) => '#' + rgbOf(h).map(v => Math.round(v * (1 - k)).toString(16).padStart(2, '0')).join('');
 // Неделя карьеры → своя тема по кругу; вне карьеры — по календарной неделе
 function themeIndex() {
   const w = C?.week || Math.floor((Date.now() / 864e5 + 3) / 7);
@@ -56,8 +64,12 @@ function applyTheme(i = themeIndex()) {
   if (i === themeNow) return THEMES[i];
   themeNow = i;
   const t = THEMES[i], st = document.documentElement.style;
-  st.setProperty('--magenta', t.m); st.setProperty('--magenta-l', mixW(t.m, .45)); st.setProperty('--magenta-xl', mixW(t.m, .78));
-  st.setProperty('--cyan', t.c); st.setProperty('--cyan-l', mixW(t.c, .45)); st.setProperty('--cyan-xl', mixW(t.c, .78));
+  // на тёмном фоне светлые оттенки акцента светлее, на светлом — темнее, чтобы текст читался
+  const tone = t.light ? (h, k) => mixB(h, k * .6) : mixW;
+  st.setProperty('--magenta', t.m); st.setProperty('--magenta-l', tone(t.m, .45)); st.setProperty('--magenta-xl', tone(t.m, .78));
+  st.setProperty('--cyan', t.c); st.setProperty('--cyan-l', tone(t.c, .45)); st.setProperty('--cyan-xl', tone(t.c, .78));
+  st.setProperty('--bg-rgb', rgbOf(t.bg).join(',')); st.setProperty('--hi', t.light ? '#14121f' : '#fff'); st.setProperty('--w-rgb', t.light ? '20,18,40' : '255,255,255');
+  document.documentElement.classList.toggle('light', !!t.light);
   st.setProperty('--m-rgb', rgbOf(t.m).join(',')); st.setProperty('--c-rgb', rgbOf(t.c).join(',')); st.setProperty('--p-rgb', rgbOf(t.p).join(','));
   st.setProperty('--bg', t.bg);
   document.querySelector('meta[name=theme-color]')?.setAttribute('content', t.bg);
