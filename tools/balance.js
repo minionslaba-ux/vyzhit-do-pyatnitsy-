@@ -1,20 +1,20 @@
 // Симуляция баланса «Выжить до пятницы»: сколько недель закрывают разные игроки,
 // какие карточки чаще всего заканчивают неделю и есть ли ответы, которые «всегда правильные».
-// Запуск: node tools/balance.js [недель=10000] [множитель эффектов=1.5]
-// Множитель 1.5 и предел ±30 — как в игре (POOL_BOOST в js/engine.js).
+// Запуск: node tools/balance.js [недель=10000] [минусы=1.5] [плюсы=1.2] [плюсы Энергии=1.5]
+// Множители (минусы ×1.5, плюсы ×1.2, у Энергии ×1.5) и предел ±30 — как в игре (POOL_BOOST в js/engine.js).
 // «Внимательный» игрок видит только то, что показывает игра: направление (▲/▼) и силу (одна или две стрелки).
 const fs = require('fs');
 const pool = JSON.parse(fs.readFileSync(__dirname + '/../data/pool.json', 'utf8'));
 const KEYS = ['psyche', 'energy', 'boss', 'colleagues'];
 const NAMES = { psyche: 'Кукуха', energy: 'Энергия', boss: 'Босс', colleagues: 'Коллеги' };
 const N = +(process.argv[2] || 10000);
-const SCALE = +(process.argv[3] || 1.5);
+const DOWN = +(process.argv[3] || 1.5), UP = +(process.argv[4] || 1.2), ENERGY_UP = +(process.argv[5] || 1.5);
 const PH = ['Утро', 'День', 'Вечер'];
 const phases = PH.map(ph => pool.filter(c => c.phase === ph));
 const rnd = a => a[Math.floor(Math.random() * a.length)];
 const effOf = {};
 for (const c of pool) for (const side of ['left', 'right'])
-  effOf[c.id + side] = Object.fromEntries(KEYS.map(k => [k, Math.max(-30, Math.min(30, Math.round((c.answers[side].effects[k] || 0) * SCALE / 5) * 5))]));
+  effOf[c.id + side] = Object.fromEntries(KEYS.map(k => [k, Math.max(-30, Math.min(30, Math.round((c.answers[side].effects[k] || 0) * ((c.answers[side].effects[k] || 0) > 0 ? (k === 'energy' ? ENERGY_UP : UP) : DOWN) / 5) * 5))]));
 const eff = (c, side) => effOf[c.id + side];
 const seen = v => v === 0 ? 0 : v > 0 ? (v >= 20 ? 2 : 1) : (v <= -20 ? -2 : -1);  // что видно в подсказке
 
@@ -57,7 +57,7 @@ const pct = x => (100 * x).toFixed(1) + '%';
 const short = c => (c.text.length > 64 ? c.text.slice(0, 63) + '…' : c.text);
 const fx = e => KEYS.filter(k => e[k]).map(k => `${NAMES[k]} ${e[k] > 0 ? '+' : ''}${e[k]}`).join(', ') || 'ничего';
 
-console.log(`Колода: ${pool.length} карточек · недель на стратегию: ${N} · множитель ×${SCALE}, предел ±30\n`);
+console.log(`Колода: ${pool.length} карточек · недель на стратегию: ${N} · минусы ×${DOWN}, плюсы ×${UP} (у Энергии ×${ENERGY_UP}), предел ±30\n`);
 for (const [name, s] of [['случайный', random], ['внимательный', careful]]) {
   for (const [label, opt] of [['без помощи', { items: 0, chance: 0 }], ['с предметами и вторым шансом', {}]]) {
     let ok = 0; for (let i = 0; i < N; i++) if (week(s, opt)) ok++;

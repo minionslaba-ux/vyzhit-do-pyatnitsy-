@@ -58,9 +58,11 @@ let TOTAL_CARDS = TOTAL_BASE;
 let POOL_CHAINS = [];
 // Баланс: эффекты карточек пула усилены в 1,5 раза — по симуляции (tools/balance.js) внимательный игрок
 // закрывает около 90% недель, а играющий наугад — около 20%; без усиления было 100% и 60%
-const POOL_BOOST = 1.5;
+// Плюсы усилены слабее минусов: при ×1.5 в обе стороны шкалы слишком быстро уходили в перегрев (100%).
+// Энергия почти не перегревается, а без сильных плюсов её не восстановить — у неё плюсы ×1.5
+const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colleagues: 1.2 } };
 const boost = c => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
-  effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * POOL_BOOST / 5) * 5))])) }])) });
+  effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down) / 5) * 5))])) }])) });
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   try {
