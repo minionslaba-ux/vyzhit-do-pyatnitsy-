@@ -739,3 +739,49 @@ body[data-phase="night"] .office .person, body[data-phase="night"] .office .lamp
   .fnum, .shield-ring, .puff, .fx-screen, .fx-doors, .fly-chip, .fly-coin, .tube .bub, .steam { display: none !important; }
   .card.idle, .office .walker, .office .cooler .cb, .tube .fill::before { animation: none !important; }
 }
+
+/* ====================== Люди: портреты, коллеги, живые игроки (js/faces.js) ====================== */
+.face { flex: none; display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.14), 0 0 18px rgba(120,100,255,.25); background: #141428; }
+.face svg { width: 100%; height: 100%; display: block; }
+.face .brow, .face .ln { fill: none; stroke: #1b1424; stroke-width: 2.4; stroke-linecap: round; }
+.face .fl { fill: #3a1424; }
+.face .eyes { fill: #1b1424; transform-origin: 32px 31px; animation: blink 5.5s infinite; }
+.face .glasses { fill: rgba(255,255,255,.12); stroke: #1b1424; stroke-width: 1.8; }
+.face.icon { font-size: 26px; line-height: 1; background: rgba(255,255,255,.06); }
+.face.mini { width: 34px; height: 34px; }
+.face.icon.mini { font-size: 18px; }
+.face.emote svg { animation: emote .4s cubic-bezier(.3,1.6,.5,1); }
+@keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+@keyframes emote { 0% { transform: scale(.9) rotate(-4deg); } 100% { transform: none; } }
+.card-head { align-items: center; }
+.rel-tag { font-size: 12px; letter-spacing: .05em; color: #ff8be6; text-shadow: 0 0 8px rgba(255,59,212,.6); white-space: nowrap; }
+/* Реплика с лицом говорящего */
+.react { display: flex; align-items: center; gap: 8px; text-align: left; }
+.react > span:last-child { min-width: 0; }
+.rel-note { position: absolute; left: 50%; top: 18px; z-index: 4; transform: translateX(-50%); white-space: nowrap; font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+  background: rgba(7,7,13,.9); pointer-events: none; animation: relnote 2.2s ease-out forwards; }
+.rel-note.up { color: #ff8be6; border: 1px solid rgba(255,59,212,.6); } .rel-note.down { color: var(--down); border: 1px solid rgba(255,59,107,.6); }
+@keyframes relnote { 0% { opacity: 0; transform: translate(-50%, 8px); } 12%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -10px); } }
+/* Сейчас в игре */
+.live { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; color: var(--text-2); }
+.live[hidden] { display: none; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up); box-shadow: 0 0 8px var(--up); animation: livedot 1.6s ease-in-out infinite; }
+@keyframes livedot { 50% { opacity: .35; } }
+.live-ava { display: flex; } .live-ava span { width: 20px; height: 20px; margin-left: -4px; display: grid; place-items: center; border-radius: 50%; background: #1a1a2e; border: 1px solid rgba(255,255,255,.18); font-size: 12px; }
+.live small { font-family: var(--f-mono); }
+/* Сколько ответили так же (неделя дня) */
+.pick-stat { font-family: var(--f-mono); font-size: 12px; color: var(--cyan-l); text-align: center; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(45,226,230,.4); background: rgba(45,226,230,.06); }
+.pick-stat[hidden] { display: none; }
+.pick-stat.on { animation: fadein .3s; }
+/* Коллеги в профиле */
+.cast-list { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 18px; border: 1.5px solid var(--line); }
+.cast-list[hidden] { display: none; }
+.cast-title { font-family: var(--f-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); }
+.cast-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+.cast-row .face { width: 40px; height: 40px; }
+.cast-row b { display: block; font-size: 14px; } .cast-row small { color: var(--text-2); font-size: 11.5px; }
+.cast-row em { font-style: normal; font-size: 12px; color: var(--text-2); } .cast-row em.up { color: #ff8be6; } .cast-row em.down { color: var(--down); }
+@media (prefers-reduced-motion: reduce) { .face .eyes, .live-dot { animation: none; } }
+.card-head { justify-content: flex-start; }
+.card-head .rnd-tag { margin-left: auto; }

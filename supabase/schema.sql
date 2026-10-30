@@ -557,6 +557,32 @@ create or replace view public.stats_shares as
 select coalesce(detail, '—') as kind, count(*) as shares from events where kind = 'share' group by detail order by shares desc;
 grant select on public.stats_overview, public.stats_killers, public.stats_funnel, public.stats_modes, public.stats_sources, public.stats_shares to anon, authenticated;
 
+-- ====================== Неделя дня: как ответили другие ======================
+-- Один ответ игрока на карточку дня; наружу — только сколько ответили так же и сколько всего
+create table if not exists public.daily_picks (
+  day         date not null,
+  step        smallint not null check (step between 0 and 14),
+  player_id   uuid not null,
+  card_id     text not null check (char_length(card_id) <= 40),
+  side        text not null check (side in ('left', 'right')),
+  created_at  timestamptz not null default now(),
+  primary key (day, step, player_id)
+);
+alter table public.daily_picks enable row level security;
+revoke all on public.daily_picks from anon, authenticated;
+
+create or replace function public.pick_daily(p_id uuid, p_day date, p_step int, p_card text, p_side text) returns table (same int, total int)
+language plpgsql security definer set search_path = public as $$
+begin
+  if public.is_registered(p_id) then perform public.require_player(p_id); end if;
+  -- записываем только свежую неделю дня (вчера, сегодня, завтра — запас на часовые пояса), первый ответ игрока
+  if p_day between current_date - 1 and current_date + 1 and p_side in ('left', 'right') and p_step between 0 and 14 then
+    insert into daily_picks (day, step, player_id, card_id, side) values (p_day, p_step, p_id, left(p_card, 40), p_side) on conflict do nothing;
+  end if;
+  return query select (count(*) filter (where d.side = p_side))::int, count(*)::int
+    from daily_picks d where d.day = p_day and d.step = p_step and d.card_id = left(p_card, 40);
+end $$;
+
 do $$
 declare f text;
 begin
@@ -564,7 +590,7 @@ begin
     'invite_player(uuid,text)', 'my_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
     'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)',
     'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)',
-    'report_message(uuid,bigint)', 'hide_message(uuid,bigint)', 'log_event(uuid,text,text,text,boolean,int,text)'] loop
+    'report_message(uuid,bigint)', 'hide_message(uuid,bigint)', 'log_event(uuid,text,text,text,boolean,int,text)', 'pick_daily(uuid,date,int,text,text)'] loop
     execute format('revoke all on function public.%s from public', f);
     execute format('grant execute on function public.%s to anon, authenticated', f);
   end loop;
@@ -573,10 +599,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 26 строк
+-- Проверка: должны вернуться 27 строк
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily');

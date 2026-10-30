@@ -1,5 +1,5 @@
 // Движок: данные карточек, пул, правила случайных событий, хранилище и настройки игрока.
-// «Выжить до пятницы». Скрипты подключаются по порядку: engine → board → audio → fx → game → ui-menu → app;
+// «Выжить до пятницы». Скрипты подключаются по порядку: engine → board → audio → fx → faces → game → ui-menu → app;
 // у них общее глобальное пространство имён, как у cards.js и content.js.
 
 // ---------- данные ----------
@@ -69,12 +69,16 @@ const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colle
 const boost = c => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
   effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down) / 5) * 5))])) }])) });
 // Вопросы собеседования: базовые из cards.js и 300 из data/interview.json (prof — только для своей профессии, last — финальный)
+// Истории постоянных коллег (data/cast.json): stage 1…8 по порядку, payoff — когда отношение ±2
+let CAST_CARDS = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   try {
-    const [p, q, ch, iv] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => [])]);
+    const [p, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => []),
+      get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
     POOL = p.map(c => boost(norm(c))); QUIZ = q; IV = IV.concat(iv);
+    CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
     for (const c of POOL) byId[c.id] = c;
     for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };

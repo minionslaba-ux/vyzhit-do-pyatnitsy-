@@ -199,11 +199,71 @@ function startWeek() {
   const season = type === 'normal' && !classic ? activeSeason() : null;
   if (season) S.season = season.id;
   S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title && !seen.has(c.id)) : [] });
+  if (!classic) placeCastCard(S.deck);
   for (const s of S.deck) seen.add(s.id);
   if (classic) seen.add('__classic');
   store.set(KEY.seen, [...seen]);
   store.set(KEY.save, S);
   enterGame();
+}
+
+// ---------- постоянные коллеги ----------
+// Отношения хранятся в карьере (C.cast), в остальных режимах — только на неделю
+const relStore = () => S?.mode === 'career' && C ? (C.cast ||= {}) : (S.castRel ||= {});
+// Раз в неделю — карточка одного коллеги: сначала «расплата» (друг выручит, обиженный отомстит), иначе следующая глава истории
+function placeCastCard(deck) {
+  if (!CAST_CARDS.length) return;
+  const rel = C.cast ||= {}, stage = C.castStage ||= {}, done = new Set(C.castSeen ||= []);
+  const payoff = CAST_CARDS.find(c => !done.has(c.id) && (c.payoff === 'friend' && (rel[c.cast] || 0) >= 2 || c.payoff === 'enemy' && (rel[c.cast] || 0) <= -2));
+  const next = Object.keys(CAST).map(k => CAST_CARDS.find(c => c.cast === k && c.stage === (stage[k] || 0) + 1)).filter(Boolean);
+  const card = payoff || next.sort((a, b) => a.stage - b.stage)[Math.floor(Math.random() * Math.min(2, next.length))];
+  if (!card) return;
+  const free = deck.map((s, i) => s.fixed || i === 0 || i === 14 ? -1 : i).filter(i => i >= 0);
+  if (!free.length) return;
+  const i = rnd(free); deck[i] = { id: card.id, time: PHASE_TIME[i % 3], fixed: true };
+}
+// Ответ меняет отношение: у карточек истории — явно (rel), у остальных с именем коллеги — по знаку шкалы «Коллеги»
+function castAfter(c, side, eff) {
+  const k = c.cast || castOf(`${c.who} ${c.text}`);
+  if (!k) return;
+  const d = c.cast ? c.answers[side].rel || 0 : Math.sign(eff.colleagues || 0);
+  if (c.cast && S.mode === 'career' && C) {
+    if (c.stage) (C.castStage ||= {})[k] = Math.max(C.castStage[k] || 0, c.stage);
+    else (C.castSeen ||= []).push(c.id);
+  }
+  if (!d) return;
+  const rel = relStore(); rel[k] = Math.max(-3, Math.min(3, (rel[k] || 0) + d));
+  if (S.mode === 'career' && C) saveCareer();
+  FX.relNote(CAST[k].name, d);
+}
+const hearts = v => v > 0 ? '♥'.repeat(v) : v < 0 ? '💢'.repeat(-v) : '·';
+
+// ---------- живые игроки ----------
+// Неделя дня: после ответа — сколько игроков ответили так же (только сводные числа)
+function livePick(c, side) {
+  const el = $('pickStat'); el.hidden = true;
+  if (S.mode !== 'daily' || !board.online) return;
+  const step = S.step;
+  board.rpc('pick_daily', { p_id: prefs.playerId, p_day: S.day, p_step: step, p_card: c.id, p_side: side }).then(r => {
+    const x = Array.isArray(r) ? r[0] : r;
+    if (!x?.total || S?.mode !== 'daily') return;
+    el.textContent = x.total === 1 ? 'Вы первые ответили на эту карточку сегодня' : `Так же ответили ${Math.round(100 * x.same / x.total)}% · ${plural(x.total, 'ответ', 'ответа', 'ответов')} за сегодня`;
+    el.hidden = false; FX.pulse(el, 'on', 4000);
+  }).catch(() => {});  // старая база без pick_daily — просто без подсказки
+}
+// Кто сейчас играет: аватары тех, у кого статус «играет» последние 3 минуты
+let liveT = 0;
+async function liveTick() {
+  clearTimeout(liveT);
+  const el = $('live');
+  if (views.game.hidden || !board.online) { el.hidden = true; return; }
+  try {
+    const me = await myTag, now = Date.now();
+    const rows = (await board.people()).filter(p => p.status === 'playing' && p.tag !== me && now - new Date(p.updated_at) < 180000);
+    el.hidden = !rows.length;
+    el.innerHTML = rows.length ? `<i class="live-dot"></i><span class="live-ava">${rows.slice(0, 5).map(p => `<span title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}">${esc(p.avatar || '🙂')}</span>`).join('')}</span><small>${rows.length > 5 ? `+${rows.length - 5} ` : ''}сейчас в игре</small>` : '';
+  } catch { el.hidden = true; }
+  liveT = setTimeout(liveTick, 30000);
 }
 
 // ---------- неделя дня и брендированная неделя ----------
@@ -226,7 +286,7 @@ function startPack() {
 }
 
 // ---------- игровой экран ----------
-function enterGame() { busy = false; show('game'); splashFor = -1; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
+function enterGame() { busy = false; show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
 // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
 function track(kind, o = {}) {
   if (!board.online || !prefs.name) return;
@@ -253,7 +313,8 @@ function renderCard() {
   const card = $('card');
   const tag = slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">ОТ КОЛЛЕГИ · ${esc(c.author)}</span>`
     : c.random ? '<span class="rnd-tag">! СЛУЧАЙНОЕ СОБЫТИЕ</span>' : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
-  card.innerHTML = `<div class="card-head"><span class="who">${esc(c.who)}</span>${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div><div class="stamp" aria-hidden="true"></div>`;
+  const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="Отношение: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
+  card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div><div class="stamp" aria-hidden="true"></div>`;
   // вход новой карточки: последствие — перемотка, случайное событие — помехи, новый день — лист календаря, иначе — снизу
   const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % 3 === 0 && S.step > 0 ? 'page' : null;
   card.style.transition = 'none'; card.style.transform = RM.matches || kind ? '' : 'translateY(28px) scale(.95)'; card.style.opacity = RM.matches || kind ? '' : '0';
@@ -346,15 +407,24 @@ function preview(side) {
   $('card').dataset.hot = side;
   $('btnL').classList.toggle('hot', side === 'left'); $('btnR').classList.toggle('hot', side === 'right');
   FX.stamp(side, .4);
+  setMood(document.querySelector('#card .face'), speakerMood(current(), eff, side));
 }
 function clearPreview() {
   for (const r of RES) $('mk-' + r.k).innerHTML = '';
   delete $('card').dataset.hot; $('btnL').classList.remove('hot'); $('btnR').classList.remove('hot');
   FX.stamp(null);
+  setMood(document.querySelector('#card .face'), 'neutral');
+}
+// Как отреагирует тот, кто говорит: коллега из истории — по отношению, остальные — по своей шкале
+function speakerMood(c, eff, side) {
+  if (c.cast) { const d = c.answers[side].rel || 0; return d > 0 ? 'happy' : d < 0 ? 'angry' : 'neutral'; }
+  const [g, stat] = reactionGroup(c.who), v = eff[stat] || Object.values(eff).reduce((a, b) => a + b, 0);
+  return moodFor(v, g === 'boss' || g === 'client' || g === 'hr');
 }
 
 // Реплика персонажа на ваш ответ — своим цветом
 function reactionGroup(who) {
+  if (castOf(who)) return ['colleagues', 'colleagues'];
   if (/босс|директор/i.test(who)) return ['boss', 'boss'];
   if (/hr|кадр|офис-менеджер/i.test(who)) return ['hr', 'boss'];
   if (/клиент|налогов/i.test(who)) return ['client', 'boss'];
@@ -376,7 +446,8 @@ function react(card, eff, side) {
   const mood = (v >= 0 ? 'pos' : 'neg') + (Math.abs(v) >= 20 && R[(v >= 0 ? 'pos' : 'neg') + 'Big'] ? 'Big' : '');
   const el = $('react');
   el.style.setProperty('--rc', R.color);
-  el.innerHTML = `<b>${g === 'self' ? R.name : esc(card.who)}</b> ${esc(rnd(R[mood]))}`;
+  el.innerHTML = `${portraitHtml(card.who, 'mini')}<span><b>${g === 'self' ? R.name : esc(card.who)}</b> ${esc(rnd(R[mood]))}</span>`;
+  setMood(el.querySelector('.face'), speakerMood(card, eff, side));
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
 }
 
@@ -400,7 +471,7 @@ function choose(side) {
     if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
     if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
-    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff);
+    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side);
     const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     const best = store.get(KEY.best, { step: 0, wins: 0 });
     if (dead) FX.finale(dead.k, !deadLow);

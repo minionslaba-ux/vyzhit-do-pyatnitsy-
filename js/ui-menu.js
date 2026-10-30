@@ -28,6 +28,13 @@ function renderMenu() {
   const save = store.get(KEY.save, null);
   if (dataLoaded && save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
   const Cm = store.get(KEY.career, null), careerSave = save && (save.mode || 'career') === 'career';
+  // Постоянные коллеги: портрет, кто это и как к вам относятся (только в карьере)
+  $('castList').hidden = !Cm;
+  if (Cm) $('castList').innerHTML = `<b class="cast-title">Коллеги по работе</b>${Object.entries(CAST).map(([k, p]) => {
+    const v = (Cm.cast || {})[k] || 0;
+    return `<div class="cast-row">${portraitHtml(p.name)}<span><b>${p.name}</b><small>${p.role} · глава ${(Cm.castStage || {})[k] || 0} из 8</small></span><em class="${v > 0 ? 'up' : v < 0 ? 'down' : ''}" title="Отношение ${v}">${hearts(v)}</em></div>`;
+  }).join('')}`;
+  for (const [k, row] of Object.keys(CAST).map((k, i) => [k, $('castList').querySelectorAll('.cast-row')[i]])) if (row) setMood(row.querySelector('.face'), moodFor(((Cm?.cast || {})[k] || 0) * 10, true));
   $('careerCard').hidden = !Cm; $('profField').hidden = !!Cm; $('traitField').hidden = !!Cm; $('newCareer').hidden = !Cm;
   $('newCareer').textContent = 'Начать карьеру заново'; delete $('newCareer').dataset.armed;
   if (Cm) {

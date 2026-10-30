@@ -93,6 +93,13 @@ const FX = {
     if (high) for (let i = 0; i < 6; i++) this.temp(w, 'puff', '', 1200).style.setProperty('--i', i);
     this.temp(document.body, `fx-screen ${high ? 'heat' : 'dim'}`, '', 1300);
   },
+  // Коллега запомнил ответ: «Фёдор ♥ +1» над репликой
+  relNote(name, d) {
+    const r = document.getElementById('react');
+    if (!r) return;
+    const el = this.temp(r.parentElement, `rel-note ${d > 0 ? 'up' : 'down'}`, `${d > 0 ? '♥' : '💢'} ${name}: ${d > 0 ? 'отношение лучше' : 'отношение хуже'}`, 2200);
+    if (this.off) el.style.animation = 'none';
+  },
   // Пятница, 18:00: двери офиса разъезжаются, в офисе гаснет свет
   doors() {
     if (this.off) return;
