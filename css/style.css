@@ -1031,3 +1031,13 @@ html[lang="en"] .btn-ghost.locked::after { content: "after sign-up"; }
 .sms-body small { color: var(--text-2); font-size: 11px; }
 .sms-body > span { grid-column: 1 / -1; }
 @media (prefers-reduced-motion: reduce) { .sms-pop.on { animation: none; } }
+/* Дедлайны */
+.dl-chip { border-color: var(--up); color: var(--up); background: rgba(212,255,58,.08); text-shadow: none; }
+.dl-badge { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 999px; font-size: 11px; font-weight: 800; background: rgba(212,255,58,.16); color: var(--up); border: 1px solid rgba(212,255,58,.5); white-space: nowrap; align-self: center; }
+html.light .dl-badge, html.light .dl-chip { color: #4f7d00; }
+.dl-box { text-align: center; align-items: center; gap: 10px; padding: 20px 18px; }
+.dl-box h2 { margin: 0; font-family: var(--f-display); font-size: 20px; color: var(--hi); }
+.dl-kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--up); }
+.dl-box .money, .dl-box .row2 { width: 100%; }
+.dl-box .money > div:last-child b { color: var(--down); }
+.nowrap { white-space: nowrap; }

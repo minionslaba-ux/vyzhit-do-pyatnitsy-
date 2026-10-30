@@ -390,7 +390,7 @@ function renderCard() {
   $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
   $('gDay').textContent = dayName(d); $('gPhase').textContent = phaseName(S.step % 3).toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
   $('dots').innerHTML = S.deck.map((s, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}${s.origin && i > S.step ? ' chain' : ''}"></i>`).join('');
-  clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer();
+  clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer(); deadlineBadges(c); deadlineOffer();
   if (S.step % 3 === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
   touchPlaying(d);
   coachFor(slot);
@@ -531,7 +531,7 @@ function choose(side) {
     if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
     if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
-    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side);
+    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side);
     const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     const best = store.get(KEY.best, { step: 0, wins: 0 });
     if (dead) FX.finale(dead.k, !deadLow);
@@ -541,6 +541,89 @@ function choose(side) {
     advance();
   }, RM.matches ? 120 : 380);
 }
+// ---------- дедлайны: задача с наградой и штрафом ----------
+// Утром иногда приходит задача: «сделать N рабочих решений до вечера такого-то дня». Рабочее решение — ответ, который
+// радует Босса или стоит Энергии (на ответах значок 📋+1). Успели — премия на счёт, не успели к вечеру срока — штраф со счёта.
+// Отказаться можно; задача одна за раз, предложений — не больше двух в неделю. Только в карьере.
+const DEADLINE_TIERS = [
+  { days: 0, need: 2, reward: 6,  fine: 4,  name: L('срочный', 'urgent') },
+  { days: 1, need: 4, reward: 10, fine: 5,  name: L('короткий', 'short') },
+  { days: 2, need: 6, reward: 15, fine: 8,  name: L('средний', 'medium') },
+  { days: 3, need: 8, reward: 24, fine: 12, name: L('крупный', 'big') },
+];
+const DEADLINE_TASKS = EN ? [
+  ['Boss', 'Quarterly report'], ['Client', 'Landing page for the launch'], ['CEO', 'Investor pitch deck'], ['Accounting', 'Close out the expense reports'],
+  ['HR', 'Onboarding plan for the new hires'], ['Sales', 'Proposal for a big client'], ['Marketing', 'Newsletter for the big sale'], ['IT', 'Migrate the old spreadsheets'],
+  ['Partner', 'Contract with all the redlines'], ['Boss', 'Summary for the board'], ['Client', 'One more “tiny” change'], ['Project manager', 'Plan for next quarter'],
+] : [
+  ['Босс', 'Квартальный отчёт'], ['Клиент', 'Лендинг к запуску'], ['Генеральный', 'Презентация для инвесторов'], ['Бухгалтерия', 'Закрыть авансовые отчёты'],
+  ['HR', 'План онбординга для новичков'], ['Отдел продаж', 'КП для крупного клиента'], ['Маркетинг', 'Рассылка к распродаже'], ['IT', 'Переезд старых таблиц'],
+  ['Партнёр', 'Договор со всеми правками'], ['Босс', 'Сводка для совета директоров'], ['Клиент', 'Ещё одна «маленькая» правка'], ['Менеджер проекта', 'План на следующий квартал'],
+];
+const workAnswer = (c, side) => { const e = c?.answers?.[side]?.effects || {}; return (e.boss || 0) > 0 || (e.energy || 0) < 0; };
+const dueText = d => L(`до ${['понедельника', 'вторника', 'среды', 'четверга', 'пятницы'][d]}, 18:00`, `by ${dayName(d)}, 6 PM`);
+function deadlineBadges(c) {
+  for (const [side, id] of [['left', 'btnL'], ['right', 'btnR']]) {
+    $(id).querySelector('.dl-badge')?.remove();
+    if (S?.deadline && workAnswer(c, side)) $(id).insertAdjacentHTML('beforeend', `<span class="dl-badge" title="${L('Засчитается в дедлайн', 'Counts toward your deadline')}">📋+1</span>`);
+  }
+  renderDeadlineChip();
+}
+function renderDeadlineChip() {
+  const el = $('dlChip'), d = S?.mode === 'career' && S.deadline;
+  el.hidden = !d; if (!d) return;
+  el.textContent = `📋 ${d.got}/${d.need} · ${dayName(d.due).slice(0, EN ? 3 : 2)}`;
+  el.onclick = () => toast(L(`«${d.title}» от: ${d.who}. Ещё ${d.need - d.got} раб. решений ${dueText(d.due)}. Награда +${money(d.reward)}, штраф −${money(d.fine)}`,
+    `“${d.title}” from ${d.who}: ${d.need - d.got} more work decisions ${dueText(d.due)}. Reward +${money(d.reward)}, penalty −${money(d.fine)}`));
+}
+function deadlineOffer() {
+  if (!(S?.mode === 'career' && C) || S.deadline || S.step % 3 || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
+  S.dlAsked = S.step;
+  const day = S.step / 3, rnd = Math.random;
+  if (rnd() > (S.step ? .4 : .25)) return;
+  const tiers = DEADLINE_TIERS.filter(t => day + t.days <= 4), t = tiers[Math.floor(rnd() * tiers.length)];
+  const [who, title] = t.days ? DEADLINE_TASKS[Math.floor(rnd() * (DEADLINE_TASKS.length - 1))] : DEADLINE_TASKS[10];
+  S.dlOffers = (S.dlOffers || 0) + 1;
+  setTimeout(() => { if (S && !busy && !views.game.hidden && S.step === day * 3) showDeadlineOffer({ who, title, need: t.need, got: 0, due: day + t.days, reward: t.reward, fine: t.fine, tier: t.name }); }, splashOn ? 4600 : 2100);
+}
+function showDeadlineOffer(d) {
+  const m = $('modal');
+  if (!m.hidden) return;
+  m.innerHTML = `<div class="modal-box glass dl-box" role="dialog" aria-modal="true" aria-labelledby="dlTitle">
+    <span class="dl-kicker">📋 ${L('Дедлайн', 'Deadline')} · ${d.tier} · ${L('от', 'from')}: ${esc(d.who)}</span>
+    <h2 id="dlTitle">${esc(d.title)}</h2>
+    <p>${L(`Сделайте <b>${d.need} рабочих решений</b> ${dueText(d.due)}. Рабочее решение — ответ, который радует Босса или стоит Энергии: на нём будет значок <span class="nowrap">📋+1</span>.`,
+      `Make <b>${d.need} work decisions</b> ${dueText(d.due)}. A work decision is an answer that pleases the Boss or costs Energy — it’ll carry a <span class="nowrap">📋+1</span> badge.`)}</p>
+    <div class="money"><div><b>+${money(d.reward)}</b><span>${L('премия, если успеете', 'bonus if you make it')}</span></div><div><b>−${money(d.fine)}</b><span>${L('штраф, если сорвёте', 'penalty if you miss it')}</span></div></div>
+    <div class="row2"><button class="btn-main" type="button" id="dlYes">${L('Взять задачу', 'Take it on')}</button><button class="btn-ghost" type="button" id="dlNo">${L('Отказаться', 'Decline')}</button></div></div>`;
+  m.hidden = false; sfx.item?.();
+  $('dlYes').onclick = () => {
+    m.hidden = true; S.deadline = d; S.dlTaken = (S.dlTaken || 0) + 1; store.set(KEY.save, S);
+    deadlineBadges(current()); toast(L(`Задача взята: «${d.title}» — ${d.need} раб. решений ${dueText(d.due)}`, `Task accepted: “${d.title}” — ${d.need} work decisions ${dueText(d.due)}`));
+  };
+  $('dlNo').onclick = () => { m.hidden = true; toast(L(`Вы отказались. «${d.title}» отдали Олегу`, `You passed. “${d.title}” went to Oleg`)); };
+}
+// После ответа: рабочее решение — +1; набрали нужное — премия сразу
+function deadlineWork(c, side) {
+  const d = S?.deadline;
+  if (!d || !workAnswer(c, side)) return;
+  d.got++;
+  if (d.got < d.need) { toast(`📋 ${L(`«${d.title}»`, `“${d.title}”`)}: ${d.got}/${d.need}`); renderDeadlineChip(); return; }
+  S.deadline = null; S.dlWon = (S.dlWon || 0) + 1;
+  pay(d.reward); S.earned = (S.earned || 0) + d.reward; renderBars(); renderDeadlineChip(); FX.coin(d.reward); sfx.coins();
+  smsPop(L('Банк', 'Bank'), L(`Премия за «${d.title}»: +${money(d.reward)} · баланс ${money(C.bank)}`, `Bonus for “${d.title}”: +${money(d.reward)} · balance ${money(C.bank)}`));
+}
+// Вечер дня сдачи прошёл, а задача не сделана — штраф
+function deadlineDue(day) {
+  const d = S?.deadline;
+  if (!d || day < d.due) return;
+  S.deadline = null; S.dlLost = (S.dlLost || 0) + 1;
+  C.bank -= d.fine; C.spent = (C.spent || 0) + d.fine; saveCareer(); renderBars(); renderDeadlineChip();
+  setTimeout(() => { sfx.sigh?.(); buzz('danger');
+    smsPop(L('Банк', 'Bank'), L(`Штраф за сорванный дедлайн «${d.title}» (${d.got}/${d.need}): −${money(d.fine)} · баланс ${money(C.bank)}`,
+      `Penalty for missing “${d.title}” (${d.got}/${d.need}): −${money(d.fine)} · balance ${money(C.bank)}`)); }, 3600);
+}
+
 // Уведомление как SMS на телефоне: сверху, само исчезает
 let smsT = 0;
 function smsPop(from, text) {
@@ -559,6 +642,7 @@ function advance() {
     pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary); sfx.coins();
     smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}: +${money(C.salary)} · баланс ${money(C.bank)}`,
       `${dayName(S.step / 3 - 1)} salary deposited: +${money(C.salary)} · balance ${money(C.bank)}`));
+    deadlineDue(S.step / 3 - 1);
   }
   best.step = Math.max(best.step, S.step);
   if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
