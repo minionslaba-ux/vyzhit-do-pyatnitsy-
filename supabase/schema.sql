@@ -49,6 +49,9 @@ create table if not exists public.players (
 alter table public.players drop constraint if exists players_prof_check;
 alter table public.players add constraint players_prof_check check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern'));
 
+-- Рабочий стол (эмодзи-украшения) и должность игрока — видны коллегам
+alter table public.players add column if not exists desk text not null default '' check (char_length(desk) <= 40);
+alter table public.players add column if not exists rank smallint not null default 0 check (rank between 0 and 20);
 alter table public.players drop constraint if exists players_step_check;
 alter table public.players add constraint players_step_check check (step between 0 and 25);
 
@@ -116,6 +119,16 @@ end $$;
 revoke all on function public.touch_player(uuid, text, text, text, text, text, int) from public;
 grant execute on function public.touch_player(uuid, text, text, text, text, text, int) to anon;
 
+-- Свой стол и должность (из игры, после покупки украшения или повышения)
+create or replace function public.set_desk(p_id uuid, p_desk text, p_rank int) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if public.is_registered(p_id) then perform public.require_player(p_id); end if;
+  update players set desk = left(coalesce(p_desk, ''), 40), rank = greatest(0, least(20, coalesce(p_rank, 0))) where player_id = p_id;
+end $$;
+revoke all on function public.set_desk(uuid,text,int) from public;
+grant execute on function public.set_desk(uuid,text,int) to anon, authenticated;
+
 -- Вместо player_id наружу отдаётся tag — SHA-256 от него. По нему игра узнаёт свою строку.
 -- Рейтинг карьеры: лучшая неделя каждого игрока
 drop view if exists public.leaderboard;
@@ -159,7 +172,8 @@ select
   encode(sha256(p.player_id::text::bytea), 'hex') as tag, upper(left(encode(sha256(p.player_id::text::bytea), 'hex'), 6)) as short_id,
   p.name, p.dept, p.avatar, p.prof, p.status, p.step, p.created_at, p.updated_at,
   coalesce(g.games, 0) as games, coalesce(g.wins, 0) as wins,
-  b.won as best_won, b.step as best_step, b.total as best_total
+  b.won as best_won, b.step as best_step, b.total as best_total,
+  p.desk, p.rank
 from public.players p
 left join (select player_id, count(*) as games, count(*) filter (where won) as wins from public.scores group by player_id) g using (player_id)
 left join lateral (select won, step, total from public.scores s where s.player_id = p.player_id
@@ -697,10 +711,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 32 строки
+-- Проверка: должны вернуться 33 строки
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites', 'chat_latest', 'send_dm', 'dm_thread', 'dm_inbox');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites', 'chat_latest', 'send_dm', 'dm_thread', 'dm_inbox', 'set_desk');

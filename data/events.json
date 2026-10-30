@@ -1,0 +1,1346 @@
+{
+ "teasers": [
+  {
+   "id": "tz01",
+   "teaser": {
+    "ru": "В понедельник Галя обещала рассказать, кто на самом деле съел торт с совещания.",
+    "en": "Galya swears that on Monday she’ll reveal who really ate the cake from the meeting."
+   },
+   "card": {
+    "id": "tz01_c",
+    "who": {
+     "ru": "Галя",
+     "en": "Galya"
+    },
+    "text": {
+     "ru": "Помните торт? Галя шепчет: его съел Роберт — «на нервной почве перед отчётом». Роберт стоит у неё за спиной и всё слышит.",
+     "en": "Remember the cake? Galya whispers it was Robert — “stress eating before the report.” Robert is standing right behind her."
+    },
+    "left": {
+     "ru": "Сделать вид, что не слышали",
+     "en": "Pretend you heard nothing"
+    },
+    "right": {
+     "ru": "Предложить Роберту печенье",
+     "en": "Offer Robert a cookie"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": 0,
+     "colleagues": -5
+    },
+    "right_effects": {
+     "psyche": 0,
+     "energy": -5,
+     "boss": 0,
+     "colleagues": 10
+    }
+   }
+  },
+  {
+   "id": "tz02",
+   "teaser": {
+    "ru": "Фёдор принёс в офис огромную коробку с надписью «Не открывать до понедельника».",
+    "en": "Fyodor brought in a huge box labeled “DO NOT OPEN UNTIL MONDAY.”"
+   },
+   "card": {
+    "id": "tz02_c",
+    "who": {
+     "ru": "Фёдор",
+     "en": "Fyodor"
+    },
+    "text": {
+     "ru": "Помните коробку Фёдора? Внутри — кофемашина, которую он собрал сам. Она шипит, мигает и требует воды. Попробуете первым?",
+     "en": "Remember Fyodor’s box? It’s a coffee machine he built himself. It hisses, blinks, and demands water. Want to go first?"
+    },
+    "left": {
+     "ru": "Пусть первым пробует Олег",
+     "en": "Let Oleg go first"
+    },
+    "right": {
+     "ru": "Рискнуть ради эспрессо",
+     "en": "Risk it for espresso"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": 0,
+     "colleagues": -10
+    },
+    "right_effects": {
+     "psyche": -10,
+     "energy": 15,
+     "boss": 0,
+     "colleagues": 5
+    }
+   }
+  },
+  {
+   "id": "tz03",
+   "teaser": {
+    "ru": "Марина Петровна сказала, что в понедельник «поговорит с каждым» о чеках за такси.",
+    "en": "Marina Petrovna says she’ll “have a word with everyone” on Monday about taxi receipts."
+   },
+   "card": {
+    "id": "tz03_c",
+    "who": {
+     "ru": "Марина Петровна",
+     "en": "Marina Petrovna"
+    },
+    "text": {
+     "ru": "Помните чеки за такси? Марина Петровна нашла ваш: поездка в три часа ночи «на совещание». Объяснитесь?",
+     "en": "Remember the taxi receipts? Marina Petrovna found yours: a 3 a.m. ride “to a meeting.” Care to explain?"
+    },
+    "left": {
+     "ru": "Совещание было бурным",
+     "en": "It was an intense meeting"
+    },
+    "right": {
+     "ru": "Молча вернуть деньги",
+     "en": "Quietly pay it back"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": -5,
+     "colleagues": 5
+    },
+    "right_effects": {
+     "psyche": -10,
+     "energy": 0,
+     "boss": 10,
+     "colleagues": 0
+    }
+   }
+  },
+  {
+   "id": "tz04",
+   "teaser": {
+    "ru": "Алексей в пятницу ушёл «к стоматологу» — в костюме и при галстуке.",
+    "en": "Alexey left Friday for a “dentist appointment” — in a suit and tie."
+   },
+   "card": {
+    "id": "tz04_c",
+    "who": {
+     "ru": "Алексей",
+     "en": "Alexey"
+    },
+    "text": {
+     "ru": "Помните «стоматолога» Алексея? Ему предложили работу в другой компании. Теперь он спрашивает вас: уходить или остаться?",
+     "en": "Remember Alexey’s “dentist”? He got a job offer somewhere else. Now he’s asking you: should he stay or go?"
+    },
+    "left": {
+     "ru": "«Уходи, пока зовут»",
+     "en": "“Go while they want you”"
+    },
+    "right": {
+     "ru": "«Останься, мы без тебя пропадём»",
+     "en": "“Stay, we’d be lost without you”"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": -10,
+     "colleagues": 5
+    },
+    "right_effects": {
+     "psyche": -5,
+     "energy": 0,
+     "boss": 5,
+     "colleagues": 10
+    }
+   }
+  },
+  {
+   "id": "tz05",
+   "teaser": {
+    "ru": "Босс заперся в переговорке с людьми в одинаковых серых пиджаках. На двери — «Не беспокоить».",
+    "en": "The boss locked himself in a meeting room with people in matching gray blazers. The sign says “Do Not Disturb.”"
+   },
+   "card": {
+    "id": "tz05_c",
+    "who": {
+     "ru": "Босс",
+     "en": "Boss"
+    },
+    "text": {
+     "ru": "Помните серые пиджаки? Это были консультанты. Вердикт: «оптимизация». Босс просит вас показать пример и пересесть за стол у лифта.",
+     "en": "Remember the gray blazers? Consultants. The verdict: “optimization.” The boss wants you to lead by example and move to the desk by the elevator."
+    },
+    "left": {
+     "ru": "Вежливо отказаться",
+     "en": "Politely decline"
+    },
+    "right": {
+     "ru": "Пересесть с улыбкой",
+     "en": "Move with a smile"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": -10,
+     "colleagues": 0
+    },
+    "right_effects": {
+     "psyche": -10,
+     "energy": -5,
+     "boss": 15,
+     "colleagues": 0
+    }
+   }
+  },
+  {
+   "id": "tz06",
+   "teaser": {
+    "ru": "Олег уехал в отпуск и оставил вам свой фикус со словами: «Он чувствует настроение».",
+    "en": "Oleg left for vacation and handed you his ficus: “He can sense your mood.”"
+   },
+   "card": {
+    "id": "tz06_c",
+    "who": {
+     "ru": "Олег",
+     "en": "Oleg"
+    },
+    "text": {
+     "ru": "Помните фикус Олега? Он сбросил все листья. Олег возвращается завтра. Галя уже в курсе.",
+     "en": "Remember Oleg’s ficus? It dropped every single leaf. Oleg’s back tomorrow. Galya already knows."
+    },
+    "left": {
+     "ru": "Купить точно такой же",
+     "en": "Buy an identical one"
+    },
+    "right": {
+     "ru": "«Он сам так решил»",
+     "en": "“It was the ficus’s choice”"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": -10,
+     "boss": 0,
+     "colleagues": 5
+    },
+    "right_effects": {
+     "psyche": 10,
+     "energy": 0,
+     "boss": 0,
+     "colleagues": -10
+    }
+   }
+  },
+  {
+   "id": "tz07",
+   "teaser": {
+    "ru": "Роберт готовит презентацию для совета директоров. На первом слайде — ваше фото. Зачем — не говорит.",
+    "en": "Robert’s building a deck for the board. Slide one is your photo. He won’t say why."
+   },
+   "card": {
+    "id": "tz07_c",
+    "who": {
+     "ru": "Роберт",
+     "en": "Robert"
+    },
+    "text": {
+     "ru": "Помните ваше фото на слайде? Роберт назвал вас «лицом цифровой трансформации». Совет директоров хочет вас послушать. Через десять минут.",
+     "en": "Remember your photo on that slide? Robert called you “the face of our digital transformation.” The board wants to hear from you. In ten minutes."
+    },
+    "left": {
+     "ru": "Внезапно заболеть",
+     "en": "Suddenly feel sick"
+    },
+    "right": {
+     "ru": "Импровизировать",
+     "en": "Wing it"
+    },
+    "left_effects": {
+     "psyche": 10,
+     "energy": 0,
+     "boss": -10,
+     "colleagues": -5
+    },
+    "right_effects": {
+     "psyche": -10,
+     "energy": -10,
+     "boss": 15,
+     "colleagues": 0
+    }
+   }
+  },
+  {
+   "id": "tz08",
+   "teaser": {
+    "ru": "На корпоративе кто-то спел в караоке песню про босса. Запись есть только у Гали.",
+    "en": "Someone sang a karaoke song about the boss at the office party. Only Galya has the video."
+   },
+   "card": {
+    "id": "tz08_c",
+    "who": {
+     "ru": "Галя",
+     "en": "Galya"
+    },
+    "text": {
+     "ru": "Помните караоке? На записи — вы. Галя готова её удалить в обмен на ваше место у окна.",
+     "en": "Remember karaoke? That’s you on the video. Galya will delete it if you give her your window seat."
+    },
+    "left": {
+     "ru": "Отдать место у окна",
+     "en": "Give up the window seat"
+    },
+    "right": {
+     "ru": "Пусть публикует",
+     "en": "Let her post it"
+    },
+    "left_effects": {
+     "psyche": -10,
+     "energy": 0,
+     "boss": 5,
+     "colleagues": 5
+    },
+    "right_effects": {
+     "psyche": 10,
+     "energy": 0,
+     "boss": -15,
+     "colleagues": 5
+    }
+   }
+  },
+  {
+   "id": "tz09",
+   "teaser": {
+    "ru": "Принтер на третьем этаже всю ночь печатал одну и ту же страницу. Айтишники ищут виновника.",
+    "en": "The third-floor printer spent all night printing the same page. IT is hunting for the culprit."
+   },
+   "card": {
+    "id": "tz09_c",
+    "who": {
+     "ru": "Олег",
+     "en": "Oleg"
+    },
+    "text": {
+     "ru": "Помните принтер? Он печатал ваше резюме. Четыреста копий. Олег принёс вам стопку и тактично молчит.",
+     "en": "Remember the printer? It was printing your résumé. Four hundred copies. Oleg drops the stack on your desk and tactfully says nothing."
+    },
+    "left": {
+     "ru": "«Это просто шаблон»",
+     "en": "“It’s just a template”"
+    },
+    "right": {
+     "ru": "Попросить Олега молчать",
+     "en": "Beg Oleg to keep quiet"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 0,
+     "boss": -5,
+     "colleagues": 0
+    },
+    "right_effects": {
+     "psyche": -5,
+     "energy": 0,
+     "boss": 5,
+     "colleagues": 10
+    }
+   }
+  },
+  {
+   "id": "tz10",
+   "teaser": {
+    "ru": "В понедельник в 10:00 обещают учебную пожарную тревогу. Или не учебную — точно никто не знает.",
+    "en": "There’s a fire drill Monday at 10 a.m. Or maybe not a drill. Nobody’s quite sure."
+   },
+   "card": {
+    "id": "tz10_c",
+    "who": {
+     "ru": "Марина Петровна",
+     "en": "Marina Petrovna"
+    },
+    "text": {
+     "ru": "Помните тревогу? Она учебная, но Марина Петровна эвакуирует из здания только сейф с документами. Поможете нести?",
+     "en": "Remember the drill? It’s just a drill, but Marina Petrovna is evacuating exactly one thing: the document safe. Help her carry it?"
+    },
+    "left": {
+     "ru": "Спасаться самому",
+     "en": "Save yourself"
+    },
+    "right": {
+     "ru": "Взяться за сейф",
+     "en": "Grab a corner of the safe"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": 5,
+     "boss": 0,
+     "colleagues": -10
+    },
+    "right_effects": {
+     "psyche": 0,
+     "energy": -15,
+     "boss": 5,
+     "colleagues": 10
+    }
+   }
+  },
+  {
+   "id": "tz11",
+   "teaser": {
+    "ru": "В общий чат добавили неизвестного «Стажёр_2». Он молчит, но ставит лайки на всё подряд.",
+    "en": "Someone called “Intern_2” got added to the team chat. Hasn’t said a word, but he likes everything."
+   },
+   "card": {
+    "id": "tz11_c",
+    "who": {
+     "ru": "Стажёр_2",
+     "en": "Intern_2"
+    },
+    "text": {
+     "ru": "Помните «Стажёра_2»? Это сын босса. Он прислал вам код на ревью: сорок строк и тридцать комментариев «тут магия».",
+     "en": "Remember “Intern_2”? He’s the boss’s son. He sent you code to review: 40 lines, 30 of them comments that say “magic happens here.”"
+    },
+    "left": {
+     "ru": "Честно разобрать ошибки",
+     "en": "Give honest feedback"
+    },
+    "right": {
+     "ru": "Ответить: «Гениально!»",
+     "en": "Reply: “Genius!”"
+    },
+    "left_effects": {
+     "psyche": 5,
+     "energy": -5,
+     "boss": -10,
+     "colleagues": 0
+    },
+    "right_effects": {
+     "psyche": -10,
+     "energy": 0,
+     "boss": 10,
+     "colleagues": -5
+    }
+   }
+  },
+  {
+   "id": "tz12",
+   "teaser": {
+    "ru": "Автомат со снеками в холле начал выдавать сдачу пуговицами. Фёдор уверен, что это неспроста.",
+    "en": "The lobby vending machine started giving change in buttons. Fyodor is convinced it’s no accident."
+   },
+   "card": {
+    "id": "tz12_c",
+    "who": {
+     "ru": "Фёдор",
+     "en": "Fyodor"
+    },
+    "text": {
+     "ru": "Помните пуговицы? Фёдор вскрыл автомат: внутри записка от прежнего завхоза и ключ от неизвестной двери. Пойдёте её искать?",
+     "en": "Remember the buttons? Fyodor cracked the machine open: inside, a note from the old facilities guy and a key to some unknown door. Go find it?"
+    },
+    "left": {
+     "ru": "Отнести ключ охране",
+     "en": "Hand the key to security"
+    },
+    "right": {
+     "ru": "Искать дверь в обед",
+     "en": "Hunt for it at lunch"
+    },
+    "left_effects": {
+     "psyche": -5,
+     "energy": 0,
+     "boss": 5,
+     "colleagues": -5
+    },
+    "right_effects": {
+     "psyche": 15,
+     "energy": -10,
+     "boss": 0,
+     "colleagues": 5
+    }
+   }
+  }
+ ],
+ "seasons": [
+  {
+   "id": "halloween",
+   "from": "10-25",
+   "to": "11-02",
+   "title": {
+    "ru": "Хэллоуин в офисе",
+    "en": "Office Halloween"
+   },
+   "rule": {
+    "ru": "Неделя Хэллоуина: тыквы, костюмы и подозрительно много конфет. Босс называет это «тимбилдингом».",
+    "en": "Halloween week: pumpkins, costumes, and a suspicious amount of candy. The boss calls it “team building.”"
+   },
+   "cards": [
+    {
+     "id": "hw_01",
+     "who": {
+      "ru": "Босс",
+      "en": "Boss"
+     },
+     "text": {
+      "ru": "Босс объявил конкурс костюмов. Приз — выходной в пятницу. Сам он пришёл в костюме дедлайна: с будильником на шее. Участвуете?",
+      "en": "The boss announced a costume contest. Prize: Friday off. He came as “the deadline” — with an alarm clock around his neck. You in?"
+     },
+     "left": {
+      "ru": "Прийти как есть",
+      "en": "Come as you are"
+     },
+     "right": {
+      "ru": "Нарядиться в KPI",
+      "en": "Dress up as a KPI"
+     },
+     "left_effects": {
+      "psyche": 5,
+      "energy": 0,
+      "boss": -5,
+      "colleagues": 0
+     },
+     "right_effects": {
+      "psyche": 0,
+      "energy": -10,
+      "boss": 10,
+      "colleagues": 5
+     }
+    },
+    {
+     "id": "hw_02",
+     "who": {
+      "ru": "Галя",
+      "en": "Galya"
+     },
+     "text": {
+      "ru": "Галя рассказывает легенду: по ночам в бухгалтерии кто-то шуршит бумагами и пересчитывает скрепки. Марина Петровна делает вид, что не слышит.",
+      "en": "Galya’s telling the legend: at night, something in Accounting rustles papers and counts paper clips. Marina Petrovna pretends not to hear."
+     },
+     "left": {
+      "ru": "Остаться и проверить",
+      "en": "Stay late and find out"
+     },
+     "right": {
+      "ru": "Призраков не бывает",
+      "en": "Ghosts aren’t real"
+     },
+     "left_effects": {
+      "psyche": 10,
+      "energy": -15,
+      "boss": 0,
+      "colleagues": 5
+     },
+     "right_effects": {
+      "psyche": 0,
+      "energy": 5,
+      "boss": 0,
+      "colleagues": -5
+     }
+    },
+    {
+     "id": "hw_03",
+     "who": {
+      "ru": "Фёдор",
+      "en": "Fyodor"
+     },
+     "text": {
+      "ru": "Фёдор вырезал тыкву с лицом босса и поставил её на ресепшен. Босс уже идёт по коридору. У вас три секунды.",
+      "en": "Fyodor carved a pumpkin that looks exactly like the boss and put it at the front desk. The boss is coming down the hall. You have three seconds."
+     },
+     "left": {
+      "ru": "Развернуть тыкву",
+      "en": "Spin the pumpkin around"
+     },
+     "right": {
+      "ru": "«Похоже же!»",
+      "en": "“Uncanny, right?”"
+     },
+     "left_effects": {
+      "psyche": -5,
+      "energy": -5,
+      "boss": 0,
+      "colleagues": 10
+     },
+     "right_effects": {
+      "psyche": 10,
+      "energy": 0,
+      "boss": -10,
+      "colleagues": -5
+     }
+    },
+    {
+     "id": "hw_04",
+     "who": {
+      "ru": "Ресепшен",
+      "en": "Front Desk"
+     },
+     "text": {
+      "ru": "На ресепшене ваза с конфетами и табличка «Возьмите одну». Вы уже взяли семь. Кто-то идёт.",
+      "en": "There’s a candy bowl at the front desk with a sign: “Take one.” You’ve already taken seven. Someone’s coming."
+     },
+     "left": {
+      "ru": "Положить три обратно",
+      "en": "Put three back"
+     },
+     "right": {
+      "ru": "Взять восьмую",
+      "en": "Grab an eighth"
+     },
+     "left_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 0,
+      "colleagues": 5
+     },
+     "right_effects": {
+      "psyche": 10,
+      "energy": 10,
+      "boss": 0,
+      "colleagues": -10
+     }
+    },
+    {
+     "id": "hw_05",
+     "who": {
+      "ru": "Марина Петровна",
+      "en": "Marina Petrovna"
+     },
+     "text": {
+      "ru": "Марина Петровна пришла в костюме ведьмы. Говорит, это не костюм, а «настроение конца квартала». Сделаете комплимент?",
+      "en": "Marina Petrovna showed up dressed as a witch. She says it’s not a costume, it’s her “end-of-quarter mood.” Compliment her?"
+     },
+     "left": {
+      "ru": "«Вам очень идёт!»",
+      "en": "“It really suits you!”"
+     },
+     "right": {
+      "ru": "Промолчать от греха",
+      "en": "Say nothing, just in case"
+     },
+     "left_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 0,
+      "colleagues": 10
+     },
+     "right_effects": {
+      "psyche": 5,
+      "energy": -5,
+      "boss": 0,
+      "colleagues": -5
+     }
+    },
+    {
+     "id": "hw_06",
+     "who": {
+      "ru": "Алексей",
+      "en": "Alexey"
+     },
+     "text": {
+      "ru": "Алексей предлагает вместо планёрки устроить в переговорке квест с привидениями. Говорит, босс разницы не заметит.",
+      "en": "Alexey wants to swap the team meeting for a haunted escape room. He says the boss won’t notice the difference."
+     },
+     "left": {
+      "ru": "Отговорить его",
+      "en": "Talk him out of it"
+     },
+     "right": {
+      "ru": "Вызваться привидением",
+      "en": "Volunteer as the ghost"
+     },
+     "left_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 5,
+      "colleagues": -5
+     },
+     "right_effects": {
+      "psyche": 15,
+      "energy": -10,
+      "boss": -5,
+      "colleagues": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "blackfriday",
+   "from": "11-20",
+   "to": "11-30",
+   "title": {
+    "ru": "Чёрная пятница",
+    "en": "Black Friday"
+   },
+   "rule": {
+    "ru": "Неделя скидок: все сидят на сайтах распродаж, а босс внезапно ищет, на чём сэкономить. Например, на вас.",
+    "en": "Sale week: everyone’s glued to deal sites, and the boss is suddenly looking for ways to cut costs. Starting with you."
+   },
+   "cards": [
+    {
+     "id": "bf_01",
+     "who": {
+      "ru": "Босс",
+      "en": "Boss"
+     },
+     "text": {
+      "ru": "Босс запустил «чёрную пятницу» на задачи: берёте три — четвёртая в подарок. Акция ограничена, возврату не подлежит.",
+      "en": "The boss launched a Black Friday deal on tasks: take three, get the fourth free. Limited-time offer. No returns."
+     },
+     "left": {
+      "ru": "Торговаться",
+      "en": "Haggle"
+     },
+     "right": {
+      "ru": "Взять с подарком",
+      "en": "Take the bundle"
+     },
+     "left_effects": {
+      "psyche": 5,
+      "energy": 0,
+      "boss": -10,
+      "colleagues": 0
+     },
+     "right_effects": {
+      "psyche": -10,
+      "energy": -10,
+      "boss": 10,
+      "colleagues": 0
+     }
+    },
+    {
+     "id": "bf_02",
+     "who": {
+      "ru": "Галя",
+      "en": "Galya"
+     },
+     "text": {
+      "ru": "Галя собирает общий заказ: «Если набрать двадцать штук, будет скидка». Двадцать штук чего — не уточняет. Скинетесь?",
+      "en": "Galya’s putting together a group order: “It’s cheaper if we get twenty.” Twenty of what, she won’t say. Chip in?"
+     },
+     "left": {
+      "ru": "Отказаться",
+      "en": "Pass"
+     },
+     "right": {
+      "ru": "Скинуться не глядя",
+      "en": "Chip in, no questions"
+     },
+     "left_effects": {
+      "psyche": 5,
+      "energy": 0,
+      "boss": 0,
+      "colleagues": -10
+     },
+     "right_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 0,
+      "colleagues": 10
+     }
+    },
+    {
+     "id": "bf_03",
+     "who": {
+      "ru": "Олег",
+      "en": "Oleg"
+     },
+     "text": {
+      "ru": "Олег весь день обновляет страницу с телевизором за полцены и не отвечает на рабочие сообщения. А ваш отчёт ждёт его цифр.",
+      "en": "Oleg’s been refreshing a half-price TV deal all day and ignoring work messages. Your report is stuck waiting on his numbers."
+     },
+     "left": {
+      "ru": "Обновлять вместе с ним",
+      "en": "Help him refresh"
+     },
+     "right": {
+      "ru": "Пожаловаться боссу",
+      "en": "Tell the boss"
+     },
+     "left_effects": {
+      "psyche": 10,
+      "energy": 0,
+      "boss": -10,
+      "colleagues": 5
+     },
+     "right_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 10,
+      "colleagues": -10
+     }
+    },
+    {
+     "id": "bf_04",
+     "who": {
+      "ru": "Марина Петровна",
+      "en": "Marina Petrovna"
+     },
+     "text": {
+      "ru": "Марина Петровна заметила, что корпоративная карта «случайно» оплатила кресло-мешок. Кресло стоит у вашего стола.",
+      "en": "Marina Petrovna noticed the company card “accidentally” paid for a beanbag chair. The beanbag is at your desk."
+     },
+     "left": {
+      "ru": "Вернуть кресло",
+      "en": "Return the beanbag"
+     },
+     "right": {
+      "ru": "«Это для эргономики»",
+      "en": "“It’s for ergonomics”"
+     },
+     "left_effects": {
+      "psyche": -10,
+      "energy": -5,
+      "boss": 5,
+      "colleagues": 0
+     },
+     "right_effects": {
+      "psyche": 10,
+      "energy": 5,
+      "boss": -10,
+      "colleagues": 0
+     }
+    },
+    {
+     "id": "bf_05",
+     "who": {
+      "ru": "Роберт",
+      "en": "Robert"
+     },
+     "text": {
+      "ru": "Роберт нашёл курс «Стань тимлидом за три дня» со скидкой 90%. Предлагает пройти его вдвоём и делить ответы.",
+      "en": "Robert found a “Become a Team Lead in 3 Days” course at 90% off. He wants to take it together and split the answers."
+     },
+     "left": {
+      "ru": "Записаться с ним",
+      "en": "Sign up together"
+     },
+     "right": {
+      "ru": "«Это развод»",
+      "en": "“That’s a scam, man”"
+     },
+     "left_effects": {
+      "psyche": 5,
+      "energy": -10,
+      "boss": 0,
+      "colleagues": 10
+     },
+     "right_effects": {
+      "psyche": 5,
+      "energy": 5,
+      "boss": 0,
+      "colleagues": -10
+     }
+    },
+    {
+     "id": "bf_06",
+     "who": {
+      "ru": "Курьер",
+      "en": "Courier"
+     },
+     "text": {
+      "ru": "На ресепшен привезли двенадцать коробок на ваше имя. Вы ничего не заказывали. Кажется. Босс смотрит с интересом.",
+      "en": "Twelve boxes just showed up at the front desk with your name on them. You didn’t order anything. Probably. The boss looks very curious."
+     },
+     "left": {
+      "ru": "Отказаться от доставки",
+      "en": "Refuse the delivery"
+     },
+     "right": {
+      "ru": "Открыть при всех",
+      "en": "Open them in front of everyone"
+     },
+     "left_effects": {
+      "psyche": -5,
+      "energy": 0,
+      "boss": 5,
+      "colleagues": -5
+     },
+     "right_effects": {
+      "psyche": 10,
+      "energy": 0,
+      "boss": -5,
+      "colleagues": 5
+     }
+    }
+   ]
+  }
+ ],
+ "rare": [
+  {
+   "id": "rare_01",
+   "who": {
+    "ru": "Лифт",
+    "en": "Elevator"
+   },
+   "text": {
+    "ru": "Вы застряли в лифте с генеральным. На двадцатой минуте он предлагает вам повышение — если вы перестанете так громко дышать.",
+    "en": "You’re stuck in the elevator with the CEO. Twenty minutes in, he offers you a promotion — if you’ll stop breathing so loud."
+   },
+   "left": {
+    "ru": "Задержать дыхание",
+    "en": "Hold your breath"
+   },
+   "right": {
+    "ru": "Дышать как раньше",
+    "en": "Keep breathing"
+   },
+   "left_effects": {
+    "psyche": -10,
+    "energy": -5,
+    "boss": 15,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": 10,
+    "energy": 0,
+    "boss": -10,
+    "colleagues": 0
+   },
+   "phase": "Утро"
+  },
+  {
+   "id": "rare_02",
+   "who": {
+    "ru": "Офисный кот",
+    "en": "Office Cat"
+   },
+   "text": {
+    "ru": "Офисный кот принёс к вашему столу квартальный отчёт. Он погрызен, но цифры в нём лучше настоящих.",
+    "en": "The office cat dropped the quarterly report at your desk. It’s chewed up, but the numbers are better than the real ones."
+   },
+   "left": {
+    "ru": "Вернуть Марине Петровне",
+    "en": "Return it to Marina Petrovna"
+   },
+   "right": {
+    "ru": "Отправить боссу версию кота",
+    "en": "Send the boss the cat’s version"
+   },
+   "left_effects": {
+    "psyche": -5,
+    "energy": 0,
+    "boss": 5,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": 10,
+    "energy": 0,
+    "boss": 10,
+    "colleagues": -10
+   },
+   "phase": "День"
+  },
+  {
+   "id": "rare_03",
+   "who": {
+    "ru": "Охранник",
+    "en": "Security Guard"
+   },
+   "text": {
+    "ru": "Ночной охранник признаётся: пять лет он ведёт таблицу, кто во сколько уходит. Вы — первый по переработкам. Он хочет вручить грамоту.",
+    "en": "The night guard admits he’s tracked who leaves when for five years. You’re #1 in overtime. He wants to give you a certificate."
+   },
+   "left": {
+    "ru": "Принять с гордостью",
+    "en": "Accept it proudly"
+   },
+   "right": {
+    "ru": "Попросить удалить таблицу",
+    "en": "Ask him to delete the file"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": -5,
+    "boss": 5,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": -5,
+    "energy": 10,
+    "boss": 0,
+    "colleagues": 0
+   },
+   "phase": "Вечер"
+  },
+  {
+   "id": "rare_04",
+   "who": {
+    "ru": "Фёдор",
+    "en": "Fyodor"
+   },
+   "text": {
+    "ru": "Фёдор выиграл в лотерею, но пришёл на работу: «Дома скучно». Он предлагает пиццу всему отделу — или новое кресло лично вам.",
+    "en": "Fyodor won the lottery but still came to work: “Home is boring.” He’s offering pizza for the whole team — or a new chair just for you."
+   },
+   "left": {
+    "ru": "Пиццу всем",
+    "en": "Pizza for everyone"
+   },
+   "right": {
+    "ru": "Кресло мне",
+    "en": "The chair. For me."
+   },
+   "left_effects": {
+    "psyche": 0,
+    "energy": 5,
+    "boss": -5,
+    "colleagues": 10
+   },
+   "right_effects": {
+    "psyche": 15,
+    "energy": 5,
+    "boss": 0,
+    "colleagues": -15
+   },
+   "phase": "Утро"
+  },
+  {
+   "id": "rare_05",
+   "who": {
+    "ru": "Принтер",
+    "en": "Printer"
+   },
+   "text": {
+    "ru": "Принтер впервые за десять лет напечатал документ с первого раза. Отдел замер. Галя снимает видео. Распечатаете что-то ещё?",
+    "en": "For the first time in ten years, the printer worked on the first try. The whole floor froze. Galya’s filming. Print something else?"
+   },
+   "left": {
+    "ru": "Не испытывать судьбу",
+    "en": "Don’t push your luck"
+   },
+   "right": {
+    "ru": "Распечатать годовой отчёт",
+    "en": "Print the annual report"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": 0,
+    "boss": 0,
+    "colleagues": -5
+   },
+   "right_effects": {
+    "psyche": -10,
+    "energy": 0,
+    "boss": 10,
+    "colleagues": 5
+   },
+   "phase": "День"
+  },
+  {
+   "id": "rare_06",
+   "who": {
+    "ru": "Босс",
+    "en": "Boss"
+   },
+   "text": {
+    "ru": "В 18:01 босс закрыл ноутбук и сказал: «Все по домам, вы молодцы». Это может быть ловушкой.",
+    "en": "At 6:01 p.m., the boss shut his laptop and said, “Everyone go home, great work today.” This could be a trap."
+   },
+   "left": {
+    "ru": "Бежать, пока не передумал",
+    "en": "Run before he changes his mind"
+   },
+   "right": {
+    "ru": "Остаться на всякий случай",
+    "en": "Stay, just in case"
+   },
+   "left_effects": {
+    "psyche": 15,
+    "energy": 10,
+    "boss": -5,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": -10,
+    "energy": -10,
+    "boss": 10,
+    "colleagues": 0
+   },
+   "phase": "Вечер"
+  },
+  {
+   "id": "rare_07",
+   "who": {
+    "ru": "Кофемашина",
+    "en": "Coffee Machine"
+   },
+   "text": {
+    "ru": "Кофемашина заговорила человеческим голосом: «Ещё одна чашка — и я увольняюсь». Очередь из шести человек смотрит на вас.",
+    "en": "The coffee machine spoke in a human voice: “One more cup and I quit.” Six people in line are staring at you."
+   },
+   "left": {
+    "ru": "Уважить кофемашину",
+    "en": "Respect its boundaries"
+   },
+   "right": {
+    "ru": "Нажать «Двойной эспрессо»",
+    "en": "Hit “Double Espresso”"
+   },
+   "left_effects": {
+    "psyche": -5,
+    "energy": -10,
+    "boss": 0,
+    "colleagues": 5
+   },
+   "right_effects": {
+    "psyche": 5,
+    "energy": 15,
+    "boss": 0,
+    "colleagues": -10
+   },
+   "phase": "Утро"
+  },
+  {
+   "id": "rare_08",
+   "who": {
+    "ru": "Марина Петровна",
+    "en": "Marina Petrovna"
+   },
+   "text": {
+    "ru": "Марина Петровна улыбнулась. Впервые за всё время. Смотрит прямо на вас. В руке — ваш авансовый отчёт.",
+    "en": "Marina Petrovna smiled. First time ever. She’s looking right at you. Your expense report is in her hand."
+   },
+   "left": {
+    "ru": "Улыбнуться в ответ",
+    "en": "Smile back"
+   },
+   "right": {
+    "ru": "Медленно отступить",
+    "en": "Back away slowly"
+   },
+   "left_effects": {
+    "psyche": -10,
+    "energy": 0,
+    "boss": 0,
+    "colleagues": 10
+   },
+   "right_effects": {
+    "psyche": 5,
+    "energy": -5,
+    "boss": 0,
+    "colleagues": -5
+   },
+   "phase": "День"
+  },
+  {
+   "id": "rare_09",
+   "who": {
+    "ru": "Олег",
+    "en": "Oleg"
+   },
+   "text": {
+    "ru": "Олег случайно отправил в общий чат голосовое на 14 минут: он поёт в машине. Это… прекрасно. Все ждут вашей реакции.",
+    "en": "Oleg accidentally sent the team chat a 14-minute voice memo of himself singing in the car. It’s… beautiful. Everyone’s waiting for your reaction."
+   },
+   "left": {
+    "ru": "Поставить огонёк",
+    "en": "React with a fire emoji"
+   },
+   "right": {
+    "ru": "Сделать вид, что не слушали",
+    "en": "Pretend you didn’t listen"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": -5,
+    "boss": 0,
+    "colleagues": 10
+   },
+   "right_effects": {
+    "psyche": 0,
+    "energy": 5,
+    "boss": 0,
+    "colleagues": -10
+   },
+   "phase": "Вечер"
+  },
+  {
+   "id": "rare_10",
+   "who": {
+    "ru": "Генеральный",
+    "en": "CEO"
+   },
+   "text": {
+    "ru": "Генеральный перепутал вас с новым директором по развитию и уже десять минут рассказывает вам свои планы на компанию.",
+    "en": "The CEO thinks you’re the new VP of Growth and has spent ten minutes walking you through his plans for the company."
+   },
+   "left": {
+    "ru": "Признаться",
+    "en": "Come clean"
+   },
+   "right": {
+    "ru": "Кивать и задавать вопросы",
+    "en": "Nod and ask smart questions"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": 0,
+    "boss": -5,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": -10,
+    "energy": -5,
+    "boss": 15,
+    "colleagues": 0
+   },
+   "phase": "Утро"
+  },
+  {
+   "id": "rare_11",
+   "who": {
+    "ru": "Роберт",
+    "en": "Robert"
+   },
+   "text": {
+    "ru": "Роберт пришёл в такой же рубашке, как у вас. Второй раз за неделю. Галя уже всем рассказала, что вы теперь «дуэт».",
+    "en": "Robert showed up in the same shirt as you. Second time this week. Galya’s already telling everyone you two are “a duo” now."
+   },
+   "left": {
+    "ru": "Срочно переодеться",
+    "en": "Change shirts ASAP"
+   },
+   "right": {
+    "ru": "Сделать совместное селфи",
+    "en": "Take a matching selfie"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": -10,
+    "boss": 0,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": 10,
+    "energy": 0,
+    "boss": -5,
+    "colleagues": 10
+   },
+   "phase": "День"
+  },
+  {
+   "id": "rare_12",
+   "who": {
+    "ru": "Голос из вентиляции",
+    "en": "Voice in the Vents"
+   },
+   "text": {
+    "ru": "Из вентиляции доносится: «Не отправляйте этот отчёт». Это либо Фёдор, либо интуиция. Отчёт уже лежит в черновиках.",
+    "en": "A voice from the air vent says: “Don’t send that report.” It’s either Fyodor or your gut. The report is sitting in drafts."
+   },
+   "left": {
+    "ru": "Не отправлять",
+    "en": "Don’t send it"
+   },
+   "right": {
+    "ru": "Отправить: вентиляция не босс",
+    "en": "Send it. The vent isn’t your boss"
+   },
+   "left_effects": {
+    "psyche": 5,
+    "energy": 0,
+    "boss": -10,
+    "colleagues": 0
+   },
+   "right_effects": {
+    "psyche": -5,
+    "energy": 5,
+    "boss": 10,
+    "colleagues": 0
+   },
+   "phase": "Вечер"
+  },
+  {
+   "id": "rare_13",
+   "who": {
+    "ru": "Стажёр",
+    "en": "Intern"
+   },
+   "text": {
+    "ru": "Стажёр починил легаси-систему, которую восемь лет боялись трогать. Как — сам не понимает. Просит не говорить боссу, пока не разберётся.",
+    "en": "The intern fixed the legacy system nobody’s dared touch in eight years. He has no idea how. He begs you not to tell the boss until he figures it out."
+   },
+   "left": {
+    "ru": "Сохранить тайну",
+    "en": "Keep his secret"
+   },
+   "right": {
+    "ru": "Немедленно доложить",
+    "en": "Report it right away"
+   },
+   "left_effects": {
+    "psyche": -5,
+    "energy": 0,
+    "boss": 0,
+    "colleagues": 10
+   },
+   "right_effects": {
+    "psyche": 5,
+    "energy": 0,
+    "boss": 10,
+    "colleagues": -10
+   },
+   "phase": "Утро"
+  },
+  {
+   "id": "rare_14",
+   "who": {
+    "ru": "Алексей",
+    "en": "Alexey"
+   },
+   "text": {
+    "ru": "Алексей нашёл в шкафу переговорки дверь, а за ней — ещё одну переговорку. Диван, кулер, тишина. Он предлагает никому не говорить.",
+    "en": "Alexey found a door in the meeting room closet. Behind it — another meeting room. Couch, water cooler, total silence. He says tell no one."
+   },
+   "left": {
+    "ru": "Рассказать отделу",
+    "en": "Share it with the team"
+   },
+   "right": {
+    "ru": "Теперь это наше место",
+    "en": "This is our spot now"
+   },
+   "left_effects": {
+    "psyche": -5,
+    "energy": -5,
+    "boss": 0,
+    "colleagues": 15
+   },
+   "right_effects": {
+    "psyche": 15,
+    "energy": 10,
+    "boss": 0,
+    "colleagues": -5
+   },
+   "phase": "День"
+  },
+  {
+   "id": "rare_15",
+   "who": {
+    "ru": "Галя",
+    "en": "Galya"
+   },
+   "text": {
+    "ru": "Галя призналась: все слухи за последние три года она придумала сама — «для тонуса коллектива». Спрашивает совета: признаться всем?",
+    "en": "Galya confesses she made up every rumor for the past three years — “to keep morale up.” She wants your advice: should she tell everyone?"
+   },
+   "left": {
+    "ru": "Унести тайну в могилу",
+    "en": "Take it to the grave"
+   },
+   "right": {
+    "ru": "Пусть признается на планёрке",
+    "en": "Tell her: confess at standup"
+   },
+   "left_effects": {
+    "psyche": -10,
+    "energy": 0,
+    "boss": 0,
+    "colleagues": 10
+   },
+   "right_effects": {
+    "psyche": 10,
+    "energy": -5,
+    "boss": 0,
+    "colleagues": -10
+   },
+   "phase": "Вечер"
+  }
+ ]
+}

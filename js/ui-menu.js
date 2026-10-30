@@ -61,6 +61,7 @@ function renderMenu() {
   renderSound(); show('menu');
   board.touch('menu').catch(() => {}).then(() => { claimReferral(); checkReferrals(); });
   maybeViralPop();
+  bus.emit('menu');
 }
 $('profs').onchange = () => { prefs.prof = getProf(); store.set(KEY.prefs, prefs); };
 $('traits').onchange = () => { prefs.trait = getTrait(); store.set(KEY.prefs, prefs); };
@@ -411,7 +412,7 @@ $('bell').onclick = () => {
 // ---------- кто сейчас в игре: позвать в свой офис ----------
 let onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
 const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
-  <span class="lb-who"><b>${esc(p.name)}</b><small>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
+  <span class="lb-who"><b>${esc(p.name)}${p.desk ? ` <span class="desk-mini">${esc(p.desk)}</span>` : ''}</b><small>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
   <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-dm="${p.short_id}" data-name="${esc(p.name)}">${L('Написать', 'Message')}</button><button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
 const bindInvite = root => {
   root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
@@ -702,7 +703,7 @@ let openDm = async function (short, name) {
   };
   $('dmForm').onsubmit = async e => {
     e.preventDefault(); const t = $('dmText').value.trim(); if (!t) return;
-    try { await board.rpc('send_dm', { p_id: prefs.playerId, p_to: short, p_text: t }); $('dmText').value = ''; sig = ''; load(); }
+    try { await board.rpc('send_dm', { p_id: prefs.playerId, p_to: short, p_text: t }); $('dmText').value = ''; sig = ''; load(); bus.emit('dm'); }
     catch (err) { toast(err.message); }
   };
   await load(); dmTimer = setInterval(() => { if (!document.hidden) load(); }, 5000);
@@ -736,6 +737,7 @@ function personPop(p) {
   m.innerHTML = `<div class="modal-box glass person-pop" role="dialog" aria-modal="true" aria-labelledby="ppName">
     <span class="pp-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span><h2 id="ppName">${esc(p.name)}</h2>
     <p>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</p><p>${personStatus(p)}</p>
+    ${p.rank && typeof RANKS !== 'undefined' && RANKS[p.rank] ? `<p class="pp-rank">🎖️ ${RANKS[p.rank].name}</p>` : ''}${p.desk ? `<p class="pp-desk" title="${L('Рабочий стол', 'Desk')}">${esc(p.desk)}</p>` : ''}
     ${p.npc ? `<p class="npc-note">🎭 ${L('Персонаж игры: отвечает сам, пока живых коллег в сети мало', 'A game character: replies on their own while few real players are online')}</p>` : ''}
     <div class="row2"><button class="btn-main" type="button" id="ppDm">✉ ${L('Написать', 'Message')}</button><button class="btn-ghost" type="button" id="ppInv">🏢 ${L('Позвать в офис', 'Invite to office')}</button></div>
     <button class="btn-ghost" type="button" id="ppClose">${L('Вернуться к неделе', 'Back to the week')}</button></div>`;

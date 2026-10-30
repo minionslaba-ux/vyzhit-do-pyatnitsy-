@@ -1,0 +1,333 @@
+// Зачем возвращаться: задания дня, должности и опыт, свой рабочий стол, истории с продолжением, письма коллег между сессиями,
+// соперники в неделе дня, «Что нового», сезонные недели и редкие карточки.
+// Слушает события игры (bus в js/engine.js). Подключается после npc.js и до app.js.
+
+// ---------- опыт и должности ----------
+// Опыт: ответ +1, закрытая неделя +20 (проваленная +5), дедлайн +15, задание дня +30, все три задания +50
+const RANKS = [
+  { xp: 0,    name: L('Вечный стажёр', 'Eternal Intern'),            perk: L('старт карьеры', 'career start') },
+  { xp: 120,  name: L('Младший специалист', 'Junior Associate'),      perk: L('подсказка дешевле на 1 у.е.', 'hints $1 cheaper') },
+  { xp: 300,  name: L('Специалист', 'Associate'),                     perk: L('+1 предмет в сумке каждую неделю', '+1 item in your bag every week') },
+  { xp: 600,  name: L('Старший специалист', 'Senior Associate'),      perk: L('+1 у.е. к зарплате в день', '+$1 daily pay') },
+  { xp: 1000, name: L('Ведущий специалист', 'Lead Specialist'),       perk: L('подсказка дешевле ещё на 1 у.е.', 'hints another $1 cheaper') },
+  { xp: 1500, name: L('Тимлид', 'Team Lead'),                         perk: L('премии за дедлайны +25%', 'deadline bonuses +25%') },
+  { xp: 2200, name: L('Руководитель отдела', 'Head of Department'),   perk: L('+2 у.е. к зарплате в день', '+$2 daily pay') },
+  { xp: 3100, name: L('Директор', 'Director'),                        perk: L('премии за дедлайны +50%', 'deadline bonuses +50%') },
+  { xp: 4300, name: L('Генеральный директор', 'CEO'),                 perk: L('👑 корона в ленте и +2 предмета в сумке', '👑 a crown in the live strip and +2 bag items') },
+];
+const rankIdx = (xp = prefs.xp || 0) => RANKS.reduce((r, x, i) => xp >= x.xp ? i : r, 0);
+// Бонусы должности: сколько добавить к предметам, зарплате, скидке на подсказку, премии за дедлайн
+function rankPerk(kind) {
+  const r = rankIdx();
+  if (kind === 'items') return (r >= 2 ? 1 : 0) + (r >= 8 ? 1 : 0);
+  if (kind === 'salary') return r >= 6 ? 2 : r >= 3 ? 1 : 0;
+  if (kind === 'hint') return (r >= 1 ? 1 : 0) + (r >= 4 ? 1 : 0);
+  if (kind === 'deadline') return r >= 7 ? .5 : r >= 5 ? .25 : 0;
+  return 0;
+}
+let xpGained = 0;  // за текущую неделю — показать на экране итогов
+function addXp(n, why) {
+  const before = rankIdx();
+  prefs.xp = (prefs.xp || 0) + n; xpGained += n; store.set(KEY.prefs, prefs);
+  const after = rankIdx();
+  if (after > before) setTimeout(() => levelUp(after), why === 'week' ? 1800 : 400);
+}
+function levelUp(r) {
+  const m = $('modal'), x = RANKS[r];
+  m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="lvlTitle">
+    <span class="lvl-ico" aria-hidden="true">${r === RANKS.length - 1 ? '👑' : '🎖️'}</span><span class="dl-kicker">${L('Повышение!', 'Promotion!')}</span>
+    <h2 id="lvlTitle">${x.name}</h2><p>${L('Новый бонус', 'New perk')}: <b>${x.perk}</b></p>
+    <button class="btn-main" type="button" id="lvlOk">${L('Ура!', 'Woohoo!')}</button></div>`;
+  m.hidden = false; sfx.win?.(); confetti();
+  $('lvlOk').onclick = () => { m.hidden = true; };
+  syncDesk();
+}
+const rankLine = () => {
+  const r = rankIdx(), x = prefs.xp || 0, next = RANKS[r + 1];
+  return { r, name: RANKS[r].name, x, next, pct: next ? Math.round((x - RANKS[r].xp) / (next.xp - RANKS[r].xp) * 100) : 100 };
+};
+
+// Деньги карьеры: живая карьера в игре (C) или сохранённая
+const careerNow = () => (typeof C !== 'undefined' && C) || store.get(KEY.career, null);
+const careerSave = c => { if (typeof C !== 'undefined' && c === C) saveCareer(); else store.set(KEY.career, c); };
+
+// ---------- задания дня ----------
+// Каждый день — три задания (одинаковые на день для игрока). Выполнили — опыт и деньги в карьеру; все три — +1 предмет на неделю
+const QUESTS = [
+  { id: 'boss_no', need: 2, text: L('Скажите «нет» Боссу', 'Say “no” to the Boss'), on: { answer: x => /босс|boss|директор|director|ceo/i.test(x.card.who || '') && (x.eff.boss || 0) < 0 } },
+  { id: 'work', need: 6, text: L('Выберите рабочих ответов (радуют Босса или стоят Энергии)', 'Pick work answers (please the Boss or cost Energy)'), on: { answer: x => workAnswer(x.card, x.side) } },
+  { id: 'team', need: 6, text: L('Порадуйте коллег', 'Make your team happy'), on: { answer: x => (x.eff.colleagues || 0) > 0 } },
+  { id: 'self', need: 5, text: L('Позаботьтесь о себе (ответы с плюсом к Кукухе)', 'Take care of yourself (answers that raise Sanity)'), on: { answer: x => (x.eff.psyche || 0) > 0 } },
+  { id: 'cards', need: 20, text: L('Ответьте на карточки', 'Answer cards'), on: { answer: () => true } },
+  { id: 'win', need: 1, text: L('Закройте любую неделю', 'Survive any week'), on: { weekEnd: x => x.won } },
+  { id: 'calm', need: 1, text: L('Закройте неделю с Кукухой выше 50%', 'Survive a week with Sanity above 50%'), on: { weekEnd: x => x.won && x.res.psyche > 50 } },
+  { id: 'energy', need: 1, text: L('Закройте неделю с Энергией выше 50%', 'Survive a week with Energy above 50%'), on: { weekEnd: x => x.won && x.res.energy > 50 } },
+  { id: 'balance', need: 1, text: L('Закройте неделю, когда все шкалы между 30% и 70%', 'Survive a week with every meter between 30% and 70%'), on: { weekEnd: x => x.won && Object.values(x.res).every(v => v >= 30 && v <= 70) } },
+  { id: 'daily', need: 1, text: L('Сыграйте неделю дня', 'Play the Daily Week'), on: { weekEnd: x => x.mode === 'daily' } },
+  { id: 'deadline', need: 1, text: L('Выполните дедлайн', 'Complete a deadline'), on: { deadlineDone: () => true } },
+  { id: 'hint', need: 1, text: L('Купите подсказку', 'Buy a hint'), on: { hint: () => true } },
+  { id: 'shop', need: 1, text: L('Купите предмет в магазине', 'Buy an item in the shop'), on: { buy: () => true } },
+  { id: 'dm', need: 1, text: L('Напишите кому-нибудь из ленты «в игре»', 'Message someone from the live strip'), on: { dm: () => true } },
+];
+function todayQuests() {
+  const day = today(), q = prefs.quests;
+  if (q?.day === day) return q;
+  const rnd = seeded('quests-' + day + prefs.playerId), ids = shuffle(QUESTS.map(x => x.id), rnd);
+  // одно задание «на неделю», два — на ответы или действия
+  const weekQ = ids.find(id => QUESTS.find(x => x.id === id).on.weekEnd), rest = ids.filter(id => !QUESTS.find(x => x.id === id).on.weekEnd).slice(0, 2);
+  prefs.quests = { day, list: [weekQ, ...rest].map(id => ({ id, got: 0 })), bonus: false };
+  store.set(KEY.prefs, prefs);
+  return prefs.quests;
+}
+function questEvent(kind, x) {
+  const q = todayQuests();
+  let changed = false;
+  for (const it of q.list) {
+    const def = QUESTS.find(d => d.id === it.id);
+    if (!def || it.done || !def.on[kind] || !def.on[kind](x)) continue;
+    it.got++; changed = true;
+    if (it.got >= def.need) {
+      it.done = true; addXp(30);
+      const C2 = careerNow(), cash = 4;
+      if (C2) { C2.bank = (C2.bank || 0) + cash; careerSave(C2); }
+      toast(L(`🎯 Задание выполнено: ${def.text.toLowerCase()} · +30 опыта${C2 ? `, +${money(cash)}` : ''}`, `🎯 Quest done: ${def.text.toLowerCase()} · +30 XP${C2 ? `, +${money(cash)}` : ''}`));
+      sfx.item?.();
+    }
+  }
+  if (q.list.every(it => it.done) && !q.bonus) {
+    q.bonus = true; addXp(50); prefs.bonusItems = (prefs.bonusItems || 0) + 1;
+    setTimeout(() => toast(L('🎁 Все задания дня выполнены: +50 опыта и +1 предмет на следующую неделю', '🎁 All daily quests done: +50 XP and +1 item next week')), 2800);
+  }
+  if (changed) store.set(KEY.prefs, prefs);
+}
+for (const k of ['answer', 'weekEnd', 'deadlineDone', 'hint', 'buy', 'dm']) bus.on(k, x => questEvent(k, x));
+bus.on('answer', () => addXp(1));
+bus.on('deadlineDone', () => addXp(15));
+bus.on('weekEnd', x => addXp(x.won ? 20 : 5, 'week'));
+
+// ---------- свой рабочий стол ----------
+// Украшения за деньги карьеры; стол видят коллеги (в ленте «в игре» и карточке игрока)
+const DESK = [
+  { id: 'cactus', icon: '🌵', price: 5,  name: L('Кактус', 'Cactus') },
+  { id: 'mug',    icon: '☕', price: 6,  name: L('Кружка «Лучший сотрудник»', '“Best Employee” mug') },
+  { id: 'lamp',   icon: '💡', price: 8,  name: L('Неоновая лампа', 'Neon lamp') },
+  { id: 'fish',   icon: '🐠', price: 10, name: L('Аквариум с рыбкой', 'Fish tank') },
+  { id: 'plant',  icon: '🪴', price: 10, name: L('Фикус', 'Ficus') },
+  { id: 'cat',    icon: '🐈', price: 14, name: L('Фигурка офисного кота', 'Office cat figurine') },
+  { id: 'coffee', icon: '🫖', price: 16, name: L('Своя кофемашина', 'Personal coffee maker') },
+  { id: 'poster', icon: '🖼️', price: 18, name: L('Постер «Скоро пятница»', '“Friday Soon” poster') },
+  { id: 'golf',   icon: '⛳', price: 22, name: L('Мини-гольф для созвонов', 'Mini golf for calls') },
+  { id: 'chair',  icon: '🪑', price: 30, name: L('Кресло-трон', 'Throne chair') },
+  { id: 'trophy', icon: '🏆', price: 40, name: L('Кубок «Пережил понедельник»', '“Survived Monday” trophy') },
+];
+const deskIcons = (ids = prefs.desk || []) => DESK.filter(d => ids.includes(d.id)).map(d => d.icon).join('');
+function syncDesk() {
+  if (!board.online || !prefs.name) return;
+  board.rpc('set_desk', { p_id: prefs.playerId, p_desk: (rankIdx() === RANKS.length - 1 ? '👑' : '') + deskIcons(), p_rank: rankIdx() }).catch(() => {});
+}
+function openDesk() {
+  const m = $('modal'), Cm = careerNow();
+  const render = () => {
+    const bank = Cm?.bank || 0, own = prefs.desk || [];
+    m.innerHTML = `<div class="modal-box glass desk-box" role="dialog" aria-modal="true" aria-labelledby="deskTitle">
+      <h2 id="deskTitle">🗄️ ${L('Мой рабочий стол', 'My desk')}</h2>
+      <div class="desk-view" aria-label="${L('Стол', 'Desk')}">${deskIcons() || `<span class="desk-empty">${L('Пока пусто. Обставьте стол — его увидят коллеги.', 'Empty for now. Decorate it — your coworkers will see it.')}</span>`}</div>
+      <p class="shop-bal">${Cm ? L(`На счёте: <b>${money(bank)}</b>`, `Balance: <b>${money(bank)}</b>`) : L('Украшения покупаются на деньги карьеры — начните карьеру.', 'Decorations cost career money — start a career first.')}</p>
+      <div class="shop-list">${DESK.map(d => `<button class="shop-item" data-desk="${d.id}" ${own.includes(d.id) || !Cm || bank < d.price ? 'disabled' : ''}>
+        <b>${d.icon} ${d.name}</b><span class="price">${own.includes(d.id) ? L('есть', 'owned') : money(d.price)}</span></button>`).join('')}</div>
+      <button class="btn-ghost" type="button" id="deskClose">${L('Закрыть', 'Close')}</button></div>`;
+    m.querySelectorAll('[data-desk]').forEach(b => b.onclick = () => {
+      const d = DESK.find(x => x.id === b.dataset.desk);
+      if (!Cm || Cm.bank < d.price) return;
+      Cm.bank -= d.price; careerSave(Cm); (prefs.desk ||= []).push(d.id); store.set(KEY.prefs, prefs);
+      sfx.coins?.(); toast(L(`На столе: ${d.icon} ${d.name}`, `On your desk: ${d.icon} ${d.name}`)); syncDesk(); render(); renderMeta();
+    });
+    $('deskClose').onclick = () => { m.hidden = true; };
+  };
+  render(); m.hidden = false; m.onclick = e => { if (e.target === m) m.hidden = true; };
+}
+
+// ---------- меню: должность, стол, задания дня, отдел ----------
+function renderMeta() {
+  const box = $('metaBox'); if (!box || !prefs.name) return;
+  const r = rankLine(), q = todayQuests();
+  box.hidden = false;
+  box.innerHTML = `<div class="rank-row"><span class="rank-ico" aria-hidden="true">${r.r === RANKS.length - 1 ? '👑' : '🎖️'}</span>
+      <span class="rank-txt"><b>${r.name}</b><small>${r.next ? L(`${r.x} / ${r.next.xp} опыта · дальше: ${r.next.name}`, `${r.x} / ${r.next.xp} XP · next: ${r.next.name}`) : L(`${r.x} опыта · вершина карьеры`, `${r.x} XP · top of the ladder`)}</small>
+      <span class="dl-prog"><i style="width:${r.pct}%"></i></span></span>
+      <button class="btn-chip" type="button" id="deskBtn">${deskIcons() || '🗄️'} ${L('Мой стол', 'My desk')}</button></div>
+    <div class="quests"><b class="q-title">🎯 ${L('Задания дня', 'Daily quests')} · ${q.list.filter(x => x.done).length}/3</b>
+      ${q.list.map(it => { const d = QUESTS.find(x => x.id === it.id); return d ? `<div class="q-row${it.done ? ' done' : ''}"><span>${it.done ? '✅' : '▫️'} ${d.text}</span><span class="q-n">${Math.min(it.got, d.need)}/${d.need}</span></div>` : ''; }).join('')}
+      <small class="q-note">${q.bonus ? L('Все выполнены — завтра будут новые', 'All done — new ones tomorrow') : L('Каждое: +30 опыта и +4 у.е. в карьеру · все три: +1 предмет на неделю', 'Each: +30 XP and +$4 to your career · all three: +1 bag item')}</small></div>
+    <div class="dept-nudge" id="deptNudge" hidden></div>`;
+  $('deskBtn').onclick = openDesk;
+  deptNudge();
+}
+bus.on('menu', renderMeta);
+// Отдел: на каком месте и сколько до первого
+async function deptNudge() {
+  const el = $('deptNudge'); if (!el || !prefs.dept) return;
+  try {
+    const rows = await board.depts(), i = rows.findIndex(d => d.dept === prefs.dept);
+    if (i < 0) { el.hidden = false; el.textContent = L(`🏢 Ваш отдел «${prefs.dept}» ещё не в рейтинге недели — закройте неделю, чтобы его открыть`, `🏢 Your department “${prefs.dept}” isn’t on this week’s board yet — survive a week to put it there`); return; }
+    el.hidden = false;
+    el.textContent = i === 0 ? L(`🏆 Ваш отдел «${prefs.dept}» — первый на этой неделе! Удержите место`, `🏆 Your department “${prefs.dept}” is #1 this week! Hold the lead`)
+      : L(`🏢 «${prefs.dept}» — ${i + 1}-е место. До «${rows[i - 1].dept}» не хватает ${rows[i - 1].avg_score - rows[i].avg_score} очков`, `🏢 “${prefs.dept}” is #${i + 1}. ${rows[i - 1].avg_score - rows[i].avg_score} points behind “${rows[i - 1].dept}”`);
+  } catch {}
+}
+
+// ---------- истории с продолжением, сезоны, редкие карточки (data/events.json) ----------
+let EVENTS = null;
+const tr = o => o && typeof o === 'object' ? (o[LANG] || o.ru) : o;
+const evCard = (c, extra = {}) => norm({ id: c.id, who: tr(c.who), text: tr(c.text), phase: c.phase || 'Утро',
+  answers: { left: { label: tr(c.left), effects: c.left_effects }, right: { label: tr(c.right), effects: c.right_effects } }, ...extra });
+const eventsReady = (async () => {
+  try { EVENTS = window.EVENTS_JSON || await (await fetch('data/events.json')).json(); } catch { EVENTS = null; }
+  if (!EVENTS) return;
+  for (const t of EVENTS.teasers || []) byId[t.card.id] = evCard(t.card, { teaser: t.id });
+  for (const c of EVENTS.rare || []) byId[c.id] = evCard(c, { rare: true });
+  const slots = [['Понедельник', 'Утро'], ['Вторник', 'День'], ['Среда', 'Вечер'], ['Четверг', 'Утро'], ['Четверг', 'Вечер'], ['Пятница', 'День']];
+  for (const z of EVENTS.seasons || []) {
+    if (SEASONS.some(x => x.id === z.id)) continue;
+    const title = tr(z.title);
+    const cards = z.cards.map((c, i) => ({ ...evCard(c), day: slots[i % slots.length][0], phase: slots[i % slots.length][1], season: title }));
+    SEASONS.push({ id: z.id, title, from: z.from, to: z.to, rule: tr(z.rule), cards });
+    for (const c of cards) { SEASON_CARDS.push(c); byId[c.id] = c; }
+  }
+})();
+// Конец недели: интрига на следующую. Начало следующей недели: карточка, которая её разрешает (11:00 понедельника)
+bus.on('weekEnd', x => {
+  if (x.mode !== 'career' || !EVENTS?.teasers?.length) return;
+  if (!prefs.teaser) {
+    const done = prefs.teasersDone || [], left = EVENTS.teasers.filter(t => !done.includes(t.id));
+    const t = (left.length ? left : EVENTS.teasers)[Math.floor(Math.random() * (left.length || EVENTS.teasers.length))];
+    prefs.teaser = t.id; store.set(KEY.prefs, prefs);
+  }
+});
+bus.on('deck', S2 => {
+  if (S2.mode !== 'career') return;
+  if (prefs.teaser) {
+    const t = EVENTS?.teasers?.find(x => x.id === prefs.teaser);
+    const at = [1, 2, 3, 0].find(i => !S2.deck[i]?.fixed && !S2.deck[i]?.origin);  // первый свободный слот понедельника
+    if (t && byId[t.card.id] && at != null) {
+      S2.deck[at] = { id: t.card.id, time: slotTime(at), fixed: true, origin: L('История с продолжением', 'To be continued') };
+      (prefs.teasersDone ||= []).push(prefs.teaser); prefs.teaser = null; store.set(KEY.prefs, prefs);
+    }
+  }
+  // редкая карточка: примерно одна на 8 недель — в случайный свободный слот
+  const rares = (EVENTS?.rare || []).filter(c => !(prefs.rareGot || []).includes(c.id));
+  if (rares.length && Math.random() < .12) {
+    const free = S2.deck.map((s, i) => s.fixed || i === 0 || i === S2.deck.length - 1 ? -1 : i).filter(i => i >= 0);
+    const i = free[Math.floor(Math.random() * free.length)], c = rares[Math.floor(Math.random() * rares.length)];
+    if (i != null) S2.deck[i] = { id: c.id, time: slotTime(i), fixed: true };
+  }
+});
+bus.on('answer', x => {
+  if (!x.card.rare || (prefs.rareGot || []).includes(x.card.id)) return;
+  (prefs.rareGot ||= []).push(x.card.id); store.set(KEY.prefs, prefs); addXp(25);
+  setTimeout(() => toast(L(`✨ Редкое событие в коллекции: ${prefs.rareGot.length} из ${EVENTS.rare.length} · +25 опыта`, `✨ Rare event collected: ${prefs.rareGot.length} of ${EVENTS.rare.length} · +25 XP`)), 1200);
+});
+
+// ---------- экран итогов: опыт, «было близко», интрига, задания ----------
+bus.on('weekEnd', x => {
+  const sheet = document.querySelector('#end .end-sheet'), stack = sheet?.querySelector('.stack');
+  if (!stack) return;
+  const q = todayQuests(), left = WEEK_LEN - x.step, t = prefs.teaser && EVENTS?.teasers?.find(z => z.id === prefs.teaser);
+  const r = rankLine();
+  stack.insertAdjacentHTML('beforebegin', `<div class="meta-end">
+    ${!x.won && left > 0 && left <= 8 ? `<p class="near-miss">😬 ${L(`До пятницы, 18:00, оставалось всего ${pl(left, 'карточка', 'карточки', 'карточек', '', '')}!`, `Only ${left} ${left === 1 ? 'card' : 'cards'} away from Friday, 6 PM!`)}</p>` : ''}
+    <p class="xp-line">🎖️ +${xpGained} ${L('опыта', 'XP')} · ${r.name}${r.next ? ` · ${r.x}/${r.next.xp}` : ''}</p>
+    <p class="q-mini">🎯 ${L('Задания дня', 'Daily quests')}: ${q.list.filter(z => z.done).length}/3</p>
+    ${t ? `<div class="teaser"><b>📌 ${L('В следующей серии', 'Next time')}</b><span>${esc(tr(t.teaser))}</span></div>` : ''}</div>`);
+  xpGained = 0;
+  // реванш вместо скромного «ещё раз»
+  const next = $('next');
+  if (!x.won && next && x.mode !== 'career' && x.mode !== 'tour') next.textContent = L('↻ Реванш', '↻ Rematch');
+});
+
+// ---------- коллеги пишут, пока вас нет ----------
+// Не заходили 3+ часа — 1–2 непрочитанных от персонажей; колокольчик зовёт прочитать
+const MISS = EN ? ['Where’d you go? The Boss was asking about the report 👀', 'Coffee isn’t the same without you ☕', 'You missed it — someone microwaved fish again. Come back!', 'The Daily Week is fresh. Bet you can’t beat my score 😏', 'Galya has news. Big news. Log in.']
+  : ['Ты куда пропал? Босс спрашивал про отчёт 👀', 'Без тебя кофе не тот ☕', 'Ты пропустил: кто-то опять грел рыбу в микроволновке. Возвращайся!', 'Неделя дня свежая. Спорим, мой результат не побьёшь? 😏', 'У Гали новости. Большие. Заходи.'];
+function missYou() {
+  const last = prefs.lastSeen || 0, now = Date.now();
+  prefs.lastSeen = now; store.set(KEY.prefs, prefs);
+  if (!last || now - last < 3 * 3600e3 || !prefs.name || typeof NPCS === 'undefined') return;
+  const all = store.get('vdp-npc-dm', {}), n = now - last > 24 * 3600e3 ? 2 : 1;
+  const who = shuffle([...NPCS]).slice(0, n);
+  who.forEach((c, i) => { (all[c.id] ||= []).push({ mine: false, msg: MISS[(Math.floor(now / 3600e3) + i) % MISS.length], at: now - i * 60000 }); });
+  store.set('vdp-npc-dm', all);
+  setTimeout(() => who.forEach(c => ring(L(`${c.name} пишет вам`, `${c.name} sent you a message`), () => openDm(c.id, c.name))), 2500);
+}
+setInterval(() => { if (!document.hidden) { prefs.lastSeen = Date.now(); store.set(KEY.prefs, prefs); } }, 60000);
+
+// ---------- соперники в неделе дня ----------
+// Кто из вашего отдела или офиса обошёл ваш результат недели дня — колокольчик и приглашение на реванш
+async function rivals() {
+  if (!board.online || !prefs.name) return;
+  const day = today(), mine = store.get(KEY.daily, {})[day];
+  if (!mine) return;
+  try {
+    const me = await myTag, rows = await board.daily(day), seen = prefs.rivalSeen?.day === day ? prefs.rivalSeen.tags : [];
+    const myScore = mine.won ? 1000 + mine.total : 0;
+    for (const r of rows) {
+      if (r.tag === me || seen.includes(r.tag) || !(prefs.dept && r.dept === prefs.dept)) continue;
+      if ((r.won ? 1000 + r.total : r.step) > myScore) {
+        seen.push(r.tag);
+        ring(L(`${r.name} (${r.dept}) обошёл(ла) вас в неделе дня. Реванш?`, `${r.name} (${r.dept}) beat you in the Daily Week. Rematch?`), () => startDaily(), false);
+      }
+    }
+    prefs.rivalSeen = { day, tags: seen }; store.set(KEY.prefs, prefs);
+  } catch {}
+}
+setInterval(rivals, 5 * 60000);
+
+// ---------- что нового ----------
+const WHATS_NEW = { v: '2026-10-30', items: EN
+  ? ['🎯 Daily quests — three goals every day', '🎖️ Ranks from Intern to CEO, with perks', '🗄️ Decorate your desk — coworkers can see it', '📌 Stories that continue next week', '✨ Rare events to collect', '🎃 Office Halloween week', '📅 A week is now 25 cards — 5 a day']
+  : ['🎯 Задания дня — три цели каждый день', '🎖️ Должности от стажёра до генерального, с бонусами', '🗄️ Обставьте свой рабочий стол — его видят коллеги', '📌 Истории с продолжением на следующей неделе', '✨ Редкие события для коллекции', '🎃 Неделя «Хэллоуин в офисе»', '📅 Неделя теперь — 25 карточек, по 5 в день'] };
+function whatsNew() {
+  if (!prefs.name || !(prefs.gamesPlayed > 0) || prefs.whatsNew === WHATS_NEW.v) return;
+  prefs.whatsNew = WHATS_NEW.v; store.set(KEY.prefs, prefs);
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="wnTitle"><span class="lvl-ico" aria-hidden="true">🆕</span>
+    <h2 id="wnTitle">${L('Что нового', 'What’s new')}</h2><ul class="lw-list">${WHATS_NEW.items.map(x => `<li>${x}</li>`).join('')}</ul>
+    <button class="btn-main" type="button" id="wnOk">${L('Играть', 'Play')}</button></div>`;
+  m.hidden = false; $('wnOk').onclick = () => { m.hidden = true; };
+}
+
+// ---------- напоминание в Telegram (только по желанию игрока) ----------
+// В Mini App — включить/выключить одной кнопкой; в браузере — открыть игру в боте, там включить
+const tgFn = () => (window.SUPABASE_CONFIG?.url || '').replace(/\/+$/, '') + '/functions/v1/tg-subscribe';
+async function tgCall(enable) {
+  const r = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
+    body: JSON.stringify({ initData: TG.initData, player_id: prefs.playerId, lang: LANG, enable }) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error === 'not_configured' ? L('Напоминания ещё настраиваются — загляните завтра', 'Reminders are still being set up — check back tomorrow') : L('Не получилось, попробуйте позже', 'Didn’t work — try again later'));
+  return j.enabled;
+}
+async function tgButton() {
+  const b = $('tgRemind'); if (!b) return;
+  if (window.VDP_PLATFORM || !board.online) { b.hidden = true; return; }
+  const label = on => on ? L('🔕 Выключить напоминания в Telegram', '🔕 Turn off Telegram reminders') : L('🔔 Напоминать в Telegram о неделе дня', '🔔 Daily reminder in Telegram');
+  if (!TG) {
+    b.textContent = label(false);
+    b.onclick = () => { toast(L('Откроем игру в Telegram — там нажмите эту же кнопку', 'We’ll open the game in Telegram — tap this same button there')); setTimeout(() => location.href = 'https://t.me/Survivefridaybot?startapp=remind', 900); };
+    return;
+  }
+  let on = prefs.tgRemind || false;
+  b.textContent = label(on);
+  tgCall(undefined).then(v => { on = v; prefs.tgRemind = v; store.set(KEY.prefs, prefs); b.textContent = label(on); }).catch(() => {});
+  b.onclick = async () => {
+    try { on = await tgCall(!on); prefs.tgRemind = on; store.set(KEY.prefs, prefs); b.textContent = label(on);
+      toast(on ? L('Готово: раз в день в 12:30 бот напомнит о неделе дня', 'Done: the bot will remind you about the Daily Week once a day at 12:30') : L('Напоминания выключены', 'Reminders off')); }
+    catch (err) { toast(err.message); }
+  };
+}
+
+// старт: после загрузки данных
+dataReady.then(() => eventsReady).then(() => {
+  todayQuests(); missYou(); syncDesk(); tgButton();
+  if (!views.menu.hidden) { renderMeta(); setTimeout(whatsNew, 800); }
+  setTimeout(rivals, 4000);
+});

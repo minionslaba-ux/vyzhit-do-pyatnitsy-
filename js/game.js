@@ -174,6 +174,7 @@ function newWeekState({ mode, res, type, rng = Math.random, extra = {} }) {
   if (rules.bossStart) res.boss = rules.bossStart;
   for (const k in res) res[k] = Math.max(5, Math.min(95, res[k]));
   let n = rules.items || (rng() < .5 ? 1 : 2);
+  if (mode === 'career' && typeof rankPerk === 'function') n = Math.min(4, n + rankPerk('items'));
   if (mode === 'career' && prefs.bonusItems > 0) { const add = Math.min(prefs.bonusItems, 4 - n); n += add; prefs.bonusItems -= add; store.set(KEY.prefs, prefs); }
   return { mode, name: prefs.name, dept: prefs.dept, prof: extra.prof || prefs.prof, trait: extra.trait || prefs.trait, res, step: 0, type,
     items: giveItems(n, rng), used: [], flags: {}, ...extra };
@@ -256,6 +257,7 @@ function startWeek() {
   if (season) S.season = season.id;
   S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title && !seen.has(c.id)) : [] });
   if (!classic) placeCastCard(S.deck);
+  bus.emit('deck', S);
   for (const s of S.deck) seen.add(s.id);
   if (classic) seen.add('__classic');
   store.set(KEY.seen, [...seen]);
@@ -370,7 +372,7 @@ const headerLine = () => S.mode === 'career' && C ? L(`Неделя ${C.week}/${
 function renderCard() {
   const slot = S.deck[S.step], c = byId[slot.id], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const card = $('card');
-  const tag = slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
+  const tag = c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
     : c.random ? `<span class="rnd-tag">${L('! СЛУЧАЙНОЕ СОБЫТИЕ', '! RANDOM EVENT')}</span>` : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
   const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="${L('Отношение', 'Relationship')}: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
   // в карьере внизу карточки — кнопки «Подсказка» и «Магазин»; там же появляется предложение подсказки
@@ -534,7 +536,7 @@ function choose(side) {
     if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: slotTime(at), fixed: true, origin: ch.origin };
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(WEEK_LEN - 1, S.step + Math.round(pc.after * PER_DAY / 3));
     if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: slotTime(pat), fixed: true, origin: pc.origin };
-    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side);
+    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side); bus.emit('answer', { card: c, side, eff });
     const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     const best = store.get(KEY.best, { step: 0, wins: 0 });
     if (dead) FX.finale(dead.k, !deadLow);
@@ -620,7 +622,8 @@ function deadlineWork(c, side) {
   if (!d || !workAnswer(c, side)) return;
   d.got++;
   if (d.got < d.need) { toast(L(`📋 +1 к задаче «${d.title}»: ${d.got} из ${d.need}`, `📋 +1 to “${d.title}”: ${d.got} of ${d.need}`)); renderDeadlineChip(); return; }
-  S.deadline = null; S.dlWon = (S.dlWon || 0) + 1;
+  S.deadline = null; S.dlWon = (S.dlWon || 0) + 1; bus.emit('deadlineDone', d);
+  d.reward = Math.round(d.reward * (1 + (typeof rankPerk === 'function' ? rankPerk('deadline') : 0)));
   pay(d.reward); S.earned = (S.earned || 0) + d.reward; renderBars(); renderDeadlineChip(); FX.coin(d.reward); sfx.coins();
   smsPop(L('Банк', 'Bank'), L(`Премия за «${d.title}»: +${money(d.reward)} · баланс ${money(C.bank)}`, `Bonus for “${d.title}”: +${money(d.reward)} · balance ${money(C.bank)}`));
 }
@@ -650,9 +653,10 @@ function advance() {
   const best = store.get(KEY.best, { step: 0, wins: 0 });
   S.step++;
   if (S.mode === 'career' && C && S.step % PER_DAY === 0) {  // вечер прошёл — рабочий день оплачен
-    pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary); sfx.coins();
-    smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / PER_DAY - 1]}: +${money(C.salary)} · баланс ${money(C.bank)}`,
-      `${dayName(S.step / PER_DAY - 1)} salary deposited: +${money(C.salary)} · balance ${money(C.bank)}`));
+    const sal = C.salary + (typeof rankPerk === 'function' ? rankPerk('salary') : 0);
+    pay(sal); S.earned = (S.earned || 0) + sal; renderBars(); FX.coin(sal); sfx.coins();
+    smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / PER_DAY - 1]}: +${money(sal)} · баланс ${money(C.bank)}`,
+      `${dayName(S.step / PER_DAY - 1)} salary deposited: +${money(sal)} · balance ${money(C.bank)}`));
     deadlineDue(S.step / PER_DAY - 1);
   }
   best.step = Math.max(best.step, S.step);
@@ -682,7 +686,7 @@ function openShop() {
       <p class="field-note">${L('Каждая следующая «мощь» на этой неделе вдвое дороже. Каждую неделю списываются расходы на жильё и еду — два дневных оклада.', 'Each extra “power” this week costs twice as much. Every week, rent and food eat two days’ pay.')}</p>
       <button class="btn-ghost" id="shopClose">${L('Закрыть', 'Close')}</button></div>`;
     m.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
-      const id = b.dataset.item; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item();
+      const id = b.dataset.item; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item(); bus.emit('buy', id);
       toast(L(`Куплено: ${ITEMS[id].name}`, `Bought: ${ITEMS[id].name}`)); renderBars(); render();
     });
     m.querySelectorAll('[data-power]').forEach(b => b.onclick = () => {
@@ -720,7 +724,8 @@ $('gExit').onclick = () => {
 
 // ---------- подсказка за 6 у.е.: какой ответ лучше держит баланс ----------
 // Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта
-const HINT_PRICE = 6;
+const HINT_BASE = 6;
+const hintPriceNow = () => Math.max(2, HINT_BASE - (typeof rankPerk === 'function' ? rankPerk('hint') : 0));
 // Чем дальше самая слабая шкала от 0 и 100 после ответа, тем ответ безопаснее; конец недели — хуже всего
 function hintScore(side) {
   const { eff } = effectsOf(side), after = RES.map(r => ({ k: r.k, v: clamp(S.res[r.k] + (eff[r.k] || 0)) }));
@@ -737,7 +742,7 @@ function cardTools() {
   const el = $('ctools'); if (!el) return;
   const got = S.hintStep === S.step;
   el.className = 'card-tools';
-  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : money(HINT_PRICE)}</b></button>
+  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : money(hintPriceNow())}</b></button>
     <button class="ct-btn ct-shop" type="button" id="ctShop">🛒 ${L('Магазин', 'Shop')} <b id="ctBank">${money(C.bank)}</b></button>`;
   $('ctHint').onclick = () => hintBar();
   $('ctShop').onclick = openShop;
@@ -746,15 +751,15 @@ function hintBar() {
   const el = $('ctools');
   if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
-  const can = C.bank >= HINT_PRICE;
+  const can = C.bank >= hintPriceNow();
   el.className = 'card-tools ask';
-  el.innerHTML = `<button class="ct-btn ct-hint" type="button" id="hbYes" ${can ? '' : 'disabled'}>💡 ${L('Получить', 'Get it')} <b>${can ? money(HINT_PRICE) : L('нет денег', 'no cash')}</b></button>
+  el.innerHTML = `<button class="ct-btn ct-hint" type="button" id="hbYes" ${can ? '' : 'disabled'}>💡 ${L('Получить', 'Get it')} <b>${can ? money(hintPriceNow()) : L('нет денег', 'no cash')}</b></button>
     <button class="ct-btn ct-no" type="button" id="hbNo">${L('Отказаться', 'No thanks')}</button>`;
   FX.pulse(el, 'on', 500);
   $('hbNo').onclick = cardTools;
   $('hbYes').onclick = () => {
-    if (C.bank < HINT_PRICE || busy) return;
-    C.bank -= HINT_PRICE; C.spent = (C.spent || 0) + HINT_PRICE; saveCareer(); renderBars(); sfx.item();
+    if (C.bank < hintPriceNow() || busy) return;
+    C.bank -= hintPriceNow(); C.spent = (C.spent || 0) + hintPriceNow(); saveCareer(); renderBars(); sfx.item(); bus.emit('hint');
     const best = hintAdvice();
     S.hintStep = S.step;
     el.className = 'card-tools said';
@@ -766,7 +771,7 @@ function hintBar() {
 }
 // Сама предлагает подсказку, когда шкала у края: раз в игровой день и только если хватает денег
 function hintOffer() {
-  if (!(S?.mode === 'career' && C) || C.bank < HINT_PRICE || prefs.hintOff) return;
+  if (!(S?.mode === 'career' && C) || C.bank < hintPriceNow() || prefs.hintOff) return;
   const day = dayOf(S.step);
   if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
   S.hintDay = day;
@@ -938,6 +943,7 @@ function lose(k, high) {
   $('share').onclick = () => share(false, k);
   $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : S.mode === 'tour' ? openScreen(S.tourCode) : startPack();
   record(false, k, high);
+  bus.emit('weekEnd', { won: false, mode: S.mode, step: S.step, res: { ...S.res }, stat: k, high });
   track('week_end', { mode: S.mode, won: false, step: S.step, card: S.deck[S.step]?.id, detail: `${k}${high ? ':100' : ':0'}` });
   $('next').focus({ preventScroll: true });
 }
@@ -981,6 +987,7 @@ function win() {
   if ($('vac')) $('vac').onclick = takeVacation;
   $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : S.mode === 'tour' ? openScreen(S.tourCode) : renderMenu();
   record(true, null, false);
+  bus.emit('weekEnd', { won: true, mode: S.mode, step: WEEK_LEN, res: { ...S.res } });
   track('week_end', { mode: S.mode, won: true, step: WEEK_LEN });
   $('next').focus({ preventScroll: true });
 }

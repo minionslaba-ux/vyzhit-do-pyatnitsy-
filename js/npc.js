@@ -67,7 +67,7 @@ function npcDm(short) {
   $('dmForm').onsubmit = e => {
     e.preventDefault(); const t = $('dmText').value.trim(); if (!t) return;
     if (!(npcThreads()[short] || []).length) push(false, c.say[0]);
-    push(true, t); $('dmText').value = ''; draw();
+    push(true, t); $('dmText').value = ''; draw(); bus.emit('dm');
     $('dmTyping').hidden = false; $('dmList').scrollTop = 1e6;
     setTimeout(() => { const said = (npcThreads()[short] || []).filter(r => !r.mine).length; push(false, c.say[said % c.say.length]); if (dmOpen === short) draw(); sfx.item?.(); }, 1200 + Math.random() * 1800);
   };

@@ -142,6 +142,10 @@ function getRandomCard(standardCard, randomPack, percent = 15, random = Math.ran
   return standardCard;
 }
 
+// ---------- события игры ----------
+// Игра сообщает, что произошло (ответ, конец недели, сборка недели, покупка…), а задания, опыт и истории (js/meta.js) слушают
+const bus = { h: {}, on(e, f) { (this.h[e] ||= []).push(f); }, emit(e, x) { for (const f of this.h[e] || []) try { f(x); } catch (err) { console.error(err); } } };
+
 // ---------- хранилище ----------
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
