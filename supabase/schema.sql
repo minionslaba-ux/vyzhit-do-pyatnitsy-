@@ -9,7 +9,7 @@ create table if not exists public.scores (
   player_id   uuid not null,
   name        text not null check (char_length(name) between 1 and 24),
   dept        text not null default '' check (char_length(dept) <= 24),
-  prof        text not null check (prof in ('marketer', 'accountant', 'dev', 'sales')),
+  prof        text not null check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern')),
   won         boolean not null,
   step        smallint not null check (step between 0 and 15),
   total       smallint not null check (total between 0 and 400),
@@ -25,6 +25,9 @@ alter table public.scores add column if not exists overheat boolean not null def
 alter table public.scores drop constraint if exists scores_mode_check;
 alter table public.scores add constraint scores_mode_check check (mode in ('career', 'daily', 'pack', 'tour'));
 alter table public.scores add column if not exists tour_id bigint;
+-- Профессии: в старой базе проверка знала только четыре
+alter table public.scores drop constraint if exists scores_prof_check;
+alter table public.scores add constraint scores_prof_check check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern'));
 create index if not exists scores_player_idx on public.scores (player_id, won desc, step desc, total desc);
 create index if not exists scores_daily_idx on public.scores (mode, day, player_id, created_at);
 
@@ -34,12 +37,14 @@ create table if not exists public.players (
   name        text not null check (char_length(name) between 1 and 24),
   dept        text not null default '' check (char_length(dept) <= 24),
   avatar      text not null default '' check (char_length(avatar) <= 16),
-  prof        text not null default 'marketer' check (prof in ('marketer', 'accountant', 'dev', 'sales')),
+  prof        text not null default 'marketer' check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern')),
   status      text not null default 'menu' check (status in ('menu', 'playing', 'finished')),
   step        smallint not null default 0 check (step between 0 and 15),
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
+alter table public.players drop constraint if exists players_prof_check;
+alter table public.players add constraint players_prof_check check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern'));
 
 -- Карточки, которые предлагают коллеги. Модерация: Table Editor → suggestions → status = 'approved'
 create table if not exists public.suggestions (
