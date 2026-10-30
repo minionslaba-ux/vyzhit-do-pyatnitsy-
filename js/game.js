@@ -310,12 +310,12 @@ let liveT = 0;
 async function liveTick() {
   clearTimeout(liveT);
   const el = $('liveStrip'); $('live').hidden = true;
-  if (views.game.hidden || !board.online) { el.hidden = true; return; }
+  if (views.game.hidden) { el.hidden = true; return; }
   try {
     const rows = (await onlineNow()).filter(p => p.short_id).sort((a, b) => (b.status === 'playing') - (a.status === 'playing'));
     el.hidden = !rows.length;
     el.innerHTML = rows.length ? `<span class="ls-head"><i class="live-dot"></i>${rows.length}<small>${L('в игре', 'online')}</small></span>`
-      + rows.slice(0, 15).map((p, i) => `<button class="ls-p${p.status === 'playing' ? ' play' : ''}" type="button" data-i="${i}" title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}"><span class="ls-ava">${esc(p.avatar || '🙂')}</span><span class="ls-name">${esc(p.name)}</span></button>`).join('') : '';
+      + rows.slice(0, 15).map((p, i) => `<button class="ls-p${p.status === 'playing' ? ' play' : ''}${p.npc ? ' npc' : ''}" type="button" data-i="${i}" title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}${p.npc ? ' · ' + L('персонаж игры', 'game character') : ''}"><span class="ls-ava">${esc(p.avatar || '🙂')}</span><span class="ls-name">${esc(p.name)}</span></button>`).join('') : '';
     el.querySelectorAll('[data-i]').forEach(b => b.onclick = () => personPop(rows[+b.dataset.i]));
   } catch { el.hidden = true; }
   liveT = setTimeout(liveTick, 30000);

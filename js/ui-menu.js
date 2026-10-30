@@ -409,7 +409,7 @@ $('bell').onclick = () => {
 };
 
 // ---------- кто сейчас в игре: позвать в свой офис ----------
-const onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
+let onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
 const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
   <span class="lb-who"><b>${esc(p.name)}</b><small>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
   <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-dm="${p.short_id}" data-name="${esc(p.name)}">${L('Написать', 'Message')}</button><button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
@@ -420,7 +420,7 @@ const bindInvite = root => {
 // Вкладка «Офис»: до 6 игроков в сети
 async function renderOnlineBox() {
   const box = $('onlineBox');
-  if (!board.online || !prefs.name) { box.hidden = true; return; }
+  if (!prefs.name) { box.hidden = true; return; }
   try {
     const rows = await onlineNow();
     box.hidden = false;
@@ -442,7 +442,7 @@ async function showOnlineModal() {
   bindInvite(m); $('olClose').onclick = () => { m.hidden = true; };
 }
 // Позвать игрока: нужен аккаунт и офис; офиса нет — предложим создать его тут же
-async function inviteToOffice(short, btn) {
+let inviteToOffice = async function (short, btn) {
   if (!registered()) {
     toast(L('Звать в свой офис могут зарегистрированные игроки', 'Only registered players can invite people to their office'));
     if (views.game.hidden) { $('modal').hidden = true; renderJoin('register', L('Зарегистрируйтесь — и сможете создать свой офис и позвать в него коллег.', 'Sign up to create your own office and invite your coworkers.')); }
@@ -677,7 +677,7 @@ const dmNeedAccount = () => {
   toast(L('Писать игрокам могут зарегистрированные игроки', 'Only registered players can send messages'));
   if (views.game.hidden) { $('modal').hidden = true; renderJoin('register', L('Зарегистрируйтесь — и сможете переписываться с игроками и звать их в свой офис.', 'Sign up to message players and invite them to your office.')); }
 };
-async function openDm(short, name) {
+let openDm = async function (short, name) {
   if (!board.online) return toast(L('Сообщения работают, когда есть связь с сервером', 'Messages need a connection to the server'));
   if (!registered()) return dmNeedAccount();
   const m = $('modal'); clearInterval(dmTimer); dmOpen = short;
@@ -736,6 +736,7 @@ function personPop(p) {
   m.innerHTML = `<div class="modal-box glass person-pop" role="dialog" aria-modal="true" aria-labelledby="ppName">
     <span class="pp-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span><h2 id="ppName">${esc(p.name)}</h2>
     <p>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</p><p>${personStatus(p)}</p>
+    ${p.npc ? `<p class="npc-note">🎭 ${L('Персонаж игры: отвечает сам, пока живых коллег в сети мало', 'A game character: replies on their own while few real players are online')}</p>` : ''}
     <div class="row2"><button class="btn-main" type="button" id="ppDm">✉ ${L('Написать', 'Message')}</button><button class="btn-ghost" type="button" id="ppInv">🏢 ${L('Позвать в офис', 'Invite to office')}</button></div>
     <button class="btn-ghost" type="button" id="ppClose">${L('Вернуться к неделе', 'Back to the week')}</button></div>`;
   m.hidden = false; m.onclick = e => { if (e.target === m) m.hidden = true; };

@@ -1012,3 +1012,9 @@ html[lang="en"] .btn-ghost.locked::after { content: "after sign-up"; }
   .live-strip { margin-bottom: 4px; }
   .ls-p { height: 30px; }
 }
+/* персонажи игры в ленте и переписке */
+.ls-p.npc .ls-ava::after { content: "🎭"; position: absolute; font-size: 9px; transform: translate(9px, 8px); }
+.ls-ava { position: relative; }
+.npc-tag { margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--text-2); }
+.npc-note { font-size: 12px !important; color: var(--text-2); }
+.msg.typing .bubble { opacity: .6; letter-spacing: 2px; }
