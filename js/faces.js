@@ -5,53 +5,57 @@
 
 // ---------- Постоянные коллеги: отношение от −3 до +3, у каждого своя история ----------
 const CAST = {
-  fedor:   { name: 'Фёдор',           role: 'сосед по столу',          face: { skin: 2, hair: 'short', hairC: '#6b4a2b', beard: true, shirt: '#3a7bd5' } },
-  aleksey: { name: 'Алексей',         role: 'оптимизатор процессов',   face: { skin: 0, hair: 'side', hairC: '#2b2b33', glasses: true, shirt: '#2de2e6' } },
-  robert:  { name: 'Роберт',          role: 'душа корпоративов',       face: { skin: 1, hair: 'afro', hairC: '#ff3bd4', shirt: '#d4ff3a', bow: true } },
-  galya:   { name: 'Галя',            role: 'знает всё обо всех',      face: { skin: 0, hair: 'long', hairC: '#c0392b', shirt: '#b26bff', earrings: true } },
-  oleg:    { name: 'Олег',            role: 'из соседнего отдела',     face: { skin: 3, hair: 'messy', hairC: '#1d1d22', shirt: '#ff8a3b', stubble: true } },
-  marina:  { name: 'Марина Петровна', role: 'главный бухгалтер',       face: { skin: 1, hair: 'bun', hairC: '#9a9aa6', glasses: true, shirt: '#ff3b6b', beads: true } },
+  fedor:   { name: L('Фёдор', 'Fyodor'), role: L('сосед по столу', 'your desk neighbor'),          face: { skin: 2, hair: 'short', hairC: '#6b4a2b', beard: true, shirt: '#3a7bd5' } },
+  aleksey: { name: L('Алексей', 'Alexey'), role: L('оптимизатор процессов', 'process optimizer'),   face: { skin: 0, hair: 'side', hairC: '#2b2b33', glasses: true, shirt: '#2de2e6' } },
+  robert:  { name: L('Роберт', 'Robert'), role: L('душа корпоративов', 'life of every office party'),       face: { skin: 1, hair: 'afro', hairC: '#ff3bd4', shirt: '#d4ff3a', bow: true } },
+  galya:   { name: L('Галя', 'Galya'), role: L('знает всё обо всех', 'knows everything about everyone'),      face: { skin: 0, hair: 'long', hairC: '#c0392b', shirt: '#b26bff', earrings: true } },
+  oleg:    { name: L('Олег', 'Oleg'), role: L('из соседнего отдела', 'from the department next door'),     face: { skin: 3, hair: 'messy', hairC: '#1d1d22', shirt: '#ff8a3b', stubble: true } },
+  marina:  { name: L('Марина Петровна', 'Marina Petrovna'), role: L('главный бухгалтер', 'chief accountant'),       face: { skin: 1, hair: 'bun', hairC: '#9a9aa6', glasses: true, shirt: '#ff3b6b', beads: true } },
 };
 // Имена ищутся целым словом (в любом падеже): «Галю» — да, «навигации» — нет
 const word = s => new RegExp(`(?<![а-яё])(?:${s})(?![а-яё])`, 'i');
 const CAST_RE = { fedor: word('ф[её]дор(?:а|у|ом|е)?'), aleksey: word('алексе(?:й|я|ю|ем|е)'), robert: word('роберт(?:а|у|ом|е)?'),
   galya: word('гал(?:я|и|е|ю|ей)'), oleg: word('олег(?:а|у|ом|е)?'), marina: word('марин(?:а|ы|е|у|ой) петровн(?:а|ы|е|у|ой)') };
-const castOf = text => Object.keys(CAST_RE).find(k => CAST_RE[k].test(text || '')) || null;
+// Английские имена — тоже целым словом: «Galya's» — да, «Olegario» — нет
+const wordEn = s => new RegExp(`(?<![a-z])(?:${s})(?![a-z])`, 'i');
+const CAST_EN = { fedor: wordEn('fyodor|fedor'), aleksey: wordEn('alexey|aleksey|alexei'), robert: wordEn('robert'),
+  galya: wordEn('galya'), oleg: wordEn('oleg'), marina: wordEn('marina(?: petrovna)?') };
+const castOf = text => Object.keys(CAST_RE).find(k => CAST_RE[k].test(text || '') || CAST_EN[k].test(text || '')) || null;
 
 // ---------- Архетипы ролей ----------
 const SKIN = ['#f3d2b8', '#e7b896', '#c98e66', '#8d5a3b'];
 const ROLES = [
-  [/генеральн|директор(?! по персоналу)|руководств|совет директоров|делегац/i, { skin: 0, hair: 'bald', hairC: '#9a9aa6', glasses: true, shirt: '#22223a', tie: '#ffd23a', bg: '#3a2a10' }],
-  [/босс|начальник|заместител|тимлид|менеджер проекта|скрам|капитан/i,           { skin: 1, hair: 'short', hairC: '#55555f', shirt: '#26263f', tie: '#ff3b6b', bg: '#3a1020' }],
-  [/hr|кадр|по персоналу|психолог|тренер|наставник|лектор|рекрут/i,               { skin: 0, hair: 'bob', hairC: '#7a3b1e', shirt: '#ff8be6', scarf: true, bg: '#3a1033' }],
-  [/бухгалт|финансист|казнач/i,                                                     { skin: 1, hair: 'bun', hairC: '#4a3a2a', glasses: true, shirt: '#b26bff', bg: '#24103a' }],
-  [/клиент|заказчик|партн[её]р|поставщик|подрядчик|закупщик|представител|торговый|инвестор|конкурент/i, { skin: 2, hair: 'side', hairC: '#2b2b33', shirt: '#1f4e8c', tie: '#2de2e6', bg: '#0e2a3a' }],
-  [/юрист|проверяющ|инспектор|налогов|аудитор/i,                                   { skin: 0, hair: 'side', hairC: '#3a3a44', glasses: true, shirt: '#2a2a2a', tie: '#9a9aa6', bg: '#1c1c28' }],
-  [/офис-менеджер|ассистент|секретар|ресепшен|приёмная|завхоз|комендант/i,          { skin: 1, hair: 'long', hairC: '#e0b04a', shirt: '#2de2e6', headset: true, bg: '#0e3033' }],
-  [/сисадмин|айтишник|программист|разработчик|техподдерж/i,                         { skin: 2, hair: 'messy', hairC: '#2b2b33', glasses: true, shirt: '#2b2b40', headset: true, bg: '#10203a' }],
-  [/стажёр|стажер|новичок|новенький|джун/i,                                         { skin: 0, hair: 'curly', hairC: '#c98e3a', shirt: '#d4ff3a', lanyard: true, bg: '#26330e' }],
-  [/курьер|водитель|доставк|грузчик|логист/i,                                       { skin: 3, hair: 'cap', hairC: '#ff8a3b', shirt: '#ff8a3b', bg: '#3a240e' }],
-  [/охран|вахт[её]р|сторож/i,                                                       { skin: 1, hair: 'cap', hairC: '#1d1d22', shirt: '#1d1d22', bg: '#151520' }],
-  [/уборщ|клининг|сантехник|электрик|маляр|бригад|монтажник|ремонтн/i,             { skin: 2, hair: 'bandana', hairC: '#2de2e6', shirt: '#2d6e8c', bg: '#0e2630' }],
-  [/мама|бабушка|т[её]тя|сестра|соседка/i,                                          { skin: 1, hair: 'long', hairC: '#7a4a2b', shirt: '#ff8be6', bg: '#33102a' }],
-  [/брат|друг|друзья|одноклассник|сосед(?! по столу)|детектив|стоматолог|фотограф|режисс[её]р|скульптор|организатор|ведущий|модератор|посетитель/i, { skin: 2, hair: 'short', hairC: '#4a3a2a', shirt: '#3a7bd5', bg: '#102033' }],
-  [/коллег|сосед по столу|маркетолог|дизайнер|продажник|отдел|сплетниц|менеджер/i, null],  // обычный коллега: внешность по имени
+  [/генеральн|директор(?! по персоналу)|руководств|совет директоров|делегац|\bceo\b|(?<!hr |hr-)director|board of directors|executive|management|delegation|chairman|president|\bvp\b/i, { skin: 0, hair: 'bald', hairC: '#9a9aa6', glasses: true, shirt: '#22223a', tie: '#ffd23a', bg: '#3a2a10' }],
+  [/босс|начальник|заместител|тимлид|менеджер проекта|скрам|капитан|boss|supervisor|project manager|team ?lead|scrum|deputy|head of|captain|(?<!office |sales |account |hr |hr-)\bmanager\b/i,           { skin: 1, hair: 'short', hairC: '#55555f', shirt: '#26263f', tie: '#ff3b6b', bg: '#3a1020' }],
+  [/\bhr\b|кадр|по персоналу|психолог|тренер|наставник|лектор|рекрут|human resources|personnel|psychologist|therapist|coach|trainer|mentor|lecturer|recruit/i,               { skin: 0, hair: 'bob', hairC: '#7a3b1e', shirt: '#ff8be6', scarf: true, bg: '#3a1033' }],
+  [/бухгалт|финансист|казнач|accountant|accounting|bookkeep|financ|\bcfo\b|treasurer|payroll/i,                                                     { skin: 1, hair: 'bun', hairC: '#4a3a2a', glasses: true, shirt: '#b26bff', bg: '#24103a' }],
+  [/клиент|заказчик|партн[её]р|поставщик|подрядчик|закупщик|представител|торговый|инвестор|конкурент|client|customer|partner|vendor|supplier|contractor|buyer|procurement|representative|sales rep|investor|competitor/i, { skin: 2, hair: 'side', hairC: '#2b2b33', shirt: '#1f4e8c', tie: '#2de2e6', bg: '#0e2a3a' }],
+  [/юрист|проверяющ|инспектор|налогов|аудитор|lawyer|attorney|legal|inspector|\btax(?:es)?\b|\birs\b|auditor|compliance|regulator/i,                                   { skin: 0, hair: 'side', hairC: '#3a3a44', glasses: true, shirt: '#2a2a2a', tie: '#9a9aa6', bg: '#1c1c28' }],
+  [/офис-менеджер|ассистент|секретар|ресепшен|приёмная|завхоз|комендант|office manager|assistant|secretary|reception|front desk|facilities/i,          { skin: 1, hair: 'long', hairC: '#e0b04a', shirt: '#2de2e6', headset: true, bg: '#0e3033' }],
+  [/сисадмин|айтишник|программист|разработчик|техподдерж|sysadmin|system admin|\bit (?:guy|support|department|dept|team)|tech support|help ?desk|programmer|developer|\bdev\b|coder|engineer/i,                         { skin: 2, hair: 'messy', hairC: '#2b2b33', glasses: true, shirt: '#2b2b40', headset: true, bg: '#10203a' }],
+  [/стажёр|стажер|новичок|новенький|джун|\binterns?\b|newbie|new guy|new hire|rookie|junior|trainee/i,                                         { skin: 0, hair: 'curly', hairC: '#c98e3a', shirt: '#d4ff3a', lanyard: true, bg: '#26330e' }],
+  [/курьер|водитель|доставк|грузчик|логист|courier|driver|delivery|\bmovers?\b|logistic|mail ?man|postman/i,                                       { skin: 3, hair: 'cap', hairC: '#ff8a3b', shirt: '#ff8a3b', bg: '#3a240e' }],
+  [/охран|вахт[её]р|сторож|security|guard|watchman|doorman/i,                                                       { skin: 1, hair: 'cap', hairC: '#1d1d22', shirt: '#1d1d22', bg: '#151520' }],
+  [/уборщ|клининг|сантехник|электрик|маляр|бригад|монтажник|ремонтн|cleaner|cleaning|janitor|plumber|electrician|painter|\bcrew\b|handyman|repair|maintenance/i,             { skin: 2, hair: 'bandana', hairC: '#2de2e6', shirt: '#2d6e8c', bg: '#0e2630' }],
+  [/мама|бабушка|т[её]тя|сестра|соседка|\bmom\b|\bmum\b|mother|grandma|granny|grandmother|\baunt|sister/i,                                          { skin: 1, hair: 'long', hairC: '#7a4a2b', shirt: '#ff8be6', bg: '#33102a' }],
+  [/брат|друг|друзья|одноклассник|сосед(?! по столу)|детектив|стоматолог|фотограф|режисс[её]р|скульптор|организатор|ведущий|модератор|посетитель|brother|friend|classmate|neighbou?r(?! at the desk)|detective|dentist|photographer|sculptor|organizer|\bhost\b|moderator|visitor|guest/i, { skin: 2, hair: 'short', hairC: '#4a3a2a', shirt: '#3a7bd5', bg: '#102033' }],
+  [/коллег|сосед по столу|маркетолог|дизайнер|продажник|отдел|сплетниц|менеджер|coworker|co-worker|colleague|deskmate|desk neighbou?r|marketer|marketing|designer|\bsales|department|gossip|manager/i, null],  // обычный коллега: внешность по имени
 ];
 const ICONS = [
-  [/чат|мессенджер|сообщени|голосов|личные/i, '💬'], [/почт|рассылк|письм|конверт/i, '✉️'], [/будильник|напоминан/i, '⏰'],
-  [/календар|график|расписан/i, '📅'], [/принтер|сканер/i, '🖨️'], [/кофе/i, '☕'], [/кулер|бутылк|водоканал|поставщик воды/i, '🚰'],
-  [/кухн|столов|холодильник|микроволн|чайник|суп|посудомо|брокколи|конфет/i, '🍽️'], [/лифт/i, '🛗'], [/кот|кошк/i, '🐈'],
-  [/п[её]с|собак|корги/i, '🐕'], [/голуб|ворон|попугай|хомяк/i, '🐦'], [/видеозвон|созвон|вебинар|микрофон|запис|zoom/i, '🎥'],
-  [/переговорк|совещан|планёрк|брейншторм|ретро|стендап|встреч|демонстрац|презентац|нетворкинг/i, '👥'],
-  [/протокол|регламент|приказ|документ|заявлен|архив|отч[её]т|таблиц|оценк|kpi|уч[её]т|статус|задач|таск|бюджет|политик|папка/i, '📋'],
-  [/кондиционер|отоплен|вентиляц|жара|погод|солнц|град|датчик/i, '🌡️'], [/телефон|звон|громкая|колл-центр/i, '📞'],
-  [/ноутбук|клавиатур|мышь|облак|обновлен|crm|портал|сайт|нейросет|бот|ссылк|розетк|удлинит|компьютер/i, '💻'],
-  [/метро|электрич|маршрутк|пробк|самокат|велосип|навигатор|парковк|шлагбаум|турникет|проходн|автобус|лужа/i, '🚇'],
-  [/растени|монстер|тополь|дерев/i, '🪴'], [/кресл|стол|шкаф|ламп|вешалк|жалюзи|ящик|диван|гардероб|зеркал|кровать|плед/i, '🪑'],
-  [/спина|шея|глаза|желуд|бессонниц|зевот|тревожн|силы|внутренний голос/i, 'self'],
-  [/корпоратив|праздник|хеллоуин|новогод|конкурс|подар|санта|шар|лотере|тотализатор|традици|гимн|квест/i, '🎉'],
-  [/сериал|гитар|пазл|каток|абонемент|курсы|массаж|парк|набережн|свидание|галерея/i, '🛋️'], [/банк|деньг|зарплат|премия/i, '💰'],
-  [/примет|легенд|суеверие|призрак|тайник|загадочн|капсул|люк|дверь/i, '👻'],
+  [/чат|мессенджер|сообщени|голосов|личные|chat|messenger|message|voice note|\bdms?\b/i, '💬'], [/почт|рассылк|письм|конверт|mail|newsletter|letter|envelope|inbox/i, '✉️'], [/будильник|напоминан|alarm|reminder/i, '⏰'],
+  [/календар|график|расписан|calendar|schedule/i, '📅'], [/принтер|сканер|printer|scanner/i, '🖨️'], [/кофе|coffee|espresso/i, '☕'], [/кулер|бутылк|водоканал|поставщик воды|water cooler|cooler|bottle/i, '🚰'],
+  [/кухн|столов|холодильник|микроволн|чайник|суп|посудомо|брокколи|конфет|kitchen|cafeteria|canteen|fridge|microwave|kettle|soup|dishwasher|broccoli|candy/i, '🍽️'], [/лифт|elevator/i, '🛗'], [/кот|кошк|\bcats?\b|kitty/i, '🐈'],
+  [/п[её]с|собак|корги|\bdogs?\b|puppy|corgi/i, '🐕'], [/голуб|ворон|попугай|хомяк|pigeon|\bcrows?\b|parrot|hamster|bird/i, '🐦'], [/видеозвон|созвон|вебинар|микрофон|запис|zoom|video call|webinar|microphone|\bmic\b|recording/i, '🎥'],
+  [/переговорк|совещан|планёрк|брейншторм|ретро|стендап|встреч|демонстрац|презентац|нетворкинг|meeting room|conference room|meeting|standup|stand-up|brainstorm|retro|presentation|demo|networking/i, '👥'],
+  [/протокол|регламент|приказ|документ|заявлен|архив|отч[её]т|таблиц|оценк|kpi|уч[её]т|статус|задач|таск|бюджет|политик|папка|minutes|protocol|regulation|memo|document|\bforms?\b|archive|report|spreadsheet|review|status|task|ticket|budget|policy|folder/i, '📋'],
+  [/кондиционер|отоплен|вентиляц|жара|погод|солнц|град|датчик|air condition|\bac\b|heating|ventilation|\bheat\b|weather|\bsun\b|\bhail\b|sensor|thermostat/i, '🌡️'], [/телефон|звон|громкая|колл-центр|phone|call center|speakerphone/i, '📞'],
+  [/ноутбук|клавиатур|мышь|облак|обновлен|crm|портал|сайт|нейросет|бот|ссылк|розетк|удлинит|компьютер|laptop|keyboard|mouse|cloud|update|crm|portal|website|\bai\b|neural|\bbot\b|link|outlet|extension cord|computer/i, '💻'],
+  [/метро|электрич|маршрутк|пробк|самокат|велосип|навигатор|парковк|шлагбаум|турникет|проходн|автобус|лужа|subway|metro|train|traffic|scooter|bike|bicycle|\bgps\b|parking|barrier|turnstile|\bbus\b|puddle/i, '🚇'],
+  [/растени|монстер|тополь|дерев|plant|monstera|ficus|\btrees?\b/i, '🪴'], [/кресл|стол|шкаф|ламп|вешалк|жалюзи|ящик|диван|гардероб|зеркал|кровать|плед|chair|desk|cabinet|lamp|coat rack|blinds|drawer|couch|sofa|closet|mirror|\bbed\b|blanket/i, '🪑'],
+  [/спина|шея|глаза|желуд|бессонниц|зевот|тревожн|силы|внутренний голос|\bback\b|\bneck\b|\beyes\b|stomach|insomnia|yawn|anxiety|strength|inner voice|your body/i, 'self'],
+  [/корпоратив|праздник|хеллоуин|новогод|конкурс|подар|санта|шар|лотере|тотализатор|традици|гимн|квест|party|holiday|halloween|new year|contest|gift|present|santa|balloon|lottery|raffle|betting|tradition|anthem|quest/i, '🎉'],
+  [/сериал|гитар|пазл|каток|абонемент|курсы|массаж|парк|набережн|свидание|галерея|series|tv show|guitar|puzzle|skating|gym|membership|course|massage|\bpark\b|embankment|\bdate\b|gallery/i, '🛋️'], [/банк|деньг|зарплат|премия|bank|money|salary|paycheck|bonus/i, '💰'],
+  [/примет|легенд|суеверие|призрак|тайник|загадочн|капсул|люк|дверь|omen|legend|superstition|ghost|stash|mysterious|capsule|hatch|door/i, '👻'],
 ];
 const hash = s => { let h = 7; for (const ch of s) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
 // Кто говорит → портрет: коллега из CAST, архетип роли, иконка предмета или «внутренний голос» (аватар игрока)
