@@ -507,7 +507,7 @@ async function showChat(channel) {
 }
 
 // ---------- приглашения в игру: ссылки с ID, плашка, бонус за пришедших ----------
-const gameUrl = () => /^https?:/.test(location.href) ? location.origin + location.pathname : 'https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/';
+const gameUrl = () => /^https?:/.test(location.href) ? location.origin + location.pathname : 'https://survivefriday.com/';
 async function referralLink(kind) {
   const ref = shortId(await myTag);
   let team = null;

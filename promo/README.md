@@ -1,8 +1,8 @@
 # Продвижение «Выжить до пятницы»
 
-Ссылка на игру: https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/
+Ссылка на игру: https://survivefriday.com/
 В Telegram: https://t.me/Survivefridaybot
-Страница для поисковиков: https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/igra-pro-ofis.html
+Страница для поисковиков: https://survivefriday.com/igra-pro-ofis.html
 
 ## Что уже есть в игре
 
@@ -34,11 +34,11 @@
 Добавляйте `?utm_source=…` к ссылке, чтобы в `?stats` было видно, какой канал работает:
 
 ```
-https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=habr
-https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=vc
-https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=tiktok
-https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=reels
-https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=pikabu
+https://survivefriday.com/?utm_source=habr
+https://survivefriday.com/?utm_source=vc
+https://survivefriday.com/?utm_source=tiktok
+https://survivefriday.com/?utm_source=reels
+https://survivefriday.com/?utm_source=pikabu
 ```
 
 ## Что сделать руками
@@ -49,7 +49,7 @@ https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=pikabu
 4. **Стикерпак**: в Telegram бот @Stickers → `/newpack` → загрузить PNG из `stickers/` по одному, к каждому — эмодзи → `/publish`, короткое имя, например `vyzhit_do_pyatnitsy`.
 5. **itch.io**: New project → Kind of project: HTML → загрузить `dist/itch.zip` → «This file will be played in the browser», размер окна 420×820, включить «Mobile friendly» и «Fullscreen button».
 6. **Яндекс Игры**: консоль разработчика → новое приложение → загрузить `dist/yandex.zip`. В сборке подключён SDK (`/sdk.js`), вызывается `LoadingAPI.ready()` и `GameplayAPI`, скрыты ссылки на Telegram, WhatsApp и установку. Перед отправкой на модерацию сверьте актуальные требования каталога: правила меняются, а запросы к Supabase и шрифты Google могут потребовать отдельного согласования.
-7. **Короткий адрес**: купить домен, который легко продиктовать (например, `dopyatnicy.ru`), и подключить к GitHub Pages: Settings → Pages → Custom domain. После этого замените адрес в `index.html` (мета-теги), `igra-pro-ofis.html`, `sitemap.xml` и перегенерируйте QR.
+7. **Домен**: игра живёт на https://survivefriday.com (файл `CNAME` в репозитории). Старый адрес на github.io перенаправляет туда сам.
 
 ## Порядок запуска
 

@@ -46,7 +46,7 @@
 - **Чат**: «Офис» — только для участников вашего офиса, «Все игроки» — общий. Сообщения до 300 символов, обновляются каждые 4 секунды.
 
 Настройка входа по почте в Supabase:
-1. **Authentication → URL Configuration**: в **Site URL** укажите адрес игры (например, `https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/`) и добавьте его же в **Redirect URLs**.
+1. **Authentication → URL Configuration**: в **Site URL** укажите адрес игры (например, `https://survivefriday.com/`) и добавьте его же в **Redirect URLs**.
 2. **Authentication → Sign In / Providers → Email** должен быть включён (по умолчанию включён).
 3. Встроенная почта Supabase отправляет лишь несколько писем в час. Для офиса подключите свой SMTP: **Authentication → Emails → SMTP Settings**.
 
@@ -159,11 +159,29 @@ python3 -m http.server 8000
 
 1. В Telegram откройте [@BotFather](https://t.me/BotFather) → `/newbot` → придумайте имя и username бота.
 2. Подключите игру к боту одним из способов:
-   - **Главное мини-приложение** (проще): `/mybots` → бот → **Bot Settings → Configure Mini App → Enable Mini App** → адрес `https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/`. Ссылки: `https://t.me/Survivefridaybot?startapp=ref-ID_join-КОД`.
+   - **Главное мини-приложение** (проще): `/mybots` → бот → **Bot Settings → Configure Mini App → Enable Mini App** → адрес `https://survivefriday.com/`. Ссылки: `https://t.me/Survivefridaybot?startapp=ref-ID_join-КОД`.
    - **Отдельное приложение:** `/newapp` → бот → название, описание, картинка 640×360 → тот же адрес → короткое имя, например `play`. Ссылки: `https://t.me/Survivefridaybot/play?startapp=…`.
 3. В `js/config.js` указано `telegram: { bot: 'Survivefridaybot', app: '' }` — ссылки ведут на главное мини-приложение: `https://t.me/Survivefridaybot?startapp=…` (так надёжнее всего открывается сразу игра). Чтобы вести на отдельное приложение, впишите его короткое имя в `app`.
    Кнопку игры в меню чата бота можно добавить там же: **Bot Settings → Menu Button** → тот же адрес.
 4. Вход по почте внутри Telegram открывает письмо в браузере; в самом Telegram удобнее играть гостем.
+
+## Домен survivefriday.com
+
+Игра открывается на https://survivefriday.com. Домен куплен на Namecheap и подключён к GitHub Pages: в корне репозитория лежит файл `CNAME`, в Namecheap → Domain List → Manage → **Advanced DNS** заведены записи:
+
+| Тип | Host | Значение |
+|---|---|---|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153` |
+| AAAA | `@` | `2606:50c0:8001::153` |
+| AAAA | `@` | `2606:50c0:8002::153` |
+| AAAA | `@` | `2606:50c0:8003::153` |
+| CNAME | `www` | `minionslaba-ux.github.io.` |
+
+Старый адрес `minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/` GitHub перенаправляет на домен сам. Прогресс в браузере (`localStorage`) привязан к адресу сайта, поэтому после переезда незарегистрированные игроки начинают заново; зарегистрированные входят по почте, их имя, офис и результаты в рейтинге хранятся в Supabase.
 
 ## Структура
 

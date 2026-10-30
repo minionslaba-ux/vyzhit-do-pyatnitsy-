@@ -1,6 +1,6 @@
 # Тексты для чатов и соцсетей
 
-Ссылка: https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/ (добавляйте `?utm_source=…`, см. README).
+Ссылка: https://survivefriday.com/ (добавляйте `?utm_source=…`, см. README).
 
 ## В рабочий чат (первый запуск)
 
