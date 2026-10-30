@@ -110,6 +110,8 @@ if (!prefs.playerId) {
   store.set(KEY.prefs, prefs);
 }
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+// Склонение после числа: plural(21, 'участник', 'участника', 'участников') → «21 участник»
+const plural = (n, one, few, many) => { const a = Math.abs(n) % 100, b = a % 10; return `${n} ${a > 10 && a < 20 ? many : b === 1 ? one : b > 1 && b < 5 ? few : many}`; };
 const dayLabel = iso => iso.split('-').reverse().slice(0, 2).join('.');
 
 // Детерминированный генератор: одинаковая неделя дня у всех

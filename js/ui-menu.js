@@ -274,7 +274,7 @@ async function renderBoard(quiet) {
     } else {
       const rows = boardMode === 'daily' ? await board.daily(today(), dept) : await board.top(dept);
       $('boardSummary').textContent = `В рейтинге: ${rows.length}`;
-      if (!rows.length) { list.innerHTML = `<div class="lb-empty"><span class="big">Пусто</span>${boardMode === 'daily' ? 'Сегодня неделю дня ещё никто не сыграл. Станьте первым!' : 'Пока никто не доиграл неделю. Станьте первым!'}</div>`; return; }
+      if (!rows.length) { list.innerHTML = `<div class="lb-empty"><span class="big">Пусто</span>${boardMode === 'daily' ? 'Сегодня неделю дня ещё никто не сыграл. Станьте первыми!' : 'Пока никто не доиграл неделю. Станьте первыми!'}</div>`; return; }
       list.innerHTML = rowsScore(rows, tag);
     }
   } catch (err) {
@@ -340,7 +340,7 @@ async function showOffice() {
   }
   const members = await board.rpc('team_members_list', { p_id: prefs.playerId }).catch(() => []);
   views.end.innerHTML = `<div class="end-sheet glass">
-    <span class="kicker">Мой офис · ${members.length} ${members.length === 1 ? 'участник' : members.length < 5 ? 'участника' : 'участников'}</span>
+    <span class="kicker">Мой офис · ${plural(members.length, 'участник', 'участника', 'участников')}</span>
     <h1>${esc(team.name)}</h1>
     <div class="office-code"><span class="kicker">Код офиса</span><b>${team.code}</b><small>${esc(inviteLink(team.code))}</small>
       <button class="btn-ghost" id="cpLink">Скопировать ссылку-приглашение</button></div>
@@ -481,14 +481,14 @@ async function showChat(channel) {
       const list = $('chList'), atBottom = list.scrollHeight - list.scrollTop - list.clientHeight < 60;
       if (channel === 'team' && !rows.length) {
         const team = (await board.rpc('my_team', { p_id: prefs.playerId }))[0];
-        list.innerHTML = team ? `<div class="lb-empty"><span class="big">Тишина</span>В чате офиса «${esc(team.name)}» пока пусто. Напишите первым!</div>`
+        list.innerHTML = team ? `<div class="lb-empty"><span class="big">Тишина</span>В чате офиса «${esc(team.name)}» пока пусто. Напишите первыми!</div>`
           : '<div class="lb-empty"><span class="big">Нет офиса</span>Чат офиса появится, когда вы создадите офис или вступите в него. А пока есть общий чат.</div>';
         return;
       }
       list.innerHTML = rows.length ? rows.map(m => `<div class="msg${m.mine ? ' mine' : ''}"><span class="ava-s" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
         <span class="meta">${m.mine ? '' : `<b>${esc(m.name)}</b> · `}${new Date(m.sent_at).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}${m.dept && !m.mine ? ` · ${esc(m.dept)}` : ''}</span>
         <span class="bubble">${esc(m.msg)}</span>
-        <span class="msg-act">${m.can_hide ? `<button data-hide="${m.msg_id}">Скрыть</button>` : ''}${m.mine ? '' : `<button data-report="${m.msg_id}">Пожаловаться</button>`}</span></div>`).join('') : '<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первым!</div>';
+        <span class="msg-act">${m.can_hide ? `<button data-hide="${m.msg_id}">Скрыть</button>` : ''}${m.mine ? '' : `<button data-report="${m.msg_id}">Пожаловаться</button>`}</span></div>`).join('') : '<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первыми!</div>';
       list.querySelectorAll('[data-hide]').forEach(b => b.onclick = async () => {
         try { await board.rpc('hide_message', { p_id: prefs.playerId, p_msg: +b.dataset.hide }); toast('Сообщение скрыто'); chatLast = ''; load(); } catch (err) { toast(err.message); } });
       list.querySelectorAll('[data-report]').forEach(b => b.onclick = async () => {
@@ -611,7 +611,7 @@ async function checkReferrals() {
     const n = await board.rpc('referral_count', { p_id: prefs.playerId }) || 0, seen = prefs.refSeen || 0;
     if (n > seen) {
       prefs.bonusItems = (prefs.bonusItems || 0) + (n - seen); prefs.refSeen = n; store.set(KEY.prefs, prefs);
-      toast(`По вашей ссылке ${n - seen === 1 ? 'пришёл новый игрок' : `пришли ${n - seen} новых игрока`}: +${n - seen} предм. на следующую неделю`);
+      toast(`По вашей ссылке ${n - seen === 1 ? 'пришёл новый игрок' : `пришли новые игроки (${n - seen})`}. Бонус на следующую неделю: ${plural(n - seen, 'предмет', 'предмета', 'предметов')}`);
     }
     if (n >= 3) unlock(['recruiter']);
   } catch {}
