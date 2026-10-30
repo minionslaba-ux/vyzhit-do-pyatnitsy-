@@ -49,8 +49,9 @@ function buildHero(T, p) {
   // шея и голова
   add(new T.CylinderGeometry(0.05, 0.056, 0.12, 20), skin, 0, 1.5 * H, 0);
   const head = new T.Group(); head.position.set(0, 1.68 * H, 0.008); head.scale.setScalar(1.28); body.add(head);  // голова чуть крупнее реальной — лицо читается и в полный рост
-  const skull = add(sph(0.118, 40, 30), skin, 0, 0, 0, head); skull.scale.set(0.9, 1.08, 0.98);
-  const jaw = add(sph(0.098, 32, 20), skin, 0, -0.045, 0.012, head); jaw.scale.set(0.86, 0.85, 0.95);
+  // голова — одна гладкая форма «яйцом» с сужением к подбородку (две пересекающиеся сферы давали рваный шов на челюсти)
+  const headProf = [[0, -0.128], [0.042, -0.122], [0.072, -0.104], [0.093, -0.074], [0.106, -0.038], [0.112, 0.002], [0.112, 0.042], [0.104, 0.08], [0.084, 0.11], [0.052, 0.13], [0, 0.138]];
+  const skull = add(new T.LatheGeometry(headProf.map(([r, y]) => new T.Vector2(r, y)), 48), skin, 0, 0, 0, head); skull.scale.set(0.93, 1, 1.0);
   for (const s of [-1, 1]) { const ear = add(sph(0.024), skin, s * 0.106, 0, -0.005, head); ear.scale.set(0.45, 1, 0.8); }
   const nose = add(sph(0.017), skin, 0, -0.012, 0.116, head); nose.scale.set(0.85, 1.15, 1.25);
   // глаза: белок, радужка, зрачок, блик; веко для моргания
@@ -68,9 +69,24 @@ function buildHero(T, p) {
   }
   const brows = [-1, 1].map(s => { const b = add(new T.BoxGeometry(0.036, 0.0065, 0.008), hairM, s * 0.042, 0.05, 0.106, head); return b; });
   // рот: дуга-улыбка; для «просит» и «грустит» — меняем изгиб
-  const mouth = add(new T.TorusGeometry(0.026, 0.0052, 8, 24, Math.PI), mat(p.lips || '#a8584f', 0.4), 0, -0.054, 0.106, head);
-  mouth.rotation.z = Math.PI;
-  const mouthO = add(sph(0.013), mat('#4a1d1d', 0.5), 0, -0.056, 0.106, head); mouthO.scale.set(1, 1.2, 0.5); mouthO.visible = false;
+  // рот: мягкие губы почти в тон кожи и тонкая линия между ними; изгиб линии — эмоция (улыбка / ровно / грусть), «просит» — приоткрыт
+  const lipCol = new T.Color(p.lips || '#b86a62').lerp(new T.Color(p.skin), 0.45);
+  const mouth = new T.Group(); mouth.position.set(0, -0.055, 0.103); head.add(mouth);
+  const upLip = add(sph(0.017, 24, 16), mat(lipCol, 0.45), 0, 0.0035, 0, mouth); upLip.scale.set(1.25, 0.24, 0.42);
+  const loLip = add(sph(0.017, 24, 16), mat(lipCol, 0.4), 0, -0.0045, 0.0005, mouth); loLip.scale.set(1.1, 0.33, 0.48);
+  const lineM = mat('#4e2626', 0.6);
+  let line = null;
+  const mouthO = add(sph(0.0105, 20, 14), mat('#3a1616', 0.6), 0, -0.002, 0.002, mouth); mouthO.scale.set(1.05, 0.95, 0.35); mouthO.visible = false;
+  const setMouth = e => {  // c — прогиб середины: минус — уголки вверх (улыбка), плюс — вниз (грусть)
+    const c = { happy: -0.0095, neutral: -0.0015, sad: 0.006, ask: -0.002 }[e] ?? -0.0015, w = e === 'happy' ? 0.022 : 0.018;
+    if (line) { mouth.remove(line); line.geometry.dispose(); }
+    const curve = new T.QuadraticBezierCurve3(new T.Vector3(-w, 0, 0.0035), new T.Vector3(0, c * 2, 0.0065), new T.Vector3(w, 0, 0.0035));
+    line = add(new T.TubeGeometry(curve, 16, 0.0015, 6, false), lineM, 0, 0, 0, mouth); line.receiveShadow = false;
+    line.visible = e !== 'ask'; mouthO.visible = e === 'ask';
+    upLip.position.y = e === 'ask' ? 0.0075 : 0.0035; loLip.position.y = e === 'ask' ? -0.0105 : e === 'happy' ? -0.0055 : -0.0045;
+    upLip.rotation.z = loLip.rotation.z = 0;
+  };
+  setMouth('neutral');
   // причёски
   const hs = p.hair;
   if (hs !== 'bald') {
@@ -98,7 +114,8 @@ function buildHero(T, p) {
     add(new T.BoxGeometry(0.03, 0.004, 0.004), gm, 0, 0.022, 0.123, head);
     for (const s of [-1, 1]) { const arm = add(new T.BoxGeometry(0.004, 0.004, 0.1), gm, s * 0.07, 0.022, 0.07, head); arm.rotation.y = s * 0.12; }
   }
-  root.userData = { body, head, chest, arms, eyes, lids, brows, mouth, mouthO, H };
+  head.traverse(o => { o.receiveShadow = false; });  // без самозатенения лица: иначе «грязные» пятна на подбородке
+  root.userData = { body, head, chest, arms, eyes, lids, brows, setMouth, mouthEmo: 'neutral', H };
   return root;
 }
 
@@ -112,7 +129,7 @@ function makeScene(T, canvas, framing) {
   const cam = new T.PerspectiveCamera(framing === 'full' ? 30 : 24, 1, 0.1, 20);
   scene.add(new T.HemisphereLight('#e4ecff', '#3a2c48', 1.0));
   const key = new T.DirectionalLight('#fff3e6', 2.4); key.position.set(1.6, 3.2, 2.6); key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024); key.shadow.camera.near = 0.5; key.shadow.camera.far = 8; key.shadow.radius = 4; key.shadow.bias = -0.0005;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.camera.near = 0.5; key.shadow.camera.far = 8; key.shadow.radius = 4; key.shadow.bias = -0.0005; key.shadow.normalBias = 0.02;
   for (const k of ['left', 'bottom']) key.shadow.camera[k] = -1.2; for (const k of ['right', 'top']) key.shadow.camera[k] = 1.2;
   scene.add(key);
   const fill = new T.DirectionalLight('#ffe9dc', 0.9); fill.position.set(-0.6, 1.6, 3); scene.add(fill);  // мягкий фронтальный — лицо не в тени
@@ -127,10 +144,10 @@ function makeScene(T, canvas, framing) {
 }
 
 const EMO = {
-  happy:   { mouth: Math.PI, o: false, brow: 0.12, browY: 0.052 },
-  neutral: { mouth: Math.PI, o: false, brow: 0, browY: 0.05, flat: true },
-  sad:     { mouth: 0, o: false, brow: -0.28, browY: 0.047 },
-  ask:     { mouth: Math.PI, o: true, brow: 0.22, browY: 0.056 },
+  happy:   { brow: 0.12, browY: 0.052 },
+  neutral: { brow: 0, browY: 0.05 },
+  sad:     { brow: -0.28, browY: 0.047 },
+  ask:     { brow: 0.22, browY: 0.056 },
 };
 
 // Живой просмотр на canvas. Возвращает { setEmotion, setPreset, dispose }; null — если WebGL недоступен
@@ -174,7 +191,7 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
     if (now > nextBlink + 140) nextBlink = now + 2200 + Math.random() * 2600;
     for (const l of u.lids) l.scale.y = lidY;
     for (const [i, b] of u.brows.entries()) { b.rotation.z = (i ? -1 : 1) * emo.brow; b.position.y = emo.browY; }
-    u.mouth.rotation.z = emo.mouth; u.mouth.scale.y = emo.flat ? 0.35 : 1; u.mouth.visible = !emo.o; u.mouthO.visible = emo.o;
+    if (u.mouthEmo !== emoName) { u.setMouth(emoName); u.mouthEmo = emoName; }  // геометрию рта — только при смене эмоции
     renderer.render(scene, cam);
   };
   raf = requestAnimationFrame(frame);
@@ -196,6 +213,7 @@ async function heroSnapshots(presets, w = 160, h = 200) {
     const hero = buildHero(T, p); hero.rotation.y = -0.25; scene.add(hero);
     const u = hero.userData; for (const l of u.lids) l.scale.y = 0.05;
     for (const [i, b] of u.brows.entries()) b.rotation.z = (i ? -1 : 1) * EMO.happy.brow;
+    u.setMouth('happy');
     renderer.render(scene, cam); out.push(canvas.toDataURL('image/png'));
     scene.remove(hero);
   }

@@ -1202,3 +1202,14 @@ body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .v
   .hero-pick .hero-cv, .hero-ask .hero-cv { height: 230px; }
   .hero-bubble::before { display: none; }
 }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.hs-list { display: grid; gap: 6px; max-height: 58vh; overflow-y: auto; margin: 6px 0 12px; }
+.hs-row { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 14px; border: 1px solid rgba(var(--w-rgb),.12); background: rgba(var(--w-rgb),.03); }
+.hs-ico { font-size: 24px; text-align: center; }
+.hs-txt { display: grid; min-width: 0; }
+.hs-txt b { font-size: 14.5px; font-weight: 900; }
+.hs-txt small { color: var(--text-2); font-size: 12px; font-weight: 700; }
+.hs-act { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.hs-act em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--text-2); white-space: nowrap; }
+.hs-row.owned em, .hs-row.paid em { color: var(--up); }
+.hs-row.locked { opacity: .6; }

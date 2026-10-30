@@ -128,12 +128,63 @@ function heroCreate(done) {
   };
 }
 
+// Купить потребность: деньгами или в кредит (вернуть на 20% больше). false — не хватает денег или банк не даёт
+const loanCost = n => Math.round(n.price * 1.2);
+function fulfill(C2, h, n, credit) {
+  if (credit) { if ((C2.loan || 0) + loanCost(n) > LOAN_CAP) return false; C2.loan = (C2.loan || 0) + loanCost(n); }
+  else { if (C2.bank < n.price) return false; C2.bank -= n.price; C2.spent = (C2.spent || 0) + n.price; }
+  h.mood = Math.min(100, (h.mood ?? 70) + n.mood);
+  if (n.every) h.last[n.id] = C2.week; else if (!h.owned.includes(n.id)) h.owned.push(n.id);
+  if (n.id === 'wedding') h.married = true;
+  if (h.pending === n.id) h.pending = null;
+  careerSave(C2); sfx.coins?.();
+  toast(credit ? L(`${n.ico} Куплено в кредит. Долг банку: ${money(C2.loan)}`, `${n.ico} Bought on credit. You owe the bank ${money(C2.loan)}`)
+    : L(`${n.ico} Куплено! ${h.name} доволен${heroFem(h) ? 'а' : ''}`, `${n.ico} Done! ${h.name} is happy`));
+  return true;
+}
+// Состояние потребности для магазина: owned — уже есть, paid — повторная оплачена недавно, locked — ещё не время, open — можно купить
+function needState(n, h, week) {
+  if (n.single && h.married && !h.owned.includes(n.id)) return { hide: true };
+  if (n.married && !h.married) return { hide: true };
+  if (!n.every && h.owned.includes(n.id)) return { st: 'owned' };
+  if (week < n.from) return { st: 'locked' };
+  if (n.every && h.last[n.id] != null && week - h.last[n.id] < n.every) return { st: 'paid', left: n.every - (week - h.last[n.id]) };
+  return { st: 'open' };
+}
+
+// Покупки: все потребности списком — что уже есть, что можно купить сейчас, что откроется позже
+function heroShop() {
+  const C2 = careerNow(), h = C2?.hero; if (!h) return;
+  dropView();
+  const m = $('modal');
+  const render = () => {
+    const rows = NEEDS.map(n => ({ n, s: needState(n, h, C2.week) })).filter(x => !x.s.hide);
+    m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="hsTitle">
+      <h2 id="hsTitle">🛍️ ${L('Покупки', 'Shopping')} · ${esc(h.name)}</h2>
+      <p class="hero-lead">${L(`На счёте ${money(C2.bank)}${C2.loan ? ` · кредит ${money(C2.loan)}` : ''} — купленное радует, настроение растёт`, `Balance ${money(C2.bank)}${C2.loan ? ` · loan ${money(C2.loan)}` : ''} — purchases lift their mood`)}</p>
+      <div class="hs-list">${rows.map(({ n, s }) => `<div class="hs-row ${s.st}">
+        <span class="hs-ico" aria-hidden="true">${n.ico}</span>
+        <span class="hs-txt"><b>${esc(needText(n, h, 't'))}</b><small>${money(n.price)} · ${L(`настроение +${n.mood}`, `mood +${n.mood}`)}${n.every ? L(` · раз в ${n.every} нед.`, ` · every ${n.every} wk`) : ''}</small></span>
+        <span class="hs-act">${s.st === 'owned' ? `<em>✓ ${L('есть', 'owned')}</em>`
+          : s.st === 'paid' ? `<em>✓ ${L(`снова через ${s.left} нед.`, `again in ${s.left} wk`)}</em>`
+          : s.st === 'locked' ? `<em>${L(`с ${n.from}-й недели`, `from week ${n.from}`)}</em>`
+          : `<button class="btn-chip" type="button" data-buy="${n.id}" ${C2.bank < n.price ? 'disabled' : ''}>${money(n.price)}</button><button class="btn-chip" type="button" data-loan="${n.id}" ${(C2.loan || 0) + loanCost(n) > LOAN_CAP ? 'disabled' : ''}>${L('в кредит', 'credit')}</button>`}</span></div>`).join('')}</div>
+      <button class="btn-ghost" type="button" id="hsClose">${L('Закрыть', 'Close')}</button></div>`;
+    m.querySelectorAll('[data-buy],[data-loan]').forEach(b => b.onclick = () => {
+      const n = NEEDS.find(x => x.id === (b.dataset.buy || b.dataset.loan));
+      if (fulfill(C2, h, n, !!b.dataset.loan)) render();
+    });
+    $('hsClose').onclick = () => { m.hidden = true; renderMenu(); };
+  };
+  render(); m.hidden = false;
+}
+
 // Просьба аватара
 function heroAsk() {
   const C2 = careerNow(), h = C2?.hero; if (!h?.pending) return;
   const n = NEEDS.find(x => x.id === h.pending); if (!n) { h.pending = null; careerSave(C2); return; }
   h.seenWeek = C2.week; careerSave(C2);
-  const p = heroPreset(h), can = C2.bank >= n.price, loanOk = (C2.loan || 0) + Math.round(n.price * 1.2) <= LOAN_CAP;
+  const p = heroPreset(h), can = C2.bank >= n.price, loanOk = (C2.loan || 0) + loanCost(n) <= LOAN_CAP;
   const { m, close } = heroModal(`
     <div class="hero-ask">
       <canvas class="hero-cv" data-framing="full"></canvas>
@@ -142,20 +193,13 @@ function heroAsk() {
     <div class="money"><div><b>${money(n.price)}</b><span>${L('стоит', 'costs')}</span></div><div><b>${money(C2.bank)}</b><span>${L('на счёте', 'balance')}</span></div></div>
     <div class="hero-acts">
       <button class="btn-main" type="button" id="haPay" ${can ? '' : 'disabled'}>${can ? L(`Купить за ${money(n.price)}`, `Buy for ${money(n.price)}`) : L('Не хватает денег', 'Not enough money')}</button>
-      <button class="btn-ghost" type="button" id="haLoan" ${loanOk ? '' : 'disabled'}>${loanOk ? L(`В кредит: вернуть ${money(Math.round(n.price * 1.2))}`, `On credit: repay ${money(Math.round(n.price * 1.2))}`) : L('Банк больше не даёт кредит', 'The bank won’t lend more')}</button>
+      <button class="btn-ghost" type="button" id="haLoan" ${loanOk ? '' : 'disabled'}>${loanOk ? L(`В кредит: вернуть ${money(loanCost(n))}`, `On credit: repay ${money(loanCost(n))}`) : L('Банк больше не даёт кредит', 'The bank won’t lend more')}</button>
       <button class="btn-ghost" type="button" id="haBonus" ${h.wantBonus ? 'disabled' : ''}>${h.wantBonus ? L('Задача на премию уже ждёт', 'A bonus task is already lined up') : L('📋 Взять задачу на премию', '📋 Take a bonus task')}</button>
       <button class="btn-link" type="button" id="haLater">${L(`Отложить (${h.name} расстроится)`, `Later (${h.name} will be upset)`)}</button>
     </div>`, p, 'ask');
-  const bought = () => {
-    h.mood = Math.min(100, (h.mood ?? 70) + n.mood);
-    if (n.every) h.last[n.id] = C2.week; else h.owned.push(n.id);
-    if (n.id === 'wedding') h.married = true;
-    h.pending = null; careerSave(C2);
-    heroView?.setEmotion('happy'); sfx.coins?.();
-    setTimeout(() => { close(); renderMenu(); }, 1300);
-  };
-  $('haPay').onclick = () => { C2.bank -= n.price; C2.spent = (C2.spent || 0) + n.price; bought(); toast(L(`${n.ico} Куплено! ${h.name} доволен${heroFem(h) ? 'а' : ''}`, `${n.ico} Done! ${h.name} is happy`)); };
-  $('haLoan').onclick = () => { C2.loan = (C2.loan || 0) + Math.round(n.price * 1.2); bought(); toast(L(`${n.ico} Куплено в кредит. Долг банку: ${money(C2.loan)}`, `${n.ico} Bought on credit. You owe the bank ${money(C2.loan)}`)); };
+  const bought = ok => { if (!ok) return; heroView?.setEmotion('happy'); setTimeout(() => { close(); renderMenu(); }, 1300); };
+  $('haPay').onclick = () => bought(fulfill(C2, h, n, false));
+  $('haLoan').onclick = () => bought(fulfill(C2, h, n, true));
   $('haBonus').onclick = () => { h.wantBonus = true; careerSave(C2); close(); toast(L('📋 В начале следующей недели придёт задача с премией — заработайте и купите', '📋 A bonus task will arrive at the start of next week — earn it and buy')); renderMenu(); };
   $('haLater').onclick = () => {
     h.postponed = (h.postponed || 0) + 1; h.mood = Math.max(0, (h.mood ?? 70) - 12);
@@ -193,11 +237,13 @@ function heroCard() {
     <div class="hero-info"><b>${esc(h.name)}</b><small>${PROF[C2.prof]?.icon || ''} ${esc(PROF[C2.prof]?.name || '')} · ${heroStatus(h)}</small>
       <div class="hero-mood" title="${L('Настроение', 'Mood')}"><i style="--v:${mood}"></i></div><small>${L('Настроение', 'Mood')}: ${moodTxt} · ${L('счёт', 'balance')} ${money(C2.bank)}${C2.loan ? ` · ${L('кредит', 'loan')} ${money(C2.loan)}` : ''}</small>
       ${n ? `<button class="btn-main hero-req" type="button" id="hcAsk">${n.ico} ${L('Просит', 'Wants')}: ${esc(needText(n, h, 't'))} · ${money(n.price)}</button>` : `<small class="hero-ok">${L('Сейчас ничего не просит', 'Not asking for anything right now')}</small>`}
-      <button class="btn-chip" type="button" id="hcCourse" ${h.xpWeek === C2.week ? 'disabled' : ''}>📚 ${L(`Курсы +${XP_COURSE.xp} опыта — ${money(XP_COURSE.price)}`, `Course +${XP_COURSE.xp} XP — ${money(XP_COURSE.price)}`)}</button>
+      <span class="hero-btns"><button class="btn-chip" type="button" id="hcShop">🛍️ ${L('Покупки', 'Shopping')}</button>
+      <button class="btn-chip" type="button" id="hcCourse" ${h.xpWeek === C2.week ? 'disabled' : ''}>📚 ${L(`Курсы +${XP_COURSE.xp} опыта — ${money(XP_COURSE.price)}`, `Course +${XP_COURSE.xp} XP — ${money(XP_COURSE.price)}`)}</button></span>
       ${h.owned.length ? `<span class="hero-owned">${h.owned.map(id => NEEDS.find(x => x.id === id)?.ico || '').join(' ')}</span>` : ''}</div>`;
   if (keepCv) box.querySelector('canvas').replaceWith(keepCv);  // живой 3D остаётся на месте
   $('hcAsk')?.addEventListener('click', heroAsk);
   $('hcCourse').onclick = heroCourse;
+  $('hcShop').onclick = heroShop;
   const emotion = n ? 'ask' : mood < 30 ? 'sad' : mood >= 70 ? 'happy' : 'neutral';
   if (cardView && cardKey === h.preset) cardView.setEmotion(emotion);  // меню перерисовывается часто — сцену не пересоздаём
   else {
