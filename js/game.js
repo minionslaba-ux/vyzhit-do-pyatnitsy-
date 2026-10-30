@@ -405,7 +405,18 @@ function renderCard() {
   touchPlaying(d);
   coachFor(slot);
   answerTimerReset();
+  fitCardText();
 }
+// Текст карточки целиком помещается в карточку: если не влезает — шрифт плавно уменьшается (до 14 px), без прокрутки
+function fitCardText() {
+  const t = $('card')?.querySelector('.text'); if (!t) return;
+  t.style.fontSize = '';
+  let fs = parseFloat(getComputedStyle(t).fontSize);
+  for (let i = 0; i < 24 && t.scrollHeight > t.clientHeight + 1 && fs > 14; i++) { fs -= 1; t.style.fontSize = fs + 'px'; }
+}
+addEventListener('resize', () => { if (!views.game.hidden) fitCardText(); });
+// панель подсказки под текстом меняет высоту — подогнать ещё раз
+if (typeof MutationObserver !== 'undefined') new MutationObserver(() => requestAnimationFrame(fitCardText)).observe($('card'), { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 // Статус «играет» — раз в игровой день или раз в 30 секунд, а не на каждой карточке
 let touchAt = 0, touchDay = -1;
 function touchPlaying(d) {

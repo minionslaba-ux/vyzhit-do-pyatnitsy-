@@ -5,7 +5,11 @@ const ANSWER_TIME = 30, ANSWER_WARN = 5, ANSWER_FINE = 1;
 let ansLeft = ANSWER_TIME, ansWarned = false, ansLast = 0, ansT = 0;
 const ansEl = () => {
   let el = $('ansTimer');
-  if (!el && $('clock')) { el = Object.assign(document.createElement('span'), { id: 'ansTimer', className: 'ans-timer' }); el.setAttribute('role', 'timer'); el.setAttribute('aria-label', L('Время на ответ', 'Time to answer')); $('clock').after(el); }
+  if (!el && $('clock')) {  // часы и таймер — в одной строке, без лишней высоты
+    el = Object.assign(document.createElement('span'), { id: 'ansTimer', className: 'ans-timer' }); el.setAttribute('role', 'timer'); el.setAttribute('aria-label', L('Время на ответ', 'Time to answer'));
+    const clock = $('clock'), row = Object.assign(document.createElement('div'), { className: 'clock-row' });
+    clock.before(row); row.append(clock, el);
+  }
   return el;
 };
 const ansWarnEl = () => {
