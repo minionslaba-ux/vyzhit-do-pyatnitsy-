@@ -10,5 +10,5 @@ window.SUPABASE_CONFIG = {
   // botId — номер бота (первая часть токена, не секрет) для кнопки «Войти через Telegram» на сайте; домен бота задаётся в BotFather → /setdomain
   telegram: { bot: 'Survivefridaybot', app: '', botId: 9083461235 },  // главное мини-приложение бота: t.me/Survivefridaybot?startapp=… открывает игру сразу
   // VK ID (необязательно): ID приложения с id.vk.com (не секрет). Пусто — кнопки «Войти через VK» нет
-  vk: { app: '' },
+  vk: { app: '54866781' },
 };
