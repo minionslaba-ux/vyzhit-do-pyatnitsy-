@@ -267,7 +267,7 @@ function makeScene(T, canvas, framing, stage = false) {  // stage — сцена
   const ground = new T.Mesh(new T.CircleGeometry(stage ? 6 : 0.75, 48), new T.ShadowMaterial({ opacity: 0.38 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
   const glow = new T.Mesh(new T.RingGeometry(0.5, 0.62, 64), new T.MeshBasicMaterial({ color: '#2de2e6', transparent: true, opacity: 0.35 })); glow.rotation.x = -Math.PI / 2; glow.position.y = 0.002; if (!stage) scene.add(glow);
   // full — во весь рост; bust — по пояс; face — лицо и плечи (превью)
-  const aim = { full: [0.9, 4.0, 0.2], bust: [1.47, 2.1, 0.06], face: [1.67, 1.25, 0.02], kid: [0.66, 2.9, 0.1], wide: [0.8, 6.4, 0.3] }[framing] || [0.9, 4.0, 0.2];
+  const aim = { full: [0.9, 4.0, 0.2], bust: [1.47, 2.1, 0.06], face: [1.67, 1.25, 0.02], kid: [0.66, 2.9, 0.1], pet: [0.48, 2.7, 0.2], wide: [0.8, 6.4, 0.3] }[framing] || [0.9, 4.0, 0.2];
   cam.position.set(0, aim[0] + aim[2], aim[1]); cam.lookAt(0, aim[0], 0);
   return { renderer, scene, cam };
 }
@@ -292,6 +292,15 @@ const POSE = {
   give:  () => [[0.03, 0, -0.05], [-1.25, 0.05, -0.15]],
   hug:   t => [[-1.1, 0.5 + Math.sin(t * 3) * 0.05, -0.9], [-1.1, 0.5 + Math.sin(t * 3) * 0.05, -0.9]],
   spin:  () => [[0, 0.5, -0.2], [0, 0.5, -0.2]],
+  show:  t => [[0.03, 0, -0.05], [-1.3 + Math.sin(t * 2) * 0.05, 0.18, -0.45]],  // протягивает покупку к зрителю
+};
+
+// Картинка-предмет (эмодзи) как спрайт: всегда повёрнута к камере и рисуется поверх — покупку видно, даже если рука перед телом
+const emojiSprite = (T, e, size) => {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const g = c.getContext('2d'); g.font = '100px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(e, 64, 70);
+  const tex = new T.CanvasTexture(c); tex.colorSpace = T.SRGBColorSpace;
+  const s = new T.Sprite(new T.SpriteMaterial({ map: tex, depthTest: false, transparent: true })); s.renderOrder = 10; s.scale.setScalar(size); return s;
 };
 
 // Живой просмотр на canvas. Возвращает { setEmotion, setPreset, setAction, dispose }; null — если WebGL недоступен.
@@ -300,7 +309,7 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
   let T; try { T = await three(); } catch { return null; }
   let ctx; try { ctx = makeScene(T, canvas, framing, stage); } catch { return null; }
   const { renderer, scene, cam } = ctx;
-  let hero = buildHero(T, preset), emo = EMO[emotion] || EMO.neutral, emoName = emotion, action = null, actT = 0, prop = null, propK = null, moving = 0;
+  let hero = buildHero(T, preset), emo = EMO[emotion] || EMO.neutral, emoName = emotion, action = null, actT = 0, prop = null, propK = null, moving = 0, held = null;
   scene.add(hero);
   const size = () => { const w = canvas.clientWidth || 200, h = canvas.clientHeight || 260; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
   size();
@@ -365,7 +374,7 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
   raf = requestAnimationFrame(frame);
   return {
     setEmotion(e) { emo = EMO[e] || EMO.neutral; emoName = e; },
-    setPreset(p) { const x = hero.position.x; scene.remove(hero); hero = buildHero(T, p); hero.position.x = x; if (prop) hero.add(prop); scene.add(hero); },
+    setPreset(p) { const x = hero.position.x; scene.remove(hero); hero = buildHero(T, p); hero.position.x = x; if (prop) hero.add(prop); if (held) hero.userData.arms[1].el.add(held); scene.add(hero); },
     setAction(a) { action = a || null; actT = performance.now(); },
     setProp(k) {  // транспорт или удочка — крепится к персонажу
       if (prop) { hero.remove(prop); prop = null; } propK = PROPS[k] ? k : null;
@@ -377,6 +386,11 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
       hero.position.x = x; hero.position.z = z;
     },
     setYaw(v) { yawRest = v; },
+    hold(e, size = 0.3) {  // покупка в правой руке (null — убрать)
+      const hand = hero.userData.arms[1].el;
+      if (held) { held.parent?.remove(held); held.material.map.dispose(); held = null; }
+      if (e) { held = emojiSprite(T, e, size / (hero.userData.kid ? 0.8 : 1)); held.position.set(0, -0.36, 0.06); hand.add(held); }
+    },
     dispose() { alive = false; cancelAnimationFrame(raf); ro?.disconnect(); renderer.dispose(); renderer.forceContextLoss?.(); },
   };
 }

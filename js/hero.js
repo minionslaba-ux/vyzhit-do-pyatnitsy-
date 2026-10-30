@@ -73,6 +73,7 @@ bus.on('deck', S2 => {
   if (h.mood < 30) { S2.res.psyche = Math.max(5, S2.res.psyche - 10); setTimeout(() => toast(L(`${nm} грустит — Кукуха −10`, `${nm} is upset — Sanity −10`)), 900); }
   else if (h.mood >= 80) { S2.res.psyche = Math.min(95, S2.res.psyche + 5); setTimeout(() => toast(L(`${nm} счастлив${heroFem(h) ? 'а' : ''} — Кукуха +5`, `${nm} is happy — Sanity +5`)), 900); }
   if (h.wantBonus) { S2.forceDeadline = true; h.wantBonus = false; }
+  setTimeout(() => { const t = lineFor('morning', heroFem(h)); say(t, heroVoice(h)); toast(`${nm}: «${t}»`); }, 2600);  // проводы на работу
   saveCareer();
 });
 
@@ -183,6 +184,7 @@ function heroShop() {
       <h3 class="hs-h">${L('Подарки и мелочи', 'Treats & little things')}</h3>
       <div class="hs-cats">${GOODS.map(g => `<button type="button" class="hs-cat" data-cat="${g.id}"><span aria-hidden="true">${g.ico}</span><b>${esc(g.t)}</b><small>${L(`${g.items.length} вар. · от ${money(Math.min(...g.items.map(x => x.price)))}`, `${g.items.length} options · from ${money(Math.min(...g.items.map(x => x.price)))}`)}</small></button>`).join('')}</div>
       <h3 class="hs-h">${L('Дети', 'Kids')}</h3>${kidsHtml(h)}
+      <h3 class="hs-h">${L('Питомцы', 'Pets')}</h3>${petsHtml(h)}
       <h3 class="hs-h">${L('Большие цели', 'Big goals')}</h3>
       <div class="hs-list">${rows.map(({ n, s }) => `<div class="hs-row ${s.st}">
         <span class="hs-ico" aria-hidden="true">${n.ico}</span>
@@ -198,6 +200,7 @@ function heroShop() {
     });
     m.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => goodsPicker(b.dataset.cat, heroShop));
     m.querySelectorAll('[data-kid]').forEach(b => b.onclick = () => kidShop(+b.dataset.kid, heroShop));
+    bindPets(m, heroShop);
     $('hsClose').onclick = () => { m.hidden = true; renderMenu(); };
   };
   render(); m.hidden = false;
@@ -268,13 +271,16 @@ function heroCard() {
       <button class="btn-chip" type="button" id="hcCourse" ${h.xpWeek === C2.week ? 'disabled' : ''}>📚 ${L(`Курсы +${XP_COURSE.xp} опыта — ${money(XP_COURSE.price)}`, `Course +${XP_COURSE.xp} XP — ${money(XP_COURSE.price)}`)}</button>
       <button class="btn-chip" type="button" id="hcChange">🔄 ${L('Сменить персонажа', 'Change character')}</button></span>
       <small>${L('Дети', 'Kids')}:</small>${kidsHtml(h)}
+      <small>${L('Питомцы', 'Pets')}:</small>${petsHtml(h)}
       ${h.owned.length || h.have?.length ? `<span class="hero-owned">${[...h.owned.map(id => NEEDS.find(x => x.id === id)?.ico || ''), ...(h.have || []).map(id => GOODS.flatMap(g => g.items).find(x => x.id === id)?.ico || '')].join(' ')}</span>` : ''}</div>`;
   if (keepCv) box.querySelector('canvas').replaceWith(keepCv);  // живой 3D остаётся на месте
   $('hcAsk')?.addEventListener('click', heroAsk);
   $('hcCourse').onclick = heroCourse;
   $('hcShop').onclick = heroShop;
   $('hcChange').onclick = () => heroCreate(renderMenu, true);
-  box.querySelectorAll('[data-kid]').forEach(b => b.onclick = () => kidShop(+b.dataset.kid, renderMenu));
+  box.querySelectorAll('[data-kid]').forEach(b => b.onclick = () => { const k = h.kids[+b.dataset.kid]; say(lineFor('kid_tap', k.g === 'f'), kidVoice(k)); kidShop(+b.dataset.kid, renderMenu); });
+  bindPets(box, renderMenu);
+  const cvEl = box.querySelector('canvas'); if (cvEl) cvEl.onclick = () => { const t = lineFor(mood < 45 ? 'tap_sad' : 'tap_happy', heroFem(h)); say(t, heroVoice(h)); toast(`${h.name}: «${t}»`); cardView?.setEmotion(mood < 45 ? 'sad' : 'happy'); };
   const emotion = n ? 'ask' : mood < 30 ? 'sad' : mood >= 70 ? 'happy' : 'neutral';
   if (cardView && cardKey === key) cardView.setEmotion(emotion);  // меню перерисовывается часто — сцену не пересоздаём
   else {

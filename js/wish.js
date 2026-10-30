@@ -134,7 +134,12 @@ bus.on('weekEnd', x => {
     setTimeout(() => breakModal(why, back, from, C2.week, h), 1200);
     return;
   }
-  setTimeout(() => { if (h.pending && h.seenWeek !== C2.week && $('modal').hidden && !views.end.hidden) heroAsk(); }, 1800);
+  // реплика на экране итогов: поздравляет или утешает
+  setTimeout(() => {
+    const t = lineFor(x.won ? 'week_win' : 'week_fired', fem), sheet = views.end.querySelector('.end-sheet');
+    if (sheet && !views.end.hidden) { sheet.querySelector('.hero-says')?.remove(); sheet.querySelector('h1')?.insertAdjacentHTML('afterend', `<p class="hero-says">💬 ${esc(nm)}: «${esc(t)}»</p>`); say(t, heroVoice(h)); }
+  }, 900);
+  setTimeout(() => { if (h.pending && h.seenWeek !== C2.week && $('modal').hidden && !views.end.hidden) heroAsk(); }, 3400);
 });
 
 function breakModal(why, back, from, to, h) {
@@ -178,6 +183,7 @@ bus.on('deck', S2 => {
   S2.wishAt = [...at];
 });
 bus.on('answer', () => {
+  if (S?.mode === 'career' && C?.hero && S.step === PER_DAY * 2 && !S.wishAt?.includes(S.step)) setTimeout(() => { const t = lineFor('cheer', heroFem(C.hero)); say(t, heroVoice(C.hero)); toast(`${C.hero.name}: «${t}»`); }, 700);  // среда — поддержка
   if (S?.mode !== 'career' || !C?.hero || !S.wishAt?.includes(S.step)) return;
   const step = S.step;
   setTimeout(() => {
@@ -186,6 +192,8 @@ bus.on('answer', () => {
     S.wishAt = S.wishAt.filter(x => x !== step);
     const kids = C.hero.kids?.length ? C.hero.kids : (ensureKids(C.hero), saveCareer(), C.hero.kids), k = Math.random() < 0.4 && rnd(kids.filter(k => kidWants(k).length)), want = k && kidWants(k).filter(x => x.id !== k.last);
     if (want?.length) return kidWishPop(k, rnd(want));  // примерно каждое третье желание — от детей
+    const pets = C.hero.pets || [], hungry = pets.find(p => p.last.p_food !== C.week);
+    if (pets.length && (hungry || Math.random() < 0.35)) return petWishPop(hungry || rnd(pets));  // голодный питомец — в первую очередь
     wishPop();
   }, 900);
 });
@@ -286,14 +294,14 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
     market: `<div class="tn-shelves">${['🥫🧃🍪🥫🧃🍪🥫🧃', '🍎🥦🍞🥛🧀🍌🥕🍇', '🧴🧻🍫🍬🧴🧻🍫🍬'].map((r, i) => `<div class="tn-shelf" style="--d:${i}">${(r + r).replace(/(.)/gu, '<span>$1</span>')}</div>`).join('')}</div>
       <div class="tn-cart">🛒<div class="tn-in"></div></div>${list.map((it, i) => `<span class="tn-fly" style="--i:${i}">${it.ico}</span>`).join('')}
       <div class="tn-receipt"><b>${L('Касса', 'Checkout')}</b>${list.length} ${L('шт.', 'items')} · ${money(list.reduce((s, it) => s + it.price, 0))}</div>`,
-    delivery: `<div class="tn-door">🚪</div><span class="tn-bell">🔔 ${L('Дзинь-дзинь!', 'Ding-dong!')}</span><div class="tn-box">📦</div><span class="tn-gift">${x?.ico || '🎁'}</span>`,
-    phone: `<div class="tn-phone"><div class="tn-scr"><b>${kid ? `📱 ${L('Новый телефон!', 'New phone!')}` : `📶 ${L('Баланс пополнен', 'Top-up done')}`}</b><i></i><span>${kid ? '🤳' : `+${x?.price || 0} ${L('у.е.', '$')}`}</span></div></div>${['💬', '❤️', '😂', '📸'].map((e, i) => `<span class="tn-ping" style="--i:${i}">${e}</span>`).join('')}`,
+    delivery: `<div class="tn-door">🚪</div><span class="tn-bell">🔔 ${L('Дзинь-дзинь!', 'Ding-dong!')}</span><div class="tn-box">📦</div>`,
+    phone: kid ? '' : `<div class="tn-phone"><div class="tn-scr"><b>${kid ? `📱 ${L('Новый телефон!', 'New phone!')}` : `📶 ${L('Баланс пополнен', 'Top-up done')}`}</b><i></i><span>${kid ? '🤳' : `+${x?.price || 0} ${L('у.е.', '$')}`}</span></div></div>${['💬', '❤️', '😂', '📸'].map((e, i) => `<span class="tn-ping" style="--i:${i}">${e}</span>`).join('')}`,
     wear: `<div class="tn-curtain l"></div><div class="tn-curtain r"></div><div class="tn-mirror">🪞</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '👗'} ${esc(title)}</span>`,
     outing: `${rain(10, OUTING_FX[x?.id] || '✨')}<span class="tn-big">${x?.ico || '🎟️'}</span>`,
     need: `<span class="tn-big need">${need?.ico || x?.ico || '🎉'}</span>${rain(12, ['🎉', '✨', '💖'])}`,
     ride: `<div class="tn-ground"></div><div class="tn-lane"></div><span class="tn-tag">${x?.ico || need?.ico || '🚗'} ${esc(title)}</span>`,
     fish: `<div class="tn-lake"></div><span class="tn-fish">🐟</span><span class="tn-catch">🐟</span><span class="tn-reed l">🌾</span><span class="tn-reed r">🌾</span>`,
-    salon: `<div class="tn-mirror big">🪞</div><span class="tn-tool">${x?.ico || '💅'}</span>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '💅'} ${esc(title)}</span>`,
+    salon: `<div class="tn-mirror big">🪞</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '💅'} ${esc(title)}</span>`,
     game: `<div class="tn-tv"><div class="tn-px">${Array.from({ length: 6 }, (_, i) => `<i style="--i:${i}"></i>`).join('')}</div></div><span class="tn-tag">🎮 ${esc(title)}</span>`,
   }[kind];
   const word = {
@@ -336,19 +344,21 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
     view = v;
     if (vProp) v.setProp(vProp);
     if (kind === 'fish') v.place(kid ? -0.35 : -0.5);
-    v.setAction({ market: 'walk', phone: 'phone', outing: 'hug', need: 'jump', game: 'hold' }[kind] || null);
+    v.setAction({ market: 'walk', phone: 'phone', game: 'hold' }[kind] || null);
   });
   stage.classList.add('go');
   // сценарий по времени
   const D = dur;
-  if (kind === 'market') { at(D * 0.25, () => cap(1)); at(D * 0.72, () => { cap(2); view?.setAction('hold'); }); at(D * 0.85, () => { view?.setAction('cheer'); hearts(); sfx.coins?.(); }); }
-  if (kind === 'delivery') { at(900, () => sfx.bell?.()); at(D * 0.3, () => { cap(1); view?.setAction('give'); }); at(D * 0.55, () => { view?.setAction('hug'); view?.setEmotion('happy'); }); at(D * 0.72, () => { cap(2); view?.setAction('cheer'); hearts(); }); }
-  if (kind === 'phone') { at(D * 0.45, () => { cap(1); sfx.sms?.(); }); at(D * 0.7, () => { view?.setAction('cheer'); hearts(); }); }
+  // покупка в руке персонажа: её видно в мультике (спрайт поверх тела)
+  const item = x?.ico || need?.ico || '🎁', show = (e = item) => { view?.hold(e); view?.setAction('show'); };
+  if (kind === 'market') { at(D * 0.25, () => cap(1)); at(D * 0.72, () => { cap(2); view?.hold('🛍️'); view?.setAction('show'); }); at(D * 0.85, () => { view?.setAction('cheer'); hearts(); sfx.coins?.(); }); }
+  if (kind === 'delivery') { at(900, () => sfx.bell?.()); at(D * 0.3, () => cap(1)); at(D * 0.55, () => { show(); view?.setEmotion('happy'); }); at(D * 0.72, () => { cap(2); hearts(); }); at(D * 0.86, () => view?.setAction('cheer')); }
+  if (kind === 'phone') { at(300, () => view?.hold('📱', 0.3)); at(D * 0.45, () => { cap(1); sfx.sms?.(); }); at(D * 0.62, () => { show('📱'); hearts(); }); }  // телефон всё время в руке и на виду
   if (kind === 'wear') { at(D * 0.15, () => view?.setAction('spin')); at(D * 0.32, () => { view?.setPreset(look); cap(1); sfx.item?.(); }); at(D * 0.5, () => { view?.setAction(null); view?.setEmotion('happy'); }); at(D * 0.7, () => { cap(2); view?.setAction('cheer'); hearts(); }); }
-  if (kind === 'outing') { at(D * 0.5, () => { cap(1); view?.setAction('cheer'); hearts(); }); }
-  if (kind === 'need') { at(D * 0.45, () => { cap(1); hearts(); sfx.win?.(); }); at(D * 0.6, () => view?.setAction('cheer')); }
-  if (kind === 'salon') { at(D * 0.3, () => cap(1)); at(D * 0.55, () => { view?.setAction('spin'); sfx.item?.(); }); at(D * 0.68, () => { view?.setAction('cheer'); cap(2); hearts(); }); }
-  if (kind === 'game') { at(D * 0.35, () => cap(1)); at(D * 0.7, () => { cap(2); view?.setAction('cheer'); hearts(); sfx.win?.(); }); }
+  if (kind === 'outing') { at(D * 0.15, () => show()); at(D * 0.5, () => { cap(1); hearts(); }); at(D * 0.75, () => view?.setAction('cheer')); }
+  if (kind === 'need') { at(D * 0.2, () => show()); at(D * 0.45, () => { cap(1); hearts(); sfx.win?.(); }); at(D * 0.7, () => view?.setAction('cheer')); }
+  if (kind === 'salon') { at(D * 0.15, () => show()); at(D * 0.3, () => cap(1)); at(D * 0.55, () => { view?.hold(null); view?.setAction('spin'); sfx.item?.(); }); at(D * 0.68, () => { view?.setAction('cheer'); cap(2); hearts(); }); }
+  if (kind === 'game') { at(300, () => view?.hold('🎮', 0.26)); at(D * 0.35, () => cap(1)); at(D * 0.7, () => { cap(2); view?.setAction('cheer'); hearts(); sfx.win?.(); }); }
   if (kind === 'fish') { at(D * 0.25, () => cap(1)); at(D * 0.55, () => { cap(2); sfx.sms?.(); }); at(D * 0.66, () => { cap(3); view?.setProp(null); view?.setAction('cheer'); hearts(); }); }
   if (kind === 'ride') {
     // 0–28% — стоит и радуется; 28–60% — разгон за правый край; 60–88% — круг почёта: въезжает слева и останавливается

@@ -1313,7 +1313,7 @@ html.light .tu-btn { color: #8a6400 !important; }
 @keyframes tnGift { 0% { opacity: 0; transform: scale(.2); } 30% { opacity: 1; transform: scale(1.25); } 50%, 100% { opacity: 1; transform: scale(1); } }
 /* телефон */
 .toon-phone { background: radial-gradient(circle at 50% 40%, #3a2f7a, #120e28); }
-.tn-phone { right: 8%; top: 70px; z-index: 3; width: 120px; height: 200px; border-radius: 22px; border: 5px solid #0b0b10; background: #1d1d2b; box-shadow: 0 10px 30px rgba(0,0,0,.5); opacity: 0; }
+.tn-phone { left: 6%; top: 70px; z-index: 3; width: 120px; height: 200px; border-radius: 22px; border: 5px solid #0b0b10; background: #1d1d2b; box-shadow: 0 10px 30px rgba(0,0,0,.5); opacity: 0; }
 .toon.go .tn-phone { animation: tnIn .5s ease-out .6s forwards; }
 .tn-scr { position: absolute; inset: 16px 8px; display: grid; gap: 8px; align-content: center; text-align: center; color: #fff; font-size: 12px; }
 .tn-scr i { height: 8px; border-radius: 9px; background: rgba(255,255,255,.15); overflow: hidden; position: relative; }
@@ -1429,3 +1429,15 @@ html.light .tu-btn { color: #8a6400 !important; }
 .cr-score { font-size: 40px; font-weight: 900; margin: 4px 0; text-align: center; } .cr-score b { color: var(--magenta); }
 .btn-cert { border-color: rgba(255,210,59,.6) !important; }
 @media (max-width: 420px) { .cq-opts { grid-template-columns: 1fr; } .cq-text { font-size: 16.5px; } }
+/* питомцы (js/pets.js) и реплики персонажа */
+.pet-cv { display: block; width: 100%; height: 230px; border-radius: 18px; background: radial-gradient(circle at 50% 45%, rgba(var(--c-rgb),.16), transparent 70%); touch-action: pan-y; cursor: grab; }
+.pet-cv.small { height: 170px; }
+.pa-kinds, .pa-breeds { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.pa-kinds .on, .pa-breeds .on { border-color: var(--magenta); box-shadow: 0 0 10px rgba(var(--m-rgb),.5); }
+.pa-breeds i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; border: 1px solid rgba(0,0,0,.3); vertical-align: -1px; }
+.pet-hungry { color: #ffb02e; }
+.toon-pet { background: linear-gradient(180deg, #ffe6c7 0%, #ffd3a8 62%, #c98f63 62%); }
+.toon-pet.pet-vet { background: linear-gradient(180deg, #e6f6ff 0%, #cfeaf7 62%, #a9c8d8 62%); }
+.toon-pet.pet-groom { background: linear-gradient(180deg, #e8f0ff, #cbd9ff 62%, #9fb4e0 62%); }
+.tn-cross { left: 8%; top: 52px; font-size: 64px; color: #e0153f; z-index: 1; }
+.hero-says { margin: 4px 0 10px; padding: 8px 12px; border-radius: 14px; background: rgba(var(--m-rgb),.12); border: 1px solid rgba(var(--m-rgb),.35); font-weight: 800; text-align: center; }

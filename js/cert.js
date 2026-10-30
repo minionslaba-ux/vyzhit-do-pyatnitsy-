@@ -47,7 +47,7 @@ function certOffer() {
   $('coGo').onclick = () => { m.hidden = true; certStart(); };
   $('coLater').onclick = () => { m.hidden = true; };
 }
-bus.on('weekEnd', x => { if (x.mode === 'career' && x.won) setTimeout(() => { if ($('modal').hidden && !views.end.hidden) certOffer(); }, 3800); });
+bus.on('weekEnd', x => { if (x.mode === 'career' && x.won) setTimeout(() => { if ($('modal').hidden && !views.end.hidden) certOffer(); }, 5200); });
 
 async function certStart(after) {
   const C2 = payFix(careerNow());
@@ -122,7 +122,8 @@ function certResult(C2, score, after) {
       : L(`Нужно минимум ${CERT_PASS} верных ответов. Новая попытка — завтра, вопросы будут другие.`, `You need at least ${CERT_PASS} right answers. Try again tomorrow — with new questions.`)}</p>
     <button class="btn-main" type="button" id="crOk">${L('Готово', 'Done')}</button></div>`;
   m.hidden = false;
-  if (ok) { sfx.win?.(); confetti(); if (C2.hero) setTimeout(() => say(lineFor('joy', heroFem(C2.hero)), heroVoice(C2.hero)), 700); } else sfx.lose?.();
+  if (ok) { sfx.win?.(); confetti(); } else sfx.lose?.();
+  if (C2.hero) { const t = lineFor(ok ? 'cert_pass' : 'cert_fail', heroFem(C2.hero)); m.querySelector('#crOk').insertAdjacentHTML('beforebegin', `<p class="hero-says">💬 ${esc(C2.hero.name)}: «${esc(t)}»</p>`); setTimeout(() => say(t, heroVoice(C2.hero)), 700); }
   $('crOk').onclick = () => { m.hidden = true; if (!views.menu.hidden) renderMenu(); after?.(); };
 }
 

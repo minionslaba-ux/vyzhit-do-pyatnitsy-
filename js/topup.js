@@ -56,7 +56,7 @@ function openTopup({ need = 0, why = '', then } = {}) {
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-topup]'); if (!b) return;
   e.preventDefault(); e.stopPropagation();
-  const back = { shop: () => openShop(), heroShop: () => heroShop(), heroAsk: () => heroAsk(), desk: () => openDesk(), tools: () => cardTools(), goods: () => goodsReopen?.(), kid: () => kidReopen?.(), kidWish: () => kidWishBack?.() }[b.dataset.topupBack];
+  const back = { shop: () => openShop(), heroShop: () => heroShop(), heroAsk: () => heroAsk(), desk: () => openDesk(), tools: () => cardTools(), goods: () => goodsReopen?.(), kid: () => kidReopen?.(), kidWish: () => kidWishBack?.(), pet: () => petReopen?.(), petWish: () => petWishBack?.() }[b.dataset.topupBack];
   openTopup({ need: +b.dataset.topup || 0, why: b.dataset.topupWhy || '', then: back });
 }, true);
 // Кнопка «нет денег» → «пополнить»: html-кусок для вставки рядом с ценой
