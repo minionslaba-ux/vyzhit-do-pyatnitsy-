@@ -4,7 +4,7 @@
 
 // ---------- меню ----------
 $('profs').innerHTML = Object.entries(PROF).map(([k, p]) => `<label class="prof">
-    <input type="radio" name="prof" value="${k}"><b>${p.name}</b><small>${p.perk}</small></label>`).join('');
+    <input type="radio" name="prof" value="${k}"><b>${p.name}</b><small>${p.perk.replace(/ ([+−]\d+)/g, '\u00a0$1')}</small></label>`).join('');  // «Кукуха −5» не разрывается
 $('traits').innerHTML = Object.entries(TRAITS).map(([k, t]) => `<label class="prof">
     <input type="radio" name="trait" value="${k}"><b>${t.name}</b><small>${t.desc}</small></label>`).join('');
 const getProf = () => document.querySelector('input[name=prof]:checked')?.value || 'marketer';

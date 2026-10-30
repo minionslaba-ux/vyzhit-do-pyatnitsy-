@@ -15,6 +15,11 @@ const PROF = {
   accountant: { name: 'Бухгалтер',   icon: '🧮', bonus: { boss: 15, energy: -5 },       perk: 'Босс +15 · Энергия −5' },
   dev:        { name: 'Программист', icon: '💻', bonus: { psyche: 15, colleagues: -5 }, perk: 'Кукуха +15 · Коллеги −5' },
   sales:      { name: 'Продажник',   icon: '📞', bonus: { energy: 15, psyche: -5 },     perk: 'Энергия +15 · Кукуха −5' },
+  hr:         { name: 'HR-менеджер', icon: '🤝', bonus: { boss: 15, colleagues: -5 },   perk: 'Босс +15 · Коллеги −5' },
+  designer:   { name: 'Дизайнер',    icon: '🎨', bonus: { psyche: 15, boss: -5 },       perk: 'Кукуха +15 · Босс −5' },
+  sysadmin:   { name: 'Сисадмин',    icon: '🔌', bonus: { colleagues: 15, energy: -5 }, perk: 'Коллеги +15 · Энергия −5' },
+  cooler:     { name: 'Хранитель кулера', icon: '🚰', bonus: { energy: 15, boss: -5 },  perk: 'Энергия +15 · Босс −5' },
+  intern:     { name: 'Вечный стажёр', icon: '🎒', bonus: { energy: 10, colleagues: 10, psyche: -10 }, perk: 'Энергия +10 · Коллеги +10 · Кукуха −10' },
 };
 const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
 const PHASES = [{ name: 'Утро' }, { name: 'День' }, { name: 'Вечер' }];
