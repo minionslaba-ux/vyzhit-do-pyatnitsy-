@@ -46,5 +46,6 @@ const sfx = {
     noise(.05, .12, 'highpass', 5000, .02); noise(.05, .1, 'highpass', 6000, .3); },
   sms: () => { [1568, 2093].forEach((f, i) => tone(f, .12, 'sine', .05, i * .13)); },
   bell: () => { [1318, 1760, 1318].forEach((f, i) => tone(f, .35, 'triangle', .05, i * .14)); tone(2637, .5, 'sine', .015, .05); },
+  buzzer: () => { buzz('danger'); [0, .32].forEach(d => { tone(92, .28, 'sawtooth', .11, d); tone(97, .28, 'square', .07, d); noise(.28, .07, 'bandpass', 380, d); }); },  // мерзкий зуммер «время выходит»
   item: () => { buzz('item'); [880, 1320].forEach((f, i) => tone(f, .12, 'triangle', .05, i * .07)); },
 };

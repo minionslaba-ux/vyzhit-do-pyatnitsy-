@@ -138,14 +138,15 @@ bus.on('weekEnd', x => {
 });
 
 function breakModal(why, back, from, to, h) {
+  const cry = lineFor('break', heroFem(h));
   const { m, close } = heroModal(`
     <div class="hero-ask"><canvas class="hero-cv" data-framing="full"></canvas>
-      <div class="hero-bubble break"><b id="heroTitle">💔 ${L('Срыв!', 'Breakdown!')}</b><p>${why}</p>
+      <div class="hero-bubble break"><b id="heroTitle">💔 ${L('Срыв!', 'Breakdown!')}</b><p class="say">«${esc(cry)}»</p><p>${why}</p>
         ${back ? `<p class="rollback">⏪ ${L(`Откат на ${back} ${back === 1 ? 'неделю' : 'недели'}: неделя ${from} → ${to}`, `Back ${back} week${back > 1 ? 's' : ''}: week ${from} → ${to}`)}</p>` : `<p>${L('Это первый срыв — предупреждение. Второй откатит карьеру на неделю назад, третий — на две.', 'First breakdown — a warning. The second sets your career back a week, the third — two weeks.')}</p>`}</div></div>
     ${moodScaleHtml(h)}
     <p class="hero-lead">${L('Поднимайте настроение: исполняйте желания, дарите цветы, покупайте продукты и одежду.', 'Keep their mood up: grant wishes, buy flowers, groceries and clothes.')}</p>
     <div class="hero-acts"><button class="btn-main" type="button" id="brShop">🛍️ ${L('Порадовать', 'Cheer them up')}</button><button class="btn-ghost" type="button" id="brOk">${L('Понятно', 'Got it')}</button></div>`, heroLook(h), 'sad');
-  sfx.lose?.();
+  sfx.lose?.(); setTimeout(() => say(cry, heroVoice(h)), 500);
   $('brOk').onclick = close;
   $('brShop').onclick = () => { close(); heroShop(); };
   return m;
@@ -193,18 +194,20 @@ bus.on('answer', () => {
 function wishPop(w = wishFor(C.hero)) {
   const h = C.hero, cat = goodsCat(w.cat);
   h.lastWish = w.cat; saveCareer();
+  const plead = lineFor('plead', heroFem(h));
+  setTimeout(() => say(`${genderize(w.ask, h)} ${plead}`, heroVoice(h)), 350);
   busy = true; sfx.sms?.();
   const done = () => { busy = false; renderBars?.(); };
   const { m, close } = heroModal(`
     <div class="hero-ask"><canvas class="hero-cv" data-framing="bust"></canvas>
-      <div class="hero-bubble"><b id="heroTitle">${cat.ico} ${esc(h.name)} ${L('пишет', 'texts')}</b><p>«${esc(genderize(w.ask, h))}»</p><span>${L('Сейчас на счёте', 'Balance')} ${money(C.bank)}</span></div></div>
+      <div class="hero-bubble"><b id="heroTitle">${cat.ico} ${esc(h.name)} ${L('пишет', 'texts')}</b><p>«${esc(genderize(w.ask, h))}»</p><p class="say">«${esc(plead)}»</p><span>${L('Сейчас на счёте', 'Balance')} ${money(C.bank)}</span></div></div>
     ${moodScaleHtml(h)}
     <div class="hero-acts"><button class="btn-main" type="button" id="wpGo">${cat.ico} ${L('Выбрать', 'Pick something')}</button>
       <button class="btn-link" type="button" id="wpNo">${L(`Не сейчас (настроение −8)`, `Not now (mood −8)`)}</button></div>`, heroLook(h), (h.mood ?? 70) < 50 ? 'sad' : 'ask');
   $('wpGo').onclick = () => { close(); goodsPicker(cat.id, done); };
   $('wpNo').onclick = () => {
     h.mood = Math.max(0, (h.mood ?? 70) - 8); saveCareer(); heroView?.setEmotion('sad');
-    toast(L(`${h.name} вздыхает…`, `${h.name} sighs…`));
+    const t = speak('sad', heroVoice(h)); toast(`${h.name}: «${t}» · ${L('настроение −8', 'mood −8')}`);
     setTimeout(() => { close(); done(); }, 900);
   };
 }
@@ -310,7 +313,7 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
   }[kind];
   m.innerHTML = `<div class="modal-box glass toon-box" role="dialog" aria-modal="true" aria-label="${L('Мультик', 'Cartoon')}">
     <div class="toon toon-${kind}${kind === 'ride' ? ` bg-${RIDE_BG[prop] || 'city'}` : ''}" style="--dur:${dur}ms;--n:${Math.max(1, list.length)}">${props}<canvas class="toon-cv"></canvas><div class="tn-hearts"></div>
-      <p class="tn-cap" aria-live="polite">${caps[0]}</p><div class="tn-bar"><i></i></div></div>
+      <p class="tn-cap" aria-live="polite">${caps[0]}</p><p class="tn-say" hidden></p><div class="tn-bar"><i></i></div></div>
     <p class="tn-sum">${need ? `${need.ico} ${esc(title)}` : list.length > 1 ? `${cat.ico} ${L(`Корзина: ${list.length} шт.`, `Cart: ${list.length} items`)}` : `${x?.ico || ''} ${esc(title)}`}${kid ? ` · ${esc(kid.name)}` : ''} · ${L(`настроение +${mood}`, `mood +${mood}`)} · ${L('на счёте', 'balance')} ${money(C2.bank)}</p>
     <button class="btn-ghost" type="button" id="tnSkip">${L('Пропустить ⏭', 'Skip ⏭')}</button></div>`;
   m.hidden = false;
@@ -318,7 +321,13 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
   let view = null, timers = [], over = false, raf = 0;
   const at = (ms, fn) => timers.push(setTimeout(fn, ms));
   const cap = i => { const p = stage.querySelector('.tn-cap'); if (p && caps[i]) { p.textContent = caps[i]; p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); } };
-  const hearts = () => { const box = stage.querySelector('.tn-hearts'); box.innerHTML = Array.from({ length: 9 }, (_, i) => `<span style="--i:${i}">${['💖', '💗', '✨'][i % 3]}</span>`).join(''); };
+  // голос: в кульминации — реплика к ситуации (поехали / красота / мечта сбылась / спасибо, люблю, рад), в конце — «спасибо»
+  const voice = kid ? kidVoice(kid) : heroVoice(h);
+  const peak = lineFor(kid ? 'kid_thanks' : { ride: 'ride', fish: 'ride', salon: 'beauty', need: 'big' }[kind] || rnd(['thanks', 'love', 'joy']), fem);
+  const bye = lineFor(kid ? 'kid_thanks' : rnd(['thanks', 'love']), fem);
+  let spoke = false;
+  const sayPeak = () => { if (spoke) return; spoke = true; const b = stage.querySelector('.tn-say'); b.textContent = `«${peak}»`; b.hidden = false; say(peak, voice); };
+  const hearts = () => { sayPeak(); const box = stage.querySelector('.tn-hearts'); box.innerHTML = Array.from({ length: 9 }, (_, i) => `<span style="--i:${i}">${['💖', '💗', '✨'][i % 3]}</span>`).join(''); };
   const look = kid ? kid.look : heroLook(h), before = kind === 'wear' && !kid ? { ...heroPreset(h), ...(h.wearPrev || {}) } : look;
   const vProp = kind === 'ride' ? prop : kind === 'fish' ? 'rod' : null;
   const yaw0 = { market: -0.9, ride: 1.1, fish: 1.25 }[kind] ?? -0.15;
@@ -350,7 +359,7 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
       view?.place(xx); stage.classList.toggle('moving', k > 0.28 && k < 0.88);
     };
     raf = requestAnimationFrame(step);
-    at(D * 0.28, () => { cap(1); view?.setYaw(Math.PI / 2); sfx.item?.(); });
+    at(D * 0.28, () => { cap(1); view?.setYaw(Math.PI / 2); sfx.item?.(); sayPeak(); });
     at(D * 0.6, () => cap(2));
     at(D * 0.88, () => { cap(3); view?.setYaw(0.9); view?.setAction('cheer'); hearts(); sfx.coins?.(); });
   }
@@ -358,7 +367,7 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
     if (over) return; over = true;
     cancelAnimationFrame(raf); timers.forEach(clearTimeout); view?.dispose(); m.hidden = true;
     if (kind === 'wear' && !kid) { h.wearPrev = h.wear; careerSave(C2); }
-    toast(L(`${who.name}: «Спасибо!» · настроение ${who.mood ?? h.mood}/100`, `${who.name}: “Thank you!” · mood ${who.mood ?? h.mood}/100`));
+    toast(`${who.name}: «${spoke ? bye : peak}» · ${L('настроение', 'mood')} ${who.mood ?? h.mood}/100`); if (!RM.matches) say(spoke ? bye : peak, voice);
     if (!views.menu.hidden) renderMenu();
     after?.();
   };
@@ -427,12 +436,14 @@ function kidShop(i, after) {
 // Ребёнок пишет посреди недели
 function kidWishPop(k, x) {
   const h = C.hero; k.last = x.id; saveCareer();
+  const plead = lineFor('kid_plead', k.g === 'f');
+  setTimeout(() => say(`${parentWord(h)}, ${x.ask.charAt(0).toLowerCase() + x.ask.slice(1)} ${plead}`, kidVoice(k)), 350);
   busy = true; sfx.sms?.();
   const done = () => { busy = false; renderBars?.(); };
   const can = C.bank >= x.price;
   const { m, close } = heroModal(`
     <div class="hero-ask"><canvas class="hero-cv" data-framing="kid"></canvas>
-      <div class="hero-bubble"><b id="heroTitle">${x.ico} ${esc(k.name)}, ${kidYears(k.age)}</b><p>«${esc(parentWord(h))}, ${esc(x.ask.charAt(0).toLowerCase() + x.ask.slice(1))}»</p><span>${esc(x.t)} · ${money(x.price)} · ${L('на счёте', 'balance')} ${money(C.bank)}</span></div></div>
+      <div class="hero-bubble"><b id="heroTitle">${x.ico} ${esc(k.name)}, ${kidYears(k.age)}</b><p>«${esc(parentWord(h))}, ${esc(x.ask.charAt(0).toLowerCase() + x.ask.slice(1))}»</p><p class="say">«${esc(plead)}»</p><span>${esc(x.t)} · ${money(x.price)} · ${L('на счёте', 'balance')} ${money(C.bank)}</span></div></div>
     <div class="hero-acts">${can ? `<button class="btn-main" type="button" id="kwBuy">${x.ico} ${L(`Купить за ${money(x.price)}`, `Buy for ${money(x.price)}`)}</button>`
       : topupBtn(lackOf(x.price), 'kidWish', L(`${k.name} просит: ${x.t} за ${money(x.price)}`, `${k.name} wants: ${x.t} for ${money(x.price)}`), 'btn-main tu-btn')}
       <button class="btn-link" type="button" id="kwNo">${L(`Не сейчас (${k.name} обидится)`, `Not now (${k.name} will sulk)`)}</button></div>`, k.look, 'ask');
@@ -440,7 +451,7 @@ function kidWishPop(k, x) {
   if ($('kwBuy')) $('kwBuy').onclick = () => { close(); buyKid(k, x, done); };
   $('kwNo').onclick = () => {
     k.mood = Math.max(0, (k.mood ?? 70) - 10); h.mood = Math.max(0, (h.mood ?? 70) - 4); saveCareer(); heroView?.setEmotion('sad');
-    toast(L(`${k.name} надул${k.g === 'f' ? 'а' : ''} губы`, `${k.name} is sulking`));
+    const t = speak('kid_sulk', kidVoice(k)); toast(`${k.name}: «${t}»`);
     setTimeout(() => { close(); done(); }, 900);
   };
 }

@@ -1384,3 +1384,18 @@ html.light .tu-btn { color: #8a6400 !important; }
 @keyframes tnPx { to { height: 95%; } }
 .hero-kids { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
 .gp-own { font-style: normal; font-size: 12px; font-weight: 800; color: var(--up); white-space: nowrap; }
+/* время на ответ (js/timer.js) */
+.ans-timer { margin-left: 8px; padding: 2px 9px; border-radius: 99px; font-weight: 900; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text);
+  background: linear-gradient(90deg, rgba(var(--c-rgb),.35) calc(var(--p, 1) * 100%), rgba(var(--w-rgb),.08) 0); border: 1px solid rgba(var(--c-rgb),.45); white-space: nowrap; }
+.ans-timer[hidden] { display: none; }
+.ans-timer.warn { color: #fff; border-color: #ff3b6b; background: linear-gradient(90deg, #ff3b6b calc(var(--p, 1) * 100%), rgba(255,59,107,.2) 0); animation: ansPulse .5s ease-in-out infinite alternate; }
+@keyframes ansPulse { to { transform: scale(1.12); box-shadow: 0 0 16px rgba(255,59,107,.8); } }
+.ans-warn { position: fixed; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 128px); translate: -50% 0; z-index: 60; display: grid; text-align: center; gap: 2px; padding: 10px 18px; border-radius: 16px;
+  background: #e0153f; color: #fff; font-weight: 900; font-size: 17px; box-shadow: 0 10px 30px rgba(224,21,63,.55); animation: ansShake .4s ease-in-out infinite alternate; max-width: calc(100% - 32px); }
+.ans-warn[hidden] { display: none; }
+.ans-warn small { font-size: 12.5px; font-weight: 700; opacity: .9; }
+@keyframes ansShake { from { transform: rotate(-1.5deg); } to { transform: rotate(1.5deg); } }
+@media (prefers-reduced-motion: reduce) { .ans-timer.warn, .ans-warn { animation: none; } }
+.hero-bubble .say { font-weight: 900; color: var(--magenta); }
+.tn-say { position: absolute; z-index: 4; right: 10px; top: 56px; max-width: 58%; margin: 0; padding: 8px 12px; border-radius: 16px 16px 4px 16px; background: #fff; color: #2a1630; font-weight: 900; font-size: 14.5px; box-shadow: 0 8px 22px rgba(0,0,0,.25); animation: tnIn .35s ease-out; }
+.tn-say[hidden] { display: none; }

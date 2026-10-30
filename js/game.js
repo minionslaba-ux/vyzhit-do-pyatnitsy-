@@ -400,6 +400,7 @@ function renderCard() {
   if (S.step % PER_DAY === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
   touchPlaying(d);
   coachFor(slot);
+  answerTimerReset();
 }
 // Статус «играет» — раз в игровой день или раз в 30 секунд, а не на каждой карточке
 let touchAt = 0, touchDay = -1;

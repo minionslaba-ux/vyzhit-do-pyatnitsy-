@@ -208,11 +208,13 @@ function heroAsk() {
   const C2 = careerNow(), h = C2?.hero; if (!h?.pending) return;
   const n = NEEDS.find(x => x.id === h.pending); if (!n) { h.pending = null; careerSave(C2); return; }
   h.seenWeek = C2.week; careerSave(C2);
+  const plead = lineFor('plead', heroFem(h));
+  setTimeout(() => say(`${needText(n, h, 'ask')} ${plead}`, heroVoice(h)), 350);
   const p = heroLook(h), can = C2.bank >= n.price, loanOk = (C2.loan || 0) + loanCost(n) <= LOAN_CAP;
   const { m, close } = heroModal(`
     <div class="hero-ask">
       <canvas class="hero-cv" data-framing="full"></canvas>
-      <div class="hero-bubble"><b id="heroTitle">${n.ico} ${esc(needText(n, h, 't'))}</b><p>«${esc(needText(n, h, 'ask'))}»</p><span>— ${esc(h.name)}</span></div>
+      <div class="hero-bubble"><b id="heroTitle">${n.ico} ${esc(needText(n, h, 't'))}</b><p>«${esc(needText(n, h, 'ask'))}»</p><p class="say">«${esc(plead)}»</p><span>— ${esc(h.name)}</span></div>
     </div>
     <div class="money"><div><b>${money(n.price)}</b><span>${L('стоит', 'costs')}</span></div><div><b>${money(C2.bank)}</b><span>${L('на счёте', 'balance')}</span></div></div>
     <div class="hero-acts">
@@ -231,7 +233,7 @@ function heroAsk() {
     h.postponed = (h.postponed || 0) + 1; h.mood = Math.max(0, (h.mood ?? 70) - 12);
     if (h.postponed >= 3) { h.pending = null; h.mood = Math.max(0, h.mood - 10); if (n.every) h.last[n.id] = C2.week; }  // три раза отказали — забыл, но обиделся
     careerSave(C2); heroView?.setEmotion('sad');
-    toast(L(`${h.name} расстроил${heroFem(h) ? 'ась' : 'ся'}`, `${h.name} is upset`));
+    const t = speak('sad', heroVoice(h)); toast(`${h.name}: «${t}»`);
     setTimeout(() => { close(); back(); }, 1100);
   };
 }
