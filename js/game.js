@@ -357,7 +357,7 @@ function renderBars() {
     w.setAttribute('aria-valuenow', v); w.setAttribute('aria-valuetext', `${r.name}: ${v}%${z ? ', ' + z : ''}`);
   }
   const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
-  if ($('ctBank')) $('ctBank').textContent = `${C.bank} у.е.`;
+  if ($('ctBank') && C) $('ctBank').textContent = `${C.bank} у.е.`;
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
 const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}`
@@ -591,6 +591,25 @@ function openShop() {
   m.onclick = e => { if (e.target === m) m.hidden = true; };
 }
 $('bankChip').onclick = openShop;
+
+// ---------- выйти из недели в меню ----------
+// Карьера сохраняется на текущей карточке — «Играть» продолжит; неделя дня, турнир и брендированная неделя не сохраняются
+function leaveWeek() {
+  clearTimeout(splashT); splashOn = false; $('splash').hidden = true; $('modal').hidden = true;
+  busy = false; renderMenu();
+}
+$('gExit').onclick = () => {
+  if (!S || busy) return;  // пока карточка улетает — дождаться следующей
+  if (S.mode === 'career') { store.set(KEY.save, S); leaveWeek(); toast('Неделя сохранена — «Играть» продолжит с этой карточки'); return; }
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass" role="dialog" aria-modal="true" aria-labelledby="exTitle"><h2 id="exTitle">Выйти из недели?</h2>
+    <p>${S.mode === 'daily' ? 'Неделя дня не сохраняется: если выйти, начать её можно будет заново, но в зачёт идёт только первая законченная попытка.' : 'Эта неделя не сохраняется — придётся начать её заново.'}</p>
+    <div class="row2"><button class="btn-main" type="button" id="exStay">Остаться</button><button class="btn-ghost" type="button" id="exGo">Выйти в меню</button></div></div>`;
+  m.hidden = false;
+  $('exStay').onclick = () => { m.hidden = true; };
+  $('exGo').onclick = leaveWeek;
+  m.onclick = e => { if (e.target === m) m.hidden = true; };
+};
 
 // ---------- подсказка за 6 у.е.: какой ответ лучше держит баланс ----------
 // Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта

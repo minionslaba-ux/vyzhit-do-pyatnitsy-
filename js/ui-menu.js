@@ -14,7 +14,8 @@ function renderMenu() {
   applyTheme();
   $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
   myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? 'войдите снова' : 'гость'}`; });
-  $('meRegister').hidden = registered() || !board.online; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';
+  $('meRegister').hidden = registered() || !board.online;
+  $('profLogout').hidden = !prefs.email; $('profLogout').textContent = 'Выйти из аккаунта'; delete $('profLogout').dataset.armed; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';
   renderOfficeLine();
   renderChallengeCta();
   for (const id of LOCKED) $(id).classList.toggle('locked', !registered());
@@ -191,11 +192,13 @@ $('joinForm').onsubmit = async e => {
   renderMenu();
 };
 // Выход из аккаунта: на этом устройстве начинается новый гость
-$('joinLogout').onclick = () => {
-  const b = $('joinLogout');
+function logoutClick(e) {
+  const b = e.currentTarget;
   if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = 'Выйти? Нажмите ещё раз'; return; }
   board.logout().finally(() => { delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; delete prefs.session; store.set(KEY.prefs, prefs); location.reload(); });
-};
+}
+$('joinLogout').onclick = logoutClick;
+$('profLogout').onclick = logoutClick;
 $('start').onclick = async () => { await whenReady($('start')); continueCareer(); };
 // Вкладки меню: «Офис» (команда, чат, рейтинг) и «Профиль» (серия, коллекция, установка)
 function menuTab(name) {

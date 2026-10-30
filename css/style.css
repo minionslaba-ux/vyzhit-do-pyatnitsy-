@@ -955,3 +955,11 @@ html.light .btn-main { color: #fff; }
 html.light .ans { background: rgba(255,255,255,.88); color: var(--hi); }
 html.light .ans .ar { color: var(--magenta); } html.light .ans.yes .ar { color: var(--cyan); }
 html.light .coach, html.light .card-tools .ct-btn { background-color: rgba(255,255,255,.75); }
+/* Выйти из недели в меню: слева от часов */
+.g-top { position: relative; }
+.exit-btn { position: absolute; left: 0; top: 70px; z-index: 3; min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 2px solid var(--cyan); background: rgba(var(--c-rgb),.1);
+  color: var(--hi); font-weight: 800; font-size: 14px; box-shadow: 0 0 14px rgba(var(--c-rgb),.35); }
+.exit-btn:hover, .exit-btn:focus-visible { background: rgba(var(--c-rgb),.22); }
+.btn-logout { border-color: rgba(255,59,107,.6); color: var(--down); }
+@media (max-width: 420px) { .exit-btn { top: 66px; padding: 7px 11px; font-size: 13px; min-height: 36px; } }
+@media (min-width: 1000px) { .exit-btn { top: 72px; } }
