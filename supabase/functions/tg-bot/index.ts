@@ -1,11 +1,13 @@
 // Бот @Survivefridaybot: принимает команды (вебхук Telegram).
 // В группе: /remind — каждый день в 12:30 по Москве бот пишет сюда «Неделя дня готова» с итогами вчерашнего дня,
 // /stop — перестать, /play — кнопка «Играть». Включать и выключать могут только админы группы.
-// В личке: /start — кнопка, открывающая игру. Разработчикам (dev_admins): /stats — сегодня, /yesterday — вчера, /week — 7 дней.
+// В личке: /start — кнопка, открывающая игру. Разработчикам (dev_admins): /stats — сегодня, /yesterday — вчера, /week — 7 дней,
+// /export — файл Excel со списком игроков (имя, почта, вход, логин Telegram, VK, откуда пришли, игры).
 // Подключение вебхука (один раз): GET …/functions/v1/tg-bot?setup=1. Чужой вебхук не перезаписывается без &force=1.
 // Запросы от Telegram проверяются секретом, который выводится из токена бота (TELEGRAM_BOT_TOKEN в секретах функций).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, todayTitle, weekTitle, yesterdayTitle } from './report.ts';
+import * as XLSX from 'npm:xlsx@0.18.5';
 
 const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
 const SELF = `${Deno.env.get('SUPABASE_URL')}/functions/v1/tg-bot`;
@@ -54,6 +56,34 @@ async function isAdmin(msg: any) {
   return ['creator', 'administrator'].includes(r.result?.status);
 }
 
+// Выгрузка игроков в Excel — только разработчикам. В файле личные данные: отправляется в личку и больше нигде не хранится
+const SRC: Record<string, string> = { web: 'сайт', telegram: 'Telegram', app: 'приложение' };
+const msk = (t?: string | null) => t ? new Date(new Date(t).getTime() + 3 * 3600e3).toISOString().slice(0, 16).replace('T', ' ') : '';
+async function exportUsers(chatId: number) {
+  const { data, error } = await db.rpc('dev_users');
+  if (error) return api('sendMessage', { chat_id: chatId, text: `Не удалось выгрузить: ${error.message}` });
+  const src = (s: string | null) => { const [a, b] = (s || 'web').split(':'); return (SRC[a] || a) + (b ? ` (${b})` : ''); };
+  const rows = (data || []).map((u: any) => ({
+    'Имя': u.name, 'Отдел': u.dept, 'Почта': u.email, 'Вход': u.login_via,
+    'Telegram': u.tg_username ? '@' + u.tg_username : '', 'Telegram ID': u.tg_id || '', 'VK': u.vk_id ? `https://vk.com/id${u.vk_id}` : '',
+    'Откуда пришёл': src(u.source), 'Пригласил': u.invited_by || '',
+    'Регистрация (МСК)': msk(u.registered), 'Последний визит (МСК)': msk(u.last_seen),
+    'Недель сыграно': Number(u.weeks), 'Дожил до пятницы': Number(u.won), 'Лучший результат': u.best ?? '', 'Напоминания в Telegram': u.reminders ? 'да' : '',
+  }));
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [18, 14, 26, 10, 16, 13, 26, 18, 16, 17, 17, 10, 10, 10, 12].map(w => ({ wch: w }));
+  XLSX.utils.book_append_sheet(wb, ws, 'Игроки');
+  const by = (k: string) => Object.entries(rows.reduce((m: Record<string, number>, r: any) => (m[r[k]] = (m[r[k]] || 0) + 1, m), {})).sort((a, b) => b[1] - a[1]);
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([['Откуда пришёл', 'Игроков'], ...by('Откуда пришёл'), [], ['Вход', 'Игроков'], ...by('Вход')]), 'Откуда пришли');
+  const day = msk(new Date().toISOString()).slice(0, 10);
+  const fd = new FormData();
+  fd.append('chat_id', String(chatId));
+  fd.append('caption', `👥 Игроки «Выжить до пятницы» на ${day}: ${rows.length}. В файле личные данные — не пересылайте его посторонним.`);
+  fd.append('document', new Blob([XLSX.write(wb, { type: 'array', bookType: 'xlsx' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `igroki-${day}.xlsx`);
+  await fetch(`https://api.telegram.org/bot${token}/sendDocument`, { method: 'POST', body: fd });
+}
+
 async function onMessage(msg: any) {
   const chat = msg.chat, group = chat.type === 'group' || chat.type === 'supergroup';
   if (msg.migrate_to_chat_id) {  // группа стала супергруппой — у неё новый id
@@ -66,9 +96,10 @@ async function onMessage(msg: any) {
   if (m[2] && me && m[2].toLowerCase() !== me.username.toLowerCase()) return;  // команда другому боту
   const cmd = m[1].toLowerCase(), arg = m[3].toLowerCase();
   if (!group) {
-    if (cmd === 'stats' || cmd === 'today' || cmd === 'yesterday' || cmd === 'week') {
+    if (cmd === 'stats' || cmd === 'today' || cmd === 'yesterday' || cmd === 'week' || cmd === 'export') {
       const { data: admin } = await db.from('dev_admins').select('tg_id').eq('tg_id', msg.from?.id).maybeSingle();
       if (!admin) return;  // отчёт — только разработчикам
+      if (cmd === 'export') return exportUsers(chat.id);
       const text = cmd === 'week' ? await buildReport(db, weekTitle(), mskDay(-7), mskDay(0), [mskDay(-14), mskDay(-7)])
         : cmd === 'yesterday' ? await buildReport(db, yesterdayTitle(), mskDay(-1), mskDay(0), [mskDay(-2), mskDay(-1)])
         : await buildReport(db, todayTitle(), mskDay(0), new Date());
@@ -119,7 +150,7 @@ Deno.serve(async req => {
     // меню команд отчёта — только в личке у разработчиков
     const { data: admins } = await db.from('dev_admins').select('tg_id');
     for (const ad of admins || []) await api('setMyCommands', { scope: { type: 'chat', chat_id: ad.tg_id }, commands: [{ command: 'stats', description: 'Отчёт за сегодня' },
-      { command: 'yesterday', description: 'Отчёт за вчера' }, { command: 'week', description: 'Отчёт за 7 дней' }, { command: 'start', description: 'Играть' }] });
+      { command: 'yesterday', description: 'Отчёт за вчера' }, { command: 'week', description: 'Отчёт за 7 дней' }, { command: 'export', description: 'Игроки в Excel' }, { command: 'start', description: 'Играть' }] });
     return json({ ok: !!set.ok, description: set.description });
   }
   if (req.method !== 'POST' || req.headers.get('x-telegram-bot-api-secret-token') !== await secret()) return json({ error: 'forbidden' }, 403);

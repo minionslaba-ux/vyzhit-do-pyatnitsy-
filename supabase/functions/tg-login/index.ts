@@ -63,12 +63,14 @@ Deno.serve(async req => {
     const url = Deno.env.get('SUPABASE_URL')!, opts = { auth: { persistSession: false, autoRefreshToken: false } };
     const db = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, opts);
     const { data: link } = await db.from(T.table).select('user_id').eq(T.key, u.id).maybeSingle();
+    const extra = vk ? {} : { username: String((u as any).username || '').slice(0, 64) };  // логин Telegram — для выгрузки разработчику
+    if (link && !vk) await db.from(T.table).update({ name, ...extra }).eq(T.key, u.id);
 
     if (body.access_token) {  // привязать к аккаунту, под которым уже вошли
       const { data: { user: cur } } = await db.auth.getUser(body.access_token);
       if (!cur) return json({ error: 'bad_session' }, 401);
       if (link && link.user_id !== cur.id) return json({ error: 'linked_elsewhere' }, 409);
-      const { error } = await db.from(T.table).upsert({ [T.key]: u.id, user_id: cur.id, name });
+      const { error } = await db.from(T.table).upsert({ [T.key]: u.id, user_id: cur.id, name, ...extra });
       if (error) return json({ error: 'already_linked' }, 409);  // к аккаунту уже привязан другой профиль
       return json({ linked: true, name });
     }
@@ -80,7 +82,7 @@ Deno.serve(async req => {
       const made = await db.auth.admin.createUser({ email, email_confirm: true, user_metadata: { [T.key]: u.id, name } });
       if (made.error || !made.data.user) return json({ error: made.error?.message || 'create_failed' }, 500);
       uid = made.data.user.id;
-      await db.from(T.table).upsert({ [T.key]: u.id, user_id: uid, name });
+      await db.from(T.table).upsert({ [T.key]: u.id, user_id: uid, name, ...extra });
     }
     const gl = await db.auth.admin.generateLink({ type: 'magiclink', email });
     if (gl.error) return json({ error: gl.error.message }, 500);

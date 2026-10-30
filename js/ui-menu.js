@@ -136,10 +136,11 @@ function renderJoin(mode, lead) {
   $('joinEmailNote').textContent = prefs.email && !login ? L('Вы вошли по почте — прогресс общий на всех устройствах.', 'You’re signed in by email — your progress syncs across devices.') : L('Пароль не обязателен — без него пришлём ссылку для входа на почту.', 'A password is optional — without one we’ll email you a sign-in link.');
   socialButtons($('joinSocial')); $('joinSocial').hidden ||= !(reg || login);
   $('joinEmailNote').hidden = login;  // при входе про пароль подсказывает поле пароля
+  $('joinLink').hidden = !login; $('joinLink').disabled = false;  // при входе — ссылка на почту отдельной кнопкой
   $('joinPassField').hidden = !(reg || login); $('joinPass').value = '';
   $('joinPass').autocomplete = reg ? 'new-password' : 'current-password';
   $('joinPassNote').textContent = reg ? L('Необязательно, от 6 символов. Без пароля входите по ссылке из письма.', 'Optional, 6+ characters. Without one, sign in via an email link.')
-    : L('Нет пароля или забыли? Оставьте поле пустым — пришлём ссылку на почту.', 'No password or forgot it? Leave it empty — we’ll email you a link.');
+    : L('Есть пароль — введите его и нажмите «Войти». Нет пароля или забыли — нажмите «Отправить ссылку для входа».', 'Have a password? Enter it and tap “Log in”. No password or forgot it? Tap “Email me a sign-in link”.');
   (document.querySelector(`input[name=ava][value="${prefs.avatar}"]`) || document.querySelector('input[name=ava]')).checked = true;
   $('joinAvatar').textContent = document.querySelector('input[name=ava]:checked').value;
   $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid'); $('joinEmail').removeAttribute('aria-invalid');
@@ -178,6 +179,13 @@ $('joinName').oninput = () => { $('joinErr').textContent = ''; $('joinName').rem
 $('joinCancel').onclick = () => prefs.name && !prefs.loggedOut ? renderMenu() : renderWelcome();
 $('joinEmail').oninput = () => { $('joinErr').textContent = ''; $('joinEmail').removeAttribute('aria-invalid'); };
 const badMail = email => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+$('joinLink').onclick = async () => {
+  const email = $('joinEmail').value.trim().toLowerCase();
+  if (badMail(email)) { $('joinErr').textContent = L('Введите почту, с которой регистрировались.', 'Enter the email you signed up with.'); $('joinEmail').setAttribute('aria-invalid', 'true'); $('joinEmail').focus(); return; }
+  $('joinLink').disabled = true;
+  try { await board.sendLink(email); renderCheckMail(email); }
+  catch (err) { $('joinErr').textContent = L(`Не удалось отправить ссылку: ${err.message}`, `Couldn’t send the link: ${err.message}`); $('joinLink').disabled = false; }
+};
 $('joinForm').onsubmit = async e => {
   e.preventDefault();
   const email = $('joinEmail').value.trim().toLowerCase();
