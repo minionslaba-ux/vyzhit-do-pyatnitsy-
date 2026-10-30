@@ -340,7 +340,7 @@ function invitePop(inv) {
   el.innerHTML = `<span class="ip-ico" aria-hidden="true">📨</span><span class="ip-text"><b>${esc(inv.from_name)}</b> зовёт вас в офис «${esc(inv.team_name)}»</span>
     <span class="ip-btns"><button class="btn-main" type="button" data-a="1">Принять</button><button class="btn-ghost" type="button" data-a="0">Отказаться</button></span>
     <button class="ip-x" type="button" aria-label="Позже">×</button>`;
-  el.hidden = false; FX.pulse(el, 'on', 600); sfx.item?.(); buzz('tap');
+  el.hidden = false; FX.pulse(el, 'on', 600);  // звон и вибрация — от колокольчика
   el.querySelectorAll('[data-a]').forEach(b => b.onclick = async () => { if (await answerInvite(inv, b.dataset.a === '1')) { el.hidden = true; renderInvites(); } });
   el.querySelector('.ip-x').onclick = () => { el.hidden = true; };
 }
@@ -352,18 +352,48 @@ async function pollSocial() {
   try {
     const seen = prefs.invSeen ||= [], list = await myInvites().catch(() => []);
     const fresh = list.filter(i => !seen.includes(i.invite_id));
-    if (fresh.length) { seen.push(...fresh.map(i => i.invite_id)); prefs.invSeen = seen.slice(-100); store.set(KEY.prefs, prefs); invitePop(fresh[0]); if (!views.menu.hidden) renderInvites(); }
+    if (fresh.length) {
+      seen.push(...fresh.map(i => i.invite_id)); prefs.invSeen = seen.slice(-100); store.set(KEY.prefs, prefs); invitePop(fresh[0]); if (!views.menu.hidden) renderInvites();
+      ring(`${fresh[0].from_name} зовёт вас в офис «${fresh[0].team_name}»`, () => invitePop(fresh[0]), true, false);
+    }
     if (registered()) {
       const sent = (await board.rpc('my_sent_invites', { p_id: prefs.playerId }).catch(() => [])) || [], done = prefs.sentSeen ||= [];
       for (const s of sent.filter(s => !done.includes(s.invite_id))) {
         done.push(s.invite_id); toast(`${s.to_name}: приглашение в «${s.team_name}» ${s.status === 'accepted' ? 'принято 🎉' : 'отклонено'}`);
       }
       prefs.sentSeen = done.slice(-100); store.set(KEY.prefs, prefs);
+      // новые сообщения в чатах: первый раз только запоминаем, где мы, звоним — на следующие
+      const last = (await board.rpc('chat_latest', { p_id: prefs.playerId }).catch(() => [])) || [], cs = prefs.chatSeen ||= {};
+      for (const r of last) {
+        const open = $('chList') && chatChannel === r.channel;
+        if (cs[r.channel] != null && r.last_id > cs[r.channel] && !open)
+          ring(`${r.from_name} пишет в ${r.channel === 'team' ? 'чате офиса' : 'общем чате'}`, () => showChat(r.channel), r.channel === 'team');
+        cs[r.channel] = Math.max(cs[r.channel] || 0, r.last_id);
+      }
+      store.set(KEY.prefs, prefs);
     }
     if (!views.menu.hidden) renderOnlineBox();
   } finally { socialBusy = false; }
 }
 setInterval(pollSocial, 20000);
+
+// ---------- колокольчик: звон, вибрация и значок, когда зовут в офис или пишут в чат ----------
+const bellQ = [];
+function ring(text, open, loud = true, note = true) {
+  bellQ.unshift({ text, open }); bellQ.length = Math.min(bellQ.length, 9);
+  const b = $('bell'); b.hidden = false; $('bellN').textContent = bellQ.length;
+  b.classList.remove('ring'); void b.offsetWidth; b.classList.add('ring');
+  sfx.bell?.();
+  if (loud) try { TG?.HapticFeedback ? TG.HapticFeedback.notificationOccurred('success') : navigator.vibrate?.([90, 60, 90, 60, 180]); } catch {}
+  if (note) toast(`🔔 ${text}`);
+}
+$('bell').onclick = () => {
+  const list = bellQ.splice(0), b = $('bell'); b.hidden = true;
+  if (!list.length) return;
+  // во время недели не уводим из игры: только напоминаем, что ждёт в меню
+  if (!views.game.hidden) { toast(`🔔 ${list[0].text}${list.length > 1 ? ` и ещё ${list.length - 1}` : ''}. Откройте после недели в меню`); return; }
+  list[0].open?.();
+};
 
 // ---------- кто сейчас в игре: позвать в свой офис ----------
 const onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
@@ -570,18 +600,18 @@ function openScreen(code) {
 }
 
 // Чаты: офиса (только участники) и общий для всех игроков; обновляются каждые 4 секунды
-let chatTimer = null, chatLast = '';
+let chatTimer = null, chatLast = '', chatChannel = '';
 async function showChat(channel) {
   if (!board.online) return offline('Чат');
-  setPhase('evening'); clearInterval(chatTimer); chatLast = '';
+  setPhase('evening'); clearInterval(chatTimer); chatLast = ''; chatChannel = channel;
   views.end.innerHTML = `<div class="chat">
-    <div class="board-head"><button class="icon-btn pill" id="chBack" aria-label="Назад">←</button><h2>${channel === 'team' ? 'Чат офиса' : 'Общий чат'}</h2><span style="width:38px"></span></div>
+    <div class="board-head"><button class="back-btn" id="chBack" type="button">← Назад</button><h2>${channel === 'team' ? 'Чат офиса' : 'Общий чат'}</h2><span class="back-sp"></span></div>
     <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">Офис</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">Все игроки</button></div>
     <div class="chat-list panel" id="chList" aria-live="polite"><div class="lb-empty">Загружаю…</div></div>
     <form class="chat-form" id="chForm"><input id="chText" maxlength="300" placeholder="Сообщение" autocomplete="off" aria-label="Сообщение"><button class="btn-main" type="submit">Отправить</button></form>
   </div>`;
   views.end.classList.add('chat-view'); show('end');
-  const leave = () => { clearInterval(chatTimer); views.end.classList.remove('chat-view'); };
+  const leave = () => { clearInterval(chatTimer); chatChannel = ''; views.end.classList.remove('chat-view'); };
   $('chBack').onclick = () => { leave(); renderMenu(); };
   $('chTeam').onclick = () => { leave(); showChat('team'); };
   $('chAll').onclick = () => { leave(); showChat('global'); };
@@ -591,6 +621,8 @@ async function showChat(channel) {
     try {
       const rows = (await board.rpc('get_messages', { p_id: prefs.playerId, p_channel: channel })).reverse();
       const sig = rows.map(r => r.msg_id).join(',');
+      const top = Math.max(0, ...rows.map(r => r.msg_id)), cs = prefs.chatSeen ||= {};
+      if (top > (cs[channel] || 0)) { cs[channel] = top; store.set(KEY.prefs, prefs); }
       if (sig === chatLast) return;
       chatLast = sig;
       const list = $('chList'), atBottom = list.scrollHeight - list.scrollTop - list.clientHeight < 60;

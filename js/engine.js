@@ -53,7 +53,7 @@ function activeSeason(d = new Date()) {
   return (typeof SEASONS === 'undefined' ? [] : SEASONS).find(z => z.from <= z.to ? md >= z.from && md <= z.to : md >= z.from || md <= z.to) || null;
 }
 const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
-// Большой пул карточек и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
+// Большой пул карточек (data/pool.json — 1000, data/pool2.json — ещё 2000) и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
 let POOL = [], QUIZ = [], dataLoaded = false;
 const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
 let PACK = null, PACK_CARDS = [];
@@ -66,8 +66,10 @@ let POOL_CHAINS = [];
 // Плюсы усилены слабее минусов: при ×1.5 в обе стороны шкалы слишком быстро уходили в перегрев (100%).
 // Энергия почти не перегревается, а без сильных плюсов её не восстановить — у неё плюсы ×1.5
 const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colleagues: 1.2 } };
-const boost = c => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
-  effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down) / 5) * 5))])) }])) });
+// Вторая пачка (data/pool2.json) по исходным числам мягче: её минусы усилены ещё в 1,1 раза — так сложность как у первой тысячи
+const POOL2_DOWN = 1.1;
+const boost = (c, down = 1) => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
+  effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down * down) / 5) * 5))])) }])) });
 // Вопросы собеседования: базовые из cards.js и 300 из data/interview.json (prof — только для своей профессии, last — финальный)
 // Истории постоянных коллег (data/cast.json): stage 1…8 по порядку, payoff — когда отношение ±2
 let CAST_CARDS = [];
@@ -75,9 +77,10 @@ let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_b
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   try {
-    const [p, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => []),
-      get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
-    POOL = p.map(c => boost(norm(c))); QUIZ = q; IV = IV.concat(iv);
+    const [p, p2, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
+      get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
+    POOL = p.map(c => boost(norm(c))).concat(p2.map(c => boost(norm(c), POOL2_DOWN))); QUIZ = q;
+    const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
     for (const c of POOL) byId[c.id] = c;

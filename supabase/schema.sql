@@ -306,6 +306,21 @@ begin
   return (select t.name from teams t where t.id = v_team);
 end $$;
 
+-- Колокольчик: последнее чужое сообщение в чате офиса и в общем чате (игра сравнивает с тем, что уже видела)
+create or replace function public.chat_latest(p_id uuid) returns table (channel text, last_id bigint, from_name text)
+language plpgsql stable security definer set search_path = public as $$
+declare v_team bigint;
+begin
+  perform public.require_player(p_id);
+  select tm.team_id into v_team from team_members tm where tm.player_id = p_id;
+  return query
+    select x.ch, m.id, coalesce(pl.name, 'Игрок')
+    from (values ('global', 'global'), ('team', 'team:' || v_team)) as x(ch, real_ch)
+    cross join lateral (select mm.id, mm.player_id from messages mm where mm.channel = x.real_ch and mm.player_id <> p_id and not mm.hidden order by mm.id desc limit 1) m
+    left join players pl on pl.player_id = m.player_id
+    where x.real_ch is not null;
+end $$;
+
 create or replace function public.post_message(p_id uuid, p_channel text, p_text text) returns void
 language plpgsql security definer set search_path = public as $$
 declare v_ch text; v_team bigint;
@@ -597,7 +612,7 @@ do $$
 declare f text;
 begin
   foreach f in array array['create_team(uuid,text)', 'join_team(uuid,text)', 'leave_team(uuid)', 'my_team(uuid)', 'team_members_list(uuid)',
-    'invite_player(uuid,text)', 'my_invites(uuid)', 'my_sent_invites(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
+    'invite_player(uuid,text)', 'my_invites(uuid)', 'my_sent_invites(uuid)', 'chat_latest(uuid)', 'answer_invite(uuid,bigint,boolean)', 'post_message(uuid,text,text)',
     'get_messages(uuid,text)', 'get_profile(uuid)', 'merge_player(uuid,uuid)', 'touch_player(uuid,text,text,text,text,text,int)', 'require_player(uuid)', 'claim_referral(uuid,text)', 'referral_count(uuid)',
     'set_tournament(uuid,timestamptz)', 'my_tournament(uuid)', 'tournament_board(text)',
     'report_message(uuid,bigint)', 'hide_message(uuid,bigint)', 'log_event(uuid,text,text,text,boolean,int,text)', 'pick_daily(uuid,date,int,text,text)'] loop
@@ -609,10 +624,10 @@ end $$;
 -- Обновить кэш схемы API, чтобы новые представления и функции сразу стали доступны (иначе бывает ошибка 404)
 notify pgrst, 'reload schema';
 
--- Проверка: должны вернуться 28 строк
+-- Проверка: должны вернуться 29 строк
 select 'view' as type, table_name as name from information_schema.views
 where table_schema = 'public' and table_name in ('leaderboard', 'daily_leaderboard', 'dept_week', 'participants', 'approved_cards')
 union all
 select 'function', routine_name from information_schema.routines where routine_schema = 'public' and routine_name in
   ('touch_player', 'short_id', 'create_team', 'join_team', 'leave_team', 'my_team', 'team_members_list', 'invite_player',
-   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites');
+   'my_invites', 'answer_invite', 'post_message', 'get_messages', 'get_profile', 'claim_referral', 'referral_count', 'set_tournament', 'my_tournament', 'tournament_board', 'report_message', 'hide_message', 'log_event', 'pick_daily', 'my_sent_invites', 'chat_latest');

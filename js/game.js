@@ -304,6 +304,7 @@ function renderBars() {
     w.setAttribute('aria-valuenow', v); w.setAttribute('aria-valuetext', `${r.name}: ${v}%${z ? ', ' + z : ''}`);
   }
   const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
+  $('hintChip').hidden = bc.hidden;
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
 const headerLine = () => S.mode === 'career' && C ? `Неделя ${C.week}/${YEAR} · ${C.company}` : S.mode === 'daily' ? `Неделя дня ${dayLabel(S.day)}${S.ranked ? '' : ' · не в зачёт'}`
@@ -331,7 +332,7 @@ function renderCard() {
   $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
   $('gDay').textContent = DAYS[d]; $('gPhase').textContent = ph.name.toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
   $('dots').innerHTML = S.deck.map((s, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}${s.origin && i > S.step ? ' chain' : ''}"></i>`).join('');
-  clearPreview();
+  clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer();
   if (S.step % 3 === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
   touchPlaying(d);
   coachFor(slot);
@@ -459,7 +460,7 @@ function choose(side) {
   card.style.transition = RM.matches ? 'opacity .12s' : `transform .38s ${EASE}, opacity .38s`;
   if (!RM.matches) card.style.transform = `translateX(${dir * 1100}px) rotate(${dir * 26}deg)`;
   card.style.opacity = '0';
-  $('coach').hidden = true;
+  $('coach').hidden = true; $('hintBar').hidden = true;
   setTimeout(() => {
     const { eff, blocked } = effectsOf(side);
     for (const b of blocked) { S.used.push(b.item); toast(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`); sfx.item(); FX.shield(ITEMS[b.item].name, b.stat); }
@@ -533,6 +534,53 @@ function openShop() {
   m.onclick = e => { if (e.target === m) m.hidden = true; };
 }
 $('bankChip').onclick = openShop;
+
+// ---------- подсказка за 3 у.е.: какой ответ лучше держит баланс ----------
+// Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта
+const HINT_PRICE = 3;
+// Чем дальше самая слабая шкала от 0 и 100 после ответа, тем ответ безопаснее; конец недели — хуже всего
+function hintScore(side) {
+  const { eff } = effectsOf(side), after = RES.map(r => ({ k: r.k, v: clamp(S.res[r.k] + (eff[r.k] || 0)) }));
+  const weak = after.reduce((a, b) => Math.min(b.v, 100 - b.v) < Math.min(a.v, 100 - a.v) ? b : a);
+  const edge = Math.min(weak.v, 100 - weak.v);
+  return { side, weak, edge: edge <= 0 ? -1 : edge, spread: after.reduce((n, x) => n + Math.abs(x.v - 50), 0) };
+}
+function hintAdvice() {
+  const [a, b] = ['left', 'right'].map(hintScore);
+  const best = a.edge !== b.edge ? (a.edge > b.edge ? a : b) : a.spread !== b.spread ? (a.spread < b.spread ? a : b) : null;
+  return best;
+}
+function hintBar(auto) {
+  if (!(S?.mode === 'career' && C) || busy || splashOn) return;
+  const el = $('hintBar'), danger = RES.find(r => S.res[r.k] <= 20 || S.res[r.k] >= 80);
+  const why = auto && danger ? `«${danger.name}» ${S.res[danger.k] <= 20 ? 'на грани' : 'на перегреве'}. ` : '';
+  const can = C.bank >= HINT_PRICE;
+  el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">${why}Подсказать, какой ответ лучше держит баланс? <b>${HINT_PRICE} у.е.</b>${can ? '' : ` На счёте только ${C.bank} у.е.`}</span>
+    <span class="hb-btns"><button class="btn-main" type="button" id="hbYes" ${can ? '' : 'disabled'}>Получить</button><button class="btn-ghost" type="button" id="hbNo">Отказаться</button></span>`;
+  el.hidden = false; FX.pulse(el, 'on', 500);
+  $('hbNo').onclick = () => { el.hidden = true; };
+  $('hbYes').onclick = () => {
+    if (C.bank < HINT_PRICE || busy) return;
+    C.bank -= HINT_PRICE; C.spent = (C.spent || 0) + HINT_PRICE; saveCareer(); renderBars(); sfx.item();
+    const best = hintAdvice(), c = current();
+    S.hintStep = S.step;
+    if (!best) { el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">Оба ответа примерно одинаково влияют на баланс — выбирайте по душе.</span>`; return; }
+    const btn = $(best.side === 'left' ? 'btnL' : 'btnR'), w = RES.find(r => r.k === best.weak.k);
+    btn.classList.add('tip');
+    el.innerHTML = `<span class="hb-ico" aria-hidden="true">💡</span><span class="hb-text">Безопаснее ${best.side === 'left' ? '← влево' : 'вправо →'}: <b>«${esc(c.answers[best.side].label)}»</b>.
+      ${best.edge < 0 ? 'Но и он заканчивает неделю — держитесь за второй шанс.' : `Самая слабая шкала после него — ${w.name} ${best.weak.v}%.`}</span>`;
+  };
+}
+// Сама предлагает подсказку, когда шкала у края: раз в игровой день и только если хватает денег
+function hintOffer() {
+  $('hintBar').hidden = true;
+  if (!(S?.mode === 'career' && C) || C.bank < HINT_PRICE || prefs.hintOff) return;
+  const day = Math.floor(S.step / 3);
+  if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
+  S.hintDay = day;
+  setTimeout(() => { if (S && !busy) hintBar(true); }, 700);
+}
+$('hintChip').onclick = () => $('hintBar').hidden ? hintBar(false) : ($('hintBar').hidden = true);
 
 // ---------- второй шанс: вопрос на эрудицию ----------
 // Шкала дошла до 0 или 100 → вопрос с 4 вариантами и 20 секундами. Верно — шкала отступает от края на 20%, неделя продолжается
@@ -938,6 +986,7 @@ $('remindDaily').onclick = remindIcs;
 async function record(won, death, high) {
   const total = RES.reduce((a, r) => a + S.res[r.k], 0);
   prefs.gamesPlayed = (prefs.gamesPlayed || 0) + 1; store.set(KEY.prefs, prefs);
+  if (typeof installNudge === 'function') installNudge();
   if (S.mode === 'daily') {
     const all = store.get(KEY.daily, {});
     if (!all[S.day]) { all[S.day] = { won, total }; store.set(KEY.daily, all); updateStreak(S.day); }

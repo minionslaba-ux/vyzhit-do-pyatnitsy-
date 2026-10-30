@@ -4,7 +4,10 @@
 // Множители (минусы ×1.5, плюсы ×1.2, у Энергии ×1.5) и предел ±30 — как в игре (POOL_BOOST в js/engine.js).
 // «Внимательный» игрок видит только то, что показывает игра: направление (▲/▼) и силу (одна или две стрелки).
 const fs = require('fs');
-const pool = JSON.parse(fs.readFileSync(__dirname + '/../data/pool.json', 'utf8'));
+const read = f => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : [];
+// pool2 мягче первой тысячи: её минусы в игре дополнительно усилены (POOL2_DOWN в js/engine.js)
+const POOL2_DOWN = +(process.env.POOL2_DOWN || 1.1);
+const pool = [...read(__dirname + '/../data/pool.json'), ...read(__dirname + '/../data/pool2.json').map(c => ({ ...c, p2: true }))];
 const KEYS = ['psyche', 'energy', 'boss', 'colleagues'];
 const NAMES = { psyche: 'Кукуха', energy: 'Энергия', boss: 'Босс', colleagues: 'Коллеги' };
 const N = +(process.argv[2] || 10000);
@@ -14,7 +17,7 @@ const phases = PH.map(ph => pool.filter(c => c.phase === ph));
 const rnd = a => a[Math.floor(Math.random() * a.length)];
 const effOf = {};
 for (const c of pool) for (const side of ['left', 'right'])
-  effOf[c.id + side] = Object.fromEntries(KEYS.map(k => [k, Math.max(-30, Math.min(30, Math.round((c.answers[side].effects[k] || 0) * ((c.answers[side].effects[k] || 0) > 0 ? (k === 'energy' ? ENERGY_UP : UP) : DOWN) / 5) * 5))]));
+  effOf[c.id + side] = Object.fromEntries(KEYS.map(k => [k, Math.max(-30, Math.min(30, Math.round((c.answers[side].effects[k] || 0) * ((c.answers[side].effects[k] || 0) > 0 ? (k === 'energy' ? ENERGY_UP : UP) : DOWN * (c.p2 ? POOL2_DOWN : 1)) / 5) * 5))]));
 const eff = (c, side) => effOf[c.id + side];
 const seen = v => v === 0 ? 0 : v > 0 ? (v >= 20 ? 2 : 1) : (v <= -20 ? -2 : -1);  // что видно в подсказке
 

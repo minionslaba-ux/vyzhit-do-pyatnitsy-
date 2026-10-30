@@ -883,3 +883,45 @@ button.live:hover { background: rgba(212,255,58,.16); color: #fff; }
 .ip-x { position: absolute; top: 6px; right: 8px; border: 0; background: none; color: var(--text-2); font-size: 22px; line-height: 1; padding: 4px 8px; }
 .ip-form { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 10px; }
 .ip-form input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: rgba(255,255,255,.05); color: #fff; font: inherit; font-weight: 800; }
+
+/* Подсказка за 3 у.е. */
+.hint-chip { border-color: var(--up); color: var(--up); background: rgba(212,255,58,.08); text-shadow: 0 0 6px rgba(212,255,58,.5); }
+.hint-chip:hover { box-shadow: 0 0 14px rgba(212,255,58,.5); color: #fff; }
+.hint-bar { display: grid; grid-template-columns: auto 1fr; gap: 8px 10px; align-items: center; max-width: 520px; width: 100%; margin: 0 auto 8px; padding: 10px 12px;
+  border-radius: 14px; border: 1.5px solid var(--up); background: rgba(212,255,58,.07); box-shadow: 0 0 18px rgba(212,255,58,.18); font-size: 13px; line-height: 1.4; color: var(--text-3); }
+.hint-bar[hidden] { display: none; }
+.hint-bar.on { animation: slidein .35s; }
+.hint-bar b { color: #fff; }
+.hb-ico { font-size: 22px; }
+.hb-btns { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+.hb-btns .btn-main, .hb-btns .btn-ghost { padding: 10px; font-size: 13px; }
+.hb-btns .btn-main:disabled { opacity: .45; box-shadow: none; }
+.ans.tip { border-color: var(--up) !important; box-shadow: 0 0 0 2px var(--up), 0 0 26px rgba(212,255,58,.55) !important; animation: tip 1.2s ease-in-out infinite; }
+@keyframes tip { 50% { box-shadow: 0 0 0 2px var(--up), 0 0 8px rgba(212,255,58,.25); } }
+
+/* Крупная заметная кнопка «Назад» */
+.back-btn { flex: none; min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 2px solid var(--cyan); background: rgba(45,226,230,.12); color: #fff;
+  font-weight: 800; font-size: 16px; letter-spacing: .02em; box-shadow: 0 0 16px rgba(45,226,230,.45); text-shadow: 0 0 8px rgba(45,226,230,.7); }
+.back-btn:hover, .back-btn:focus-visible { background: rgba(45,226,230,.25); box-shadow: 0 0 24px rgba(45,226,230,.7); }
+.back-sp { flex: none; width: 112px; }
+@media (max-width: 420px) { .back-btn { padding: 9px 14px; font-size: 15px; } .back-sp { width: 0; } .board-head h2 { font-size: 15px; } }
+
+/* Колокольчик: новые приглашения и сообщения */
+.bell { position: fixed; top: calc(84px + env(safe-area-inset-top, 0px)); right: 12px; z-index: 43; width: 50px; height: 50px; border-radius: 50%; padding: 0;
+  display: grid; place-items: center; border: 2px solid var(--up); background: rgba(12,12,24,.96); box-shadow: 0 0 22px rgba(212,255,58,.5); font-size: 24px; }
+.bell[hidden] { display: none; }
+.bell b { position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 5px; border-radius: 999px; background: var(--magenta); color: #fff;
+  font-size: 12px; line-height: 22px; text-align: center; box-shadow: 0 0 10px rgba(255,59,212,.8); }
+.bell.ring .bell-ico { display: inline-block; transform-origin: 50% 8%; animation: bellring 1.2s ease-in-out 2; }
+@keyframes bellring { 0%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(18deg); } 20%, 40% { transform: rotate(-18deg); } 50% { transform: rotate(8deg); } 60% { transform: rotate(-8deg); } 70% { transform: rotate(0); } }
+
+/* Установка на телефон: баннер в меню и всплывающее предложение */
+.install-cta { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 10px 12px; align-items: center; padding: 14px 40px 14px 14px; border-radius: 18px;
+  border: 1.5px solid var(--cyan); background: linear-gradient(135deg, rgba(45,226,230,.14), rgba(255,59,212,.08)); box-shadow: 0 0 22px rgba(45,226,230,.25); }
+.install-cta[hidden] { display: none; }
+.ic-ico { font-size: 30px; }
+.ic-text { display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.35; color: var(--text-3); }
+.ic-text b { color: #fff; font-size: 15px; }
+.install-cta .btn-main { grid-column: 1 / -1; padding: 12px; font-size: 15px; }
+.install-pop { border-color: var(--cyan); box-shadow: 0 0 28px rgba(45,226,230,.35); }
+@media (prefers-reduced-motion: reduce) { .ans.tip, .bell.ring .bell-ico { animation: none; } }

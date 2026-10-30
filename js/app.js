@@ -67,18 +67,42 @@ $('joinForm').onsubmit = async e => { await origSubmit(e); if (prefs.name && !vi
 if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON && !window.VDP_PLATFORM) navigator.serviceWorker.register('sw.js').catch(() => {});
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isAndroid = /android/i.test(navigator.userAgent), isMobile = isIOS || isAndroid;
 let installEvt = null;
-addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; $('installApp').hidden = false; });
-$('installApp').hidden = standalone || TG || !(isIOS);  // на iOS кнопка с подсказкой, на Android — после события браузера
-$('installApp').onclick = async () => {
-  if (installEvt) { installEvt.prompt(); const r = await installEvt.userChoice.catch(() => null); if (r?.outcome === 'accepted') $('installApp').hidden = true; installEvt = null; return; }
+// Установить можно: браузер дал событие установки, или это телефон (покажем, как добавить вручную); не в Telegram, не в каталогах
+const canInstall = () => !standalone && !TG && !window.VDP_PLATFORM && !window.POOL_JSON && (installEvt || isMobile);
+function installUi() {
+  $('installApp').hidden = !canInstall();
+  $('installCta').hidden = !canInstall() || Date.now() < (prefs.installSnooze || 0);
+}
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; installUi(); });
+addEventListener('appinstalled', () => { installEvt = null; prefs.installed = 1; store.set(KEY.prefs, prefs); $('installPop').hidden = true; installUi(); toast('Игра установлена — ищите её на главном экране'); });
+async function doInstall() {
+  $('installPop').hidden = true;
+  track('install', { detail: installEvt ? 'prompt' : isIOS ? 'ios' : 'manual' });
+  if (installEvt) { installEvt.prompt(); const r = await installEvt.userChoice.catch(() => null); if (r?.outcome === 'accepted') { prefs.installed = 1; store.set(KEY.prefs, prefs); } installEvt = null; installUi(); return; }
   const m = $('modal');
-  m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="insTitle"><h2 id="insTitle">На экран «Домой»</h2>
-    <p class="share-text">1. Нажмите кнопку «Поделиться» внизу Safari (квадрат со стрелкой).<br>2. Выберите «На экран „Домой“».<br>3. Нажмите «Добавить» — игра откроется как приложение, на весь экран и даже без интернета.</p>
+  const steps = isIOS
+    ? '1. Нажмите кнопку «Поделиться» внизу Safari (квадрат со стрелкой).<br>2. Выберите «На экран „Домой“».<br>3. Нажмите «Добавить».'
+    : '1. Откройте меню браузера — три точки ⋮ справа вверху.<br>2. Выберите «Установить приложение» или «Добавить на главный экран».<br>3. Подтвердите — значок игры появится рядом с другими приложениями.';
+  m.innerHTML = `<div class="modal-box glass share-box" role="dialog" aria-modal="true" aria-labelledby="insTitle"><h2 id="insTitle">На главный экран</h2>
+    <p class="share-text">${steps}<br><br>Игра будет открываться как приложение: на весь экран и даже без интернета.</p>
     <button class="btn-ghost" id="insClose">Понятно</button></div>`;
   m.hidden = false; $('insClose').onclick = () => { m.hidden = true; };
-};
-addEventListener('appinstalled', () => { track('install'); $('installApp').hidden = true; toast('Игра установлена — ищите иконку на экране телефона'); });
+}
+$('installApp').onclick = doInstall;
+$('installCtaGo').onclick = doInstall;
+$('installCtaX').onclick = () => { prefs.installSnooze = Date.now() + 3 * 864e5; store.set(KEY.prefs, prefs); installUi(); };
+// Иногда предлагаем в игре: после 2-й, 5-й, 8-й… недели, не чаще раза в двое суток, после трёх «Не сейчас» — больше не всплывает
+function installNudge() {
+  const n = prefs.gamesPlayed || 0;
+  if (!canInstall() || prefs.installed || (prefs.installNo || 0) >= 3 || n < 2 || (n - 2) % 3 || Date.now() < (prefs.installNudgeAt || 0)) return;
+  prefs.installNudgeAt = Date.now() + 2 * 864e5; store.set(KEY.prefs, prefs);
+  setTimeout(() => { const el = $('installPop'); if (!$('invitePop').hidden) return; el.hidden = false; FX.pulse(el, 'on', 600); }, 2500);
+}
+$('installPopGo').onclick = doInstall;
+$('installPopNo').onclick = () => { $('installPop').hidden = true; prefs.installNo = (prefs.installNo || 0) + 1; store.set(KEY.prefs, prefs); };
+installUi();
 // Telegram Mini App: тёмная шапка, имя из Telegram, приглашения через startapp=ref-ID_join-КОД, кнопка «Назад»
 if (TG) {
   try {
