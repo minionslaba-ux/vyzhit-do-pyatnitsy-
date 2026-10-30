@@ -566,16 +566,22 @@ const dueText = d => L(`до ${['понедельника', 'вторника', 
 function deadlineBadges(c) {
   for (const [side, id] of [['left', 'btnL'], ['right', 'btnR']]) {
     $(id).querySelector('.dl-badge')?.remove();
-    if (S?.deadline && workAnswer(c, side)) $(id).insertAdjacentHTML('beforeend', `<span class="dl-badge" title="${L('Засчитается в дедлайн', 'Counts toward your deadline')}">📋+1</span>`);
+    if (S?.deadline && workAnswer(c, side)) $(id).insertAdjacentHTML('beforeend', `<span class="dl-badge" title="${L('Этот ответ засчитается в задачу', 'This answer counts toward your task')}">📋 ${L('в задачу', 'counts')}</span>`);
   }
   renderDeadlineChip();
 }
+// Полоска задачи над карточкой: что сделать, сколько осталось, до когда и какой ответ на этой карточке засчитается
 function renderDeadlineChip() {
-  const el = $('dlChip'), d = S?.mode === 'career' && S.deadline;
+  const el = $('dlBar'), d = S?.mode === 'career' && S.deadline;
+  $('dlChip').hidden = true;
   el.hidden = !d; if (!d) return;
-  el.textContent = `📋 ${d.got}/${d.need} · ${dayName(d.due).slice(0, EN ? 3 : 2)}`;
-  el.onclick = () => toast(L(`«${d.title}» от: ${d.who}. Ещё ${d.need - d.got} раб. решений ${dueText(d.due)}. Награда +${money(d.reward)}, штраф −${money(d.fine)}`,
-    `“${d.title}” from ${d.who}: ${d.need - d.got} more work decisions ${dueText(d.due)}. Reward +${money(d.reward)}, penalty −${money(d.fine)}`));
+  const c = current(), l = workAnswer(c, 'left'), r = workAnswer(c, 'right');
+  const here = l && r ? L('тут засчитаются оба ответа', 'both answers count here') : l ? L('← в задачу засчитается левый ответ', '← the left answer counts') : r ? L('в задачу засчитается правый ответ →', 'the right answer counts →') : L('на этой карточке рабочего ответа нет', 'no work answer on this card');
+  el.innerHTML = `<span class="dl-top"><b>📋 ${esc(d.title)}</b><span class="dl-n">${d.got}/${d.need}</span><span class="dl-due">${dueText(d.due)}</span></span>
+    <span class="dl-prog"><i style="width:${Math.round(d.got / d.need * 100)}%"></i></span>`;
+  el.title = here;
+  el.onclick = () => toast(L(`${here}. «${d.title}» (${d.who}): ещё ${d.need - d.got} отв. со значком 📋 ${dueText(d.due)}. Успеете — +${money(d.reward)}, нет — −${money(d.fine)}`,
+    `${here}. “${d.title}” (${d.who}): ${d.need - d.got} more 📋 answers ${dueText(d.due)}. Make it — +${money(d.reward)}, miss it — −${money(d.fine)}`));
 }
 function deadlineOffer() {
   if (!(S?.mode === 'career' && C) || S.deadline || S.step % 3 || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
@@ -593,8 +599,9 @@ function showDeadlineOffer(d) {
   m.innerHTML = `<div class="modal-box glass dl-box" role="dialog" aria-modal="true" aria-labelledby="dlTitle">
     <span class="dl-kicker">📋 ${L('Дедлайн', 'Deadline')} · ${d.tier} · ${L('от', 'from')}: ${esc(d.who)}</span>
     <h2 id="dlTitle">${esc(d.title)}</h2>
-    <p>${L(`Сделайте <b>${d.need} рабочих решений</b> ${dueText(d.due)}. Рабочее решение — ответ, который радует Босса или стоит Энергии: на нём будет значок <span class="nowrap">📋+1</span>.`,
-      `Make <b>${d.need} work decisions</b> ${dueText(d.due)}. A work decision is an answer that pleases the Boss or costs Energy — it’ll carry a <span class="nowrap">📋+1</span> badge.`)}</p>
+    <ol class="dl-how">${L(`<li>Отвечайте на карточки как обычно.</li><li>На «рабочих» ответах — взяться, задержаться, помочь Боссу — будет значок <span class="nowrap">📋 в задачу</span>.</li><li>Выберите <b>${d.need} таких ответов ${dueText(d.due)}</b> — счётчик над карточкой.</li>`,
+      `<li>Answer cards as usual.</li><li>“Work” answers — take it on, stay late, help the Boss — carry a <span class="nowrap">📋 counts</span> badge.</li><li>Pick <b>${d.need} of those ${dueText(d.due)}</b> — the counter is above the card.</li>`)}</ol>
+    <p class="dl-warn">${L('Рабочие ответы стоят сил и нервов — следите за шкалами.', 'Work answers cost energy and nerves — watch your meters.')}</p>
     <div class="money"><div><b>+${money(d.reward)}</b><span>${L('премия, если успеете', 'bonus if you make it')}</span></div><div><b>−${money(d.fine)}</b><span>${L('штраф, если сорвёте', 'penalty if you miss it')}</span></div></div>
     <div class="row2"><button class="btn-main" type="button" id="dlYes">${L('Взять задачу', 'Take it on')}</button><button class="btn-ghost" type="button" id="dlNo">${L('Отказаться', 'Decline')}</button></div></div>`;
   m.hidden = false; sfx.item?.();
@@ -609,7 +616,7 @@ function deadlineWork(c, side) {
   const d = S?.deadline;
   if (!d || !workAnswer(c, side)) return;
   d.got++;
-  if (d.got < d.need) { toast(`📋 ${L(`«${d.title}»`, `“${d.title}”`)}: ${d.got}/${d.need}`); renderDeadlineChip(); return; }
+  if (d.got < d.need) { toast(L(`📋 +1 к задаче «${d.title}»: ${d.got} из ${d.need}`, `📋 +1 to “${d.title}”: ${d.got} of ${d.need}`)); renderDeadlineChip(); return; }
   S.deadline = null; S.dlWon = (S.dlWon || 0) + 1;
   pay(d.reward); S.earned = (S.earned || 0) + d.reward; renderBars(); renderDeadlineChip(); FX.coin(d.reward); sfx.coins();
   smsPop(L('Банк', 'Bank'), L(`Премия за «${d.title}»: +${money(d.reward)} · баланс ${money(C.bank)}`, `Bonus for “${d.title}”: +${money(d.reward)} · balance ${money(C.bank)}`));
