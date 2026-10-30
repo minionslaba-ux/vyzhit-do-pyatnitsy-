@@ -685,7 +685,7 @@ function jobSearch() {
   board.touch('menu').catch(() => {});
 }
 
-// Собеседование: 6 вопросов (до двух — по профессии) + финальный. Заданные вопросы запоминаются,
+// Собеседование: 6 вопросов (один — по профессии) + финальный. Заданные вопросы запоминаются,
 // повторы — только когда незаданных не осталось
 const IV_COUNT = 6;
 function pickInterview(prof) {
@@ -696,7 +696,7 @@ function pickInterview(prof) {
     const out = left.slice(0, n); for (const x of out) seen.add(x.id); return out;
   };
   const own = IV.filter(x => !x.last && x.prof === prof), main = IV.filter(x => !x.last && !x.prof), last = IV.filter(x => x.last);
-  const mine = take(own, Math.min(2, own.length));
+  const mine = take(own, Math.min(1, own.length));
   const qs = shuffle(mine.concat(take(main, IV_COUNT - mine.length))).concat(take(last, 1));
   store.set(KEY.ivseen, [...seen]);
   return qs;

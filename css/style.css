@@ -66,7 +66,7 @@ button { cursor: pointer; }
 .field input[aria-invalid="true"] { border-color: var(--down); box-shadow: 0 0 18px rgba(255,59,107,.4); }
 
 /* ---------- меню ---------- */
-.menu { justify-content: center; overflow-y: auto; }
+.menu { justify-content: flex-start; overflow-y: auto; }
 .hero { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
 .logo { width: 84px; height: auto; color: var(--cyan-l); filter: drop-shadow(0 0 8px rgba(45,226,230,.8)); }
 .title { margin: 0; font-family: var(--f-display); font-weight: 800; line-height: 1; text-transform: uppercase; letter-spacing: .01em; display: flex; flex-direction: column; gap: 4px; }
@@ -96,7 +96,7 @@ button { cursor: pointer; }
 .sound { flex: none; width: 52px; border-radius: 18px; font-family: var(--f-mono); font-size: 12px; color: var(--text-2); }
 
 /* ---------- пропуск ---------- */
-.join { justify-content: center; overflow-y: auto; }
+.join { justify-content: flex-start; overflow-y: auto; }
 .pass { overflow: hidden; }
 .pass-top { position: relative; padding: 24px 16px 14px; text-align: center; border-bottom: 1.5px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
 .pass-top b { font-family: var(--f-display); font-weight: 800; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; color: #fff; text-shadow: 0 0 18px rgba(255,59,212,.8); }
@@ -206,7 +206,7 @@ button { cursor: pointer; }
 .splash .tap { font-family: var(--f-mono); font-size: 11px; color: var(--text-2); letter-spacing: .08em; animation: slidein .4s .55s both; }
 
 /* ---------- финал ---------- */
-.end { justify-content: center; overflow-y: auto; }
+.end { justify-content: flex-start; overflow-y: auto; }
 .end-sheet { position: relative; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; text-align: center; align-items: center; }
 .end-sheet > * { max-width: 100%; }
 .end h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 8.4vw, 40px); overflow-wrap: anywhere; line-height: 1.05; margin: 0; color: #fff; text-shadow: 0 0 24px rgba(255,59,212,.8); text-wrap: balance; }
@@ -629,3 +629,8 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(45,226,230,.25); filt
 .place.challenge b { font-family: var(--f-display); font-size: 16px; color: var(--up); text-shadow: 0 0 10px rgba(212,255,58,.6); }
 .btn-share { border-color: var(--up); color: var(--up); }
 .modal-box .share-text { max-height: 7.5em; overflow: auto; }
+
+/* Центрирование по вертикали без обрезки: при justify-content: center высокое содержимое уходит за верхний край
+   прокручиваемого блока и до него не докрутить. Поля auto центрируют, только пока есть свободное место */
+.menu > :first-child, .join > :first-child, .end > :first-child { margin-top: auto; }
+.menu > :last-child, .join > :last-child, .end > :last-child { margin-bottom: auto; }
