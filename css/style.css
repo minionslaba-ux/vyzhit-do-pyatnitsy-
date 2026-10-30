@@ -20,6 +20,8 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { height: 100%; }
+/* Telegram на компьютере во весь экран: сверху его кнопки «Закрыть / ⋯» — отступ под них */
+html.tgfs body { box-sizing: border-box; padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px)); }
 @supports (height: 100dvh) { html, body { height: 100dvh; } }  /* на телефоне учитывает панели браузера и клавиатуру */
 body {
   background:

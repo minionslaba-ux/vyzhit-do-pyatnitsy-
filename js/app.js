@@ -133,6 +133,10 @@ installUi();
 if (TG) {
   try {
     TG.ready(); TG.expand(); TG.setHeaderColor?.('#07070d'); TG.setBackgroundColor?.('#07070d');
+    // на компьютере Telegram открывает игру маленьким окошком — разворачиваем на весь экран (Bot API 8.0+)
+    if (/^(tdesktop|macos|weba|webk|unigram)$/.test(TG.platform) && TG.isVersionAtLeast?.('8.0')) {
+      document.documentElement.classList.add('tgfs'); TG.requestFullscreen?.();
+    }
     const sp = TG.initDataUnsafe?.start_param || '';
     const ref = sp.match(/ref-([A-Z0-9]{6})/i), join = sp.match(/join-([A-Z0-9]{6})/i);
     if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
