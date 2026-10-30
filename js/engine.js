@@ -63,11 +63,13 @@ let POOL_CHAINS = [];
 const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colleagues: 1.2 } };
 const boost = c => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
   effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down) / 5) * 5))])) }])) });
+// Вопросы собеседования: базовые из cards.js и 300 из data/interview.json (prof — только для своей профессии, last — финальный)
+let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   try {
-    const [p, q, ch] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => [])]);
-    POOL = p.map(c => boost(norm(c))); QUIZ = q;
+    const [p, q, ch, iv] = await Promise.all([get('pool', 'POOL_JSON'), get('quiz', 'QUIZ_JSON'), get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => [])]);
+    POOL = p.map(c => boost(norm(c))); QUIZ = q; IV = IV.concat(iv);
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
     for (const c of POOL) byId[c.id] = c;
     for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };
@@ -103,7 +105,7 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
   del(k) { try { localStorage.removeItem(k); } catch {} },
 };
-const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen', qseen: 'vdp-quiz-seen' };
+const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen', qseen: 'vdp-quiz-seen', ivseen: 'vdp-iv-seen' };
 const YEAR = 52;
 const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', trait: 'workaholic', sound: true }, store.get(KEY.prefs, {}));
 const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];

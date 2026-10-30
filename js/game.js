@@ -685,10 +685,26 @@ function jobSearch() {
   board.touch('menu').catch(() => {});
 }
 
-// Собеседование: 3 случайных вопроса + финальный, проходной балл зависит от сложности
+// Собеседование: 6 вопросов (до двух — по профессии) + финальный. Заданные вопросы запоминаются,
+// повторы — только когда незаданных не осталось
+const IV_COUNT = 6;
+function pickInterview(prof) {
+  const seen = new Set(store.get(KEY.ivseen, []));
+  const take = (list, n) => {
+    let left = shuffle(list.filter(x => !seen.has(x.id)));
+    if (left.length < n) { const old = shuffle(list.filter(x => seen.has(x.id))); for (const x of list) seen.delete(x.id); left = left.concat(old); }
+    const out = left.slice(0, n); for (const x of out) seen.add(x.id); return out;
+  };
+  const own = IV.filter(x => !x.last && x.prof === prof), main = IV.filter(x => !x.last && !x.prof), last = IV.filter(x => x.last);
+  const mine = take(own, Math.min(2, own.length));
+  const qs = shuffle(mine.concat(take(main, IV_COUNT - mine.length))).concat(take(last, 1));
+  store.set(KEY.ivseen, [...seen]);
+  return qs;
+}
+// Проходной балл зависит от уровня вакансии: из 14 возможных нужно 7, 9 или 11
 function interview(v) {
-  const qs = shuffle(INTERVIEW).slice(0, 3).concat(INTERVIEW_LAST);
-  const need = { 1: 4, 2: 5, 3: 6 }[v.level];
+  const qs = pickInterview(C.prof);
+  const need = Math.round(qs.length * 2 * { 1: .5, 2: .64, 3: .79 }[v.level]);
   let i = 0, score = 0;
   const step = () => {
     const q = qs[i];

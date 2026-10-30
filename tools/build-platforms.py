@@ -11,7 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FILES = ['index.html', 'css/style.css', 'manifest.json', 'sw.js', 'igra-pro-ofis.html',
          'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js',
          'js/game.js', 'js/ui-menu.js', 'js/app.js',
-         'data/pool.json', 'data/quiz.json', 'data/chains.json']
+         'data/pool.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json']
 DIRS = ['icons', 'packs']
 
 
