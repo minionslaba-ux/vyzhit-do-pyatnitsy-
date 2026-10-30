@@ -185,14 +185,15 @@ let C = null;
 const saveCareer = () => store.set(KEY.career, C);
 const vacancy = id => VACANCIES.find(v => v.id === id);
 // ---------- зарплата и отпуск ----------
-// Оклад за рабочий день: 3 у.е. в простой компании, 4 и 5 — в компаниях посложнее
-const salaryFor = v => 2 + (v?.level || 1);
+// Оклад за рабочий день: 2 у.е. в любой компании, +0,5 за каждую сданную аттестацию (js/cert.js)
+const PAY_BASE = 2, PAY_CERT = 0.5, LIFE_COST = 4;
+const salaryFor = () => PAY_BASE + PAY_CERT * (C?.cert || 0);
 const VAC_YEAR = 28, VAC_PER_WEEK = VAC_YEAR / YEAR;  // 28 календарных дней в году → ≈0,54 дня за неделю
 const fmtDays = d => (Math.floor(d * 10) / 10).toLocaleString(LOCALE);
 function pay(amount) { C.bank += amount; C.earned += amount; saveCareer(); }
-// Расходы недели: жильё и еда — 2 дневных оклада, плюс платёж по кредиту. Счёт ниже нуля — долг, он давит на Кукуху
+// Расходы недели: жильё и еда — 4 у.е. (не растут вместе с окладом), плюс платёж по кредиту. Счёт ниже нуля — долг, он давит на Кукуху
 function weekExpenses(share = 1) {  // share — доля недели: при увольнении расходы только за отработанные дни
-  const life = Math.round(C.salary * 2 * share), loanPay = Math.min(C.loan || 0, Math.max(6, Math.ceil((C.loan || 0) / 8)));  // большой кредит — платёж больше
+  const life = Math.round(LIFE_COST * share), loanPay = Math.min(C.loan || 0, Math.max(6, Math.ceil((C.loan || 0) / 8)));  // большой кредит — платёж больше
   C.bank -= life + loanPay; C.loan = (C.loan || 0) - loanPay; C.spent = (C.spent || 0) + life + loanPay; saveCareer();
   return { life, loanPay };
 }
@@ -231,7 +232,8 @@ function continueCareer() {
   C = store.get(KEY.career, null);
   if (!C) return newCareer();
   C.trait = C.trait || prefs.trait;
-  C.bank ??= 0; C.earned ??= 0; C.salary ??= 3; C.vacation ??= 0; C.vacUsed ??= 0;  // карьеры до появления зарплаты и отпуска
+  C.bank ??= 0; C.earned ??= 0; C.vacation ??= 0; C.vacUsed ??= 0;  // карьеры до появления зарплаты и отпуска
+  if (C.payV !== 2) { C.payV = 2; C.salary = salaryFor(); saveCareer(); }  // новая сетка окладов: 2 у.е. + аттестации
   const save = store.get(KEY.save, null);
   if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(); }
   if (C.week > YEAR) return yearEnd();
@@ -682,7 +684,7 @@ function openShop() {
   const render = () => {
     m.innerHTML = `<div class="modal-box glass shop-box" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
       <h2 id="shopTitle">${L('Магазин мощей', 'Power Shop')}</h2>
-      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${C.salary} у.е./день`, `pay $${C.salary}/day`)} ${topupBtn(0, 'shop')}</p>
+      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${money(C.salary)}/день`, `pay ${money(C.salary)}/day`)} ${topupBtn(0, 'shop')}</p>
       <span class="shop-sec">${L('Предметы — гасят один удар −10 и сильнее', 'Items — each blocks one hit of −10 or worse')}</span>
       <div class="shop-list">${Object.entries(SHOP).map(([id, price]) => `<button class="shop-item${C.bank < price ? ' short' : ''}" data-item="${id}" ${S.items.length >= 6 ? 'disabled' : ''} ${C.bank < price ? `data-topup="${lackOf(price)}" data-topup-back="shop"` : ''}>
         <b>${ITEMS[id].name}</b><small>${ITEMS[id].text}</small><span class="price">${C.bank < price ? `💰 ${L('не хватает', 'short')} ${lackOf(price)}` : money(price)}</span></button>`).join('')}</div>
@@ -691,7 +693,7 @@ function openShop() {
         <b>${r.name} ${S.res[r.k]}% → ${S.res[r.k] > 50 ? Math.max(50, S.res[r.k] - 20) : Math.min(50, S.res[r.k] + 20)}%</b><span class="price">${C.bank < powerPrice() ? `💰 ${L('не хватает', 'short')} ${lackOf(powerPrice())}` : money(powerPrice())}</span></button>`).join('')}</div>
       <span class="shop-sec">${L('Банк', 'Bank')}</span>
       <div class="shop-list"><button class="shop-item" id="loanBtn" ${C.loan ? 'disabled' : ''}><b>${L('Кредит +20 у.е.', 'Loan +$20')}</b><small>${C.loan ? L(`осталось вернуть ${C.loan} у.е.`, `$${C.loan} left to repay`) : L('вернуть 24 у.е. — по 6 в неделю', 'repay $24 — $6 a week')}</small><span class="price">${L('сразу на счёт', 'cash right now')}</span></button></div>
-      <p class="field-note">${L('Каждая следующая «мощь» на этой неделе вдвое дороже. Каждую неделю списываются расходы на жильё и еду — два дневных оклада.', 'Each extra “power” this week costs twice as much. Every week, rent and food eat two days’ pay.')}</p>
+      <p class="field-note">${L('Каждая следующая «мощь» на этой неделе вдвое дороже. Каждую неделю списываются расходы на жильё и еду — 4 у.е. Хотите оклад выше — сдайте 📜 аттестацию.', 'Each extra “power” this week costs twice as much. Every week, rent and food cost $4. Want a raise? Pass the 📜 certification.')}</p>
       <button class="btn-ghost" id="shopClose">${L('Закрыть', 'Close')}</button></div>`;
     m.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
       const id = b.dataset.item; if (C.bank < SHOP[id]) return; C.bank -= SHOP[id]; S.items.push(id); saveCareer(); store.set(KEY.save, S); sfx.item(); bus.emit('buy', id);
@@ -731,10 +733,10 @@ $('gExit').onclick = () => {
   m.onclick = e => { if (e.target === m) m.hidden = true; };
 };
 
-// ---------- подсказка за 6 у.е.: какой ответ лучше держит баланс ----------
+// ---------- подсказка за 2 у.е.: какой ответ лучше держит баланс ----------
 // Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта
-const HINT_BASE = 6;
-const hintPriceNow = () => Math.max(2, HINT_BASE - (typeof rankPerk === 'function' ? rankPerk('hint') : 0));
+const HINT_BASE = 2;
+const hintPriceNow = () => Math.max(1, HINT_BASE - (typeof rankPerk === 'function' ? rankPerk('hint') : 0));
 // Чем дальше самая слабая шкала от 0 и 100 после ответа, тем ответ безопаснее; конец недели — хуже всего
 function hintScore(side) {
   const { eff } = effectsOf(side), after = RES.map(r => ({ k: r.k, v: clamp(S.res[r.k] + (eff[r.k] || 0)) }));
@@ -989,6 +991,7 @@ function win() {
     ${viralHtml()}
     ${onboardingLine()}
     <div class="stack"><button class="btn-main" id="next">${career ? (last ? L('Итоги года', 'Year in review') : L(`Неделя ${C.week} →`, `Week ${C.week} →`)) : S.mode === 'tour' ? L('Экран итогов турнира', 'Tournament results') : L('В главное меню', 'Main menu')}</button>
+      ${career && !last && certCan(C) ? `<button class="btn-ghost btn-cert" id="certEnd">📜 ${L(`Хочу зарабатывать больше: аттестация (${money(C.salary)} → ${money(certNextPay(C))})`, `Earn more: take the exam (${money(C.salary)} → ${money(certNextPay(C))})`)}</button>` : ''}
       ${career && !last && C.vacation >= 7 ? `<button class="btn-ghost btn-vac" id="vac">${L('Уйти в отпуск на неделю (7 дн.)', 'Take a week off (7 days)')}</button>` : ''}
       <button class="btn-ghost btn-share" id="share">${S.mode === 'daily' ? L('Поделиться и вызвать коллег', 'Share & challenge coworkers') : L('Поделиться результатом', 'Share result')}</button>
       <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? L('Рейтинг дня', 'Daily leaderboard') : L('Рейтинг офиса', 'Office leaderboard')}</button><button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div>
@@ -996,6 +999,7 @@ function win() {
   show('end'); bindCommon();
   $('share').onclick = () => share(true);
   if ($('vac')) $('vac').onclick = takeVacation;
+  if ($('certEnd')) $('certEnd').onclick = () => certStart(() => { const b = $('certEnd'); if (b) b.remove(); });
   $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : S.mode === 'tour' ? openScreen(S.tourCode) : renderMenu();
   record(true, null, false);
   bus.emit('weekEnd', { won: true, mode: S.mode, step: WEEK_LEN, res: { ...S.res } });
@@ -1014,7 +1018,7 @@ function jobSearch() {
     <p>${L('Выберите, куда откликнуться. Собеседование займёт неделю: 4 вопроса от HR. Первая неделя на новом месте — с новым боссом.', 'Pick where to apply. The interview takes a week: 4 questions from HR. Your first week at the new place comes with a brand-new boss.')}</p>
     <div class="vacancies">${C.offers.map(id => { const v = vacancy(id);
       return `<button class="vac" data-id="${v.id}"><b>${esc(v.name)}</b><span class="lvl">${'●'.repeat(v.level)}${'○'.repeat(3 - v.level)}</span>
-        <small>${esc(v.vibe)}</small><span class="perk">${L('старт', 'start')}: ${perkText(v.perk)} · ${L(`оклад ${salaryFor(v)} у.е./день`, `pay $${salaryFor(v)}/day`)}</span></button>`; }).join('')}</div>
+        <small>${esc(v.vibe)}</small><span class="perk">${L('старт', 'start')}: ${perkText(v.perk)} · ${L(`оклад ${money(salaryFor(v))}/день`, `pay ${money(salaryFor(v))}/day`)}</span></button>`; }).join('')}</div>
     <div class="stack"><button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div>
   </div>`;
   show('end');
@@ -1071,7 +1075,7 @@ function interview(v) {
     views.end.innerHTML = `<div class="end-sheet glass">
       <span class="kicker">${L(`Собеседование · ${esc(v.name)} · ${score} из ${qs.length * 2} баллов, нужно ${need}`, `Interview · ${esc(v.name)} · ${score} of ${qs.length * 2} points, needed ${need}`)}</span>
       <h1 class="${ok ? '' : 'lose'}">${ok ? L('Оффер!', 'You got the offer!') : L('Мы вам перезвоним', 'We’ll be in touch')}</h1>
-      <p>${ok ? L(`${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%. Оклад — ${C.salary} у.е. в день.`, `${esc(v.name)} expects you on Monday. New job, fresh start: meters are back around 50%. Pay: $${C.salary} a day.`) : L('…но не перезвонили. Поиск продолжается, впереди новые вакансии.', '…they were not in touch. The hunt goes on — more openings ahead.')}</p>
+      <p>${ok ? L(`${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%. Оклад — ${money(C.salary)} в день.`, `${esc(v.name)} expects you on Monday. New job, fresh start: meters are back around 50%. Pay: ${money(C.salary)} a day.`) : L('…но не перезвонили. Поиск продолжается, впереди новые вакансии.', '…they were not in touch. The hunt goes on — more openings ahead.')}</p>
       ${endingsHtml(got)}
       <div class="stack"><button class="btn-main" id="next">${over ? L('Итоги года', 'Year in review') : ok ? L(`Выйти на работу · неделя ${C.week}`, `Start the job · week ${C.week}`) : L(`Искать дальше · неделя ${C.week}`, `Keep looking · week ${C.week}`)}</button>
         <button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div>

@@ -19,7 +19,8 @@ const EN = LANG === 'en';
 const L = (ru, en) => EN ? en : ru;
 const LOCALE = EN ? 'en-US' : 'ru-RU';
 // Деньги: «12 у.е.» / «$12»
-const money = n => EN ? `${n < 0 ? '−' : ''}$${Math.abs(n)}` : `${n} у.е.`;
+const num1 = n => Number.isInteger(n) ? String(n) : (Math.round(n * 10) / 10).toLocaleString(EN ? 'en-US' : 'ru-RU');  // 2,5 — оклад растёт на 0,5 после аттестации
+const money = n => EN ? `${n < 0 ? '−' : ''}$${num1(Math.abs(n))}` : `${num1(n)} у.е.`;
 // Число со словом: pl(3, 'предмет', 'предмета', 'предметов', 'item', 'items') → «3 предмета» / «3 items»
 const pl = (n, one, few, many, enOne, enMany) => {
   if (EN) return `${n} ${Math.abs(n) === 1 ? enOne : enMany}`;

@@ -55,8 +55,10 @@ function renderMenu() {
       <div class="stat-box"><b>${Cm.firings}</b><span>${L('увольнений', 'times fired')}</span></div>
       <div class="stat-box"><b>${Cm.companies.length}</b><span>${L('компаний', 'companies')}</span></div>
       <div class="cc-trait">${PROF[Cm.prof].name} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>
-      <div class="money" style="grid-column:1/-1"><div><b>${money(Cm.bank || 0)}</b><span>${L(`на счёте · оклад ${Cm.salary || 3}/день`, `in the bank · salary ${money(Cm.salary || 3)}/day`)}</span>${window.VDP_PLATFORM ? '' : topupBtn(0, '')}</div><div><b>${fmtDays(Cm.vacation || 0)} ${L('дн.', 'days')}</b><span>${L(`отпуска из ${VAC_YEAR}`, `vacation of ${VAC_YEAR}`)}</span></div></div>
+      <div class="money" style="grid-column:1/-1"><div><b>${money(Cm.bank || 0)}</b><span>${L(`на счёте · оклад ${money(Cm.salary || 2)}/день`, `in the bank · salary ${money(Cm.salary || 2)}/day`)}</span>${window.VDP_PLATFORM ? '' : topupBtn(0, '')}</div><div><b>${fmtDays(Cm.vacation || 0)} ${L('дн.', 'days')}</b><span>${L(`отпуска из ${VAC_YEAR}`, `vacation of ${VAC_YEAR}`)}</span></div></div>
+      ${certBtnHtml(Cm)}
       ${!careerSave && Cm.stage === 'work' && (Cm.vacation || 0) >= 7 && Cm.week <= YEAR ? '<button class="btn-ghost btn-vac" id="menuVac" style="grid-column:1/-1">' + L('Уйти в отпуск на неделю (7 дн.)', 'Take a week of vacation (7 days)') + '</button>' : ''}`;
+    if ($('certBtn')) $('certBtn').onclick = () => certStart();
     if ($('menuVac')) $('menuVac').onclick = () => { C = store.get(KEY.career, null); takeVacation(); };
     $('start').innerHTML = `${L('Играть', 'Play')}<small>${careerSave ? L('продолжить неделю', 'continue the week') : Cm.stage === 'search' ? L('поиск работы', 'job hunt') : L(`неделя ${Cm.week} из ${YEAR}`, `week ${Cm.week} of ${YEAR}`)}</small>`;
   } else $('start').innerHTML = L('Играть<small>начать карьеру</small>', 'Play<small>start your career</small>');
