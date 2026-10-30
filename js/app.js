@@ -134,6 +134,7 @@ if (TG) {
     const ref = sp.match(/ref-([A-Z0-9]{6})/i), join = sp.match(/join-([A-Z0-9]{6})/i);
     if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
     if (join) prefs.pendingJoin = join[1].toUpperCase();
+    const bonus = sp.match(/bonus-(\d{8})/); if (bonus) prefs.pendingBonus = bonus[1];  // ссылка из рассылки бота: +15 у.е.
     const ch = sp.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
     if (ch) rememberChallenge(ch[1], '', ref?.[1]);
     store.set(KEY.prefs, prefs);

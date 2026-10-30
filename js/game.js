@@ -542,7 +542,12 @@ function choose(side) {
     if (dead) FX.finale(dead.k, !deadLow);
     const pause = FX.off ? 650 : 1150;  // успеть показать взрыв шкалы или её угасание
     if (dead && !S.chanceUsed && QUIZ.length) { setTimeout(() => secondChance(dead.k, !deadLow), pause); return; }  // второй шанс — раз в неделю
-    if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); setTimeout(() => lose(dead.k, !deadLow), pause); return; } // busy остаётся до следующей недели
+    if (dead) {  // busy остаётся до следующей недели
+      best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save);
+      const fire = () => lose(dead.k, !deadLow);
+      setTimeout(() => { if (!window.groupOffer?.(fire)) fire(); }, pause);  // не в группе Telegram — сначала предложить вступить
+      return;
+    }
     advance();
   }, RM.matches ? 120 : 380);
 }
@@ -826,7 +831,8 @@ function secondChance(k, high) {
         unlock(['quiz_fail']);
         const best = store.get(KEY.best, { step: 0, wins: 0 });
         best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save);
-        lose(k, high);
+        const fire = () => lose(k, high);
+        if (!window.groupOffer?.(fire)) fire();
       }
     };
   };

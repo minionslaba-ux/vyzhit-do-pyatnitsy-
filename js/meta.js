@@ -351,43 +351,75 @@ async function tgGroup() {
   const mirror = () => { const c = $('psGroup'); if (c) { c.hidden = b.hidden; c.innerHTML = b.innerHTML; } };  // копия в «Моём профиле»
   mirror();
   const go = () => TG ? TG.openTelegramLink(link) : window.open(link, '_blank', 'noopener');
-  const claim = async () => {
+  const claim = async (done) => {
     const res = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
       body: JSON.stringify({ action: 'group_claim', ...(await tgWho()), player_id: prefs.playerId }) });
     const j = await res.json().catch(() => ({}));
     if (j.ok) {
       prefs.groupClaimed = true; const now = addCash(GROUP_REWARD); label(); mirror(); $('modal').hidden = true;
       sfx.coins?.(); toast(L(`🎉 Спасибо, что с нами! +${money(GROUP_REWARD)}${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎉 Thanks for joining! +${money(GROUP_REWARD)}${now ? '' : ' — paid once you get a job'}`));
-    } else if (j.error === 'claimed') { prefs.groupClaimed = true; store.set(KEY.prefs, prefs); label(); $('modal').hidden = true; toast(L('Награда за группу уже получена', 'You’ve already got the group reward')); }
-    else if (j.error === 'no_telegram' || j.error === 'bad_session') tgLogin('group');
+      if (done) setTimeout(done, 900);
+    } else if (j.error === 'claimed') { prefs.groupClaimed = true; store.set(KEY.prefs, prefs); label(); $('modal').hidden = true; toast(L('Награда за группу уже получена', 'You’ve already got the group reward')); done?.(); }
+    else if (j.error === 'no_telegram' || j.error === 'bad_session') { if (done) toast(L('Награду можно забрать в «Моём профиле» после входа через Telegram', 'Claim it in “My profile” after signing in with Telegram')); else tgLogin('group'); }
     else if (j.error === 'not_member') toast(L('Пока не видим вас в группе. Вступите и нажмите ещё раз', 'We don’t see you in the group yet. Join and tap again'));
     else toast(L('Не получилось, попробуйте позже', 'Didn’t work — try again later'));
   };
-  const open = () => {
+  // fired — то же окно перед экраном увольнения (done — показать увольнение дальше)
+  const open = (o = {}) => {
     if (prefs.groupClaimed) return go();
-    const can = TG || tgOnSite(), site = !TG && board.online && !window.VDP_PLATFORM;
+    const fired = !!o.done, can = TG || tgOnSite(), site = !TG && board.online && !window.VDP_PLATFORM && !fired;  // перед увольнением — без перехода на вход: неделя не дорисована
     const m = $('modal');
-    m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="tgGrTitle"><span class="lvl-ico" aria-hidden="true">👥</span>
-      <h2 id="tgGrTitle">${L('Группа игры в Telegram', 'The game’s Telegram group')}</h2>
-      <p>${L(`Каждый день — напоминание о неделе дня и кто вчера продержался лучше всех. За вступление — <b>+${money(GROUP_REWARD)}</b>, один раз.`,
+    m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="tgGrTitle"><span class="lvl-ico" aria-hidden="true">${fired ? '📦' : '👥'}</span>
+      <h2 id="tgGrTitle">${fired ? L('Кажется, вас увольняют…', 'Looks like you’re getting fired…') : L('Группа игры в Telegram', 'The game’s Telegram group')}</h2>
+      <p>${fired ? L(`Пока собираете коробку с вещами — вступите в группу игры в Telegram: там напоминания о неделе дня и итоги дня. За вступление — <b>+${money(GROUP_REWARD)}</b> на счёт, один раз.`,
+          `While you pack your box — join the game’s Telegram group for Daily Week reminders and results. Joining gets you <b>+${money(GROUP_REWARD)}</b>, once.`)
+        : L(`Каждый день — напоминание о неделе дня и кто вчера продержался лучше всех. За вступление — <b>+${money(GROUP_REWARD)}</b>, один раз.`,
         `A daily Daily Week reminder and who lasted longest yesterday. Join and get <b>+${money(GROUP_REWARD)}</b>, once.`)}</p>
       <button class="btn-main" type="button" id="tgGrGo">${L('1. Вступить в группу', '1. Join the group')}</button>
       <button class="${can || site ? 'btn-main btn-tg' : 'btn-ghost'}" type="button" id="tgGrClaim">${can ? L(`2. Я вступил — получить ${money(GROUP_REWARD)}`, `2. I’ve joined — get ${money(GROUP_REWARD)}`) : site ? L(`2. Войти через Telegram и получить ${money(GROUP_REWARD)}`, `2. Sign in with Telegram and get ${money(GROUP_REWARD)}`) : L('2. Получить награду в Telegram', '2. Get the reward in Telegram')}</button>
-      ${can ? '' : `<p style="opacity:.7;font-size:13px">${L('Награду выдаёт бот: он проверяет, что вы в группе, — для этого нужен вход через Telegram.', 'The bot checks that you’re in the group — that needs a Telegram sign-in.')}</p>`}
-      <button class="btn-ghost" type="button" id="tgGrClose">${L('Закрыть', 'Close')}</button></div>`;
+      ${can ? '' : `<p style="opacity:.7;font-size:13px">${fired ? L('Награду выдаёт бот после проверки, что вы в группе: заберите её потом в «Моём профиле».', 'The bot pays out after checking you’re in the group: claim it later in “My profile”.') : L('Награду выдаёт бот: он проверяет, что вы в группе, — для этого нужен вход через Telegram.', 'The bot checks that you’re in the group — that needs a Telegram sign-in.')}</p>`}
+      <button class="btn-ghost" type="button" id="tgGrClose">${fired ? L('Продолжить', 'Continue') : L('Закрыть', 'Close')}</button></div>`;
     m.hidden = false;
     $('tgGrGo').onclick = go;
-    $('tgGrClaim').onclick = () => can ? claim() : site ? tgLogin('group') : (location.href = 'https://t.me/Survivefridaybot?startapp=group');
-    $('tgGrClose').onclick = () => { m.hidden = true; };
+    if (fired && !can) $('tgGrClaim').hidden = true;
+    $('tgGrClaim').onclick = () => can ? claim(o.done) : site ? tgLogin('group') : (location.href = 'https://t.me/Survivefridaybot?startapp=group');
+    $('tgGrClose').onclick = () => { m.hidden = true; o.done?.(); };
+  };
+  // Перед экраном увольнения: кто ещё не в группе — предложить вступить (не чаще раза в день). false — окна не будет
+  window.groupOffer = done => {
+    const day = new Date().toDateString();
+    if (prefs.groupClaimed || prefs.groupOfferDay === day) return false;
+    prefs.groupOfferDay = day; store.set(KEY.prefs, prefs);
+    open({ done }); return true;
   };
   b.onclick = open;
   let after = ''; try { after = sessionStorage.getItem('vdp-after') || ''; sessionStorage.removeItem('vdp-after'); } catch {}
   if ((after === 'group' || TG && /(^|_)group\b/.test(TG.initDataUnsafe?.start_param || '')) && !prefs.groupClaimed) setTimeout(open, 1200);
 }
 
+// ---------- бонус за игру по ссылке из рассылки бота (пн, ср, пт): +15 у.е. ----------
+// Ссылка t.me/Survivefridaybot?startapp=bonus-ГГГГММДД или survivefriday.com/?bonus=ГГГГММДД — действует в день рассылки и на следующий, один раз
+const LINK_BONUS = 15;
+(() => {
+  const q = new URLSearchParams(location.search), b = q.get('bonus');
+  if (!b) return;
+  if (/^\d{8}$/.test(b)) { prefs.pendingBonus = b; store.set(KEY.prefs, prefs); }
+  q.delete('bonus'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+})();
+function linkBonus() {
+  const code = prefs.pendingBonus; if (!code) return;
+  delete prefs.pendingBonus; store.set(KEY.prefs, prefs);
+  const mskDay = d => new Date(Date.now() + 3 * 3600e3 - d * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
+  if (code !== mskDay(0) && code !== mskDay(1)) return toast(L('Срок этой ссылки с бонусом уже прошёл — ждите следующую рассылку', 'This bonus link has expired — watch for the next one'));
+  if ((prefs.bonusGot || []).includes(code)) return toast(L('Бонус по этой ссылке уже получен', 'You’ve already claimed this bonus'));
+  prefs.bonusGot = [...(prefs.bonusGot || []).slice(-9), code];
+  const now = addCash(LINK_BONUS); sfx.coins?.();
+  toast(L(`🎁 +${money(LINK_BONUS)} за игру по ссылке из Telegram${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎁 +${money(LINK_BONUS)} for playing from the Telegram link${now ? '' : ' — paid once you get a job'}`));
+}
+
 // старт: после загрузки данных
 dataReady.then(() => eventsReady).then(() => {
-  todayQuests(); missYou(); syncDesk(); tgButton(); tgGroup();
+  todayQuests(); missYou(); syncDesk(); tgButton(); tgGroup(); setTimeout(linkBonus, 1500);
   if (!views.menu.hidden) { renderMeta(); setTimeout(whatsNew, 800); }
   setTimeout(rivals, 4000);
 });

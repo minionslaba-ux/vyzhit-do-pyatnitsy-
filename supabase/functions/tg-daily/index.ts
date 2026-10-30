@@ -3,6 +3,7 @@
 // Каждому — не больше одного сообщения в день (last_sent), поэтому лишний вызов ничего не ломает.
 // Заблокировали бота или удалили из группы — подписка выключается сама.
 // Разработчикам (dev_admins) — отчёт по игре за вчера, тоже раз в день.
+// Пн, ср, пт — бонус: кнопка «Играть и получить 15 у.е.» со ссылкой ?bonus=ГГГГММДД (игра начисляет один раз, в тот же или на следующий день).
 // Тест: POST {"test": "<код>"} — 10 примеров в главную группу; код одноразовый, создаётся только в базе (bot_test_tokens).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
@@ -98,6 +99,10 @@ Deno.serve(async req => {
   const send = (body: Record<string, unknown>) => fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
   const pause = () => new Promise(res => setTimeout(res, 40));  // не больше ~25 сообщений в секунду
+  const msk = new Date(Date.now() + 3 * 3600e3), dow = msk.getUTCDay();
+  const bonus = [1, 3, 5].includes(dow) ? msk.toISOString().slice(0, 10).replace(/-/g, '') : '';  // код бонуса — дата по Москве
+  const bonusLine = (en: boolean) => bonus ? '\n\n' + (en ? '🎁 Play today with the button below — +$15 to your balance.' : '🎁 Сыграйте сегодня по кнопке ниже — +15 у.е. на счёт.') : '';
+  const playText = (en: boolean) => bonus ? (en ? '🎁 Play and get $15' : '🎁 Играть и получить 15 у.е.') : (en ? '▶ Play' : '▶ Играть');
 
   // личные напоминания
   const { data, error } = await db.from('tg_subs').select('player_id, tg_id, lang').eq('enabled', true).or(`last_sent.is.null,last_sent.lt.${today}`).limit(1000);
@@ -105,8 +110,8 @@ Deno.serve(async req => {
   let sent = 0, groups = 0;
   for (const s of data || []) {
     const en = s.lang === 'en', list = en ? TEXT.en : TEXT.ru;
-    const r = await send({ chat_id: s.tg_id, text: list[day % list.length],
-      reply_markup: { inline_keyboard: [[{ text: en ? '▶ Play' : '▶ Играть', web_app: { url: `https://survivefriday.com/${en ? 'en.html' : ''}` } }]] } });
+    const r = await send({ chat_id: s.tg_id, text: list[day % list.length] + bonusLine(en),
+      reply_markup: { inline_keyboard: [[{ text: playText(en), web_app: { url: `https://survivefriday.com/${en ? 'en.html' : ''}${bonus ? '?bonus=' + bonus : ''}` } }]] } });
     if (r.ok) { sent++; await db.from('tg_subs').update({ last_sent: today }).eq('player_id', s.player_id); }
     else if (r.status === 403) await db.from('tg_subs').update({ enabled: false }).eq('player_id', s.player_id);
     await pause();
@@ -123,7 +128,6 @@ Deno.serve(async req => {
     const recap = (en: boolean) => !count || !best ? '' : '\n\n' + (en
       ? `Yesterday ${count} ${count === 1 ? 'person' : 'people'} played. Best: ${best.name} — ${best.won ? `made it to Friday, ${best.total} pts` : `${best.step} of 25 decisions`}.`
       : `Вчера сыграли: ${count}. Лучший — ${best.name}: ${best.won ? `дожил(а) до пятницы, ${best.total} очков` : `${best.step} из 25 решений`}.`);
-    const msk = new Date(Date.now() + 3 * 3600e3), dow = msk.getUTCDay();
     // пн, ср, пт — позвать играть; вт, чт, вс — привлечь игроков; суббота — по очереди: за две недели ровно 7 на 7
     const week = Math.floor((day + 3) / 7);  // 1 января 1970 — четверг: так неделя начинается с понедельника
     const recruit = [2, 4, 0].includes(dow) || (dow === 6 && week % 2 === 0);
@@ -132,8 +136,9 @@ Deno.serve(async req => {
       text: en ? 'Survive till Friday — an office survival game. Can you make it to 6 PM?' : '«Выжить до пятницы» — игра про офис. Доживёшь до 18:00?' });
     for (const g of gs) {
       const en = g.lang === 'en';
-      const play = { text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
-      const text = groupText(ru, en, recruit, dow, day, week) + (recruit ? '' : recap(en));
+      const withBonus = !recruit && !!bonus;
+      const play = withBonus ? { text: playText(en), url: `https://t.me/Survivefridaybot?startapp=bonus-${bonus}` } : { text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
+      const text = groupText(ru, en, recruit, dow, day, week) + (recruit ? '' : recap(en)) + (withBonus ? bonusLine(en) : '');
       const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться игрой', url: shareUrl(en) }], [play]] : [[play]];
       const r = await send({ chat_id: g.chat_id, text, reply_markup: { inline_keyboard: keyboard } });
       const j = await r.json().catch(() => ({}));
