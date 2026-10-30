@@ -47,6 +47,7 @@ function renderMenu() {
   for (const [k, row] of Object.keys(CAST).map((k, i) => [k, $('castList').querySelectorAll('.cast-row')[i]])) if (row) setMood(row.querySelector('.face'), moodFor(((Cm?.cast || {})[k] || 0) * 10, true));
   $('careerCard').hidden = !Cm; $('profField').hidden = !!Cm; $('traitField').hidden = !!Cm; $('newCareer').hidden = !Cm;
   $('newCareer').textContent = L('Начать карьеру заново', 'Start career over'); delete $('newCareer').dataset.armed;
+  if (Cm && Cm.payV !== 2) { payFix(Cm); store.set(KEY.career, Cm); }
   if (Cm) {
     const where = Cm.stage === 'search' ? L('ищет работу', 'job hunting') : Cm.company;
     $('careerCard').innerHTML = `<div class="cc-head"><b>${L('Неделя', 'Week')} ${Math.min(Cm.week, YEAR)}/${YEAR}</b><span>${esc(where)}</span></div>

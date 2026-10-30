@@ -10,8 +10,8 @@ const CERT_TOPICS = {
   chem: ['⚗️', L('Химия', 'Chemistry')], med: ['🩺', L('Медицина', 'Medicine')], history: ['📜', L('История', 'History')], geo: ['🌍', L('География', 'Geography')],
   music: ['🎵', L('Музыка', 'Music')], fashion: ['👗', L('Мода', 'Fashion')], jobs: ['👷', L('Профессии', 'Professions')],
 };
-const FRIENDS = L(['Серёга из IT', 'Тётя Люба', 'Однокурсник Витя', 'Соседка Ира', 'Бывший начальник', 'Мама', 'Друг детства Костя', 'Бухгалтер Нина Петровна'],
-  ['Steve from IT', 'Aunt Lucy', 'Old classmate Vic', 'Neighbor Irene', 'Your ex-boss', 'Mom', 'Childhood friend Kevin', 'Nina from Accounting']);
+const FRIENDS = L([['Серёга из IT', 0], ['Тётя Люба', 1], ['Однокурсник Витя', 0], ['Соседка Ира', 1], ['Бывший начальник', 0], ['Мама', 1], ['Друг детства Костя', 0], ['Бухгалтер Нина Петровна', 1]],
+  [['Steve from IT', 0], ['Aunt Lucy', 1], ['Old classmate Vic', 0], ['Neighbor Irene', 1], ['Your ex-boss', 0], ['Mom', 1], ['Childhood friend Kevin', 0], ['Nina from Accounting', 1]]);
 let certBank = null;
 const certLoad = () => certBank ? Promise.resolve(certBank) : fetch(`data/cert/${EN ? 'en' : 'ru'}.json`).then(r => r.json()).then(b => (certBank = b));
 const certCan = C2 => C2 && C2.week <= YEAR && C2.certDay !== today();
@@ -50,7 +50,7 @@ function certOffer() {
 bus.on('weekEnd', x => { if (x.mode === 'career' && x.won) setTimeout(() => { if ($('modal').hidden && !views.end.hidden) certOffer(); }, 3800); });
 
 async function certStart(after) {
-  const C2 = careerNow();
+  const C2 = payFix(careerNow());
   if (!C2) return toast(L('Аттестация — для карьеры: начните её кнопкой «Играть»', 'Certification is part of Career mode — press Play to start one'));
   if (!certCan(C2)) return toast(L('Аттестацию можно проходить раз в день. Возвращайтесь завтра!', 'You can take the exam once a day. Come back tomorrow!'));
   const m = $('modal');
@@ -94,9 +94,9 @@ async function certStart(after) {
       if (!life.call) return; life.call = false; $('clCall').disabled = true; sfx.sms?.();
       const live = btns.map((b, k) => k).filter(k => !btns[k].disabled), sure = [0, 0.92, 0.75, 0.58][q.d];
       const pick = Math.random() < sure ? q.ok : rnd(live.filter(k => k !== q.ok)), conf = Math.round((sure - 0.1 + Math.random() * 0.2) * 100);
-      const who = rnd(FRIENDS);
-      $('cqHelp').innerHTML = `<div class="cq-call">📞 <b>${esc(who)}:</b> ${L(`«Хм… думаю, это <b>${'ABCD'[pick]}: ${esc(q.opts[pick])}</b>. Уверен${Math.random() < 0.5 ? 'а' : ''} процентов на ${conf}.»`, `“Hmm… I think it’s <b>${'ABCD'[pick]}: ${esc(q.opts[pick])}</b>. I’m about ${conf}% sure.”`)}</div>`;
-      say(L(`Думаю, это ${q.opts[pick]}`, `I think it's ${q.opts[pick]}`), { fem: Math.random() < 0.5 });
+      const [who, wf] = rnd(FRIENDS);
+      $('cqHelp').innerHTML = `<div class="cq-call">📞 <b>${esc(who)}:</b> ${L(`«Хм… думаю, это <b>${'ABCD'[pick]}: ${esc(q.opts[pick])}</b>. Уверен${wf ? 'а' : ''} процентов на ${conf}.»`, `“Hmm… I think it’s <b>${'ABCD'[pick]}: ${esc(q.opts[pick])}</b>. I’m about ${conf}% sure.”`)}</div>`;
+      say(L(`Думаю, это ${q.opts[pick]}`, `I think it's ${q.opts[pick]}`), { fem: !!wf });
     };
     // помощь зала: голоса зала, правильный ответ обычно лидирует
     $('clHall').onclick = () => {

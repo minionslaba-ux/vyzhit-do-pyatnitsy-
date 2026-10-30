@@ -188,6 +188,8 @@ const vacancy = id => VACANCIES.find(v => v.id === id);
 // Оклад за рабочий день: 2 у.е. в любой компании, +0,5 за каждую сданную аттестацию (js/cert.js)
 const PAY_BASE = 2, PAY_CERT = 0.5, LIFE_COST = 4;
 const salaryFor = () => PAY_BASE + PAY_CERT * (C?.cert || 0);
+// Карьеры со старой сеткой окладов (3–5 у.е.) переводим на новую: 2 у.е. + аттестации
+const payFix = c => { if (c && c.payV !== 2) { c.payV = 2; c.salary = PAY_BASE + PAY_CERT * (c.cert || 0); } return c; };
 const VAC_YEAR = 28, VAC_PER_WEEK = VAC_YEAR / YEAR;  // 28 календарных дней в году → ≈0,54 дня за неделю
 const fmtDays = d => (Math.floor(d * 10) / 10).toLocaleString(LOCALE);
 function pay(amount) { C.bank += amount; C.earned += amount; saveCareer(); }
@@ -233,7 +235,7 @@ function continueCareer() {
   if (!C) return newCareer();
   C.trait = C.trait || prefs.trait;
   C.bank ??= 0; C.earned ??= 0; C.vacation ??= 0; C.vacUsed ??= 0;  // карьеры до появления зарплаты и отпуска
-  if (C.payV !== 2) { C.payV = 2; C.salary = salaryFor(); saveCareer(); }  // новая сетка окладов: 2 у.е. + аттестации
+  if (C.payV !== 2) { payFix(C); saveCareer(); }
   const save = store.get(KEY.save, null);
   if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(); }
   if (C.week > YEAR) return yearEnd();
