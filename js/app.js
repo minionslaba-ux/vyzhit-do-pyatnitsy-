@@ -41,6 +41,7 @@ async function finishLogin() {
       prefs.playerId = user.id;
     }
     prefs.email = user.email; delete prefs.pendingEmail;
+    prefs.loginWelcome = Date.now() - new Date(user.created_at) < 30 * 60000 ? 'new' : 'back';  // после перезагрузки — экран «Добро пожаловать»
     const exp = +h.get('expires_at') ? +h.get('expires_at') * 1000 : Date.now() + (+h.get('expires_in') || 3600) * 1000;
     prefs.session = { access: token, refresh: h.get('refresh_token'), exp };
     const prof = (await board.rpc('get_profile', { p_id: user.id }).catch(() => []))[0];
@@ -49,6 +50,21 @@ async function finishLogin() {
     location.reload();  // ID игрока сменился — перезапускаем игру с ним
     return true;
   } catch (err) { toast(`Вход не удался: ${err.message}`); return false; }
+}
+// После перехода по ссылке из письма: регистрация подтверждена — короткое приветствие и кнопка в игру
+function loginWelcome() {
+  const fresh = prefs.loginWelcome === 'new';
+  delete prefs.loginWelcome; store.set(KEY.prefs, prefs);
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass welcome-box" role="dialog" aria-modal="true" aria-labelledby="lwTitle">
+    <span class="lw-ico" aria-hidden="true">${fresh ? '🎉' : '👋'}</span>
+    <h2 id="lwTitle">${fresh ? 'Регистрация подтверждена!' : `С возвращением, ${esc(prefs.name)}!`}</h2>
+    <p>${fresh ? `Почта ${esc(prefs.email)} подтверждена. Гостевой прогресс перенесён в аккаунт — теперь он с вами на любом устройстве.` : 'Вход выполнен. Карьера, офис и коллеги на месте.'}</p>
+    ${fresh ? '<ul class="lw-list"><li>🏢 Создайте офис и позовите коллег</li><li>💬 Пишите в чат офиса</li><li>🏆 Ваш отдел — в рейтинге</li></ul>' : ''}
+    <button class="btn-main" type="button" id="lwGo">${fresh ? 'Начать игру' : 'Продолжить'}</button></div>`;
+  m.hidden = false;
+  if (fresh) { sfx.win?.(); confetti(); }
+  $('lwGo').onclick = () => { m.hidden = true; };
 }
 // Приглашение по ссылке ?join=КОД
 async function joinFromLink() {
@@ -133,6 +149,7 @@ finishLogin().then(reloading => {
   if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');
   else if (prefs.name) renderMenu();
   else renderWelcome();
+  if (prefs.loginWelcome && prefs.name) loginWelcome();
   if (!prefs.introSeen && !prefs.gamesPlayed) showIntro();  // первый вход: сначала коротко, в чём смысл игры
   joinFromLink();
   flushOutbox();

@@ -963,3 +963,9 @@ html.light .coach, html.light .card-tools .ct-btn { background-color: rgba(255,2
 .btn-logout { border-color: rgba(255,59,107,.6); color: var(--down); }
 @media (max-width: 420px) { .exit-btn { top: 66px; padding: 7px 11px; font-size: 13px; min-height: 36px; } }
 @media (min-width: 1000px) { .exit-btn { top: 72px; } }
+.welcome-box { text-align: center; align-items: center; gap: 12px; padding: 24px 20px; }
+.welcome-box h2 { margin: 0; font-family: var(--f-display); font-size: 22px; color: var(--hi); }
+.welcome-box p { font-size: 14px; }
+.lw-ico { font-size: 46px; }
+.lw-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; color: var(--text-3); text-align: left; }
+.welcome-box .btn-main { width: 100%; }
