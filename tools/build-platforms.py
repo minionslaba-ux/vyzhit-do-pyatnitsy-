@@ -37,9 +37,9 @@ def build(name, patch_index=None, extra=()):
 
 def yandex(html):
     # SDK — до скриптов игры; Telegram-скрипт каталогу не нужен
-    tg = '<script src="https://telegram.org/js/telegram-web-app.js"></script>'
-    assert tg in html
-    return html.replace(tg, '<script src="/sdk.js"></script>\n<script src="js/platform-yandex.js"></script>')
+    start = html.index('<script>\n  // Скрипт Telegram')
+    end = html.index('</script>', start) + len('</script>')
+    return html[:start] + '<script src="/sdk.js"></script>\n<script src="js/platform-yandex.js"></script>' + html[end:]
 
 
 build('itch.zip')
