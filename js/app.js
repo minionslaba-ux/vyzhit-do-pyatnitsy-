@@ -2,6 +2,8 @@
 // «Выжить до пятницы». Скрипты подключаются по порядку: engine → board → audio → game → ui-menu → app;
 // у них общее глобальное пространство имён, как у cards.js и content.js.
 
+applyStaticLang();  // английский текст из data-en в index.html
+
 // ---------- старт: брендированная неделя (?pack=имя) и карточки от коллег ----------
 (async () => {
   const pack = new URLSearchParams(location.search).get('pack');

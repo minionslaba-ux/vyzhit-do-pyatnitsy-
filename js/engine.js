@@ -4,35 +4,47 @@
 
 // ---------- данные ----------
 const RES = [
-  { k: 'psyche', name: 'Кукуха' },
-  { k: 'energy', name: 'Энергия' },
-  { k: 'boss', name: 'Босс' },
-  { k: 'colleagues', name: 'Коллеги' },
+  { k: 'psyche', name: L('Кукуха', 'Sanity') },
+  { k: 'energy', name: L('Энергия', 'Energy') },
+  { k: 'boss', name: L('Босс', 'Boss') },
+  { k: 'colleagues', name: L('Коллеги', 'Team') },
 ];
 const resName = k => RES.find(r => r.k === k).name;
 const PROF = {
-  marketer:   { name: 'Маркетолог',  icon: '📣', bonus: { colleagues: 15, psyche: -5 }, perk: 'Коллеги +15 · Кукуха −5' },
-  accountant: { name: 'Бухгалтер',   icon: '🧮', bonus: { boss: 15, energy: -5 },       perk: 'Босс +15 · Энергия −5' },
-  dev:        { name: 'Программист', icon: '💻', bonus: { psyche: 15, colleagues: -5 }, perk: 'Кукуха +15 · Коллеги −5' },
-  sales:      { name: 'Продажник',   icon: '📞', bonus: { energy: 15, psyche: -5 },     perk: 'Энергия +15 · Кукуха −5' },
-  hr:         { name: 'HR-менеджер', icon: '🤝', bonus: { boss: 15, colleagues: -5 },   perk: 'Босс +15 · Коллеги −5' },
-  designer:   { name: 'Дизайнер',    icon: '🎨', bonus: { psyche: 15, boss: -5 },       perk: 'Кукуха +15 · Босс −5' },
-  sysadmin:   { name: 'Сисадмин',    icon: '🔌', bonus: { colleagues: 15, energy: -5 }, perk: 'Коллеги +15 · Энергия −5' },
-  cooler:     { name: 'Хранитель кулера', icon: '🚰', bonus: { energy: 15, boss: -5 },  perk: 'Энергия +15 · Босс −5' },
-  intern:     { name: 'Вечный стажёр', icon: '🎒', bonus: { energy: 10, colleagues: 10, psyche: -10 }, perk: 'Энергия +10 · Коллеги +10 · Кукуха −10' },
+  marketer:   { name: L('Маркетолог', 'Marketer'), icon: '📣', bonus: { colleagues: 15, psyche: -5 }, perk: L('Коллеги +15 · Кукуха −5', 'Team +15 · Sanity −5') },
+  accountant: { name: L('Бухгалтер', 'Accountant'), icon: '🧮', bonus: { boss: 15, energy: -5 }, perk: L('Босс +15 · Энергия −5', 'Boss +15 · Energy −5') },
+  dev:        { name: L('Программист', 'Developer'), icon: '💻', bonus: { psyche: 15, colleagues: -5 }, perk: L('Кукуха +15 · Коллеги −5', 'Sanity +15 · Team −5') },
+  sales:      { name: L('Продажник', 'Sales rep'), icon: '📞', bonus: { energy: 15, psyche: -5 }, perk: L('Энергия +15 · Кукуха −5', 'Energy +15 · Sanity −5') },
+  hr:         { name: L('HR-менеджер', 'HR manager'), icon: '🤝', bonus: { boss: 15, colleagues: -5 }, perk: L('Босс +15 · Коллеги −5', 'Boss +15 · Team −5') },
+  designer:   { name: L('Дизайнер', 'Designer'), icon: '🎨', bonus: { psyche: 15, boss: -5 }, perk: L('Кукуха +15 · Босс −5', 'Sanity +15 · Boss −5') },
+  sysadmin:   { name: L('Сисадмин', 'Sysadmin'), icon: '🔌', bonus: { colleagues: 15, energy: -5 }, perk: L('Коллеги +15 · Энергия −5', 'Team +15 · Energy −5') },
+  cooler:     { name: L('Хранитель кулера', 'Keeper of the Cooler'), icon: '🚰', bonus: { energy: 15, boss: -5 }, perk: L('Энергия +15 · Босс −5', 'Energy +15 · Boss −5') },
+  intern:     { name: L('Вечный стажёр', 'Eternal Intern'), icon: '🎒', bonus: { energy: 10, colleagues: 10, psyche: -10 }, perk: L('Энергия +10 · Коллеги +10 · Кукуха −10', 'Energy +10 · Team +10 · Sanity −10') },
 };
+// DAYS и PHASES — ключи логики (c.day, c.phase): не переводить; показывать — dayName(i), phaseName(i) из js/i18n.js
 const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
 const PHASES = [{ name: 'Утро' }, { name: 'День' }, { name: 'Вечер' }];
 const PHASE_KEY = ['morning', 'day', 'evening'];
 const PHASE_TIME = ['09:00', '13:00', '17:00'];
-const DAY_QUIP = [
+const DAY_QUIP = EN ? [
+  'The week has just begun. Coffee poured, nerves still intact.',
+  "Yesterday's emails haven't gone anywhere. There are more of them now.",
+  'Hump day. Halfway to freedom.',
+  'Thursday is a tiny Friday. Hang in there.',
+  'The final push. 6 p.m. is within reach.',
+] : [
   'Неделя только началась. Кофе налит, нервы пока целы.',
   'Вчерашние письма никуда не делись. Их стало больше.',
   'Экватор недели. Половина пути до свободы.',
   'Четверг — это маленькая пятница. Держитесь.',
   'Последний рывок. До 18:00 рукой подать.',
 ];
-const DEATH = {
+const DEATH = EN ? {
+  psyche:     { title: 'Sanity 0%', text: 'One more "ASAP" in the chat was one too many. You flipped the water cooler and walked off into the sunset. HR is looking for you.' },
+  energy:     { title: 'Energy 0%', text: 'Energy crisis. You fell asleep on the meeting-room carpet during a big investor call. Someone gently covered you with a blanket — and fired you.' },
+  boss:       { title: 'Boss 0%', text: 'The boss called you in "for a quick word" and handed you your papers. Your memes in the company chat have been ruled a security risk.' },
+  colleagues: { title: 'Team 0%', text: 'The team declared a total boycott. Nobody shared the new Wi‑Fi password or invited you to the cake in the kitchen. Working in isolation became unbearable.' },
+} : {
   psyche:     { title: 'Кукуха 0%', text: 'Вы не выдержали очередного «Асиап» в чате, перевернули кулер с водой и ушли в закат. Вас ищут HR.' },
   energy:     { title: 'Энергия 0%', text: 'Энергетический кризис. Вы уснули на ковре в переговорной во время важного зума с инвесторами. Вас аккуратно накрыли пледом и уволили.' },
   boss:       { title: 'Босс 0%', text: 'Шеф вызвал вас «на пару слов» и вручил трудовую книжку. Ваши мемы в общем чате признаны экстремистскими.' },
@@ -76,9 +88,18 @@ let CAST_CARDS = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
+  // Английский: data/en/<имя>.json — только тексты, по id поверх русских. Карточки без перевода в английскую игру не попадают
+  const en = async name => EN ? (window[`EN_${name.toUpperCase()}_JSON`] || (await fetch(`data/en/${name}.json`).then(r => r.ok ? r.json() : []).catch(() => []))) : null;
   try {
-    const [p, p2, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
+    let [p, p2, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
       get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
+    if (EN) {
+      const [ep, ep2, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'quiz', 'chains', 'interview', 'cast'].map(en));
+      p = enCards(p, ep); p2 = enCards(p2, ep2); cast = enCards(cast, ecast);
+      ch = enCards(ch.map(x => ({ ...x.card, _chain: x })), ech).map(c => ({ ...c._chain, origin: c.origin || c._chain.origin, card: { ...c, _chain: undefined, origin: undefined } }));
+      iv = enById(iv, eiv, (x, t) => ({ ...x, q: t.q, a: x.a.map((a, i) => ({ ...a, ...(t.a?.[i] || {}) })) }));
+      q = enById(q, eq, (x, t) => ({ ...x, ...t }));
+    }
     POOL = p.map(c => boost(norm(c))).concat(p2.map(c => boost(norm(c), POOL2_DOWN))); QUIZ = q;
     const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
@@ -127,8 +148,14 @@ if (!prefs.playerId) {
 }
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
 // Склонение после числа: plural(21, 'участник', 'участника', 'участников') → «21 участник»
+// В английской версии используйте pl(n, …, enOne, enMany) из js/i18n.js
 const plural = (n, one, few, many) => { const a = Math.abs(n) % 100, b = a % 10; return `${n} ${a > 10 && a < 20 ? many : b === 1 ? one : b > 1 && b < 5 ? few : many}`; };
-const dayLabel = iso => iso.split('-').reverse().slice(0, 2).join('.');
+const dayLabel = iso => EN ? iso.split('-').slice(1).join('/') : iso.split('-').reverse().slice(0, 2).join('.');
+
+// Перевод поверх русских данных: перевод {id, who, text, left, right[, origin]} → карточка с английским текстом; без перевода — пропускается
+const enById = (list, tr, merge) => { const m = new Map((tr || []).map(t => [t.id, t])); return list.filter(x => m.has(x.id)).map(x => merge(x, m.get(x.id))); };
+const enCards = (list, tr) => enById(list, tr, (c, t) => ({ ...c, who: t.who ?? c.who, text: t.text ?? c.text, ...(t.origin ? { origin: t.origin } : {}),
+  answers: { left: { ...c.answers.left, label: t.left ?? c.answers.left.label }, right: { ...c.answers.right, label: t.right ?? c.answers.right.label } } }));
 
 // Детерминированный генератор: одинаковая неделя дня у всех
 const seeded = str => { let h = 1779033703 ^ str.length; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = h << 13 | h >>> 19;
