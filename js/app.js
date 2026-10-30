@@ -90,7 +90,9 @@ function installUi() {
   $('installApp').hidden = !canInstall();
   $('installCta').hidden = !canInstall() || Date.now() < (prefs.installSnooze || 0);
 }
-addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; installUi(); });
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; installUi();
+// В сборках для каталогов игр (Яндекс Игры и др.) страницы правил нет — ссылки прячем
+if (window.VDP_PLATFORM) document.querySelectorAll('a[href$="pravila.html"], a[href$="rules.html"]').forEach(a => { a.hidden = true; }); });
 addEventListener('appinstalled', () => { installEvt = null; prefs.installed = 1; store.set(KEY.prefs, prefs); $('installPop').hidden = true; installUi(); toast(L('Игра установлена — ищите её на главном экране', 'Game installed — find it on your home screen')); });
 async function doInstall() {
   $('installPop').hidden = true;

@@ -22,4 +22,14 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://survivefriday.com/igra-pro-ofis.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://survivefriday.com/office-game.html"/>
   </url>
+  <url>
+    <loc>https://survivefriday.com/pravila.html</loc><lastmod>2026-10-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://survivefriday.com/pravila.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://survivefriday.com/rules.html"/>
+  </url>
+  <url>
+    <loc>https://survivefriday.com/rules.html</loc><lastmod>2026-10-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://survivefriday.com/pravila.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://survivefriday.com/rules.html"/>
+  </url>
 </urlset>

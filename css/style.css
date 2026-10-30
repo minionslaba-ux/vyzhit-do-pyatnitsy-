@@ -1120,3 +1120,5 @@ body:has(#menu:not([hidden])) .bell { top: calc(12px + env(safe-area-inset-top, 
 .share-big { display: grid; gap: 8px; margin: 10px 0; }
 .share-big a { text-decoration: none; text-align: center; font-size: 15px; padding-left: 12px; padding-right: 12px; }
 .share-big b { white-space: nowrap; margin-left: 6px; padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,.22); font-size: .9em; }
+.btn-rules { display: block; text-align: center; text-decoration: none; }
+a.btn-link { display: block; text-align: center; }

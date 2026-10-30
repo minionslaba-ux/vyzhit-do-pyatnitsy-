@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<meta name="author" content="Konstantin Moiseenko">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Survive till Friday — game rules</title>
+<meta name="description" content="Full rules of the office game Survive till Friday: four meters, a 25-decision week, pay and the shop, deadlines, a 52-week career, ranks, the Daily Week and rewards.">
+<link rel="canonical" href="https://survivefriday.com/rules.html">
+<link rel="alternate" hreflang="ru" href="https://survivefriday.com/pravila.html">
+<link rel="alternate" hreflang="en" href="https://survivefriday.com/rules.html">
+<meta name="robots" content="index, follow">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Survive till Friday — game rules">
+<meta property="og:description" content="How to make it to Friday, 6 PM: meters, money, deadlines, career and rewards.">
+<meta property="og:url" content="https://survivefriday.com/rules.html">
+<meta property="og:image" content="https://survivefriday.com/icons/og-en-1200x630.jpg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root { --bg: #07070d; --text: #f2f0ff; --muted: #b9b4d6; --magenta: #ff3bd4; --cyan: #2de2e6; --lime: #d4ff3a; --line: rgba(255,255,255,.12); --card: rgba(255,255,255,.03); }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: radial-gradient(700px 400px at 10% 0%, rgba(178,107,255,.22), transparent 60%), radial-gradient(700px 400px at 100% 30%, rgba(45,226,230,.16), transparent 60%), var(--bg); color: var(--text); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; }
+.top a { color: var(--muted); text-decoration: none; }
+.top a:hover { color: var(--cyan); }
+h1 { font-size: clamp(30px, 7vw, 46px); line-height: 1.1; margin: 28px 0 12px; }
+h1 em { font-style: normal; color: var(--magenta); text-shadow: 0 0 18px rgba(255,59,212,.6); }
+h2 { font-size: 23px; margin: 44px 0 10px; color: var(--cyan); scroll-margin-top: 16px; }
+h3 { font-size: 18px; margin: 22px 0 6px; }
+p, li { color: var(--muted); }
+b, strong { color: var(--text); }
+a { color: var(--cyan); }
+.lead { font-size: 19px; }
+.toc { margin: 24px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+.toc b { display: block; margin-bottom: 6px; }
+.toc ol { margin: 0; padding-left: 22px; columns: 2 220px; column-gap: 28px; }
+.toc li { margin: 2px 0; }
+.meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; padding: 0; list-style: none; }
+.meters li { padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+.meters li b { display: block; font-size: 18px; }
+.zone { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 14px 0 6px; border: 1px solid var(--line); }
+.zone i { display: block; }
+.zone-legend { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--text); font-weight: 700; }
+td { color: var(--muted); }
+td.n { white-space: nowrap; color: var(--lime); font-weight: 700; }
+.wrap { overflow-x: auto; }
+.note { padding: 12px 16px; border-left: 3px solid var(--magenta); background: rgba(255,59,212,.07); border-radius: 0 12px 12px 0; }
+.play { display: inline-block; margin: 18px 0 8px; padding: 15px 28px; border-radius: 999px; background: var(--magenta); color: var(--bg); font-weight: 800; font-size: 18px; text-decoration: none; box-shadow: 0 0 30px rgba(255,59,212,.6); }
+.play:hover { background: #ff7be3; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <nav class="top"><a href="en.html">← Back to the game</a><a href="pravila.html" lang="ru">Русский</a></nav>
+
+  <h1>Rules of <em>Survive till Friday</em></h1>
+  <p class="lead">You’re an office worker. Every card is a situation at work with two answers. Your job: <b>make it to Friday, 6 PM</b> without any of your four meters snapping.</p>
+
+  <div class="toc"><b>Contents</b>
+    <ol>
+      <li><a href="#goal">Goal and the week</a></li>
+      <li><a href="#meters">Four meters</a></li>
+      <li><a href="#answer">How to answer</a></li>
+      <li><a href="#help">Items and second chance</a></li>
+      <li><a href="#money">Pay, expenses, shop</a></li>
+      <li><a href="#deadlines">Deadlines</a></li>
+      <li><a href="#career">The 52-week career</a></li>
+      <li><a href="#ranks">XP and ranks</a></li>
+      <li><a href="#daily">Daily Week, quests, challenges</a></li>
+      <li><a href="#people">Office, chats, sign-in</a></li>
+      <li><a href="#rewards">Rewards</a></li>
+      <li><a href="#score">Score and titles</a></li>
+    </ol>
+  </div>
+
+  <h2 id="goal">1. Goal and the week</h2>
+  <p>A week is <b>25 decisions</b>: five a day, Monday to Friday. Cards arrive at 9:00, 11:00, 13:00, 15:00 and 17:00. Answer all 25 without dropping a meter and you’ve made it to Friday.</p>
+  <p>A week takes 5–8 minutes. In Career mode you can pause a week with “Exit” — “Play” picks up from the same card.</p>
+
+  <h2 id="meters">2. Four meters</h2>
+  <ul class="meters">
+    <li><b>🧠 Sanity</b>your nerves and peace of mind</li>
+    <li><b>⚡ Energy</b>your stamina</li>
+    <li><b>👔 Boss</b>how management sees you</li>
+    <li><b>🤝 Team</b>your coworkers</li>
+  </ul>
+  <p>Each meter runs from 0% to 100%. The Daily Week starts every meter at 50%. In Career mode meters carry over from the previous week, and your profession shifts the starting values — a Developer gets Sanity +15 but Team −5.</p>
+  <div class="zone" aria-hidden="true"><i style="width:20%;background:#ff3b6b"></i><i style="width:60%;background:#2de2e6"></i><i style="width:20%;background:#ff9d3b"></i></div>
+  <div class="zone-legend"><span>0–20% “on the edge”</span><span>20–80% safe</span><span>80–100% “overheat”</span></div>
+  <p class="note"><b>The week ends if any meter hits 0% or 100%.</b> Too good is bad too: a Boss at 100% buries you in work, a Team at 100% won’t let you work. Keep every meter between 20% and 80%.</p>
+
+  <h2 id="answer">3. How to answer</h2>
+  <ul>
+    <li>Drag the card <b>left or right</b>, tap the answer buttons, or use the ← → keys.</li>
+    <li>While you drag, <b>▲</b> and <b>▼</b> light up over the meters — what goes up and what goes down. <b>▲▲</b> or <b>▼▼</b> means a big swing.</li>
+    <li>A card with a <b>←</b> arrow is the fallout of an earlier choice. Coworkers remember: a friend will bail you out, someone you burned will get even.</li>
+    <li>Some weeks are special: quarterly reports (every 13th career week), the week before vacation, your first week at a new job with a new Boss. In some weeks the Boss’s mood is hidden — you see “?” instead of arrows.</li>
+  </ul>
+
+  <h2 id="help">4. Items and second chance</h2>
+  <p>You start a week with 1–2 items. Each one <b>automatically blocks one hit of −10 or worse</b> to its meter. A ◆ over a meter means the next hit will be absorbed.</p>
+  <div class="wrap"><table>
+    <tr><th>Item</th><th>Protects</th></tr>
+    <tr><td>☕ Coffee</td><td>Energy</td></tr>
+    <tr><td>🎧 Headphones</td><td>Sanity</td></tr>
+    <tr><td>📄 Doctor’s note</td><td>Boss</td></tr>
+    <tr><td>🍪 Cookies</td><td>Team</td></tr>
+  </table></div>
+  <p>Meter hit the edge? Once per week you get a <b>second chance</b>: a trivia question with 20 seconds on the clock. Answer right and the week goes on.</p>
+
+  <h2 id="money">5. Pay, expenses, shop</h2>
+  <p>In Career mode every workday pays a <b>salary</b> of $3, $4 or $5 depending on the company — a bank text tells you when it lands. At the end of the week <b>rent and food take two days’ pay</b>, plus a loan payment if you have one.</p>
+  <p>Below zero means debt: every Monday Sanity −10 until you’re back in the black.</p>
+  <p>Open the shop with the <b>“$ · shop”</b> button under the clock during a week:</p>
+  <div class="wrap"><table>
+    <tr><th>What</th><th>Price</th><th>Why</th></tr>
+    <tr><td>Coffee, headphones, cookies</td><td class="n">$6</td><td>one more item in your bag (up to 6)</td></tr>
+    <tr><td>Doctor’s note</td><td class="n">$9</td><td>protects the Boss meter</td></tr>
+    <tr><td>Power-up</td><td class="n">$12</td><td>pulls a meter 20 back from the edge</td></tr>
+    <tr><td>💡 Hint</td><td class="n">$6</td><td>shows which answer on this card is safer; take it or skip it</td></tr>
+  </table></div>
+
+  <h2 id="deadlines">6. Deadlines</h2>
+  <p>On career mornings a <b>📋 task with a deadline</b> may show up. Take it or pass. If you take it, make enough <b>work decisions</b> before it’s due — answers that please the Boss or cost Energy. They’re marked “📋 to the task”, and the deadline bar shows your progress.</p>
+  <div class="wrap"><table>
+    <tr><th>Deadline</th><th>Due</th><th>Work decisions</th><th>Bonus</th><th>Penalty</th></tr>
+    <tr><td>Urgent</td><td>today</td><td>4</td><td class="n">+$6</td><td>−$4</td></tr>
+    <tr><td>Short</td><td>1 day</td><td>9</td><td class="n">+$10</td><td>−$5</td></tr>
+    <tr><td>Medium</td><td>2 days</td><td>13</td><td class="n">+$15</td><td>−$8</td></tr>
+    <tr><td>Big</td><td>3 days</td><td>18</td><td class="n">+$24</td><td>−$12</td></tr>
+  </table></div>
+  <p>Miss the deadline and the penalty comes off your balance.</p>
+
+  <h2 id="career">7. The 52-week career</h2>
+  <p>Career mode is a year of <b>52 weeks</b>. Pick a profession and a personality trait, get hired, and live it week by week. Money and progress carry over.</p>
+  <ul>
+    <li><b>Fired</b> (a meter hit 0% or 100%)? Time to job hunt: pick an opening and pass a <b>7-question interview</b>. Tougher companies pay more.</li>
+    <li><b>Vacation</b>: you earn 28 days a year, about half a day per week. Save up 7 days to take a week off with vacation pay.</li>
+    <li>Some stories start one week and pay off the next.</li>
+  </ul>
+
+  <h2 id="ranks">8. XP and ranks</h2>
+  <p>Weeks and quests give XP, and XP gets you promoted. Each rank comes with a permanent perk:</p>
+  <div class="wrap"><table>
+    <tr><th>Rank</th><th>XP</th><th>Perk</th></tr>
+    <tr><td>Eternal Intern</td><td>0</td><td>career start</td></tr>
+    <tr><td>Junior Associate</td><td>120</td><td>hints $1 cheaper</td></tr>
+    <tr><td>Associate</td><td>300</td><td>+1 item in your bag every week</td></tr>
+    <tr><td>Senior Associate</td><td>600</td><td>+$1 daily pay</td></tr>
+    <tr><td>Lead Specialist</td><td>1000</td><td>hints another $1 cheaper</td></tr>
+    <tr><td>Team Lead</td><td>1500</td><td>deadline bonuses +25%</td></tr>
+    <tr><td>Head of Department</td><td>2200</td><td>+$2 daily pay</td></tr>
+    <tr><td>Director</td><td>3100</td><td>deadline bonuses +50%</td></tr>
+    <tr><td>CEO</td><td>4300</td><td>👑 a crown in the live strip and +2 items in your bag</td></tr>
+  </table></div>
+  <p>You can furnish your <b>desk</b> with your cash — coworkers see it on your profile.</p>
+
+  <h2 id="daily">9. Daily Week, quests, challenges</h2>
+  <ul>
+    <li>The <b>Daily Week</b> is the same for every player that day. Play it and compare on the “Day” leaderboard; after each card you see how many players chose the same answer.</li>
+    <li><b>Daily quests</b>: three goals every day. Each one gives +30 XP and +$4; finish all three for +1 item next week and +50 XP.</li>
+    <li><b>Challenge</b>: send a coworker a link to your week — they play the exact same one and try to beat you.</li>
+    <li><b>Departments</b> compete on their average score for the calendar week, and there are office <b>tournaments</b> with a results screen.</li>
+  </ul>
+
+  <h2 id="people">10. Office, chats, sign-in</h2>
+  <p>You can play as a <b>guest</b>, no sign-up needed. An account unlocks your own Office, the office chat, the general chat, direct messages, suggesting your own cards, and shared progress across phone and computer.</p>
+  <p>Sign in <b>with email</b> (an email link or a password), <b>with Telegram</b> or <b>with VK ID</b>. After you log out, the game asks you to sign in again.</p>
+  <p>Characters marked “game character 🎭” aren’t real people — they live in the game’s office.</p>
+
+  <h2 id="rewards">11. Rewards</h2>
+  <div class="wrap"><table>
+    <tr><th>For</th><th>Reward</th></tr>
+    <tr><td>Joining the game’s Telegram group</td><td class="n">+$10 once</td></tr>
+    <tr><td>Sending the game on Telegram</td><td class="n">+$10 once</td></tr>
+    <tr><td>Posting about the game on VK</td><td class="n">+$10 once</td></tr>
+    <tr><td>Sharing the link any other way</td><td class="n">+$5 once a day</td></tr>
+    <tr><td>A friend joins via your link for the first time</td><td class="n">+$15 and +1 item</td></tr>
+    <tr><td>Finishing a daily quest</td><td class="n">+$4 and +30 XP</td></tr>
+  </table></div>
+  <p>If you haven’t been hired yet in Career mode, the cash arrives once you are.</p>
+  <p>Turn on the Daily Week reminder in your profile: @Survivefridaybot will message you once a day at 12:30 Moscow time.</p>
+
+  <h2 id="score">12. Score and titles</h2>
+  <p>A finished week scores <b>the sum of all four meters</b> on Friday at 6 PM, up to 400. A lost week counts 10 points per card you got through on the leaderboard. At the end of the week you get a title:</p>
+  <div class="wrap"><table>
+    <tr><th>Score</th><th>Title</th></tr>
+    <tr><td class="n">280+</td><td>Open-Space Legend</td></tr>
+    <tr><td class="n">220–279</td><td>Senior Survival Engineer</td></tr>
+    <tr><td class="n">160–219</td><td>Solid Mid-Level</td></tr>
+    <tr><td class="n">under 160</td><td>Intern Who Somehow Survived</td></tr>
+  </table></div>
+
+  <a class="play" href="en.html">Play</a>
+
+  <footer>Survive till Friday is a free office game by Konstantin Moiseenko. <a href="office-game.html">About the game</a></footer>
+</main>
+</body>
+</html>

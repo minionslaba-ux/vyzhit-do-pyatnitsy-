@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<meta name="author" content="Константин Моисеенко (Konstantin Moiseenko)">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Правила игры «Выжить до пятницы»</title>
+<meta name="description" content="Полные правила офисной игры «Выжить до пятницы»: четыре шкалы, неделя из 25 решений, зарплата и магазин, дедлайны, карьера на 52 недели, должности, неделя дня и награды.">
+<link rel="canonical" href="https://survivefriday.com/pravila.html">
+<link rel="alternate" hreflang="ru" href="https://survivefriday.com/pravila.html">
+<link rel="alternate" hreflang="en" href="https://survivefriday.com/rules.html">
+<meta name="robots" content="index, follow">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Правила игры «Выжить до пятницы»">
+<meta property="og:description" content="Как доживать до пятницы, 18:00: шкалы, деньги, дедлайны, карьера и награды.">
+<meta property="og:url" content="https://survivefriday.com/pravila.html">
+<meta property="og:image" content="https://survivefriday.com/icons/og-1200x630.jpg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="icons/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root { --bg: #07070d; --text: #f2f0ff; --muted: #b9b4d6; --magenta: #ff3bd4; --cyan: #2de2e6; --lime: #d4ff3a; --line: rgba(255,255,255,.12); --card: rgba(255,255,255,.03); }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: radial-gradient(700px 400px at 10% 0%, rgba(178,107,255,.22), transparent 60%), radial-gradient(700px 400px at 100% 30%, rgba(45,226,230,.16), transparent 60%), var(--bg); color: var(--text); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; }
+.top a { color: var(--muted); text-decoration: none; }
+.top a:hover { color: var(--cyan); }
+h1 { font-size: clamp(30px, 7vw, 46px); line-height: 1.1; margin: 28px 0 12px; }
+h1 em { font-style: normal; color: var(--magenta); text-shadow: 0 0 18px rgba(255,59,212,.6); }
+h2 { font-size: 23px; margin: 44px 0 10px; color: var(--cyan); scroll-margin-top: 16px; }
+h3 { font-size: 18px; margin: 22px 0 6px; }
+p, li { color: var(--muted); }
+b, strong { color: var(--text); }
+a { color: var(--cyan); }
+.lead { font-size: 19px; }
+.toc { margin: 24px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+.toc b { display: block; margin-bottom: 6px; }
+.toc ol { margin: 0; padding-left: 22px; columns: 2 220px; column-gap: 28px; }
+.toc li { margin: 2px 0; }
+.meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; padding: 0; list-style: none; }
+.meters li { padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+.meters li b { display: block; font-size: 18px; }
+.zone { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 14px 0 6px; border: 1px solid var(--line); }
+.zone i { display: block; }
+.zone-legend { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--text); font-weight: 700; }
+td { color: var(--muted); }
+td.n { white-space: nowrap; color: var(--lime); font-weight: 700; }
+.wrap { overflow-x: auto; }
+.note { padding: 12px 16px; border-left: 3px solid var(--magenta); background: rgba(255,59,212,.07); border-radius: 0 12px 12px 0; }
+.play { display: inline-block; margin: 18px 0 8px; padding: 15px 28px; border-radius: 999px; background: var(--magenta); color: var(--bg); font-weight: 800; font-size: 18px; text-decoration: none; box-shadow: 0 0 30px rgba(255,59,212,.6); }
+.play:hover { background: #ff7be3; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <nav class="top"><a href="./">← В игру</a><a href="rules.html" lang="en">English</a></nav>
+
+  <h1>Правила игры <em>«Выжить до пятницы»</em></h1>
+  <p class="lead">Вы — офисный сотрудник. Каждая карточка — ситуация на работе, у неё два ответа. Ваша задача — <b>дожить до пятницы, 18:00</b> и не сорваться ни по одной из четырёх шкал.</p>
+
+  <div class="toc"><b>Содержание</b>
+    <ol>
+      <li><a href="#goal">Цель и неделя</a></li>
+      <li><a href="#meters">Четыре шкалы</a></li>
+      <li><a href="#answer">Как отвечать</a></li>
+      <li><a href="#help">Предметы и второй шанс</a></li>
+      <li><a href="#money">Зарплата, расходы, магазин</a></li>
+      <li><a href="#deadlines">Дедлайны</a></li>
+      <li><a href="#career">Карьера на 52 недели</a></li>
+      <li><a href="#ranks">Опыт и должности</a></li>
+      <li><a href="#daily">Неделя дня, задания, вызовы</a></li>
+      <li><a href="#people">Офис, чаты, вход</a></li>
+      <li><a href="#rewards">Награды</a></li>
+      <li><a href="#score">Очки и звания</a></li>
+    </ol>
+  </div>
+
+  <h2 id="goal">1. Цель и неделя</h2>
+  <p>Неделя — это <b>25 решений</b>: по пять в день, с понедельника по пятницу. Карточки приходят в 9:00, 11:00, 13:00, 15:00 и 17:00. Ответьте на все 25 и не уроните ни одну шкалу — неделя закрыта, вы дожили до пятницы.</p>
+  <p>Одна неделя занимает 5–8 минут. В карьере начатую неделю можно отложить кнопкой «Выйти» — кнопка «Играть» продолжит с той же карточки.</p>
+
+  <h2 id="meters">2. Четыре шкалы</h2>
+  <ul class="meters">
+    <li><b>🧠 Кукуха</b>нервы и душевное равновесие</li>
+    <li><b>⚡ Энергия</b>силы и бодрость</li>
+    <li><b>👔 Босс</b>как к вам относится начальство</li>
+    <li><b>🤝 Коллеги</b>отношения с командой</li>
+  </ul>
+  <p>Каждая шкала — от 0% до 100%. Неделя дня начинается с 50% по всем шкалам. В карьере шкалы переходят из прошлой недели, а профессия сдвигает стартовые значения: например, у программиста Кукуха +15, но Коллеги −5.</p>
+  <div class="zone" aria-hidden="true"><i style="width:20%;background:#ff3b6b"></i><i style="width:60%;background:#2de2e6"></i><i style="width:20%;background:#ff9d3b"></i></div>
+  <div class="zone-legend"><span>0–20% «на грани»</span><span>20–80% безопасно</span><span>80–100% «перегрев»</span></div>
+  <p class="note"><b>Неделя заканчивается, если любая шкала дошла до 0% или до 100%.</b> Слишком хорошо — тоже плохо: Босс на 100% завалит вас работой, а Коллеги на 100% не дадут работать. Держите все шкалы между 20% и 80%.</p>
+
+  <h2 id="answer">3. Как отвечать</h2>
+  <ul>
+    <li>Тяните карточку <b>влево или вправо</b>, нажимайте кнопки ответов или стрелки ← → на клавиатуре.</li>
+    <li>Пока тянете, над шкалами загораются <b>▲</b> и <b>▼</b> — что вырастет, а что упадёт. <b>▲▲</b> или <b>▼▼</b> — сильный сдвиг.</li>
+    <li>Карточка со стрелкой <b>←</b> — последствие вашего прошлого решения. Коллеги помнят: друг выручит, обиженный отомстит.</li>
+    <li>Бывают особые недели: квартальные отчёты (каждая 13-я неделя карьеры), неделя перед отпуском, первая неделя на новой работе с новым Боссом. В некоторых неделях настроение Босса скрыто — вместо стрелок «?».</li>
+  </ul>
+
+  <h2 id="help">4. Предметы и второй шанс</h2>
+  <p>В начале недели в сумке 1–2 предмета. Каждый <b>сам отменяет один удар −10 и сильнее</b> по своей шкале. Значок ◆ над шкалой значит: этот удар погасит предмет.</p>
+  <div class="wrap"><table>
+    <tr><th>Предмет</th><th>Защищает</th></tr>
+    <tr><td>☕ Кофе</td><td>Энергию</td></tr>
+    <tr><td>🎧 Наушники</td><td>Кукуху</td></tr>
+    <tr><td>📄 Справка от врача</td><td>Босса</td></tr>
+    <tr><td>🍪 Печеньки</td><td>Коллег</td></tr>
+  </table></div>
+  <p>Шкала дошла до края? Один раз за неделю будет <b>второй шанс</b>: вопрос на эрудицию за 20 секунд. Ответили верно — неделя продолжается.</p>
+
+  <h2 id="money">5. Зарплата, расходы, магазин</h2>
+  <p>В режиме карьеры за каждый рабочий день приходит <b>зарплата</b> — 3, 4 или 5 у.е. в зависимости от компании; о зачислении сообщает СМС из банка. В конце недели списываются <b>жильё и еда — два дневных оклада</b>, а также платёж по кредиту, если он есть.</p>
+  <p>Ушли в минус — это долг: каждый понедельник Кукуха −10, пока не выйдете в плюс.</p>
+  <p>Магазин открывается кнопкой <b>«у.е. · магазин»</b> под часами во время недели:</p>
+  <div class="wrap"><table>
+    <tr><th>Что</th><th>Цена</th><th>Зачем</th></tr>
+    <tr><td>Кофе, наушники, печеньки</td><td class="n">6 у.е.</td><td>ещё один предмет в сумку (до 6 предметов)</td></tr>
+    <tr><td>Справка от врача</td><td class="n">9 у.е.</td><td>защита шкалы Босса</td></tr>
+    <tr><td>Мощь</td><td class="n">12 у.е.</td><td>отодвигает шкалу на 20 от края</td></tr>
+    <tr><td>💡 Подсказка</td><td class="n">6 у.е.</td><td>показывает, какой ответ на этой карточке безопаснее; можно получить или отказаться</td></tr>
+  </table></div>
+
+  <h2 id="deadlines">6. Дедлайны</h2>
+  <p>По утрам в карьере может прийти <b>📋 задача с дедлайном</b>. Её можно взять или отказаться. Взяли — нужно до срока принять нужное число <b>рабочих решений</b>: ответов, которые радуют Босса или отнимают Энергию. Такие ответы помечены «📋 в задачу», прогресс видно на полоске дедлайна.</p>
+  <div class="wrap"><table>
+    <tr><th>Дедлайн</th><th>Срок</th><th>Рабочих решений</th><th>Премия</th><th>Штраф</th></tr>
+    <tr><td>Срочный</td><td>сегодня</td><td>4</td><td class="n">+6 у.е.</td><td>−4 у.е.</td></tr>
+    <tr><td>Короткий</td><td>1 день</td><td>9</td><td class="n">+10 у.е.</td><td>−5 у.е.</td></tr>
+    <tr><td>Средний</td><td>2 дня</td><td>13</td><td class="n">+15 у.е.</td><td>−8 у.е.</td></tr>
+    <tr><td>Крупный</td><td>3 дня</td><td>18</td><td class="n">+24 у.е.</td><td>−12 у.е.</td></tr>
+  </table></div>
+  <p>Не успели к сроку — штраф списывается со счёта.</p>
+
+  <h2 id="career">7. Карьера на 52 недели</h2>
+  <p>Карьера — это год из <b>52 недель</b>. Выбираете профессию и черту характера, устраиваетесь в компанию и проживаете неделю за неделей. Деньги и прогресс переходят из недели в неделю.</p>
+  <ul>
+    <li><b>Уволили</b> (шкала ушла в 0% или 100%)? Начинается поиск работы: выбираете вакансию и проходите <b>собеседование из 7 вопросов</b>. Компании посложнее платят больше.</li>
+    <li><b>Отпуск</b>: за год набегает 28 дней, примерно полдня за неделю. Накопили 7 дней — можно уйти в отпуск на неделю и получить отпускные.</li>
+    <li>Истории с продолжением: некоторые события начинаются в одну неделю и заканчиваются в следующую.</li>
+  </ul>
+
+  <h2 id="ranks">8. Опыт и должности</h2>
+  <p>За недели и задания вы получаете опыт и растёте в должности. Каждая должность даёт постоянный бонус:</p>
+  <div class="wrap"><table>
+    <tr><th>Должность</th><th>Опыт</th><th>Бонус</th></tr>
+    <tr><td>Вечный стажёр</td><td>0</td><td>старт карьеры</td></tr>
+    <tr><td>Младший специалист</td><td>120</td><td>подсказка дешевле на 1 у.е.</td></tr>
+    <tr><td>Специалист</td><td>300</td><td>+1 предмет в сумке каждую неделю</td></tr>
+    <tr><td>Старший специалист</td><td>600</td><td>+1 у.е. к зарплате в день</td></tr>
+    <tr><td>Ведущий специалист</td><td>1000</td><td>подсказка дешевле ещё на 1 у.е.</td></tr>
+    <tr><td>Тимлид</td><td>1500</td><td>премии за дедлайны +25%</td></tr>
+    <tr><td>Руководитель отдела</td><td>2200</td><td>+2 у.е. к зарплате в день</td></tr>
+    <tr><td>Директор</td><td>3100</td><td>премии за дедлайны +50%</td></tr>
+    <tr><td>Генеральный директор</td><td>4300</td><td>👑 корона в ленте игроков и +2 предмета в сумке</td></tr>
+  </table></div>
+  <p>Свой <b>рабочий стол</b> можно обставить за у.е. — его видят коллеги в вашем профиле.</p>
+
+  <h2 id="daily">9. Неделя дня, задания, вызовы</h2>
+  <ul>
+    <li><b>Неделя дня</b> — одна и та же для всех игроков в этот день. Сыграйте и сравните результат в рейтинге «День»; после каждой карточки видно, сколько игроков ответили так же.</li>
+    <li><b>Задания дня</b> — три цели каждый день. За каждое — +30 опыта и +4 у.е., за все три — ещё +1 предмет на следующую неделю и +50 опыта.</li>
+    <li><b>Вызов</b>: отправьте коллеге ссылку на свою неделю — он сыграет ту же самую и попробует обойти ваш результат.</li>
+    <li><b>Отделы</b> соревнуются средним результатом за календарную неделю, есть <b>турниры</b> для офиса с экраном итогов.</li>
+  </ul>
+
+  <h2 id="people">10. Офис, чаты, вход</h2>
+  <p>Играть можно <b>гостем</b>, без регистрации. С аккаунтом открываются свой офис, чат офиса, общий чат, личные сообщения, свои карточки для игры и общий прогресс на телефоне и компьютере.</p>
+  <p>Войти можно <b>по почте</b> (ссылкой из письма или паролем), <b>через Telegram</b> или <b>через VK ID</b>. После выхода из аккаунта игра снова попросит войти.</p>
+  <p>Персонажи, помеченные «персонаж игры 🎭», — не живые люди, а жители игрового офиса.</p>
+
+  <h2 id="rewards">11. Награды</h2>
+  <div class="wrap"><table>
+    <tr><th>За что</th><th>Награда</th></tr>
+    <tr><td>Вступить в группу игры в Telegram</td><td class="n">+10 у.е. один раз</td></tr>
+    <tr><td>Отправить игру в Telegram</td><td class="n">+10 у.е. один раз</td></tr>
+    <tr><td>Рассказать об игре в VK</td><td class="n">+10 у.е. один раз</td></tr>
+    <tr><td>Поделиться ссылкой другим способом</td><td class="n">+5 у.е. раз в день</td></tr>
+    <tr><td>Друг впервые пришёл по вашей ссылке</td><td class="n">+15 у.е. и +1 предмет</td></tr>
+    <tr><td>Выполнено задание дня</td><td class="n">+4 у.е. и +30 опыта</td></tr>
+  </table></div>
+  <p>Если вы ещё не устроились на работу в карьере, деньги придут, когда устроитесь.</p>
+  <p>Напоминание о неделе дня можно включить в профиле: бот @Survivefridaybot напишет раз в день в 12:30 по Москве.</p>
+
+  <h2 id="score">12. Очки и звания</h2>
+  <p>Очки закрытой недели — <b>сумма всех четырёх шкал</b> в пятницу в 18:00, максимум 400. Неделя проиграна — в рейтинг идёт по 10 очков за каждую пройденную карточку. По итогу недели вы получаете звание:</p>
+  <div class="wrap"><table>
+    <tr><th>Очки</th><th>Звание</th></tr>
+    <tr><td class="n">280+</td><td>Легенда опенспейса</td></tr>
+    <tr><td class="n">220–279</td><td>Сеньор по выживанию</td></tr>
+    <tr><td class="n">160–219</td><td>Крепкий мидл</td></tr>
+    <tr><td class="n">до 160</td><td>Чудом уцелевший стажёр</td></tr>
+  </table></div>
+
+  <a class="play" href="./">Играть</a>
+
+  <footer>«Выжить до пятницы» — бесплатная игра про офис. Автор — Константин Моисеенко. <a href="igra-pro-ofis.html">Об игре</a></footer>
+</main>
+</body>
+</html>

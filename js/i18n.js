@@ -46,6 +46,6 @@ document.documentElement.lang = LANG;
 function applyStaticLang(root = document) {
   if (!EN) return;
   root.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = el.dataset.en; });
-  for (const a of ['aria-label', 'placeholder', 'title', 'content'])
+  for (const a of ['aria-label', 'placeholder', 'title', 'content', 'href'])
     root.querySelectorAll(`[data-en-${a}]`).forEach(el => el.setAttribute(a, el.getAttribute(`data-en-${a}`)));
 }
