@@ -969,3 +969,7 @@ html.light .coach, html.light .card-tools .ct-btn { background-color: rgba(255,2
 .lw-ico { font-size: 46px; }
 .lw-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; color: var(--text-3); text-align: left; }
 .welcome-box .btn-main { width: 100%; }
+.lang-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--text-2); }
+.lang-row .btn-chip.on { background: rgba(var(--m-rgb),.22); color: var(--hi); }
+.credits { margin: 4px 0 0; text-align: center; font-size: 12px; color: var(--text-2); }
+.credits b { color: var(--text-3); }

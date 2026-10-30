@@ -199,6 +199,10 @@ function logoutClick(e) {
 }
 $('joinLogout').onclick = logoutClick;
 $('profLogout').onclick = logoutClick;
+// Язык: русский / английский — игра перезапускается на выбранном
+$('langRu').onclick = () => EN && setLang('ru');
+$('langEn').onclick = () => !EN && setLang('en');
+$(EN ? 'langEn' : 'langRu').classList.add('on');
 $('start').onclick = async () => { await whenReady($('start')); continueCareer(); };
 // Вкладки меню: «Офис» (команда, чат, рейтинг) и «Профиль» (серия, коллекция, установка)
 function menuTab(name) {
