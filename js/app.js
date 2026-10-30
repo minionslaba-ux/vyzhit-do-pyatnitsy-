@@ -150,7 +150,9 @@ finishLogin().then(reloading => {
   if (reloading) return;
   if (new URLSearchParams(location.search).has('stats') && board.online) return showStats();
   // utm_source из постеров, статей и каталогов — в статистику открытий: видно, какой канал приводит игроков
-  const utm = (new URLSearchParams(location.search).get('utm_source') || window.VDP_PLATFORM?.name || '').replace(/[^\w-]/g, '').slice(0, 20);
+  // в Telegram метка рекламы приходит в startapp: t.me/Survivefridaybot?startapp=utm_tgads1 (можно вместе с другими: ref-…_utm_…)
+  const tgUtm = (TG?.initDataUnsafe?.start_param || '').match(/utm_([\w-]+)/)?.[1];
+  const utm = (new URLSearchParams(location.search).get('utm_source') || tgUtm || window.VDP_PLATFORM?.name || '').replace(/[^\w-]/g, '').slice(0, 20);
   track('open', { detail: (TG ? 'telegram' : standalone ? 'app' : 'web') + (utm ? ':' + utm : '') });
   const scr = new URLSearchParams(location.search).get('screen');
   if (scr && board.online) return openScreen(scr);
