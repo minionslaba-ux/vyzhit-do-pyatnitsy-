@@ -143,6 +143,8 @@ $('wGuest').onclick = () => renderJoin('guest');
 $('wLogin').onclick = () => renderJoin('login');
 $('wHow').onclick = () => showIntro();
 $('openHow').onclick = () => showIntro();
+$('wVideo').onclick = () => showVideo();
+$('openVideo').onclick = () => showVideo();
 $('joinRegister').onclick = () => renderJoin('register');
 $('mailChange').onclick = () => renderJoin(prefs.name ? 'register' : 'login');
 $('mailGuest').onclick = () => { renderMenu(); joinFromLink(); };

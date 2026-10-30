@@ -61,3 +61,19 @@ function showIntro(done) {
   document.addEventListener('keydown', key);
   el.hidden = false; render();
 }
+
+// Видеозаставка: открывается по нажатию (не грузится вместе с игрой). На узком экране — вертикальная, иначе — горизонтальная
+const VIDEO_BASE = /^https?:/.test(location.href) && !window.POOL_JSON ? '' : 'https://survivefriday.com/';
+function showVideo() {
+  const tall = innerHeight > innerWidth, f = tall ? '9x16' : '16x9', m = $('modal');
+  m.innerHTML = `<div class="modal-box glass video-box${tall ? ' tall' : ''}" role="dialog" aria-modal="true" aria-label="Видео об игре">
+    <video src="${VIDEO_BASE}promo/video/zastavka-${f}.mp4" poster="${VIDEO_BASE}promo/video/poster-${f}.jpg" controls autoplay playsinline preload="auto"></video>
+    <div class="video-nav"><button class="btn-ghost" type="button" id="vidHow">Как играть</button><button class="btn-main" type="button" id="vidClose">Понятно, играть</button></div></div>`;
+  m.hidden = false;
+  const v = m.querySelector('video'), close = () => { v.pause(); m.hidden = true; m.innerHTML = ''; };
+  v.play?.().catch(() => {});  // если браузер запретил автозапуск со звуком — останется кнопка ▶
+  $('vidClose').onclick = close;
+  $('vidHow').onclick = () => { close(); showIntro(); };
+  m.onclick = e => { if (e.target === m) close(); };
+  track('share', { detail: 'video' });
+}
