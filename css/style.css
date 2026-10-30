@@ -1117,3 +1117,6 @@ body:has(#menu:not([hidden])) .bell { top: calc(12px + env(safe-area-inset-top, 
 .btn-login { font-size: 16px; }
 .acct-box { display: grid; gap: 8px; }
 #wSocial .or-line { display: none; }
+.share-big { display: grid; gap: 8px; margin: 10px 0; }
+.share-big a { text-decoration: none; text-align: center; font-size: 15px; padding-left: 12px; padding-right: 12px; }
+.share-big b { white-space: nowrap; margin-left: 6px; padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,.22); font-size: .9em; }

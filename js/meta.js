@@ -331,7 +331,7 @@ async function tgButton() {
 // ---------- группа игры в Telegram: +10 у.е. за вступление (один раз) ----------
 // Бот проверяет, что игрок действительно в группе (getChatMember), — поэтому награда выдаётся только в игре внутри Telegram
 const GROUP_REWARD = 10;
-function groupCash(n) {  // нет карьеры — деньги дождутся её
+function addCash(n) {  // на счёт карьеры; нет карьеры — деньги дождутся её
   const C2 = careerNow();
   if (C2) { C2.bank = (C2.bank || 0) + n; careerSave(C2); }
   else prefs.pendingCash = (prefs.pendingCash || 0) + n;
@@ -340,7 +340,7 @@ function groupCash(n) {  // нет карьеры — деньги дождут�
 }
 async function tgGroup() {
   const b = $('tgGroup'); if (!b) return;
-  if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; groupCash(n); }
+  if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; addCash(n); }
   if (window.VDP_PLATFORM || !board.online) return;
   const r = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
     body: JSON.stringify({ action: 'group_link' }) }).then(r => r.json()).catch(() => ({}));
@@ -354,7 +354,7 @@ async function tgGroup() {
       body: JSON.stringify({ action: 'group_claim', ...(await tgWho()), player_id: prefs.playerId }) });
     const j = await res.json().catch(() => ({}));
     if (j.ok) {
-      prefs.groupClaimed = true; const now = groupCash(GROUP_REWARD); label(); $('modal').hidden = true;
+      prefs.groupClaimed = true; const now = addCash(GROUP_REWARD); label(); $('modal').hidden = true;
       sfx.coins?.(); toast(L(`🎉 Спасибо, что с нами! +${money(GROUP_REWARD)}${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎉 Thanks for joining! +${money(GROUP_REWARD)}${now ? '' : ' — paid once you get a job'}`));
     } else if (j.error === 'claimed') { prefs.groupClaimed = true; store.set(KEY.prefs, prefs); label(); $('modal').hidden = true; toast(L('Награда за группу уже получена', 'You’ve already got the group reward')); }
     else if (j.error === 'no_telegram' || j.error === 'bad_session') tgLogin('group');

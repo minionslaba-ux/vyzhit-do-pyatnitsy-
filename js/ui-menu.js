@@ -822,9 +822,25 @@ function shareText(kind, team) {
             : L('Играю в «Выжить до пятницы» — офисный симулятор, где Босс на 100% хуже увольнения. Давай сыграем всем отделом и сравним, кто дольше продержится!', 'Playing Survive till Friday — the office sim where a Boss at 100% is worse than getting fired. Let’s get the whole department in and see who lasts longest!'))
     : L('Затягивает: «Выжить до пятницы» — офисный симулятор в духе Reigns. Держи Кукуху, Энергию, Босса и Коллег в балансе до пятницы, 18:00. Попробуй!', 'Seriously addictive: Survive till Friday — a Reigns-style office sim. Keep your Sanity, Energy, Boss and Team in balance until Friday, 6 PM. Give it a try!');
 }
+// Награды за то, что поделились: Telegram и VK — один раз, остальное — раз в день (что ссылку правда отправили, проверить нельзя —
+// поэтому суммы скромные; за пришедшего по ссылке игрока, которого засчитывает сервер, — больше)
+const SHARE_ONCE = 10, SHARE_DAILY = 5, REF_CASH = 15;
+function shareReward(via) {
+  const once = via === 'tg' || via === 'vk', today = new Date().toISOString().slice(0, 10);
+  prefs.shared ||= {};
+  let n = 0;
+  if (once && !prefs.shared[via]) { prefs.shared[via] = true; n = SHARE_ONCE; }
+  else if (prefs.shareDay !== today) { prefs.shareDay = today; n = SHARE_DAILY; }
+  if (!n) return;
+  const now = addCash(n); sfx.coins?.();
+  toast(L(`🎁 Спасибо, что рассказали об игре! +${money(n)}${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎁 Thanks for spreading the word! +${money(n)}${now ? '' : ' — paid once you get a job'}`));
+  dropShareBadge(via);
+}
+function dropShareBadge(via) { const b = document.querySelector(`.share-big [data-via="${via}"] b`); if (b) b.remove(); }
 function bindShare(root) { root.querySelectorAll('[data-share]').forEach(b => b.onclick = () => { snoozeViral(7); openShare(b.dataset.share); }); }
 async function openShare(kind) {
   track('share', { detail: kind });
+  $('viralPop').hidden = true;  // плашка «Вместе веселее» не должна перекрывать окно
   const m = $('modal');
   const { url, team } = await referralLink(kind), text = shareText(kind, team), full = `${text} ${url}`;
   const enc = encodeURIComponent;
@@ -833,24 +849,29 @@ async function openShare(kind) {
     <div class="share-tabs" role="tablist"><button class="tab" role="tab" data-k="team" aria-selected="${kind === 'team'}">${L('Коллег', 'Coworkers')}</button><button class="tab" role="tab" data-k="friends" aria-selected="${kind === 'friends'}">${L('Друзей', 'Friends')}</button></div>
     ${kind === 'team' && !team ? `<p class="field-note">${registered() ? L('Создайте офис в «Мой офис» — тогда ссылка сразу приведёт коллег в вашу команду.', 'Create an office in “My Office” — then the link drops coworkers straight into your team.') : L('Зарегистрируйтесь и создайте офис — тогда ссылка сразу приведёт коллег в вашу команду.', 'Sign up and create an office — then the link drops coworkers straight into your team.')}</p>` : ''}
     <p class="share-text" id="shText">${esc(full)}</p>
+    <div class="share-big">
+      <a class="btn-main btn-tg" data-via="tg" href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">${L('Отправить в Telegram', 'Send on Telegram')}${prefs.shared?.tg ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
+      <a class="btn-main btn-vk" data-via="vk" href="https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}" target="_blank" rel="noopener">${L('Рассказать в VK', 'Post on VK')}${prefs.shared?.vk ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
+    </div>
     <div class="share-grid">
-      ${TG ? `<button id="shTg">${L('Отправить в чат Telegram', 'Send to a Telegram chat')}</button>` : navigator.share ? `<button id="shNative">${L('Отправить…', 'Share…')}</button>` : ''}
-      <a href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">Telegram</a>
-      <a href="https://wa.me/?text=${enc(full)}" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}" target="_blank" rel="noopener">${L('ВКонтакте', 'VK')}</a>
-      <a href="mailto:?subject=${enc(L('Выжить до пятницы', 'Survive till Friday'))}&body=${enc(full)}">${L('Почта', 'Email')}</a>
-      <button id="shCopy">${L('Скопировать ссылку', 'Copy link')}</button>
+      ${!TG && navigator.share ? `<button id="shNative" data-via="native">${L('Отправить…', 'Share…')}</button>` : ''}
+      <a href="https://wa.me/?text=${enc(full)}" data-via="wa" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="mailto:?subject=${enc(L('Выжить до пятницы', 'Survive till Friday'))}&body=${enc(full)}" data-via="mail">${L('Почта', 'Email')}</a>
+      <button id="shCopy" data-via="copy">${L('Скопировать ссылку', 'Copy link')}</button>
     </div>
     <p class="share-count" id="shCount"></p>
-    <p class="field-note">${L('За каждого, кто впервые придёт по вашей ссылке, — +1 предмет на следующую неделю карьеры.', 'Every new player who joins via your link earns you +1 item for your next career week.')}</p>
+    <p class="field-note">${L(`Награды: Telegram и VK — по +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — ещё +${money(REF_CASH)} и +1 предмет на неделю.`,
+      `Rewards: Telegram and VK — +${money(SHARE_ONCE)} each (once), any other share — +${money(SHARE_DAILY)} once a day. Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`)}</p>
     <button class="btn-ghost" id="shClose">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;
   m.querySelectorAll('.share-tabs .tab').forEach(t => t.onclick = () => openShare(t.dataset.k));
   $('shClose').onclick = () => { m.hidden = true; };
   m.onclick = e => { if (e.target === m) m.hidden = true; };
+  m.querySelectorAll('[data-via]').forEach(el => el.addEventListener('click', () => { const v = el.dataset.via; if (v === 'native' || TG && (v === 'tg' || v === 'vk')) return; setTimeout(() => shareReward(v), 600); }));
   $('shCopy').onclick = () => copy(full, L('Приглашение скопировано — вставьте его в чат', 'Invite copied — paste it into a chat'));
-  if ($('shNative')) $('shNative').onclick = () => navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url }).catch(() => {});
-  if ($('shTg')) $('shTg').onclick = () => TG.openTelegramLink(`https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`);
+  if ($('shNative')) $('shNative').onclick = () => navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url }).then(() => shareReward('native')).catch(() => {});
+  if (TG) m.querySelector('.btn-tg').onclick = e => { e.preventDefault(); TG.openTelegramLink(`https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`); setTimeout(() => shareReward('tg'), 600); };
+  if (TG) m.querySelector('.btn-vk').onclick = e => { e.preventDefault(); TG.openLink(`https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}`); setTimeout(() => shareReward('vk'), 600); };
   if (board.online) board.rpc('referral_count', { p_id: prefs.playerId }).then(n => { if ($('shCount')) $('shCount').textContent = L(`По вашим ссылкам пришло: ${n || 0}`, `Joined via your links: ${n || 0}`); }).catch(() => {});
 }
 // Плашка в меню: после первой сыгранной недели, не чаще раза в двое суток после закрытия
@@ -880,7 +901,8 @@ async function checkReferrals() {
     const n = await board.rpc('referral_count', { p_id: prefs.playerId }) || 0, seen = prefs.refSeen || 0;
     if (n > seen) {
       prefs.bonusItems = (prefs.bonusItems || 0) + (n - seen); prefs.refSeen = n; store.set(KEY.prefs, prefs);
-      toast(L(`По вашей ссылке ${n - seen === 1 ? 'пришёл новый игрок' : `пришли новые игроки (${n - seen})`}. Бонус на следующую неделю: ${pl(n - seen, 'предмет', 'предмета', 'предметов', 'item', 'items')}`, `${n - seen === 1 ? 'A new player' : `New players (${n - seen})`} joined via your link. Bonus for next week: ${pl(n - seen, 'предмет', 'предмета', 'предметов', 'item', 'items')}`));
+      addCash(REF_CASH * (n - seen)); sfx.coins?.();
+      toast(L(`По вашей ссылке ${n - seen === 1 ? 'пришёл новый игрок' : `пришли новые игроки (${n - seen})`}: +${money(REF_CASH * (n - seen))} и ${pl(n - seen, 'предмет', 'предмета', 'предметов', 'item', 'items')} на следующую неделю`, `${n - seen === 1 ? 'A new player' : `New players (${n - seen})`} joined via your link: +${money(REF_CASH * (n - seen))} and ${pl(n - seen, 'предмет', 'предмета', 'предметов', 'item', 'items')} for next week`));
     }
     if (n >= 3) unlock(['recruiter']);
   } catch {}
