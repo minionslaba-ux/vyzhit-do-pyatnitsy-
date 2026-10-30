@@ -141,6 +141,8 @@ function renderCheckMail(email) {
 $('wRegister').onclick = () => renderJoin('register');
 $('wGuest').onclick = () => renderJoin('guest');
 $('wLogin').onclick = () => renderJoin('login');
+$('wHow').onclick = () => showIntro();
+$('openHow').onclick = () => showIntro();
 $('joinRegister').onclick = () => renderJoin('register');
 $('mailChange').onclick = () => renderJoin(prefs.name ? 'register' : 'login');
 $('mailGuest').onclick = () => { renderMenu(); joinFromLink(); };

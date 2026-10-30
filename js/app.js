@@ -109,6 +109,7 @@ finishLogin().then(reloading => {
   if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');
   else if (prefs.name) renderMenu();
   else renderWelcome();
+  if (!prefs.introSeen && !prefs.gamesPlayed) showIntro();  // первый вход: сначала коротко, в чём смысл игры
   joinFromLink();
   flushOutbox();
 });

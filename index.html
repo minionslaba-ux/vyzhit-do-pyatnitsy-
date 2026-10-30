@@ -59,6 +59,7 @@
         <button class="btn-main" type="button" id="wRegister">Зарегистрироваться</button>
         <button class="btn-ghost" type="button" id="wGuest">Играть как гость</button>
         <button class="btn-link" type="button" id="wLogin">Уже есть аккаунт? Войти</button>
+        <button class="btn-link" type="button" id="wHow">Как играть?</button>
         <p class="join-note" id="wNote"></p>
       </div>
     </div>
@@ -144,6 +145,7 @@
       </div>
       <div class="pane" id="paneProfile" role="tabpanel" aria-labelledby="tabProfile" hidden>
         <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily">Напомнить в календаре</button></div>
+        <button class="btn-ghost btn-how" type="button" id="openHow">Как играть: цель, шкалы, деньги</button>
         <div class="cast-list" id="castList" hidden></div>
         <div class="row2"><button class="btn-ghost" id="openCollection">Коллекция</button><button class="btn-ghost" id="openSuggest">Предложить ситуацию</button></div>
         <button class="btn-ghost" id="installApp" hidden>Установить на телефон</button>
@@ -211,6 +213,7 @@
 </div>
 <canvas id="confetti" hidden></canvas>
 <div class="modal" id="modal" hidden></div>
+<div class="intro" id="intro" hidden></div>
 <script>
   // Скрипт Telegram нужен только внутри Telegram. В обычном браузере не грузим: если telegram.org медленный
   // или недоступен (у части провайдеров), синхронный скрипт держал бы всю игру и страница не открывалась.
@@ -228,6 +231,7 @@
 <script src="js/audio.js"></script>
 <script src="js/fx.js"></script>
 <script src="js/faces.js"></script>
+<script src="js/intro.js"></script>
 <script src="js/game.js"></script>
 <script src="js/ui-menu.js"></script>
 <script src="js/app.js"></script>

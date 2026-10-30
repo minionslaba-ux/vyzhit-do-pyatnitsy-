@@ -785,3 +785,71 @@ body[data-phase="night"] .office .person, body[data-phase="night"] .office .lamp
 @media (prefers-reduced-motion: reduce) { .face .eyes, .live-dot { animation: none; } }
 .card-head { justify-content: flex-start; }
 .card-head .rnd-tag { margin-left: auto; }
+
+/* ====================== Обучение «Как играть» (js/intro.js) ====================== */
+.intro { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; padding: 16px; background: rgba(7,7,13,.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fadein .25s; }
+.intro[hidden] { display: none; }
+.intro-box { position: relative; width: min(440px, 100%); max-height: 100%; overflow: auto; padding: 22px 20px 18px; border-radius: 26px; display: flex; flex-direction: column; gap: 10px; text-align: center; touch-action: pan-y; }
+.intro-skip { position: absolute; top: 12px; right: 14px; border: 0; background: none; color: var(--text-2); font-size: 13px; font-weight: 800; }
+.intro-skip:empty { display: none; }
+.intro-art { min-height: 150px; margin-top: 16px; display: grid; place-items: center; animation: slidein .35s; }
+.intro-step { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; color: var(--cyan-l); text-transform: uppercase; }
+.intro h2 { margin: 0; font-family: var(--f-display); font-weight: 800; font-size: 22px; color: #fff; text-shadow: 0 0 18px rgba(255,59,212,.6); }
+.intro p { margin: 0; color: var(--text-3); font-size: 15px; line-height: 1.5; }
+.intro p b { color: #fff; }
+.intro-dots { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+.intro-dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.18); transition: background .2s, width .2s; }
+.intro-dots i.on { width: 22px; border-radius: 4px; background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+.intro-nav { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; margin-top: 4px; }
+.intro-nav .btn-ghost:disabled { opacity: .35; }
+/* иллюстрации слайдов */
+.in-clock { display: flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-weight: 700; font-size: 38px; color: var(--cyan-l); text-shadow: 0 0 14px rgba(45,226,230,.8); }
+.in-clock i { font-style: normal; font-size: 24px; color: var(--text-2); }
+.in-clock .hot { color: #ff8be6; text-shadow: 0 0 14px var(--magenta); animation: neonon 2s .3s both; }
+.in-segs { display: flex; gap: 4px; margin-top: 12px; justify-content: center; }
+.in-segs i { width: 14px; height: 5px; border-radius: 3px; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: segon .2s both; }
+.in-segs i:last-child { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
+.in-segs i:nth-child(1) { animation-delay: 0.00s; }
+.in-segs i:nth-child(2) { animation-delay: 0.06s; }
+.in-segs i:nth-child(3) { animation-delay: 0.12s; }
+.in-segs i:nth-child(4) { animation-delay: 0.18s; }
+.in-segs i:nth-child(5) { animation-delay: 0.24s; }
+.in-segs i:nth-child(6) { animation-delay: 0.30s; }
+.in-segs i:nth-child(7) { animation-delay: 0.36s; }
+.in-segs i:nth-child(8) { animation-delay: 0.42s; }
+.in-segs i:nth-child(9) { animation-delay: 0.48s; }
+.in-segs i:nth-child(10) { animation-delay: 0.54s; }
+.in-segs i:nth-child(11) { animation-delay: 0.60s; }
+.in-segs i:nth-child(12) { animation-delay: 0.66s; }
+.in-segs i:nth-child(13) { animation-delay: 0.72s; }
+.in-segs i:nth-child(14) { animation-delay: 0.78s; }
+.in-segs i:nth-child(15) { animation-delay: 0.84s; }
+@keyframes segon { from { opacity: .1; } }
+.in-tubes { display: flex; gap: 8px; justify-content: center; }
+.in-tubes .tube-wrap { width: 62px; }
+.in-tubes .tube { height: 92px; }
+.in-card { position: relative; width: 250px; }
+.in-arrows { display: flex; justify-content: space-around; font-size: 14px; margin-bottom: 6px; }
+.in-arrows .u { color: var(--up); text-shadow: 0 0 8px var(--up); } .in-arrows .d { color: var(--down); text-shadow: 0 0 8px var(--down); }
+.in-card-box { display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 18px; border: 1.5px solid var(--magenta); background: rgba(255,255,255,.04); text-align: left; animation: inswipe 2.6s ease-in-out infinite; }
+.in-card-box b { font-family: var(--f-display); font-size: 10px; letter-spacing: .1em; color: #ff8be6; }
+.in-card-box span { color: #fff; font-weight: 800; font-size: 15px; }
+.in-ans { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; font-weight: 800; color: var(--text-2); }
+.in-hand { position: absolute; left: 50%; top: 58px; font-style: normal; font-size: 26px; animation: inhand 2.6s ease-in-out infinite; }
+@keyframes inswipe { 0%, 20%, 100% { transform: none; } 45%, 60% { transform: translateX(34px) rotate(5deg); } }
+@keyframes inhand { 0%, 20%, 100% { transform: translateX(-50%); } 45%, 60% { transform: translateX(calc(-50% + 34px)); } }
+.in-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 280px; }
+.in-shield { margin-top: 12px; font-size: 40px; color: #fff; text-shadow: 0 0 14px var(--up), 0 0 30px var(--up); animation: inshield 1.8s ease-out infinite; }
+@keyframes inshield { 0% { transform: scale(.7); opacity: .3; } 40% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); opacity: .8; } }
+.in-money { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; }
+.in-money .bank-chip { font-size: 13px; padding: 5px 14px; }
+.in-coin { position: static; animation: incoin 2s ease-in-out infinite; }
+@keyframes incoin { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.in-shop { list-style: none; margin: 8px 0 0; padding: 0; width: 260px; display: flex; flex-direction: column; gap: 6px; }
+.in-shop li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 12px; border-radius: 12px; border: 1px solid var(--line); font-size: 12.5px; }
+.in-shop b { color: #fff; } .in-shop span { font-family: var(--f-mono); color: var(--cyan-l); white-space: nowrap; }
+.in-faces { display: flex; gap: 10px; justify-content: center; }
+.in-faces .face { width: 58px; height: 58px; animation: slidein .4s both; }
+.in-faces .face:nth-child(2) { animation-delay: .08s; } .in-faces .face:nth-child(3) { animation-delay: .16s; } .in-faces .face:nth-child(4) { animation-delay: .24s; }
+.btn-how { border-color: var(--cyan); color: var(--cyan-l); }
+@media (prefers-reduced-motion: reduce) { .in-card-box, .in-hand, .in-shield, .in-coin { animation: none; } }
