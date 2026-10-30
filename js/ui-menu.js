@@ -13,8 +13,9 @@ const getTrait = () => document.querySelector('input[name=trait]:checked')?.valu
 function renderMenu() {
   applyTheme();
   $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || L('без отдела', 'no department');
-  myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
+  myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? acctLabel() : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
   $('meRegister').hidden = registered() || !board.online;
+  $('meLogin').hidden = !!prefs.email || !board.online; renderAcctBox();
   $('profLogout').hidden = !prefs.email; $('profLogout').textContent = L('Выйти из аккаунта', 'Log out'); delete $('profLogout').dataset.armed; $('meRegister').textContent = prefs.email ? L('Войти', 'Sign in') : L('Регистрация', 'Sign up');
   renderOfficeLine();
   renderChallengeCta();
@@ -72,10 +73,11 @@ $('openCollection').onclick = showCollection;
 const registered = () => !!(prefs.email && prefs.session);
 const LOCKED = ['openOffice', 'openChat', 'openSuggest'];
 const needAccount = (fn, why) => () => registered() || !board.online ? fn()
-  : prefs.email ? renderJoin('login', L('Сессия входа истекла. Пришлём новую ссылку на вашу почту.', 'Your session expired. We’ll email you a fresh sign-in link.')) : renderJoin('register', why);
+  : prefs.email ? renderJoin('login', socialVia() ? L(`Сессия входа истекла — войдите через ${viaName(socialVia())} ещё раз.`, `Your session expired — sign in with ${viaName(socialVia())} again.`) : L('Сессия входа истекла. Войдите снова — паролем или по ссылке из письма.', 'Your session expired. Sign in again — with your password or an email link.')) : renderJoin('register', why);
 $('openOffice').onclick = needAccount(showOffice, L('«Мой офис» доступен после регистрации: соберите команду и позовите коллег.', '“My Office” unlocks after you sign up: build a team and bring in your coworkers.'));
 $('openChat').onclick = needAccount(() => showChat('team'), L('Чаты доступны после регистрации — так коллеги будут знать, кто пишет.', 'Chats unlock after you sign up — so your coworkers know who’s talking.'));
-$('meRegister').onclick = () => prefs.email ? renderJoin('login', L('Пришлём новую ссылку для входа на вашу почту.', 'We’ll email you a fresh sign-in link.')) : renderJoin('register');
+$('meRegister').onclick = () => prefs.email ? renderJoin('login') : renderJoin('register');
+$('meLogin').onclick = () => renderJoin('login');
 $('ctaOffice').onclick = () => showOffice();
 $('openInvite').onclick = () => openShare(registered() ? 'team' : 'friends');
 // Зарегистрированному без офиса — предложение создать свой; с офисом — его название под именем
@@ -110,6 +112,7 @@ function joinPanel(id) { for (const p of ['welcome', 'joinForm', 'checkMail']) $
 function renderWelcome() {
   joinMode = 'welcome';
   $('wRegister').hidden = $('wLogin').hidden = !board.online;
+  socialButtons($('wSocial'));
   $('wNote').textContent = board.online ? '' : L('Регистрация появится, когда к игре подключат общий офис (Supabase). Пока можно играть как гость.', 'Sign-up arrives once the shared office (Supabase) is connected. For now you can play as a guest.');
   joinPanel('welcome');
 }
@@ -117,17 +120,23 @@ function renderJoin(mode, lead) {
   joinMode = mode;
   const reg = mode === 'register', login = mode === 'login', edit = mode === 'edit';
   $('joinTitle').textContent = (EN ? { register: 'Sign up', login: 'Sign in', guest: 'Guest pass', edit: 'Office badge', profile: 'Your profile' } : { register: 'Регистрация', login: 'Вход', guest: 'Пропуск гостя', edit: 'Пропуск в офис', profile: 'Ваш профиль' })[mode];
-  $('joinSub').textContent = (EN ? { register: 'Name, department and email', login: 'We’ll email you a link', guest: 'No sign-up needed', edit: prefs.email || 'Guest', profile: prefs.email || '' } : { register: 'Имя, отдел и почта', login: 'Пришлём ссылку на почту', guest: 'Без регистрации', edit: prefs.email || 'Гость', profile: prefs.email || '' })[mode];
+  $('joinSub').textContent = (EN ? { register: 'Name, department and email', login: 'Telegram, email or password', guest: 'No sign-up needed', edit: acctLabel() || 'Guest', profile: acctLabel() } : { register: 'Имя, отдел и почта', login: 'Telegram, почта или пароль', guest: 'Без регистрации', edit: acctLabel() || 'Гость', profile: acctLabel() })[mode];
   $('joinLead').hidden = !lead; $('joinLead').textContent = lead || '';
-  $('joinName').value = prefs.name; $('joinDept').value = prefs.dept;
-  $('joinEmail').value = prefs.email || mailTo || prefs.pendingEmail || ''; $('joinEmail').disabled = !!prefs.email && !login;
+  $('joinName').value = prefs.name || prefs.suggestName || ''; $('joinDept').value = prefs.dept;
+  $('joinEmail').value = (socialVia() ? '' : prefs.email) || mailTo || prefs.pendingEmail || ''; $('joinEmail').disabled = !!prefs.email && !socialVia() && !login;
   for (const id of ['joinNameField', 'joinDeptField', 'joinAvaField', 'joinAvatar']) $(id).hidden = login;
-  $('joinEmailField').hidden = !(reg || login || (edit && prefs.email));
-  $('joinEmailNote').textContent = prefs.email ? L('Вы вошли по почте — прогресс общий на всех устройствах.', 'You’re signed in by email — your progress syncs across devices.') : L('Пришлём ссылку для входа — пароль не нужен.', 'We’ll email you a sign-in link — no password needed.');
+  $('joinEmailField').hidden = !(reg || login || (edit && prefs.email && !socialVia()));
+  $('joinEmailNote').textContent = prefs.email && !login ? L('Вы вошли по почте — прогресс общий на всех устройствах.', 'You’re signed in by email — your progress syncs across devices.') : L('Пароль не обязателен — без него пришлём ссылку для входа на почту.', 'A password is optional — without one we’ll email you a sign-in link.');
+  socialButtons($('joinSocial')); $('joinSocial').hidden ||= !(reg || login);
+  $('joinEmailNote').hidden = login;  // при входе про пароль подсказывает поле пароля
+  $('joinPassField').hidden = !(reg || login); $('joinPass').value = '';
+  $('joinPass').autocomplete = reg ? 'new-password' : 'current-password';
+  $('joinPassNote').textContent = reg ? L('Необязательно, от 6 символов. Без пароля входите по ссылке из письма.', 'Optional, 6+ characters. Without one, sign in via an email link.')
+    : L('Нет пароля или забыли? Оставьте поле пустым — пришлём ссылку на почту.', 'No password or forgot it? Leave it empty — we’ll email you a link.');
   (document.querySelector(`input[name=ava][value="${prefs.avatar}"]`) || document.querySelector('input[name=ava]')).checked = true;
   $('joinAvatar').textContent = document.querySelector('input[name=ava]:checked').value;
   $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid'); $('joinEmail').removeAttribute('aria-invalid');
-  $('joinGo').textContent = (EN ? { register: 'Sign up', login: 'Email me a sign-in link', guest: 'Play as guest', edit: 'Save', profile: 'Save and play' } : { register: 'Зарегистрироваться', login: 'Получить ссылку для входа', guest: 'Играть как гость', edit: 'Сохранить', profile: 'Сохранить и играть' })[mode];
+  $('joinGo').textContent = (EN ? { register: 'Sign up', login: 'Log in', guest: 'Play as guest', edit: 'Save', profile: 'Save and play' } : { register: 'Зарегистрироваться', login: 'Войти', guest: 'Играть как гость', edit: 'Сохранить', profile: 'Сохранить и играть' })[mode];
   $('joinGo').disabled = false;
   $('joinRegister').hidden = !(edit && !prefs.email && board.online);
   $('joinLogout').hidden = !(edit && prefs.email); $('joinLogout').textContent = L('Выйти из аккаунта', 'Log out'); delete $('joinLogout').dataset.armed;
@@ -159,7 +168,7 @@ $('mailResend').onclick = async () => {
   setTimeout(() => { $('mailResend').disabled = false; }, 15000);
 };
 $('joinName').oninput = () => { $('joinErr').textContent = ''; $('joinName').removeAttribute('aria-invalid'); };
-$('joinCancel').onclick = () => prefs.name ? renderMenu() : renderWelcome();
+$('joinCancel').onclick = () => prefs.name && !prefs.loggedOut ? renderMenu() : renderWelcome();
 $('joinEmail').oninput = () => { $('joinErr').textContent = ''; $('joinEmail').removeAttribute('aria-invalid'); };
 const badMail = email => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 $('joinForm').onsubmit = async e => {
@@ -168,7 +177,11 @@ $('joinForm').onsubmit = async e => {
   if (joinMode === 'login') {
     if (badMail(email)) { $('joinErr').textContent = L('Введите почту, с которой регистрировались.', 'Enter the email you signed up with.'); $('joinEmail').setAttribute('aria-invalid', 'true'); return; }
     $('joinGo').disabled = true;
-    try { await board.sendLink(email); renderCheckMail(email); }
+    const pass = $('joinPass').value;
+    try {
+      if (pass) { const j = await board.password(email, pass); prefs.hasPass = true; await applySession(sessOf(j), j.user, { via: 'email' }); return; }
+      await board.sendLink(email); renderCheckMail(email);
+    }
     catch (err) { $('joinErr').textContent = L(`Не удалось отправить ссылку: ${err.message}`, `Couldn’t send the link: ${err.message}`); $('joinGo').disabled = false; }
     return;
   }
@@ -184,10 +197,21 @@ $('joinForm').onsubmit = async e => {
     store.set(KEY.prefs, prefs);
     await board.touch('menu').catch(() => {});  // профиль гостя сохраняется и перейдёт в аккаунт после входа
     $('joinGo').disabled = true;
-    try { await board.sendLink(email); prefs.pendingEmail = email; store.set(KEY.prefs, prefs); renderCheckMail(email); }
+    const pass = $('joinPass').value;
+    if (pass && pass.length < 6) { $('joinErr').textContent = L('Пароль — хотя бы 6 символов. Или оставьте поле пустым.', 'Password must be 6+ characters — or leave it empty.'); $('joinGo').disabled = false; return; }
+    try {
+      if (pass) {
+        const j = await board.password(email, pass, true);
+        if (j.user && Array.isArray(j.user.identities) && !j.user.identities.length) throw new Error(L('эта почта уже зарегистрирована — нажмите «Войти»', 'this email is already registered — tap “Log in”'));
+        prefs.hasPass = true;
+        if (j.access_token) { await applySession(sessOf(j), j.user, { via: 'email' }); return; }  // подтверждение почты выключено — сразу в игру
+      } else await board.sendLink(email);
+      prefs.pendingEmail = email; store.set(KEY.prefs, prefs); renderCheckMail(email);
+    }
     catch (err) { $('joinErr').textContent = L(`Не удалось отправить ссылку: ${err.message}`, `Couldn’t send the link: ${err.message}`); $('joinGo').disabled = false; }
     return;
   }
+  delete prefs.loggedOut;  // выбрали «Играть как гость»
   store.set(KEY.prefs, prefs);
   await board.touch('menu').catch(() => {});
   renderMenu();
@@ -196,7 +220,11 @@ $('joinForm').onsubmit = async e => {
 function logoutClick(e) {
   const b = e.currentTarget;
   if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = L('Выйти? Нажмите ещё раз', 'Log out? Tap again'); return; }
-  board.logout().finally(() => { delete prefs.email; delete prefs.pendingEmail; delete prefs.playerId; delete prefs.session; store.set(KEY.prefs, prefs); location.reload(); });
+  // после выхода игра снова просит войти (или явно играть как гость), а не пускает дальше под старым именем
+  board.logout().finally(() => {
+    for (const k of ['email', 'pendingEmail', 'playerId', 'session', 'acctName', 'tgLinked', 'vkLinked', 'hasPass', 'suggestName', 'tgRemind']) delete prefs[k];
+    prefs.loggedOut = true; store.set(KEY.prefs, prefs); location.reload();
+  });
 }
 $('joinLogout').onclick = logoutClick;
 $('profLogout').onclick = logoutClick;

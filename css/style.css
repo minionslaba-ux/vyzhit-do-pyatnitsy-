@@ -340,8 +340,8 @@ body[data-phase="evening"] .office .last .mon { fill: rgba(var(--c-rgb),.25); fi
 
 /* ---------- аккаунт, офис, чат ---------- */
 .field-note { color: var(--text-2); font-size: 12px; line-height: 1.4; font-weight: 700; }
-.field input[type=email] { width: 100%; padding: 13px 14px; border-radius: 14px; border: 1.5px solid rgba(var(--w-rgb),.18); background: rgba(var(--w-rgb),.04); color: var(--text); font-size: 16px; font-weight: 800; }
-.field input[type=email]:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 18px rgba(var(--c-rgb),.35); }
+.field input[type=email], .field input[type=password] { width: 100%; padding: 13px 14px; border-radius: 14px; border: 1.5px solid rgba(var(--w-rgb),.18); background: rgba(var(--w-rgb),.04); color: var(--text); font-size: 16px; font-weight: 800; }
+.field input[type=email]:focus, .field input[type=password]:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 18px rgba(var(--c-rgb),.35); }
 .id-chip { align-self: flex-start; margin-top: 4px; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(var(--c-rgb),.55); background: transparent; color: var(--cyan-l); font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; }
 .id-chip:hover { box-shadow: 0 0 12px rgba(var(--c-rgb),.45); }
 .invites { display: flex; flex-direction: column; gap: 8px; }
@@ -1106,3 +1106,14 @@ html.light .q-title, html.light .q-n { color: #4f7d00; }
 .teaser span { font-size: 14px; color: var(--hi); }
 .rnd-tag.rare { color: #ffd23a; text-shadow: 0 0 10px rgba(255,210,58,.8); }
 body:has(#menu:not([hidden])) .bell { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+/* Вход: Telegram, VK ID, «или по почте» */
+.social-login { display: grid; gap: 8px; margin: 4px 0 6px; }
+.btn-main.btn-tg { background: #2aabee; border-color: #2aabee; color: #fff; box-shadow: 0 0 18px rgba(42,171,238,.35); }
+.btn-main.btn-vk { background: #0077ff; border-color: #0077ff; color: #fff; box-shadow: 0 0 18px rgba(0,119,255,.35); }
+.btn-main.btn-tg:hover, .btn-main.btn-vk:hover { filter: brightness(1.1); }
+.or-line { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-2); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+.or-line::before, .or-line::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .35; }
+.btn-login { font-size: 16px; }
+.acct-box { display: grid; gap: 8px; }
+#wSocial .or-line { display: none; }

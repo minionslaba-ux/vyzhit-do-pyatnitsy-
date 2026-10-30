@@ -41,7 +41,7 @@ const board = (() => {
     refreshing = refreshing || (async () => {
       const r = await fetch(`${authBase}/token?grant_type=refresh_token`, { method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: ss.refresh }) });
-      if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast(L('Сессия входа истекла — войдите по почте ещё раз', 'Your session expired — sign in by email again')); return null; }
+      if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast(L('Сессия входа истекла — войдите ещё раз', 'Your session expired — please sign in again')); return null; }
       const j = await r.json();
       prefs.session = { access: j.access_token, refresh: j.refresh_token, exp: (j.expires_at ? j.expires_at * 1000 : Date.now() + j.expires_in * 1000) };
       store.set(KEY.prefs, prefs);
@@ -140,6 +140,29 @@ const board = (() => {
       const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/otp?redirect_to=${encodeURIComponent(redirect)}`, {
         method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, create_user: true }) });
       if (!r.ok) { let m = ''; try { const j = await r.json(); m = j.msg || j.message || j.error_description || ''; } catch {} throw new Error(m || L(`Supabase ответил ${r.status}`, `Supabase returned ${r.status}`)); }
+    },
+    accessToken: token,
+    // Вход и регистрация по паролю (Supabase Auth). Ответ с access_token — сразу сессия; без него — ждём подтверждения почты
+    async password(email, password, signup) {
+      const a = cfg.url.replace(/\/+$/, '') + '/auth/v1';
+      const url = signup ? `${a}/signup?redirect_to=${encodeURIComponent(location.origin + location.pathname)}` : `${a}/token?grant_type=password`;
+      const r = await fetch(url, { method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        const m = j.msg || j.message || j.error_description || '';
+        throw new Error(/invalid login/i.test(m) ? L('неверная почта или пароль', 'wrong email or password')
+          : /not confirmed/i.test(m) ? L('почта ещё не подтверждена — откройте ссылку из письма', 'email not confirmed yet — open the link in the email')
+          : /at least|weak|short/i.test(m) ? L('пароль слишком простой — нужно хотя бы 6 символов', 'password too weak — use at least 6 characters')
+          : /already registered/i.test(m) ? L('эта почта уже зарегистрирована — войдите', 'this email is already registered — sign in')
+          : m || L(`Supabase ответил ${r.status}`, `Supabase returned ${r.status}`));
+      }
+      return j;
+    },
+    async setPassword(password) {
+      const t = await token(); if (!t) throw new Error(L('войдите ещё раз', 'please sign in again'));
+      const r = await fetch(`${authBase}/user`, { method: 'PUT', headers: { apikey: cfg.anonKey, Authorization: `Bearer ${t}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) });
+      if (!r.ok) { const j = await r.json().catch(() => ({})); const m = j.msg || j.message || '';
+        throw new Error(/at least|weak|short/i.test(m) ? L('нужно хотя бы 6 символов', 'use at least 6 characters') : /different/i.test(m) ? L('это и так ваш пароль', 'that’s already your password') : m || String(r.status)); }
     },
     async user(token) {
       const r = await fetch(`${cfg.url.replace(/\/+$/, '')}/auth/v1/user`, { headers: { apikey: cfg.anonKey, Authorization: `Bearer ${token}` } });

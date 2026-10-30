@@ -1,5 +1,6 @@
 // Подписка на напоминания «Неделя дня готова» в Telegram. Вызывается из игры, открытой как Telegram Mini App.
 // Проверяем подпись initData токеном бота (TELEGRAM_BOT_TOKEN в секретах функций) — так подписаться можно только за себя.
+// На сайте вместо initData — access_token игрока, вошедшего через Telegram (tg_accounts, см. tg-login).
 // action: 'group_link' — ссылка-приглашение в группу игры (tg_groups.main); 'group_claim' — награда 10 у.е. за вступление:
 // бот проверяет, что игрок в группе, и выдаёт её один раз на аккаунт Telegram (tg_group_rewards).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
@@ -18,7 +19,7 @@ Deno.serve(async req => {
   try {
     const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
     if (!token) return json({ error: 'not_configured' }, 503);
-    const { initData, player_id, lang, enable, action } = await req.json();
+    const { initData, access_token, player_id, lang, enable, action } = await req.json();
     const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
     const tg = async (method: string, body: Record<string, unknown>) =>
       (await fetch(`https://api.telegram.org/bot${token}/${method}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json().catch(() => ({}));
@@ -31,14 +32,24 @@ Deno.serve(async req => {
       if (r.ok) await db.from('tg_groups').update({ invite_link: r.result }).eq('chat_id', g.chat_id);
       return json({ link: r.ok ? r.result : null });
     }
-    if (typeof initData !== 'string' || !/^[0-9a-f-]{36}$/i.test(player_id || '')) return json({ error: 'bad_request' }, 400);
-    const p = new URLSearchParams(initData), hash = p.get('hash') || '';
-    p.delete('hash');
-    const check = [...p.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([k, v]) => `${k}=${v}`).join('\n');
-    const secret = await hmac(enc.encode('WebAppData'), token);
-    if (hex(await hmac(secret, check)) !== hash) return json({ error: 'bad_signature' }, 403);
-    if (Date.now() / 1000 - Number(p.get('auth_date') || 0) > 7 * 86400) return json({ error: 'expired' }, 403);
-    const user = JSON.parse(p.get('user') || '{}');
+    // кто это в Telegram: в Mini App — по подписи initData, на сайте — по сессии входа и привязке tg_accounts
+    let user: { id?: number } = {};
+    if (typeof initData === 'string' && initData) {
+      const p = new URLSearchParams(initData), hash = p.get('hash') || '';
+      p.delete('hash');
+      const check = [...p.entries()].sort(([a], [b]) => (a < b ? -1 : 1)).map(([k, v]) => `${k}=${v}`).join('\n');
+      const secret = await hmac(enc.encode('WebAppData'), token);
+      if (hex(await hmac(secret, check)) !== hash) return json({ error: 'bad_signature' }, 403);
+      if (Date.now() / 1000 - Number(p.get('auth_date') || 0) > 7 * 86400) return json({ error: 'expired' }, 403);
+      user = JSON.parse(p.get('user') || '{}');
+    } else if (typeof access_token === 'string' && access_token) {
+      const { data: { user: cur } } = await db.auth.getUser(access_token);
+      if (!cur) return json({ error: 'bad_session' }, 401);
+      const { data: acc } = await db.from('tg_accounts').select('tg_id').eq('user_id', cur.id).maybeSingle();
+      if (!acc) return json({ error: 'no_telegram' }, 403);
+      user = { id: Number(acc.tg_id) };
+    }
+    if (!/^[0-9a-f-]{36}$/i.test(player_id || '')) return json({ error: 'bad_request' }, 400);
     if (!user.id) return json({ error: 'no_user' }, 400);
     if (action === 'group_claim') {
       const g = await main();

@@ -71,7 +71,8 @@
         </ul>
         <button class="btn-main" type="button" id="wRegister" data-en="Sign up">Sign up</button>
         <button class="btn-ghost" type="button" id="wGuest" data-en="Play as guest">Play as guest</button>
-        <button class="btn-link" type="button" id="wLogin" data-en="Already have an account? Log in">Already have an account? Log in</button>
+        <button class="btn-ghost btn-login" type="button" id="wLogin" data-en="🔑 Log in">🔑 Log in</button>
+        <div class="social-login" id="wSocial" hidden></div>
         <button class="btn-link" type="button" id="wHow" data-en="How to play?">How to play?</button>
         <p class="join-note" id="wNote"></p>
       </div>
@@ -84,8 +85,11 @@
         <div class="pass-photo" id="joinAvatar" aria-hidden="true">😎</div>
         <div class="field" id="joinNameField"><label for="joinName" data-en="Your name *">Your name *</label><input id="joinName" type="text" maxlength="24" placeholder="Например, Костя" data-en-placeholder="e.g. Kevin" autocomplete="nickname"></div>
         <div class="field" id="joinDeptField"><label for="joinDept" data-en="Department">Department</label><input id="joinDept" type="text" maxlength="24" placeholder="Например, Продажи" data-en-placeholder="e.g. Sales" autocomplete="off"></div>
+        <div class="social-login" id="joinSocial" hidden></div>
         <div class="field" id="joinEmailField"><label for="joinEmail" data-en="Email *">Email *</label><input id="joinEmail" type="email" maxlength="80" placeholder="name@company.ru" data-en-placeholder="name@company.com" autocomplete="email" inputmode="email">
           <small class="field-note" id="joinEmailNote" data-en="We’ll email you a login link — no password needed.">We’ll email you a login link — no password needed.</small></div>
+        <div class="field" id="joinPassField" hidden><label for="joinPass" data-en="Password">Password</label><input id="joinPass" type="password" maxlength="72" autocomplete="current-password">
+          <small class="field-note" id="joinPassNote"></small></div>
         <fieldset class="field" id="joinAvaField"><legend data-en="Avatar">Avatar</legend><div class="avatars" id="avatars"></div></fieldset>
         <p class="join-err" id="joinErr" role="alert"></p>
         <button class="btn-main" type="submit" id="joinGo" data-en="Sign up">Sign up</button>
@@ -127,7 +131,7 @@
       <div class="me-card">
         <span class="me-ava" id="meAva" aria-hidden="true">😎</span>
         <span class="me-who"><b id="meName" data-en="Employee">Employee</b><small id="meDept" data-en="no department">no department</small><button class="id-chip" type="button" id="meId" title="Скопировать ID" data-en-title="Copy ID">ID ······</button></span>
-        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit" data-en="Edit">Edit</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden data-en="Sign up">Sign up</button></span>
+        <span class="me-actions"><button class="btn-chip" type="button" id="meEdit" data-en="Edit">Edit</button><button class="btn-chip btn-reg" type="button" id="meLogin" hidden data-en="Log in">Log in</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden data-en="Sign up">Sign up</button></span>
       </div>
       <div class="install-cta" id="installCta" hidden><span class="ic-ico" aria-hidden="true">📲</span><span class="ic-text" data-en="<b>Put the game on your home screen</b>Opens in one tap, full screen, even offline"><b>Игра на главном экране</b>Открывается в одно касание, на весь экран и даже без интернета</span>
         <button class="btn-main" type="button" id="installCtaGo" data-en="Install">Install</button><button class="ip-x" type="button" id="installCtaX" aria-label="Скрыть" data-en-aria-label="Hide">×</button></div>
@@ -162,6 +166,7 @@
         <button class="btn-ghost btn-pack" id="startPack" hidden></button>
       </div>
       <div class="pane" id="paneProfile" role="tabpanel" aria-labelledby="tabProfile" hidden>
+        <div class="acct-box" id="acctBox" hidden></div>
         <button class="btn-ghost btn-how" type="button" id="tgRemind" data-en="🔔 Daily reminder in Telegram">🔔 Daily reminder in Telegram</button>
         <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Remind me in my calendar</button></div>
         <button class="btn-ghost btn-how" type="button" id="openHow" data-en="How to play: goal, meters, money">How to play: goal, meters, money</button>
@@ -270,6 +275,7 @@
 <script src="js/ui-menu.js"></script>
 <script src="js/npc.js"></script>
 <script src="js/meta.js"></script>
+<script src="js/login.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

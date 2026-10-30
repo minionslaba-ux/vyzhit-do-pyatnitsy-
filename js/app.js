@@ -30,6 +30,7 @@ applyStaticLang();  // английский текст из data-en в index.htm
 
 // Вход по ссылке из письма: в адресе #access_token=… — игрок становится аккаунтом, гостевой прогресс переносится
 async function finishLogin() {
+  if (await finishSocial()) return true;  // вернулись после входа через Telegram или VK
   const h = new URLSearchParams(location.hash.slice(1));
   const clean = () => history.replaceState(null, '', location.pathname + location.search);
   if (h.get('error')) { clean(); toast(L(`Вход не удался: ${h.get('error_description') || h.get('error')}. Отправьте ссылку ещё раз.`, `Sign-in failed: ${h.get('error_description') || h.get('error')}. Please send the link again.`)); return false; }
@@ -38,30 +39,20 @@ async function finishLogin() {
   clean();
   try {
     const user = await board.user(token);
-    if (prefs.playerId !== user.id) {
-      if (prefs.name) await board.rpc('merge_player', { p_from: prefs.playerId, p_to: user.id }, token).catch(() => {});
-      prefs.playerId = user.id;
-    }
-    prefs.email = user.email; delete prefs.pendingEmail;
-    prefs.loginWelcome = Date.now() - new Date(user.created_at) < 30 * 60000 ? 'new' : 'back';  // после перезагрузки — экран «Добро пожаловать»
     const exp = +h.get('expires_at') ? +h.get('expires_at') * 1000 : Date.now() + (+h.get('expires_in') || 3600) * 1000;
-    prefs.session = { access: token, refresh: h.get('refresh_token'), exp };
-    const prof = (await board.rpc('get_profile', { p_id: user.id }).catch(() => []))[0];
-    if (prof && !prefs.name) Object.assign(prefs, { name: prof.name, dept: prof.dept, avatar: prof.avatar || prefs.avatar });
-    store.set(KEY.prefs, prefs);
-    location.reload();  // ID игрока сменился — перезапускаем игру с ним
+    await applySession({ access: token, refresh: h.get('refresh_token'), exp }, user, { via: 'email' });  // ID игрока сменился — игра перезапустится
     return true;
   } catch (err) { toast(L(`Вход не удался: ${err.message}`, `Sign-in failed: ${err.message}`)); return false; }
 }
 // После перехода по ссылке из письма: регистрация подтверждена — короткое приветствие и кнопка в игру
 function loginWelcome() {
-  const fresh = prefs.loginWelcome === 'new';
-  delete prefs.loginWelcome; store.set(KEY.prefs, prefs);
+  const fresh = prefs.loginWelcome === 'new', via = prefs.loginVia && prefs.loginVia !== 'email' ? viaName(prefs.loginVia) : '';
+  delete prefs.loginWelcome; delete prefs.loginVia; store.set(KEY.prefs, prefs);
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass welcome-box" role="dialog" aria-modal="true" aria-labelledby="lwTitle">
     <span class="lw-ico" aria-hidden="true">${fresh ? '🎉' : '👋'}</span>
-    <h2 id="lwTitle">${fresh ? L('Регистрация подтверждена!', 'You’re all signed up!') : L(`С возвращением, ${esc(prefs.name)}!`, `Welcome back, ${esc(prefs.name)}!`)}</h2>
-    <p>${fresh ? L(`Почта ${esc(prefs.email)} подтверждена. Гостевой прогресс перенесён в аккаунт — теперь он с вами на любом устройстве.`, `${esc(prefs.email)} is confirmed. Your guest progress has moved to your account — now it follows you to any device.`) : L('Вход выполнен. Карьера, офис и коллеги на месте.', 'You’re signed in. Your career, office and coworkers are right where you left them.')}</p>
+    <h2 id="lwTitle">${fresh ? (via ? L('Добро пожаловать в офис!', 'Welcome to the office!') : L('Регистрация подтверждена!', 'You’re all signed up!')) : L(`С возвращением, ${esc(prefs.name)}!`, `Welcome back, ${esc(prefs.name)}!`)}</h2>
+    <p>${fresh && via ? L(`Вы вошли через ${via}. Гостевой прогресс перенесён в аккаунт — входите через ${via} на любом устройстве.`, `You signed in with ${via}. Your guest progress has moved to your account — sign in with ${via} on any device.`) : fresh ? L(`Почта ${esc(prefs.email)} подтверждена. Гостевой прогресс перенесён в аккаунт — теперь он с вами на любом устройстве.`, `${esc(prefs.email)} is confirmed. Your guest progress has moved to your account — now it follows you to any device.`) : L('Вход выполнен. Карьера, офис и коллеги на месте.', 'You’re signed in. Your career, office and coworkers are right where you left them.')}</p>
     ${fresh ? `<ul class="lw-list"><li>${L('🏢 Создайте офис и позовите коллег', '🏢 Start an Office and invite your coworkers')}</li><li>${L('💬 Пишите в чат офиса', '💬 Chat with your Office')}</li><li>${L('🏆 Ваш отдел — в рейтинге', '🏆 Get your department on the leaderboard')}</li></ul>` : ''}
     <button class="btn-main" type="button" id="lwGo">${fresh ? L('Начать игру', 'Start playing') : L('Продолжить', 'Continue')}</button></div>`;
   m.hidden = false;
@@ -160,7 +151,8 @@ finishLogin().then(reloading => {
   track('open', { detail: (TG ? 'telegram' : standalone ? 'app' : 'web') + (utm ? ':' + utm : '') });
   const scr = new URLSearchParams(location.search).get('screen');
   if (scr && board.online) return openScreen(scr);
-  if (prefs.email && !prefs.name) renderJoin('profile', L('Вход выполнен. Осталось представиться коллегам.', 'You’re signed in. Now just introduce yourself to your coworkers.'));
+  if (prefs.loggedOut) renderWelcome();  // вышли из аккаунта — сначала вход
+  else if (prefs.email && !prefs.name) renderJoin('profile', L('Вход выполнен. Осталось представиться коллегам.', 'You’re signed in. Now just introduce yourself to your coworkers.'));
   else if (prefs.name) renderMenu();
   else renderWelcome();
   if (prefs.loginWelcome && prefs.name) loginWelcome();
