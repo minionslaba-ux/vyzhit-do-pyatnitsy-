@@ -11,6 +11,7 @@ const getProf = () => document.querySelector('input[name=prof]:checked')?.value 
 const getTrait = () => document.querySelector('input[name=trait]:checked')?.value || 'workaholic';
 
 function renderMenu() {
+  applyTheme();
   $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || 'без отдела';
   myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? 'войдите снова' : 'гость'}`; });
   $('meRegister').hidden = registered() || !board.online; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';

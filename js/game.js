@@ -23,6 +23,47 @@ $('tubesL').innerHTML = RES.slice(0, 2).map(tube).join('');
 $('tubesR').innerHTML = RES.slice(2).map(tube).join('');
 const setPhase = p => { document.body.dataset.phase = p; };
 
+// ---------- 17 цветовых тем: каждую неделю — своя ----------
+// m — главный акцент (кнопки, заголовки), c — второй (рамки, часы), p — свечение фона. Цвета шкал и ▲▼ не меняются: у них свой смысл
+const THEMES = [
+  { name: 'Ночной неон', m: '#ff3bd4', c: '#2de2e6', p: '#b26bff', bg: '#07070d' },
+  { name: 'Закат',       m: '#ff6a3d', c: '#ffc53d', p: '#ff3d7f', bg: '#0d0707' },
+  { name: 'Океан',       m: '#3d8bff', c: '#3dffd0', p: '#2b5cff', bg: '#050a12' },
+  { name: 'Лес',         m: '#2fe07a', c: '#e8d36a', p: '#1f8a4c', bg: '#050d08' },
+  { name: 'Лаванда',     m: '#c48bff', c: '#ff9de2', p: '#7a5cff', bg: '#0a0712' },
+  { name: 'Мандарин',    m: '#ff9a2e', c: '#2ec4ff', p: '#ff5e2e', bg: '#0d0905' },
+  { name: 'Мята',        m: '#3de8c0', c: '#ff7aa8', p: '#2fb38f', bg: '#060d0c' },
+  { name: 'Рубин',       m: '#ff2e55', c: '#ffb02e', p: '#b3122f', bg: '#0e0508' },
+  { name: 'Электрик',    m: '#5c6bff', c: '#00e5ff', p: '#3a2bff', bg: '#06061a' },
+  { name: 'Золото',      m: '#ffcf3d', c: '#ff8a3d', p: '#b38a1f', bg: '#0d0b05' },
+  { name: 'Фуксия',      m: '#ff2ea6', c: '#ffe14d', p: '#a3125f', bg: '#0e050b' },
+  { name: 'Аврора',      m: '#4dffb5', c: '#9b6bff', p: '#2bb3ff', bg: '#050c10' },
+  { name: 'Коралл',      m: '#ff7b6b', c: '#6be4ff', p: '#ff4d6d', bg: '#0e0708' },
+  { name: 'Сакура',      m: '#ffa3cf', c: '#fff0a3', p: '#ff6bab', bg: '#0f080c' },
+  { name: 'Индиго',      m: '#8b7bff', c: '#ff6be1', p: '#4b2bff', bg: '#07061a' },
+  { name: 'Токсик',      m: '#7cff2e', c: '#2ee8ff', p: '#2e8b1f', bg: '#060d05' },
+  { name: 'Лёд',         m: '#e6f0ff', c: '#8fd3ff', p: '#5c7cff', bg: '#08090d' },
+];
+const rgbOf = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mixW = (h, k) => '#' + rgbOf(h).map(v => Math.round(v + (255 - v) * k).toString(16).padStart(2, '0')).join('');
+// Неделя карьеры → своя тема по кругу; вне карьеры — по календарной неделе
+function themeIndex() {
+  const w = C?.week || Math.floor((Date.now() / 864e5 + 3) / 7);
+  return (w - 1 + THEMES.length * 100) % THEMES.length;
+}
+let themeNow = -1;
+function applyTheme(i = themeIndex()) {
+  if (i === themeNow) return THEMES[i];
+  themeNow = i;
+  const t = THEMES[i], st = document.documentElement.style;
+  st.setProperty('--magenta', t.m); st.setProperty('--magenta-l', mixW(t.m, .45)); st.setProperty('--magenta-xl', mixW(t.m, .78));
+  st.setProperty('--cyan', t.c); st.setProperty('--cyan-l', mixW(t.c, .45)); st.setProperty('--cyan-xl', mixW(t.c, .78));
+  st.setProperty('--m-rgb', rgbOf(t.m).join(',')); st.setProperty('--c-rgb', rgbOf(t.c).join(',')); st.setProperty('--p-rgb', rgbOf(t.p).join(','));
+  st.setProperty('--bg', t.bg);
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content', t.bg);
+  return t;
+}
+
 // Офис за окном: утром пусто, днём все на местах, вечером горит одна лампа
 (() => {
   let seed = 11; const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -287,7 +328,7 @@ function startPack() {
 }
 
 // ---------- игровой экран ----------
-function enterGame() { busy = false; show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
+function enterGame() { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
 // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
 function track(kind, o = {}) {
   if (!board.online || !prefs.name) return;
@@ -376,7 +417,7 @@ function showSplash(d) {
   const extra = d === 0 ? `<div class="splash-week">${S.mode === 'pack' ? esc(PACK.intro) : S.mode === 'tour' ? `<b>Турнир офиса «${esc(S.tourTeam)}»</b><span>Одна неделя для всех участников. В зачёт — первая попытка.</span>`
     : zs && S.type === 'normal' ? `<b>${zs.title}</b><span>${zs.rule}</span>` : `<b>${T.title}</b>${S.type !== 'normal' ? `<span>${T.rule}</span>` : ''}`}
     <span class="splash-items">В сумке: ${S.items.map(i => ITEMS[i].name).join(', ')} — ${S.items.length > 1 ? 'каждый отменит' : 'отменит'} один сильный удар по своей шкале.</span></div>` : '';
-  el.innerHTML = `<div class="splash-in"><small>${top}День ${d + 1} из 5</small><h2>${DAYS[d]}</h2><p>${DAY_QUIP[d]}</p>${extra}<span class="tap">${d ? '' : 'нажмите или смахните, чтобы начать'}</span></div>`;
+  el.innerHTML = `<div class="splash-in"><small>${top}День ${d + 1} из 5</small><h2>${DAYS[d]}</h2><p>${DAY_QUIP[d]}</p>${d ? '' : `<span class="splash-theme">🎨 Цвета недели: «${applyTheme().name}»</span>`}${extra}<span class="tap">${d ? '' : 'нажмите или смахните, чтобы начать'}</span></div>`;
   // со второго дня заставка — баннер поверх игры: играть можно сразу
   el.classList.toggle('mini', d > 0); el.hidden = false; splashOn = d === 0;
   clearTimeout(splashT);
