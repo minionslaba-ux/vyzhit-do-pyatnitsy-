@@ -1,10 +1,11 @@
 // Бот @Survivefridaybot: принимает команды (вебхук Telegram).
 // В группе: /remind — каждый день в 12:30 по Москве бот пишет сюда «Неделя дня готова» с итогами вчерашнего дня,
 // /stop — перестать, /play — кнопка «Играть». Включать и выключать могут только админы группы.
-// В личке: /start — кнопка, открывающая игру.
+// В личке: /start — кнопка, открывающая игру. Разработчикам (dev_admins): /stats — сегодня, /yesterday — вчера, /week — 7 дней.
 // Подключение вебхука (один раз): GET …/functions/v1/tg-bot?setup=1. Чужой вебхук не перезаписывается без &force=1.
 // Запросы от Telegram проверяются секретом, который выводится из токена бота (TELEGRAM_BOT_TOKEN в секретах функций).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { buildReport, mskDay, reportMarkup, todayTitle, weekTitle, yesterdayTitle } from './report.ts';
 
 const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
 const SELF = `${Deno.env.get('SUPABASE_URL')}/functions/v1/tg-bot`;
@@ -65,6 +66,15 @@ async function onMessage(msg: any) {
   if (m[2] && me && m[2].toLowerCase() !== me.username.toLowerCase()) return;  // команда другому боту
   const cmd = m[1].toLowerCase(), arg = m[3].toLowerCase();
   if (!group) {
+    if (cmd === 'stats' || cmd === 'today' || cmd === 'yesterday' || cmd === 'week') {
+      const { data: admin } = await db.from('dev_admins').select('tg_id').eq('tg_id', msg.from?.id).maybeSingle();
+      if (!admin) return;  // отчёт — только разработчикам
+      const text = cmd === 'week' ? await buildReport(db, weekTitle(), mskDay(-7), mskDay(0), [mskDay(-14), mskDay(-7)])
+        : cmd === 'yesterday' ? await buildReport(db, yesterdayTitle(), mskDay(-1), mskDay(0), [mskDay(-2), mskDay(-1)])
+        : await buildReport(db, todayTitle(), mskDay(0), new Date());
+      await api('sendMessage', { chat_id: chat.id, text, parse_mode: 'HTML', reply_markup: reportMarkup });
+      return;
+    }
     if (cmd !== 'start') return;
     const l = langOf(msg.from?.language_code);
     await api('sendMessage', { chat_id: chat.id, text: T[l].start, reply_markup: { inline_keyboard: [[{ text: T[l].btn, web_app: { url: SITE + (l === 'en' ? 'en.html' : '') } }]] } });
@@ -106,6 +116,10 @@ Deno.serve(async req => {
     const scope = { type: 'all_group_chats' };
     await api('setMyCommands', { scope, commands: [{ command: 'remind', description: 'Напоминать о неделе дня каждый день' }, { command: 'stop', description: 'Выключить напоминания' }, { command: 'play', description: 'Играть' }] });
     await api('setMyCommands', { scope, language_code: 'en', commands: [{ command: 'remind', description: 'Daily Week reminder every day' }, { command: 'stop', description: 'Turn reminders off' }, { command: 'play', description: 'Play' }] });
+    // меню команд отчёта — только в личке у разработчиков
+    const { data: admins } = await db.from('dev_admins').select('tg_id');
+    for (const ad of admins || []) await api('setMyCommands', { scope: { type: 'chat', chat_id: ad.tg_id }, commands: [{ command: 'stats', description: 'Отчёт за сегодня' },
+      { command: 'yesterday', description: 'Отчёт за вчера' }, { command: 'week', description: 'Отчёт за 7 дней' }, { command: 'start', description: 'Играть' }] });
     return json({ ok: !!set.ok, description: set.description });
   }
   if (req.method !== 'POST' || req.headers.get('x-telegram-bot-api-secret-token') !== await secret()) return json({ error: 'forbidden' }, 403);

@@ -2,7 +2,9 @@
 // и в группы, где админ написал боту /remind (в группу — с итогами вчерашней недели дня).
 // Каждому — не больше одного сообщения в день (last_sent), поэтому лишний вызов ничего не ломает.
 // Заблокировали бота или удалили из группы — подписка выключается сама.
+// Разработчикам (dev_admins) — отчёт по игре за вчера, тоже раз в день.
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -69,5 +71,16 @@ Deno.serve(async () => {
       await pause();
     }
   }
-  return new Response(JSON.stringify({ sent, groups }), { headers: { 'Content-Type': 'application/json' } });
+  // отчёт разработчику за вчера (по Москве), со сравнением с позавчера
+  let reports = 0;
+  const { data: admins } = await db.from('dev_admins').select('tg_id').or(`last_sent.is.null,last_sent.lt.${today}`);
+  if (admins?.length) {
+    const text = await buildReport(db, yesterdayTitle(), mskDay(-1), mskDay(0), [mskDay(-2), mskDay(-1)]);
+    for (const a of admins) {
+      const r = await send({ chat_id: a.tg_id, text, parse_mode: 'HTML', reply_markup: reportMarkup });
+      if (r.ok) { reports++; await db.from('dev_admins').update({ last_sent: today }).eq('tg_id', a.tg_id); }
+      await pause();
+    }
+  }
+  return new Response(JSON.stringify({ sent, groups, reports }), { headers: { 'Content-Type': 'application/json' } });
 });
