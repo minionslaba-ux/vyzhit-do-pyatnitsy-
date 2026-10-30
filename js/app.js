@@ -82,7 +82,13 @@ const origSubmit = $('joinForm').onsubmit;
 $('joinForm').onsubmit = async e => { await origSubmit(e); if (prefs.name && !views.menu.hidden) joinFromLink(); };
 
 // ---------- приложение на телефоне: офлайн, установка, Telegram Mini App ----------
-if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON && !window.VDP_PLATFORM) navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON && !window.VDP_PLATFORM) {
+  // Вышла новая версия игры (новый sw.js взял управление) — перезагрузить, если игрок в меню; посреди недели — тихо, при следующем входе
+  const hadSw = !!navigator.serviceWorker.controller;
+  let swReloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!hadSw || swReloaded || !views.game.hidden) return; swReloaded = true; location.reload(); });
+  navigator.serviceWorker.register('sw.js').then(r => r.update?.()).catch(() => {});
+}
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid = /android/i.test(navigator.userAgent), isMobile = isIOS || isAndroid;
