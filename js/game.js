@@ -5,7 +5,7 @@
 // ---------- DOM ----------
 const $ = id => document.getElementById(id);
 const views = { join: $('join'), menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
-const show = v => { Object.entries(views).forEach(([k, el]) => el.hidden = k !== v); if (v !== 'menu') $('viralPop').hidden = true; };
+const show = v => { Object.entries(views).forEach(([k, el]) => el.hidden = k !== v); if (v !== 'menu') $('viralPop').hidden = true; window.VDP_PLATFORM?.view?.(v); };
 const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 const rnd = (a, r = Math.random) => a[Math.floor(r() * a.length)];
 const shuffle = (a, r = Math.random) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -205,13 +205,14 @@ function startWeek() {
 }
 
 // ---------- неделя дня и брендированная неделя ----------
-function startDaily() {
-  const day = today(), rng = seeded('vdp-daily-' + day);
+// day — дата недели дня; прошлые даты (по ссылке-вызову) играются вне зачёта
+function startDaily(day = today()) {
+  const rng = seeded('vdp-daily-' + day);
   C = null;
   S = newWeekState({ mode: 'daily', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { day } });
-  const season = activeSeason(); if (season) S.season = season.id;
+  const season = activeSeason(new Date(day + 'T12:00')); if (season) S.season = season.id;
   S.deck = buildDeck({ type: 'normal', rng, profCard: false, classic: !POOL.length, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title) : [] });
-  S.ranked = !store.get(KEY.daily, {})[day];
+  S.ranked = day === today() && !store.get(KEY.daily, {})[day];
   enterGame();
 }
 function startPack() {
@@ -605,11 +606,12 @@ function lose(k, high) {
     ${finalGrid(k)}
     ${career ? `<div class="money"><div><b>+${S.earned || 0} у.е.</b><span>за ${paidDays} отраб. дн.</span></div><div><b>+${comp} у.е.</b><span>компенсация отпуска</span></div></div>${expHtml(exp)}` : ''}
     ${endingsHtml(got)}
+    ${challengeLine(false, k)}
     <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
     ${viralHtml()}
     ${onboardingLine()}
     <div class="stack">${career ? `<button class="btn-main" id="next">${next}</button>` : `<button class="btn-main" id="next">${S.mode === 'daily' ? 'Сыграть неделю дня ещё раз' : S.mode === 'tour' ? 'Экран итогов турнира' : 'Сыграть ещё раз'}</button>`}
-      <button class="btn-ghost" id="share">Мем-карточка для чата</button>
+      <button class="btn-ghost btn-share" id="share">${S.mode === 'daily' ? 'Поделиться и вызвать коллег' : 'Поделиться результатом'}</button>
       <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
   </div>`;
   show('end'); bindCommon();
@@ -645,12 +647,13 @@ function win() {
     <div class="total"><span>Счёт недели</span><b>${total} / 400</b></div>
     ${career ? `<div class="money"><div><b>${C.bank} у.е.</b><span>на счёте (+${S.earned || 0} за неделю)</span></div><div><b>${fmtDays(C.vacation)} дн.</b><span>отпуска накоплено</span></div></div>${expHtml(exp)}` : ''}
     ${endingsHtml(got)}
+    ${challengeLine(true)}
     <div class="place" id="place" aria-live="polite">Записываю результат в рейтинг…</div>
     ${viralHtml()}
     ${onboardingLine()}
     <div class="stack"><button class="btn-main" id="next">${career ? (last ? 'Итоги года' : `Неделя ${C.week} →`) : S.mode === 'tour' ? 'Экран итогов турнира' : 'В главное меню'}</button>
       ${career && !last && C.vacation >= 7 ? '<button class="btn-ghost btn-vac" id="vac">Уйти в отпуск на неделю (7 дн.)</button>' : ''}
-      <button class="btn-ghost" id="share">Мем-карточка для чата</button>
+      <button class="btn-ghost btn-share" id="share">${S.mode === 'daily' ? 'Поделиться и вызвать коллег' : 'Поделиться результатом'}</button>
       <button class="btn-ghost" id="toBoard">${S.mode === 'daily' ? 'Рейтинг дня' : 'Рейтинг офиса'}</button><button class="btn-ghost" id="toMenu">В главное меню</button></div>
   </div>`;
   show('end'); bindCommon();
@@ -911,6 +914,34 @@ function confetti() {
   })(t0);
 }
 
+// ---------- вызов коллеге: ссылка с результатом открывает ту же неделю дня ----------
+const CH_STAT = { psyche: 'p', energy: 'e', boss: 'b', colleagues: 'c' };
+const CH_KEY = Object.fromEntries(Object.entries(CH_STAT).map(([k, v]) => [v, k]));
+// 20261029w312p12: дата, w/l, счёт (победа) или номер карточки (проигрыш), шкала и её значение
+function challengeCode(won, k) {
+  const key = won ? [...RES].sort((a, b) => S.res[a.k] - S.res[b.k])[0].k : k;
+  const num = won ? RES.reduce((a, r) => a + S.res[r.k], 0) : S.step;
+  return `${S.day.replace(/-/g, '')}${won ? 'w' : 'l'}${String(num).padStart(3, '0')}${CH_STAT[key]}${S.res[key]}`;
+}
+function parseChallenge(code) {
+  const m = /^(\d{4})(\d{2})(\d{2})([wl])(\d{3})([pebc])(\d{1,3})$/.exec(code || '');
+  if (!m || (m[4] === 'l' && +m[5] > 14) || (m[4] === 'w' && +m[5] > 400)) return null;
+  return { day: `${m[1]}-${m[2]}-${m[3]}`, won: m[4] === 'w', num: +m[5], stat: CH_KEY[m[6]], val: Math.min(100, +m[7]) };
+}
+// победа всегда выше проигрыша; дальше — счёт недели или сколько карточек продержались
+const chScore = c => c.won ? 1000 + c.num : c.num;
+const chResult = c => c.won ? `неделя закрыта, счёт ${c.num}/400, ${resName(c.stat)} ${c.val}%` : `неделя завалена: ${DAYS[Math.floor(c.num / 3)].toLowerCase()}, ${PHASES[c.num % 3].name.toLowerCase()}, ${resName(c.stat)} ${c.val}%`;
+const chName = c => c.by || 'Коллега';
+// Строка на финале недели дня, если игрок принял вызов на этот день
+function challengeLine(won, k) {
+  const c = prefs.challenge;
+  if (S.mode !== 'daily' || !c || c.day !== S.day || c.done) return '';
+  const mine = parseChallenge(challengeCode(won, k)), d = chScore(mine) - chScore(c);
+  c.done = true; c.beat = d > 0; store.set(KEY.prefs, prefs);
+  return `<div class="place challenge"><b>${d > 0 ? 'Вызов выигран!' : d === 0 ? 'Ничья' : 'Вызов проигран'}</b>
+    <span>${esc(chName(c))}: ${chResult(c)}<br>Вы: ${chResult(mine)}</span></div>`;
+}
+
 // ---------- мем-карточка для чата ----------
 function wrap(ctx, text, x, y, maxW, lh) {
   const words = text.split(' '); let line = '';
@@ -953,31 +984,43 @@ async function share(won, k) {
   ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(80, y, W - 160, 2);
   ctx.fillStyle = '#ffffff'; glow('rgba(255,59,212,.8)', 24); ctx.font = '700 40px "JetBrains Mono", monospace'; ctx.fillText(won ? `СЧЁТ ${total}/400` : S.name.toUpperCase(), 80, y + 70);
   glow('rgba(212,255,58,.7)', 16); ctx.fillStyle = '#d4ff3a'; ctx.textAlign = 'right'; ctx.font = '900 36px Nunito, sans-serif'; ctx.fillText(won ? rank(total) : TRAITS[S.trait || 'workaholic'].name, W - 80, y + 70); ctx.textAlign = 'left';
-  glow('transparent', 0); ctx.font = '800 32px Nunito, sans-serif'; ctx.fillStyle = '#b9b4d6'; ctx.fillText('А ты доживёшь до пятницы?', 80, H - 90);
+  glow('transparent', 0); ctx.font = '800 32px Nunito, sans-serif'; ctx.fillStyle = '#b9b4d6'; ctx.fillText(S.mode === 'daily' ? 'Сможешь лучше? Та же неделя — по ссылке' : 'А ты доживёшь до пятницы?', 80, H - 90);
   const url = cv.toDataURL('image/png');
-  const link = /^https?:/.test(location.href) ? ` ${location.origin}${location.pathname}` : '';
-  const text = `${memeLine(won)}. «Выжить до пятницы»${S.mode === 'daily' ? `, неделя дня ${dayLabel(S.day)}` : ''}. А ты доживёшь?${link}`;
+  // неделя дня — ссылка-вызов на ту же неделю, остальное — приглашение с ID игрока
+  const daily = S.mode === 'daily', link = daily ? await challengeLink(challengeCode(won, k)) : (await referralLink('friends')).url;
+  const c = prefs.challenge, reply = daily && c?.day === S.day && c.done ? `${chName(c)}, ${c.beat ? 'вызов принят и выигран' : 'вызов принят'}! ` : '';
+  const text = daily ? `${reply}${memeLine(won)}. Неделя дня ${dayLabel(S.day)} в «Выжить до пятницы» — сможешь лучше? Та же неделя по ссылке:`
+    : `${memeLine(won)}. «Выжить до пятницы» — а ты доживёшь до пятницы?`;
+  const full = `${text} ${link}`, enc = encodeURIComponent;
+  track('share', { detail: daily ? 'challenge' : 'meme' });
   const m = $('modal');
-  m.innerHTML = `<div class="modal-box glass" role="dialog" aria-modal="true" aria-label="Мем-карточка">
+  m.innerHTML = `<div class="modal-box glass" role="dialog" aria-modal="true" aria-label="Поделиться результатом">
     <img src="${url}" alt="Мем-карточка: ${esc(memeLine(won))}">
-    <p>Нажмите и удерживайте картинку (на компьютере — правый клик → «Сохранить изображение»), чтобы отправить её в рабочий чат.</p>
-    ${navigator.canShare ? '<button class="btn-main" id="shareImg">Отправить картинку</button>' : ''}
-    <button class="${navigator.canShare ? 'btn-ghost' : 'btn-main'}" id="copyTxt">Скопировать текст для чата</button>
+    <p class="share-text">${esc(full)}</p>
+    ${navigator.canShare ? '<button class="btn-main" id="shareImg">Отправить картинку и ссылку</button>' : ''}
+    <div class="share-grid">
+      <a href="https://t.me/share/url?url=${enc(link)}&text=${enc(text)}" target="_blank" rel="noopener" id="shTgLink">Telegram</a>
+      <a href="https://wa.me/?text=${enc(full)}" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="${url}" download="vyzhit-do-pyatnitsy.png" id="dlImg">Скачать картинку</a>
+      <button id="copyTxt">Скопировать текст</button>
+    </div>
+    <p class="field-note">Для Slack и рабочей почты: скачайте картинку и вставьте вместе с текстом.</p>
     <div class="toast" id="toast" aria-live="polite"></div>
     <button class="btn-ghost" id="closeM">Закрыть</button></div>`;
   m.hidden = false;
+  if (TG) $('shTgLink').onclick = e => { e.preventDefault(); TG.openTelegramLink(`https://t.me/share/url?url=${enc(link)}&text=${enc(text)}`); };
   $('closeM').onclick = () => { m.hidden = true; $('share')?.focus(); };
   m.onclick = e => { if (e.target === m) m.hidden = true; };
   if ($('shareImg')) $('shareImg').onclick = async () => {
     try {
       const blob = await (await fetch(url)).blob(), file = new File([blob], 'vyzhit-do-pyatnitsy.png', { type: 'image/png' });
-      if (navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text });
-      else await navigator.share({ text });
+      if (navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text: full });
+      else await navigator.share({ text, url: link });
     } catch {}
   };
   $('copyTxt').onclick = () => {
-    navigator.clipboard.writeText(text).then(() => $('toast').textContent = 'Текст скопирован',
-      () => { $('toast').textContent = text; });
+    navigator.clipboard.writeText(full).then(() => $('toast').textContent = 'Текст со ссылкой скопирован — вставьте в чат',
+      () => { $('toast').textContent = full; });
   };
   $('copyTxt').focus();
 }

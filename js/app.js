@@ -64,7 +64,7 @@ const origSubmit = $('joinForm').onsubmit;
 $('joinForm').onsubmit = async e => { await origSubmit(e); if (prefs.name && !views.menu.hidden) joinFromLink(); };
 
 // ---------- приложение на телефоне: офлайн, установка, Telegram Mini App ----------
-if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON) navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !window.POOL_JSON && !window.VDP_PLATFORM) navigator.serviceWorker.register('sw.js').catch(() => {});
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 let installEvt = null;
@@ -87,6 +87,8 @@ if (TG) {
     const ref = sp.match(/ref-([A-Z0-9]{6})/i), join = sp.match(/join-([A-Z0-9]{6})/i);
     if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
     if (join) prefs.pendingJoin = join[1].toUpperCase();
+    const ch = sp.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
+    if (ch) rememberChallenge(ch[1], '', ref?.[1]);
     store.set(KEY.prefs, prefs);
     const u = TG.initDataUnsafe?.user;
     if (u && !prefs.name) $('joinName').value = [u.first_name, u.last_name].filter(Boolean).join(' ').slice(0, 24);
@@ -99,7 +101,9 @@ dataReady.then(() => { if (!views.menu.hidden) renderMenu(); });
 finishLogin().then(reloading => {
   if (reloading) return;
   if (new URLSearchParams(location.search).has('stats') && board.online) return showStats();
-  track('open', { detail: TG ? 'telegram' : standalone ? 'app' : 'web' });
+  // utm_source из постеров, статей и каталогов — в статистику открытий: видно, какой канал приводит игроков
+  const utm = (new URLSearchParams(location.search).get('utm_source') || window.VDP_PLATFORM?.name || '').replace(/[^\w-]/g, '').slice(0, 20);
+  track('open', { detail: (TG ? 'telegram' : standalone ? 'app' : 'web') + (utm ? ':' + utm : '') });
   const scr = new URLSearchParams(location.search).get('screen');
   if (scr && board.online) return openScreen(scr);
   if (prefs.email && !prefs.name) renderJoin('profile', 'Вход выполнен. Осталось представиться коллегам.');

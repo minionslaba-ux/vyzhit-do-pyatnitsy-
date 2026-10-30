@@ -11,7 +11,23 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<meta name="description" content="Карточная мини-игра про офисное выживание: продержитесь с понедельника до пятницы, 18:00.">
+<meta name="description" content="Офисная игра онлайн без регистрации: свайпайте решения, держите Кукуху, Энергию, Босса и Коллег в балансе и доживите до пятницы, 18:00. Неделя дня, рейтинг отделов, турниры офиса.">
+<link rel="canonical" href="https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Выжить до пятницы">
+<meta property="og:title" content="Выжить до пятницы — офисная игра на 5 минут">
+<meta property="og:description" content="Босс, дедлайны и коллеги: доживите до пятницы, 18:00. Одна неделя дня на весь офис — сравните, кто продержится дольше.">
+<meta property="og:url" content="https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/">
+<meta property="og:image" content="https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/icons/og-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Выжить до пятницы: неоновые шкалы Кукуха, Энергия, Босс, Коллеги и карточка от Босса">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Выжить до пятницы — офисная игра на 5 минут">
+<meta name="twitter:description" content="Доживите до пятницы, 18:00: свайпайте решения и держите четыре шкалы в балансе.">
+<meta name="twitter:image" content="https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/icons/og-1200x630.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Выжить до пятницы","url":"https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/","image":"https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/icons/og-1200x630.jpg","description":"Офисная игра онлайн без регистрации: свайпайте решения, держите Кукуху, Энергию, Босса и Коллег в балансе и доживите до пятницы, 18:00. Неделя дня, рейтинг отделов, турниры офиса.","genre":["Карточная игра","Симулятор"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","inLanguage":"ru","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"}}</script>
 <title>Выжить до пятницы</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +36,7 @@
 <style>:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-sizing: border-box; height: 100%; } body { margin: 0; }</style>
 </head>
 <body data-phase="day">
+<noscript><div style="padding:24px;color:#f2f0ff;font-family:sans-serif"><h1>Выжить до пятницы — офисная игра онлайн</h1><p>Карточная игра про офис в духе Reigns: 15 решений с понедельника до пятницы, четыре шкалы — Кукуха, Энергия, Босс и Коллеги. Для игры включите JavaScript.</p><p><a href="igra-pro-ofis.html" style="color:#7df9ff">Об игре</a></p></div></noscript>
 <!-- Офис за окном: меняется по фазе дня -->
 <div class="office" id="office" aria-hidden="true"></div>
 
@@ -96,6 +113,7 @@
         <span class="me-actions"><button class="btn-chip" type="button" id="meEdit">Изменить</button><button class="btn-chip btn-reg" type="button" id="meRegister" hidden>Регистрация</button></span>
       </div>
       <div class="invites" id="invites" hidden></div>
+      <div class="office-cta ch-cta" id="chCta" hidden><span></span><button class="btn-main" type="button" id="chGo">Принять вызов</button></div>
       <div class="office-cta" id="tourCta" hidden><span></span><button class="btn-main" type="button" id="tourCtaGo">К турниру</button></div>
       <div class="career-card" id="careerCard" hidden></div>
       <fieldset class="field" id="profField">

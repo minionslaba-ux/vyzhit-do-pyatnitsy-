@@ -1,0 +1,60 @@
+# Продвижение «Выжить до пятницы»
+
+Ссылка на игру: https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/
+В Telegram: https://t.me/Survivefridaybot
+Страница для поисковиков: https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/igra-pro-ofis.html
+
+## Что уже есть в игре
+
+| Пункт плана | Где |
+|---|---|
+| Неделя дня — одна на всех | кнопка «Неделя дня» в меню |
+| Поделиться результатом сразу после финала | «Поделиться результатом» на экране итогов: картинка, Telegram, WhatsApp, скачать, скопировать |
+| Мем-карточка финала | картинка 1080×1350 со шкалами и концовкой: подходит для Telegram, WhatsApp, Slack |
+| Вызов коллеге | после недели дня ссылка «сможешь лучше?» открывает ту же неделю; в конце — «вызов выигран / проигран» |
+| Рейтинг отделов | «Рейтинг» → «Отделы» |
+| Турнир с экраном для проектора | «Мой офис» → турнир, ссылка `?screen=КОД` |
+| PWA (на главный экран) | кнопка «Установить на телефон» во вкладке «Профиль» |
+| Превью ссылок (Open Graph) | `icons/og-1200x630.jpg` и мета-теги в `index.html` |
+| SEO-страница | `igra-pro-ofis.html`, `sitemap.xml` |
+| Сборки для каталогов | `python3 tools/build-platforms.py` → `dist/itch.zip`, `dist/yandex.zip` |
+| Откуда пришли игроки | `?stats` → «Откуда пришли»: метка `utm_source` из ссылки |
+
+## Материалы в этой папке
+
+- `posts.md` — тексты для рабочих чатов, 10 постов «Что бы вы выбрали?», подписи к мемам.
+- `article.md` — черновик статьи для Habr / vc.ru «Как я сделал офисную игру».
+- `videos.md` — 12 сценариев коротких роликов для TikTok, Reels, Shorts.
+- `b2b.md` — письмо HR для бесплатного пилота, предложение коворкингам, сценарий турнира на корпоративе.
+- `stickers/` — 12 стикеров 512×512 PNG с прозрачным фоном для Telegram.
+- `poster-a4.jpg` — постер A4 (300 dpi) с QR-кодом; `qr.svg`, `qr.png` — сам QR (ведёт на игру с `utm_source=poster`).
+
+## Метки источников
+
+Добавляйте `?utm_source=…` к ссылке, чтобы в `?stats` было видно, какой канал работает:
+
+```
+https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=habr
+https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=vc
+https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=tiktok
+https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=reels
+https://minionslaba-ux.github.io/vyzhit-do-pyatnitsy-/?utm_source=pikabu
+```
+
+## Что сделать руками
+
+1. **Обновить базу**: выполнить свежий `supabase/schema.sql` в Supabase → SQL Editor (новые представления для статистики источников).
+2. **Проверить превью**: отправить ссылку на игру себе в Telegram. Если картинка старая — @WebpageBot в Telegram обновляет кэш превью.
+3. **Поисковики**: добавить сайт в Яндекс Вебмастер и Google Search Console, отправить `sitemap.xml`.
+4. **Стикерпак**: в Telegram бот @Stickers → `/newpack` → загрузить PNG из `stickers/` по одному, к каждому — эмодзи → `/publish`, короткое имя, например `vyzhit_do_pyatnitsy`.
+5. **itch.io**: New project → Kind of project: HTML → загрузить `dist/itch.zip` → «This file will be played in the browser», размер окна 420×820, включить «Mobile friendly» и «Fullscreen button».
+6. **Яндекс Игры**: консоль разработчика → новое приложение → загрузить `dist/yandex.zip`. В сборке подключён SDK (`/sdk.js`), вызывается `LoadingAPI.ready()` и `GameplayAPI`, скрыты ссылки на Telegram, WhatsApp и установку. Перед отправкой на модерацию сверьте актуальные требования каталога: правила меняются, а запросы к Supabase и шрифты Google могут потребовать отдельного согласования.
+7. **Короткий адрес**: купить домен, который легко продиктовать (например, `dopyatnicy.ru`), и подключить к GitHub Pages: Settings → Pages → Custom domain. После этого замените адрес в `index.html` (мета-теги), `igra-pro-ofis.html`, `sitemap.xml` и перегенерируйте QR.
+
+## Порядок запуска
+
+1. Неделя 1: превью ссылок, кнопка «Поделиться», вызов коллеге — готово. Разослать в 3–5 рабочих чатов с текстом из `posts.md`.
+2. Неделя 2: посты «Что бы вы выбрали?» каждый день в своих соцсетях и мемных пабликах.
+3. Неделя 3: статья на Habr или vc.ru, публикация на itch.io и Яндекс Играх.
+4. Недели 4–6: 10–15 роликов из `videos.md`, 2–3 в неделю.
+5. Дальше: стикерпак, постеры в коворкингах, пилоты с HR из `b2b.md`.

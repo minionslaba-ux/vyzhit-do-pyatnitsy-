@@ -538,7 +538,19 @@ select count(*) as opened, count(*) filter (where weeks >= 1) as week1, count(*)
 create or replace view public.stats_modes as
 select mode, count(*) as weeks, round(100.0 * avg(case when won then 1 else 0 end)) as win_rate, round(avg(step), 1) as avg_step
 from events where kind = 'week_end' group by mode order by weeks desc;
-grant select on public.stats_overview, public.stats_killers, public.stats_funnel, public.stats_modes to anon, authenticated;
+-- Откуда пришли игроки за 30 дней: первое открытие игры (web:poster, telegram, app, yandex…) и сколько из них доиграли неделю
+create or replace view public.stats_sources as
+with first_open as (
+  select distinct on (player_id) player_id, coalesce(detail, 'web') as source
+  from events where kind = 'open' and created_at > now() - interval '30 days' order by player_id, created_at
+)
+select f.source, count(*) as players,
+       count(*) filter (where exists (select 1 from events e where e.player_id = f.player_id and e.kind = 'week_end')) as played
+from first_open f group by f.source order by players desc limit 20;
+-- Чем делятся: мем-карточка, вызов на неделю дня, приглашения коллег и друзей
+create or replace view public.stats_shares as
+select coalesce(detail, '—') as kind, count(*) as shares from events where kind = 'share' group by detail order by shares desc;
+grant select on public.stats_overview, public.stats_killers, public.stats_funnel, public.stats_modes, public.stats_sources, public.stats_shares to anon, authenticated;
 
 do $$
 declare f text;

@@ -15,6 +15,7 @@ function renderMenu() {
   myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? prefs.email : prefs.email ? 'войдите снова' : 'гость'}`; });
   $('meRegister').hidden = registered() || !board.online; $('meRegister').textContent = prefs.email ? 'Войти' : 'Регистрация';
   renderOfficeLine();
+  renderChallengeCta();
   for (const id of LOCKED) $(id).classList.toggle('locked', !registered());
   renderInvites();
   (document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]')).checked = true;
@@ -369,6 +370,8 @@ async function showStats() {
   try {
     const get = v => fetch(`${window.SUPABASE_CONFIG.url.replace(/\/+$/, '')}/rest/v1/${v}?select=*`, { headers: { apikey: window.SUPABASE_CONFIG.anonKey } }).then(r => r.ok ? r.json() : Promise.reject(new Error(`Supabase ответил ${r.status} на ${v}`)));
     const [[o], killers, [f], modes] = await Promise.all(['stats_overview', 'stats_killers', 'stats_funnel', 'stats_modes'].map(get));
+    const [sources, shares] = await Promise.all(['stats_sources', 'stats_shares'].map(v => get(v).catch(() => [])));  // нет в старой схеме — пропускаем
+    const SHARE = { meme: 'мем-карточка', challenge: 'вызов на неделю дня', team: 'позвать коллег', friends: 'позвать друзей' };
     const box = (v, l) => `<div class="stat-box"><b>${v ?? 0}</b><span>${l}</span></div>`;
     const pct = (a, b) => b ? Math.round(100 * a / b) + '%' : '—';
     views.end.innerHTML = `<div class="screen stats">
@@ -379,6 +382,10 @@ async function showStats() {
       <div class="stats-grid">${box(f.opened, 'зашли в игру')}${box(`${f.week1} · ${pct(f.week1, f.opened)}`, 'доиграли 1 неделю')}${box(`${f.week3} · ${pct(f.week3, f.opened)}`, '3 недели')}${box(`${f.week10} · ${pct(f.week10, f.opened)}`, '10 недель')}${box(f.year, 'весь год')}</div>
       <h2>По режимам</h2>
       <div class="scr-list">${modes.map(m => `<div class="scr-row"><span class="scr-pos">${m.weeks}</span><span></span><span class="scr-name"><b>${({ career: 'Карьера', daily: 'Неделя дня', tour: 'Турнир', pack: 'Брендированная' })[m.mode] || m.mode}</b><small>в среднем ходов за неделю: ${m.avg_step} из 15</small></span><span class="scr-res won">${m.win_rate}%</span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
+      <h2>Откуда пришли (30 дней)</h2>
+      <div class="scr-list">${sources.map(s => `<div class="scr-row"><span class="scr-pos">${s.players}</span><span></span><span class="scr-name"><b>${esc(s.source)}</b><small>доиграли неделю: ${s.played} · ${pct(s.played, s.players)}</small></span><span class="scr-res won">${pct(s.players, sources.reduce((a, x) => a + x.players, 0))}</span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
+      <h2>Чем делятся</h2>
+      <div class="scr-list">${shares.map(s => `<div class="scr-row"><span class="scr-pos">${s.shares}</span><span></span><span class="scr-name"><b>${esc(SHARE[s.kind] || s.kind)}</b></span><span></span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
       <h2>Карточки, на которых чаще всего увольняют</h2>
       <div class="scr-list">${killers.map((k, i) => `<div class="scr-row"><span class="scr-pos">${i + 1}</span><span></span><span class="scr-name"><b>${esc(byId[k.card_id]?.text?.slice(0, 90) || k.card_id)}</b><small>${esc(k.card_id)}</small></span><span class="scr-res lost">${k.losses}</span></div>`).join('') || '<p class="scr-empty">Пока нет данных</p>'}</div>
       <button class="btn-ghost scr-exit" id="stBack">Закрыть</button></div>`;
@@ -508,6 +515,37 @@ async function referralLink(kind) {
   const tg = window.SUPABASE_CONFIG?.telegram;
   if (tg?.bot) return { url: `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
   return { url: `${gameUrl()}?ref=${ref}${team ? `&join=${team.code}` : ''}`, team };
+}
+// Ссылка-вызов: та же неделя дня и результат, по которому сравнят; в Telegram — через мини-приложение
+async function challengeLink(code) {
+  const ref = shortId(await myTag), tg = window.SUPABASE_CONFIG?.telegram;
+  if (tg?.bot) return `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=ref-${ref}_ch-${code}`;
+  return `${gameUrl()}?ref=${ref}&ch=${code}&by=${encodeURIComponent(prefs.name.slice(0, 24))}`;
+}
+// Пришли по вызову: запоминаем до игры (переживёт регистрацию и перезагрузку)
+function rememberChallenge(code, by, ref) {
+  const c = parseChallenge(code);
+  if (!c || (prefs.challenge && prefs.challenge.day === c.day && prefs.challenge.ref === ref && prefs.challenge.num === c.num)) return;
+  prefs.challenge = { ...c, by: (by || '').slice(0, 24), ref: (ref || '').toUpperCase(), at: Date.now() };
+  store.set(KEY.prefs, prefs);
+}
+{
+  const q = new URLSearchParams(location.search);
+  if (q.get('ch')) {
+    rememberChallenge(q.get('ch'), q.get('by'), q.get('ref'));
+    q.delete('ch'); q.delete('by'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+  }
+}
+async function renderChallengeCta() {
+  const c = prefs.challenge, el = $('chCta');
+  el.hidden = !c || c.done || Date.now() - c.at > 14 * 864e5;
+  if (el.hidden) return;
+  if (!c.by && c.ref && board.online) {  // из Telegram имя не передаётся — ищем по ID среди участников
+    const p = (await board.people().catch(() => [])).find(x => shortId(x.tag) === c.ref);
+    if (p?.name) { c.by = p.name; store.set(KEY.prefs, prefs); }
+  }
+  el.querySelector('span').innerHTML = `<b>Вызов: ${esc(chName(c))}</b> ${chResult(c)}. Неделя дня ${dayLabel(c.day)} — та же самая. Сможете лучше?`;
+  $('chGo').onclick = async () => { await whenReady($('chGo')); startDaily(c.day); };
 }
 function shareText(kind, team) {
   return kind === 'team'
