@@ -7,12 +7,14 @@ const fs = require('fs');
 const read = f => fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : [];
 // pool2 мягче первой тысячи: её минусы в игре дополнительно усилены (POOL2_DOWN в js/engine.js)
 const POOL2_DOWN = +(process.env.POOL2_DOWN || 1.1);
-const pool = [...read(__dirname + '/../data/pool.json'), ...read(__dirname + '/../data/pool2.json').map(c => ({ ...c, p2: true }))];
+const pool = [...read(__dirname + '/../data/pool.json'), ...[...read(__dirname + '/../data/pool2.json'), ...read(__dirname + '/../data/pool3.json')].map(c => ({ ...c, p2: true }))];
 const KEYS = ['psyche', 'energy', 'boss', 'colleagues'];
 const NAMES = { psyche: 'Кукуха', energy: 'Энергия', boss: 'Босс', colleagues: 'Коллеги' };
 const N = +(process.argv[2] || 10000);
 const DOWN = +(process.argv[3] || 1.5), UP = +(process.argv[4] || 1.2), ENERGY_UP = +(process.argv[5] || 1.5);
 const PH = ['Утро', 'День', 'Вечер'];
+// Неделя — 25 карточек: по 5 в день (утро, утро, день, день, вечер) — как PER_DAY и SLOT_PHASE в js/engine.js
+const WEEK = +(process.env.WEEK || 25), SLOT = WEEK === 15 ? [0, 1, 2] : [0, 0, 1, 1, 2];
 const phases = PH.map(ph => pool.filter(c => c.phase === ph));
 const rnd = a => a[Math.floor(Math.random() * a.length)];
 const effOf = {};
@@ -31,8 +33,8 @@ function week(strategy, { items = 1.5, chance = 0.6, track = false } = {}) {
   if (!items) inv = 0;
   const picks = [];
   const done = won => { if (track) for (const [id, side] of picks) { st(id)[side][0]++; if (won) st(id)[side][1]++; } return won; };
-  for (let i = 0; i < 15; i++) {
-    const c = rnd(phases[i % 3]);
+  for (let i = 0; i < WEEK; i++) {
+    const c = rnd(phases[SLOT[i % SLOT.length]]);
     const side = strategy(c, res);
     if (track) { st(c.id).shown++; picks.push([c.id, side]); }
     const e = eff(c, side);
@@ -81,8 +83,8 @@ for (const r of rows.filter(r => r.shown >= 20).sort((a, b) => b.rate - a.rate).
 const deathBy = Object.fromEntries(KEYS.map(k => [k, [0, 0]]));
 for (let i = 0; i < N; i++) {
   const res = { psyche: 50, energy: 50, boss: 50, colleagues: 50 };
-  for (let j = 0; j < 15; j++) {
-    const c = rnd(phases[j % 3]), e = eff(c, random());
+  for (let j = 0; j < WEEK; j++) {
+    const c = rnd(phases[SLOT[j % SLOT.length]]), e = eff(c, random());
     for (const k of KEYS) res[k] = Math.max(0, Math.min(100, res[k] + e[k]));
     const d = KEYS.find(k => res[k] <= 0 || res[k] >= 100);
     if (d) { deathBy[d][res[d] >= 100 ? 1 : 0]++; break; }

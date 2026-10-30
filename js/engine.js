@@ -26,6 +26,16 @@ const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Чет�
 const PHASES = [{ name: 'Утро' }, { name: 'День' }, { name: 'Вечер' }];
 const PHASE_KEY = ['morning', 'day', 'evening'];
 const PHASE_TIME = ['09:00', '13:00', '17:00'];
+// День — 5 карточек (неделя — 25): 9:00 и 11:00 — утро, 13:00 и 15:00 — день, 17:00 — вечер.
+// Длина дня меняется здесь: PER_DAY, SLOT_PHASE и SLOT_TIME
+const PER_DAY = 5, WEEK_LEN = PER_DAY * 5;
+const SLOT_PHASE = [0, 0, 1, 1, 2];
+const SLOT_TIME = ['09:00', '11:00', '13:00', '15:00', '17:00'];
+const dayOf = step => Math.min(4, Math.floor(step / PER_DAY));
+const slotPh = step => SLOT_PHASE[step % PER_DAY];
+const slotTime = step => SLOT_TIME[step % PER_DAY];
+// первая карточка утра, дня или вечера данного дня (для карточек по расписанию: day + phase)
+const slotOfPhase = (d, p) => d * PER_DAY + SLOT_PHASE.indexOf(p);
 const DAY_QUIP = EN ? [
   'The week has just begun. Coffee poured, nerves still intact.',
   "Yesterday's emails haven't gone anywhere. There are more of them now.",
@@ -65,7 +75,7 @@ function activeSeason(d = new Date()) {
   return (typeof SEASONS === 'undefined' ? [] : SEASONS).find(z => z.from <= z.to ? md >= z.from && md <= z.to : md >= z.from || md <= z.to) || null;
 }
 const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
-// Большой пул карточек (data/pool.json — 1000, data/pool2.json — ещё 2000) и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
+// Большой пул карточек (data/pool.json — 1000, data/pool2.json — ещё 2000, data/pool3.json — ещё 1000) и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
 let POOL = [], QUIZ = [], dataLoaded = false;
 const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
 let PACK = null, PACK_CARDS = [];
@@ -78,7 +88,7 @@ let POOL_CHAINS = [];
 // Плюсы усилены слабее минусов: при ×1.5 в обе стороны шкалы слишком быстро уходили в перегрев (100%).
 // Энергия почти не перегревается, а без сильных плюсов её не восстановить — у неё плюсы ×1.5
 const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colleagues: 1.2 } };
-// Вторая пачка (data/pool2.json) по исходным числам мягче: её минусы усилены ещё в 1,1 раза — так сложность как у первой тысячи
+// Вторая и третья пачки (data/pool2.json, pool3.json) по исходным числам мягче: её минусы усилены ещё в 1,1 раза — так сложность как у первой тысячи
 const POOL2_DOWN = 1.1;
 const boost = (c, down = 1) => ({ ...c, answers: Object.fromEntries(['left', 'right'].map(side => [side, { ...c.answers[side],
   effects: Object.fromEntries(Object.entries(c.answers[side].effects).map(([k, v]) => [k, Math.max(-30, Math.min(30, Math.round(v * (v > 0 ? POOL_BOOST.up[k] ?? 1.2 : POOL_BOOST.down * down) / 5) * 5))])) }])) });
@@ -91,16 +101,16 @@ const dataReady = (async () => {
   // Английский: data/en/<имя>.json — только тексты, по id поверх русских. Карточки без перевода в английскую игру не попадают
   const en = async name => EN ? (window[`EN_${name.toUpperCase()}_JSON`] || (await fetch(`data/en/${name}.json`).then(r => r.ok ? r.json() : []).catch(() => []))) : null;
   try {
-    let [p, p2, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
+    let [p, p2, p3, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
       get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
     if (EN) {
-      const [ep, ep2, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'quiz', 'chains', 'interview', 'cast'].map(en));
-      p = enCards(p, ep); p2 = enCards(p2, ep2); cast = enCards(cast, ecast);
+      const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'pool3', 'quiz', 'chains', 'interview', 'cast'].map(en));
+      p = enCards(p, ep); p2 = enCards(p2, ep2); p3 = enCards(p3, ep3); cast = enCards(cast, ecast);
       ch = enCards(ch.map(x => ({ ...x.card, _chain: x })), ech).map(c => ({ ...c._chain, origin: c.origin || c._chain.origin, card: { ...c, _chain: undefined, origin: undefined } }));
       iv = enById(iv, eiv, (x, t) => ({ ...x, q: t.q, a: x.a.map((a, i) => ({ ...a, ...(t.a?.[i] || {}) })) }));
       q = enById(q, eq, (x, t) => ({ ...x, ...t }));
     }
-    POOL = p.map(c => boost(norm(c))).concat(p2.map(c => boost(norm(c), POOL2_DOWN))); QUIZ = q;
+    POOL = p.map(c => boost(norm(c))).concat(p2.concat(p3).map(c => boost(norm(c), POOL2_DOWN))); QUIZ = q;
     const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));

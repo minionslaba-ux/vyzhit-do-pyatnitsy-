@@ -11,7 +11,7 @@ create table if not exists public.scores (
   dept        text not null default '' check (char_length(dept) <= 24),
   prof        text not null check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern')),
   won         boolean not null,
-  step        smallint not null check (step between 0 and 15),
+  step        smallint not null check (step between 0 and 25),
   total       smallint not null check (total between 0 and 400),
   psyche      smallint not null check (psyche between 0 and 100),
   energy      smallint not null check (energy between 0 and 100),
@@ -28,6 +28,9 @@ alter table public.scores add column if not exists tour_id bigint;
 -- Профессии: в старой базе проверка знала только четыре
 alter table public.scores drop constraint if exists scores_prof_check;
 alter table public.scores add constraint scores_prof_check check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern'));
+-- Неделя — 25 карточек (раньше 15): расширить проверку шага в существующей базе
+alter table public.scores drop constraint if exists scores_step_check;
+alter table public.scores add constraint scores_step_check check (step between 0 and 25);
 create index if not exists scores_player_idx on public.scores (player_id, won desc, step desc, total desc);
 create index if not exists scores_daily_idx on public.scores (mode, day, player_id, created_at);
 
@@ -39,12 +42,15 @@ create table if not exists public.players (
   avatar      text not null default '' check (char_length(avatar) <= 16),
   prof        text not null default 'marketer' check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern')),
   status      text not null default 'menu' check (status in ('menu', 'playing', 'finished')),
-  step        smallint not null default 0 check (step between 0 and 15),
+  step        smallint not null default 0 check (step between 0 and 25),
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
 alter table public.players drop constraint if exists players_prof_check;
 alter table public.players add constraint players_prof_check check (prof in ('marketer', 'accountant', 'dev', 'sales', 'hr', 'designer', 'sysadmin', 'cooler', 'intern'));
+
+alter table public.players drop constraint if exists players_step_check;
+alter table public.players add constraint players_step_check check (step between 0 and 25);
 
 -- Карточки, которые предлагают коллеги. Модерация: Table Editor → suggestions → status = 'approved'
 create table if not exists public.suggestions (
@@ -102,7 +108,7 @@ begin
   if public.is_registered(p_id) then perform public.require_player(p_id); end if;
   insert into players (player_id, name, dept, avatar, prof, status, step, updated_at)
   values (p_id, left(trim(p_name), 24), left(coalesce(trim(p_dept), ''), 24), left(coalesce(p_avatar, ''), 16),
-          p_prof, p_status, greatest(0, least(15, coalesce(p_step, 0))), now())
+          p_prof, p_status, greatest(0, least(25, coalesce(p_step, 0))), now())
   on conflict (player_id) do update set
     name = excluded.name, dept = excluded.dept, avatar = excluded.avatar, prof = excluded.prof,
     status = excluded.status, step = excluded.step, updated_at = now();
@@ -516,7 +522,7 @@ declare v_edge boolean;
 begin
   if new.total <> new.psyche + new.energy + new.boss + new.colleagues then raise exception 'Результат не сходится'; end if;
   v_edge := least(new.psyche, new.energy, new.boss, new.colleagues) = 0 or greatest(new.psyche, new.energy, new.boss, new.colleagues) = 100;
-  if new.won and (new.step <> 15 or new.death is not null or v_edge) then raise exception 'Результат не сходится'; end if;
+  if new.won and (new.step not in (15, 25) or new.death is not null or v_edge) then raise exception 'Результат не сходится'; end if;
   if not new.won and (new.death is null or not v_edge) then raise exception 'Результат не сходится'; end if;
   if exists (select 1 from scores s where s.player_id = new.player_id and s.created_at > now() - interval '10 seconds') then
     raise exception 'Слишком часто: подождите немного';
@@ -550,7 +556,7 @@ language plpgsql security definer set search_path = public as $$
 begin
   if (select count(*) from events e where e.player_id = p_id and e.created_at > now() - interval '1 hour') >= 300 then return; end if;
   insert into events (player_id, kind, mode, card_id, won, step, detail)
-  values (p_id, p_kind, left(p_mode, 12), left(p_card, 40), p_won, least(greatest(coalesce(p_step, 0), 0), 15), left(p_detail, 60));
+  values (p_id, p_kind, left(p_mode, 12), left(p_card, 40), p_won, least(greatest(coalesce(p_step, 0), 0), 25), left(p_detail, 60));
 end $$;
 
 -- Сводка для страницы ?stats: только агрегаты, без личных данных
@@ -592,13 +598,15 @@ grant select on public.stats_overview, public.stats_killers, public.stats_funnel
 -- Один ответ игрока на карточку дня; наружу — только сколько ответили так же и сколько всего
 create table if not exists public.daily_picks (
   day         date not null,
-  step        smallint not null check (step between 0 and 14),
+  step        smallint not null check (step between 0 and 24),
   player_id   uuid not null,
   card_id     text not null check (char_length(card_id) <= 40),
   side        text not null check (side in ('left', 'right')),
   created_at  timestamptz not null default now(),
   primary key (day, step, player_id)
 );
+alter table public.daily_picks drop constraint if exists daily_picks_step_check;
+alter table public.daily_picks add constraint daily_picks_step_check check (step between 0 and 24);
 alter table public.daily_picks enable row level security;
 revoke all on public.daily_picks from anon, authenticated;
 
@@ -607,7 +615,7 @@ language plpgsql security definer set search_path = public as $$
 begin
   if public.is_registered(p_id) then perform public.require_player(p_id); end if;
   -- записываем только свежую неделю дня (вчера, сегодня, завтра — запас на часовые пояса), первый ответ игрока
-  if p_day between current_date - 1 and current_date + 1 and p_side in ('left', 'right') and p_step between 0 and 14 then
+  if p_day between current_date - 1 and current_date + 1 and p_side in ('left', 'right') and p_step between 0 and 24 then
     insert into daily_picks (day, step, player_id, card_id, side) values (p_day, p_step, p_id, left(p_card, 40), p_side) on conflict do nothing;
   end if;
   return query select (count(*) filter (where d.side = p_side))::int, count(*)::int

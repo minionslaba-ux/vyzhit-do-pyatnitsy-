@@ -123,7 +123,7 @@ const endingsHtml = list => list.length ? `<div class="unlocked">${list.map(e =>
 
 // ---------- сборка недели ----------
 let S = null, busy = false, splashOn = false, splashFor = -1;
-const slotOf = (day, phase) => DAYS.indexOf(day) * 3 + PHASES.findIndex(p => p.name === phase);
+const slotOf = (day, phase) => slotOfPhase(DAYS.indexOf(day), PHASES.findIndex(p => p.name === phase));
 
 // Неделя: карточки по расписанию → карточки вида недели (или пакета) → одна карточка профессии → случайные события
 // classic — классическая неделя из cards.js; иначе карточки берутся из большого пула.
@@ -133,26 +133,29 @@ function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [],
   const used = new Set(), deck = [], randomPack = [...RANDOM_CARDS, ...extraRandom].filter(unseen); // свежая копия на каждую неделю
   const rules = WEEK_TYPES[type].rules, fixed = new Map();
   for (const c of [...(WEEK_TYPES[type].cards || []).filter(unseen), ...packCards]) fixed.set(slotOf(c.day, c.phase), c.id);
-  for (let i = 0; i < 15; i++) {
-    const d = Math.floor(i / 3), ph = PHASES[i % 3];
-    if (fixed.has(i)) { const c = byId[fixed.get(i)]; deck.push({ id: c.id, time: c.time || PHASE_TIME[i % 3], fixed: true }); continue; }
+  for (let i = 0; i < WEEK_LEN; i++) {
+    const d = dayOf(i), ph = PHASES[slotPh(i)];
+    if (fixed.has(i)) { const c = byId[fixed.get(i)]; deck.push({ id: c.id, time: c.time || slotTime(i), fixed: true }); continue; }
     const ok = c => c.phase === ph.name && !used.has(c.id);
     const fresh = classic ? [] : POOL.filter(c => ok(c) && unseen(c));
     const special = CARDS.filter(c => ok(c) && c.day === DAYS[d]);
-    const pool = fresh.length ? fresh : special.length ? special : CARDS.filter(c => ok(c) && !c.day);
+    // классических карточек 15 на 25 слотов — недостающие берём из большого пула
+    let pool = fresh.length ? fresh : special.length ? special : CARDS.filter(c => ok(c) && !c.day);
+    if (!pool.length) pool = POOL.filter(c => ok(c) && unseen(c));
+    if (!pool.length) pool = [...CARDS, ...POOL].filter(c => c.phase === ph.name && !used.has(c.id));
     const standard = rnd(pool, rng); used.add(standard.id);
-    deck.push({ id: standard.id, time: standard.time || PHASE_TIME[i % 3] });
+    deck.push({ id: standard.id, time: standard.time || slotTime(i) });
   }
   const profLeft = profCard && prof && PROF_CARDS[prof] ? PROF_CARDS[prof].filter(unseen) : [];
   if (profLeft.length) {
-    const free = deck.map((s, i) => s.fixed ? -1 : i).filter(i => i > 0 && i !== 14 && i >= 0);
+    const free = deck.map((s, i) => s.fixed ? -1 : i).filter(i => i > 0 && i !== WEEK_LEN - 1 && i >= 0);
     const i = rnd(free, rng), c = byId[rnd(profLeft, rng).id];
-    deck[i] = { id: c.id, time: PHASE_TIME[i % 3], fixed: true };
+    deck[i] = { id: c.id, time: slotTime(i), fixed: true };
   }
   deck.forEach((s, i) => {
     if (s.fixed) return;
     const card = getRandomCard(byId[s.id], randomPack, rules.randomChance ?? 15, rng);
-    if (card.id !== s.id) deck[i] = { id: card.id, time: card.time || PHASE_TIME[i % 3] };
+    if (card.id !== s.id) deck[i] = { id: card.id, time: card.time || slotTime(i) };
   });
   return deck;
 }
@@ -271,9 +274,9 @@ function placeCastCard(deck) {
   const next = Object.keys(CAST).map(k => CAST_CARDS.find(c => c.cast === k && c.stage === (stage[k] || 0) + 1)).filter(Boolean);
   const card = payoff || next.sort((a, b) => a.stage - b.stage)[Math.floor(Math.random() * Math.min(2, next.length))];
   if (!card) return;
-  const free = deck.map((s, i) => s.fixed || i === 0 || i === 14 ? -1 : i).filter(i => i >= 0);
+  const free = deck.map((s, i) => s.fixed || i === 0 || i === WEEK_LEN - 1 ? -1 : i).filter(i => i >= 0);
   if (!free.length) return;
-  const i = rnd(free); deck[i] = { id: card.id, time: PHASE_TIME[i % 3], fixed: true };
+  const i = rnd(free); deck[i] = { id: card.id, time: slotTime(i), fixed: true };
 }
 // Ответ меняет отношение: у карточек истории — явно (rel), у остальных с именем коллеги — по знаку шкалы «Коллеги»
 function castAfter(c, side, eff) {
@@ -365,7 +368,7 @@ const headerLine = () => S.mode === 'career' && C ? L(`Неделя ${C.week}/${
   : S.mode === 'tour' ? `${L('Турнир', 'Tournament')} · ${S.tourTeam}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}` : PACK?.company || '';
 
 function renderCard() {
-  const slot = S.deck[S.step], c = byId[slot.id], d = Math.floor(S.step / 3), ph = PHASES[S.step % 3];
+  const slot = S.deck[S.step], c = byId[slot.id], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const card = $('card');
   const tag = slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
     : c.random ? `<span class="rnd-tag">${L('! СЛУЧАЙНОЕ СОБЫТИЕ', '! RANDOM EVENT')}</span>` : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
@@ -376,22 +379,22 @@ function renderCard() {
   if (tools) cardTools();
   views.game.classList.toggle('pro', (prefs.gamesPlayed || 0) >= 2);  // опытным не нужна строка «тяните карточку…» — больше места карточке
   // вход новой карточки: последствие — перемотка, случайное событие — помехи, новый день — лист календаря, иначе — снизу
-  const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % 3 === 0 && S.step > 0 ? 'page' : null;
+  const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % PER_DAY === 0 && S.step > 0 ? 'page' : null;
   card.style.transition = 'none'; card.style.transform = RM.matches || kind ? '' : 'translateY(28px) scale(.95)'; card.style.opacity = RM.matches || kind ? '' : '0';
   void card.offsetWidth;
   card.style.transition = RM.matches ? 'none' : `transform .38s ${EASE}, opacity .38s, border-color .2s, box-shadow .2s`; card.style.transform = ''; card.style.opacity = '';
   FX.enter(card, kind);
-  setPhase(PHASE_KEY[S.step % 3]);
+  setPhase(PHASE_KEY[slotPh(S.step)]);
   $('btnL').innerHTML = `<span class="ar">←</span><span>${esc(c.answers.left.label)}</span>`;
   $('btnR').innerHTML = `<span>${esc(c.answers.right.label)}</span><span class="ar">→</span>`;
   FX.clock(slot.time);
   $('gCareer').textContent = headerLine();
   const zs = S.season && SEASONS.find(z => z.id === S.season);
   $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
-  $('gDay').textContent = dayName(d); $('gPhase').textContent = phaseName(S.step % 3).toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
+  $('gDay').textContent = dayName(d); $('gPhase').textContent = phaseName(slotPh(S.step)).toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
   $('dots').innerHTML = S.deck.map((s, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}${s.origin && i > S.step ? ' chain' : ''}"></i>`).join('');
   clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer(); deadlineBadges(c); deadlineOffer();
-  if (S.step % 3 === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
+  if (S.step % PER_DAY === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
   touchPlaying(d);
   coachFor(slot);
 }
@@ -528,9 +531,9 @@ function choose(side) {
     if (c.id === 'rnd_cake' && side === 'right') S.flags.cake = true;
     // цепочка: решение вернётся в другой день недели
     const ch = CHAINS.find(x => x.from === c.id && x.side === side), at = ch && slotOf(ch.at.day, ch.at.phase);
-    if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
-    const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
-    if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
+    if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: slotTime(at), fixed: true, origin: ch.origin };
+    const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(WEEK_LEN - 1, S.step + Math.round(pc.after * PER_DAY / 3));
+    if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: slotTime(pat), fixed: true, origin: pc.origin };
     clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side);
     const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     const best = store.get(KEY.best, { step: 0, wins: 0 });
@@ -545,12 +548,12 @@ function choose(side) {
 // Утром иногда приходит задача: «сделать N рабочих решений до вечера такого-то дня». Рабочее решение — ответ, который
 // радует Босса или стоит Энергии (на ответах значок 📋+1). Успели — премия на счёт, не успели к вечеру срока — штраф со счёта.
 // Отказаться можно; задача одна за раз, предложений — не больше двух в неделю. Только в карьере.
-// Сложность ×1,5 к первой версии (2/4/6/8 решений), но с запасом в одну карточку: до срока 3/6/9/12 карточек
+// День — 5 карточек: до срока 5/10/15/20 карточек; нужно ~85–90% из них (с запасом в одну-две карточки)
 const DEADLINE_TIERS = [
-  { days: 0, need: 3,  reward: 6,  fine: 4,  name: L('срочный', 'urgent') },
-  { days: 1, need: 5,  reward: 10, fine: 5,  name: L('короткий', 'short') },
-  { days: 2, need: 8,  reward: 15, fine: 8,  name: L('средний', 'medium') },
-  { days: 3, need: 11, reward: 24, fine: 12, name: L('крупный', 'big') },
+  { days: 0, need: 4,  reward: 6,  fine: 4,  name: L('срочный', 'urgent') },
+  { days: 1, need: 9,  reward: 10, fine: 5,  name: L('короткий', 'short') },
+  { days: 2, need: 13, reward: 15, fine: 8,  name: L('средний', 'medium') },
+  { days: 3, need: 18, reward: 24, fine: 12, name: L('крупный', 'big') },
 ];
 const DEADLINE_TASKS = EN ? [
   ['Boss', 'Quarterly report'], ['Client', 'Landing page for the launch'], ['CEO', 'Investor pitch deck'], ['Accounting', 'Close out the expense reports'],
@@ -584,14 +587,14 @@ function renderDeadlineChip() {
     `${here}. “${d.title}” (${d.who}): ${d.need - d.got} more 📋 answers ${dueText(d.due)}. Make it — +${money(d.reward)}, miss it — −${money(d.fine)}`));
 }
 function deadlineOffer() {
-  if (!(S?.mode === 'career' && C) || S.deadline || S.step % 3 || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
+  if (!(S?.mode === 'career' && C) || S.deadline || S.step % PER_DAY || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
   S.dlAsked = S.step;
-  const day = S.step / 3, rnd = Math.random;
+  const day = S.step / PER_DAY, rnd = Math.random;
   if (rnd() > (S.step ? .4 : .25)) return;
   const tiers = DEADLINE_TIERS.filter(t => day + t.days <= 4), t = tiers[Math.floor(rnd() * tiers.length)];
   const [who, title] = t.days ? DEADLINE_TASKS[Math.floor(rnd() * (DEADLINE_TASKS.length - 1))] : DEADLINE_TASKS[10];
   S.dlOffers = (S.dlOffers || 0) + 1;
-  setTimeout(() => { if (S && !busy && !views.game.hidden && S.step === day * 3) showDeadlineOffer({ who, title, need: t.need, got: 0, due: day + t.days, reward: t.reward, fine: t.fine, tier: t.name }); }, splashOn ? 4600 : 2100);
+  setTimeout(() => { if (S && !busy && !views.game.hidden && S.step === day * PER_DAY) showDeadlineOffer({ who, title, need: t.need, got: 0, due: day + t.days, reward: t.reward, fine: t.fine, tier: t.name }); }, splashOn ? 4600 : 2100);
 }
 function showDeadlineOffer(d) {
   const m = $('modal');
@@ -646,14 +649,14 @@ function smsPop(from, text) {
 function advance() {
   const best = store.get(KEY.best, { step: 0, wins: 0 });
   S.step++;
-  if (S.mode === 'career' && C && S.step % 3 === 0) {  // вечер прошёл — рабочий день оплачен
+  if (S.mode === 'career' && C && S.step % PER_DAY === 0) {  // вечер прошёл — рабочий день оплачен
     pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary); sfx.coins();
-    smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}: +${money(C.salary)} · баланс ${money(C.bank)}`,
-      `${dayName(S.step / 3 - 1)} salary deposited: +${money(C.salary)} · balance ${money(C.bank)}`));
-    deadlineDue(S.step / 3 - 1);
+    smsPop(L('Банк', 'Bank'), L(`Зачислена зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / PER_DAY - 1]}: +${money(C.salary)} · баланс ${money(C.bank)}`,
+      `${dayName(S.step / PER_DAY - 1)} salary deposited: +${money(C.salary)} · balance ${money(C.bank)}`));
+    deadlineDue(S.step / PER_DAY - 1);
   }
   best.step = Math.max(best.step, S.step);
-  if (S.step >= 15) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
+  if (S.step >= WEEK_LEN) { best.wins++; store.set(KEY.best, best); store.del(KEY.save); setTimeout(win, 550); return; }
   store.set(KEY.best, best); if (S.mode === 'career') store.set(KEY.save, S);
   renderCard(); busy = false;
 }
@@ -764,7 +767,7 @@ function hintBar() {
 // Сама предлагает подсказку, когда шкала у края: раз в игровой день и только если хватает денег
 function hintOffer() {
   if (!(S?.mode === 'career' && C) || C.bank < HINT_PRICE || prefs.hintOff) return;
-  const day = Math.floor(S.step / 3);
+  const day = dayOf(S.step);
   if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
   S.hintDay = day;
   setTimeout(() => { if (S && !busy) hintBar(); }, 700);
@@ -886,7 +889,7 @@ const onboardingLine = () => S.flags.obTotal ? `<div class="place"><b>${S.flags.
 function rank(total) { return total >= 280 ? L('Легенда опенспейса', 'Open-Space Legend') : total >= 220 ? L('Сеньор по выживанию', 'Senior Survival Engineer') : total >= 160 ? L('Крепкий мидл', 'Solid Mid-Level') : L('Чудом уцелевший стажёр', 'Intern Who Somehow Survived'); }
 
 function weekEndings(won, k, high) {
-  const ids = [], d = Math.floor(S.step / 3);
+  const ids = [], d = dayOf(S.step);
   if (S.used.length >= 2) ids.push('items2');
   if (won) {
     const v = Object.values(S.res);
@@ -896,7 +899,7 @@ function weekEndings(won, k, high) {
     ids.push(high ? { boss: d === 4 ? 'boss_fri' : null, colleagues: 'party', psyche: 'zen', energy: 'battery' }[k]
       : { psyche: 'cooler', energy: 'zoom', boss: 'two_words', colleagues: 'wifi' }[k]);
     if (d === 0) ids.push('monday');
-    if (S.step === 14) ids.push('almost');
+    if (S.step === WEEK_LEN - 1) ids.push('almost');
     if (S.flags.cake) ids.push('cake');
   }
   return unlock(ids);
@@ -904,18 +907,18 @@ function weekEndings(won, k, high) {
 
 function lose(k, high) {
   sfx.lose();
-  const D = (high ? DEATH_HIGH : DEATH)[k], d = Math.floor(S.step / 3), ph = PHASES[S.step % 3];
+  const D = (high ? DEATH_HIGH : DEATH)[k], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const got = weekEndings(false, k, high), career = S.mode === 'career' && C;
   let next = '';
   if (career) {
-    var company = C.company, comp = Math.floor(C.vacation) * C.salary, paidDays = Math.floor(S.step / 3);
+    var company = C.company, comp = Math.floor(C.vacation) * C.salary, paidDays = Math.floor(S.step / PER_DAY);
     C.firings++; C.week++; C.stage = 'search'; C.res = null; C.vacation = 0;
     if (comp) pay(comp); else saveCareer();
     var exp = weekExpenses(paidDays / 5);
     next = C.week > YEAR ? L('Итоги года', 'Year in review') : L('Искать работу', 'Look for a job');
   }
   views.end.innerHTML = `<div class="end-sheet glass">
-    <span class="kicker">${career ? L(`Вас уволили · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()} · ${esc(company)}`, `Fired · ${dayName(d)} ${phaseName(S.step % 3).toLowerCase()} · ${esc(company)}`) : L(`Неделя закончилась досрочно · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()}`, `Week ended early · ${dayName(d)} ${phaseName(S.step % 3).toLowerCase()}`)}</span>
+    <span class="kicker">${career ? L(`Вас уволили · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()} · ${esc(company)}`, `Fired · ${dayName(d)} ${phaseName(slotPh(S.step)).toLowerCase()} · ${esc(company)}`) : L(`Неделя закончилась досрочно · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()}`, `Week ended early · ${dayName(d)} ${phaseName(slotPh(S.step)).toLowerCase()}`)}</span>
     <h1 class="lose">${high ? L('ПЕРЕГРЕВ', 'OVERHEAT') : L('НЕДЕЛЯ ЗАВАЛЕНА', 'WEEK WRECKED')}</h1>
     <p class="cause">${D.title} · ${esc(S.name)}, ${PROF[S.prof].name.toLowerCase()}</p>
     <p>${D.text}</p>
@@ -978,7 +981,7 @@ function win() {
   if ($('vac')) $('vac').onclick = takeVacation;
   $('next').onclick = () => career ? (last ? yearEnd() : startWeek()) : S.mode === 'tour' ? openScreen(S.tourCode) : renderMenu();
   record(true, null, false);
-  track('week_end', { mode: S.mode, won: true, step: 15 });
+  track('week_end', { mode: S.mode, won: true, step: WEEK_LEN });
   $('next').focus({ preventScroll: true });
 }
 
@@ -1184,7 +1187,7 @@ async function record(won, death, high) {
   if (S.mode === 'pack' || (S.mode === 'daily' && !S.ranked) || (S.mode === 'tour' && !S.ranked)) {
     if (el()) el().textContent = S.mode === 'pack' ? L('Брендированная неделя в общий рейтинг не идёт.', 'Branded weeks don’t count toward the main leaderboard.') : L('Повторная попытка: в зачёт идёт только первая.', 'Replay: only your first attempt counts.'); return; }
   const entry = { player_id: prefs.playerId, name: S.name.slice(0, 24), dept: (S.dept || '').slice(0, 24), prof: S.prof, won,
-    step: won ? 15 : S.step, total, psyche: S.res.psyche, energy: S.res.energy, boss: S.res.boss, colleagues: S.res.colleagues, death,
+    step: won ? WEEK_LEN : S.step, total, psyche: S.res.psyche, energy: S.res.energy, boss: S.res.boss, colleagues: S.res.colleagues, death,
     mode: S.mode, day: S.mode === 'daily' ? S.day : null, overheat: !!high, ...(S.mode === 'tour' ? { tour_id: S.tourId } : {}) };
   try {
     try { await board.submit(entry); }
@@ -1259,12 +1262,12 @@ function challengeCode(won, k) {
 }
 function parseChallenge(code) {
   const m = /^(\d{4})(\d{2})(\d{2})([wl])(\d{3})([pebc])(\d{1,3})$/.exec(code || '');
-  if (!m || (m[4] === 'l' && +m[5] > 14) || (m[4] === 'w' && +m[5] > 400)) return null;
+  if (!m || (m[4] === 'l' && +m[5] > WEEK_LEN - 1) || (m[4] === 'w' && +m[5] > 400)) return null;
   return { day: `${m[1]}-${m[2]}-${m[3]}`, won: m[4] === 'w', num: +m[5], stat: CH_KEY[m[6]], val: Math.min(100, +m[7]) };
 }
 // победа всегда выше проигрыша; дальше — счёт недели или сколько карточек продержались
 const chScore = c => c.won ? 1000 + c.num : c.num;
-const chResult = c => c.won ? L(`неделя закрыта, счёт ${c.num}/400, ${resName(c.stat)} ${c.val}%`, `week survived, score ${c.num}/400, ${resName(c.stat)} ${c.val}%`) : L(`неделя завалена: ${DAYS[Math.floor(c.num / 3)].toLowerCase()}, ${PHASES[c.num % 3].name.toLowerCase()}, ${resName(c.stat)} ${c.val}%`, `week wrecked: ${dayName(Math.floor(c.num / 3))} ${phaseName(c.num % 3).toLowerCase()}, ${resName(c.stat)} ${c.val}%`);
+const chResult = c => c.won ? L(`неделя закрыта, счёт ${c.num}/400, ${resName(c.stat)} ${c.val}%`, `week survived, score ${c.num}/400, ${resName(c.stat)} ${c.val}%`) : L(`неделя завалена: ${DAYS[dayOf(c.num)].toLowerCase()}, ${PHASES[slotPh(c.num)].name.toLowerCase()}, ${resName(c.stat)} ${c.val}%`, `week wrecked: ${dayName(dayOf(c.num))} ${phaseName(slotPh(c.num)).toLowerCase()}, ${resName(c.stat)} ${c.val}%`);
 const chName = c => c.by || L('Коллега', 'Colleague');
 // Строка на финале недели дня, если игрок принял вызов на этот день
 function challengeLine(won, k) {
@@ -1285,7 +1288,7 @@ function wrap(ctx, text, x, y, maxW, lh) {
 // «Неделя пережита: Кукуха 12%, Босс 88%» — самая низкая и самая высокая шкала
 function memeLine(won) {
   const sorted = [...RES].sort((a, b) => S.res[a.k] - S.res[b.k]), lo = sorted[0], hi = sorted[3];
-  const d = Math.floor(S.step / 3);
+  const d = dayOf(S.step);
   return `${won ? L('Я пережил(а) неделю', 'I survived the week') : L(`Неделя завалена в ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][d]}`, `My week got wrecked on ${dayName(d)}`)}: ${lo.name} ${S.res[lo.k]}%, ${hi.name} ${S.res[hi.k]}%`;
 }
 async function share(won, k) {

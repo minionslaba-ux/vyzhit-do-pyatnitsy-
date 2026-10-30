@@ -4,9 +4,9 @@
 
 const INTRO = [
   { title: L('Доживите до пятницы', 'Survive till Friday'), art: () => `<div class="in-clock"><span>09:00</span><i>→</i><span class="hot">18:00</span></div>
-      <div class="in-segs">${'<i></i>'.repeat(15)}</div>`,
-    text: L('Вы — офисный сотрудник. Неделя — это 15 решений: утро, день и вечер с понедельника по пятницу. Продержитесь до пятницы, 18:00. Карьера — целый год из 52 недель.',
-      'You’re an office worker. A week is 15 decisions: morning, afternoon and evening, Monday through Friday. Hold out till Friday, 6 PM. Career mode is a whole year — 52 weeks.') },
+      <div class="in-segs">${'<i></i>'.repeat(WEEK_LEN)}</div>`,
+    text: L('Вы — офисный сотрудник. Неделя — это 25 решений: по пять в день, с утра до вечера, с понедельника по пятницу. Продержитесь до пятницы, 18:00. Карьера — целый год из 52 недель.',
+      'You’re an office worker. A week is 25 decisions: five a day, morning to evening, Monday through Friday. Hold out till Friday, 6 PM. Career mode is a whole year — 52 weeks.') },
   { title: L('Держите четыре шкалы', 'Keep four meters in check'), art: () => `<div class="in-tubes">${[['psyche', L('Кукуха', 'Sanity'), 50, ''], ['energy', L('Энергия', 'Energy'), 15, L('на грани', 'on the edge')], ['boss', L('Босс', 'Boss'), 88, L('перегрев', 'overheat')], ['colleagues', L('Коллеги', 'Team'), 60, '']]
       .map(([k, n, v, z]) => `<div class="tube-wrap${v >= 80 ? ' hot danger' : v <= 20 ? ' low danger' : ''}" data-k="${k}"><div class="tube"><div class="fill" style="--v:${v}"></div></div><span class="lbl">${n}</span><span class="pct">${v}%</span><span class="zone">${z}</span></div>`).join('')}</div>`,
     text: L('<b>Кукуха</b> — нервы, <b>Энергия</b> — силы, <b>Босс</b> — отношение начальства, <b>Коллеги</b> — команда. Ноль — конец недели. Но и <b>100% — тоже конец</b>: перегрев. Лучше всего — между 20% и 80%.',

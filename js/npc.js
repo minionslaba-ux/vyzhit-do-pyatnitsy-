@@ -41,7 +41,7 @@ function npcOnline() {
   return shuffle([...NPCS], rnd).slice(0, n).map(c => {
     const playing = rnd() < 0.6;
     return { npc: true, tag: c.id, short_id: c.id, name: c.name, avatar: c.avatar, dept: c.dept, prof: c.prof,
-      status: playing ? 'playing' : 'menu', step: Math.floor(rnd() * 15), updated_at: new Date(Date.now() - rnd() * 120000).toISOString() };
+      status: playing ? 'playing' : 'menu', step: Math.floor(rnd() * WEEK_LEN), updated_at: new Date(Date.now() - rnd() * 120000).toISOString() };
   });
 }
 const npcById = id => NPCS.find(c => c.id === id);

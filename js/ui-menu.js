@@ -26,7 +26,7 @@ function renderMenu() {
   setPhase('evening');
   const best = store.get(KEY.best, { step: 0, wins: 0 });
   const seenN = store.get(KEY.seen, []).filter(id => byId[id]).length;
-  $('record').textContent = (best.wins ? L(`недель закрыто: ${best.wins}`, `weeks survived: ${best.wins}`) : best.step ? L(`дольше всего: ${dayName(Math.floor(best.step / 3))}, ${phaseName(best.step % 3).toLowerCase()}`, `longest run: ${dayName(Math.floor(best.step / 3))}, ${phaseName(best.step % 3).toLowerCase()}`) : L('пока нет', 'none yet'))
+  $('record').textContent = (best.wins ? L(`недель закрыто: ${best.wins}`, `weeks survived: ${best.wins}`) : best.step ? L(`дольше всего: ${dayName(dayOf(best.step))}, ${phaseName(slotPh(best.step)).toLowerCase()}`, `longest run: ${dayName(dayOf(best.step))}, ${phaseName(slotPh(best.step)).toLowerCase()}`) : L('пока нет', 'none yet'))
     + L(` · карточек открыто: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`, ` · cards discovered: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`);
   const save = store.get(KEY.save, null);
   if (dataLoaded && save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
@@ -226,12 +226,12 @@ $('newCareer').onclick = () => {
 
 // ---------- рейтинг, неделя дня, отделы, участники ----------
 const resultText = e => e.won ? { main: `${e.total}/400`, sub: L('неделя закрыта', 'week survived') } :
-  { main: `${dayName(Math.floor(e.step / 3)).slice(0, EN ? 3 : 2)}, ${phaseName(e.step % 3).toLowerCase()}`, sub: `${e.death ? resName(e.death) : ''} ${e.overheat ? '100%' : '0%'}` };
+  { main: `${dayName(dayOf(e.step)).slice(0, EN ? 3 : 2)}, ${phaseName(slotPh(e.step)).toLowerCase()}`, sub: `${e.death ? resName(e.death) : ''} ${e.overheat ? '100%' : '0%'}` };
 const ago = iso => {
   const m = Math.max(0, Math.round((Date.now() - new Date(iso)) / 60000));
   return m < 1 ? L('только что', 'just now') : m < 60 ? L(`${m} мин назад`, `${m} min ago`) : m < 1440 ? L(`${Math.floor(m / 60)} ч назад`, `${Math.floor(m / 60)}h ago`) : L(`${Math.floor(m / 1440)} дн. назад`, `${Math.floor(m / 1440)}d ago`);
 };
-const stepName = st => `${dayName(Math.min(4, Math.floor(st / 3))).slice(0, EN ? 3 : 2)}, ${phaseName(st % 3).toLowerCase()}`;
+const stepName = st => `${dayName(dayOf(st)).slice(0, EN ? 3 : 2)}, ${phaseName(slotPh(st)).toLowerCase()}`;
 function personStatus(p) {
   const fresh = Date.now() - new Date(p.updated_at) < 10 * 60000;
   if (fresh && p.status === 'playing') return `<span class="st play"><i></i>${L('играет', 'playing')} · ${stepName(p.step)}</span>`;
@@ -542,7 +542,7 @@ async function showStats() {
       <h2>${L('Воронка', 'Funnel')}</h2>
       <div class="stats-grid">${box(f.opened, L('зашли в игру', 'opened the game'))}${box(`${f.week1} · ${pct(f.week1, f.opened)}`, L('доиграли 1 неделю', 'finished 1 week'))}${box(`${f.week3} · ${pct(f.week3, f.opened)}`, L('3 недели', '3 weeks'))}${box(`${f.week10} · ${pct(f.week10, f.opened)}`, L('10 недель', '10 weeks'))}${box(f.year, L('весь год', 'full year'))}</div>
       <h2>${L('По режимам', 'By mode')}</h2>
-      <div class="scr-list">${modes.map(m => `<div class="scr-row"><span class="scr-pos">${m.weeks}</span><span></span><span class="scr-name"><b>${(EN ? { career: 'Career', daily: 'Daily Week', tour: 'Tournament', pack: 'Branded' } : { career: 'Карьера', daily: 'Неделя дня', tour: 'Турнир', pack: 'Брендированная' })[m.mode] || m.mode}</b><small>${L(`в среднем ходов за неделю: ${m.avg_step} из 15`, `avg moves per week: ${m.avg_step} of 15`)}</small></span><span class="scr-res won">${m.win_rate}%</span></div>`).join('') || `<p class="scr-empty">${L('Пока нет данных', 'No data yet')}</p>`}</div>
+      <div class="scr-list">${modes.map(m => `<div class="scr-row"><span class="scr-pos">${m.weeks}</span><span></span><span class="scr-name"><b>${(EN ? { career: 'Career', daily: 'Daily Week', tour: 'Tournament', pack: 'Branded' } : { career: 'Карьера', daily: 'Неделя дня', tour: 'Турнир', pack: 'Брендированная' })[m.mode] || m.mode}</b><small>${L(`в среднем ходов за неделю: ${m.avg_step} из ${WEEK_LEN}`, `avg moves per week: ${m.avg_step} of ${WEEK_LEN}`)}</small></span><span class="scr-res won">${m.win_rate}%</span></div>`).join('') || `<p class="scr-empty">${L('Пока нет данных', 'No data yet')}</p>`}</div>
       <h2>${L('Откуда пришли (30 дней)', 'Traffic sources (30 days)')}</h2>
       <div class="scr-list">${sources.map(s => `<div class="scr-row"><span class="scr-pos">${s.players}</span><span></span><span class="scr-name"><b>${esc(s.source)}</b><small>${L('доиграли неделю', 'finished a week')}: ${s.played} · ${pct(s.played, s.players)}</small></span><span class="scr-res won">${pct(s.players, sources.reduce((a, x) => a + x.players, 0))}</span></div>`).join('') || `<p class="scr-empty">${L('Пока нет данных', 'No data yet')}</p>`}</div>
       <h2>${L('Чем делятся', 'What people share')}</h2>
