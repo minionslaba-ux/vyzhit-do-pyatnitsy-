@@ -283,9 +283,9 @@ async function rivals() {
 setInterval(rivals, 5 * 60000);
 
 // ---------- что нового ----------
-const WHATS_NEW = { v: '2026-10-31', items: EN
-  ? ['🧍 Your 3D character: pick one of 10, name them — they’ll ask for food, a home, a car, a wedding… and it all costs money', '🎯 Daily quests — three goals every day', '🎖️ Ranks from Intern to CEO, with perks', '🗄️ Decorate your desk — coworkers can see it', '📌 Stories that continue next week', '✨ Rare events to collect', '🎃 Office Halloween week', '📅 A week is now 25 cards — 5 a day']
-  : ['🧍 Ваш 3D-персонаж: выберите одного из 10 и дайте имя — он будет просить еду, жильё, машину, свадьбу… и всё это стоит денег', '🎯 Задания дня — три цели каждый день', '🎖️ Должности от стажёра до генерального, с бонусами', '🗄️ Обставьте свой рабочий стол — его видят коллеги', '📌 Истории с продолжением на следующей неделе', '✨ Редкие события для коллекции', '🎃 Неделя «Хэллоуин в офисе»', '📅 Неделя теперь — 25 карточек, по 5 в день'] };
+const WHATS_NEW = { v: '2026-11-01', items: EN
+  ? ['💌 Your character now texts you mid-week: flowers, sweets, phone credit, groceries, clothes, nights out — 36 things to choose from, each with its own short cartoon', '💔 Breakdown meter: let their mood crash and your career rolls back 1–2 weeks', '🧍 Your 3D character: pick one of 10, name them — they’ll ask for food, a home, a car, a wedding… and it all costs money', '🎯 Daily quests — three goals every day', '🎖️ Ranks from Intern to CEO, with perks', '🗄️ Decorate your desk — coworkers can see it', '📌 Stories that continue next week', '✨ Rare events to collect', '🎃 Office Halloween week', '📅 A week is now 25 cards — 5 a day']
+  : ['💌 Персонаж пишет прямо посреди недели: цветы, сладкое, баланс телефона, продукты, одежда, вечер вне дома — 36 вещей на выбор, и у каждой покупки свой мультик', '💔 Шкала срывов: если настроение персонажа рухнет, карьера откатится на 1–2 недели назад', '🧍 Ваш 3D-персонаж: выберите одного из 10 и дайте имя — он будет просить еду, жильё, машину, свадьбу… и всё это стоит денег', '🎯 Задания дня — три цели каждый день', '🎖️ Должности от стажёра до генерального, с бонусами', '🗄️ Обставьте свой рабочий стол — его видят коллеги', '📌 Истории с продолжением на следующей неделе', '✨ Редкие события для коллекции', '🎃 Неделя «Хэллоуин в офисе»', '📅 Неделя теперь — 25 карточек, по 5 в день'] };
 function whatsNew() {
   if (!prefs.name || !(prefs.gamesPlayed > 0) || prefs.whatsNew === WHATS_NEW.v) return;
   prefs.whatsNew = WHATS_NEW.v; store.set(KEY.prefs, prefs);
