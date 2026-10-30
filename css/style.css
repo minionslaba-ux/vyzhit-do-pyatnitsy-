@@ -956,13 +956,17 @@ html.light .ans { background: rgba(255,255,255,.88); color: var(--hi); }
 html.light .ans .ar { color: var(--magenta); } html.light .ans.yes .ar { color: var(--cyan); }
 html.light .coach, html.light .card-tools .ct-btn { background-color: rgba(255,255,255,.75); }
 /* Выйти из недели в меню: слева от часов */
-.g-top { position: relative; }
+@media (max-width: 999px) { .g-top { position: relative; } }
 .exit-btn { position: absolute; left: 0; top: 70px; z-index: 3; min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 2px solid var(--cyan); background: rgba(var(--c-rgb),.1);
   color: var(--hi); font-weight: 800; font-size: 14px; box-shadow: 0 0 14px rgba(var(--c-rgb),.35); }
 .exit-btn:hover, .exit-btn:focus-visible { background: rgba(var(--c-rgb),.22); }
 .btn-logout { border-color: rgba(255,59,107,.6); color: var(--down); }
 @media (max-width: 420px) { .exit-btn { top: 66px; padding: 7px 11px; font-size: 13px; min-height: 36px; } }
-@media (min-width: 1000px) { .exit-btn { top: 72px; } }
+/* на компьютере — отдельной строкой под названием и неделей, не поверх них */
+@media (min-width: 1000px) {
+  .g-top { grid-template-areas: "brand clock day" "exit clock day"; grid-template-rows: auto 1fr; }
+  .exit-btn { position: static; grid-area: exit; justify-self: start; align-self: start; margin-top: 2px; }
+}
 .welcome-box { text-align: center; align-items: center; gap: 12px; padding: 24px 20px; }
 .welcome-box h2 { margin: 0; font-family: var(--f-display); font-size: 22px; color: var(--hi); }
 .welcome-box p { font-size: 14px; }
