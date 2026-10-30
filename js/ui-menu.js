@@ -18,6 +18,7 @@ function renderMenu() {
   renderChallengeCta();
   for (const id of LOCKED) $(id).classList.toggle('locked', !registered());
   renderInvites();
+  renderOnlineBox();
   (document.querySelector(`input[name=prof][value=${prefs.prof}]`) || document.querySelector('input[name=prof]')).checked = true;
   (document.querySelector(`input[name=trait][value=${prefs.trait}]`) || document.querySelector('input[name=trait]')).checked = true;
   setPhase('evening');
@@ -261,7 +262,7 @@ async function renderBoard(quiet) {
     const dept = onlyDept ? prefs.dept : '', tag = await myTag;
     if (boardMode === 'people') {
       const rows = await board.people(dept);
-      const canInvite = registered() && board.online && !!(myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0]);
+      const canInvite = registered() && board.online;  // нет офиса — предложим создать при нажатии
       const live = rows.filter(p => Date.now() - new Date(p.updated_at) < 10 * 60000);
       $('boardSummary').textContent = `Участников: ${rows.length} · в сети: ${live.length}`;
       if (!rows.length) { list.innerHTML = '<div class="lb-empty"><span class="big">Пусто</span>Пока никого нет.</div>'; return; }
@@ -270,10 +271,7 @@ async function renderBoard(quiet) {
         <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? ' (вы)' : ''}</b><small>${esc(p.dept || 'без отдела')}</small>
           <small class="lb-meta">недель: ${p.games || 0} · побед: ${p.wins || 0}${p.games ? ` · лучшее: ${p.best_won ? `${p.best_total}/400` : stepName(p.best_step)}` : ''}</small></span>
         <span class="lb-res">${personStatus(p)}${canInvite && p.tag !== tag && p.short_id ? `<button class="btn-chip" data-invite="${p.short_id}">Позвать в офис</button>` : ''}</span></div>`).join('');
-      list.querySelectorAll('[data-invite]').forEach(b => b.onclick = async () => {
-        try { const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: b.dataset.invite }); b.textContent = 'Приглашён'; b.disabled = true; toast(`Приглашение отправлено: ${n}`); }
-        catch (err) { toast(err.message); }
-      });
+      bindInvite(list);
     } else if (boardMode === 'depts') {
       const rows = await board.depts();
       $('boardSummary').textContent = cupTime() ? 'Кубок недели вручён' : 'Кубок вручат в пятницу в 18:00';
@@ -308,20 +306,126 @@ const offline = title => {
 const inviteLink = code => `${location.origin}${location.pathname}?join=${code}`;
 const copy = (text, ok) => navigator.clipboard.writeText(text).then(() => toast(ok), () => toast(text));
 
+// ---------- приглашения в офис: список в меню, плашка в любой момент, ответ пригласившему ----------
+// Гость видит приглашения; принять — после регистрации (приглашение перейдёт в аккаунт), отклонить — скрыть у себя
+const invHidden = () => prefs.invHidden ||= [];
+async function myInvites() { return ((await board.rpc('my_invites', { p_id: prefs.playerId })) || []).filter(i => !invHidden().includes(i.invite_id)); }
+async function answerInvite(inv, accept) {
+  if (!registered()) {
+    if (!accept) { invHidden().push(inv.invite_id); store.set(KEY.prefs, prefs); toast('Приглашение скрыто'); return true; }
+    if (!views.game.hidden) { toast('Доиграйте неделю — приглашение ждёт в меню. Чтобы вступить в офис, нужна регистрация'); return false; }
+    renderJoin('register', `Чтобы войти в офис «${inv.team_name}», зарегистрируйтесь — приглашение сохранится.`); return false;
+  }
+  try {
+    const name = await board.rpc('answer_invite', { p_id: prefs.playerId, p_invite: inv.invite_id, p_accept: accept });
+    toast(accept ? `Вы в офисе «${name}». Загляните в чат офиса!` : 'Приглашение отклонено'); myTeamCache = null;
+    if (!views.menu.hidden) renderMenu();
+    return true;
+  } catch (err) { toast(err.message); return false; }
+}
 async function renderInvites() {
   const box = $('invites');
-  if (!board.online || !prefs.name || !registered()) { box.hidden = true; return; }
+  if (!board.online || !prefs.name) { box.hidden = true; return; }
   try {
-    const list = await board.rpc('my_invites', { p_id: prefs.playerId });
+    const list = await myInvites();
     box.hidden = !list.length;
-    box.innerHTML = list.map(i => `<div class="invite"><span><b>${esc(i.from_name)}</b> зовёт вас в офис «${esc(i.team_name)}»</span>
-      <button class="btn-chip" data-a="1" data-id="${i.invite_id}">Принять</button><button class="btn-chip" data-a="0" data-id="${i.invite_id}">Нет</button></div>`).join('');
-    box.querySelectorAll('button').forEach(b => b.onclick = async () => {
-      try { const name = await board.rpc('answer_invite', { p_id: prefs.playerId, p_invite: +b.dataset.id, p_accept: b.dataset.a === '1' });
-        toast(b.dataset.a === '1' ? `Вы в офисе «${name}»` : 'Приглашение отклонено'); renderInvites(); }
-      catch (err) { toast(err.message); }
-    });
+    box.innerHTML = list.map((i, n) => `<div class="invite"><span><b>${esc(i.from_name)}</b> зовёт вас в офис «${esc(i.team_name)}»</span>
+      <button class="btn-chip" data-a="1" data-n="${n}">Принять</button><button class="btn-chip" data-a="0" data-n="${n}">Отказаться</button></div>`).join('');
+    box.querySelectorAll('button').forEach(b => b.onclick = async () => { if (await answerInvite(list[+b.dataset.n], b.dataset.a === '1')) renderInvites(); });
   } catch { box.hidden = true; }
+}
+// Плашка нового приглашения — в меню и во время игры, не мешая ходить
+function invitePop(inv) {
+  const el = $('invitePop');
+  el.innerHTML = `<span class="ip-ico" aria-hidden="true">📨</span><span class="ip-text"><b>${esc(inv.from_name)}</b> зовёт вас в офис «${esc(inv.team_name)}»</span>
+    <span class="ip-btns"><button class="btn-main" type="button" data-a="1">Принять</button><button class="btn-ghost" type="button" data-a="0">Отказаться</button></span>
+    <button class="ip-x" type="button" aria-label="Позже">×</button>`;
+  el.hidden = false; FX.pulse(el, 'on', 600); sfx.item?.(); buzz('tap');
+  el.querySelectorAll('[data-a]').forEach(b => b.onclick = async () => { if (await answerInvite(inv, b.dataset.a === '1')) { el.hidden = true; renderInvites(); } });
+  el.querySelector('.ip-x').onclick = () => { el.hidden = true; };
+}
+// Раз в 20 секунд: новые приглашения мне и ответы на мои приглашения
+let socialBusy = false;
+async function pollSocial() {
+  if (socialBusy || !board.online || !prefs.name || document.hidden) return;
+  socialBusy = true;
+  try {
+    const seen = prefs.invSeen ||= [], list = await myInvites().catch(() => []);
+    const fresh = list.filter(i => !seen.includes(i.invite_id));
+    if (fresh.length) { seen.push(...fresh.map(i => i.invite_id)); prefs.invSeen = seen.slice(-100); store.set(KEY.prefs, prefs); invitePop(fresh[0]); if (!views.menu.hidden) renderInvites(); }
+    if (registered()) {
+      const sent = (await board.rpc('my_sent_invites', { p_id: prefs.playerId }).catch(() => [])) || [], done = prefs.sentSeen ||= [];
+      for (const s of sent.filter(s => !done.includes(s.invite_id))) {
+        done.push(s.invite_id); toast(`${s.to_name}: приглашение в «${s.team_name}» ${s.status === 'accepted' ? 'принято 🎉' : 'отклонено'}`);
+      }
+      prefs.sentSeen = done.slice(-100); store.set(KEY.prefs, prefs);
+    }
+    if (!views.menu.hidden) renderOnlineBox();
+  } finally { socialBusy = false; }
+}
+setInterval(pollSocial, 20000);
+
+// ---------- кто сейчас в игре: позвать в свой офис ----------
+const onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
+const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
+  <span class="lb-who"><b>${esc(p.name)}</b><small>${esc(p.dept || 'без отдела')}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
+  <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-invite="${p.short_id}">Позвать</button>` : ''}</span></div>`;
+const bindInvite = root => root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
+// Вкладка «Офис»: до 6 игроков в сети
+async function renderOnlineBox() {
+  const box = $('onlineBox');
+  if (!board.online || !prefs.name) { box.hidden = true; return; }
+  try {
+    const rows = await onlineNow();
+    box.hidden = false;
+    box.innerHTML = `<div class="ob-head"><b><i class="live-dot"></i>Сейчас в игре: ${rows.length}</b><button class="btn-chip" type="button" id="obAll">Все участники</button></div>
+      ${rows.length ? `<div class="board-list">${rows.slice(0, 6).map(onlineRow).join('')}</div>` : '<p class="field-note">Пока никого. Позовите коллег по ссылке — кнопка ниже.</p>'}`;
+    bindInvite(box); $('obAll').onclick = () => openBoard('menu', 'people');
+  } catch { box.hidden = true; }
+}
+// Список в окне — из значка «сейчас в игре» во время недели
+async function showOnlineModal() {
+  const m = $('modal');
+  m.innerHTML = '<div class="modal-box glass online-modal" role="dialog" aria-modal="true" aria-labelledby="olTitle"><h2 id="olTitle">Сейчас в игре</h2><p>Загружаю…</p></div>';
+  m.hidden = false; m.onclick = e => { if (e.target === m) m.hidden = true; };
+  const rows = await onlineNow().catch(() => []);
+  m.querySelector('.modal-box').innerHTML = `<h2 id="olTitle">Сейчас в игре: ${rows.length}</h2>
+    ${rows.length ? `<div class="board-list">${rows.map(onlineRow).join('')}</div>` : '<p>Сейчас никого нет.</p>'}
+    <p class="field-note">Позвать в офис — и вы будете играть турниры и общаться в чате офиса.</p>
+    <button class="btn-ghost" type="button" id="olClose">Вернуться к неделе</button>`;
+  bindInvite(m); $('olClose').onclick = () => { m.hidden = true; };
+}
+// Позвать игрока: нужен аккаунт и офис; офиса нет — предложим создать его тут же
+async function inviteToOffice(short, btn) {
+  if (!registered()) {
+    toast('Звать в свой офис могут зарегистрированные игроки');
+    if (views.game.hidden) { $('modal').hidden = true; renderJoin('register', 'Зарегистрируйтесь — и сможете создать свой офис и позвать в него коллег.'); }
+    return;
+  }
+  let team = myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0];
+  if (!team) {
+    const name = await askOfficeName();
+    if (!name) return;
+    try { await board.rpc('create_team', { p_id: prefs.playerId, p_name: name }); team = myTeamCache = (await board.rpc('my_team', { p_id: prefs.playerId }))[0]; }
+    catch (err) { toast(err.message); return; }
+  }
+  try {
+    const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: short });
+    if (btn) { btn.textContent = 'Приглашён'; btn.disabled = true; }
+    toast(`Приглашение в «${team.name}» отправлено: ${n}`);
+  } catch (err) { toast(err.message); }
+}
+function askOfficeName() {
+  return new Promise(done => {
+    const el = $('invitePop');
+    el.innerHTML = `<form class="ip-form" id="ipForm"><span class="ip-text"><b>Сначала создайте свой офис</b> — в него и позовём.</span>
+      <input id="ipName" maxlength="32" value="${esc(`Офис ${prefs.name}`.slice(0, 32))}" aria-label="Название офиса">
+      <span class="ip-btns"><button class="btn-main" type="submit">Создать и позвать</button><button class="btn-ghost" type="button" id="ipCancel">Отмена</button></span></form>`;
+    el.hidden = false;
+    $('ipName').focus(); $('ipName').select();
+    $('ipCancel').onclick = () => { el.hidden = true; done(null); };
+    $('ipForm').onsubmit = e => { e.preventDefault(); const n = $('ipName').value.trim(); if (n.length < 2) { $('ipName').focus(); return; } el.hidden = true; done(n); };
+  });
 }
 
 async function showOffice() {

@@ -112,4 +112,5 @@ finishLogin().then(reloading => {
   if (!prefs.introSeen && !prefs.gamesPlayed) showIntro();  // первый вход: сначала коротко, в чём смысл игры
   joinFromLink();
   flushOutbox();
+  pollSocial();
 });

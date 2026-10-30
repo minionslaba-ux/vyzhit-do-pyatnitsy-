@@ -261,7 +261,8 @@ async function liveTick() {
     const me = await myTag, now = Date.now();
     const rows = (await board.people()).filter(p => p.status === 'playing' && p.tag !== me && now - new Date(p.updated_at) < 180000);
     el.hidden = !rows.length;
-    el.innerHTML = rows.length ? `<i class="live-dot"></i><span class="live-ava">${rows.slice(0, 5).map(p => `<span title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}">${esc(p.avatar || '🙂')}</span>`).join('')}</span><small>${rows.length > 5 ? `+${rows.length - 5} ` : ''}сейчас в игре</small>` : '';
+    el.innerHTML = rows.length ? `<i class="live-dot"></i><span class="live-ava">${rows.slice(0, 5).map(p => `<span title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}">${esc(p.avatar || '🙂')}</span>`).join('')}</span><small>${rows.length > 5 ? `+${rows.length - 5} ` : ''}сейчас в игре ›</small>` : '';
+    el.onclick = showOnlineModal;
   } catch { el.hidden = true; }
   liveT = setTimeout(liveTick, 30000);
 }

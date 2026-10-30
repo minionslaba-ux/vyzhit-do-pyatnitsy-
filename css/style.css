@@ -862,3 +862,24 @@ body[data-phase="night"] .office .person, body[data-phase="night"] .office .lamp
 .video-box.tall { max-width: 420px; width: min(420px, 100%); }
 .video-box video { display: block; width: 100%; max-height: calc(100dvh - 140px); border-radius: 14px; background: #000; }
 .video-nav { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+/* ====================== Кто в игре и приглашения в офис ====================== */
+.online-box { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 18px; border: 1.5px solid rgba(212,255,58,.45); box-shadow: 0 0 18px rgba(212,255,58,.15); }
+.online-box[hidden] { display: none; }
+.ob-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ob-head b { display: flex; align-items: center; gap: 8px; font-family: var(--f-display); font-size: 13px; letter-spacing: .04em; color: var(--up); }
+.online-box .board-list, .online-modal .board-list { display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow: auto; }
+.online-box .lb-res, .online-modal .lb-res { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+button.live { border: 0; background: rgba(212,255,58,.08); padding: 3px 10px; border-radius: 999px; cursor: pointer; color: var(--text-2); font: inherit; }
+button.live:hover { background: rgba(212,255,58,.16); color: #fff; }
+.invite-pop { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 42; transform: translateX(-50%); width: min(520px, calc(100% - 24px));
+  display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; align-items: center; padding: 14px 40px 14px 14px; border-radius: 18px; background: rgba(12,12,24,.97);
+  border: 1.5px solid var(--up); box-shadow: 0 0 28px rgba(212,255,58,.35); }
+.invite-pop[hidden] { display: none; }
+.invite-pop.on { animation: slidein .35s; }
+.ip-ico { font-size: 28px; }
+.ip-text { font-size: 14px; line-height: 1.35; color: var(--text-3); } .ip-text b { color: #fff; }
+.ip-btns { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; gap: 8px; }
+.ip-btns .btn-main, .ip-btns .btn-ghost { padding: 11px 10px; font-size: 13px; }
+.ip-x { position: absolute; top: 6px; right: 8px; border: 0; background: none; color: var(--text-2); font-size: 22px; line-height: 1; padding: 4px 8px; }
+.ip-form { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 10px; }
+.ip-form input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: rgba(255,255,255,.05); color: #fff; font: inherit; font-weight: 800; }
