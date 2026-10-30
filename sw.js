@@ -1,7 +1,7 @@
 // Офлайн-режим «Выжить до пятницы»: игра и данные кэшируются на телефоне.
 // Свои файлы — «быстро из кэша, обновить в фоне»; Supabase, Telegram и прочие внешние запросы — только из сети.
-const CACHE = 'vdp-v9';
-const SHELL = ['./', 'index.html', 'css/style.css', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/game.js', 'js/ui-menu.js', 'js/app.js',
+const CACHE = 'vdp-v10';
+const SHELL = ['./', 'index.html', 'css/style.css', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/game.js', 'js/ui-menu.js', 'js/app.js',
   'data/pool.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

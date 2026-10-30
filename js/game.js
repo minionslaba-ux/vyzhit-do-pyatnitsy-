@@ -15,11 +15,10 @@ const EASE = 'cubic-bezier(.2,.7,.2,1)';
 // Неоновые трубки: слева Кукуха и Энергия, справа Босс и Коллеги
 const tube = r => `<div class="tube-wrap" id="st-${r.k}" data-k="${r.k}" role="meter" aria-label="${r.name}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
     <span class="arrows" id="mk-${r.k}" aria-hidden="true"></span>
-    <div class="tube" aria-hidden="true"><div class="fill" id="fl-${r.k}"></div></div>
+    <div class="tube" aria-hidden="true"><div class="fill" id="fl-${r.k}"></div><i class="bub"></i><i class="bub"></i><i class="bub"></i></div><span class="steam" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="lbl" aria-hidden="true">${r.name}</span><span class="pct" id="pc-${r.k}" aria-hidden="true">50%</span><span class="zone" id="zn-${r.k}" aria-hidden="true"></span></div>`;
 // Опасные зоны: у 0 — «на грани», у 100 — «перегрев»; оба края заканчивают неделю
 const zoneOf = v => v >= 80 ? 'перегрев' : v <= 20 ? 'на грани' : '';
-const RM = matchMedia('(prefers-reduced-motion: reduce)');
 $('tubesL').innerHTML = RES.slice(0, 2).map(tube).join('');
 $('tubesR').innerHTML = RES.slice(2).map(tube).join('');
 const setPhase = p => { document.body.dataset.phase = p; };
@@ -32,7 +31,7 @@ const setPhase = p => { document.body.dataset.phase = p; };
     const w = 30 + Math.floor(r() * 50), h = 60 + Math.floor(r() * 140);
     city += `<rect class="bld" x="${x}" y="${250 - h}" width="${w}" height="${h}"/>`;
     for (let wy = 256 - h; wy < 240; wy += 14) for (let wx = x + 6; wx < x + w - 8; wx += 12)
-      if (r() > .35) city += `<rect class="cw${r() > .55 ? ' lit' : ''}" x="${wx}" y="${wy}" width="5" height="7"/>`;
+      if (r() > .35) city += `<rect class="cw${r() > .55 ? ' lit' : ''}" style="--d:${(r() * 2.4).toFixed(2)}s" x="${wx}" y="${wy}" width="5" height="7"/>`;
     x += w + 4;
   }
   const desk = (dx, i) => `<g class="desk${i === 3 ? ' last' : ''}">
@@ -44,7 +43,10 @@ const setPhase = p => { document.body.dataset.phase = p; };
   $('office').innerHTML = `<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice">
     <rect class="sky" x="100" y="20" width="1000" height="232"/>${city}
     <rect class="frame" x="100" y="20" width="1000" height="232"/><path class="frame" d="M350 20v232M600 20v232M850 20v232"/>
-    <rect class="floor" x="0" y="356" width="1200" height="44"/>${[110, 380, 650, 920].map(desk).join('')}</svg>`;
+    <rect class="floor" x="0" y="356" width="1200" height="44"/>${[110, 380, 650, 920].map(desk).join('')}
+    <g class="cooler"><rect class="bottle" x="1138" y="246" width="34" height="48" rx="10"/><circle class="cb" cx="1150" cy="288" r="3"/><circle class="cb" cx="1160" cy="290" r="2.4"/><circle class="cb" cx="1146" cy="292" r="2"/>
+      <rect class="body" x="1132" y="294" width="46" height="62" rx="4"/><rect class="tap" x="1150" y="306" width="10" height="5" rx="2"/></g>
+    <g class="walker"><circle cx="0" cy="300" r="13"/><path d="M-14 356 v-30 q14 -20 28 0 v30z"/><rect class="mug" x="14" y="318" width="9" height="11" rx="2"/></g></svg>`;
 })();
 
 function renderSound() {
@@ -237,7 +239,7 @@ function renderBars() {
     $('fl-' + r.k).style.setProperty('--v', v);
     $('pc-' + r.k).textContent = v + '%';
     const z = zoneOf(v), w = $('st-' + r.k);
-    w.classList.toggle('danger', !!z); w.classList.toggle('hot', v >= 80); $('zn-' + r.k).textContent = z;
+    w.classList.toggle('danger', !!z); w.classList.toggle('hot', v >= 80); w.classList.toggle('low', v <= 20); $('zn-' + r.k).textContent = z;
     w.setAttribute('aria-valuenow', v); w.setAttribute('aria-valuetext', `${r.name}: ${v}%${z ? ', ' + z : ''}`);
   }
   const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${C.bank} у.е. · магазин`;
@@ -251,15 +253,17 @@ function renderCard() {
   const card = $('card');
   const tag = slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">ОТ КОЛЛЕГИ · ${esc(c.author)}</span>`
     : c.random ? '<span class="rnd-tag">! СЛУЧАЙНОЕ СОБЫТИЕ</span>' : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
-  card.innerHTML = `<div class="card-head"><span class="who">${esc(c.who)}</span>${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div>`;
-  // вход новой карточки: из translateY(28px) scale(.95) и прозрачности (без анимации при «уменьшить движение»)
-  card.style.transition = 'none'; card.style.transform = RM.matches ? '' : 'translateY(28px) scale(.95)'; card.style.opacity = RM.matches ? '' : '0';
+  card.innerHTML = `<div class="card-head"><span class="who">${esc(c.who)}</span>${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div><div class="stamp" aria-hidden="true"></div>`;
+  // вход новой карточки: последствие — перемотка, случайное событие — помехи, новый день — лист календаря, иначе — снизу
+  const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % 3 === 0 && S.step > 0 ? 'page' : null;
+  card.style.transition = 'none'; card.style.transform = RM.matches || kind ? '' : 'translateY(28px) scale(.95)'; card.style.opacity = RM.matches || kind ? '' : '0';
   void card.offsetWidth;
   card.style.transition = RM.matches ? 'none' : `transform .38s ${EASE}, opacity .38s, border-color .2s, box-shadow .2s`; card.style.transform = ''; card.style.opacity = '';
+  FX.enter(card, kind);
   setPhase(PHASE_KEY[S.step % 3]);
   $('btnL').innerHTML = `<span class="ar">←</span><span>${esc(c.answers.left.label)}</span>`;
   $('btnR').innerHTML = `<span>${esc(c.answers.right.label)}</span><span class="ar">→</span>`;
-  $('clock').textContent = slot.time;
+  FX.clock(slot.time);
   $('gCareer').textContent = headerLine();
   const zs = S.season && SEASONS.find(z => z.id === S.season);
   $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
@@ -341,10 +345,12 @@ function preview(side) {
   }
   $('card').dataset.hot = side;
   $('btnL').classList.toggle('hot', side === 'left'); $('btnR').classList.toggle('hot', side === 'right');
+  FX.stamp(side, .4);
 }
 function clearPreview() {
   for (const r of RES) $('mk-' + r.k).innerHTML = '';
   delete $('card').dataset.hot; $('btnL').classList.remove('hot'); $('btnR').classList.remove('hot');
+  FX.stamp(null);
 }
 
 // Реплика персонажа на ваш ответ — своим цветом
@@ -384,7 +390,7 @@ function choose(side) {
   $('coach').hidden = true;
   setTimeout(() => {
     const { eff, blocked } = effectsOf(side);
-    for (const b of blocked) { S.used.push(b.item); toast(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`); sfx.item(); }
+    for (const b of blocked) { S.used.push(b.item); toast(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`); sfx.item(); FX.shield(ITEMS[b.item].name, b.stat); }
     for (const [k, v] of Object.entries(eff)) S.res[k] = clamp(S.res[k] + v);
     if (Object.values(eff).some(v => v <= -15)) sfx.sigh();
     if (RES.some(r => S.res[r.k] <= 15 || S.res[r.k] >= 85)) buzz('danger');
@@ -394,11 +400,13 @@ function choose(side) {
     if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: PHASE_TIME[at % 3], fixed: true, origin: ch.origin };
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(14, S.step + pc.after);
     if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: PHASE_TIME[pat % 3], fixed: true, origin: pc.origin };
-    clearPreview(); renderBars(); react(c, eff, side);
+    clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff);
     const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     const best = store.get(KEY.best, { step: 0, wins: 0 });
-    if (dead && !S.chanceUsed && QUIZ.length) { setTimeout(() => secondChance(dead.k, !deadLow), 650); return; }  // второй шанс — раз в неделю
-    if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); setTimeout(() => lose(dead.k, !deadLow), 650); return; } // busy остаётся до следующей недели
+    if (dead) FX.finale(dead.k, !deadLow);
+    const pause = FX.off ? 650 : 1150;  // успеть показать взрыв шкалы или её угасание
+    if (dead && !S.chanceUsed && QUIZ.length) { setTimeout(() => secondChance(dead.k, !deadLow), pause); return; }  // второй шанс — раз в неделю
+    if (dead) { best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save); setTimeout(() => lose(dead.k, !deadLow), pause); return; } // busy остаётся до следующей недели
     advance();
   }, RM.matches ? 120 : 380);
 }
@@ -407,7 +415,7 @@ function advance() {
   const best = store.get(KEY.best, { step: 0, wins: 0 });
   S.step++;
   if (S.mode === 'career' && C && S.step % 3 === 0) {  // вечер прошёл — рабочий день оплачен
-    pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars();
+    pay(C.salary); S.earned = (S.earned || 0) + C.salary; renderBars(); FX.coin(C.salary);
     toast(`+${C.salary} у.е. на счёт — зарплата за ${['понедельник', 'вторник', 'среду', 'четверг', 'пятницу'][S.step / 3 - 1]}`);
   }
   best.step = Math.max(best.step, S.step);
@@ -525,19 +533,20 @@ function secondChance(k, high) {
   const card = $('card'); let x0 = 0, dx = 0, t0 = 0, drag = false, pid = null;
   card.addEventListener('pointerdown', e => {
     if (busy || splashOn) return; drag = true; pid = e.pointerId; x0 = e.clientX; dx = 0; t0 = performance.now();
-    card.setPointerCapture(pid); card.style.transition = 'border-color .2s, box-shadow .2s';
+    card.setPointerCapture(pid); card.style.transition = 'border-color .2s, box-shadow .2s'; card.classList.remove('idle');
   });
   card.addEventListener('pointermove', e => {
     if (!drag || e.pointerId !== pid) return;
     dx = e.clientX - x0;
     card.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`;
     if (Math.abs(dx) > 40) preview(dx < 0 ? 'left' : 'right'); else clearPreview();
+    if (Math.abs(dx) > 20) FX.stamp(dx < 0 ? 'left' : 'right', (Math.abs(dx) - 20) / Math.min(140, innerWidth * .3));
   });
   const end = e => {
     if (!drag || e.pointerId !== pid) return; drag = false;
     const limit = Math.min(140, innerWidth * .3), v = Math.abs(dx) / Math.max(1, performance.now() - t0);
     if (Math.abs(dx) > limit || (Math.abs(dx) > 50 && v > .7)) { choose(dx < 0 ? 'left' : 'right'); return; }
-    card.style.transition = `transform .3s ${EASE}, border-color .2s, box-shadow .2s`; card.style.transform = ''; clearPreview();
+    card.style.transition = `transform .3s ${EASE}, border-color .2s, box-shadow .2s`; card.style.transform = ''; clearPreview(); card.classList.add('idle');
   };
   card.addEventListener('pointerup', end); card.addEventListener('pointercancel', end);
 })();
@@ -623,7 +632,7 @@ function lose(k, high) {
 }
 
 function win() {
-  sfx.win();
+  sfx.win(); FX.doors();
   const total = RES.reduce((a, r) => a + S.res[r.k], 0), got = weekEndings(true), career = S.mode === 'career' && C;
   let week, last = false;
   if (career) {
