@@ -150,6 +150,7 @@ function renderJoin(mode, lead) {
   $('joinLogout').hidden = !(edit && prefs.email); $('joinLogout').textContent = L('Выйти из аккаунта', 'Log out'); delete $('joinLogout').dataset.armed;
   $('joinCancel').hidden = mode === 'profile';
   $('joinNote').hidden = login;
+  $('joinConsent').hidden = !(reg || login);  // согласие на обработку персональных данных — при регистрации и входе
   joinPanel('joinForm');
   (login ? $('joinEmail') : $('joinName')).focus({ preventScroll: true });
 }

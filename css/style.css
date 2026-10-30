@@ -1215,3 +1215,5 @@ body:has(#profSheet:not([hidden])) .viral-pop, body:has(#modal:not([hidden])) .v
 .hs-row.locked { opacity: .6; }
 .site-legal { margin: 10px 0 0; text-align: center; font-size: 11.5px; font-weight: 700; color: var(--text-2); opacity: .8; }
 .site-legal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.join-consent { font-size: 11.5px; opacity: .85; }
+.join-consent a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
