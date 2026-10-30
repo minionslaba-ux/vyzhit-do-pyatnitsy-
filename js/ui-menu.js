@@ -16,6 +16,7 @@ function renderMenu() {
   myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? acctLabel() : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
   $('meRegister').hidden = registered() || !board.online;
   $('meLogin').hidden = !!prefs.email || !board.online; renderAcctBox();
+  $('topLogin').hidden = registered() || !board.online || !!window.VDP_PLATFORM;  // гость или истекла сессия — «Войти» на виду
   $('mbAva').textContent = prefs.avatar || '😎';
   $('mbName').textContent = prefs.name ? prefs.name.split(' ')[0] : L('Профиль', 'Profile');
   $('meBadge').classList.toggle('guest', !registered());
@@ -83,6 +84,7 @@ $('openOffice').onclick = needAccount(showOffice, L('«Мой офис» дос�
 $('openChat').onclick = needAccount(() => showChat('team'), L('Чаты доступны после регистрации — так коллеги будут знать, кто пишет.', 'Chats unlock after you sign up — so your coworkers know who’s talking.'));
 $('meRegister').onclick = () => prefs.email ? renderJoin('login') : renderJoin('register');
 $('meLogin').onclick = () => renderJoin('login');
+$('topLogin').onclick = () => renderJoin('login', socialVia() ? L(`Сессия входа истекла — войдите через ${viaName(socialVia())} ещё раз.`, `Your session expired — sign in with ${viaName(socialVia())} again.`) : undefined);
 $('ctaOffice').onclick = () => showOffice();
 $('openInvite').onclick = () => openShare(registered() ? 'team' : 'friends');
 // Зарегистрированному без офиса — предложение создать свой; с офисом — его название под именем

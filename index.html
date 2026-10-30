@@ -162,7 +162,10 @@
       <button class="sound glass" id="soundMenu" aria-label="Звук" data-en-aria-label="Sound"></button>
     </div>
   <!-- «Мой профиль»: плашка справа вверху открывает панель со всем, что про игрока и аккаунт -->
-  <button class="me-badge" type="button" id="meBadge" aria-haspopup="dialog" aria-controls="profSheet"><span class="mb-ava" id="mbAva" aria-hidden="true">😎</span><span class="mb-name" id="mbName" data-en="Profile">Профиль</span><span class="mb-caret" aria-hidden="true">▾</span></button>
+  <div class="me-top">
+    <button class="top-login" type="button" id="topLogin" hidden data-en="🔑 Log in">🔑 Войти</button>
+    <button class="me-badge" type="button" id="meBadge" aria-haspopup="dialog" aria-controls="profSheet"><span class="mb-ava" id="mbAva" aria-hidden="true">😎</span><span class="mb-name" id="mbName" data-en="Profile">Профиль</span><span class="mb-caret" aria-hidden="true">▾</span></button>
+  </div>
   <div class="prof-sheet" id="profSheet" hidden>
     <div class="ps-box panel" role="dialog" aria-modal="true" aria-labelledby="psTitle">
       <div class="ps-head"><b id="psTitle" data-en="My profile">Мой профиль</b><button class="ps-x" type="button" id="psClose" aria-label="Закрыть" data-en-aria-label="Close">×</button></div>
