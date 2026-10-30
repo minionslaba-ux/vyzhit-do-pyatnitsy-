@@ -1,0 +1,89 @@
+# Промты для видео в стиле игры «Выжить до пятницы»
+
+Для генераторов видео: Sora, Veo, Kling, Runway, Hailuo, Pika. Промты на английском: так генераторы понимают их точнее.
+Русский текст на экране генераторы рисуют с ошибками, поэтому надписи добавляйте при монтаже (CapCut, VN, Premiere) — они указаны в каждом ролике.
+
+## Общий стиль (добавляйте в начало каждого промта)
+
+```
+Neon synthwave office at night, near-black navy background (#07070d), glowing neon accents in magenta (#ff3bd4), cyan (#2de2e6) and lime (#d4ff3a), stylized semi-realistic 3D with soft bloom and glass reflections, glowing glass UI cards, night city skyline with lit windows behind panoramic office windows, cinematic lighting, smooth camera, vertical 9:16, high detail
+```
+
+**Негативный промт** (если генератор его поддерживает):
+```
+text, letters, captions, watermark, logo, distorted hands, extra fingers, blurry faces, daylight, flat lighting, horror, gore
+```
+
+Длительность каждого — 5–8 секунд. Склеивайте 2–3 ролика подряд и в конце ставьте заставку игры (`promo/video/`).
+
+---
+
+## 1. «Понедельник, 09:00»
+```
+A tired office worker sits down at a desk in a dark neon office, a giant glowing digital wall clock flips from 08:59 to 09:00 in cyan light, four tall glowing glass tubes on the wall light up one by one (purple, lime, red, cyan), slow push-in camera, dramatic but funny mood
+```
+Надписи: «Понедельник. 09:00» → «Доживёте до пятницы?»
+
+## 2. «Есть минутка?»
+```
+Friday evening 17:55, an office worker in a coat is about to leave, a smiling boss in a dark suit and red tie slowly rises from behind a glowing monitor holding a laptop, neon clock shows 17:55, the worker freezes mid-step, comedic slow motion, magenta rim light on the boss
+```
+Надписи: «Пятница, 17:55» → Босс: «Есть минутка?» → «Что вы выберете? ⬅️ ➡️»
+
+## 3. «Четыре шкалы»
+```
+Close-up of four tall glowing glass tubes filled with luminous liquid in purple, lime, red and cyan, liquid levels rise and fall rhythmically like an equalizer, tiny bubbles, glossy reflections, one red tube starts to boil with steam at the top, macro product shot, dark background
+```
+Надписи: «Кукуха · Энергия · Босс · Коллеги» → «0% — конец недели» → «100% — тоже»
+
+## 4. «Свайп»
+```
+First-person view of a hand holding a smartphone, a glowing glass card on the screen is swiped to the right with a satisfying motion, the card flies off in a trail of neon light, floating numbers "+25" in lime and "-20" in red rise from glowing gauges, dark neon office background, crisp UI motion design
+```
+Надписи: «Тяните карточку» → «Каждое решение — последствия»
+
+## 5. «Перегрев»
+```
+A red glowing glass gauge tube labeled with a boss icon fills to the top, the liquid boils violently, steam bursts out, the whole screen flashes red-orange, an office worker in a chair stares in shock surrounded by fourteen sticky notes, comedic dramatic zoom
+```
+Надписи: «Босс доволен на 100%» → «Теперь у вас 14 проектов» → «Перегрев. Это тоже конец»
+
+## 6. «Хранитель кулера»
+```
+An office worker heroically guards a glowing office water cooler like a medieval knight, holding a paper cup like a shield, a queue of colleagues waits in neon light, bubbles rise inside the water bottle with cyan glow, epic low-angle shot, humorous tone
+```
+Надписи: «Новая профессия: Хранитель кулера» → «Знает все сплетни офиса»
+
+## 7. «Пятница, 18:00»
+```
+Wide shot of a neon office at night, the digital clock flips to 18:00, sliding glass doors open with a magenta glow, office lights switch off row by row, a happy worker walks out into the glowing night city, confetti in magenta, cyan and lime falls, triumphant cinematic moment
+```
+Надписи: «18:00» → «Неделя пережита!» → «survivefriday.com»
+
+## 8. «Коллеги, которые всё помнят»
+```
+Quick montage of quirky office coworkers in neon light: a bearded man carrying moving boxes and a piano, a cheerful man in a retro 80s wig with a microphone, a woman whispering gossip behind a coffee mug, a strict accountant in glasses watering violets on her desk, each turns to the camera with a different emotion, snappy cuts
+```
+Надписи: «Фёдор: опять переезд» → «Роберт: корпоратив в стиле 80-х» → «Галя знает всё» → «Коллеги помнят ваши решения»
+
+## 9. «Собеседование»
+```
+A job interview in a dark neon meeting room, a friendly HR manager in a pink blouse sits across a glossy table from a nervous candidate, three glowing glass answer cards float above the table and slowly rotate, one card glows lime, soft cinematic lighting, slight comedic tension
+```
+Надписи: «Где вы видите себя через пять лет?» → «На Бали, без ноутбука» → HR: «Мы тоже. Но вопрос был про работу»
+
+## 10. «Вызов коллеге»
+```
+Two coworkers at neighboring desks in a neon office compare their phone screens with competitive smirks, glowing score numbers float above the phones, a neon scoreboard on the wall shows two departments racing, playful rivalry, dynamic handheld camera
+```
+Надписи: «Неделя дня — одна на всех» → «Маркетинг против бухгалтерии» → «Сможешь лучше? survivefriday.com»
+
+---
+
+## Как собрать ролик для Reels, Shorts и TikTok
+
+1. 2–3 ролика из списка (например, 2 → 5 → 7), по 5–7 секунд.
+2. Надписи шрифтом с толстым начертанием (в CapCut — Montserrat Black или Unbounded), цвета: белый, розовый #ff3bd4, голубой #2de2e6.
+3. Звук: синтвейв или ретро-электроника из библиотеки CapCut, щелчок степлера на свайпах.
+4. Последние 2–3 секунды — концовка заставки игры (`promo/video/zastavka-9x16.mp4`) с адресом survivefriday.com.
+5. Подпись и хештеги — в `videos.md`.

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Nunito:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=block" rel="stylesheet">
+<style>
+:root { --bg: #07070d; --mag: #ff3bd4; --cyan: #2de2e6; --lime: #d4ff3a; --down: #ff3b6b; --text: #f2f0ff; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: var(--W); height: var(--H); overflow: hidden; background: var(--bg); color: var(--text); font-family: Nunito, sans-serif; }
+#stage { position: absolute; left: 50%; top: 0; width: 540px; height: 960px; margin-left: -270px; overflow: hidden; }
+.bgfull { position: absolute; inset: 0; background: radial-gradient(70% 50% at 15% 105%, rgba(178,107,255,.38), transparent 60%), radial-gradient(60% 45% at 90% -5%, rgba(45,226,230,.3), transparent 60%), var(--bg); }
+#city { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; opacity: .5; }
+#city svg { width: 100%; height: 100%; }
+.cw { fill: rgba(255,255,255,.05); } .cw.on { fill: rgba(255,214,120,.65); }
+.bld { fill: #12121f; }
+.abs { position: absolute; }
+/* сцена 1: заголовок */
+#title { left: 0; right: 0; top: 330px; text-align: center; font-family: Unbounded; font-weight: 800; text-transform: uppercase; line-height: 1; }
+#title .a { display: block; font-size: 72px; color: #fff; text-shadow: 0 0 22px rgba(255,59,212,.6); }
+#title .b { display: block; font-size: 52px; color: var(--mag); text-shadow: 0 0 18px var(--mag), 0 0 50px rgba(255,59,212,.6); }
+#title small { display: block; margin-top: 22px; font-family: 'JetBrains Mono'; font-size: 16px; letter-spacing: .2em; color: #7df9ff; text-shadow: 0 0 10px var(--cyan); }
+/* интерфейс игры */
+#ui { inset: 0; }
+#clock { left: 0; right: 0; top: 52px; text-align: center; font-family: 'JetBrains Mono'; font-weight: 700; font-size: 74px; color: #7df9ff; text-shadow: 0 0 14px rgba(45,226,230,.9), 0 0 44px rgba(45,226,230,.5); }
+#day { left: 0; right: 0; top: 30px; text-align: center; font-family: Unbounded; font-weight: 600; font-size: 15px; letter-spacing: .14em; color: #fff; }
+#segs { left: 50%; top: 150px; transform: translateX(-50%); display: flex; gap: 5px; }
+#segs i { width: 18px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); }
+#segs i.d { background: #7df9ff; box-shadow: 0 0 8px var(--cyan); } #segs i.n { background: var(--mag); box-shadow: 0 0 10px var(--mag); }
+#tubes { left: 0; right: 0; top: 196px; display: flex; justify-content: center; gap: 22px; }
+.tw { position: relative; display: flex; flex-direction: column; align-items: center; gap: 7px; width: 92px; }
+.tube { position: relative; width: 50px; height: 150px; border-radius: 26px; border: 2.5px solid var(--cb); box-shadow: inset 0 0 18px var(--ci); overflow: hidden; }
+.fill { position: absolute; left: 5px; right: 5px; bottom: 5px; border-radius: 20px; background: linear-gradient(var(--cl), var(--c)); box-shadow: 0 0 24px var(--c); }
+.lbl { font-weight: 900; font-size: 16px; color: var(--cl); }
+.pct { font-family: 'JetBrains Mono'; font-size: 14px; color: #b9b4d6; margin-top: -4px; }
+.zone { font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 700; letter-spacing: .06em; color: #ffb03b; text-shadow: 0 0 8px #ff8a3b; min-height: 14px; }
+.tw[data-k=psyche] { --c: #b26bff; --cl: #e2c2ff; --cb: rgba(178,107,255,.6); --ci: rgba(178,107,255,.25); }
+.tw[data-k=energy] { --c: #c6f01a; --cl: #f2ffb8; --cb: rgba(212,255,58,.55); --ci: rgba(212,255,58,.2); }
+.tw[data-k=boss] { --c: #ff3b6b; --cl: #ffc2d0; --cb: rgba(255,90,130,.6); --ci: rgba(255,59,107,.22); }
+.tw[data-k=colleagues] { --c: #2de2e6; --cl: #c8feff; --cb: rgba(45,226,230,.6); --ci: rgba(45,226,230,.22); }
+.fnum { position: absolute; left: 50%; top: 40px; transform: translateX(-50%); font-family: 'JetBrains Mono'; font-weight: 700; font-size: 26px; white-space: nowrap; }
+.fnum.u { color: var(--lime); text-shadow: 0 0 12px var(--lime); } .fnum.d { color: var(--down); text-shadow: 0 0 12px var(--down); }
+.steam { position: absolute; left: 50%; top: -18px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(rgba(255,255,255,.7), transparent 70%); }
+#card { left: 40px; right: 40px; top: 470px; height: 300px; padding: 26px; border-radius: 30px; background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 2px solid var(--glow); box-shadow: 0 0 40px var(--glows); transform-origin: 50% 120%; }
+.head { display: flex; align-items: center; gap: 12px; }
+.face { width: 62px; height: 62px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px rgba(255,255,255,.15); }
+.face svg { width: 100%; height: 100%; display: block; }
+.face .brow, .face .ln { fill: none; stroke: #1b1424; stroke-width: 2.4; stroke-linecap: round; } .face .fl { fill: #3a1424; } .face .eyes { fill: #1b1424; }
+.face .glasses { fill: rgba(255,255,255,.12); stroke: #1b1424; stroke-width: 1.8; }
+.who { font-family: Unbounded; font-weight: 600; font-size: 14px; letter-spacing: .1em; padding: 8px 16px; border-radius: 99px; border: 1.5px solid rgba(255,59,212,.6); color: #ff8be6; }
+.ctext { margin-top: 20px; font-weight: 900; font-size: 27px; line-height: 1.22; color: #fff; }
+.stamp { position: absolute; top: 96px; padding: 8px 16px; border: 4px solid currentColor; border-radius: 12px; font-family: Unbounded; font-weight: 800; font-size: 22px; background: rgba(7,7,13,.9); }
+.stamp.r { left: 24px; color: #7df9ff; transform: rotate(-11deg); text-shadow: 0 0 12px var(--cyan); }
+.stamp.l { right: 24px; color: #ff8be6; transform: rotate(11deg); text-shadow: 0 0 12px var(--mag); }
+#ans { left: 40px; right: 40px; top: 796px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+#ans span { padding: 18px 12px; border-radius: 20px; text-align: center; font-weight: 900; font-size: 17px; }
+#ans .l { border: 2px solid var(--mag); color: #ffc2ef; } #ans .r { border: 2px solid var(--cyan); color: #c8feff; }
+/* текстовые вставки */
+#beat { left: 30px; right: 30px; top: 470px; text-align: center; font-family: Unbounded; font-weight: 800; text-transform: uppercase; line-height: 1.05; }
+#beat b { display: block; font-size: 54px; color: #fff; text-shadow: 0 0 22px rgba(255,59,212,.7); }
+#beat i { display: block; margin-top: 14px; font-style: normal; font-family: Nunito; font-weight: 900; font-size: 26px; text-transform: none; color: #ffc2d0; }
+#dim { inset: 0; background: rgba(7,7,13,.78); }
+#flash { inset: 0; }
+/* финал */
+#doorL, #doorR { top: 0; bottom: 0; width: 50.5%; background: linear-gradient(90deg, #0b0b16, #171730); }
+#doorL { left: 0; border-right: 4px solid var(--mag); box-shadow: 0 0 40px var(--mag); } #doorR { right: 0; border-left: 4px solid var(--mag); box-shadow: 0 0 40px var(--mag); }
+#big { left: 0; right: 0; top: 330px; text-align: center; }
+#big .t { font-family: 'JetBrains Mono'; font-weight: 700; font-size: 120px; color: #7df9ff; text-shadow: 0 0 22px var(--cyan), 0 0 70px var(--cyan); }
+#big .s { margin-top: 18px; font-family: Unbounded; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--mag); text-shadow: 0 0 18px var(--mag); text-transform: uppercase; }
+#conf { inset: 0; }
+#end { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; }
+#end .logo .a { display: block; font-family: Unbounded; font-weight: 800; font-size: 66px; color: #fff; text-transform: uppercase; line-height: 1; text-shadow: 0 0 22px rgba(255,59,212,.6); }
+#end .logo .b { display: block; font-family: Unbounded; font-weight: 800; font-size: 47px; color: var(--mag); text-transform: uppercase; line-height: 1; text-shadow: 0 0 18px var(--mag); }
+#end .q { font-weight: 900; font-size: 28px; color: #fff; }
+#end .free { font-family: 'JetBrains Mono'; font-size: 16px; color: #b9b4d6; letter-spacing: .04em; }
+#end .url { padding: 16px 30px; border-radius: 99px; background: var(--mag); color: var(--bg); font-family: Unbounded; font-weight: 800; font-size: 26px; box-shadow: 0 0 40px rgba(255,59,212,.75); }
+/* горизонтальный кадр: по бокам — тот же город, сцена в центре */
+body.wide #stage { top: 60px; transform: scale(1); }
+</style></head>
+<body>
+<div class="bgfull"></div>
+<div id="stage">
+  <div id="city" class="abs"></div>
+  <div id="ui" class="abs">
+    <div id="day" class="abs"></div><div id="clock" class="abs">09:00</div><div id="segs" class="abs"></div>
+    <div id="tubes" class="abs"></div>
+    <div id="card" class="abs"></div>
+    <div id="ans" class="abs"><span class="l"></span><span class="r"></span></div>
+  </div>
+  <div id="dim" class="abs"></div>
+  <div id="beat" class="abs"></div>
+  <div id="title" class="abs"><span class="a">Выжить</span><span class="b">до пятницы</span><small>ПОНЕДЕЛЬНИК · 09:00</small></div>
+  <div id="flash" class="abs"></div>
+  <div id="doorL" class="abs"></div><div id="doorR" class="abs"></div>
+  <div id="big" class="abs"><div class="t">17:59</div><div class="s">Неделя<br>пережита</div></div>
+  <canvas id="conf" class="abs" width="540" height="960"></canvas>
+  <div id="end" class="abs"><div class="logo"><span class="a">Выжить</span><span class="b">до пятницы</span></div>
+    <div class="q">А вы доживёте до пятницы?</div><div class="free">Бесплатно · без регистрации · 5 минут</div><div class="url">survivefriday.com</div></div>
+</div>
+<script>
+// портреты — те же, что в игре (faces.js подключается из репозитория)
+</script>
+<script src="../../js/faces.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const ease = x => 1 - Math.pow(1 - x, 3), inout = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const lerp = (a, b, x) => a + (b - a) * x;
+// город с окнами
+let seed = 5; const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+let city = '', x = 0, wins = 0;
+while (x < 560) { const w = 34 + Math.floor(r() * 50), h = 120 + Math.floor(r() * 230); city += `<rect class="bld" x="${x}" y="${440 - h}" width="${w}" height="${h}"/>`;
+  for (let wy = 450 - h; wy < 430; wy += 18) for (let wx = x + 7; wx < x + w - 9; wx += 13) if (r() > .4) city += `<rect class="cw" data-i="${wins++}" x="${wx}" y="${wy}" width="6" height="9"/>`;
+  x += w + 5; }
+$('city').innerHTML = `<svg viewBox="0 0 540 440" preserveAspectRatio="xMidYMax slice">${city}</svg>`;
+const cws = [...document.querySelectorAll('.cw')].sort(() => r() - .5);
+// шкалы
+const RES = [['psyche', 'Кукуха'], ['energy', 'Энергия'], ['boss', 'Босс'], ['colleagues', 'Коллеги']];
+$('tubes').innerHTML = RES.map(([k, n]) => `<div class="tw" data-k="${k}"><div class="tube"><div class="fill" id="f-${k}"></div></div><span class="lbl">${n}</span><span class="pct" id="p-${k}"></span><span class="zone" id="z-${k}"></span><span class="fnum" id="n-${k}"></span><span class="steam" id="s-${k}"></span></div>`).join('');
+$('segs').innerHTML = '<i></i>'.repeat(15);
+const CARDS = [
+  { who: 'Босс', face: { skin: 1, hair: 'short', hairC: '#55555f', shirt: '#26263f', tie: '#ff3b6b', bg: '#3a1020' }, glow: '#ff3bd4', text: 'Пятница, 17:55. «Есть минутка? Там ма-а-аленькая правка».', l: 'Я уже дома', r: 'Сделаю', side: 'r', mood: 'joy' },
+  { who: 'Роберт', face: { skin: 2, hair: 'afro', hairC: '#ff3bd4', shirt: '#d4ff3a', bow: true, bg: '#1a1a2e' }, glow: '#2de2e6', text: 'Роберт зовёт на корпоратив в стиле 80-х. Парик уже куплен. На вас.', l: 'Сослаться на дедлайн', r: 'Надеть парик', side: 'l', mood: 'sad' },
+];
+let cardShown = -1;
+function showCard(i) {
+  if (cardShown === i) return; cardShown = i; const c = CARDS[i];
+  $('card').style.setProperty('--glow', c.glow); $('card').style.setProperty('--glows', c.glow + '55');
+  $('card').innerHTML = `<div class="head"><span class="face">${faceSvg(c.face, 'neutral')}</span><span class="who">${c.who}</span></div><div class="ctext">${c.text}</div><div class="stamp ${c.side}">${c.side === 'r' ? c.r : c.l}</div>`;
+  $('ans').children[0].textContent = '← ' + c.l; $('ans').children[1].textContent = c.r + ' →';
+}
+function setMood(m) { const g = document.querySelector('#card .expr'); if (g && g.dataset.m !== m) { g.dataset.m = m; g.innerHTML = exprSvg(m); } }
+function tubes(vals, nums, numK) {
+  for (const [k] of RES) {
+    const v = Math.round(vals[k]);
+    $('f-' + k).style.height = `calc(${v}% - 10px)`; $('p-' + k).textContent = v + '%';
+    $('z-' + k).textContent = v >= 80 ? 'ПЕРЕГРЕВ' : v <= 20 ? 'НА ГРАНИ' : '';
+    $('z-' + k).style.color = v >= 80 ? '#ffb03b' : '#ff3b6b';
+    const n = nums && nums[k]; const el = $('n-' + k);
+    if (n) { el.textContent = (n > 0 ? '+' : '−') + Math.abs(n); el.className = 'fnum ' + (n > 0 ? 'u' : 'd'); el.style.opacity = 1 - numK; el.style.transform = `translate(-50%, ${-numK * 50}px) scale(${1 + .3 * (1 - numK)})`; }
+    else el.style.opacity = 0;
+  }
+}
+const A = { psyche: 55, energy: 65, boss: 50, colleagues: 60 };
+const D1 = { psyche: -15, energy: -20, boss: 25, colleagues: 0 }, D2 = { psyche: 15, energy: 5, boss: 0, colleagues: -15 };
+const add = (a, d, k) => Object.fromEntries(Object.keys(a).map(x => [x, a[x] + (d[x] || 0) * k]));
+// конфетти
+const conf = Array.from({ length: 140 }, () => ({ x: r() * 540, y: -r() * 400, vy: 3 + r() * 5, vx: (r() - .5) * 3, s: 5 + r() * 7, c: ['#ff3bd4', '#2de2e6', '#d4ff3a', '#b26bff', '#fff'][Math.floor(r() * 5)], a: r() * 6 }));
+function confetti(k) {
+  const cv = $('conf'), ctx = cv.getContext('2d'); ctx.clearRect(0, 0, 540, 960);
+  if (k <= 0) return;
+  for (const p of conf) { const f = k * 60; ctx.save(); ctx.translate(p.x + p.vx * f, p.y + p.vy * f * 1.6); ctx.rotate(p.a + f * .1); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); }
+}
+const op = (id, v) => { $(id).style.opacity = v; $(id).style.visibility = v > .001 ? 'visible' : 'hidden'; };
+// кадр по времени t (секунды); общая длина 15 с
+window.frame = t => {
+  // сцена 1: заголовок (0–2.4)
+  const s1 = seg(t, .2, 1.1), flick = t < 1.1 ? (Math.sin(t * 60) > -.2 ? 1 : .3) : 1;
+  op('title', t < 2.4 ? s1 * flick : 1 - seg(t, 2.4, 2.8));
+  $('title').style.transform = `scale(${lerp(.92, 1, ease(s1)) + seg(t, 2.4, 2.8) * .1})`;
+  // окна города загораются к вечеру
+  const lit = Math.floor(cws.length * (.15 + .55 * seg(t, 0, 12)));
+  cws.forEach((w, i) => w.classList.toggle('on', i < lit && t < 12.8));
+  // интерфейс (2.6–10.3)
+  op('ui', seg(t, 2.6, 3.0) * (1 - seg(t, 10.2, 10.5)));
+  // время и день
+  const days = ['ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА'];
+  let clock = '09:00', day = 0, step = 0;
+  if (t > 5.6) { clock = '13:00'; step = 1; } if (t > 7.2) { clock = '17:00'; step = 2; }
+  if (t > 7.6) { day = 1 + Math.min(3, Math.floor((t - 7.6) / .35)); clock = ['09:00', '13:00', '17:00'][Math.floor((t - 7.6) / .12) % 3]; step = 3 + Math.floor((t - 7.6) / .12) % 11; }
+  if (t > 9.0) { day = 4; clock = '17:55'; step = 14; }
+  $('clock').textContent = clock; $('day').textContent = days[day];
+  [...$('segs').children].forEach((s, i) => s.className = i < step ? 'd' : i === step ? 'n' : '');
+  // карточка 1: появляется, тянется вправо, улетает
+  const c1in = ease(seg(t, 2.8, 3.3)), drag1 = inout(seg(t, 3.6, 4.4)), fly1 = seg(t, 4.5, 4.9);
+  const c2in = ease(seg(t, 5.0, 5.5)), drag2 = inout(seg(t, 5.9, 6.6)), fly2 = seg(t, 6.7, 7.1);
+  let vals = A, nums = null, nk = 0;
+  if (t < 5.0) {
+    showCard(0);
+    const dx = drag1 * 110 + fly1 * 700;
+    $('card').style.transform = `translate(${dx}px, ${(1 - c1in) * 40}px) rotate(${dx / 16}deg)`; $('card').style.opacity = c1in * (1 - fly1);
+    document.querySelector('#card .stamp').style.opacity = drag1;
+    setMood(drag1 > .3 ? 'joy' : 'neutral');
+    if (t > 4.6) { const k = seg(t, 4.6, 5.3); vals = add(A, D1, ease(k)); nums = D1; nk = seg(t, 4.6, 5.6); }
+  } else {
+    showCard(1); const B = add(A, D1, 1);
+    const dx = -drag2 * 110 - fly2 * 700;
+    $('card').style.transform = `translate(${dx}px, ${(1 - c2in) * 40}px) rotate(${dx / 16}deg)`; $('card').style.opacity = c2in * (1 - fly2) * (1 - seg(t, 7.3, 7.6));
+    document.querySelector('#card .stamp').style.opacity = drag2;
+    setMood(drag2 > .3 ? 'sad' : 'neutral');
+    vals = B;
+    if (t > 6.8) { vals = add(B, D2, ease(seg(t, 6.8, 7.4))); nums = D2; nk = seg(t, 6.8, 7.8); }
+    if (t > 7.6) { const k = seg(t, 7.6, 9.0); vals = { psyche: 55 + Math.sin(t * 9) * 18, energy: 50 + Math.cos(t * 7) * 22, boss: 75 + Math.sin(t * 5) * 10, colleagues: 45 + Math.cos(t * 8) * 15 }; }
+    if (t > 9.0) vals = { psyche: 48, energy: 30, boss: lerp(84, 100, ease(seg(t, 9.6, 10.2))), colleagues: 52 };
+  }
+  tubes(vals, nums, nk);
+  op('ans', 1);
+  // пар над Боссом в перегреве
+  const boil = t > 9.0 && t < 10.4 ? 1 : 0;
+  ['psyche', 'energy', 'boss', 'colleagues'].forEach(k => { const s = $('s-' + k); const on = k === 'boss' && boil; s.style.opacity = on ? .5 + .5 * Math.sin(t * 20) : 0; s.style.transform = `translateY(${on ? -((t * 40) % 20) : 0}px) scale(${1 + ((t * 2) % 1)})`; });
+  // текстовые вставки поверх
+  const beats = [[7.7, 8.5, '15 решений', 'с понедельника по пятницу'], [8.5, 9.3, '4 шкалы', 'держите их в балансе'], [9.3, 10.4, '0% — конец', 'и 100% — тоже']];
+  const b = beats.find(([a, z]) => t >= a && t < z);
+  op('dim', b ? .55 : 0);
+  if (b) { $('beat').innerHTML = `<b>${b[2]}</b><i>${b[3]}</i>`; const k = seg(t, b[0], b[0] + .2); op('beat', k * (1 - seg(t, b[1] - .12, b[1]))); $('beat').style.transform = `scale(${lerp(1.25, 1, ease(k))})`; } else op('beat', 0);
+  // вспышка перегрева
+  const fl = seg(t, 10.05, 10.2) * (1 - seg(t, 10.2, 10.6));
+  $('flash').style.background = `radial-gradient(circle at 50% 30%, rgba(255,90,40,${.2 * fl}), rgba(255,40,60,${.6 * fl}))`;
+  // финал: пятница 17:59 → 18:00, двери, неделя пережита (10.5–13.2)
+  const fin = t >= 10.5 && t < 13.4;
+  op('big', fin ? seg(t, 10.5, 10.8) * (1 - seg(t, 13.0, 13.4)) : 0);
+  $('big').querySelector('.t').textContent = t < 11.4 ? '17:59' : '18:00';
+  $('big').querySelector('.t').style.transform = t >= 11.4 && t < 11.6 ? `perspective(400px) rotateX(${(1 - seg(t, 11.4, 11.6)) * -90}deg)` : '';
+  op($('big').querySelector('.s').id || 'bigs', 1);
+  $('big').querySelector('.s').style.opacity = seg(t, 11.7, 12.0);
+  const doorsIn = seg(t, 10.4, 10.7), doorsOpen = inout(seg(t, 11.5, 12.4));
+  op('doorL', fin ? doorsIn : 0); op('doorR', fin ? doorsIn : 0);
+  $('doorL').style.transform = `translateX(${-doorsOpen * 102}%)`; $('doorR').style.transform = `translateX(${doorsOpen * 102}%)`;
+  confetti(t > 11.7 && t < 13.6 ? seg(t, 11.7, 13.6) : 0);
+  // концовка (13.2–15)
+  const e = seg(t, 13.2, 13.7); op('end', e);
+  $('end').style.transform = `scale(${lerp(.94, 1, ease(e))})`;
+  $('end').querySelector('.url').style.transform = `scale(${1 + .04 * Math.sin(t * 6) * seg(t, 13.8, 14.2)})`;
+};
+// у #big .s нет id — держим видимым через стиль
+document.querySelector('#big .s').id = 'bigs';
+window.ready = document.fonts.ready.then(() => true);
+frame(0);
+</script>
+</body></html>
