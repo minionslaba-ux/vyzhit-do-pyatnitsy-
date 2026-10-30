@@ -39,6 +39,8 @@ const NEEDS = [
   { id: 'gym', from: 38, price: 15, mood: 12, ico: '🏋️', t: L('Спортзал', 'Gym membership'), ask: L('Спина болит от офисного кресла. Купим абонемент в спортзал?', 'My back hurts from the office chair. Gym membership?') },
 ];
 const needText = (n, h, k) => typeof n[k] === 'function' ? n[k](h) : n[k];
+// Мультик к большой покупке: машина — уезжает на ней, отпуск у моря — катается на лодке, остальное — праздник
+const needToon = n => ({ car: { kind: 'ride', prop: 'car' }, trip: { kind: 'ride', prop: 'boat' } })[n.id] || { kind: 'need' };
 const XP_COURSE = { price: 20, xp: 60 };
 const LOAN_CAP = 150;
 
@@ -89,27 +91,30 @@ function heroModal(html, preset, emotion) {
 }
 
 // Создание аватара: 10 персонажей, имя, профессия
-function heroCreate(done) {
-  let pick = HERO_PRESETS[0], nameTouched = false;
+// change — сменить персонажа в идущей карьере: внешность и имя новые, настроение, покупки, дети и деньги остаются
+function heroCreate(done, change = false) {
+  const old = change ? careerNow()?.hero : null;
+  let pick = old ? heroPreset(old) : HERO_PRESETS[0], nameTouched = false;
   const profOpts = Object.entries(PROF).map(([k, p]) => `<option value="${k}" ${k === (prefs.prof || 'marketer') ? 'selected' : ''}>${p.icon} ${esc(p.name)}</option>`).join('');
   const { m, close } = heroModal(`
-    <h2 id="heroTitle">${L('Ваш персонаж', 'Your character')}</h2>
-    <p class="hero-lead">${L('Он будет жить вашей карьерой: просить еду, жильё, машину, отпуск — всё стоит денег. Покрутите пальцем, чтобы рассмотреть.', 'They live off your career: food, a home, a car, vacations — it all costs money. Drag to look around.')}</p>
+    <h2 id="heroTitle">${old ? L('Сменить персонажа', 'Change character') : L('Ваш персонаж', 'Your character')}</h2>
+    <p class="hero-lead">${old ? L('Выберите другую внешность и имя. Настроение, покупки, дети и деньги останутся; одежда — по новой.', 'Pick a new look and name. Mood, purchases, kids and money stay; the outfit resets.') : L('Он будет жить вашей карьерой: просить еду, жильё, машину, отпуск — всё стоит денег. Покрутите пальцем, чтобы рассмотреть.', 'They live off your career: food, a home, a car, vacations — it all costs money. Drag to look around.')}</p>
     <div class="hero-pick">
       <canvas class="hero-cv" data-framing="full" aria-label="${L('Персонаж в 3D', '3D character')}"></canvas>
       <div class="hero-side">
         <b class="hero-nm" id="hcName"></b><small id="hcSub"></small>
         <label class="field"><span>${L('Имя', 'Name')}</span><input type="text" id="hcInput" maxlength="16" autocomplete="off"></label>
-        <label class="field"><span>${L('Профессия', 'Job')}</span><select id="hcProf">${profOpts}</select></label>
+        ${old ? '' : `<label class="field"><span>${L('Профессия', 'Job')}</span><select id="hcProf">${profOpts}</select></label>`}
       </div>
     </div>
-    <div class="hero-grid" id="hcGrid">${HERO_PRESETS.map((p, i) => `<button type="button" class="hero-thumb${i ? '' : ' on'}" data-i="${i}" aria-label="${esc(p.name)}"><img alt=""><span>${esc(p.name)}<small>${p.married ? '💍' : ''}</small></span></button>`).join('')}</div>
-    <button class="btn-main" type="button" id="hcGo">${L('Начать карьеру', 'Start the career')}</button>`, pick, 'happy');
+    <div class="hero-grid" id="hcGrid">${HERO_PRESETS.map((p, i) => `<button type="button" class="hero-thumb${p === pick ? ' on' : ''}" data-i="${i}" aria-label="${esc(p.name)}"><img alt=""><span>${esc(p.name)}<small>${p.married ? '💍' : ''}</small></span></button>`).join('')}</div>
+    <button class="btn-main" type="button" id="hcGo">${old ? L('Сменить', 'Change') : L('Начать карьеру', 'Start the career')}</button>${old ? `<button class="btn-ghost" type="button" id="hcCancel">${L('Отмена', 'Cancel')}</button>` : ''}`, pick, 'happy');
   const show = () => {
     $('hcName').textContent = $('hcInput').value || pick.name;
     $('hcSub').textContent = `${pick.age} ${L('лет', 'y.o.')} · ${pick.married ? (pick.g === 'f' ? L('замужем', 'married') : L('женат', 'married')) : (pick.g === 'f' ? L('не замужем', 'single') : L('холост', 'single'))}`;
   };
-  $('hcInput').value = pick.name; show();
+  $('hcInput').value = old ? old.name : pick.name; show();
+  if (old) $('hcCancel').onclick = () => { close(); done?.(); };
   $('hcInput').oninput = () => { nameTouched = true; show(); };
   m.querySelectorAll('.hero-thumb').forEach(b => b.onclick = () => {
     pick = HERO_PRESETS[+b.dataset.i];
@@ -121,8 +126,17 @@ function heroCreate(done) {
   $('hcGo').onclick = () => {
     const name = ($('hcInput').value || pick.name).trim().replace(/\s+/g, ' ').slice(0, 16) || pick.name;
     const C2 = careerNow();
+    if (old) {
+      C2.hero = { ...old, preset: pick.id, name, wear: {}, wearPrev: {} };
+      if (old.preset !== pick.id) for (const k of C2.hero.kids || []) Object.assign(k.look, { skin: pick.skin, eyes: pick.eyes, hairColor: pick.hairColor });  // дети похожи на родителя
+      careerSave(C2); close(); sfx.item?.();
+      track('hero_change', { detail: pick.id });
+      toast(L(`Теперь вы играете за: ${name}`, `You’re now playing as ${name}`));
+      return done?.();
+    }
     C2.prof = prefs.prof = $('hcProf').value; store.set(KEY.prefs, prefs);
     C2.hero = { preset: pick.id, name, married: pick.married, mood: 70, owned: [], last: {}, pending: null, xpWeek: 0, breaks: 0 };
+    ensureKids(C2.hero);
     C2.res = freshRes(VACANCIES.find(v => v.name === C2.company)?.perk); careerSave(C2);  // профессия могла смениться — пересчитать стартовые шкалы
     close(); sfx.win?.();
     toast(L(`Знакомьтесь: ${name}. Берегите настроение — и кошелёк`, `Meet ${name}. Mind their mood — and your wallet`));
@@ -158,6 +172,7 @@ function needState(n, h, week) {
 function heroShop() {
   const C2 = careerNow(), h = C2?.hero; if (!h) return;
   dropView();
+  if (!h.kids?.length) { ensureKids(h); careerSave(C2); }
   const m = $('modal');
   const render = () => {
     const rows = NEEDS.map(n => ({ n, s: needState(n, h, C2.week) })).filter(x => !x.s.hide);
@@ -167,6 +182,7 @@ function heroShop() {
       ${moodScaleHtml(h)}
       <h3 class="hs-h">${L('Подарки и мелочи', 'Treats & little things')}</h3>
       <div class="hs-cats">${GOODS.map(g => `<button type="button" class="hs-cat" data-cat="${g.id}"><span aria-hidden="true">${g.ico}</span><b>${esc(g.t)}</b><small>${L(`${g.items.length} вар. · от ${money(Math.min(...g.items.map(x => x.price)))}`, `${g.items.length} options · from ${money(Math.min(...g.items.map(x => x.price)))}`)}</small></button>`).join('')}</div>
+      <h3 class="hs-h">${L('Дети', 'Kids')}</h3>${kidsHtml(h)}
       <h3 class="hs-h">${L('Большие цели', 'Big goals')}</h3>
       <div class="hs-list">${rows.map(({ n, s }) => `<div class="hs-row ${s.st}">
         <span class="hs-ico" aria-hidden="true">${n.ico}</span>
@@ -178,9 +194,10 @@ function heroShop() {
       <button class="btn-ghost" type="button" id="hsClose">${L('Закрыть', 'Close')}</button></div>`;
     m.querySelectorAll('[data-buy],[data-loan]').forEach(b => b.onclick = () => {
       const n = NEEDS.find(x => x.id === (b.dataset.buy || b.dataset.loan));
-      if (fulfill(C2, h, n, !!b.dataset.loan)) playToon({ kind: 'need', need: n, mood: n.mood, h }, heroShop);
+      if (fulfill(C2, h, n, !!b.dataset.loan)) playToon({ ...needToon(n), need: n, mood: n.mood, h }, heroShop);
     });
     m.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => goodsPicker(b.dataset.cat, heroShop));
+    m.querySelectorAll('[data-kid]').forEach(b => b.onclick = () => kidShop(+b.dataset.kid, heroShop));
     $('hsClose').onclick = () => { m.hidden = true; renderMenu(); };
   };
   render(); m.hidden = false;
@@ -206,7 +223,7 @@ function heroAsk() {
       <button class="btn-link" type="button" id="haLater">${L(`Отложить (${h.name} расстроится)`, `Later (${h.name} will be upset)`)}</button>
     </div>`, p, 'ask');
   const back = () => { if (!views.menu.hidden) renderMenu(); };  // на экране итогов недели — остаёмся на нём
-  const bought = ok => { if (!ok) return; close(); playToon({ kind: 'need', need: n, mood: n.mood, h }, back); };
+  const bought = ok => { if (!ok) return; close(); playToon({ ...needToon(n), need: n, mood: n.mood, h }, back); };
   if ($('haPay')) $('haPay').onclick = () => bought(fulfill(C2, h, n, false));
   $('haLoan').onclick = () => bought(fulfill(C2, h, n, true));
   $('haBonus').onclick = () => { h.wantBonus = true; careerSave(C2); close(); toast(L('📋 В начале следующей недели придёт задача с премией — заработайте и купите', '📋 A bonus task will arrive at the start of next week — earn it and buy')); back(); };
@@ -236,6 +253,7 @@ function heroCard() {
   const box = $('heroCard'); if (!box) return;
   const C2 = careerNow(), h = C2?.hero;
   if (!h || views.menu.hidden) { box.hidden = true; cardView?.dispose(); cardView = null; cardKey = ''; return; }
+  if (!h.kids?.length) { ensureKids(h); careerSave(C2); }  // карьеры до появления детей
   const n = h.pending && NEEDS.find(x => x.id === h.pending), mood = h.mood ?? 70, p = heroLook(h), key = h.preset + JSON.stringify(h.wear || {});
   box.hidden = false;
   const keepCv = cardView && cardKey === key && box.querySelector('canvas');
@@ -245,12 +263,16 @@ function heroCard() {
       ${moodScaleHtml(h)}<small>${L('Счёт', 'Balance')} ${money(C2.bank)}${C2.loan ? ` · ${L('кредит', 'loan')} ${money(C2.loan)}` : ''}</small>
       ${n ? `<button class="btn-main hero-req" type="button" id="hcAsk">${n.ico} ${L('Просит', 'Wants')}: ${esc(needText(n, h, 't'))} · ${money(n.price)}</button>` : `<small class="hero-ok">${L('Сейчас ничего не просит', 'Not asking for anything right now')}</small>`}
       <span class="hero-btns"><button class="btn-chip" type="button" id="hcShop">🛍️ ${L('Покупки', 'Shopping')}</button>${topupBtn(0, '')}
-      <button class="btn-chip" type="button" id="hcCourse" ${h.xpWeek === C2.week ? 'disabled' : ''}>📚 ${L(`Курсы +${XP_COURSE.xp} опыта — ${money(XP_COURSE.price)}`, `Course +${XP_COURSE.xp} XP — ${money(XP_COURSE.price)}`)}</button></span>
-      ${h.owned.length ? `<span class="hero-owned">${h.owned.map(id => NEEDS.find(x => x.id === id)?.ico || '').join(' ')}</span>` : ''}</div>`;
+      <button class="btn-chip" type="button" id="hcCourse" ${h.xpWeek === C2.week ? 'disabled' : ''}>📚 ${L(`Курсы +${XP_COURSE.xp} опыта — ${money(XP_COURSE.price)}`, `Course +${XP_COURSE.xp} XP — ${money(XP_COURSE.price)}`)}</button>
+      <button class="btn-chip" type="button" id="hcChange">🔄 ${L('Сменить персонажа', 'Change character')}</button></span>
+      <small>${L('Дети', 'Kids')}:</small>${kidsHtml(h)}
+      ${h.owned.length || h.have?.length ? `<span class="hero-owned">${[...h.owned.map(id => NEEDS.find(x => x.id === id)?.ico || ''), ...(h.have || []).map(id => GOODS.flatMap(g => g.items).find(x => x.id === id)?.ico || '')].join(' ')}</span>` : ''}</div>`;
   if (keepCv) box.querySelector('canvas').replaceWith(keepCv);  // живой 3D остаётся на месте
   $('hcAsk')?.addEventListener('click', heroAsk);
   $('hcCourse').onclick = heroCourse;
   $('hcShop').onclick = heroShop;
+  $('hcChange').onclick = () => heroCreate(renderMenu, true);
+  box.querySelectorAll('[data-kid]').forEach(b => b.onclick = () => kidShop(+b.dataset.kid, renderMenu));
   const emotion = n ? 'ask' : mood < 30 ? 'sad' : mood >= 70 ? 'happy' : 'neutral';
   if (cardView && cardKey === key) cardView.setEmotion(emotion);  // меню перерисовывается часто — сцену не пересоздаём
   else {

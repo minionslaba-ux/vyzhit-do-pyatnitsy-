@@ -10,7 +10,7 @@ const three = () => THREE_P || (THREE_P = import('./vendor/three.module.min.js')
 // Пропорции — «модельные»: длинные ноги, голова чуть крупнее реальной (лицо читается и в полный рост), у женщин — талия,
 // бёдра и мягкий силуэт, у мужчин — широкие плечи и V-образный торс. Материалы с мягким блеском (sheen) — кожа и ткань не «деревянные».
 function buildHero(T, p) {
-  const f = p.g === 'f', H = f ? 0.95 : 1;  // женские фигуры чуть ниже
+  const f = p.g === 'f', H = f ? 0.95 : 1, fa = f && !p.kid;  // женские фигуры чуть ниже; fa — взрослая (у детей без макияжа и каблуков)
   const phys = (color, rough, extra = {}) => new T.MeshPhysicalMaterial({ color, roughness: rough, metalness: 0, ...extra });
   const tint = (c, k) => new T.Color(c).lerp(new T.Color('#ffffff'), k);
   const skin = phys(p.skin, 0.5, { sheen: 0.35, sheenColor: tint(p.skin, 0.5), sheenRoughness: 0.5, clearcoat: 0.08, clearcoatRoughness: 0.6 });
@@ -34,7 +34,7 @@ function buildHero(T, p) {
     if (skirt) add(lathe(legProf, 1), skin, 0, 0, 0, lg);
     else add(lathe(legProf.map(([r, y]) => [y < -0.78 ? r : Math.max(r * 1.12, 0.05), y]), 1), pants, 0, 0, 0, lg);
     const sh = add(sph(0.062), shoe, 0, -0.845, 0.035, lg); sh.scale.set(0.9, 0.55, 1.75);
-    if (p.heels ?? f) { sh.position.y = -0.83; sh.rotation.x = 0.28; add(new T.CylinderGeometry(0.008, 0.012, 0.06, 10), shoe, 0, -0.87, -0.06, lg); }
+    if (p.heels ?? fa) { sh.position.y = -0.83; sh.rotation.x = 0.28; add(new T.CylinderGeometry(0.008, 0.012, 0.06, 10), shoe, 0, -0.87, -0.06, lg); }
     legs.push(lg);
   }
   // таз, торс (тело вращения: талия, грудь, плечи; сплющен спереди-назад)
@@ -44,7 +44,7 @@ function buildHero(T, p) {
   // торс; у женщин спереди на уровне груди форма плавно выдаётся вперёд (деформация вершин — без «приклеенных» шаров)
   const torsoGeo = (k, seg = 40, a0, al) => {
     const g = new T.LatheGeometry(prof.map(([r, y]) => new T.Vector2(r * H * k, y * H)), seg, a0, al);
-    if (f) { const pos = g.attributes.position; for (let i = 0; i < pos.count; i++) { const y = pos.getY(i) / H, z = pos.getZ(i); if (z > 0) pos.setZ(i, z * (1 + 0.55 * Math.exp(-(((y - 0.39) / 0.075) ** 2)) * (z / (0.16 * k * H)) ** 2)); } g.computeVertexNormals(); }
+    if (fa) { const pos = g.attributes.position; for (let i = 0; i < pos.count; i++) { const y = pos.getY(i) / H, z = pos.getZ(i); if (z > 0) pos.setZ(i, z * (1 + 0.55 * Math.exp(-(((y - 0.39) / 0.075) ** 2)) * (z / (0.16 * k * H)) ** 2)); } g.computeVertexNormals(); }
     return g;
   };
   const torso = add(torsoGeo(1), shirt, 0, 0.86 * H, 0);
@@ -93,7 +93,7 @@ function buildHero(T, p) {
     add(new T.CircleGeometry(er * 0.11, 12), new T.MeshBasicMaterial({ color: '#ffffff' }), er * 0.15, er * 0.14, er * 0.63, eg);
     const lid = add(sph(er + 0.0015, 20, 12), skin, 0, 0.0005, 0.001, eg); lid.scale.set(1.04, 0.05, 0.7); lids.push(lid);
     const lash = add(new T.TorusGeometry(er * 0.93, f ? 0.0026 : 0.0016, 6, 20, Math.PI), phys('#140e0c', 0.5), 0, 0.002, er * 0.35, eg); lash.scale.set(1, 0.85, 1);
-    if (f) { const wing = add(new T.CapsuleGeometry(0.0022, 0.012, 3, 6), phys('#140e0c', 0.5), s * er * 0.98, er * 0.32, er * 0.3, eg); wing.rotation.z = s * -1.0; }  // стрелка у внешнего уголка
+    if (fa) { const wing = add(new T.CapsuleGeometry(0.0022, 0.012, 3, 6), phys('#140e0c', 0.5), s * er * 0.98, er * 0.32, er * 0.3, eg); wing.rotation.z = s * -1.0; }  // стрелка у внешнего уголка
     const cheek = add(sph(0.02), new T.MeshStandardMaterial({ color: '#ff8f9a', transparent: true, opacity: f ? 0.18 : 0.08, roughness: 0.9, depthWrite: false }), s * 0.008, -0.042, -0.002, eg); cheek.scale.set(1.15, 0.6, 0.35); cheek.castShadow = false;
     eyes.push(eg);
   }
@@ -103,8 +103,8 @@ function buildHero(T, p) {
   });
   // рот: губы и тонкая линия между ними; изгиб линии — эмоция (улыбка / ровно / грусть), «просит» — приоткрыт.
   // У женщин — помада (цвет губ из пресета почти без смешивания с кожей)
-  const lipCol = new T.Color(p.lips || '#b86a62').lerp(new T.Color(p.skin), f ? 0.12 : 0.5);
-  const lipM = phys(lipCol, 0.35, { clearcoat: f ? 0.7 : 0.1, clearcoatRoughness: 0.3 });
+  const lipCol = new T.Color(p.lips || '#b86a62').lerp(new T.Color(p.skin), fa ? 0.12 : 0.5);
+  const lipM = phys(lipCol, 0.35, { clearcoat: fa ? 0.7 : 0.1, clearcoatRoughness: 0.3 });
   const mouth = new T.Group(); mouth.position.set(0, -0.056, 0.102); head.add(mouth);
   const upLip = add(sph(0.017, 24, 16), lipM, 0, 0.0035, 0, mouth); upLip.scale.set(f ? 1.2 : 1.25, f ? 0.3 : 0.24, 0.45);
   const loLip = add(sph(0.017, 24, 16), lipM, 0, -0.0048, 0.0005, mouth); loLip.scale.set(f ? 1.05 : 1.1, f ? 0.42 : 0.33, 0.5);
@@ -152,12 +152,104 @@ function buildHero(T, p) {
     for (const s of [-1, 1]) { const arm = add(new T.BoxGeometry(0.004, 0.004, 0.1), gm, s * 0.07, 0.022, 0.07, head); arm.rotation.y = s * 0.12; }
   }
   head.traverse(o => { o.receiveShadow = false; });  // без самозатенения лица: иначе «грязные» пятна на подбородке
-  root.userData = { body, head, chest, arms, legs, eyes, lids, brows, setMouth, mouthEmo: 'neutral', H, f };
+  if (p.kid) { root.scale.setScalar(0.64); head.scale.multiplyScalar(1.24); }  // ребёнок: меньше ростом, голова крупнее
+  root.userData = { body, head, chest, arms, legs, eyes, lids, brows, setMouth, mouthEmo: 'neutral', H, f, kid: !!p.kid };
   return root;
 }
 
+
+// ---------- предметы для мультиков: транспорт и удочка ----------
+// Строятся в координатах персонажа (смотрит в +z, сиденье — в начале координат), крепятся к нему и едут вместе.
+// seat — насколько опустить тело (сесть), legs — поза ног: число (сидя, ноги вперёд), 'pedal' (крутит педали), 'push' (отталкивается)
+const PROPS = {
+  moto:    { seat: -0.3, legs: -1.15, arms: [-1.0, 0.12, -0.7] },
+  bike:    { seat: -0.07, legs: 'pedal', arms: [-0.95, 0.1, -0.65] },
+  car:     { seat: -0.5, legs: -1.45, arms: [-0.95, 0.05, -0.75] },
+  boat:    { seat: -0.58, legs: -1.4, arms: 'row' },
+  scooter: { seat: 0.07, legs: 'push', arms: [-0.9, 0.08, -0.55] },
+  skate:   { seat: 0.1, legs: 'push', arms: [-0.1, 1.0, -0.2] },
+  rod:     { seat: 0, legs: 0, arms: [-1.0, 0.05, -0.55] },
+};
+function buildProp(T, kind) {
+  const g = new T.Group(), wheels = [];
+  const M = (color, rough = 0.4, extra = {}) => new T.MeshPhysicalMaterial({ color, roughness: rough, metalness: 0.1, clearcoat: 0.6, ...extra });
+  const add = (geo, m, x = 0, y = 0, z = 0) => { const o = new T.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = true; g.add(o); return o; };
+  const bar = (a, b, r, m) => {  // цилиндр между двумя точками
+    const A = new T.Vector3(...a), B = new T.Vector3(...b), d = B.clone().sub(A);
+    const o = add(new T.CylinderGeometry(r, r, d.length(), 12), m); o.position.copy(A).add(B).multiplyScalar(0.5);
+    o.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), d.normalize()); return o;
+  };
+  const wheel = (z, r, tube, x = 0, tire = M('#18181c', 0.8, { clearcoat: 0 })) => {
+    const w = new T.Group(); w.position.set(x, r, z); g.add(w);
+    const t = new T.Mesh(new T.TorusGeometry(r - tube, tube, 12, 36), tire); t.rotation.y = Math.PI / 2; t.castShadow = true; w.add(t);
+    const hub = new T.Mesh(new T.CylinderGeometry(r * 0.32, r * 0.32, tube * 1.6, 16), M('#c9ccd4', 0.25, { metalness: 0.8 })); hub.rotation.z = Math.PI / 2; w.add(hub);
+    for (let i = 0; i < 3; i++) { const sp = new T.Mesh(new T.BoxGeometry(0.01, (r - tube) * 2, 0.012), M('#c9ccd4', 0.3, { metalness: 0.8 })); sp.rotation.x = i * Math.PI / 3; w.add(sp); }
+    wheels.push({ w, r }); return w;
+  };
+  const chrome = M('#d8dbe2', 0.2, { metalness: 0.9 }), black = M('#1b1b20', 0.5);
+  if (kind === 'moto') {
+    const red = M('#d6283a', 0.3);
+    wheel(0.58, 0.28, 0.07); wheel(-0.5, 0.29, 0.08);
+    const body = add(new T.BoxGeometry(0.2, 0.22, 0.72), red, 0, 0.52, 0.05); body.rotation.x = 0.08;
+    const tank = add(new T.SphereGeometry(0.16, 24, 16), red, 0, 0.7, 0.24); tank.scale.set(0.85, 0.6, 1.3);
+    add(new T.BoxGeometry(0.24, 0.07, 0.42), black, 0, 0.66, -0.16);
+    bar([0, 0.28, 0.58], [0, 0.92, 0.42], 0.025, chrome);
+    const hb = add(new T.CylinderGeometry(0.018, 0.018, 0.6, 10), black, 0, 0.94, 0.4); hb.rotation.z = Math.PI / 2;
+    add(new T.SphereGeometry(0.06, 16, 12), new T.MeshStandardMaterial({ color: '#fff6c8', emissive: '#ffe680', emissiveIntensity: 1.2 }), 0, 0.8, 0.52);
+    bar([0.13, 0.33, -0.05], [0.13, 0.4, -0.62], 0.035, chrome);
+    add(new T.BoxGeometry(0.16, 0.18, 0.22), M('#2a2a30', 0.4, { metalness: 0.6 }), 0, 0.38, 0.12);  // мотор
+  }
+  if (kind === 'bike' || kind === 'scooter' || kind === 'skate') {
+    const col = M(kind === 'bike' ? '#1fa5d6' : kind === 'scooter' ? '#ff5c8a' : '#ffb02e', 0.35);
+    if (kind === 'bike') {
+      wheel(0.52, 0.32, 0.025); wheel(-0.5, 0.32, 0.025);
+      const B = [0, 0.38, 0.02], S = [0, 0.86, -0.06], Hd = [0, 0.86, 0.42];
+      bar(B, S, 0.02, col); bar(S, Hd, 0.02, col); bar(B, Hd, 0.022, col); bar(B, [0, 0.32, -0.5], 0.016, col); bar(S, [0, 0.32, -0.5], 0.016, col);
+      bar(Hd, [0, 0.32, 0.52], 0.018, chrome); bar([0, 0.86, 0.42], [0, 1.0, 0.4], 0.018, chrome);
+      const hb = add(new T.CylinderGeometry(0.015, 0.015, 0.5, 10), black, 0, 1.0, 0.4); hb.rotation.z = Math.PI / 2;
+      const seat = add(new T.BoxGeometry(0.12, 0.05, 0.22), black, 0, 0.9, -0.06);
+      seat.scale.x = 1;
+    } else if (kind === 'scooter') {
+      wheel(0.3, 0.07, 0.025); wheel(-0.3, 0.07, 0.025);
+      add(new T.BoxGeometry(0.14, 0.035, 0.6), col, 0, 0.1, 0);
+      bar([0, 0.1, 0.3], [0, 1.0, 0.33], 0.02, chrome);
+      const hb = add(new T.CylinderGeometry(0.016, 0.016, 0.42, 10), black, 0, 1.0, 0.33); hb.rotation.z = Math.PI / 2;
+    } else {
+      for (const x of [-0.08, 0.08]) { wheel(0.25, 0.045, 0.02, x, M('#f5f0e6', 0.5)); wheel(-0.25, 0.045, 0.02, x, M('#f5f0e6', 0.5)); }
+      const d = add(new T.BoxGeometry(0.22, 0.025, 0.78), col, 0, 0.1, 0); d.scale.set(1, 1, 1);
+    }
+  }
+  if (kind === 'car') {
+    const paint = M('#e8b23a', 0.25);
+    for (const x of [-0.43, 0.43]) { wheel(0.95, 0.25, 0.08, x); wheel(-0.5, 0.25, 0.08, x); }
+    add(new T.BoxGeometry(0.86, 0.34, 1.95), paint, 0, 0.42, 0.22);
+    const hood = add(new T.BoxGeometry(0.84, 0.1, 0.7), paint, 0, 0.62, 0.8); hood.rotation.x = 0.06;
+    const ws = add(new T.BoxGeometry(0.8, 0.32, 0.02), new T.MeshPhysicalMaterial({ color: '#bfe6ff', transparent: true, opacity: 0.45, roughness: 0.05 }), 0, 0.8, 0.42); ws.rotation.x = -0.45;
+    add(new T.BoxGeometry(0.4, 0.5, 0.1), M('#3a2a24', 0.6), 0, 0.72, -0.28);  // спинка сиденья
+    const st = add(new T.TorusGeometry(0.11, 0.015, 8, 24), black, 0, 0.82, 0.3); st.rotation.x = -0.5;
+    for (const x of [-0.3, 0.3]) add(new T.SphereGeometry(0.06, 14, 10), new T.MeshStandardMaterial({ color: '#fff6c8', emissive: '#ffe680', emissiveIntensity: 1 }), x, 0.5, 1.2);
+  }
+  if (kind === 'boat') {
+    const hull = M('#f4f6fa', 0.3), stripe = M('#2563c9', 0.3);
+    const outline = (k, z0) => { const sh = new T.Shape(); [[-0.33, -0.85], [0.33, -0.85], [0.34, 0.45], [0, 1.05], [-0.34, 0.45]].forEach(([x, z], i) => sh[i ? 'lineTo' : 'moveTo'](x * k, -z * k)); return sh; };
+    const h = add(new T.ExtrudeGeometry(outline(1), { depth: 0.26, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.03, bevelSegments: 3 }), hull, 0, 0.03, 0); h.rotation.x = -Math.PI / 2;
+    const st = add(new T.ExtrudeGeometry(outline(1.02), { depth: 0.05, bevelEnabled: false }), stripe, 0, 0.22, 0); st.rotation.x = -Math.PI / 2;
+    add(new T.BoxGeometry(0.6, 0.05, 0.3), M('#9a6a3a', 0.6), 0, 0.33, 0);
+    add(new T.BoxGeometry(0.16, 0.36, 0.16), black, 0, 0.36, -0.86);  // мотор
+  }
+  if (kind === 'rod') {
+    const rod = bar([0.05, 0.98, 0.32], [0.12, 1.85, 1.3], 0.012, M('#3a2a1a', 0.5));
+    bar([0.12, 1.85, 1.3], [0.14, 0.25, 1.55], 0.004, new T.MeshBasicMaterial({ color: '#f0f0f0' }));
+    add(new T.SphereGeometry(0.035, 14, 10), M('#ff3b3b', 0.3), 0.14, 0.25, 1.55);
+    add(new T.CylinderGeometry(0.04, 0.04, 0.04, 16), chrome, 0.08, 1.05, 0.38).rotation.z = Math.PI / 2;
+    rod.castShadow = true;
+  }
+  g.userData = { wheels };
+  return g;
+}
+
 // Сцена, свет, камера. framing: 'full' — во весь рост, 'bust' — по пояс
-function makeScene(T, canvas, framing) {
+function makeScene(T, canvas, framing, stage = false) {  // stage — сцена мультика: земля шире, без светящегося круга
   const renderer = new T.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
   renderer.outputColorSpace = T.SRGBColorSpace; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.25;
@@ -167,15 +259,15 @@ function makeScene(T, canvas, framing) {
   scene.add(new T.HemisphereLight('#e4ecff', '#3a2c48', 1.0));
   const key = new T.DirectionalLight('#fff3e6', 2.4); key.position.set(1.6, 3.2, 2.6); key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024); key.shadow.camera.near = 0.5; key.shadow.camera.far = 8; key.shadow.radius = 4; key.shadow.bias = -0.0005; key.shadow.normalBias = 0.02;
-  for (const k of ['left', 'bottom']) key.shadow.camera[k] = -1.2; for (const k of ['right', 'top']) key.shadow.camera[k] = 1.2;
+  const sc = stage ? 3.2 : 1.2; for (const k of ['left', 'bottom']) key.shadow.camera[k] = -sc; for (const k of ['right', 'top']) key.shadow.camera[k] = sc;
   scene.add(key);
   const fill = new T.DirectionalLight('#ffe9dc', 0.9); fill.position.set(-0.6, 1.6, 3); scene.add(fill);  // мягкий фронтальный — лицо не в тени
   const rim = new T.DirectionalLight('#7ff3ff', 1.4); rim.position.set(-2, 2.2, -2.5); scene.add(rim);
   const rim2 = new T.DirectionalLight('#ff8ae6', 0.7); rim2.position.set(2.4, 1.2, -2); scene.add(rim2);
-  const ground = new T.Mesh(new T.CircleGeometry(0.75, 48), new T.ShadowMaterial({ opacity: 0.38 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
-  const glow = new T.Mesh(new T.RingGeometry(0.5, 0.62, 64), new T.MeshBasicMaterial({ color: '#2de2e6', transparent: true, opacity: 0.35 })); glow.rotation.x = -Math.PI / 2; glow.position.y = 0.002; scene.add(glow);
+  const ground = new T.Mesh(new T.CircleGeometry(stage ? 6 : 0.75, 48), new T.ShadowMaterial({ opacity: 0.38 })); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  const glow = new T.Mesh(new T.RingGeometry(0.5, 0.62, 64), new T.MeshBasicMaterial({ color: '#2de2e6', transparent: true, opacity: 0.35 })); glow.rotation.x = -Math.PI / 2; glow.position.y = 0.002; if (!stage) scene.add(glow);
   // full — во весь рост; bust — по пояс; face — лицо и плечи (превью)
-  const aim = { full: [0.9, 4.0, 0.2], bust: [1.47, 2.1, 0.06], face: [1.67, 1.25, 0.02] }[framing] || [0.9, 4.0, 0.2];
+  const aim = { full: [0.9, 4.0, 0.2], bust: [1.47, 2.1, 0.06], face: [1.67, 1.25, 0.02], kid: [0.66, 2.9, 0.1], wide: [0.8, 6.4, 0.3] }[framing] || [0.9, 4.0, 0.2];
   cam.position.set(0, aim[0] + aim[2], aim[1]); cam.lookAt(0, aim[0], 0);
   return { renderer, scene, cam };
 }
@@ -204,11 +296,11 @@ const POSE = {
 
 // Живой просмотр на canvas. Возвращает { setEmotion, setPreset, setAction, dispose }; null — если WebGL недоступен.
 // setAction('walk' | 'hold' | 'cheer' | 'jump' | 'phone' | 'give' | 'hug' | 'spin' | null) — движения для мультиков
-async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral', interactive = true, yawRest = null } = {}) {
+async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral', interactive = true, yawRest = null, stage = false } = {}) {
   let T; try { T = await three(); } catch { return null; }
-  let ctx; try { ctx = makeScene(T, canvas, framing); } catch { return null; }
+  let ctx; try { ctx = makeScene(T, canvas, framing, stage); } catch { return null; }
   const { renderer, scene, cam } = ctx;
-  let hero = buildHero(T, preset), emo = EMO[emotion] || EMO.neutral, emoName = emotion, action = null, actT = 0;
+  let hero = buildHero(T, preset), emo = EMO[emotion] || EMO.neutral, emoName = emotion, action = null, actT = 0, prop = null, propK = null, moving = 0;
   scene.add(hero);
   const size = () => { const w = canvas.clientWidth || 200, h = canvas.clientHeight || 260; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
   size();
@@ -245,10 +337,20 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
       if (action === 'jump') by = Math.max(0, Math.sin(at * 5.5)) * 0.13;
       if (action === 'cheer') by = Math.abs(Math.sin(t * 4.5)) * 0.03;
       if (!action && emoName === 'happy') by += Math.abs(Math.sin(t * 2.2)) * 0.006;
-      u.body.position.y = by;
-      const w = action === 'walk' ? Math.sin(t * 7) * 0.45 : 0;
-      ease(u.legs[0].rotation, 'x', w); ease(u.legs[1].rotation, 'x', -w);
-      const pose = POSE[action]?.(at) || [[Math.sin(t * 1.1) * 0.04, 0, -0.05], emoName === 'ask' ? [-0.95, 0, -0.7 + Math.sin(t * 2.4) * 0.08] : [0.03, 0, -0.05]];  // «просит»: правая рука ладонью вверх
+      const P = PROPS[propK];
+      if (P) {  // сидит на транспорте / рыбачит
+        const bob = propK === 'boat' ? Math.sin(t * 2.2) * 0.025 : 0;
+        prop.position.y = bob; if (propK === 'rod') prop.rotation.x = Math.sin(t * 1.3) * 0.02;
+        u.body.position.y = P.seat + bob + (propK === 'moto' || propK === 'car' ? Math.sin(t * 30) * 0.002 * moving : 0);
+        const L0 = P.legs === 'pedal' ? -0.75 + Math.sin(t * 8) * 0.35 : P.legs === 'push' ? 0 : P.legs, L1 = P.legs === 'pedal' ? -0.75 - Math.sin(t * 8) * 0.35 : P.legs === 'push' ? Math.max(0, Math.sin(t * 5)) * 0.45 * moving : P.legs;
+        ease(u.legs[0].rotation, 'x', L0); ease(u.legs[1].rotation, 'x', L1);
+      } else {
+        u.body.position.y = by;
+        const w = action === 'walk' ? Math.sin(t * 7) * 0.45 : 0;
+        ease(u.legs[0].rotation, 'x', w); ease(u.legs[1].rotation, 'x', -w);
+      }
+      const propArms = P && !action ? (P.arms === 'row' ? [[-0.8 + Math.sin(t * 3) * 0.4, 0.15, -0.3], [-0.8 + Math.sin(t * 3) * 0.4, 0.15, -0.3]] : [P.arms, P.arms]) : null;
+      const pose = propArms || POSE[action]?.(at) || [[Math.sin(t * 1.1) * 0.04, 0, -0.05], emoName === 'ask' ? [-0.95, 0, -0.7 + Math.sin(t * 2.4) * 0.08] : [0.03, 0, -0.05]];  // «просит»: правая рука ладонью вверх
       u.arms.forEach((a, i) => { const [x, z, e] = pose[i], s = i ? 1 : -1; ease(a.sh.rotation, 'x', x); ease(a.sh.rotation, 'z', a.rest + s * z); ease(a.el.rotation, 'x', e); });
     }
     // моргание
@@ -263,8 +365,18 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
   raf = requestAnimationFrame(frame);
   return {
     setEmotion(e) { emo = EMO[e] || EMO.neutral; emoName = e; },
-    setPreset(p) { scene.remove(hero); hero = buildHero(T, p); scene.add(hero); },
+    setPreset(p) { const x = hero.position.x; scene.remove(hero); hero = buildHero(T, p); hero.position.x = x; if (prop) hero.add(prop); scene.add(hero); },
     setAction(a) { action = a || null; actT = performance.now(); },
+    setProp(k) {  // транспорт или удочка — крепится к персонажу
+      if (prop) { hero.remove(prop); prop = null; } propK = PROPS[k] ? k : null;
+      if (propK) { prop = buildProp(T, propK); hero.add(prop); }
+    },
+    place(x, z = 0) {  // переместить (колёса крутятся сами); moving — для покачивания и отталкивания ногой
+      const dx = Math.hypot(x - hero.position.x, z - hero.position.z); moving = dx > 0.001 ? 1 : moving * 0.9;
+      for (const { w, r } of prop?.userData.wheels || []) w.rotation.x += dx / (r * hero.scale.x);
+      hero.position.x = x; hero.position.z = z;
+    },
+    setYaw(v) { yawRest = v; },
     dispose() { alive = false; cancelAnimationFrame(raf); ro?.disconnect(); renderer.dispose(); renderer.forceContextLoss?.(); },
   };
 }
