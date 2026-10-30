@@ -545,11 +545,12 @@ function choose(side) {
 // Утром иногда приходит задача: «сделать N рабочих решений до вечера такого-то дня». Рабочее решение — ответ, который
 // радует Босса или стоит Энергии (на ответах значок 📋+1). Успели — премия на счёт, не успели к вечеру срока — штраф со счёта.
 // Отказаться можно; задача одна за раз, предложений — не больше двух в неделю. Только в карьере.
+// Сложность ×1,5 к первой версии (2/4/6/8 решений), но с запасом в одну карточку: до срока 3/6/9/12 карточек
 const DEADLINE_TIERS = [
-  { days: 0, need: 2, reward: 6,  fine: 4,  name: L('срочный', 'urgent') },
-  { days: 1, need: 4, reward: 10, fine: 5,  name: L('короткий', 'short') },
-  { days: 2, need: 6, reward: 15, fine: 8,  name: L('средний', 'medium') },
-  { days: 3, need: 8, reward: 24, fine: 12, name: L('крупный', 'big') },
+  { days: 0, need: 3,  reward: 6,  fine: 4,  name: L('срочный', 'urgent') },
+  { days: 1, need: 5,  reward: 10, fine: 5,  name: L('короткий', 'short') },
+  { days: 2, need: 8,  reward: 15, fine: 8,  name: L('средний', 'medium') },
+  { days: 3, need: 11, reward: 24, fine: 12, name: L('крупный', 'big') },
 ];
 const DEADLINE_TASKS = EN ? [
   ['Boss', 'Quarterly report'], ['Client', 'Landing page for the launch'], ['CEO', 'Investor pitch deck'], ['Accounting', 'Close out the expense reports'],
