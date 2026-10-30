@@ -3,6 +3,7 @@
 // Каждому — не больше одного сообщения в день (last_sent), поэтому лишний вызов ничего не ломает.
 // Заблокировали бота или удалили из группы — подписка выключается сама.
 // Разработчикам (dev_admins) — отчёт по игре за вчера, тоже раз в день.
+// Тест: POST {"test": "<код>"} — 10 примеров в главную группу; код одноразовый, создаётся только в базе (bot_test_tokens).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
 
@@ -61,10 +62,38 @@ function groupText(ru: { recruit: string[] | null; play: Record<string, string[]
   return l[(k === 'any' ? day : week) % l.length];
 }
 
-Deno.serve(async () => {
+// Тестовая рассылка: 5 «привлечь» и 5 «играть» (понедельник, пятница, суббота, два общих) в главную группу
+async function testGroup(db: any, token: string, code: string) {
+  const { data: t } = await db.from('bot_test_tokens').delete().eq('token', code).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
+  if (!t?.length) return new Response('forbidden', { status: 403 });
+  const { data: g } = await db.from('tg_groups').select('chat_id').eq('main', true).maybeSingle();
+  if (!g) return new Response('no group', { status: 404 });
+  const [rec, play] = await Promise.all([getJson('recruit_ru.json'), getJson('play_ru.json')]);
+  const r = rec || RECRUIT_RU_SPARE, p = play || { monday: PLAY_RU_SPARE, friday: PLAY_RU_SPARE, saturday: PLAY_RU_SPARE, any: PLAY_RU_SPARE };
+  const pickR = (i: number) => r[Math.floor(Math.random() * r.length + i) % r.length];
+  const pickP = (k: string) => p[k][Math.floor(Math.random() * p[k].length)];
+  const play_btn = { text: '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
+  const share = { text: '📣 Поделиться игрой', url: 'https://t.me/share/url?' + new URLSearchParams({ url: 'https://t.me/Survivefridaybot?startapp', text: '«Выжить до пятницы» — игра про офис. Доживёшь до 18:00?' }) };
+  const items: [string, string, boolean][] = [
+    ['привлечь', pickR(0), true], ['играть · понедельник', pickP('monday'), false], ['привлечь', pickR(50), true], ['играть · общий', pickP('any'), false],
+    ['привлечь', pickR(100), true], ['играть · пятница', pickP('friday'), false], ['привлечь', pickR(150), true], ['играть · суббота', pickP('saturday'), false],
+    ['привлечь', pickR(200), true], ['играть · общий', pickP('any'), false]];
+  let n = 0;
+  for (const [i, [kind, text, isRec]] of items.entries()) {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: g.chat_id, text: `🧪 Тест ${i + 1}/10 · ${kind}\n\n${text}`, reply_markup: { inline_keyboard: isRec ? [[share], [play_btn]] : [[play_btn]] } }) });
+    if (res.ok) n++;
+    await new Promise(r => setTimeout(r, 1100));  // в группу — не чаще раза в секунду
+  }
+  return new Response(JSON.stringify({ test_sent: n }), { headers: { 'Content-Type': 'application/json' } });
+}
+
+Deno.serve(async req => {
   const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
   if (!token) return new Response('not configured', { status: 503 });
   const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+  const body = await req.json().catch(() => ({}));
+  if (typeof body.test === 'string') return testGroup(db, token, body.test);
   const today = new Date().toISOString().slice(0, 10), day = Math.floor(Date.now() / 864e5);
   const send = (body: Record<string, unknown>) => fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
