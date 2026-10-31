@@ -143,7 +143,7 @@ async function playBreak(n, opts = {}) {
       r.querySelector('#brkAgain').onclick = () => { close(); playBreak(n); };
       r.querySelector('#brkList').onclick = () => { close(); openBreaks(); };
       };
-      if (typeof adWatch === 'function' && adOn() && !prefs.paidUser) setTimeout(() => adWatch(() => show(), { forced: true, why: 'break' }), 700);
+      if (typeof adWatch === 'function' && adOn() && !prefs.paidUser && !(typeof noAdsOn === 'function' && noAdsOn())) setTimeout(() => adWatch(() => show(), { forced: true, why: 'break' }), 700);
       else show();
     },
   };

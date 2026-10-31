@@ -174,6 +174,8 @@
         <button class="btn-main btn-day" id="startDaily" data-en="Daily Week">Daily Week</button>
       </div>
       <div class="brk-day" id="brkDay"><button class="btn-ghost btn-break" type="button" id="openBreaks" data-en="☕ Break time: 50 mini-games">☕ Break time: 50 mini-games</button></div>
+      <button class="btn-ghost shp-btn" type="button" id="openStore" data-en="🛒 Shop">🛒 Shop</button>
+      <div class="shp-season-slot" id="seasonCard" hidden></div>
       <div class="pane" id="paneOffice">
         <div class="online-box" id="onlineBox" hidden></div>
         <div class="office-cta" id="officeCta" hidden><span data-en="<b>Your own Office</b> Build a team: create an Office and invite coworkers via link or ID."><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice" data-en="Create an Office">Create an Office</button></div>
@@ -223,6 +225,7 @@
       <div class="ps-sec">
         <b class="ps-cap" data-en="Account">Account</b>
         <button class="btn-ghost btn-topup" type="button" data-topup="0" data-en="💰 Top up your balance">💰 Top up your balance</button>
+        <div class="shp-coffee-slot" id="coffeeProf"></div>
         <span id="pushSlot"></span>
         <div class="acct-box" id="acctBox" hidden></div>
         <div class="lang-row" role="group" aria-label="Язык" data-en-aria-label="Language"><span data-en="Language">Language</span>
@@ -338,6 +341,7 @@
 <script src="js/push.js"></script>
 <script src="js/streak.js"></script>
 <script src="js/break.js"></script>
+<script src="js/shop.js"></script>
 <script src="js/topup.js"></script>
 <script src="js/login.js"></script>
 <script src="js/app.js"></script>

@@ -9,6 +9,10 @@ const TOPUP_TIERS = [[1, 100], [10, 90], [25, 80], [50, 70], [100, 60]];  // [о
 const TOPUP_PACKS = [10, 25, 50, 100];
 const rubPer = n => TOPUP_TIERS.reduce((p, [from, price]) => n >= from ? price : p, 100);
 const rub = n => (n * rubPer(n)).toLocaleString('ru-RU') + ' ₽';
+// Подсказки выбора на пакетах (якорь цены): 25 — самый частый выбор, 100 — самая низкая цена за 1 у.е.
+const TOPUP_TAG = { 25: () => L('Популярное', 'Popular'), 100: () => L('Выгодно', 'Best value') };
+// +50% к первому пополнению (сервер, robokassa-pay, даёт бонус, если у игрока ещё нет оплаченных покупок)
+const firstBonusOn = () => !prefs.paidUser;
 
 // Сколько не хватает до цены (0 — хватает)
 const lackOf = price => { const C2 = careerNow(); return C2 ? Math.max(0, price - Math.max(0, C2.bank)) : price; };
@@ -23,10 +27,12 @@ function openTopup({ need = 0, why = '', then } = {}) {
     m.innerHTML = `<div class="modal-box glass topup-box" role="dialog" aria-modal="true" aria-labelledby="tuTitle">
       <h2 id="tuTitle">💰 ${L('Пополнить баланс', 'Top up your balance')}</h2>
       ${why ? `<p class="tu-why">${why}</p>` : ''}
+      ${typeof shopStarterHtml === 'function' ? shopStarterHtml('tu') : ''}
       <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank)}</b>`, `Balance: <b>${money(C2.bank)}</b>`) : L('У.е. зачислятся в карьеру — начните её, чтобы тратить.', 'The $ go to your career — start one to spend them.')}</p>
       <div class="tu-packs">${opts.map(x => `<button type="button" class="tu-pack${x === n ? ' on' : ''}" data-n="${x}">
-        <b>${x} ${L('у.е.', '$')}</b><span>${rub(x)}</span><small>${x === need ? L('сколько не хватает', 'exactly what you lack') : rubPer(x) < 100 ? L(`−${100 - rubPer(x)}% · ${rubPer(x)} ₽/у.е.`, `−${100 - rubPer(x)}% · ${rubPer(x)} ₽ each`) : L('100 ₽/у.е.', '100 ₽ each')}</small></button>`).join('')}</div>
+        ${TOPUP_TAG[x] ? `<em class="shp-tag">${TOPUP_TAG[x]()}</em>` : ''}<b>${x} ${L('у.е.', '$')}</b><span>${rub(x)}</span><small>${x === need ? L('сколько не хватает', 'exactly what you lack') : rubPer(x) < 100 ? L(`−${100 - rubPer(x)}% · ${rubPer(x)} ₽/у.е.`, `−${100 - rubPer(x)}% · ${rubPer(x)} ₽ each`) : L('100 ₽/у.е.', '100 ₽ each')}</small></button>`).join('')}</div>
       <div class="tu-custom"><button type="button" class="btn-chip" id="tuMinus" aria-label="${L('Меньше', 'Less')}">−</button><span><b id="tuN">${n}</b> ${L('у.е.', '$')} = <b id="tuSum">${rub(n)}</b></span><button type="button" class="btn-chip" id="tuPlus" aria-label="${L('Больше', 'More')}">+</button></div>
+      ${firstBonusOn() ? `<p class="shp-first">🎁 ${L('Первое пополнение: <b>+50% у.е. в подарок</b> — зачислим вместе с покупкой', 'First top-up: <b>+50% bonus $</b> — credited with your purchase')}</p>` : ''}
       <p class="tu-tiers">${L('Чем больше пополнение, тем дешевле: 10+ у.е. — 90 ₽, 25+ — 80 ₽, 50+ — 70 ₽, 100+ — 60 ₽ за 1 у.е.', 'The more you buy, the cheaper: 10+ — 90 ₽, 25+ — 80 ₽, 50+ — 70 ₽, 100+ — 60 ₽ per $1.')}</p>
       <label class="tu-agree"><input type="checkbox" id="tuAgree"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a> и <a href="politika.html" target="_blank" rel="noopener">политикой обработки персональных данных</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a> and <a href="politika.html" target="_blank" rel="noopener">privacy policy</a> (in Russian)')}</span></label>
       <p class="join-err" id="tuErr" role="alert"></p>
@@ -82,15 +88,23 @@ const topupBtn = (need, back, why = '', cls = 'btn-chip tu-btn') => `<button typ
 async function claimPaid(again = 0) {
   if (!(typeof registered === 'function' && registered()) || !board.online) return;
   try {
-    const n = Number(await board.rpc('claim_purchases', {})) || 0;
-    if (n > 0) {
-      addCash(n); prefs.paidUser = true; store.set(KEY.prefs, prefs);
+    // claim_purchases2 — список [{inv, ue, bonus, product}] (supabase/update-2026-11-01-shop.sql); пока миграции нет — старая функция
+    let rows = await board.rpc('claim_purchases2', {}).catch(() => null);
+    if (!Array.isArray(rows)) { const n0 = Number(await board.rpc('claim_purchases', {})) || 0; rows = n0 > 0 ? [{ ue: n0, bonus: 0, product: null }] : []; }
+    const n = rows.reduce((s2, r) => s2 + (Number(r.ue) || 0) + (Number(r.bonus) || 0), 0), bonus = rows.reduce((s2, r) => s2 + (Number(r.bonus) || 0), 0);
+    if (rows.length) {
+      if (n > 0) addCash(n);
+      prefs.paidUser = true; store.set(KEY.prefs, prefs);
+      for (const r of rows) if (r.product && typeof shopGrantProduct === 'function') shopGrantProduct(r.product);
       // электронная коммерция Метрики: покупка у.е.
       const pend = store.get('vdp-pay-pending', null); store.del('vdp-pay-pending');
-      try { (window.dataLayer = window.dataLayer || []).push({ ecommerce: { currencyCode: 'RUB', purchase: { actionField: { id: String(pend?.inv || Date.now()) }, products: [{ id: 'ue', name: L('Игровая валюта, у.е.', 'In-game currency'), price: rubPer(n), quantity: n }] } } }); } catch {}
+      try { (window.dataLayer = window.dataLayer || []).push({ ecommerce: { currencyCode: 'RUB', purchase: { actionField: { id: String(pend?.inv || Date.now()) }, products: rows.map(r => r.product ? { id: r.product, name: r.product, price: r.product === 'coffee' ? 100 : 149, quantity: 1 } : { id: 'ue', name: L('Игровая валюта, у.е.', 'In-game currency'), price: rubPer(r.ue), quantity: r.ue }) } } }); } catch {}
       sfx.coins?.(); confetti?.();
-      toast(L(`💰 Оплата прошла: +${money(n)} на счёт. Спасибо!`, `💰 Payment received: +${money(n)}. Thank you!`));
-      track('purchase', { detail: String(n) });
+      if (rows.every(r => r.product === 'coffee')) toast(L(`☕ Спасибо за кофе! +${money(n)} на счёт`, `☕ Thanks for the coffee! +${money(n)}`));
+      else toast(rows.some(r => r.product === 'starter') ? L(`🎁 Стартовый набор получен: +${money(n)} на счёт и подарки. Спасибо!`, `🎁 Starter pack received: +${money(n)} and gifts. Thank you!`)
+        : bonus ? L(`💰 Оплата прошла: +${money(n)} на счёт (из них ${money(bonus)} — подарок за первое пополнение). Спасибо!`, `💰 Payment received: +${money(n)} (incl. ${money(bonus)} first top-up bonus). Thank you!`)
+        : L(`💰 Оплата прошла: +${money(n)} на счёт. Спасибо!`, `💰 Payment received: +${money(n)}. Thank you!`));
+      track('purchase', { detail: rows.map(r => r.product || `${r.ue}${r.bonus ? '+' + r.bonus : ''}`).join(',').slice(0, 60) });
       if (!views.menu.hidden) renderMenu();
     } else if (again > 0) setTimeout(() => claimPaid(again - 1), 4000);  // уведомление Робокассы может прийти на несколько секунд позже
   } catch {}

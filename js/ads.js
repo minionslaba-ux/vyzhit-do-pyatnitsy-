@@ -138,9 +138,11 @@ document.addEventListener('click', e => {
   adWatch(() => { b.disabled = false; b.outerHTML = adBtnHtml(b.className); });
 });
 
+// «Без рекламы» (js/shop.js): ни обязательной рекламы, ни всплывающих предложений; кнопки «Реклама за награду» остаются
+const adQuiet = () => typeof noAdsOn === 'function' && noAdsOn();
 // Предложение после недели — кнопкой на экране итогов, не чаще раза в 20 минут
 bus.on('weekEnd', () => {
-  if (!adOn() || adLeft() || Date.now() - (prefs.adOffer || 0) < AD_COOLDOWN) return;
+  if (!adOn() || adQuiet() || adLeft() || Date.now() - (prefs.adOffer || 0) < AD_COOLDOWN) return;
   setTimeout(() => {
     const st = views.end.querySelector('.end-sheet .stack'); if (!st || views.end.hidden || st.querySelector('[data-ad]')) return;
     prefs.adOffer = Date.now(); store.set(KEY.prefs, prefs);
@@ -155,7 +157,7 @@ const adChip = () => adReady() ? `<button type="button" class="btn-chip ad-chip"
 
 // Окно-предложение: text — что даст реклама; give — награда; no — отказ
 function adOffer({ ico = '🎬', title, text, yes, no, give, why }) {
-  if (!adReady()) return false;
+  if (!adReady() || adQuiet()) return false;
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="aoTitle"><span class="lvl-ico" aria-hidden="true">${ico}</span>
     <h2 id="aoTitle">${title}</h2><p>${text}</p>
@@ -181,7 +183,7 @@ function adRescue(k, high, fallback) {
 
 // 4. Удвоить премию (дедлайн, задание дня) — плашкой сверху, игру не прерывает
 function adDouble(n, label) {
-  if (!adReady() || !careerNow() || !n) return;
+  if (!adReady() || adQuiet() || !careerNow() || !n) return;
   document.querySelector('.ad-pill')?.remove();
   const el = Object.assign(document.createElement('button'), { type: 'button', className: 'ad-pill', innerHTML: `🎬 ${L(`${label}: удвоить ещё на +${money(n)} за рекламу`, `${label}: double it, +${money(n)} for an ad`)}` });
   document.body.append(el);
@@ -213,7 +215,7 @@ document.addEventListener('click', e => {
 // не тем, кто покупал у.е. картой (prefs.paidUser), и не тем, кто сам смотрел рекламу за награду в последние 30 минут
 const AD_FORCED_WEEKS = 3, AD_FORCED_GAP = 30 * 60 * 1000;
 bus.on('weekEnd', x => { if (x.mode === 'career') { prefs.adWeeks = (prefs.adWeeks || 0) + 1; store.set(KEY.prefs, prefs); } });
-const adForcedDue = () => adOn() && !prefs.paidUser && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
+const adForcedDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
   && Date.now() - (prefs.adForcedAt || 0) > AD_FORCED_GAP && Date.now() - (prefs.adAt || 0) > AD_FORCED_GAP;
 function adForced(go) {
   if (views.end.hidden || !adForcedDue()) return go();
@@ -222,12 +224,12 @@ function adForced(go) {
     <h2 id="afTitle">${L('Короткая реклама', 'A short ad')}</h2>
     <p>${L('Она помогает игре оставаться бесплатной. Сразу после неё — следующая неделя.', 'It keeps the game free. The next week starts right after it.')}</p>
     <button class="btn-main" type="button" id="afGo">${L('Смотреть', 'Watch')} <small id="afT">3</small></button>
-    <button class="btn-link" type="button" id="afOff">${L('Отключить обязательную рекламу — купить у.е.', 'Turn off ads — buy $')}</button></div>`;
+    <button class="btn-link" type="button" id="afOff">${typeof openShopNoAds === 'function' ? L('🚫 Отключить рекламу', '🚫 Turn off ads') : L('Отключить обязательную рекламу — купить у.е.', 'Turn off ads — buy $')}</button></div>`;
   m.hidden = false;
   let n = 3, fired = false;
   const run = () => { if (fired) return; fired = true; clearInterval(t); m.hidden = true; adWatch(() => go(), { forced: true }); };
   const t = setInterval(() => { n--; if ($('afT')) $('afT').textContent = n; if (n <= 0) run(); }, 1000);
   $('afGo').onclick = run;
-  $('afOff').onclick = () => { fired = true; clearInterval(t); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go) }); };
+  $('afOff').onclick = () => { fired = true; clearInterval(t); if (typeof openShopNoAds === 'function') return openShopNoAds(() => adForced(go)); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go) }); };
 }
 if (typeof window.startWeek === 'function') { const sw0 = window.startWeek; window.startWeek = function (...a) { return adForced(() => sw0.apply(this, a)); }; }

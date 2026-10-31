@@ -84,7 +84,7 @@ function petAdopt(after) {
       <h2 id="paTitle">🐾 ${L('Завести питомца', 'Adopt a pet')}</h2>
       <div class="pa-kinds">${Object.entries(PET_KINDS).map(([id, x]) => `<button type="button" class="btn-chip${id === kind ? ' on' : ''}" data-kind="${id}">${x.ico} ${esc(x.t)}</button>`).join('')}</div>
       <canvas class="pet-cv" aria-label="${L('Питомец в 3D', '3D pet')}"></canvas>
-      <div class="pa-breeds">${PET_BREEDS.filter(b => b.kind === kind).map(b => `<button type="button" class="btn-chip${b === breed ? ' on' : ''}" data-breed="${b.id}"><i style="background:${b.color}"></i>${esc(b.t)}</button>`).join('')}</div>
+      <div class="pa-breeds">${PET_BREEDS.filter(b => b.kind === kind && !b.rare).map(b => `<button type="button" class="btn-chip${b === breed ? ' on' : ''}" data-breed="${b.id}"><i style="background:${b.color}"></i>${esc(b.t)}</button>`).join('')}</div>
       <label class="field"><span>${L('Кличка', 'Name')}</span><input type="text" id="paName" maxlength="14" autocomplete="off" value="${esc(name || rnd(k.names))}"></label>
       <p class="hero-lead">${L(`${k.t} — ${money(k.price)}. Потом — корм каждую неделю, игрушки, ветеринар.`, `${k.t} — ${money(k.price)}. Then food every week, toys, vet visits.`)}</p>
       ${can ? `<button class="btn-main" type="button" id="paGo">🏡 ${L(`Забрать домой за ${money(k.price)}`, `Take home for ${money(k.price)}`)}</button>` : topupBtn(lackOf(k.price), '', L(`${k.t} стоит ${money(k.price)} · на счёте ${money(C2.bank)}`, `${k.t} costs ${money(k.price)} · you have ${money(C2.bank)}`), 'btn-main tu-btn')}
@@ -119,7 +119,7 @@ function petShop(i, after) {
   let view = null;
   const close = () => { view?.dispose(); view = null; m.hidden = true; };
   m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="psTitle">
-    <h2 id="psTitle">${k.ico} ${esc(p.name)} · ${esc(petBreed(p.breed).t)}</h2>
+    <h2 id="psTitle">${k.ico} ${esc(p.name)} · ${esc(petBreed(p.breed).t)}${petBreed(p.breed).rare ? ' ✨' : ''}</h2>
     <canvas class="pet-cv small" aria-label="${esc(p.name)}"></canvas>
     <p class="hero-lead">${L(`Настроение ${p.mood}/100 · на счёте ${money(C2.bank)}`, `Mood ${p.mood}/100 · balance ${money(C2.bank)}`)}${p.last.p_food !== C2.week ? ` · <b class="pet-hungry">${L('🥣 ждёт корм на эту неделю', '🥣 waiting for this week’s food')}</b>` : ''} ${adChip()}</p>
     <div class="gp-list">${petGoodsFor(p).map(x => {
@@ -243,7 +243,7 @@ bus.on('weekEnd', x => {
   if (hungry) setTimeout(() => toast(L(`🥣 Питомцы голодные (${hungry}) — купите корм, ${h.name} переживает`, `🥣 ${hungry} hungry pet(s) — buy food, ${h.name} is worried`)), 2600);
 });
 
-const petsHtml = h => `<span class="hero-kids">${(h.pets || []).map((p, i) => `<button type="button" class="btn-chip" data-pet="${i}" title="${L('Настроение', 'Mood')} ${p.mood}/100">${PET_KINDS[p.kind].ico} ${esc(p.name)}${p.mood < 40 ? ' 😿' : ''}</button>`).join('')}${(h.pets || []).length < PET_MAX ? `<button type="button" class="btn-chip" data-adopt="1">＋🐾 ${L('Завести питомца', 'Adopt a pet')}</button>` : ''}</span>`;
+const petsHtml = h => `<span class="hero-kids">${(h.pets || []).map((p, i) => `<button type="button" class="btn-chip" data-pet="${i}" title="${L('Настроение', 'Mood')} ${p.mood}/100">${PET_KINDS[p.kind].ico} ${esc(p.name)}${petBreed(p.breed).rare ? ' ✨' : ''}${p.mood < 40 ? ' 😿' : ''}</button>`).join('')}${(h.pets || []).length < PET_MAX ? `<button type="button" class="btn-chip" data-adopt="1">＋🐾 ${L('Завести питомца', 'Adopt a pet')}</button>` : ''}</span>`;
 const bindPets = (root, after) => {
   root.querySelectorAll('[data-pet]').forEach(b => b.onclick = () => petShop(+b.dataset.pet, after));
   root.querySelectorAll('[data-adopt]').forEach(b => b.onclick = () => petAdopt(after));

@@ -68,6 +68,7 @@ const mixB = (h, k) => '#' + rgbOf(h).map(v => Math.round(v * (1 - k)).toString(
 // Насовсем бесплатно — классика, «Утренний кофе» и «Высокий контраст»; остальные — 15 у.е. (старые) и 25 у.е. (новые)
 const THEME_FREE = [0, 23, 30];
 const themePrice = i => THEME_FREE.includes(i) ? 0 : i >= 23 ? 25 : 15;
+const PAID_THEMES = THEMES.map((t, i) => ({ id: i, name: t.name })).filter(t => themePrice(t.id));  // для купона из магазина (js/shop.js)
 const themeOwned = i => !themePrice(i) || (prefs.themesOwned || []).includes(i);
 const themeFixed = () => Number.isInteger(prefs.theme) && THEMES[prefs.theme] && themeOwned(prefs.theme) ? prefs.theme : null;
 function themeIndex() {
@@ -106,7 +107,8 @@ function renderThemePicker() {
   if (pv != null) {
     const price = themePrice(pv), C2 = careerNow(), enough = C2 && C2.bank >= price;
     foot = `<div class="tp-buy"><span>👀 ${L(`Примерка: «${name}»`, `Preview: “${name}”`)}<small>${L(`навсегда за ${price} у.е.`, `yours forever for ${money(price)}`)}${C2 ? L(` · на счёте ${money(C2.bank)}`, ` · balance ${money(C2.bank)}`) : ''}</small></span>
-      ${enough ? `<button type="button" class="btn-main tp-go" data-theme-buy="${pv}">${L(`Купить за ${price} у.е.`, `Buy for ${money(price)}`)}</button>`
+      ${prefs.themeCoupons > 0 ? `<button type="button" class="btn-main tp-go" data-theme-buy="${pv}">🎟 ${L('Взять по купону', 'Use coupon')}</button>`
+        : enough ? `<button type="button" class="btn-main tp-go" data-theme-buy="${pv}">${L(`Купить за ${price} у.е.`, `Buy for ${money(price)}`)}</button>`
         : `<button type="button" class="btn-main tp-go" data-theme-topup="${pv}">💰 ${L('Пополнить', 'Top up')}</button>`}
       <button type="button" class="btn-link" data-theme-cancel>${L('Отмена', 'Cancel')}</button></div>`;
   }
@@ -117,6 +119,11 @@ function renderThemePicker() {
     }).join('') + foot;
 }
 function themeBuy(i) {
+  if ((prefs.themeCoupons || 0) > 0 && typeof useThemeCoupon === 'function' && useThemeCoupon(i)) {  // купон из стартового набора / сезона
+    prefs.theme = i; store.set(KEY.prefs, prefs); themePreview = null; applyTheme();
+    try { renderMenu(); } catch { renderThemePicker(); }
+    return toast(L(`🎨 Тема «${THEMES[i].name}» ваша — по купону`, `🎨 The “${THEMES[i].name}” theme is yours — coupon used`));
+  }
   const price = themePrice(i), C2 = careerNow();
   if (!C2 || C2.bank < price) return openTopup({ need: lackOf(price), why: L(`Тема «${THEMES[i].name}» — ${price} у.е.`, `“${THEMES[i].name}” theme — ${money(price)}`), then: renderThemePicker });
   C2.bank -= price; C2.spent = (C2.spent || 0) + price; careerSave(C2);
@@ -871,6 +878,7 @@ $('gExit').onclick = () => {
 // Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта
 const HINT_BASE = 2;
 const hintPriceNow = () => Math.max(1, HINT_BASE - (typeof rankPerk === 'function' ? rankPerk('hint') : 0));
+const hintFree = () => (prefs.freeHints || 0) > 0;  // бесплатные подсказки из магазина (js/shop.js): Стартовый набор, сезон, наборы
 // Чем дальше самая слабая шкала от 0 и 100 после ответа, тем ответ безопаснее; конец недели — хуже всего
 function hintScore(side) {
   const { eff } = effectsOf(side), after = RES.map(r => ({ k: r.k, v: clamp(S.res[r.k] + (eff[r.k] || 0)) }));
@@ -887,7 +895,7 @@ function cardTools() {
   const el = $('ctools'); if (!el) return;
   const got = S.hintStep === S.step;
   el.className = 'card-tools';
-  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : money(hintPriceNow())}</b></button>
+  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : hintFree() ? `🎟️×${prefs.freeHints}` : money(hintPriceNow())}</b></button>
     <button class="ct-btn ct-shop" type="button" id="ctShop">🛒 ${L('Магазин', 'Shop')} <b id="ctBank">${money(C.bank)}</b></button>`;
   $('ctHint').onclick = () => hintBar();
   $('ctShop').onclick = openShop;
@@ -896,16 +904,17 @@ function hintBar() {
   const el = $('ctools');
   if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
-  const can = C.bank >= hintPriceNow();
+  const can = hintFree() || C.bank >= hintPriceNow();
   el.className = 'card-tools ask';
-  el.innerHTML = (can ? `<button class="ct-btn ct-hint" type="button" id="hbYes">💡 ${L('Получить', 'Get it')} <b>${money(hintPriceNow())}</b></button>`
+  el.innerHTML = (can ? `<button class="ct-btn ct-hint" type="button" id="hbYes">💡 ${L('Получить', 'Get it')} <b>${hintFree() ? L(`🎟️ бесплатно · ${prefs.freeHints}`, `🎟️ free · ${prefs.freeHints}`) : money(hintPriceNow())}</b></button>`
     : `<button class="ct-btn ct-hint" type="button" id="hbYes" data-topup="${lackOf(hintPriceNow())}" data-topup-back="tools" data-topup-why="${esc(L(`Подсказка стоит ${money(hintPriceNow())} · на счёте ${money(C.bank)}`, `A hint costs ${money(hintPriceNow())} · you have ${money(C.bank)}`))}">💰 ${L('Пополнить', 'Top up')} <b>${L(`не хватает ${lackOf(hintPriceNow())}`, `$${lackOf(hintPriceNow())} short`)}</b></button>`) + `
     <button class="ct-btn ct-no" type="button" id="hbNo">${L('Отказаться', 'No thanks')}</button>`;
   FX.pulse(el, 'on', 500);
   $('hbNo').onclick = cardTools;
   $('hbYes').onclick = () => {
-    if (C.bank < hintPriceNow() || busy) return;
-    C.bank -= hintPriceNow(); C.spent = (C.spent || 0) + hintPriceNow(); saveCareer(); renderBars(); sfx.item(); bus.emit('hint');
+    if ((!hintFree() && C.bank < hintPriceNow()) || busy) return;
+    if (hintFree()) { prefs.freeHints--; store.set(KEY.prefs, prefs); } else { C.bank -= hintPriceNow(); C.spent = (C.spent || 0) + hintPriceNow(); saveCareer(); }
+    renderBars(); sfx.item(); bus.emit('hint');
     const best = hintAdvice();
     S.hintStep = S.step;
     el.className = 'card-tools said';
