@@ -1516,3 +1516,6 @@ body.ad-pause .app { pointer-events: none; }
 .brk-result p { margin: 6px 0; }
 .brk-reward { color: var(--up); font-weight: 800; }
 .brk-note { color: var(--text-2); font-size: 13px; }
+.brk-offer { display: flex; gap: 6px; align-items: stretch; }
+.brk-offer .btn-break { flex: 1; margin-top: 0; }
+.brk-x { flex: none; width: 40px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 20px; cursor: pointer; }

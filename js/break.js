@@ -85,7 +85,7 @@ function openBreaks() {
 }
 
 // Партия: полноэкранное окно, игра рисуется в root
-async function playBreak(n) {
+async function playBreak(n, opts = {}) {
   const meta = BREAKS.find(b => b[0] === n); if (!meta) return;
   const over = Object.assign(document.createElement('div'), { className: 'brk-over', role: 'dialog' });
   over.innerHTML = `<div class="brk-head"><button type="button" class="btn-chip" id="brkBack">← ${L('Разминка', 'Breaks')}</button><b>${meta[2]} ${esc(meta[3])}</b><span class="brk-best" id="brkBest"></span></div>
@@ -93,7 +93,9 @@ async function playBreak(n) {
   document.body.append(over);
   const cleanups = []; let ended = false;
   const close = () => { cleanups.splice(0).forEach(f => { try { f(); } catch {} }); over.remove(); };
-  over.querySelector('#brkBack').onclick = () => { close(); openBreaks(); };
+  const then = opts.then;  // разминка перед неделей: выход и кнопка итога ведут дальше, в неделю
+  if (then) over.querySelector('#brkBack').innerHTML = L('Пропустить →', 'Skip →');
+  over.querySelector('#brkBack').onclick = () => { close(); then ? then() : openBreaks(); };
   const best = brkBest()[n];
   over.querySelector('#brkBest').textContent = best != null ? `🏆 ${best}` : '';
   try { if (!window.BREAK_IMPL[n]) await brkLoad(n); } catch { over.querySelector('#brkRoot').innerHTML = `<p class="brk-load">${L('Не удалось загрузить — проверьте интернет', 'Couldn’t load — check your connection')}</p>`; return; }
@@ -128,8 +130,10 @@ async function playBreak(n) {
       const r = over.querySelector('#brkResult');
       r.innerHTML = `<b>${won ? (rec ? L('🏆 Новый рекорд!', '🏆 New record!') : L('✅ Готово!', '✅ Done!')) : L('Не получилось', 'Not this time')}</b>
         ${text ? `<p>${text}</p>` : ''}${score != null ? `<p>${L('Результат', 'Score')}: <b>${esc(String(score))}</b></p>` : ''}${reward ? `<p class="brk-reward">🎁 ${reward}</p>` : won ? `<p class="brk-note">${L('Награды на сегодня собраны — играйте для рекордов', 'Today’s rewards are collected — play for records')}</p>` : ''}
-        <div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`;
+        ${then ? `<button class="btn-main" type="button" id="brkGo">${L('За работу →', 'Back to work →')}</button>`
+          : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}`;
       r.hidden = false;
+      if (then) { r.querySelector('#brkGo').onclick = () => { close(); then(); }; return; }
       r.querySelector('#brkAgain').onclick = () => { close(); playBreak(n); };
       r.querySelector('#brkList').onclick = () => { close(); openBreaks(); };
       };
@@ -150,3 +154,48 @@ bus.on('deck', S2 => {
 
 document.addEventListener('DOMContentLoaded', () => { const b = $('openBreaks'); if (b) b.onclick = openBreaks; });
 if (document.readyState !== 'loading') { const b = $('openBreaks'); if (b) b.onclick = openBreaks; }
+
+// ---------- разминка сама приходит в игру ----------
+// Короткие игры — для разминки перед неделей и для предложений
+const BREAK_QUICK = [5, 6, 22, 24, 28, 30, 34, 39, 41, 43, 44, 45, 49];
+const brkPick = () => { const left = BREAK_QUICK.filter(n => n !== prefs.brkLast); const n = left[Math.floor(Math.random() * left.length)]; prefs.brkLast = n; store.set(KEY.prefs, prefs); return n; };
+const brkTitle = n => { const b = BREAKS.find(x => x[0] === n); return `${b[2]} ${b[3]}`; };
+
+// 1) Каждая третья рабочая неделя начинается с разминки (переход «Неделя N →» с экрана итогов)
+function breakBeforeWeek(go) {
+  if (views.end.hidden || (prefs.gamesPlayed || 0) < 2 || (typeof guestLocked === 'function' && guestLocked())) return go();
+  prefs.brkWeeks = (prefs.brkWeeks || 0) + 1; store.set(KEY.prefs, prefs);
+  if (prefs.brkWeeks % 3) return go();
+  const n = brkPick(), m = $('modal');
+  m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="bwTitle"><span class="lvl-ico" aria-hidden="true">☕</span>
+    <h2 id="bwTitle">${L('Разминка перед неделей', 'Warm-up before the week')}</h2>
+    <p>${L('Минутка на перерыв — и за работу. Сегодня:', 'A quick break, then back to work. Today:')} <b>${esc(brkTitle(n))}</b></p>
+    <button class="btn-main" type="button" id="bwGo">${L('Начать', 'Start')} <small id="bwT">3</small></button>
+    <button class="btn-link" type="button" id="bwSkip">${L('Пропустить', 'Skip')}</button></div>`;
+  m.hidden = false;
+  let k = 3, fired = false;
+  const run = () => { if (fired) return; fired = true; clearInterval(t); m.hidden = true; track('break_week', { detail: String(n) }); playBreak(n, { then: go }); };
+  const t = setInterval(() => { k--; if ($('bwT')) $('bwT').textContent = k; if (k <= 0) run(); }, 1000);
+  $('bwGo').onclick = run;
+  $('bwSkip').onclick = () => { fired = true; clearInterval(t); m.hidden = true; track('break_week_skip'); go(); };
+}
+if (typeof window.startWeek === 'function') { const sw1 = window.startWeek; window.startWeek = function (...a) { return breakBeforeWeek(() => sw1.apply(this, a)); }; }
+
+// 2) Предложение на экране итогов недели: пока сегодня есть награды, не чаще раза в 20 минут и 3 раз в день;
+// если персонаж выдохся (Энергия или Кукуха ниже 30) — про бодрость. «×» — больше не предлагать.
+bus.on('weekEnd', x => {
+  if (x.mode !== 'career' || prefs.brkNoAsk || brkToday().n >= BREAK_DAY_REWARDS) return;
+  const d = store.get('vdp-break-ask', {}), td = today();
+  if (Date.now() - (d.at || 0) < 20 * 60 * 1000 || (d.day === td && d.n >= 3)) return;
+  setTimeout(() => {
+    const st = views.end.querySelector('.end-sheet .stack'); if (!st || views.end.hidden || st.querySelector('.brk-offer')) return;
+    store.set('vdp-break-ask', { at: Date.now(), day: td, n: d.day === td ? (d.n || 0) + 1 : 1 });
+    const n = brkPick(), tired = x.res && (x.res.energy < 30 || x.res.psyche < 30);
+    st.insertAdjacentHTML('afterbegin', `<div class="brk-offer"><button class="btn-ghost btn-break" type="button" data-brk-go="${n}">${tired
+      ? L(`😮‍💨 Вы на нуле — разомнитесь: ${esc(brkTitle(n))} (+${BREAK_BUFF} бодрости)`, `😮‍💨 Running on empty — take a break: ${esc(brkTitle(n))} (+${BREAK_BUFF} boost)`)
+      : L(`☕ Перерыв? ${esc(brkTitle(n))} — +1 у.е.`, `☕ Break? ${esc(brkTitle(n))} — +$1`)}</button><button class="brk-x" type="button" aria-label="${L('Не предлагать', 'Don’t offer')}" title="${L('Больше не предлагать', 'Don’t offer again')}">×</button></div>`);
+    const o = st.querySelector('.brk-offer');
+    o.querySelector('[data-brk-go]').onclick = () => { o.remove(); track('break_offer_go', { detail: String(n) }); playBreak(n); };
+    o.querySelector('.brk-x').onclick = () => { o.remove(); prefs.brkNoAsk = true; store.set(KEY.prefs, prefs); toast(L('Хорошо, не будем предлагать. Разминка — в меню.', 'Okay, no more offers. Breaks are in the menu.')); };
+  }, 1800);
+});
