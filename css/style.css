@@ -1961,3 +1961,6 @@ html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
 .shp-item-cv { display: block; width: 100%; height: 280px; }
 .shp-item-big { position: absolute; top: 8px; right: 10px; font-size: 44px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); animation: bdBadge 2.4s ease-in-out infinite; }
 .shp-item-ico { font-size: 1.1em; }
+/* Посыл «игра от выгорания» на входе и в меню */
+.burnout-lead { margin: 6px auto 0; max-width: 420px; padding: 6px 12px; border-radius: 14px; text-align: center; font-size: 13.5px; font-weight: 800; line-height: 1.35;
+  color: var(--text); background: linear-gradient(135deg, rgba(90,220,150,.14), rgba(var(--c-rgb),.1)); border: 1px solid rgba(90,220,150,.35); }

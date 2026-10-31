@@ -29,6 +29,18 @@ Deno.serve(async req => {
   const { data: gs } = await db.from('tg_groups').select('chat_id').eq('enabled', true).limit(500);
   const out: unknown[] = [];
   // action 'desc': добавить в описание группы строку «▶ Играть / Play» (нужно право бота «Изменять профиль группы»)
+  // action 'botdesc': описание бота в профиле и на экране «Что умеет этот бот?» (RU по умолчанию и EN)
+  if (action === 'botdesc') {
+    const D = {
+      ru: { short: 'Офисная игра от выгорания: доживи до пятницы с юмором и сними стресс 🕔', long: 'Выгораете на работе? Перезагрузитесь за 5 минут — с юмором.\n\n«Выжить до пятницы» — игра про офис: свайпайте решения и держите в балансе Кукуху, Энергию, Босса и Коллег.\n\n• 3 уровня карьеры по 52 недели, 8000 ситуаций\n• 3D-персонаж, питомцы и дети\n• 50 мини-игр для перерыва: дыхание, дзен-сад, пупырка\n• Неделя дня, офис с коллегами, стикеры и подарки\n\nНажмите «Играть» — бесплатно.' },
+      en: { short: 'An office game against burnout: make it to Friday and blow off steam 🕔', long: 'Burning out at work? Reset in 5 minutes — with a laugh.\n\nSurvive till Friday is an office game: swipe decisions and keep Sanity, Energy, Boss and Team in balance.\n\n• 3 career levels × 52 weeks, 8,000 situations\n• A 3D character, pets and kids\n• 50 break-time mini-games: breathing, zen garden, bubble wrap\n• Daily Week, offices with coworkers, stickers and gifts\n\nTap Play — it’s free.' },
+    };
+    for (const [lc, d] of Object.entries(D)) {
+      const l = lc === 'ru' ? {} : { language_code: lc };
+      out.push({ lc, short: !!(await api('setMyShortDescription', { short_description: d.short, ...l })).ok, long: !!(await api('setMyDescription', { description: d.long, ...l })).ok });
+    }
+    return new Response(JSON.stringify(out), { headers: { 'Content-Type': 'application/json' } });
+  }
   if (action === 'desc') {
     const LINE = '▶ Играть / Play: t.me/Survivefridaybot?startapp';
     for (const g of gs || []) {
