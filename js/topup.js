@@ -1,14 +1,14 @@
-// Пополнение баланса у.е. за рубли (Prodamus). Цена 1 у.е. зависит от размера пополнения — как в оферте и на странице «Цены».
+// Пополнение баланса у.е. за рубли (Робокасса). Цена 1 у.е. зависит от размера пополнения — как в оферте и на странице «Цены».
 // Окно открывается: кнопкой «Пополнить» (магазин, карточка карьеры, персонаж, профиль) и там, где у.е. не хватает —
 // подсказка, магазин, просьбы и покупки персонажа, курсы, рабочий стол, долг. Любой элемент с data-topup="N" открывает окно
 // с предложением докупить N у.е. (N — сколько не хватает; 0 — просто пополнить).
-// Оплата: пока платёжная форма не настроена (SUPABASE_CONFIG.payments.url), кнопка «Оплатить» сообщает, что оплата скоро
-// появится, и записывает намерение в статистику (событие buy_intent) — так видно спрос до запуска.
+// Оплата: «Оплатить» → сервер (robokassa-pay) создаёт счёт и подписанную ссылку → страница Робокассы → возврат на сайт.
+// Пока в Supabase нет паролей магазина, сервер отвечает not_configured — игрок видит «оплата появится совсем скоро».
+// Каждое нажатие «Оплатить» пишется в статистику (buy_intent), зачисление — событие purchase.
 const TOPUP_TIERS = [[1, 100], [10, 90], [25, 80], [50, 70], [100, 60]];  // [от скольких у.е., цена 1 у.е. в рублях]
 const TOPUP_PACKS = [10, 25, 50, 100];
 const rubPer = n => TOPUP_TIERS.reduce((p, [from, price]) => n >= from ? price : p, 100);
 const rub = n => (n * rubPer(n)).toLocaleString('ru-RU') + ' ₽';
-const payUrl = () => window.SUPABASE_CONFIG?.payments?.url || '';
 
 // Сколько не хватает до цены (0 — хватает)
 const lackOf = price => { const C2 = careerNow(); return C2 ? Math.max(0, price - Math.max(0, C2.bank)) : price; };
@@ -46,8 +46,21 @@ function openTopup({ need = 0, why = '', then } = {}) {
         return;
       }
       track('buy_intent', { detail: `${n}:${n * rubPer(n)}` });
-      if (!payUrl()) { $('tuErr').textContent = ''; m.querySelector('.tu-alt').innerHTML = `<b>${L('Оплата картой появится совсем скоро.', 'Card payments are coming very soon.')}</b> ${L('А пока у.е. можно заработать в игре.', 'Meanwhile, you can earn $ in the game.')}`; return; }
-      location.href = payUrl();  // подключение Prodamus: адрес платёжной формы с параметрами заказа — следующим шагом
+      // Робокасса: счёт и подписанную ссылку на оплату выдаёт сервер (robokassa-pay); пароли магазина в браузер не попадают
+      const btn = $('tuPay'); btn.disabled = true; btn.textContent = L('Переходим к оплате…', 'Opening the payment page…');
+      (async () => {
+        try {
+          const r = await fnPost('robokassa-pay', { access_token: await board.accessToken(), ue: n, email: prefs.email || '' });
+          if (!r?.url) throw new Error(r?.error || 'no url');
+          store.set('vdp-pay-pending', { inv: r.inv_id, ue: n, at: Date.now() });
+          location.href = r.url;
+        } catch (e) {
+          btn.disabled = false; btn.textContent = `${L('Оплатить', 'Pay')} ${rub(n)}`;
+          $('tuErr').textContent = /not_configured/.test(e.message) ? L('Оплата картой появится совсем скоро. А пока у.е. можно заработать в игре.', 'Card payments are coming very soon. Meanwhile, earn $ in the game.')
+            : /session/.test(e.message) ? L('Войдите в аккаунт ещё раз и повторите оплату.', 'Please sign in again and retry.')
+            : L('Не удалось открыть оплату — попробуйте ещё раз.', 'Couldn’t open the payment page — please try again.');
+        }
+      })();
     };
   };
   render();
@@ -62,3 +75,27 @@ document.addEventListener('click', e => {
 }, true);
 // Кнопка «нет денег» → «пополнить»: html-кусок для вставки рядом с ценой
 const topupBtn = (need, back, why = '', cls = 'btn-chip tu-btn') => `<button type="button" class="${cls}" data-topup="${need}" data-topup-back="${back || ''}" data-topup-why="${esc(why)}">💰 ${need ? L(`Не хватает ${need} — пополнить`, `$${need} short — top up`) : L('Пополнить', 'Top up')}</button>`;
+
+// ---------- зачисление оплаченных у.е. ----------
+// Робокасса подтверждает оплату серверу (robokassa-result), а игра забирает у.е. на счёт карьеры (claim_purchases):
+// сразу после возврата со страницы оплаты (?pay=ok) и при каждом запуске — если игрок закрыл вкладку до возврата
+async function claimPaid(again = 0) {
+  if (!(typeof registered === 'function' && registered()) || !board.online) return;
+  try {
+    const n = Number(await board.rpc('claim_purchases', {})) || 0;
+    if (n > 0) {
+      addCash(n); prefs.paidUser = true; store.set(KEY.prefs, prefs); store.del('vdp-pay-pending');
+      sfx.coins?.(); confetti?.();
+      toast(L(`💰 Оплата прошла: +${money(n)} на счёт. Спасибо!`, `💰 Payment received: +${money(n)}. Thank you!`));
+      track('purchase', { detail: String(n) });
+      if (!views.menu.hidden) renderMenu();
+    } else if (again > 0) setTimeout(() => claimPaid(again - 1), 4000);  // уведомление Робокассы может прийти на несколько секунд позже
+  } catch {}
+}
+(() => {
+  const q = new URLSearchParams(location.search), pay = q.get('pay');
+  if (pay) history.replaceState(null, '', location.pathname + location.hash);
+  if (pay === 'fail') setTimeout(() => toast(L('Оплата не завершена — деньги не списаны. Можно попробовать ещё раз.', 'Payment not completed — you weren’t charged. You can try again.')), 1500);
+  const pend = store.get('vdp-pay-pending', null);
+  setTimeout(() => claimPaid(pay === 'ok' || (pend && Date.now() - pend.at < 3600e3) ? 5 : 0), 2500);
+})();
