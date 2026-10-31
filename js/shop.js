@@ -338,6 +338,43 @@ function buyRareItem(id, price, back) {
   giveRareItem(x, C2, h, back);
   return true;
 }
+// Карточка редкой вещи: персонаж уже с ней (на машине/яхте, в обновке, с часами в руке), описание, цена — и только потом покупка
+const RARE_DESC = {
+  r_neon: L('Яркий бомбер с надписью «18:00» — персонаж носит его в мультиках и на карточке.', 'A bright bomber with “6 PM” on the back — your character wears it in cartoons and on the card.'),
+  r_kicks: L('Красные лимитированные кроссовки: такие есть только у избранных.', 'Red limited-edition sneakers — only a lucky few have them.'),
+  r_watch: L('Швейцарские часы — чтобы точно знать, сколько осталось до пятницы.', 'A Swiss watch — so you always know how long until Friday.'),
+  r_gold: L('Золотой образ для корпоратива и красной дорожки.', 'A golden look for the office party and the red carpet.'),
+  r_car: L('Спорткар: персонаж уезжает на нём в мультике, а коллеги завидуют.', 'A sports car — your character speeds off in it in the cartoon, coworkers envy.'),
+  r_yacht: L('Собственная яхта: выходные на воде, никаких писем от босса.', 'Your own yacht — weekends on the water, no emails from the boss.'),
+};
+function rareItemView(id, back, price) {
+  const x = rareItemById(id), C2 = shpCareer(), h = C2?.hero; if (!x) return;
+  if (!h) return toast(L('Редкие вещи — для персонажа карьеры. Начните карьеру кнопкой «Играть».', 'Rare items are for your career character. Start a career with “Play”.'));
+  const cost = price ?? x.price, has = h.rare?.includes(x.id), g = heroPreset(h).g;
+  const w = x.wear ? (typeof x.wear === 'function' ? x.wear(g) : x.wear) : null;
+  dropView?.();
+  const m = $('modal');
+  let view = null;
+  const close = () => { view?.dispose(); view = null; m.hidden = true; };
+  m.innerHTML = `<div class="modal-box glass hero-box shp-item" role="dialog" aria-modal="true" aria-labelledby="shpItT">
+    <h2 id="shpItT"><span class="shp-item-ico" aria-hidden="true">${x.ico}</span> ${esc(goodText(x, h))} ✨</h2>
+    <div class="shp-item-stage${x.toon === 'ride' ? ` ride bg-${x.prop}` : ''}"><canvas class="pet-cv shp-item-cv" aria-label="${esc(goodText(x, h))}"></canvas><span class="shp-item-big" aria-hidden="true">${x.ico}</span></div>
+    <p class="hero-lead">${RARE_DESC[x.id] || ''} ${L(`Настроение персонажа +${x.mood} сразу и +${RARE_WEEK_MOOD} каждую неделю.`, `Character mood +${x.mood} now and +${RARE_WEEK_MOOD} every week.`)}</p>
+    ${has ? `<p class="shp-ok">✓ ${L('Уже ваша', 'Already yours')}</p>` : `<button class="btn-main" type="button" id="shpItBuy">${L(`Купить за ${money(cost)}`, `Buy for ${money(cost)}`)}</button>`}
+    <button class="btn-ghost" type="button" id="shpItBack">${L('Назад', 'Back')}</button></div>`;
+  m.hidden = false;
+  const cv = m.querySelector('.shp-item-cv');
+  const look = { ...heroLook(h), ...(w || {}) };
+  heroViewer(cv, look, { framing: x.toon === 'ride' ? 'wide' : 'full', emotion: 'happy', interactive: true, yawRest: x.toon === 'ride' ? 1.1 : -0.25, stage: x.toon === 'ride' }).then(v => {
+    if (!v || !cv.isConnected || m.hidden) return v?.dispose();
+    view = v;
+    if (x.toon === 'ride' && x.prop) v.setProp(x.prop);
+    else if (!w) { v.hold(x.ico); v.setAction('show'); }
+    else v.setAction('spin');
+  });
+  if ($('shpItBuy')) $('shpItBuy').onclick = () => { close(); if (buyRareItem(id, price, back) && price != null) { prefs.dealDay = today(); savePrefs(); } };
+  $('shpItBack').onclick = () => { close(); back?.(); };
+}
 // Окно редкого питомца: 3D, кличка, покупка (у.е. или купон из Стартового набора)
 function rarePetView(id, back, price) {
   const b = RARE_PETS.find(x => x.id === id), C2 = shpCareer(), h = C2?.hero; if (!b) return;
@@ -421,7 +458,7 @@ function openStore(section = '', after) {
     m.querySelector('[data-deal]')?.addEventListener('click', () => {
       if (dealBought()) return;
       if (deal.id === 'pet') return rarePetView(deal.ref, back, deal.price);
-      if (deal.id === 'item') { if (shpHero()?.rare?.includes(deal.ref)) return toast(L('Эта вещь уже есть', 'You already have this item')); prefs.dealDay = today(); savePrefs(); if (buyRareItem(deal.ref, deal.price, back) === false) { prefs.dealDay = ''; savePrefs(); } return; }
+      if (deal.id === 'item') { if (shpHero()?.rare?.includes(deal.ref)) return toast(L('Эта вещь уже есть', 'You already have this item')); rareItemView(deal.ref, back, deal.price); return; }
       if (!shpSpend(deal.price, 'deal_' + deal.id, deal.t(), back)) return;
       if (deal.id === 'hints5') prefs.freeHints = (prefs.freeHints || 0) + 5;
       if (deal.id === 'x2') prefs.x2Weeks = (prefs.x2Weeks || 0) + 1;
@@ -443,7 +480,7 @@ function openStore(section = '', after) {
       savePrefs(); render();
     });
     m.querySelectorAll('[data-rpet]').forEach(b => b.onclick = () => rarePetView(b.dataset.rpet, back));
-    m.querySelectorAll('[data-ritem]').forEach(b => b.onclick = () => buyRareItem(b.dataset.ritem, undefined, back));
+    m.querySelectorAll('[data-ritem]').forEach(b => b.onclick = () => rareItemView(b.dataset.ritem, back));
     if ($('shpThemePick')) $('shpThemePick').onclick = () => themeCouponPick(back);
     $('shpSeasonGo').onclick = () => openSeason(back);
     $('shpClose').onclick = () => { clearInterval(shpTick); m.hidden = true; if (after) after(); else if (!views.menu.hidden) renderMenu(); };

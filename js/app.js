@@ -77,7 +77,11 @@ if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !windo
   // Вышла новая версия игры (новый sw.js взял управление) — перезагрузить, если игрок в меню; посреди недели — тихо, при следующем входе
   const hadSw = !!navigator.serviceWorker.controller;
   let swReloaded = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!hadSw || swReloaded || !views.game.hidden) return; swReloaded = true; location.reload(); });
+  let swPending = false;  // новая версия пришла посреди недели — перезагрузимся, как только игрок окажется в меню
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!hadSw || swReloaded) return; if (!views.game.hidden) { swPending = true; return; } swReloaded = true; location.reload(); });
+  bus.on('menu', () => { if (swPending && !swReloaded) { swReloaded = true; location.reload(); } });
+  // приложение с экрана «Домой» на iPhone не перезапускается, а просыпается — проверяем обновление при каждом возвращении
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) navigator.serviceWorker.getRegistration().then(r => r?.update()).catch(() => {}); });
   navigator.serviceWorker.register('sw.js').then(r => r.update?.()).catch(() => {});
 }
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;

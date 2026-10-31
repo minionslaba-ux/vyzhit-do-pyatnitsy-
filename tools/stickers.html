@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Стикеры «Выжить до пятницы»</title>
+<!-- Генератор стикерпака для Telegram: один стикер на страницу, ?n=1…24 (512×512, прозрачный фон).
+     3D-персонажи — из игры (js/hero3d.js + пресеты js/hero.js), подпись и декор — 2D-слой поверх.
+     Снимает tools/make-stickers.js (Playwright) → data/stickers/NN.png. Готовность — window.__ready. -->
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800;900&family=Nunito:wght@900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 512px; height: 512px; overflow: hidden; background: transparent; }
+  #gl { position: absolute; left: -9999px; top: 0; }
+  #out { position: absolute; left: 0; top: 0; width: 512px; height: 512px; }
+  body.dbg { background: repeating-conic-gradient(#ccc 0 25%, #fff 0 50%) 0 0 / 32px 32px; }
+</style>
+</head><body>
+<canvas id="gl" width="512" height="512"></canvas>
+<canvas id="out" width="512" height="512"></canvas>
+<script>
+  // заглушки для js/hero.js: из него нужны только пресеты внешности (HERO_PRESETS)
+  const L = (ru) => ru;
+  const bus = { on() {}, emit() {} };
+</script>
+<script src="../js/hero3d.js"></script>
+<script src="../js/hero.js"></script>
+<script>
+const S = 512, PI = Math.PI;
+const q = new URLSearchParams(location.search);
+const N = +q.get('n') || 1;
+if (q.has('dbg')) document.body.classList.add('dbg');
+
+// ---------- руки: [плечо x (вперёд −), y (поворот), z (наружу +), локоть x (сгиб −), порядок углов] — для правой по экрану руки, левая зеркально
+const ARM = {
+  down:   [0.03, 0, 0.02, -0.08],
+  relax:  [0.12, 0, 0.08, -0.35],
+  up:     [-0.15, 0, 2.55, -0.25],
+  upV:    [-0.2, 0, 2.15, -0.15],
+  wave:   [0, PI / 2, 1.5, -1.75, 'ZYX'],
+  hi:     [0, PI / 2, 1.05, -2.05, 'ZYX'],
+  head:   [0, PI / 2, 2.25, -1.95, 'ZYX'],
+  hips:   [0, PI / 2, 0.55, 1.5, 'ZYX'],
+  hold:   [-0.75, 0, -0.04, -0.95],
+  carry:  [-0.55, 0, 0.12, -1.05],
+  show:   [-1.3, 0, 0.18, -0.45],
+  give:   [-1.25, 0, 0.05, -0.15],
+  phone:  [-0.6, 0, 0.22, -2.15],
+  face:   [-2.0, -0.3, 0.0, -2.55],
+  cheeks: [-0.75, -0.55, 0.15, -2.35],
+  ask:    [-0.95, 0, 0.12, -0.7],
+  shrug:  [-0.35, 0, 0.75, -1.35],
+  cross:  [-0.35, -1.05, 0, -1.95],
+  thumb:  [-0.85, 0, 0.2, -1.25],
+  hugL:   [-1.1, 0, 0.55, -0.9],
+  wheel:  [-1.0, 0, 0.12, -0.7],
+  walkF:  [-0.42, 0, 0.05, -0.3],
+  walkB:  [0.42, 0, 0.05, -0.12],
+};
+
+// ---------- 24 стикера
+// heroes: p — пресет (m1…m5, f1…f5, kid*), x/z — место, yaw — поворот, emo — эмоция (брови), mouth — рот (happy/neutral/sad/ask/grin/shout),
+// arms — [правая по экрану, левая], legs — [[x, z]…], by — подъём (прыжок), lean — [наклон вперёд, вбок], head — [rx, ry, rz], lids — прищур 0…1,
+// gaze — [x, y] взгляд, hold — эмодзи в руке, props — 3D-предметы. decor — эмодзи/вспышки/конфетти поверх (в пикселях кадра).
+const STICKERS = [
+  { cap: 'Есть минутка?', emoji: ['🙋', '❓', '⏱️'], cam: [0.5, 0.1],
+    heroes: [{ p: 'f1', yaw: 0.55, emo: 'ask', mouth: 'ask', lean: [0.05, -0.12], head: [-0.05, 0.25, 0.22], arms: ['down', 'hi'], gaze: [0.25, 0.05] }],
+    decor: [{ e: '❓', x: 400, y: 70, s: 70, r: 0.25 }, { e: '⏱', x: 90, y: 95, s: 52, r: -0.2 }] },
+  { cap: 'До пятницы!', emoji: ['👋', '📅', '🎉'], cam: [-0.35, 0.12],
+    heroes: [{ p: 'm2', yaw: -0.25, emo: 'happy', mouth: 'grin', head: [-0.05, -0.1, -0.12], arms: ['down', 'wave'], lean: [0, 0.05] }],
+    decor: [{ e: '👋', x: 420, y: 70, s: 54, r: 0.3 }, { burst: 1, x: 410, y: 95, r: 70, c: '#d4ff3a' }] },
+  { cap: 'Дедлайн горит 🔥', emoji: ['🔥', '😱', '⏰'], cam: [0.2, 0.08],
+    heroes: [{ p: 'm4', yaw: 0.1, emo: 'sad', mouth: 'shout', arms: ['cheeks', 'cheeks'], legs: [[0, -0.12], [0, 0.12]], head: [-0.08, 0, 0], gaze: [0, 0.1] }],
+    decor: [{ burst: 1, x: 256, y: 200, r: 225, c: '#ff4f5e', n: 16 }, { e: '🔥', x: 80, y: 330, s: 80, r: -0.2 }, { e: '🔥', x: 440, y: 320, s: 90, r: 0.2 }, { e: '💦', x: 360, y: 80, s: 46, r: 0.2 }] },
+  { cap: 'Я в отпуске', emoji: ['🏖️', '🌴', '😎'], cam: [-0.45, 0.1],
+    heroes: [{ p: 'f2', yaw: -0.3, emo: 'happy', mouth: 'grin', arms: ['hips', 'show'], hold: ['🍹', 0.32], props: ['shades'], lean: [0, 0.08], head: [-0.06, -0.1, -0.15] }],
+    decor: [{ e: '🌴', x: 70, y: 130, s: 92, r: -0.15 }, { e: '☀️', x: 430, y: 62, s: 64, r: 0.1 }] },
+  { cap: 'Кофе. Срочно.', emoji: ['☕', '😴', '🥱'], cam: [0.35, 0.1],
+    heroes: [{ p: 'm3', yaw: 0.2, emo: 'sad', mouth: 'neutral', lids: 0.55, arms: ['down', 'show'], props: [['cup', 1]], head: [0.12, 0.1, 0.12], lean: [0.08, 0] }],
+    decor: [{ e: '💤', x: 110, y: 75, s: 60, r: -0.2 }, { e: '☕', x: 440, y: 260, s: 58, r: 0.25 }] },
+  { cap: 'Созвон без повестки?', emoji: ['🤨', '📞', '🙄'], cam: [-0.3, 0.1],
+    heroes: [{ p: 'f3', yaw: -0.25, emo: { brow: -0.25, browY: 0.05, one: 0.3 }, mouth: 'sad', arms: ['cross', 'cross'], head: [-0.06, -0.15, 0.18], gaze: [-0.3, 0], lean: [-0.03, 0] }],
+    decor: [{ e: '🤨', x: 420, y: 90, s: 62, r: 0.2 }, { e: '🎧', x: 90, y: 110, s: 56, r: -0.2 }] },
+  { cap: 'Сделал вчера', emoji: ['😎', '✅', '💪'], cam: [0.4, 0.08],
+    heroes: [{ p: 'm1', yaw: 0.3, emo: 'happy', mouth: 'happy', lids: [0, 0.35], arms: ['down', 'thumb'], hold: ['👍', 0.3], head: [-0.12, 0.15, 0.1] }],
+    decor: [{ e: '✅', x: 90, y: 90, s: 74, r: -0.2 }, { e: '✨', x: 430, y: 70, s: 50, r: 0 }] },
+  { cap: 'Пятница! 18:00!', emoji: ['🏍️', '🎉', '🕕'], cam: [0.75, 0.12], fitPad: 6, crop: 1,
+    heroes: [{ p: 'm5', yaw: 0.15, emo: 'happy', mouth: 'grin', moto: true, head: [-0.05, 0.35, 0.05], lean: [0.12, 0] }],
+    decor: [{ speed: 1, x: 30, y: 160, w: 120 }, { e: '🕕', x: 440, y: 70, s: 62, r: 0.2 }, { e: '💨', x: 60, y: 300, s: 70, r: 0 }] },
+  { cap: 'Понедельник…', emoji: ['😩', '☔', '😫'], cam: [0.3, 0.16],
+    heroes: [{ p: 'f5', yaw: 0.15, emo: 'sad', mouth: 'sad', lids: 0.5, arms: [[0.12, 0, 0.0, -0.05], [0.12, 0, 0.0, -0.05]], head: [0.3, 0.1, 0.12], lean: [0.12, 0.04], gaze: [0, -0.25] }],
+    decor: [{ e: '🌧', x: 95, y: 70, s: 84, r: 0 }, { e: '💧', x: 360, y: 150, s: 34, r: 0.2 }] },
+  { cap: 'Я на созвоне', emoji: ['📞', '🤫', '🎧'], cam: [0.55, 0.1],
+    heroes: [{ p: 'f4', yaw: 0.1, emo: 'neutral', mouth: 'neutral', arms: ['hi', 'down'], phoneEar: 1, head: [0.05, -0.3, -0.12], gaze: [-0.3, 0] }],
+    decor: [{ e: '🤫', x: 410, y: 90, s: 58, r: 0.15 }, { e: '🔴', x: 80, y: 80, s: 30, r: 0 }] },
+  { cap: 'Шеф, всё под контролем', emoji: ['👌', '🔥', '🙂'], cam: [0.3, 0.1],
+    heroes: [{ p: 'm2', yaw: 0.15, emo: { brow: 0.3, browY: 0.056 }, mouth: 'grin', arms: ['down', 'thumb'], hold: ['👍', 0.3], head: [-0.05, 0.1, 0.1], gaze: [0.2, 0] }],
+    decor: [{ e: '🔥', x: 70, y: 170, s: 90, r: -0.1 }, { e: '🔥', x: 440, y: 230, s: 70, r: 0.15 }, { e: '🔥', x: 130, y: 300, s: 60, r: 0 }, { e: '💦', x: 330, y: 70, s: 40, r: 0.3 }] },
+  { cap: 'Отчёт готов\n(почти)', emoji: ['📄', '😅', '⏳'], cam: [-0.35, 0.1],
+    heroes: [{ p: 'f1', yaw: -0.2, emo: 'ask', mouth: 'grin', arms: ['down', 'show'], hold: ['📊', 0.36], head: [-0.05, -0.1, -0.2], gaze: [0.2, 0] }],
+    decor: [{ e: '😅', x: 90, y: 90, s: 56, r: -0.15 }, { e: '⏳', x: 430, y: 90, s: 52, r: 0.2 }] },
+  { cap: 'Ну давай, ещё\nодну правку', emoji: ['🤦', '✏️', '😤'], cam: [0.3, 0.1],
+    heroes: [{ p: 'm3', yaw: 0.15, emo: 'sad', mouth: 'sad', lids: 0.6, arms: ['down', 'down'], facepalm: 1, head: [0.35, 0.05, 0.1], lean: [0.06, 0] }],
+    decor: [{ e: '✏️', x: 90, y: 110, s: 60, r: -0.4 }, { e: '📝', x: 430, y: 110, s: 56, r: 0.25 }] },
+  { cap: 'Я просто стажёр', emoji: ['🤷', '👶', '🙈'], cam: [0.25, 0.14],
+    heroes: [{ p: 'kidm', yaw: 0.1, emo: 'ask', mouth: 'ask', arms: ['shrug', 'shrug'], head: [-0.05, 0.05, 0.2], gaze: [0, 0.1] }],
+    decor: [{ e: '❔', x: 100, y: 90, s: 56, r: -0.2 }, { e: '❔', x: 420, y: 80, s: 46, r: 0.2 }] },
+  { cap: 'Перезвоню', emoji: ['📱', '🏃', '👋'], cam: [-0.9, 0.1],
+    heroes: [{ p: 'm4', yaw: -0.85, emo: 'ask', mouth: 'neutral', arms: ['down', 'walkB'], legs: [[-0.45, 0], [0.4, 0]], phoneEar: 0, head: [0, 0.6, 0], lean: [0.08, 0], gaze: [0.3, 0] }],
+    decor: [{ speed: 1, x: 380, y: 180, w: 100, flip: 1 }, { e: '💨', x: 440, y: 330, s: 60, r: 0 }] },
+  { cap: 'Обед!', emoji: ['🍔', '😋', '🍕'], cam: [0.3, 0.1], crop: 1,
+    heroes: [{ p: 'f4', yaw: 0.15, emo: 'happy', mouth: 'grin', arms: ['up', 'upV'], hold: ['🍔', 0.36], by: 0.12, legs: [[0.25, -0.08], [-0.35, 0.08]], head: [-0.12, 0, -0.1] }],
+    decor: [{ burst: 1, x: 256, y: 190, r: 210, c: '#ffd23a', n: 14 }, { e: '🍕', x: 80, y: 120, s: 66, r: -0.3 }, { e: '🥗', x: 440, y: 300, s: 56, r: 0.2 }] },
+  { cap: 'Ок, бумер…\nто есть босс', emoji: ['😬', '👔', '🙃'], cam: [0.15, 0.08],
+    heroes: [
+      { p: 'm3', x: 0.42, z: -0.45, yaw: -0.35, emo: { brow: -0.3, browY: 0.046 }, mouth: 'sad', arms: ['cross', 'cross'], head: [0.05, -0.15, 0] },
+      { p: 'f2', x: -0.3, z: 0.25, yaw: 0.25, emo: 'ask', mouth: 'grin', arms: ['down', 'hi'], head: [-0.05, 0.4, -0.1], gaze: [0.4, 0] }],
+    decor: [{ e: '😬', x: 45, y: 45, s: 50, r: -0.2, front: 1 }, { e: '💢', x: 440, y: 80, s: 54, r: 0.1 }] },
+  { cap: 'Работаю из дома 🏠', emoji: ['🏠', '💻', '🛋️'], cam: [0.35, 0.18],
+    heroes: [{ p: 'm5', yaw: 0.25, emo: 'happy', mouth: 'happy', arms: ['hold', 'hold'], props: ['laptop', 'mug'], head: [0.12, 0.05, 0.08], wear: { top: '#3e7fd6', tie: null, bottom: '#6a6f8a', shoes: '#f2f2f2' } }],
+    decor: [{ e: '🛋️', x: 80, y: 330, s: 80, r: 0 }, { e: '🐈', x: 435, y: 340, s: 66, r: 0 }, { e: '🏠', x: 420, y: 80, s: 58, r: 0.15 }] },
+  { cap: 'Повышение!', emoji: ['📈', '🎉', '🥳'], cam: [-0.3, 0.12], crop: 1,
+    heroes: [{ p: 'f3', yaw: -0.1, emo: 'happy', mouth: 'grin', arms: ['up', 'up'], by: 0.14, legs: [[-0.25, -0.1], [0.3, 0.1]], head: [-0.15, 0, 0.08] }],
+    decor: [{ burst: 1, x: 256, y: 200, r: 220, c: '#2de2e6', n: 14 }, { confetti: 40 }, { e: '📈', x: 430, y: 300, s: 70, r: 0.1 }, { e: '🚀', x: 75, y: 300, s: 66, r: -0.3 }] },
+  { cap: 'Уволен… шучу 😜', emoji: ['📦', '😜', '🙃'], cam: [0.4, 0.1],
+    heroes: [{ p: 'm1', yaw: 0.2, emo: 'happy', mouth: 'grin', lids: [0, 1], arms: ['carry', 'carry'], props: ['box'], head: [-0.08, 0.2, 0.15] }],
+    decor: [{ e: '😜', x: 430, y: 80, s: 56, r: 0.2 }] },
+  { cap: 'Спасибо!', emoji: ['🙏', '❤️', '🤗'], cam: [0.2, 0.1],
+    heroes: [
+      { p: 'f5', x: -0.24, yaw: 0.45, emo: 'happy', mouth: 'grin', arms: ['down', 'hugL'], head: [0, 0.25, 0.22], lids: 0.15 },
+      { p: 'm4', x: 0.24, yaw: -0.45, emo: 'happy', mouth: 'grin', arms: ['hugL', 'down'], head: [0, -0.25, -0.18], lids: 0.15 }],
+    decor: [{ e: '💖', x: 256, y: 50, s: 64, r: 0 }, { e: '💕', x: 70, y: 150, s: 50, r: -0.2 }, { e: '✨', x: 445, y: 150, s: 46, r: 0.2 }] },
+  { cap: 'Привет, коллеги!', emoji: ['👋', '😊', '☀️'], cam: [0.1, 0.1],
+    heroes: [
+      { p: 'm2', x: -0.32, yaw: 0.2, emo: 'happy', mouth: 'grin', arms: ['wave', 'down'], head: [-0.05, 0.1, 0.1] },
+      { p: 'f4', x: 0.32, yaw: -0.2, emo: 'happy', mouth: 'grin', arms: ['down', 'wave'], head: [-0.05, -0.1, -0.12] }],
+    decor: [{ e: '👋', x: 60, y: 70, s: 50, r: -0.3 }, { e: '👋', x: 452, y: 70, s: 50, r: 0.3 }] },
+  { cap: 'Ушёл на кулер', emoji: ['🚰', '🚶', '💧'], cam: [0.6, 0.1],
+    heroes: [{ p: 'm1', yaw: 1.25, emo: 'happy', mouth: 'happy', arms: ['walkB', 'walkF'], legs: [[0.4, 0], [-0.42, 0]], hold: ['🥤', 0.26], head: [-0.05, -0.75, 0], gaze: [-0.3, 0], wear: { jacket: null } }],
+    decor: [{ e: '🚰', x: 440, y: 230, s: 92, r: 0 }, { e: '💧', x: 405, y: 120, s: 40, r: 0 }, { e: '🎵', x: 120, y: 90, s: 46, r: -0.2 }] },
+  { cap: 'Выжил!', emoji: ['🏆', '🎉', '💪'], cam: [0.25, 0.12], crop: 1,
+    heroes: [{ p: 'm2', yaw: 0.1, emo: 'happy', mouth: 'shout', arms: ['up', 'upV'], hold: ['🏆', 0.38], by: 0.13, legs: [[0.3, -0.1], [-0.3, 0.1]], head: [-0.18, 0, 0.05] }],
+    decor: [{ burst: 1, x: 256, y: 190, r: 225, c: '#d4ff3a', n: 16 }, { confetti: 46 }, { e: '🎉', x: 80, y: 290, s: 66, r: -0.2 }] },
+  // женские варианты
+  { cap: 'Сделала вчера', emoji: ['😎', '✅', '💅'], cam: [-0.4, 0.08],
+    heroes: [{ p: 'f4', yaw: -0.3, emo: 'happy', mouth: 'happy', lids: [0.35, 0], arms: ['thumb', 'hips'], hold: ['👍', 0.3], holdArm: 0, head: [-0.12, -0.15, -0.1] }],
+    decor: [{ e: '✅', x: 430, y: 90, s: 74, r: 0.2 }, { e: '✨', x: 80, y: 70, s: 50, r: 0 }] },
+  { cap: 'Уволена… шучу 😜', emoji: ['📦', '😜', '🙃'], cam: [-0.4, 0.1],
+    heroes: [{ p: 'f2', yaw: -0.2, emo: 'happy', mouth: 'grin', lids: [1, 0], arms: ['carry', 'carry'], props: ['box'], head: [-0.08, -0.2, -0.15] }],
+    decor: [{ e: '😜', x: 80, y: 80, s: 56, r: -0.2 }] },
+  { cap: 'Ушла на кулер', emoji: ['🚰', '🥤', '💧'], cam: [-0.6, 0.1],
+    heroes: [{ p: 'f1', yaw: -1.25, emo: 'happy', mouth: 'happy', arms: [[-0.5, 0, 0.1, -1.45], 'walkB'], legs: [[-0.42, 0], [0.4, 0]], props: [['cup', 0]], head: [-0.05, 0.75, 0], gaze: [0.3, 0] }],
+    decor: [{ e: '🚰', x: 72, y: 230, s: 92, r: 0 }, { e: '💧', x: 107, y: 120, s: 40, r: 0 }, { e: '🎵', x: 392, y: 90, s: 46, r: 0.2 }] },
+  { cap: 'Выжила!', emoji: ['🏆', '🎉', '💪'], cam: [-0.25, 0.12], crop: 1,
+    heroes: [{ p: 'f5', yaw: -0.1, emo: 'happy', mouth: 'shout', arms: ['upV', 'up'], hold: ['🏆', 0.38], holdArm: 0, by: 0.13, legs: [[-0.3, -0.1], [0.3, 0.1]], head: [-0.18, 0, -0.05] }],
+    decor: [{ burst: 1, x: 256, y: 190, r: 225, c: '#ff8ae6', n: 16 }, { confetti: 46 }, { e: '🎉', x: 432, y: 290, s: 66, r: 0.2 }] },
+];
+
+// ---------- 3D-предметы (простые формы в стиле героев)
+function phys(T, color, rough = 0.4, extra = {}) { return new T.MeshPhysicalMaterial({ color, roughness: rough, metalness: 0, ...extra }); }
+function mk(T, geo, m, x = 0, y = 0, z = 0, parent) { const o = new T.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = true; parent.add(o); return o; }
+const BUILD = {
+  cup(T) {
+    const g = new T.Group();
+    mk(T, new T.CylinderGeometry(0.045, 0.036, 0.11, 28), phys(T, '#ffffff', 0.3, { clearcoat: 0.8 }), 0, 0, 0, g);
+    mk(T, new T.CylinderGeometry(0.047, 0.043, 0.042, 28), phys(T, '#ff3bd4', 0.5), 0, -0.004, 0, g);
+    mk(T, new T.CylinderGeometry(0.048, 0.048, 0.016, 28), phys(T, '#2a2026', 0.4), 0, 0.058, 0, g);
+    const h = mk(T, new T.TorusGeometry(0.024, 0.007, 8, 20), phys(T, '#ffffff', 0.3), 0.048, 0.005, 0, g);
+    return g;
+  },
+  mug(T) { const g = BUILD.cup(T); g.scale.setScalar(0.9); return g; },
+  phone(T) {  // смартфон: скруглённый корпус в ярком чехле, экран спереди (+z), камера сзади
+    const g = new T.Group(), W = 0.08, H = 0.16, R = 0.014;
+    const rr = (w, h, r) => { const sh = new T.Shape(), x = -w / 2, y = -h / 2;
+      sh.moveTo(x + r, y); sh.lineTo(x + w - r, y); sh.quadraticCurveTo(x + w, y, x + w, y + r); sh.lineTo(x + w, y + h - r); sh.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      sh.lineTo(x + r, y + h); sh.quadraticCurveTo(x, y + h, x, y + h - r); sh.lineTo(x, y + r); sh.quadraticCurveTo(x, y, x + r, y); return sh; };
+    const body = mk(T, new T.ExtrudeGeometry(rr(W, H, R), { depth: 0.008, bevelEnabled: true, bevelSize: 0.004, bevelThickness: 0.004, bevelSegments: 3, curveSegments: 8 }), phys(T, '#ff3bd4', 0.35, { clearcoat: 0.8 }), 0, 0, -0.004, g);
+    const glass = mk(T, new T.ShapeGeometry(rr(W - 0.004, H - 0.004, R - 0.002), 8), phys(T, '#101018', 0.1, { clearcoat: 1 }), 0, 0, 0.0085, g);
+    const scr = new T.Mesh(new T.ShapeGeometry(rr(W - 0.012, H - 0.02, R - 0.006), 8), new T.MeshBasicMaterial({ color: '#2de2e6' })); scr.position.z = 0.009; g.add(scr);
+    const cam = mk(T, new T.BoxGeometry(0.03, 0.03, 0.004), phys(T, '#1b1b22', 0.2, { clearcoat: 1 }), -0.016, 0.054, -0.0105, g);
+    for (const dy of [-0.006, 0.006]) { const l = mk(T, new T.CylinderGeometry(0.0045, 0.0045, 0.003, 14), phys(T, '#55607a', 0.1, { metalness: 0.6 }), -0.016, 0.054 + dy, -0.013, g); l.rotation.x = PI / 2; }
+    return g;
+  },
+  laptop(T) {
+    const g = new T.Group(), alu = phys(T, '#c9ccd4', 0.3, { metalness: 0.6, clearcoat: 0.6 });
+    mk(T, new T.BoxGeometry(0.4, 0.018, 0.27), alu, 0, 0, 0, g);
+    const lid = new T.Group(); lid.position.set(0, 0.009, -0.135); g.add(lid); lid.rotation.x = -0.25;
+    mk(T, new T.BoxGeometry(0.4, 0.27, 0.012), alu, 0, 0.135, 0, lid);
+    const sc = new T.Mesh(new T.PlaneGeometry(0.37, 0.24), new T.MeshBasicMaterial({ color: '#2a3a6a' })); sc.position.set(0, 0.135, 0.0065); lid.add(sc);
+    const logo = new T.Mesh(new T.CircleGeometry(0.03, 24), new T.MeshBasicMaterial({ color: '#2de2e6' })); logo.position.set(0, 0.135, -0.0065); logo.rotation.y = PI; lid.add(logo);
+    mk(T, new T.BoxGeometry(0.36, 0.004, 0.12), phys(T, '#2a2a30', 0.6), 0, 0.011, 0.03, g);
+    return g;
+  },
+  box(T) {
+    const g = new T.Group(), card = phys(T, '#c8955a', 0.85);
+    mk(T, new T.BoxGeometry(0.46, 0.26, 0.3), card, 0, 0, 0, g);
+    mk(T, new T.BoxGeometry(0.47, 0.03, 0.31), phys(T, '#d9b07a', 0.6), 0, 0.06, 0, g);
+    return g;
+  },
+  shades(T) {
+    const g = new T.Group(), m = phys(T, '#101014', 0.15, { clearcoat: 1 });
+    for (const s of [-1, 1]) { const l = mk(T, new T.CylinderGeometry(0.03, 0.03, 0.008, 28), m, s * 0.042, 0.016, 0.124, g); l.rotation.x = PI / 2; l.scale.z = 0.78; }
+    mk(T, new T.BoxGeometry(0.028, 0.005, 0.005), m, 0, 0.026, 0.126, g);
+    for (const s of [-1, 1]) { const a = mk(T, new T.BoxGeometry(0.004, 0.004, 0.1), m, s * 0.072, 0.022, 0.075, g); a.rotation.y = s * 0.12; }
+    return g;
+  },
+};
+
+const KIDS = {
+  kidm: { g: 'm', kid: true, skin: '#f1c9a8', eyes: '#5a7a3a', hairColor: '#8a5a32', hair: 'quiff', top: '#ffb02e', bottom: '#34507a', short: true, heels: false, shoes: '#f2f2f2', tie: '#2f4f8f' },
+};
+
+// ---------- поза
+function pose(T, hero, h) {
+  const u = hero.userData;
+  hero.position.set(h.x || 0, 0, h.z || 0);
+  hero.rotation.y = h.yaw || 0;
+  const arms = h.arms || ['down', 'down'];
+  u.arms.forEach((a, i) => {
+    const sg = i ? 1 : -1, sp = typeof arms[i] === 'string' ? ARM[arms[i]] : arms[i];
+    const [x, y, z, e, o = 'XYZ'] = sp;
+    a.sh.rotation.set(x, sg * y, a.rest + sg * z, o);
+    a.el.rotation.x = e;
+  });
+  (h.legs || [[0, 0], [0, 0]]).forEach(([x, z], i) => { u.legs[i].rotation.x = x; u.legs[i].rotation.z = (i ? 1 : -1) * z; });
+  u.body.position.y = h.by || 0;
+  const [lx, lz] = h.lean || [0, 0]; u.body.rotation.x = lx; u.body.rotation.z = lz;
+  const [hx, hy, hz] = h.head || [0, 0, 0]; u.head.rotation.set(hx, hy, hz);
+  const emo = typeof h.emo === 'object' ? h.emo : EMO[h.emo] || EMO.neutral;
+  setBrows(u, emo);
+  if (emo.one) { u.brows[1].position.y += 0.008; u.brows[1].rotation.z -= emo.one; }  // одна бровь вверх (скепсис)
+  const m = h.mouth || h.emo || 'neutral', base = m === 'grin' ? 'happy' : m === 'shout' ? 'ask' : m;
+  u.setMouth(typeof base === 'string' ? base : 'neutral');
+  const mouth = u.head.children.find(o => o.isGroup && Math.abs(o.position.y + 0.056) < 1e-4);
+  if (mouth) mouth.scale.set(m === 'grin' ? 1.3 : m === 'shout' ? 1.5 : 1, m === 'grin' ? 1.3 : m === 'shout' ? 2.0 : 1, 1);
+  // веки: доля прикрытия сверху (0 — открыты, 1 — закрыты)
+  const lids = Array.isArray(h.lids) ? h.lids : [h.lids || 0, h.lids || 0], er = u.f ? 0.025 : 0.022;
+  u.lids.forEach((l, i) => { const a = lids[i]; if (a > 0) { l.scale.y = Math.max(0.05, a); l.position.y = er * (1 - a); } else { l.scale.y = 0.05; } });
+  const [gx, gy] = h.gaze || [0, 0]; u.eyes.forEach(e => { e.rotation.y = gx; e.rotation.x = -gy; });
+}
+
+function attachProps(T, hero, h) {
+  const u = hero.userData;
+  for (const pr of h.props || []) {
+    const [k, arm = 1, mode] = Array.isArray(pr) ? pr : [pr];
+    const o = BUILD[k](T);
+    if (k === 'shades') { u.head.add(o); continue; }
+    if (k === 'laptop') { o.position.set(0, 1.0, 0.36); o.rotation.y = PI; u.body.add(o); continue; }  // экраном к герою
+    if (k === 'box') { o.position.set(0, 1.0, 0.3); u.body.add(o); const s = emojiSprite(T, '🪴', 0.34); s.position.set(-0.08, 0.26, 0); o.add(s); const s2 = emojiSprite(T, '🖼️', 0.22); s2.position.set(0.12, 0.2, 0.05); o.add(s2); continue; }
+    if (k === 'mug') { o.position.set(0.3, 1.07, 0.32); u.body.add(o); o.userData.upright = true; continue; }
+    const el = u.arms[arm].el, s = arm ? 1 : -1;
+    o.position.set(-s * 0.05, -0.33, 0.04); el.add(o); o.userData.upright = true;
+  }
+  if (h.hold) { const [e, size] = h.hold, arm = h.holdArm ?? 1; const sp = emojiSprite(T, e, size); sp.position.set(0, -0.37, 0.07); u.arms[arm].el.add(sp); }
+  if (h.moto) {
+    const P = PROPS.moto, pr = buildProp(T, 'moto'); hero.add(pr);
+    u.body.position.y = P.seat; u.legs.forEach(l => { l.rotation.x = P.legs; l.rotation.z = 0; });
+    u.arms.forEach((a, i) => { const sg = i ? 1 : -1; a.sh.rotation.set(P.arms[0], 0, a.rest + sg * P.arms[1]); a.el.rotation.x = P.arms[2]; });
+  }
+}
+
+// ---------- рука «дотягивается» до точки: покоординатный спуск по углам плеча и локтя (простая IK)
+function reach(T, hero, i, target, init) {
+  const a = hero.userData.arms[i], sg = i ? 1 : -1, [x0, y0, z0, e0, o = 'XYZ'] = typeof init === 'string' ? ARM[init] : init;
+  const hp = new T.Vector3(), elb = new T.Vector3(), headC = hero.userData.head.getWorldPosition(new T.Vector3());
+  const set = p => { a.sh.rotation.set(p[0], sg * p[1], a.rest + sg * p[2], o); a.el.rotation.x = p[3]; a.sh.updateMatrixWorld(true); };
+  const cost = p => {
+    set(p); hp.set(0, -0.31, 0.004); a.el.localToWorld(hp); a.el.getWorldPosition(elb);
+    const pen = Math.max(0, 0.2 - elb.distanceTo(headC)) * 4 + Math.max(0, p[3] - 0) * 2 + Math.max(0, -2.7 - p[3]) * 2;
+    return hp.distanceTo(target) + pen + 0.004 * Math.hypot(p[0] - x0, p[1] - y0, p[2] - z0);
+  };
+  let p = [x0, y0, z0, e0], c = cost(p);
+  for (let st = 0.4; st > 0.003; st *= 0.6) for (let it = 0; it < 30; it++) {
+    let moved = false;
+    for (let k = 0; k < 4; k++) for (const d of [st, -st]) { const q = p.slice(); q[k] += d; const cq = cost(q); if (cq < c) { p = q; c = cq; moved = true; } }
+    if (!moved) break;
+  }
+  set(p);
+  return c;
+}
+// телефон у уха (side: 1 — у правого по экрану, −1 — у левого): крепится к голове, экраном к щеке, задняя крышка — к зрителю;
+// рука с этой стороны держит его за нижнюю половину — верх с камерой и чехол видны
+function earPhone(T, hero, arm, init) {
+  const u = hero.userData, s = arm ? 1 : -1, ph = BUILD.phone(T);
+  ph.scale.setScalar(1 / u.head.scale.x);
+  ph.position.set(s * 0.122, -0.03, 0.03);
+  ph.rotation.set(-0.5, -s * PI / 2, 0, 'XYZ');
+  u.head.add(ph);
+  hero.updateMatrixWorld(true);
+  const tgt = ph.localToWorld(new T.Vector3(0, -0.045, -0.04));  // чуть снаружи нижней половины
+  reach(T, hero, arm, tgt, init || 'phone');
+}
+// фейспалм: ладонь закрывает лоб и глаза
+function facepalm(T, hero, arm) {
+  hero.updateMatrixWorld(true);
+  const tgt = hero.userData.head.localToWorld(new T.Vector3(0, 0.035, 0.15));
+  reach(T, hero, arm, tgt, 'face');
+}
+
+// ---------- 2D: подпись, декор, обводка
+const DARK = '#1d1640';
+function wrap(g, text, maxW) {
+  const out = [];
+  for (const para of text.split('\n')) {
+    let line = '';
+    for (const w of para.split(' ')) {
+      const t = line ? line + ' ' + w : w;
+      if (line && g.measureText(t).width > maxW) { out.push(line); line = w; } else line = t;
+    }
+    out.push(line);
+  }
+  return out;
+}
+function layoutCaption(g, text) {
+  const maxW = 470;
+  for (let fs = 64; fs >= 26; fs -= 2) {
+    g.font = `900 ${fs}px Unbounded, "Noto Color Emoji", sans-serif`;
+    const lines = wrap(g, text, maxW);
+    if (lines.length <= 2 && lines.every(l => g.measureText(l).width <= maxW)) return { fs, lines, lh: fs * 1.08 };
+  }
+  g.font = `900 26px Unbounded, "Noto Color Emoji", sans-serif`;
+  return { fs: 26, lines: wrap(g, text, maxW), lh: 28 };
+}
+function drawCaption(g, cap, y0) {
+  const { fs, lines, lh } = cap;
+  g.save();
+  g.translate(256, y0); g.rotate(-0.03);
+  g.font = `900 ${fs}px Unbounded, "Noto Color Emoji", sans-serif`;
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic'; g.lineJoin = 'round'; g.miterLimit = 2;
+  lines.forEach((l, i) => {
+    const y = i * lh + fs * 0.82;
+    g.save(); g.shadowColor = 'rgba(20,10,40,.55)'; g.shadowBlur = 6; g.shadowOffsetY = 4;
+    g.strokeStyle = '#fff'; g.lineWidth = Math.max(9, fs * 0.3); g.strokeText(l, 0, y); g.restore();
+    g.strokeStyle = '#fff'; g.lineWidth = Math.max(9, fs * 0.3); g.strokeText(l, 0, y);
+    g.fillStyle = DARK; g.fillText(l, 0, y);
+  });
+  g.restore();
+}
+function rng(seed) { let s = seed * 9301 + 49297; return () => ((s = (s * 9301 + 49297) % 233280) / 233280); }
+function drawBurst(g, d) {
+  const n = d.n || 12, r1 = d.r, r0 = d.r * 0.72;
+  g.save(); g.translate(d.x, d.y); g.beginPath();
+  for (let i = 0; i < n * 2; i++) { const a = i / (n * 2) * PI * 2 - PI / 2, r = i % 2 ? r0 : r1; g.lineTo(Math.cos(a) * r, Math.sin(a) * r); }
+  g.closePath(); g.fillStyle = d.c; g.fill(); g.lineJoin = 'round'; g.lineWidth = 5; g.strokeStyle = DARK; g.stroke();
+  g.restore();
+}
+function drawSpeed(g, d) {
+  g.save(); g.strokeStyle = DARK; g.lineCap = 'round'; g.lineWidth = 6;
+  for (let i = 0; i < 4; i++) { const y = d.y + i * 34, w = d.w * (1 - i * 0.18); g.beginPath(); g.moveTo(d.x + (d.flip ? 0 : d.w - w), y); g.lineTo(d.x + (d.flip ? w : d.w), y); g.stroke(); }
+  g.restore();
+}
+function drawConfetti(g, n) {
+  const r = rng(N * 7 + 3), cols = ['#ff3bd4', '#2de2e6', '#d4ff3a', '#ffb02e', '#8f6bff'];
+  for (let i = 0; i < n; i++) {
+    const x = 20 + r() * 472, y = 15 + r() * 330; if (x > 150 && x < 362 && y > 60) continue;
+    g.save(); g.translate(x, y); g.rotate(r() * PI); g.fillStyle = cols[i % cols.length]; g.fillRect(-7, -3.5, 14, 7); g.strokeStyle = DARK; g.lineWidth = 1.5; g.strokeRect(-7, -3.5, 14, 7); g.restore();
+  }
+}
+function drawEmoji(g, d) {
+  g.save(); g.translate(d.x, d.y); g.rotate(d.r || 0);
+  g.font = `${d.s}px "Noto Color Emoji"`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(d.e, 0, d.s * 0.06);
+  g.restore();
+}
+// белая «наклейная» обводка вокруг всего непрозрачного + мягкая тень
+function outlined(src, rad) {
+  const c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d');
+  const sil = document.createElement('canvas'); sil.width = sil.height = S; const sg = sil.getContext('2d');
+  sg.drawImage(src, 0, 0); sg.globalCompositeOperation = 'source-in'; sg.fillStyle = '#fff'; sg.fillRect(0, 0, S, S);
+  const ring = document.createElement('canvas'); ring.width = ring.height = S; const rg = ring.getContext('2d');
+  for (let i = 0; i < 32; i++) { const a = i / 32 * PI * 2; for (const k of [rad, rad * 0.5]) rg.drawImage(sil, Math.cos(a) * k, Math.sin(a) * k); }
+  g.save(); g.filter = 'blur(5px)'; g.globalAlpha = 0.35; g.drawImage(ring, 0, 5); g.restore();
+  g.save(); g.globalCompositeOperation = 'source-in'; g.fillStyle = '#1d1640'; g.fillRect(0, 0, S, S); g.restore();
+  g.drawImage(ring, 0, 0); g.drawImage(src, 0, 0);
+  return c;
+}
+async function watermark(g) {
+  const img = new Image(); img.src = '../icons/favicon-96.png'; await img.decode();
+  const x = 300, y = 482, sz = 26;
+  g.save();
+  g.shadowColor = 'rgba(20,10,40,.4)'; g.shadowBlur = 3;
+  g.beginPath(); g.roundRect(x - 2, y - 2, sz + 4, sz + 4, 8); g.fillStyle = '#fff'; g.fill(); g.restore();
+  g.save(); g.beginPath(); g.roundRect(x, y, sz, sz, 6); g.clip(); g.drawImage(img, x, y, sz, sz); g.restore();
+  g.save(); g.textAlign = 'left'; g.textBaseline = 'alphabetic'; g.lineJoin = 'round';
+  const line = (t, f, yy) => { g.font = f; g.strokeStyle = '#fff'; g.lineWidth = 4; g.strokeText(t, x + sz + 6, yy); g.fillStyle = DARK; g.fillText(t, x + sz + 6, yy); };
+  line('Выжить до пятницы', '900 12px Nunito', y + 11);
+  line('survivefriday.com', '900 11.5px Nunito', y + 24);
+  g.restore();
+}
+
+// ---------- кадрирование: проекция всех вершин → подгонка под прямоугольник через setViewOffset
+function screenBounds(T, cam, roots) {
+  const v = new T.Vector3(), b = [Infinity, Infinity, -Infinity, -Infinity];
+  const push = () => { v.project(cam); const px = (v.x + 1) / 2 * S, py = (1 - v.y) / 2 * S; b[0] = Math.min(b[0], px); b[1] = Math.min(b[1], py); b[2] = Math.max(b[2], px); b[3] = Math.max(b[3], py); };
+  for (const r of roots) r.traverseVisible(o => {
+    if (o.isMesh && o.geometry?.attributes.position) { const p = o.geometry.attributes.position; for (let i = 0; i < p.count; i += 1) { v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld); push(); } }
+    if (o.isSprite) { const c = new T.Vector3().setFromMatrixPosition(o.matrixWorld), s = o.getWorldScale(new T.Vector3()).x / 2; for (const [dx, dy] of [[-s, -s], [s, s], [-s, s], [s, -s]]) { v.copy(c); v.x += dx; v.y += dy; push(); } }
+  });
+  return b;
+}
+
+async function main() {
+  const st = STICKERS[N - 1];
+  const sample = 'Привет, ёЁ survivefriday.com 18:00 (…)!?';
+  await Promise.all(['900 60px Unbounded', '900 12px Nunito'].map(f => document.fonts.load(f, sample))); await document.fonts.ready;
+  const T = await three();
+  const glc = document.getElementById('gl');
+  const renderer = new T.WebGLRenderer({ canvas: glc, antialias: true, alpha: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(1); renderer.setSize(S, S, false); renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = T.SRGBColorSpace; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.2;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+  const scene = new T.Scene();
+  scene.add(new T.HemisphereLight('#eef2ff', '#4a3a5a', 1.15));
+  const key = new T.DirectionalLight('#fff1e2', 2.3); key.position.set(1.8, 3.4, 3.0); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 5; key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
+  Object.assign(key.shadow.camera, { left: -1.6, right: 1.6, top: 2.4, bottom: -0.6, near: 0.5, far: 9 }); scene.add(key);
+  const fill = new T.DirectionalLight('#ffe7da', 0.95); fill.position.set(-1.4, 1.4, 3); scene.add(fill);
+  const rim = new T.DirectionalLight('#7ff3ff', 2.0); rim.position.set(-2.4, 2.4, -2.6); scene.add(rim);
+  const rim2 = new T.DirectionalLight('#ff8ae6', 1.1); rim2.position.set(2.6, 1.4, -2.2); scene.add(rim2);
+
+  const roots = [];
+  for (const h of st.heroes) {
+    const base = KIDS[h.p] || HERO_PRESETS.find(p => p.id === h.p);
+    const hero = buildHero(T, { ...base, ...(h.wear || {}) });
+    hero.userData.head.scale.multiplyScalar(h.p.startsWith('kid') ? 1.05 : 1.15);  // стикерная пропорция: голова чуть крупнее — эмоции читаются
+    pose(T, hero, h); attachProps(T, hero, h);
+    scene.add(hero); roots.push(hero);
+    scene.updateMatrixWorld(true);
+    if (h.phoneEar != null) earPhone(T, hero, h.phoneEar, h.phoneInit);
+    if (h.facepalm != null) facepalm(T, hero, h.facepalm);
+  }
+  scene.updateMatrixWorld(true);
+  scene.traverse(o => { if (o.userData.upright && o.parent) { const q = o.parent.getWorldQuaternion(new T.Quaternion()).invert(); o.quaternion.copy(q); } });
+  scene.updateMatrixWorld(true);
+
+  // камера: лёгкий ракурс сбоку и сверху, смотрим в центр фигур
+  const box = new T.Box3(); roots.forEach(r => box.expandByObject(r));
+  const ctr = box.getCenter(new T.Vector3()), [az, el] = st.cam || [0.3, 0.1], dist = 5.2;
+  const cam = new T.PerspectiveCamera(26, 1, 0.1, 30);
+  cam.position.set(ctr.x + Math.sin(az) * Math.cos(el) * dist, ctr.y + Math.sin(el) * dist, ctr.z + Math.cos(az) * Math.cos(el) * dist);
+  cam.lookAt(ctr); cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+
+  // подпись внизу, водяной знак под ней; персонаж — в прямоугольнике над подписью (с нахлёстом)
+  const out = document.getElementById('out'), og = out.getContext('2d');
+  const cap = layoutCaption(og, st.cap), capH = cap.lines.length * cap.lh, capBottom = 476, capTop = capBottom - capH;
+  const pad = 12 + (st.fitPad || 0), fitBottom = capTop + capH * (st.overlap ?? 0.7);  // подпись перекрывает голени — фигура крупнее
+  const tr = [pad, pad, S - pad, fitBottom];
+  const b = screenBounds(T, cam, roots);
+  // crop < 1 — «по колено»: верх фигуры у верхнего края, доля crop высоты фигуры доходит до нижнего края (голени — за подписью);
+  // crop = 1 — фигура целиком над/за подписью (прыжки, мотоцикл)
+  const crop = st.crop ?? 0.8, fh = b[3] - b[1];
+  let s, offY;
+  if (crop < 1) { s = Math.min((S - pad) / (fh * crop), (tr[2] - tr[0]) / (b[2] - b[0])); offY = b[1] - pad / s; }
+  else { s = Math.min((tr[2] - tr[0]) / (b[2] - b[0]), (tr[3] - tr[1]) / fh); offY = b[3] - tr[3] / s; }
+  const tcx = (tr[0] + tr[2]) / 2, pcx = (b[0] + b[2]) / 2;
+  const offX = pcx - tcx / s;  // по центру по горизонтали
+  cam.setViewOffset(S, S, offX, offY, S / s, S / s);
+  renderer.render(scene, cam);
+
+  // слой «наклейки»: вспышки/линии → 3D → эмодзи; потом белая обводка всего слоя
+  const lay = document.createElement('canvas'); lay.width = lay.height = S; const lg = lay.getContext('2d');
+  for (const d of st.decor || []) { if (d.burst) drawBurst(lg, d); if (d.speed) drawSpeed(lg, d); }
+  for (const d of st.decor || []) if (d.confetti) drawConfetti(lg, d.confetti);
+  for (const d of st.decor || []) if (d.e && !d.front) drawEmoji(lg, d);  // эмодзи — за персонажем (front — поверх)
+  lg.drawImage(glc, 0, 0);
+  for (const d of st.decor || []) if (d.e && d.front) drawEmoji(lg, d);
+  og.clearRect(0, 0, S, S);
+  const ol = outlined(lay, 6);
+  if ((st.crop ?? 0.8) < 1) {  // фигура обрезана снизу — мягко растворяем срез за подписью, под ней чисто (там водяной знак)
+    const m = ol.getContext('2d'), gr = m.createLinearGradient(0, capTop + capH * 0.55, 0, capBottom - 6);
+    gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    m.globalCompositeOperation = 'destination-in'; m.fillStyle = gr; m.fillRect(0, 0, S, S);
+  }
+  og.drawImage(ol, 0, 0);
+  drawCaption(og, cap, capTop);
+  await watermark(og);
+  window.__info = { n: N, cap: st.cap, emoji: st.emoji, fs: cap.fs, lines: cap.lines.length, bounds: b, scale: s };
+  window.__ready = true;
+}
+window.STICKERS = STICKERS;
+main().catch(e => { window.__error = String(e && e.stack || e); window.__ready = true; console.error(e); });
+</script>
+</body></html>

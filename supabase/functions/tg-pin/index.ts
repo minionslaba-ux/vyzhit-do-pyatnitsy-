@@ -13,7 +13,8 @@ const KB = { inline_keyboard: [
   [{ text: '▶ Играть · Play', url: BOT }],
   [{ text: '📅 Неделя дня · Daily', url: `${BOT}=go-daily` }, { text: '☕ Разминка · Breaks', url: `${BOT}=go-breaks` }],
   [{ text: '🛒 Магазин · Shop', url: `${BOT}=go-shop` }, { text: '📰 Лента · Feed', url: `${BOT}=go-feed` }],
-  [{ text: '🏆 Рейтинг · Top', url: `${BOT}=go-top` }, { text: '🌐 Сайт · Web', url: 'https://survivefriday.com' }],
+  [{ text: '🏆 Рейтинг · Top', url: `${BOT}=go-top` }, { text: '😺 Стикеры · Stickers', url: 'https://t.me/addstickers/office_friday_by_Survivefridaybot' }],
+  [{ text: '🌐 Сайт · Web', url: 'https://survivefriday.com' }],
 ] };
 
 Deno.serve(async req => {
@@ -42,6 +43,12 @@ Deno.serve(async req => {
     return new Response(JSON.stringify(out), { headers: { 'Content-Type': 'application/json' } });
   }
   for (const g of gs || []) {
+    // меню уже закреплено ботом — обновить кнопки в нём, а не слать новое сообщение
+    const c = await api('getChat', { chat_id: g.chat_id }), pm = c.result?.pinned_message;
+    if (pm?.from?.is_bot && String(pm.text || '').includes('быстрое меню')) {
+      const e = await api('editMessageReplyMarkup', { chat_id: g.chat_id, message_id: pm.message_id, reply_markup: KB });
+      if (e.ok || /not modified/.test(e.description || '')) { out.push({ updated: true }); continue; }
+    }
     const s = await api('sendMessage', { chat_id: g.chat_id, text: TEXT, reply_markup: KB, disable_notification: true });
     const pin = s.ok ? await api('pinChatMessage', { chat_id: g.chat_id, message_id: s.result.message_id, disable_notification: true }) : null;
     out.push({ sent: !!s.ok, pinned: !!pin?.ok, err: s.ok ? pin?.description : s.description });
