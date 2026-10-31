@@ -3,6 +3,7 @@
   "short_name": "Выжить до пятницы",
   "description": "Офисный симулятор в духе Reigns: продержитесь с понедельника до пятницы, 18:00.",
   "lang": "ru",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
