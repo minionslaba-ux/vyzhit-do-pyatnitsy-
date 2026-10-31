@@ -353,7 +353,10 @@ function startPack() {
 // ---------- игровой экран ----------
 function enterGame() { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); requestAnimationFrame(fitGame); }
 // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
+// Цели Яндекс Метрики (счётчик 113961628 в <head>): ключевые шаги воронки
+const YM_GOALS = new Set(['open', 'week_start', 'week_end', 'buy_intent', 'purchase', 'ad_reward', 'ad_forced', 'cert_end', 'share', 'invite', 'install', 'pet_adopt', 'hero_buy', 'guest_gate']);
 function track(kind, o = {}) {
+  if (YM_GOALS.has(kind)) try { window.ym?.(113961628, 'reachGoal', kind, { mode: o.mode, detail: o.detail }); } catch {}
   if (!board.online || !prefs.name) return;
   board.rpc('log_event', { p_id: prefs.playerId, p_kind: kind, p_mode: o.mode || null, p_card: o.card || null, p_won: o.won ?? null, p_step: o.step ?? null, p_detail: o.detail || null }).catch(() => {});
 }

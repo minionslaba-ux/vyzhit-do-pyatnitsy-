@@ -84,7 +84,10 @@ async function claimPaid(again = 0) {
   try {
     const n = Number(await board.rpc('claim_purchases', {})) || 0;
     if (n > 0) {
-      addCash(n); prefs.paidUser = true; store.set(KEY.prefs, prefs); store.del('vdp-pay-pending');
+      addCash(n); prefs.paidUser = true; store.set(KEY.prefs, prefs);
+      // электронная коммерция Метрики: покупка у.е.
+      const pend = store.get('vdp-pay-pending', null); store.del('vdp-pay-pending');
+      try { (window.dataLayer = window.dataLayer || []).push({ ecommerce: { currencyCode: 'RUB', purchase: { actionField: { id: String(pend?.inv || Date.now()) }, products: [{ id: 'ue', name: L('Игровая валюта, у.е.', 'In-game currency'), price: rubPer(n), quantity: n }] } } }); } catch {}
       sfx.coins?.(); confetti?.();
       toast(L(`💰 Оплата прошла: +${money(n)} на счёт. Спасибо!`, `💰 Payment received: +${money(n)}. Thank you!`));
       track('purchase', { detail: String(n) });
