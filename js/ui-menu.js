@@ -13,7 +13,7 @@ const getTrait = () => document.querySelector('input[name=trait]:checked')?.valu
 function renderMenu() {
   applyTheme();
   $('meAva').textContent = prefs.avatar; $('meName').textContent = prefs.name; $('meDept').textContent = prefs.dept || L('без отдела', 'no department');
-  myTag.then(t => { $('meId').textContent = `ID ${shortId(t)} · ${registered() ? acctLabel() : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
+  myTag.then(t => { $('meId').textContent = `${window.APP_VER || ''} · ID ${shortId(t)} · ${registered() ? acctLabel() : prefs.email ? L('войдите снова', 'sign in again') : L('гость', 'guest')}`; });
   $('meRegister').hidden = registered() || !board.online;
   $('meLogin').hidden = !!prefs.email || !board.online; renderAcctBox();
   $('topLogin').hidden = registered() || !board.online || !!window.VDP_PLATFORM;  // гость или истекла сессия — «Войти» на виду

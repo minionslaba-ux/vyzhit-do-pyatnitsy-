@@ -543,6 +543,8 @@ function safeBottom() {
 }
 // iOS: панели Safari и клавиатура появляются с задержкой — подогнать ещё раз
 addEventListener('orientationchange', () => { safeB = null; setTimeout(fitGame, 350); });
+addEventListener('pageshow', () => setTimeout(fitGame, 300));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(fitGame, 300); });
 window.visualViewport?.addEventListener('scroll', () => requestAnimationFrame(fitGame));
 window.visualViewport?.addEventListener('resize', () => requestAnimationFrame(fitGame));
 // Текст карточки целиком помещается в карточку: если не влезает — шрифт плавно уменьшается (до 14 px), без прокрутки
