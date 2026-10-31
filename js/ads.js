@@ -31,7 +31,8 @@ function adWatch(done) {
   if (!adOn()) return done?.(false);
   if (adLeft()) { toast(L(`Следующий ролик за награду — через ${adMins()} мин.`, `Next rewarded video in ${adMins()} min`)); return done?.(false); }
   const c = adCfg(), t0 = Date.now(); let settled = false;
-  const finish = ok => {
+  // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
+  const finish = (ok, why = '') => {
     if (settled) return; settled = true; clearTimeout(guard); vdpPause(false);
     if (ok) {
       prefs.adAt = Date.now(); store.set(KEY.prefs, prefs);
@@ -40,10 +41,15 @@ function adWatch(done) {
       track('ad_reward', { detail: c.type });
       if (!views.menu.hidden) renderMenu();
       if (typeof S !== 'undefined' && S && !views.game.hidden) renderBars?.();
-    } else toast(L('Реклама сейчас недоступна — попробуйте позже', 'No ad available right now — try again later'));
+    } else {
+      track('ad_fail', { detail: `${c.type}:${why}`.slice(0, 60) });
+      toast(why === 'script' ? L('Реклама не загрузилась — возможно, включён блокировщик рекламы', 'The ad didn’t load — an ad blocker may be on')
+        : why.startsWith('close') ? L('Реклама закрыта раньше времени — награда только за просмотр', 'The ad was closed too early — the reward is for watching')
+        : L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
+    }
     done?.(ok);
   };
-  const guard = setTimeout(() => finish(false), 90000);  // ответа нет совсем (нет показов, блокировщик) — кнопка снова доступна
+  const guard = setTimeout(() => finish(false, 'timeout'), 90000);  // ответа нет совсем (нет показов, блокировщик) — кнопка снова доступна
   track('ad_open', { detail: c.type });
   vdpPause(true);
   adScript().then(() => {
@@ -51,13 +57,14 @@ function adWatch(done) {
       try {
         Ya.Context.AdvManager.render({
           blockId: c.blockId, type: c.type || 'fullscreen', platform: matchMedia('(pointer: coarse)').matches ? 'touch' : 'desktop',
-          onRewarded: ok => finish(!!ok),                                           // блок «с вознаграждением»: досмотрел
-          onClose: () => { if (c.type !== 'rewarded') finish(Date.now() - t0 > AD_MIN_SHOW); else if (!settled) finish(false); },
-          onError: () => finish(false),
+          onRender: () => track('ad_render', { detail: c.type }),
+          onRewarded: ok => finish(!!ok, 'norew'),                                  // блок «с вознаграждением»: досмотрел
+          onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(ms > AD_MIN_SHOW, `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
+          onError: e => finish(false, `err:${e?.type || ''}:${e?.code || e?.message || ''}`),
         });
-      } catch { finish(false); }
+      } catch (e) { finish(false, `ex:${e?.message || ''}`); }
     });
-  }).catch(() => finish(false));
+  }).catch(() => finish(false, 'script'));
 }
 
 // Кнопка «Реклама за награду» (или когда снова можно)
