@@ -1496,26 +1496,47 @@ body.ad-pause .app { pointer-events: none; }
 .btn-push { border-color: rgba(255,210,59,.6) !important; }
 
 /* Разминка: витрина и окно мини-игры (js/break.js, игры — js/break/b1–b5.js) */
-.btn-break { width: 100%; margin-top: 8px; border-color: rgba(var(--c-rgb),.55) !important; color: var(--cyan-l); }
+.btn-break { width: 100%; margin-top: 8px; border-color: rgba(45,226,230,.55) !important; color: #7df9ff; background: linear-gradient(135deg, rgba(45,226,230,.12), rgba(255,59,212,.10)) !important; }
 .brk-box { max-height: 92vh; overflow-y: auto; }
-.brk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; margin-bottom: 6px; }
-.brk-card { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 6px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--glass); color: var(--text); font: inherit; font-size: 12px; line-height: 1.2; cursor: pointer; text-align: center; }
-.brk-card:hover { border-color: rgba(var(--c-rgb),.7); }
-.brk-card small { color: var(--up); font-size: 11px; }
-.brk-ico { font-size: 26px; line-height: 1; }
-.brk-over { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; background: var(--bg); color: var(--text); overflow-y: auto; overscroll-behavior: contain;
+.brk-box .hs-h { display: flex; align-items: center; gap: 8px; margin: 16px 0 8px; }
+.brk-box .hs-h::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(var(--w-rgb),.18), transparent); }
+.brk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 9px; margin-bottom: 6px; }
+.brk-card { --cc: 45,226,230; position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px 10px; border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(var(--cc),.28); background: radial-gradient(120% 80% at 50% 0%, rgba(var(--cc),.20), transparent 60%), linear-gradient(180deg, #1a1a2c, #11111c);
+  box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06); color: var(--text); font: inherit; font-size: 12px; line-height: 1.2; cursor: pointer; text-align: center;
+  transition: transform .15s ease-out, box-shadow .15s, border-color .15s; animation: brkIn .35s ease-out backwards; }
+.brk-card:hover { border-color: rgba(var(--cc),.7); box-shadow: 0 8px 22px rgba(var(--cc),.22), inset 0 1px 0 rgba(255,255,255,.08); transform: translateY(-2px); }
+.brk-card:active { transform: scale(.96); }
+.brk-card b { font-weight: 800; }
+.brk-card small { color: #d4ff3a; font-size: 11px; font-weight: 800; }
+.brk-ico { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; font-size: 26px; line-height: 1;
+  background: radial-gradient(circle at 35% 30%, rgba(var(--cc),.45), rgba(var(--cc),.12) 70%); box-shadow: 0 0 18px rgba(var(--cc),.35), inset 0 1px 0 rgba(255,255,255,.25); }
+.brk-c-logic { --cc: 255,59,212; } .brk-c-puzzle { --cc: 178,107,255; } .brk-c-arcade { --cc: 255,170,40; }
+.brk-c-words { --cc: 45,226,230; } .brk-c-memory { --cc: 212,255,58; } .brk-c-relax { --cc: 90,220,150; }
+@keyframes brkIn { from { opacity: 0; transform: translateY(8px) scale(.97); } }
+.brk-over { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; color: var(--text); overflow-y: auto; overscroll-behavior: contain;
+  background: radial-gradient(90% 50% at 50% 0%, rgba(178,107,255,.16), transparent 70%), radial-gradient(70% 40% at 50% 100%, rgba(45,226,230,.08), transparent 70%), #08080f;
   padding: max(10px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); animation: fadein .2s; }
 .brk-head { display: flex; align-items: center; gap: 10px; min-height: 40px; }
 .brk-head b { flex: 1; font-size: 16px; }
-.brk-best { color: var(--up); font-weight: 800; font-size: 13px; }
+.brk-best { padding: 4px 10px; border-radius: 99px; background: rgba(212,255,58,.12); color: #d4ff3a; font-weight: 800; font-size: 12px; font-variant-numeric: tabular-nums; }
+.brk-best:empty { display: none; }
 .brk-desc { margin: 4px 0 8px; color: var(--text-2); font-size: 13px; }
 .brk-root { flex: 1; width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .brk-load { margin-top: 30vh; color: var(--text-2); }
-.brk-result { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 51; width: min(420px, calc(100% - 32px)); padding: 16px; border-radius: 18px; border: 1.5px solid rgba(var(--c-rgb),.6);
-  background: var(--panel); box-shadow: 0 12px 40px rgba(0,0,0,.6); text-align: center; animation: slidein .3s ease-out; }
+.brk-result { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom, 0px)); translate: -50% 0; z-index: 51; width: min(420px, calc(100% - 32px)); padding: 18px 16px 16px; border-radius: 22px;
+  border: 1px solid rgba(45,226,230,.45); background: linear-gradient(180deg, #1c1c30, #12121e); box-shadow: 0 18px 50px rgba(0,0,0,.7), 0 0 30px rgba(45,226,230,.15), inset 0 1px 0 rgba(255,255,255,.08);
+  text-align: center; animation: brkPop .4s cubic-bezier(.2,1.4,.4,1); }
+.brk-result > b { display: block; font-size: 20px; }
+.brk-result.brk-win { border-color: rgba(212,255,58,.55); box-shadow: 0 18px 50px rgba(0,0,0,.7), 0 0 36px rgba(212,255,58,.18), inset 0 1px 0 rgba(255,255,255,.08); }
 .brk-result p { margin: 6px 0; }
-.brk-reward { color: var(--up); font-weight: 800; }
+.brk-reward { display: inline-block; padding: 6px 12px; border-radius: 12px; background: rgba(212,255,58,.1); color: #d4ff3a; font-weight: 800; }
 .brk-note { color: var(--text-2); font-size: 13px; }
+@keyframes brkPop { from { opacity: 0; transform: translateY(30px) scale(.9); } }
+.brk-conf { position: fixed; inset: 0; z-index: 52; pointer-events: none; overflow: hidden; }
+.brk-conf i { position: absolute; top: -12px; width: 8px; height: 12px; border-radius: 2px; animation: brkFall linear forwards; }
+@keyframes brkFall { to { transform: translateY(110vh) rotate(720deg); } }
+@media (prefers-reduced-motion: reduce) { .brk-card, .brk-result { animation: none; } .brk-conf { display: none; } }
 .brk-offer { display: flex; gap: 6px; align-items: stretch; }
 .brk-offer .btn-break { flex: 1; margin-top: 0; }
 .brk-x { flex: none; width: 40px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 20px; cursor: pointer; }

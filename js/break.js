@@ -76,7 +76,7 @@ function openBreaks() {
   m.innerHTML = `<div class="modal-box glass brk-box" role="dialog" aria-modal="true" aria-labelledby="brkTitle">
     <h2 id="brkTitle">☕ ${L('Разминка', 'Break time')}</h2>
     <p class="hero-lead">${L(`Мини-игры для перерыва. Награда — ещё ${Math.max(0, BREAK_DAY_REWARDS - t.n)} из ${BREAK_DAY_REWARDS} сегодня: +1 у.е. и бодрость на следующую неделю (+${BREAK_BUFF} к Энергии и Кукухе).`, `Mini-games for your break. Rewards left today: ${Math.max(0, BREAK_DAY_REWARDS - t.n)} of ${BREAK_DAY_REWARDS} — +$1 and a boost for next week (+${BREAK_BUFF} Energy and Sanity).`)}${prefs.breakBuff ? ` <b>${L(`Бодрость: +${prefs.breakBuff}`, `Boost: +${prefs.breakBuff}`)}</b>` : ''}</p>
-    ${BREAK_CATS.map(([c, ico, name]) => `<h3 class="hs-h">${ico} ${esc(name)}</h3><div class="brk-grid">${BREAKS.filter(b => b[1] === c).map(([n, , i, title]) => `<button type="button" class="brk-card" data-brk="${n}"><span class="brk-ico" aria-hidden="true">${i}</span><b>${esc(title)}</b>${best[n] != null ? `<small>🏆 ${esc(String(best[n]))}</small>` : ''}</button>`).join('')}</div>`).join('')}
+    ${BREAK_CATS.map(([c, ico, name]) => `<h3 class="hs-h">${ico} ${esc(name)}</h3><div class="brk-grid">${BREAKS.filter(b => b[1] === c).map(([n, , i, title]) => `<button type="button" class="brk-card brk-c-${c}" data-brk="${n}" style="animation-delay:${(n % 10) * 25}ms"><span class="brk-ico" aria-hidden="true">${i}</span><b>${esc(title)}</b>${best[n] != null ? `<small>🏆 ${esc(String(best[n]))}</small>` : ''}</button>`).join('')}</div>`).join('')}
     <button class="btn-ghost" type="button" id="brkClose">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;
   m.querySelectorAll('[data-brk]').forEach(b => b.onclick = () => { m.hidden = true; playBreak(+b.dataset.brk); });
@@ -132,7 +132,12 @@ async function playBreak(n, opts = {}) {
         ${text ? `<p>${text}</p>` : ''}${score != null ? `<p>${L('Результат', 'Score')}: <b>${esc(String(score))}</b></p>` : ''}${reward ? `<p class="brk-reward">🎁 ${reward}</p>` : won ? `<p class="brk-note">${L('Награды на сегодня собраны — играйте для рекордов', 'Today’s rewards are collected — play for records')}</p>` : ''}
         ${then ? `<button class="btn-main" type="button" id="brkGo">${L('За работу →', 'Back to work →')}</button>`
           : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}`;
-      r.hidden = false;
+      r.hidden = false; r.classList.toggle('brk-win', !!won);
+      if (won && !matchMedia('(prefers-reduced-motion: reduce)').matches) {  // конфетти
+        const cf = Object.assign(document.createElement('div'), { className: 'brk-conf' }), cols = ['#ff3bd4', '#2de2e6', '#d4ff3a', '#ffaa28', '#b26bff'];
+        for (let i = 0; i < 40; i++) { const e = document.createElement('i'); e.style.cssText = `left:${Math.random() * 100}%;background:${cols[i % 5]};animation-duration:${1.4 + Math.random() * 1.4}s;animation-delay:${Math.random() * .4}s`; cf.append(e); }
+        over.append(cf); setTimeout(() => cf.remove(), 3400);
+      }
       if (then) { r.querySelector('#brkGo').onclick = () => { close(); then(); }; return; }
       r.querySelector('#brkAgain').onclick = () => { close(); playBreak(n); };
       r.querySelector('#brkList').onclick = () => { close(); openBreaks(); };
