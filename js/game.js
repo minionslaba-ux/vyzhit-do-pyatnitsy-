@@ -351,7 +351,7 @@ function startPack() {
 }
 
 // ---------- игровой экран ----------
-function enterGame() { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); }
+function enterGame() { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); requestAnimationFrame(fitGame); }
 // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
 function track(kind, o = {}) {
   if (!board.online || !prefs.name) return;
@@ -405,8 +405,21 @@ function renderCard() {
   touchPlaying(d);
   coachFor(slot);
   answerTimerReset();
-  fitCardText();
+  fitGame();
 }
+// Экран недели всегда целиком в видимой части экрана (без панелей браузера и полоски «домой» на iPhone):
+// если кнопки ответов не помещаются — ужимаем верх в два шага (без ленты «в игре», ниже шкалы и часы), текст карточки подгоняется
+function fitGame() {
+  const g = views.game; if (g.hidden) return;
+  g.classList.remove('tight', 'tighter');
+  fitCardText();
+  const vh = () => window.visualViewport?.height || innerHeight;
+  const small = () => parseFloat($('card').querySelector('.text')?.style.fontSize || 99) < 16;  // текст пришлось сильно уменьшить
+  const over = () => $('btnL').getBoundingClientRect().bottom > vh() - 2 || small();
+  if (over()) { g.classList.add('tight'); fitCardText(); }
+  if (over()) { g.classList.add('tighter'); fitCardText(); }
+}
+window.visualViewport?.addEventListener('resize', () => requestAnimationFrame(fitGame));
 // Текст карточки целиком помещается в карточку: если не влезает — шрифт плавно уменьшается (до 14 px), без прокрутки
 function fitCardText() {
   const t = $('card')?.querySelector('.text'); if (!t) return;
@@ -414,9 +427,11 @@ function fitCardText() {
   let fs = parseFloat(getComputedStyle(t).fontSize);
   for (let i = 0; i < 24 && t.scrollHeight > t.clientHeight + 1 && fs > 14; i++) { fs -= 1; t.style.fontSize = fs + 'px'; }
 }
-addEventListener('resize', () => { if (!views.game.hidden) fitCardText(); });
+addEventListener('resize', () => requestAnimationFrame(fitGame));
 // панель подсказки под текстом меняет высоту — подогнать ещё раз
-if (typeof MutationObserver !== 'undefined') new MutationObserver(() => requestAnimationFrame(fitCardText)).observe($('card'), { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+// (и лента «в игре», дедлайн, подсказка появляются позже — подгоняем весь экран; не чаще раза за кадр)
+let fitQ = 0;
+if (typeof MutationObserver !== 'undefined') new MutationObserver(() => { if (!fitQ) fitQ = requestAnimationFrame(() => { fitQ = 0; fitGame(); }); }).observe(views.game, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
 // Статус «играет» — раз в игровой день или раз в 30 секунд, а не на каждой карточке
 let touchAt = 0, touchDay = -1;
 function touchPlaying(d) {
@@ -1221,7 +1236,7 @@ async function record(won, death, high) {
   if (S.mode === 'tour') { const t = store.get('vdp-tours', {}); if (!t[S.tourId]) { t[S.tourId] = { won, total }; store.set('vdp-tours', t); } }
   if (S.mode === 'pack' || (S.mode === 'daily' && !S.ranked) || (S.mode === 'tour' && !S.ranked)) {
     if (el()) el().textContent = S.mode === 'pack' ? L('Брендированная неделя в общий рейтинг не идёт.', 'Branded weeks don’t count toward the main leaderboard.') : L('Повторная попытка: в зачёт идёт только первая.', 'Replay: only your first attempt counts.'); return; }
-  const entry = { player_id: prefs.playerId, name: S.name.slice(0, 24), dept: (S.dept || '').slice(0, 24), prof: S.prof, won,
+  const entry = { player_id: prefs.playerId, name: (S.name || prefs.name || '').trim().slice(0, 24) || L('Сотрудник', 'Employee'),  // пустое имя база не примет — результат не попал бы в рейтинг dept: (S.dept || '').slice(0, 24), prof: S.prof, won,
     step: won ? WEEK_LEN : S.step, total, psyche: S.res.psyche, energy: S.res.energy, boss: S.res.boss, colleagues: S.res.colleagues, death,
     mode: S.mode, day: S.mode === 'daily' ? S.day : null, overheat: !!high, ...(S.mode === 'tour' ? { tour_id: S.tourId } : {}) };
   try {

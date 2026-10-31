@@ -41,7 +41,12 @@ const board = (() => {
     refreshing = refreshing || (async () => {
       const r = await fetch(`${authBase}/token?grant_type=refresh_token`, { method: 'POST', headers: { apikey: cfg.anonKey, 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: ss.refresh }) });
-      if (!r.ok) { delete prefs.session; store.set(KEY.prefs, prefs); toast(L('Сессия входа истекла — войдите ещё раз', 'Your session expired — please sign in again')); return null; }
+      if (!r.ok) {  // вход истёк: аккаунтом без сессии база ничего не примет — просим войти заново
+        delete prefs.session; store.set(KEY.prefs, prefs);
+        toast(L('Сессия входа истекла — войдите ещё раз', 'Your session expired — please sign in again'));
+        if (typeof renderJoin === 'function' && views.game.hidden) setTimeout(() => renderJoin('login', L('Сессия входа истекла. Войдите снова — прогресс и рейтинг сохранятся.', 'Your session expired. Sign in again — your progress and ranking are kept.')), 600);
+        return null;
+      }
       const j = await r.json();
       prefs.session = { access: j.access_token, refresh: j.refresh_token, exp: (j.expires_at ? j.expires_at * 1000 : Date.now() + j.expires_in * 1000) };
       store.set(KEY.prefs, prefs);
@@ -61,6 +66,7 @@ const board = (() => {
         all[m.tag] = { ...all[m.tag], ...m, prof: prefs.prof, status, step, updated_at: new Date().toISOString(), created_at: all[m.tag]?.created_at || new Date().toISOString() };
         store.set(PEOPLE, all); return;
       }
+      if (prefs.email && !prefs.session) return;  // аккаунт без действующего входа — ждём повторного входа
       await req('/rpc/touch_player', { method: 'POST', headers: await authHeaders(), body: JSON.stringify({ p_id: prefs.playerId, p_name: prefs.name, p_dept: prefs.dept,
         p_avatar: prefs.avatar, p_prof: prefs.prof, p_status: status, p_step: step }) });
     },
@@ -70,6 +76,7 @@ const board = (() => {
         store.set(LOCAL, all.slice(-300)); return;
       }
       const auth = await authHeaders();
+      if (prefs.email && !prefs.session) throw new Error(L('войдите в аккаунт — тогда результат попадёт в рейтинг', 'sign in so your result is added to the leaderboard'));
       const post = body => req('/scores', { method: 'POST', headers: { Prefer: 'return=minimal', ...auth }, body: JSON.stringify(body) });
       try { await post(entry); }
       catch (err) {
