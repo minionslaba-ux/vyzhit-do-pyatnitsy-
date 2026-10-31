@@ -214,7 +214,7 @@ function renderBreakDay() {
   const box = $('brkDay'); if (!box) return;
   const n = brkOfDay(), b = BREAKS.find(x => x[0] === n); if (!b) return;
   const left = BREAK_DAY_REWARDS - brkToday().n, best = brkBest()[n], cat = BREAK_CATS.find(c => c[0] === b[1]);
-  const badge = left > 0 ? `<span class="bd-badge">${L('+1 у.е. · бодрость', '+$1 · boost')}</span>`
+  const badge = left > 0 ? `<span class="bd-badge">${L('🎁 +1 у.е. · ⚡ бодрость', '🎁 +$1 · ⚡ boost')}</span>`
     : best != null ? `<span class="bd-badge bd-rec">🏆 ${esc(String(best))}</span>` : '';
   box.innerHTML = `<button type="button" class="bd-card brk-c-${b[1]}" id="brkDayGo">
       <span class="bd-ico" aria-hidden="true">${b[2]}</span>
