@@ -256,6 +256,7 @@ function startWeek() {
   const type = weekTypeFor(C.week, C.newJob);
   C.newJob = false; saveCareer();
   S = newWeekState({ mode: 'career', res: C.res, type, extra: { prof: C.prof, trait: C.trait } });
+  S.diff = diffStage(C);  // сложность стадии карьеры (DIFF в js/engine.js) — на всю неделю
   if (C.bank < 0) { S.res.psyche = Math.max(5, S.res.psyche - 10); setTimeout(() => toast(L(`Долг ${C.bank} у.е. давит: Кукуха −10`, `${money(-C.bank)} of debt weighs on you: Sanity −10`)), 400); }
   const seen = seenSet(), classic = !seen.has('__classic') || !POOL.length;  // классическая неделя — только в самый первый раз
   const season = type === 'normal' && !classic ? activeSeason() : null;
@@ -373,6 +374,7 @@ function renderBars() {
   }
   const bc = $('bankChip'); bc.hidden = !(S.mode === 'career' && C); if (!bc.hidden) bc.textContent = `${money(C.bank)} · ${L('магазин', 'shop')}`;
   if ($('ctBank') && C) $('ctBank').textContent = money(C.bank);
+  if (!busy && !views.game.hidden) answerWarn();  // шкала вошла в опасную зону или вышла из неё (магазин) — обновить метки ответов
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
 const headerLine = () => S.mode === 'career' && C ? L(`Неделя ${C.week}/${YEAR} · ${C.company}`, `Week ${C.week}/${YEAR} · ${C.company}`) : S.mode === 'daily' ? `${L('Неделя дня', 'Daily Week')} ${dayLabel(S.day)}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}`
@@ -404,7 +406,7 @@ function renderCard() {
   $('gType').textContent = S.type !== 'normal' ? WEEK_TYPES[S.type].title : zs ? zs.title : '';
   $('gDay').textContent = dayName(d); $('gPhase').textContent = phaseName(slotPh(S.step)).toLowerCase(); $('gNum').textContent = String(S.step + 1).padStart(2, '0');
   $('dots').innerHTML = S.deck.map((s, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'now' : ''}${s.origin && i > S.step ? ' chain' : ''}"></i>`).join('');
-  clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer(); deadlineBadges(c); deadlineOffer();
+  clearPreview(); $('btnL').classList.remove('tip'); $('btnR').classList.remove('tip'); hintOffer(); deadlineBadges(c); answerWarn(); deadlineOffer();
   if (S.step % PER_DAY === 0 && splashFor !== S.step) { splashFor = S.step; showSplash(d); }
   touchPlaying(d);
   coachFor(slot);
@@ -485,11 +487,12 @@ const current = () => byId[S.deck[S.step].id];
 // Эффекты ответа с правилами недели; предметы гасят удары −10 и сильнее
 function effectsOf(side) {
   const rules = WEEK_TYPES[S.type].rules, raw = current().answers[side].effects, eff = {}, blocked = [];
-  const free = S.items.filter(i => !S.used.includes(i));
+  const free = S.items.filter(i => !S.used.includes(i)), D = S.mode === 'career' && DIFF[S.diff];
   for (const r of RES) {
     let v = raw[r.k] || 0;
     if (r.k === 'boss' && rules.bossMul) v = Math.round(v * rules.bossMul / 5) * 5;
     if (r.k === 'psyche' && v < 0 && rules.psycheNegMul) v = Math.round(v * rules.psycheNegMul / 5) * 5;
+    if (D && v < 0) v = Math.max(D.cap, Math.round(v * D.neg));  // стадия карьеры: новичкам мягче, руководителям жёстче
     const item = v <= -10 && free.find(i => ITEMS[i].stat === r.k && !blocked.some(b => b.item === i));
     if (item) blocked.push({ item, stat: r.k, v });
     eff[r.k] = item ? 0 : v;
@@ -573,7 +576,13 @@ function choose(side) {
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(WEEK_LEN - 1, S.step + Math.round(pc.after * PER_DAY / 3));
     if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: slotTime(pat), fixed: true, origin: pc.origin };
     clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side); bus.emit('answer', { card: c, side, eff });
-    const deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
+    let deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
+    // первые недели карьеры: раз в неделю бесплатный «кофе» — шкала останавливается на 5% (95%), вопрос и реклама остаются на потом
+    if (dead && S.mode === 'career' && DIFF[S.diff]?.save && !S.coffeeUsed) {
+      S.coffeeUsed = true; S.res[dead.k] = deadLow ? 5 : 95; renderBars(); sfx.item();
+      toast(L(`☕ Вас спас кофе — ещё шанс. «${dead.name}» держится на ${S.res[dead.k]}%`, `☕ Coffee saved you — one more chance. ${dead.name} holds at ${S.res[dead.k]}%`));
+      deadLow = deadHigh = dead = null;
+    }
     const best = store.get(KEY.best, { step: 0, wins: 0 });
     if (dead) FX.finale(dead.k, !deadLow);
     const pause = FX.off ? 650 : 1150;  // успеть показать взрыв шкалы или её угасание
@@ -615,6 +624,21 @@ function deadlineBadges(c) {
     if (S?.deadline && workAnswer(c, side)) $(id).insertAdjacentHTML('beforeend', `<span class="dl-badge" title="${L('Этот ответ засчитается в задачу', 'This answer counts toward your task')}">📋 ${L('в задачу', 'counts')}</span>`);
   }
   renderDeadlineChip();
+}
+// Шкала в опасной зоне (≤20% или ≥80%), а ответ толкает её дальше к краю — на ответе метка «⚠ Кукуха».
+// Только то, что уже видно по стрелкам ▲/▼: без чисел; удар, который погасит предмет (◆), и скрытый Босс не помечаются
+function answerWarn() {
+  if (!S?.deck?.[S.step]) return;
+  const hide = WEEK_TYPES[S.type].rules.hideBoss;
+  for (const [side, id] of [['left', 'btnL'], ['right', 'btnR']]) {
+    const b = $(id), { eff } = effectsOf(side);
+    b.querySelector('.dz-badge')?.remove();
+    const bad = RES.filter(r => !(hide && r.k === 'boss') && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
+    b.classList.toggle('dz', bad.length > 0);
+    if (!bad.length) continue;
+    const why = bad.map(r => `${r.name} ${S.res[r.k] <= 20 ? L('ближе к 0%', 'closer to 0%') : L('ближе к 100%', 'closer to 100%')}`).join(', ');
+    b.insertAdjacentHTML('beforeend', `<span class="dz-badge" title="${esc(why)}"><span aria-hidden="true">⚠ </span>${bad.length > 1 ? L(`${bad.length} шкалы`, `${bad.length} meters`) : bad[0].name}<span class="sr">: ${esc(why)}</span></span>`);
+  }
 }
 // Полоска задачи над карточкой: что сделать, сколько осталось, до когда и какой ответ на этой карточке засчитается
 function renderDeadlineChip() {
