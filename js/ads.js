@@ -2,7 +2,7 @@
 // Не чаще раза в 20 минут (и само предложение — тоже). Ролик — только по нажатию игрока, никогда посреди решения карточки;
 // на время ролика игра на паузе. Полноэкранный формат сам подстраивается под телефон (touch) и компьютер (desktop). На игровых платформах (Яндекс Игры и т. п.) — их собственная реклама, здесь выключено.
 // Блок и тип — SUPABASE_CONFIG.ads в js/config.js.
-const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 5000;
+const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 3000;  // крестик у полноэкранной рекламы Яндекса — около 5-й секунды: закрыл сразу — награда есть
 const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window ? 'touch' : 'desktop';
 // блок под устройство (кабинет РСЯ: Mobile / Desktop): { id, type }
