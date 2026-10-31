@@ -1217,13 +1217,14 @@ function pickInterview(prof) {
 function interview(v) {
   const qs = pickInterview(C.prof);
   const need = Math.round(qs.length * 2 * { 1: .5, 2: .64, 3: .79 }[v.level]);
-  let i = 0, score = 0;
+  let i = 0, score = 0, recUsed = false;
   const step = () => {
     const q = qs[i];
     views.end.innerHTML = `<div class="end-sheet glass">
       <span class="kicker">${L(`Неделя ${C.week} из ${YEAR} · собеседование · ${esc(v.name)}`, `Week ${C.week} of ${YEAR} · interview · ${esc(v.name)}`)}</span>
       <div class="iv-dots">${qs.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'now' : ''}"></i>`).join('')}</div>
       <div class="iv-q"><span class="who">${L(`HR · вопрос ${i + 1} из ${qs.length}`, `HR · question ${i + 1} of ${qs.length}`)}</span><div class="text">${esc(q.q)}</div><div class="iv-reply" id="ivReply" aria-live="polite"></div></div>
+      ${i === 0 && typeof anketaNote === 'function' ? anketaNote() : ''}
       <div class="iv-answers">${shuffle(q.a).map(a => `<button class="ans" data-s="${a.score}" data-r="${esc(a.reply)}">${esc(a.label)}</button>`).join('')}</div>
     </div>`;
     show('end');
@@ -1236,6 +1237,8 @@ function interview(v) {
     btns[0].focus({ preventScroll: true });
   };
   const verdict = () => {
+    // рекомендация HR из анкеты (js/anketa.js): +2 балла, только когда их не хватает до проходного
+    if (score < need && typeof anketaRecUse === 'function' && anketaRecUse(need - score)) { score += ANK_REC; recUsed = true; }
     const ok = score >= need, got = unlock([score === qs.length * 2 ? 'perfect_iv' : null]);
     C.week++; C.offers = [];
     if (ok) { C.passed++; C.stage = 'work'; C.newJob = true; C.company = v.name; C.salary = salaryFor(v); if (!C.companies.includes(v.name)) C.companies.push(v.name); C.res = freshRes(v.perk); sfx.win(); }
@@ -1246,6 +1249,7 @@ function interview(v) {
       <span class="kicker">${L(`Собеседование · ${esc(v.name)} · ${score} из ${qs.length * 2} баллов, нужно ${need}`, `Interview · ${esc(v.name)} · ${score} of ${qs.length * 2} points, needed ${need}`)}</span>
       <h1 class="${ok ? '' : 'lose'}">${ok ? L('Оффер!', 'You got the offer!') : L('Мы вам перезвоним', 'We’ll be in touch')}</h1>
       <p>${ok ? L(`${esc(v.name)} ждёт вас в понедельник. Новое место — свежий старт: шкалы снова около 50%. Оклад — ${money(C.salary)} в день.`, `${esc(v.name)} expects you on Monday. New job, fresh start: meters are back around 50%. Pay: ${money(C.salary)} a day.`) : L('…но не перезвонили. Поиск продолжается, впереди новые вакансии.', '…they were not in touch. The hunt goes on — more openings ahead.')}</p>
+      ${recUsed ? `<p class="ank-used">📎 ${L(`Сработала рекомендация HR из анкеты: +${ANK_REC} балла.`, `Your HR referral from the application kicked in: +${ANK_REC} points.`)}</p>` : ''}
       ${endingsHtml(got)}
       <div class="stack"><button class="btn-main" id="next">${over ? L('Итоги года', 'Year in review') : ok ? L(`Выйти на работу · неделя ${C.week}`, `Start the job · week ${C.week}`) : L(`Искать дальше · неделя ${C.week}`, `Keep looking · week ${C.week}`)}</button>
         <button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div>

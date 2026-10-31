@@ -1729,3 +1729,72 @@ html.light .shp-ok, html.light .shp-sc-cell.got em { color: #0f8a55; }
 /* Карточка не влезает даже в «tighter»: текст прокручивается внутри, ответы остаются на экране (js/game.js fitGame) */
 .game.squeeze .card { min-height: 0; flex: 0 1 auto; overflow: hidden; display: flex; flex-direction: column; }
 .game.squeeze .card .text { overflow-y: auto; min-height: 0; flex: 1; -webkit-overflow-scrolling: touch; mask-image: linear-gradient(#000 85%, transparent); -webkit-mask-image: linear-gradient(#000 85%, transparent); }
+/* ---------- Анкета соискателя (js/anketa.js): бумажный бланк на планшете ---------- */
+.ank-wrap { padding: 8px 4px 24px; }
+.ank-board { --ank-ink: #1d3b8f; --ank-red: #c8262d; --ank-paper: #fbf7ea; --ank-txt: #2a2620; --ank-hand: "Caveat", "Segoe Print", "Comic Sans MS", var(--f-body);
+  position: relative; width: min(100%, 520px); margin: 18px auto 0; padding: 26px 12px 14px; border-radius: 18px;
+  background: linear-gradient(160deg, #8a5a33, #6b4224 60%, #5a361c); box-shadow: 0 18px 50px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.08); }
+.ank-clip { position: absolute; top: -14px; left: 50%; width: 120px; height: 34px; transform: translateX(-50%); border-radius: 10px 10px 6px 6px;
+  background: linear-gradient(180deg, #e8e8ee, #9fa0aa 55%, #c9cad3); box-shadow: 0 4px 10px rgba(0,0,0,.45), inset 0 -3px 0 rgba(0,0,0,.18); z-index: 2; }
+.ank-clip::after { content: ""; position: absolute; left: 50%; top: 7px; width: 40px; height: 10px; transform: translateX(-50%); border-radius: 6px; background: #6f707a; box-shadow: inset 0 2px 3px rgba(0,0,0,.5); }
+.ank-paper { position: relative; text-align: left; color: var(--ank-txt); font-family: var(--f-body); padding: 20px 16px 16px; border-radius: 4px;
+  background: repeating-linear-gradient(180deg, transparent 0 31px, rgba(29,59,143,.12) 31px 32px), var(--ank-paper);
+  box-shadow: 0 2px 0 #e9e2cc, 0 4px 0 #ddd4b8, 0 8px 18px rgba(0,0,0,.3); display: flex; flex-direction: column; gap: 14px;
+  animation: ank-in .35s var(--ease) both; }
+.ank-paper::before { content: ""; position: absolute; top: 0; bottom: 0; left: 26px; width: 1.5px; background: rgba(200,38,45,.28); }
+.ank-head { position: relative; padding-left: 18px; padding-right: 84px; min-height: 64px; }
+.ank-form { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: #6d6656; font-weight: 500; }
+.end .ank-paper .ank-title { margin: 4px 0 0; font-family: var(--f-display); font-weight: 800; font-size: clamp(17px, 4.8vw, 24px); text-shadow: none; overflow-wrap: normal; hyphens: manual; text-wrap: balance; line-height: 1.1; color: #1c1a16; text-transform: uppercase; letter-spacing: .01em; }
+.ank-stamp { position: absolute; top: -4px; right: -2px; width: 82px; height: 82px; border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 10px;
+  font-family: var(--f-mono); font-weight: 700; font-size: 10.5px; line-height: 1.15; letter-spacing: .06em; color: var(--ank-ink);
+  border: 3px double var(--ank-ink); transform: rotate(-14deg); opacity: .72; mix-blend-mode: multiply; }
+.end .ank-paper .ank-lead { max-width: none; margin: 0; padding-left: 18px; font-size: 15px; line-height: 1.4; font-weight: 700; color: var(--ank-txt); }
+.ank-perks { margin: 0; padding: 0 0 0 18px; list-style: none; display: flex; flex-direction: column; gap: 6px; font-family: var(--ank-hand); font-size: 20px; line-height: 1.15; color: var(--ank-ink); }
+.ank-btns { display: flex; flex-direction: column; gap: 10px; padding-left: 18px; }
+.ank-paper .btn-main { background: var(--ank-ink); color: #fff; box-shadow: 0 3px 0 #0f2260; border-radius: 14px; font-size: 15px; }
+.ank-paper .btn-main.ank-rec { background: #2b6a3f; box-shadow: 0 3px 0 #17402a; }
+.ank-paper .btn-ghost { color: #4a4436; border: 2px dashed #9a917a; box-shadow: none; border-radius: 14px; }
+.ank-paper .btn-ghost:hover { background: rgba(0,0,0,.05); color: #1c1a16; }
+.ank-paper :focus-visible { outline: 3px solid #f0a020; outline-offset: 2px; }
+.ank-prog { display: flex; gap: 5px; margin-top: 10px; }
+.ank-prog i { flex: 1; height: 5px; border-radius: 3px; background: rgba(29,59,143,.15); }
+.ank-prog i.done { background: var(--ank-ink); }
+.ank-prog i.now { background: var(--ank-red); }
+.ank-q { margin: 0; padding: 0 0 0 18px; border: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ank-q legend { padding: 0; margin-bottom: 8px; font-family: var(--f-display); font-weight: 800; font-size: clamp(16px, 4.6vw, 20px); line-height: 1.25; color: #1c1a16; }
+.ank-n { color: var(--ank-red); }
+.ank-opt { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 50px; padding: 8px 10px; text-align: left; border-radius: 10px; border: 1.5px solid rgba(42,38,32,.18);
+  background: rgba(255,255,255,.55); color: var(--ank-txt); font: inherit; font-size: 15px; font-weight: 800; line-height: 1.25; cursor: pointer; transition: background .15s, border-color .15s, transform .08s; }
+.ank-opt:hover:not(:disabled) { background: #fff; border-color: rgba(29,59,143,.5); }
+.ank-opt:active:not(:disabled) { transform: scale(.98); }
+.ank-opt:disabled { cursor: default; opacity: .55; }
+.ank-opt.on { opacity: 1; background: #fff; border-color: var(--ank-ink); }
+.ank-opt.on .ank-txt { font-family: var(--ank-hand); font-size: 21px; font-weight: 700; color: var(--ank-ink); line-height: 1.05; }
+.ank-box { position: relative; flex: none; width: 24px; height: 24px; border: 2px solid #3b3529; border-radius: 3px; background: #fff; }
+.ank-opt.on .ank-box::after { content: "✓"; position: absolute; left: 1px; top: -12px; font-family: var(--ank-hand); font-size: 34px; font-weight: 700; color: var(--ank-ink); transform: rotate(-8deg); animation: ank-tick .25s var(--ease) both; }
+.end .ank-paper .ank-hr { max-width: none; margin: 0; padding-left: 18px; min-height: 1.6em; font-family: var(--ank-hand); font-size: 21px; line-height: 1.15; color: var(--ank-red); transform: rotate(-1deg); }
+.ank-hr b { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; font-weight: 700; }
+.end .ank-paper .ank-hr:not(:empty) { animation: ank-in .3s var(--ease) both; }
+.ank-quit { align-self: center; background: none; border: 0; padding: 6px 8px; color: #7a7262; font: inherit; font-size: 12.5px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.ank-about { display: flex; flex-direction: column; gap: 6px; padding-left: 18px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #6d6656; font-weight: 500; }
+.ank-about textarea { width: 100%; resize: vertical; min-height: 64px; padding: 6px 8px; border: 0; border-bottom: 2px solid rgba(29,59,143,.45); border-radius: 0; background: transparent;
+  font-family: var(--ank-hand); font-size: 22px; line-height: 1.2; color: var(--ank-ink); text-transform: none; letter-spacing: 0; }
+.ank-about textarea::placeholder { color: rgba(29,59,143,.38); }
+.ank-about textarea:focus { outline: none; border-bottom-color: var(--ank-ink); background: rgba(255,255,255,.5); }
+.ank-about small { text-transform: none; letter-spacing: 0; font-size: 10.5px; }
+.ank-fine { padding-left: 18px; font-size: 12px; line-height: 1.35; color: #6d6656; font-weight: 700; }
+.ank-ok { position: relative; display: flex; flex-direction: column; gap: 12px; padding-top: 8px; }
+.ank-stamp2 { align-self: center; padding: 6px 18px; border: 4px solid var(--ank-red); border-radius: 8px; color: var(--ank-red); font-family: var(--f-display); font-weight: 800; font-size: 28px; letter-spacing: .12em;
+  transform: rotate(-8deg); opacity: .85; mix-blend-mode: multiply; animation: ank-stamp .45s cubic-bezier(.3,1.6,.5,1) both; }
+.end .ank-note { max-width: none; width: 100%; margin: 0; padding: 10px 14px; border-radius: 14px; border: 1.5px dashed rgba(var(--c-rgb),.45); text-align: left; font-size: 13.5px; line-height: 1.4; color: var(--text-2); }
+.ank-note b { color: var(--up); font-weight: 800; }
+.end .ank-used { margin: 0; color: var(--up); font-weight: 800; }
+@keyframes ank-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes ank-tick { from { opacity: 0; transform: rotate(-8deg) scale(1.6); } to { opacity: 1; transform: rotate(-8deg) scale(1); } }
+@keyframes ank-stamp { from { opacity: 0; transform: rotate(-8deg) scale(2.2); } to { opacity: .85; transform: rotate(-8deg) scale(1); } }
+@media (min-width: 700px) { .ank-paper { padding: 26px 26px 20px; } .ank-btns { flex-direction: row; } .ank-btns > * { flex: 1; } }
+@media (max-width: 370px) { .ank-head { padding-right: 70px; } .ank-stamp { width: 70px; height: 70px; font-size: 9px; } .ank-opt { font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .ank-paper, .end .ank-paper .ank-hr:not(:empty), .ank-stamp2, .ank-opt.on .ank-box::after { animation: none; } .ank-opt { transition: none; } }
+.ank-head.ank-sm { min-height: 0; padding-right: 64px; }
+.end .ank-paper .ank-sm .ank-title { font-size: clamp(14px, 3.8vw, 18px); }
+.ank-sm .ank-stamp { width: 60px; height: 60px; font-size: 8px; padding: 6px; top: -10px; }
