@@ -83,7 +83,7 @@ if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !windo
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid = /android/i.test(navigator.userAgent), isMobile = isIOS || isAndroid;
-let installEvt = null;
+let installEvt = null, tgGo = '';  // tgGo — куда перейти из быстрого меню Telegram-группы
 // Установить можно: браузер дал событие установки, или это телефон (покажем, как добавить вручную); не в Telegram, не в каталогах
 const canInstall = () => !standalone && !TG && !window.VDP_PLATFORM && !window.POOL_JSON && (installEvt || isMobile);
 function installUi() {
@@ -135,6 +135,8 @@ if (TG) {
     if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
     if (join) prefs.pendingJoin = join[1].toUpperCase();
     const bonus = sp.match(/bonus-(\d{8})/); if (bonus) prefs.pendingBonus = bonus[1];  // ссылка из рассылки бота: +15 у.е.
+    // быстрое меню из закреплённого сообщения в группе: t.me/Survivefridaybot?startapp=go-daily (daily, breaks, shop, feed, top)
+    const go = sp.match(/go-(daily|breaks|shop|feed|top)/); if (go) tgGo = go[1];
     const ch = sp.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
     if (ch) rememberChallenge(ch[1], '', ref?.[1]);
     store.set(KEY.prefs, prefs);
@@ -145,6 +147,15 @@ if (TG) {
   } catch {}
 }
 dataReady.then(() => { if (!views.menu.hidden) renderMenu(); });
+// переход из быстрого меню группы — один раз, когда открылось главное меню и игрок уже представился
+bus.on('menu', () => {
+  if (!tgGo || !prefs.name) return;
+  const g = tgGo; tgGo = ''; track('tg_go', { detail: g });
+  setTimeout(() => { try {
+    if (g === 'daily') startDaily(); else if (g === 'breaks') openBreaks(); else if (g === 'shop') openStore();
+    else if (g === 'feed') showFeed(); else if (g === 'top') openBoard('menu', 'rating');
+  } catch {} }, 600);
+});
 
 finishLogin().then(reloading => {
   if (reloading) return;
