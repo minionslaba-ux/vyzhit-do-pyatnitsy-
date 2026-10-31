@@ -182,10 +182,22 @@ if ($('profSheet')) new MutationObserver(() => { if ($('profSheet').hidden && th
 })();
 
 function renderSound() {
+  const vol = Math.round(sfxVol() * 100), sl = $('sndVol'), sv = $('sndVolVal'), st = $('sndToggle');
+  if (sl) { sl.value = vol; sl.style.setProperty('--p', vol + '%'); sl.setAttribute('aria-valuetext', vol + '%'); }
+  if (sv) sv.textContent = prefs.sound ? vol + '%' : L('выкл.', 'off');
+  if (st) { st.textContent = prefs.sound ? '♪' : '×'; st.setAttribute('aria-pressed', prefs.sound); st.title = prefs.sound ? L('Звук включён', 'Sound on') : L('Звук выключен', 'Sound off'); }
   for (const b of [$('soundMenu'), $('soundGame')]) { b.textContent = prefs.sound ? '♪' : '×'; b.setAttribute('aria-pressed', prefs.sound); b.title = prefs.sound ? L('Звук включён', 'Sound on') : L('Звук выключен', 'Sound off'); }
 }
-function toggleSound() { prefs.sound = !prefs.sound; store.set(KEY.prefs, prefs); renderSound(); }
+function toggleSound() { prefs.sound = !prefs.sound; store.set(KEY.prefs, prefs); renderSound(); if (prefs.sound) sfx.click?.(); }
 $('soundMenu').onclick = toggleSound; $('soundGame').onclick = toggleSound;
+if ($('sndToggle')) $('sndToggle').onclick = toggleSound;
+// ползунок «Звуки» в профиле: 0–100 %, хранится в prefs.vol; во время перетаскивания — тихий щелчок для примерки
+$('sndVol')?.addEventListener('input', e => {
+  prefs.vol = Math.max(0, Math.min(100, Math.round(+e.target.value) || 0));
+  if (prefs.vol > 0 && !prefs.sound) prefs.sound = true;
+  sfxSetVol(); renderSound(); sfx.tick?.();
+});
+$('sndVol')?.addEventListener('change', () => { store.set(KEY.prefs, prefs); sfx.click?.(); });
 
 let toastT;
 function toast(text) { const t = $('toastBar'); t.textContent = text; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
@@ -469,6 +481,7 @@ function renderCard() {
   const tools = S.mode === 'career' && C ? '<div class="card-tools" id="ctools"></div>' : '';
   card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div>${tools}<div class="stamp" aria-hidden="true"></div>`;
   if (tools) cardTools();
+  sfx.flick?.();
   views.game.classList.toggle('pro', (prefs.gamesPlayed || 0) >= 2);  // опытным не нужна строка «тяните карточку…» — больше места карточке
   // вход новой карточки: последствие — перемотка, случайное событие — помехи, новый день — лист календаря, иначе — снизу
   const kind = slot.origin ? 'rewind' : c.random ? 'glitch' : S.step % PER_DAY === 0 && S.step > 0 ? 'page' : null;
@@ -636,7 +649,7 @@ function react(card, eff, side) {
 
 function choose(side) {
   if (busy || splashOn || !S) return;
-  busy = true; sfx.stapler(); buzz('tap');
+  busy = true; sfx.swipe?.(); sfx.stapler(); buzz('tap');
   const card = $('card'), dir = side === 'left' ? -1 : 1, c = current();
   card.style.transition = RM.matches ? 'opacity .12s' : `transform .38s ${EASE}, opacity .38s`;
   if (!RM.matches) card.style.transform = `translateX(${dir * 1100}px) rotate(${dir * 26}deg)`;
