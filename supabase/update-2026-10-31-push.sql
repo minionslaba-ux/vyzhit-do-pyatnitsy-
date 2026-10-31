@@ -25,3 +25,23 @@ revoke all on public.push_keys from anon, authenticated;
 select cron.schedule('push-morning', '40 6 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
 select cron.schedule('push-day', '40 10 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
 select cron.schedule('push-evening', '40 16 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
+
+-- Пуши по событиям (личное сообщение, приглашение в офис) и состояние игрока для личных напоминаний
+alter table public.push_subs add column if not exists state jsonb, add column if not exists state_at timestamptz, add column if not exists last_event_at timestamptz;
+create index if not exists push_subs_player_idx on public.push_subs (player_id);
+create or replace function public.push_notify() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if exists (select 1 from push_subs where player_id = new.to_player) then
+    perform net.http_post(
+      url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-event',
+      headers := '{"Content-Type": "application/json"}'::jsonb,
+      body := jsonb_build_object('key', (select cron_key from push_keys where id = 1), 'kind', tg_argv[0], 'id', new.id));
+  end if;
+  return new;
+end $$;
+revoke all on function public.push_notify() from public, anon, authenticated;
+drop trigger if exists dm_push on public.direct_messages;
+create trigger dm_push after insert on public.direct_messages for each row execute function public.push_notify('dm');
+drop trigger if exists invite_push on public.invites;
+create trigger invite_push after insert on public.invites for each row execute function public.push_notify('invite');

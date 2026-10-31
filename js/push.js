@@ -74,3 +74,38 @@ setTimeout(async () => {
   if (!pushOn()) return;
   try { const sub = await (await navigator.serviceWorker.ready).pushManager.getSubscription(); if (sub) await pushSave(sub); else { prefs.push = false; store.set(KEY.prefs, prefs); pushRender(); } } catch {}
 }, 3000);
+
+// ---------- личные напоминания: что сейчас у игрока (персонаж, питомцы, дети, карьера) ----------
+// Отправляем на сервер, только если напоминания включены; сервер подставит имена в 500 личных шаблонов
+const lc = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : '';
+function pushStateNow() {
+  const C2 = careerNow(), h = C2?.hero; if (!C2) return null;
+  const n = h?.pending && typeof NEEDS !== 'undefined' && NEEDS.find(x => x.id === h.pending);
+  const pets = h?.pets || [], hungry = pets.find(p => p.last?.p_food !== C2.week), pet = hungry || pets[0];
+  const kids = h?.kids || [], kidW = kids.map(k => ({ k, w: typeof kidWants === 'function' ? kidWants(k)[0] : null })).find(x => x.w);
+  return {
+    hero: h?.name || '', g: h && heroFem(h) ? 'f' : 'm', need: n ? lc(needText(n, h, 't')) : '', mood: h?.mood ?? null, breaks: h?.breaks || 0,
+    pet: pet?.name || '', petHungry: !!hungry, kid: kidW?.k.name || kids[0]?.name || '', kidWant: kidW ? lc(kidW.w.t) : '',
+    week: Math.min(C2.week, YEAR), company: C2.stage === 'work' ? C2.company : '', bank: C2.bank, certReady: typeof certCan === 'function' && certCan(C2),
+    streak: typeof streakNow === 'function' ? streakNow() : 0,
+  };
+}
+let pushStateLast = '';
+async function pushStateSend() {
+  if (!pushOn()) return;
+  const st = pushStateNow(); if (!st) return;
+  const key = JSON.stringify(st); if (key === pushStateLast) return; pushStateLast = key;
+  try {
+    const sub = await (await navigator.serviceWorker.ready).pushManager.getSubscription(); if (!sub) return;
+    await fetch(PUSH_FN(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG.anonKey }, body: JSON.stringify({ action: 'state', endpoint: sub.endpoint, state: st }) });
+  } catch {}
+}
+bus.on('menu', () => setTimeout(pushStateSend, 1500));
+bus.on('weekEnd', () => setTimeout(pushStateSend, 4000));
+
+// Открыли игру из пуша о сообщении или приглашении — сразу туда
+(() => {
+  const q = new URLSearchParams(location.search), open = q.get('open'); if (!open) return;
+  q.delete('open'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+  if (open === 'dm') setTimeout(() => { if (typeof showDmInbox === 'function' && views.game.hidden) showDmInbox(); }, 2500);
+})();
