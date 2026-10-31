@@ -10,8 +10,8 @@ import os, zipfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FILES = ['index.html', 'css/style.css', 'manifest.json', 'sw.js', 'igra-pro-ofis.html',
          'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js',
-         'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/push.js', 'js/streak.js', 'js/break.js', 'js/break/b1.js', 'js/break/b2.js', 'js/break/b3.js', 'js/break/b4.js', 'js/break/b5.js', 'js/shop.js', 'js/topup.js', 'js/vendor/three.module.min.js', 'js/vendor/three.LICENSE', 'js/login.js', 'js/app.js',
-         'data/pool.json', 'data/pool2.json', 'data/pool3.json', 'data/events.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'data/cert/ru.json', 'data/cert/en.json']
+         'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/push.js', 'js/streak.js', 'js/break.js', 'js/break/b1.js', 'js/break/b2.js', 'js/break/b3.js', 'js/break/b4.js', 'js/break/b5.js', 'js/quotes.js', 'js/shop.js', 'js/topup.js', 'js/vendor/three.module.min.js', 'js/vendor/three.LICENSE', 'js/login.js', 'js/app.js',
+         'data/pool.json', 'data/pool2.json', 'data/pool3.json', 'data/events.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'data/quotes.json', 'data/cert/ru.json', 'data/cert/en.json']
 DIRS = ['icons', 'packs']
 
 

@@ -1713,3 +1713,59 @@ html.light .shp-ok, html.light .shp-sc-cell.got em { color: #0f8a55; }
 .shp-coffee p { margin: 0; font-size: 13px; color: var(--text-2); }
 .shp-coffee .tu-agree { font-size: 12px; }
 .shp-maecenas { display: inline-block; justify-self: start; width: max-content; padding: 1px 8px; margin: 2px 0; border-radius: 999px; font-size: 12px; font-weight: 900; color: #3a1d00; background: linear-gradient(135deg, #ffcf3d, #ff9a2e); white-space: nowrap; }
+
+/* ---------- «Цитаты» (js/quotes.js): цитата дня в меню, цитата на итогах недели, плашка утром в понедельник ---------- */
+.qt-day { margin-top: 18px; }
+.qt-card { position: relative; margin: 0; padding: 26px 18px 14px 22px; border-radius: 18px; overflow: hidden; text-align: left;
+  border: 1px solid var(--line); color: var(--text);
+  background: radial-gradient(120% 140% at 0% 0%, rgba(var(--m-rgb),.13), transparent 55%), radial-gradient(120% 140% at 100% 100%, rgba(var(--c-rgb),.1), transparent 55%), var(--glass, var(--panel));
+  box-shadow: 0 10px 28px rgba(0,0,0,.25), inset 0 1px 0 rgba(var(--w-rgb),.08); }
+.qt-card::before { content: "«"; position: absolute; left: 8px; top: -14px; font: 800 96px/1 Georgia, "Times New Roman", serif; color: var(--magenta); opacity: .32; pointer-events: none; }
+html[lang="en"] .qt-card::before { content: "“"; top: -6px; }
+.qt-kick { display: block; margin-bottom: 8px; font: 700 10.5px/1.2 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-l); }
+.qt-text { margin: 0; }
+.qt-text p { margin: 0; font: italic 600 clamp(16px, 4.4vw, 19px)/1.42 Georgia, "Times New Roman", serif; color: var(--text); text-wrap: pretty; hyphens: auto; }
+.qt-who { margin-top: 10px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-align: right; font: 800 13px/1.3 var(--f-body); color: var(--text-2); }
+.qt-who span::before { content: "— "; color: var(--magenta); }
+.qt-src { font: 600 11px/1.3 var(--f-body); color: var(--text-2); opacity: .75; }
+.qt-acts { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; justify-content: flex-end; gap: 8px; }
+.qt-btn { min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(var(--w-rgb),.04); color: var(--text);
+  font: 800 13px/1 var(--f-body); cursor: pointer; transition: border-color .2s, background .2s, transform .15s; }
+.qt-btn:hover, .qt-btn:focus-visible { border-color: var(--cyan); background: rgba(var(--c-rgb),.1); }
+.qt-btn:active { transform: scale(.96); }
+.qt-more { width: 36px; padding: 0; font-size: 18px; }
+.qt-share { color: var(--magenta-l); border-color: rgba(var(--m-rgb),.45); }
+.qt-share:hover, .qt-share:focus-visible { border-color: var(--magenta); background: rgba(var(--m-rgb),.1); }
+.qt-in { animation: qtIn .35s var(--ease); }
+@keyframes qtIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* итоги недели: короткая цитата под результатом */
+.qt-end { margin: 14px auto 4px; max-width: 34em; padding: 10px 14px 10px 16px; border-left: 3px solid var(--cyan); border-radius: 0 12px 12px 0; text-align: left;
+  background: rgba(var(--c-rgb),.06); animation: qtIn .5s var(--ease); }
+.qt-end.qt-lose { border-left-color: var(--magenta); background: rgba(var(--m-rgb),.06); }
+.qt-end blockquote { margin: 0; }
+.qt-end p { margin: 0 !important; font: italic 600 14.5px/1.45 Georgia, "Times New Roman", serif; color: var(--text); }
+.qt-end figcaption { margin-top: 4px; text-align: right; font: 800 12px/1.3 var(--f-body); color: var(--text-2); }
+
+/* понедельник, утро: плашка сверху, сама исчезает через 7 с, касание — закрыть */
+.qt-toast { position: fixed; z-index: 60; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 10px); width: min(92vw, 420px); transform: translate(-50%, -12px); opacity: 0;
+  display: grid; gap: 3px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--line); text-align: left; cursor: pointer;
+  background: var(--panel); color: var(--text); box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 0 24px rgba(var(--c-rgb),.18);
+  transition: opacity .35s var(--ease), transform .35s var(--ease); pointer-events: auto; }
+.qt-toast.on { opacity: .97; transform: translate(-50%, 0); }
+.qt-toast small { font: 700 10px/1.2 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cyan-l); }
+.qt-toast span { font: italic 600 14px/1.4 Georgia, "Times New Roman", serif; }
+.qt-toast i { font: 800 12px/1.3 var(--f-body); font-style: normal; color: var(--text-2); text-align: right; }
+
+html.light .qt-card { box-shadow: 0 8px 22px rgba(var(--p-rgb),.16), inset 0 1px 0 rgba(255,255,255,.6); }
+html.light .qt-card::before { opacity: .22; }
+html.light .qt-btn { background: rgba(255,255,255,.7); }
+html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
+@media (min-width: 1000px) {
+  .qt-card { padding: 30px 24px 16px 28px; }
+  .qt-text p { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qt-in, .qt-end { animation: none; }
+  .qt-btn, .qt-toast { transition: none; }
+}
