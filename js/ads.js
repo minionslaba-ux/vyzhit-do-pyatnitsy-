@@ -5,7 +5,8 @@
 const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 5000;
 const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window ? 'touch' : 'desktop';
-const adOn = () => !!adCfg().blockId && !window.VDP_PLATFORM && (adCfg().platforms || ['touch', 'desktop']).includes(adPlatform());  // блок только для телефонов — на компьютере кнопки нет
+const adBlock = () => adCfg().blocks?.[adPlatform()] || adCfg().blockId || '';  // блок под устройство (кабинет РСЯ: Mobile / Desktop)
+const adOn = () => !!adBlock() && !window.VDP_PLATFORM;  // нет блока для этого устройства — нет и кнопки
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
@@ -57,7 +58,7 @@ function adWatch(done) {
     window.yaContextCb.push(() => {
       try {
         Ya.Context.AdvManager.render({
-          blockId: c.blockId, type: c.type || 'fullscreen', platform: adPlatform(),
+          blockId: adBlock(), type: c.type || 'fullscreen', platform: adPlatform(),
           onRender: () => track('ad_render', { detail: c.type }),
           onRewarded: ok => finish(!!ok, 'norew'),                                  // блок «с вознаграждением»: досмотрел
           onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(ms > AD_MIN_SHOW, `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
