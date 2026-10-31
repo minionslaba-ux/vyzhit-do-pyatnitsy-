@@ -432,7 +432,7 @@ async function liveTick() {
   try {
     const rows = (await onlineNow()).filter(p => p.short_id).sort((a, b) => (b.status === 'playing') - (a.status === 'playing'));
     el.hidden = !rows.length;
-    el.innerHTML = rows.length ? `<span class="ls-head"><i class="live-dot"></i>${rows.length}<small>${L('в игре', 'online')}</small></span>`
+    el.innerHTML = rows.length ? `<span class="ls-head"><i class="live-dot"></i>${rows.filter(r => !r.npc).length ? `${rows.filter(r => !r.npc).length}<small>${L('в игре', 'online')}</small>` : `<small>${L('офис', 'office')}</small>`}</span>`
       + rows.slice(0, 15).map((p, i) => `<button class="ls-p${p.status === 'playing' ? ' play' : ''}${p.npc ? ' npc' : ''}" type="button" data-i="${i}" title="${esc(p.name)}${p.dept ? ' · ' + esc(p.dept) : ''}${p.npc ? ' · ' + L('персонаж игры', 'game character') : ''}"><span class="ls-ava">${esc(p.avatar || '🙂')}</span><span class="ls-name">${esc(p.name)}</span></button>`).join('') : '';
     el.querySelectorAll('[data-i]').forEach(b => b.onclick = () => personPop(rows[+b.dataset.i]));
   } catch { el.hidden = true; }
@@ -525,7 +525,7 @@ function renderCard() {
 // если кнопки ответов не помещаются — ужимаем верх в два шага (без ленты «в игре», ниже шкалы и часы), текст карточки подгоняется
 function fitGame() {
   const g = views.game; if (g.hidden) return;
-  g.classList.remove('tight', 'tighter', 'squeeze'); $('card').style.maxHeight = '';
+  g.classList.remove('tight', 'tighter', 'squeeze');
   fitCardText();
   // видимая высота минус «полоска домой» iPhone (safe-area снизу), которую эмуляторы не учитывают
   const vh = () => (window.visualViewport?.height || innerHeight) - safeBottom();
@@ -533,9 +533,6 @@ function fitGame() {
   const over = () => $('btnL').getBoundingClientRect().bottom > vh() - 2 || small();
   if (over()) { g.classList.add('tight'); fitCardText(); }
   if (over()) { g.classList.add('tighter'); fitCardText(); }
-  // последняя страховка: ответы всегда на экране — карточка ужимается, а её текст прокручивается внутри
-  const extra = $('btnL').getBoundingClientRect().bottom - (vh() - 6);
-  if (extra > 0) { const c = $('card'); g.classList.add('squeeze'); c.style.maxHeight = Math.max(120, c.getBoundingClientRect().height - extra) + 'px'; }
   const tx = $('card').querySelector('.text'); if (tx && tx.scrollHeight > tx.clientHeight + 1) g.classList.add('squeeze');  // текст длинный даже мелким шрифтом — прокрутка, а не обрезка
 }
 let safeB = null;
