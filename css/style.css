@@ -1493,3 +1493,4 @@ body.ad-pause .app { pointer-events: none; }
   background: rgba(12, 30, 22, .92); color: #b9ffd8; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; box-shadow: 0 8px 24px rgba(45,226,138,.3); animation: slidein .35s ease-out; }
 .ad-loading .ad-box { width: auto; display: flex; gap: 14px; align-items: center; }
 .ad-over.ad-under { z-index: 99; background: rgba(6, 4, 16, .6); align-items: end; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+.btn-push { border-color: rgba(255,210,59,.6) !important; }

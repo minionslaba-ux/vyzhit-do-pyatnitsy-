@@ -28,6 +28,8 @@ Deno.serve(async req => {
     const msk = new Date(Date.now() + 3 * 3600e3), hour = msk.getUTCHours(), dow = msk.getUTCDay(), date = msk.toISOString().slice(0, 10);
     const slot = typeof forced === 'number' ? forced : hour < 12 ? 0 : hour < 17 ? 1 : 2;
     const dayNo = Math.floor(msk.getTime() / 864e5);
+    // пн/ср/пт утром — уведомление с бонусом +15 у.е.: ссылка ?bonus=ГГГГММДД (как в рассылке бота, один раз в день)
+    const bonusDay = slot === 0 && [1, 3, 5].includes(dow), bonus = bonusDay ? `&bonus=${date.replace(/-/g, '')}` : '';
     const texts = await fetch(`${SITE}/data/push_ru.json`).then(r => r.json()).catch(() => null);
     const pool = (lang: string) => {
       if (lang === 'en' || !texts) return EN;
@@ -54,7 +56,7 @@ Deno.serve(async req => {
         const list = pool(s.lang) || EN, m = list[(h32(s.endpoint) + dayNo * 3 + slot) % list.length];
         try {
           await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
-            JSON.stringify({ t: m.t, b: m.b, url: `/?utm_source=push&utm_medium=web&utm_campaign=${['morning', 'day', 'evening'][slot]}` }), { TTL: 6 * 3600, urgency: 'normal' });
+            JSON.stringify({ t: m.t, b: m.b, url: `/?utm_source=push&utm_medium=web&utm_campaign=${['morning', 'day', 'evening'][slot]}${s.lang === 'en' ? '' : bonus}` }), { TTL: 6 * 3600, urgency: 'normal' });
           sent++;
           await db.from('push_subs').update({ last_sent: new Date().toISOString(), sent: (s.sent || 0) + 1 }).eq('endpoint', s.endpoint);
         } catch (e) {

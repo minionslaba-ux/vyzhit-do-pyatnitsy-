@@ -415,7 +415,7 @@ function linkBonus() {
   if ((prefs.bonusGot || []).includes(code)) return toast(L('Бонус по этой ссылке уже получен', 'You’ve already claimed this bonus'));
   prefs.bonusGot = [...(prefs.bonusGot || []).slice(-9), code];
   const now = addCash(LINK_BONUS); sfx.coins?.();
-  toast(L(`🎁 +${money(LINK_BONUS)} за игру по ссылке из Telegram${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎁 +${money(LINK_BONUS)} for playing from the Telegram link${now ? '' : ' — paid once you get a job'}`));
+  toast(L(`🎁 +${money(LINK_BONUS)} за игру по ссылке-напоминанию${now ? '' : ' — придут, когда устроитесь на работу'}`, `🎁 +${money(LINK_BONUS)} for playing from the reminder link${now ? '' : ' — paid once you get a job'}`));
 }
 
 // старт: после загрузки данных

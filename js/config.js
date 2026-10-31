@@ -15,5 +15,7 @@ window.SUPABASE_CONFIG = {
   // (награда только за досмотр), 'fullscreen' — полноэкранный (награда после закрытия). Пусто — кнопок рекламы нет
   // blocks — свой блок для телефонов (touch) и для компьютеров (desktop); где номера нет — там нет и кнопки рекламы.
   // Тип: fullscreen — Яндекс сам открывает рекламу на весь экран; banner — баннер в нашем окне с отсчётом 10 секунд
+  // Пуш-уведомления браузера: открытый ключ VAPID (закрытый — только на сервере, в закрытой таблице push_keys)
+  push: { pub: 'BFod69QYYT_V09dWTc3W0nbmXsiBcXcuaZqqZrEt9T5poQ1qkX8hGecS6UVaxZRWVRcwGmOVHVp0Mrg6DINMZjQ' },
   ads: { blocks: { touch: { id: 'R-A-20310847-1', type: 'fullscreen' }, desktop: { id: 'R-A-20310847-2', type: 'banner' } } },
 };

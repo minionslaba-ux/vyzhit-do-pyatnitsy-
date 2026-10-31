@@ -2,8 +2,8 @@
 // Свои файлы — «сначала сеть»: есть интернет — всегда свежая версия (браузер сам переспрашивает сервер по ETag, это дёшево);
 // нет сети или сервер не ответил за 4 секунды — из кэша. Шрифты Google — из кэша, обновляются в фоне.
 // Supabase, Telegram и прочие внешние запросы — только из сети.
-const CACHE = 'vdp-v74';
-const SHELL = ['./', 'index.html', 'en.html', 'css/style.css', 'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js', 'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/topup.js', 'js/login.js', 'js/app.js',
+const CACHE = 'vdp-v75';
+const SHELL = ['./', 'index.html', 'en.html', 'css/style.css', 'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js', 'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/push.js', 'js/topup.js', 'js/login.js', 'js/app.js',
   'data/pool.json', 'data/pool2.json', 'data/pool3.json', 'data/events.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -40,5 +40,22 @@ self.addEventListener('fetch', e => {
     const hit = await cache.match(key, { ignoreSearch: true });
     if (hit) { e.waitUntil(net.catch(() => {})); return hit; }
     return net.catch(offline);
+  }));
+});
+
+// Пуш-уведомления (js/push.js): показать и по нажатию открыть игру (уже открытую вкладку — переключить на неё)
+self.addEventListener('push', e => {
+  let d = {}; try { d = e.data ? e.data.json() : {}; } catch { d = { b: e.data?.text() }; }
+  e.waitUntil(self.registration.showNotification(d.t || 'Выжить до пятницы', {
+    body: d.b || '', icon: 'icons/icon-192.png', badge: 'icons/icon-192.png', tag: 'vdp-remind', data: { url: d.url || '/' },
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = new URL(e.notification.data?.url || '/', self.location.origin).href;
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(ws => {
+    const w = ws.find(c => c.url.startsWith(self.location.origin));
+    if (w) { w.navigate?.(url).catch(() => {}); return w.focus(); }
+    return self.clients.openWindow(url);
   }));
 });
