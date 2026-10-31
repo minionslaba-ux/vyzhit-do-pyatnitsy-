@@ -28,7 +28,7 @@ async function pushEnable() {
     const sub = await reg.pushManager.getSubscription() || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64key(window.SUPABASE_CONFIG.push.pub) });
     await pushSave(sub);
     prefs.push = true; prefs.pushAsked = 'on'; store.set(KEY.prefs, prefs);
-    track('push_on'); sfx.item?.();
+    track('push_on'); sfx.item?.(); setTimeout(() => { pushStateLast = ''; pushStateSend(); }, 500);  // сразу — для личных напоминаний
     toast(L('🔔 Готово! Будем напоминать 1–3 раза в день', '🔔 Done! We’ll remind you 1–3 times a day'));
   } catch { toast(L('Не получилось включить напоминания — попробуйте ещё раз', 'Couldn’t turn on reminders — please try again')); }
   pushRender();
