@@ -237,7 +237,7 @@ function continueCareer() {
   C.bank ??= 0; C.earned ??= 0; C.vacation ??= 0; C.vacUsed ??= 0;  // карьеры до появления зарплаты и отпуска
   if (C.payV !== 2) { payFix(C); saveCareer(); }
   const save = store.get(KEY.save, null);
-  if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(); }
+  if (save && (save.mode || 'career') === 'career' && save.deck?.every(x => byId[x.id])) { S = { items: [], used: [], flags: {}, type: 'normal', mode: 'career', ...save }; return enterGame(true); }
   if (C.week > YEAR) return yearEnd();
   if (!C.hero) return heroCreate(continueCareer);  // карьеры до появления аватара — создать его один раз
   if (C.stage === 'search') return jobSearch();
@@ -351,7 +351,8 @@ function startPack() {
 }
 
 // ---------- игровой экран ----------
-function enterGame() { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); requestAnimationFrame(fitGame); }
+// resumed — продолжение сохранённой недели: отдельное событие, чтобы не считать её начатой дважды
+function enterGame(resumed) { busy = false; applyTheme(); show('game'); splashFor = -1; liveTick(); $('pickStat').hidden = true; if (resumed) track('week_resume', { mode: S.mode, step: S.step }); else if (S.step === 0) track('week_start', { mode: S.mode }); renderBars(); renderCard(); requestAnimationFrame(fitGame); }
 // Статистика: анонимные события игры (без текста ответов); без Supabase не отправляются
 // Цели Яндекс Метрики (счётчик 113961628 в <head>): ключевые шаги воронки
 const YM_GOALS = new Set(['open', 'week_start', 'week_end', 'buy_intent', 'purchase', 'ad_reward', 'ad_forced', 'cert_end', 'share', 'invite', 'install', 'pet_adopt', 'hero_buy', 'guest_gate']);
@@ -748,6 +749,11 @@ $('bankChip').onclick = openShop;
 
 // ---------- выйти из недели в меню ----------
 // Карьера сохраняется на текущей карточке — «Играть» продолжит; неделя дня, турнир и брендированная неделя не сохраняются
+// Закрыли вкладку или свернули приложение посреди недели — сохранить карьеру на текущей карточке.
+// Пока карточка улетает или идёт увольнение (busy), не сохраняем: там шкалы уже сдвинуты, а шаг ещё нет
+function saveWeekNow() { if (S?.mode === 'career' && C && !busy && !views.game.hidden && store.get(KEY.save, null)) store.set(KEY.save, S); }
+addEventListener('pagehide', saveWeekNow);
+document.addEventListener('visibilitychange', () => { if (document.hidden) saveWeekNow(); });
 function leaveWeek() {
   clearTimeout(splashT); splashOn = false; $('splash').hidden = true; $('modal').hidden = true;
   busy = false; renderMenu();

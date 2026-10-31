@@ -63,7 +63,8 @@ function renderMenu() {
       ${!careerSave && Cm.stage === 'work' && (Cm.vacation || 0) >= 7 && Cm.week <= YEAR ? '<button class="btn-ghost btn-vac" id="menuVac" style="grid-column:1/-1">' + L('Уйти в отпуск на неделю (7 дн.)', 'Take a week of vacation (7 days)') + '</button>' : ''}`;
     if ($('certBtn')) $('certBtn').onclick = () => certStart();
     if ($('menuVac')) $('menuVac').onclick = () => { C = store.get(KEY.career, null); takeVacation(); };
-    $('start').innerHTML = `${L('Играть', 'Play')}<small>${careerSave ? L('продолжить неделю', 'continue the week') : Cm.stage === 'search' ? L('поиск работы', 'job hunt') : L(`неделя ${Cm.week} из ${YEAR}`, `week ${Cm.week} of ${YEAR}`)}</small>`;
+    $('start').innerHTML = careerSave ? `${L('Продолжить неделю', 'Continue the week')}<small>${L(`карточка ${Math.min((save.step || 0) + 1, WEEK_LEN)} из ${WEEK_LEN}`, `card ${Math.min((save.step || 0) + 1, WEEK_LEN)} of ${WEEK_LEN}`)}</small>`
+      : `${L('Играть', 'Play')}<small>${Cm.stage === 'search' ? L('поиск работы', 'job hunt') : L(`неделя ${Cm.week} из ${YEAR}`, `week ${Cm.week} of ${YEAR}`)}</small>`;
   } else $('start').innerHTML = L('Играть<small>начать карьеру</small>', 'Play<small>start your career</small>');
   const daily = store.get(KEY.daily, {})[today()];
   const sk = streakNow();

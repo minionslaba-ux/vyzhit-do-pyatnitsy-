@@ -1540,3 +1540,21 @@ body.ad-pause .app { pointer-events: none; }
 .brk-offer { display: flex; gap: 6px; align-items: stretch; }
 .brk-offer .btn-break { flex: 1; margin-top: 0; }
 .brk-x { flex: none; width: 40px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 20px; cursor: pointer; }
+/* Награда за возвращение «День N подряд» (js/streak.js) */
+.stk-box { width: min(400px, 100%); }
+.stk-lead { margin: 0; color: var(--text-2); font-size: 14px; }
+.stk-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; width: 100%; }
+.stk-day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0 5px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--text-2); }
+.stk-day small { font-size: 9px; white-space: nowrap; }
+.stk-day span { font-size: 16px; line-height: 1.2; }
+.stk-day b { font-size: 12px; font-variant-numeric: tabular-nums; }
+.stk-day.got { opacity: .55; }
+.stk-day.got span { color: #d4ff3a; }
+.stk-day.now { border-color: #d4ff3a; background: rgba(212,255,58,.12); color: var(--text); box-shadow: 0 0 14px rgba(212,255,58,.3); animation: stkPulse 1.6s ease-in-out infinite; }
+.stk-day.chest:not(.got) { border-color: rgba(255,170,40,.6); }
+.stk-chest { margin: 0; color: #ffaa28; font-weight: 800; }
+.stk-box .btn-main { width: 100%; }
+@keyframes stkPulse { 50% { transform: scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { .stk-day.now { animation: none; } }
+.stk-box .btn-ghost { width: 100%; }
+.stk-note { margin-top: -4px; color: var(--text-2); font-size: 12px; }
