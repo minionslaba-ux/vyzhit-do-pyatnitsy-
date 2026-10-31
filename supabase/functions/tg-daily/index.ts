@@ -89,12 +89,40 @@ async function testGroup(db: any, token: string, code: string) {
   return new Response(JSON.stringify({ test_sent: n }), { headers: { 'Content-Type': 'application/json' } });
 }
 
+// Разовое объявление по-английски во все включённые группы: POST {"announce": "<код>"}; код одноразовый (bot_test_tokens), как у теста
+const ANNOUNCE_EN = `👋 Hello to everyone who joined from abroad — welcome!
+
+🕔 Survive till Friday is an office survival card game. Every card is a work situation: the boss, a deadline, a coworker who needs "just a minute". Swipe left or right and keep four meters in balance — Sanity, Energy, Boss and Team. Hit 0% or 100% and your week is over.
+
+✨ Inside:
+• a whole career — 52 weeks, from Intern to CEO
+• your own 3D character with wishes, kids and pets
+• the Daily Week — the same cards for everyone, compete on the leaderboard
+• 50 mini-games for your coffee break
+• offices with coworkers, chat and tournaments
+
+🌍 The game is fully in English. Free to play right here in Telegram or at survivefriday.com/en.html — tap below and try to make it to Friday, 6 PM!`;
+async function announceEn(db: any, token: string, code: string) {
+  const { data: t } = await db.from('bot_test_tokens').delete().eq('token', code).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
+  if (!t?.length) return new Response('forbidden', { status: 403 });
+  const { data: gs } = await db.from('tg_groups').select('chat_id').eq('enabled', true).limit(1000);
+  let n = 0;
+  for (const g of gs || []) {
+    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: g.chat_id, text: ANNOUNCE_EN, reply_markup: { inline_keyboard: [[{ text: '▶ Play in Telegram', url: 'https://t.me/Survivefridaybot?startapp' }], [{ text: '🌐 Play in browser', url: 'https://survivefriday.com/en.html' }]] } }) });
+    if (r.ok) n++;
+    await new Promise(r2 => setTimeout(r2, 1100));
+  }
+  return new Response(JSON.stringify({ announced: n }), { headers: { 'Content-Type': 'application/json' } });
+}
+
 Deno.serve(async req => {
   const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
   if (!token) return new Response('not configured', { status: 503 });
   const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
   const body = await req.json().catch(() => ({}));
   if (typeof body.test === 'string') return testGroup(db, token, body.test);
+  if (typeof body.announce === 'string') return announceEn(db, token, body.announce);
   const today = new Date().toISOString().slice(0, 10), day = Math.floor(Date.now() / 864e5);
   const send = (body: Record<string, unknown>) => fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -137,9 +165,11 @@ Deno.serve(async req => {
     for (const g of gs) {
       const en = g.lang === 'en';
       const withBonus = !recruit && !!bonus;
-      const play = withBonus ? { text: playText(en), url: `https://t.me/Survivefridaybot?startapp=bonus-${bonus}` } : { text: en ? '▶ Play' : '▶ Играть', url: 'https://t.me/Survivefridaybot?startapp' };
-      const text = groupText(ru, en, recruit, dow, day, week) + (recruit ? '' : recap(en)) + (withBonus ? bonusLine(en) : '');
-      const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться игрой', url: shareUrl(en) }], [play]] : [[play]];
+      const play = withBonus ? { text: en ? playText(true) : `${playText(false)} · Play`, url: `https://t.me/Survivefridaybot?startapp=bonus-${bonus}` } : { text: en ? '▶ Play' : '▶ Играть · Play', url: 'https://t.me/Survivefridaybot?startapp' };
+      // в русских группах есть иностранцы — под русским текстом тот же пост по-английски
+      const one = (e: boolean) => groupText(ru, e, recruit, dow, day, week) + (recruit ? '' : recap(e)) + (withBonus ? bonusLine(e) : '');
+      const text = en ? one(true) : `${one(false)}\n\n🇬🇧 ${one(true)}`;
+      const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться · Share', url: shareUrl(en) }], [play]] : [[play]];
       const r = await send({ chat_id: g.chat_id, text, reply_markup: { inline_keyboard: keyboard } });
       const j = await r.json().catch(() => ({}));
       if (r.ok) { groups++; await db.from('tg_groups').update({ last_sent: today }).eq('chat_id', g.chat_id); }
