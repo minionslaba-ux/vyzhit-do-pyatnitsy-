@@ -1949,3 +1949,10 @@ html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
 .soc-stp-i:active { transform: scale(.94); }
 .soc-stp-i.lock img { opacity: .45; filter: grayscale(.6); }
 .soc-stp-i i { position: absolute; right: 4px; bottom: 4px; font-style: normal; font-size: 14px; }
+/* Карточка редкой вещи в магазине (js/shop.js rareItemView) */
+.shp-item-stage { position: relative; width: 100%; border-radius: 18px; overflow: hidden; background: radial-gradient(120% 90% at 50% 20%, rgba(255,207,61,.18), transparent 60%), rgba(var(--w-rgb),.04); }
+.shp-item-stage.bg-boat { background: linear-gradient(#7fd3ff 0 55%, #2a7fd4 55% 100%); }
+.shp-item-stage.bg-car { background: linear-gradient(#ffb36b 0 55%, #3a3a4a 55% 100%); }
+.shp-item-cv { display: block; width: 100%; height: 280px; }
+.shp-item-big { position: absolute; top: 8px; right: 10px; font-size: 44px; filter: drop-shadow(0 4px 10px rgba(0,0,0,.4)); animation: bdBadge 2.4s ease-in-out infinite; }
+.shp-item-ico { font-size: 1.1em; }
