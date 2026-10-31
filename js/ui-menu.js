@@ -715,7 +715,7 @@ async function showChat(channel) {
       }
       list.innerHTML = rows.length ? rows.map(m => `<div class="msg${m.mine ? ' mine' : ''}"><span class="ava-s" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
         <span class="meta">${m.mine ? '' : `<b>${esc(m.name)}</b> · `}${new Date(m.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}${m.dept && !m.mine ? ` · ${esc(m.dept)}` : ''}</span>
-        ${m.gift ? socGiftBubble(m.name, m.gift_to, m.gift) : `<span class="bubble">${esc(m.msg)}</span>`}
+        ${m.gift ? socGiftBubble(m.name, m.gift_to, m.gift) : socMsgHtml(m.msg)}
         ${socSlot('msg', m.msg_id, m.short_id, m.name, m.mine)}
         <span class="msg-act">${m.can_hide ? `<button data-hide="${m.msg_id}">${L('Скрыть', 'Hide')}</button>` : ''}${m.mine ? '' : `<button data-report="${m.msg_id}">${L('Пожаловаться', 'Report')}</button>`}</span></div>`).join('') : L('<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первыми!</div>', '<div class="lb-empty"><span class="big">Crickets</span>No messages yet. Break the ice!</div>');
       socDecorate(list, 'msg');
@@ -762,7 +762,7 @@ let openDm = async function (short, name) {
       const rows = ((await board.rpc('dm_thread', { p_id: prefs.playerId, p_with: short })) || []).reverse();
       const s2 = rows.map(r => r.msg_id).join(','); if (s2 === sig) return; sig = s2; lastId = rows.length ? rows[rows.length - 1].msg_id : 0;
       const list = $('dmList');
-      list.innerHTML = rows.length ? rows.map(r => `<div class="msg${r.mine ? ' mine' : ''}"><span class="meta">${new Date(r.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}</span>${r.gift ? socGiftBubble(r.mine ? L('Вы', 'You') : name, r.mine ? name : L('вам', 'you'), r.gift) : `<span class="bubble">${esc(r.msg)}</span>`}${r.mine ? '' : socSlot('dm', r.msg_id, short, name, false)}</div>`).join('')
+      list.innerHTML = rows.length ? rows.map(r => `<div class="msg${r.mine ? ' mine' : ''}"><span class="meta">${new Date(r.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}</span>${r.gift ? socGiftBubble(r.mine ? L('Вы', 'You') : name, r.mine ? name : L('вам', 'you'), r.gift) : socMsgHtml(r.msg)}${r.mine ? '' : socSlot('dm', r.msg_id, short, name, false)}</div>`).join('')
         : `<div class="lb-empty">${L('Напишите первым — например, позовите в свой офис или вызовите на неделю дня.', 'Say hi first — invite them to your office or challenge them to the Daily Week.')}</div>`;
       list.scrollTop = list.scrollHeight; socDecorate(list, 'dm');
     } catch (err) { $('dmList').innerHTML = `<div class="lb-empty">${esc(err.message)}</div>`; }

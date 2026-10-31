@@ -333,7 +333,7 @@ async function socRenderLive() {
         const tx = it.npc ? { ico: it.ico, t: it.t } : socText(it);
         return `<span class="soc-ico" aria-hidden="true">${tx.ico}</span><span class="soc-lt"><b>${esc(it.name)}</b> ${esc(tx.t)}${it.npc ? ` <span class="npc-tag">🤖 ${L('персонаж игры', 'game character')}</span>` : ''}</span>`; })(), go: 'feed' })),
       ...msgs.slice(0, 3).map(m => ({ key: 'm' + m.msg_id, at: m.sent_at, go: 'chat',
-        html: `<span class="soc-ico" aria-hidden="true">${m.gift ? socGift(m.gift)?.ico || '🎁' : '💬'}</span><span class="soc-lt"><b>${esc(m.name)}</b>${m.gift ? ` → ${esc(m.gift_to || '')}:` : ':'} ${esc(m.gift ? (socGift(m.gift)?.t || '') : m.msg.slice(0, 80))}</span>` })),
+        html: `<span class="soc-ico" aria-hidden="true">${m.gift ? socGift(m.gift)?.ico || '🎁' : '💬'}</span><span class="soc-lt"><b>${esc(m.name)}</b>${m.gift ? ` → ${esc(m.gift_to || '')}:` : ':'} ${m.gift ? esc(socGift(m.gift)?.t || '') : socMsgHtml(m.msg, true)}</span>` })),
     ].sort((a, b) => new Date(b.at) - new Date(a.at)).slice(0, 5);
     const prev = socLiveIds; socLiveIds = new Set(items.map(x => x.key));
     box.hidden = false;
@@ -425,3 +425,47 @@ document.addEventListener('click', async e => {
   try { await board.rpc('report_title', { p_id: prefs.playerId, p_short: b.dataset.repTitle }); b.textContent = L('Жалоба отправлена', 'Reported'); b.disabled = true; }
   catch (err) { toast(err.message); }
 });
+
+// ---------- стикеры в чатах игры (те же картинки, что в наборе Telegram: data/stickers/NN.png) ----------
+// Сообщение-стикер — текст «[st:NN]». Бесплатные — первые 12, остальные — набор «Премиум-стикеры» за у.е. (prefs.stickersPro)
+const ST_N = 28, ST_FREE = 12, ST_PRICE = 25;
+const stOk = n => n <= ST_FREE || !!prefs.stickersPro;
+const stUrl = n => `data/stickers/${String(n).padStart(2, '0')}.png`;
+function socMsgHtml(t, short = false) {
+  const m = /^\[st:(\d{2})\]$/.exec(String(t || '').trim()), n = m ? +m[1] : 0;
+  if (n >= 1 && n <= ST_N) return short ? `🖼 ${L('стикер', 'sticker')}` : `<img class="soc-st" src="${stUrl(n)}" alt="${L('стикер', 'sticker')}" loading="lazy" width="150" height="150">`;
+  return short ? esc(String(t || '').slice(0, 80)) : `<span class="bubble">${esc(t)}</span>`;
+}
+// Панель стикеров под полем ввода: send(text) — отправить сообщение-стикер
+function stPicker(anchor, send) {
+  const old = document.querySelector('.soc-stp'); if (old) { old.remove(); return; }
+  const box = Object.assign(document.createElement('div'), { className: 'soc-stp' });
+  const render = () => {
+    box.innerHTML = `<div class="soc-stp-grid">${Array.from({ length: ST_N }, (_, i) => i + 1).map(n => `<button type="button" class="soc-stp-i${stOk(n) ? '' : ' lock'}" data-st="${n}"><img src="${stUrl(n)}" alt="" loading="lazy">${stOk(n) ? '' : '<i>🔒</i>'}</button>`).join('')}</div>
+      ${prefs.stickersPro ? '' : `<button type="button" class="btn-main soc-stp-buy">✨ ${L(`Премиум-стикеры (${ST_N - ST_FREE} шт.) — ${ST_PRICE} у.е.`, `Premium stickers (${ST_N - ST_FREE}) — ${money(ST_PRICE)}`)}</button>`}`;
+  };
+  render(); anchor.insertAdjacentElement('beforebegin', box);
+  box.onclick = e => {
+    if (e.target.closest('.soc-stp-buy')) return stBuy(() => render());
+    const b = e.target.closest('[data-st]'); if (!b) return;
+    const n = +b.dataset.st;
+    if (!stOk(n)) return stBuy(() => render());
+    box.remove(); track('sticker_send', { detail: String(n) }); send(`[st:${String(n).padStart(2, '0')}]`);
+  };
+}
+function stBuy(then) {
+  const C3 = careerNow();
+  if (!C3 || (C3.bank || 0) < ST_PRICE) return openTopup({ need: ST_PRICE - Math.max(0, C3?.bank || 0), why: L(`Премиум-стикеры — ${ST_PRICE} у.е.`, `Premium stickers — ${money(ST_PRICE)}`), then });
+  C3.bank -= ST_PRICE; C3.spent = (C3.spent || 0) + ST_PRICE; careerSave(C3);
+  prefs.stickersPro = true; store.set(KEY.prefs, prefs); track('stickers_buy');
+  sfx.coins?.(); toast(L('✨ Премиум-стикеры ваши — отправляйте в чатах!', '✨ Premium stickers unlocked — send them in chats!')); then?.();
+}
+// кнопка 🖼 в общем чате, чате офиса и личке
+function stAttach(formId, inputId) {
+  const form = $(formId); if (!form || form.querySelector('.soc-stb')) return;
+  const btn = Object.assign(document.createElement('button'), { type: 'button', className: 'soc-stb', title: L('Стикеры', 'Stickers'), textContent: '😺' });
+  btn.setAttribute('aria-label', L('Стикеры', 'Stickers'));
+  form.prepend(btn);
+  btn.onclick = () => stPicker(form, t => { const inp = $(inputId); const keep = inp.value; inp.value = t; form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true })); setTimeout(() => { if (!inp.value) inp.value = keep; }, 50); });
+}
+new MutationObserver(() => { stAttach('chForm', 'chText'); stAttach('dmForm', 'dmText'); }).observe(document.body, { childList: true, subtree: true });
