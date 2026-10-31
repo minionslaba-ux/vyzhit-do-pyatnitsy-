@@ -109,3 +109,27 @@ bus.on('weekEnd', () => setTimeout(pushStateSend, 4000));
   q.delete('open'); history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
   if (open === 'dm') setTimeout(() => { if (typeof showDmInbox === 'function' && views.game.hidden) showDmInbox(); }, 2500);
 })();
+
+// ---------- предложение при входе ----------
+// Системный запрос разрешения браузеры показывают только по нажатию — поэтому при входе наше окно с кнопкой «Включить».
+// Не новичкам (после первой недели), «Позже» — снова не раньше чем через 3 дня, «Не спрашивать» — никогда; не поверх других окон
+const PUSH_ASK_GAP = 3 * 864e5;
+function pushAskOnEntry() {
+  if (pushOn() || prefs.pushNever || !(prefs.gamesPlayed >= 1) || !prefs.name) return;
+  if (pushCan() !== 'ok' || Notification.permission !== 'default') return;
+  if (Date.now() - (prefs.pushAskAt || 0) < PUSH_ASK_GAP || views.menu.hidden || !$('modal').hidden) return;
+  prefs.pushAskAt = Date.now(); store.set(KEY.prefs, prefs);
+  const h = careerNow()?.hero, m = $('modal');
+  m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="paTitle2"><span class="lvl-ico" aria-hidden="true">🔔</span>
+    <h2 id="paTitle2">${L('Включить напоминания?', 'Turn on reminders?')}</h2>
+    <p>${h ? L(`Подскажем, когда ${esc(h.name)} чего-то захочет, питомцы проголодаются, придёт сообщение от коллеги или бонус +15 у.е. — 1–3 раза в день, не чаще.`, `We’ll let you know when ${esc(h.name)} wants something, pets get hungry, a coworker messages you or a +$15 bonus arrives — 1–3 times a day, no more.`)
+      : L('Напомним о бонусах +15 у.е., сообщениях от коллег и «Неделе дня» — 1–3 раза в день, не чаще.', 'We’ll remind you about +$15 bonuses, messages from coworkers and the Daily Week — 1–3 times a day, no more.')}</p>
+    <button class="btn-main" type="button" id="paYes">🔔 ${L('Включить', 'Turn on')}</button>
+    <button class="btn-ghost" type="button" id="paLater">${L('Позже', 'Later')}</button>
+    <button class="btn-link" type="button" id="paNever">${L('Не спрашивать', 'Don’t ask again')}</button></div>`;
+  m.hidden = false; track('push_ask');
+  $('paYes').onclick = () => { m.hidden = true; pushEnable(); };
+  $('paLater').onclick = () => { m.hidden = true; };
+  $('paNever').onclick = () => { m.hidden = true; prefs.pushNever = true; store.set(KEY.prefs, prefs); };
+}
+setTimeout(pushAskOnEntry, 6000);  // после загрузки и «Что нового», когда меню спокойно
