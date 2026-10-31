@@ -528,7 +528,7 @@ function fitGame() {
   g.classList.remove('tight', 'tighter', 'squeeze');
   fitCardText();
   // видимая высота минус «полоска домой» iPhone (safe-area снизу), которую эмуляторы не учитывают
-  const vh = () => (window.visualViewport?.height || innerHeight) - safeBottom();
+  const vh = () => (document.documentElement.classList.contains('pwa') ? document.body.getBoundingClientRect().bottom : (window.visualViewport?.height || innerHeight)) - safeBottom();
   const small = () => parseFloat($('card').querySelector('.text')?.style.fontSize || 99) < 16;  // текст пришлось сильно уменьшить
   const over = () => $('btnL').getBoundingClientRect().bottom > vh() - 2 || small();
   if (over()) { g.classList.add('tight'); fitCardText(); }

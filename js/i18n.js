@@ -1,6 +1,9 @@
 // Высота экрана для вёрстки (--app-h): реально видимая область. 100dvh в Telegram на iPhone и в части браузеров бывает
 // больше видимого — тогда низ экрана (кнопки ответов) уезжал за край, а прокрутки нет. Берём высоту из Telegram или visualViewport.
 (() => {
+  // приложение на экране «Домой» (iOS/Android): высоту задаёт CSS (body fixed на весь экран) — в нём visualViewport на iPhone врёт
+  const app = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  if (app) { document.documentElement.classList.add('pwa'); return; }
   const set = () => {
     const tg = window.Telegram?.WebApp, vv = window.visualViewport;
     const h = (tg?.initData && tg.viewportStableHeight) || vv?.height || window.innerHeight;
