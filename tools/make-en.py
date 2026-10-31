@@ -44,7 +44,7 @@ head = '\n'.join([
     '<meta name="application-name" content="Survive till Friday">',
     '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False, separators=(',', ':')) + '</script>'])
 s = s[:a] + head + s[b:]
-s = s.replace('<html lang="ru"', '<html lang="en"', 1).replace('content="Выжить до пятницы">', 'content="Survive till Friday">', 1)
+s = s.replace('<html lang="ru"', '<html lang="en"', 1).replace('content="Выжить до пт">', 'content="Till Friday">', 1)
 # язык игры на этой странице — английский (до загрузки js/i18n.js)
 s = s.replace('<script src="js/i18n.js"></script>', "<script>try { localStorage.setItem('vdp-lang', 'en'); } catch (e) {}</script>\n<script src=\"js/i18n.js\"></script>", 1)
 # английский текст сразу в разметке — его видят поисковики без JavaScript (только простые элементы без вложенных тегов)
