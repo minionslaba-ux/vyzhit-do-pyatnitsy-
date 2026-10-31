@@ -5,8 +5,9 @@
 const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 5000;
 const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window ? 'touch' : 'desktop';
-const adBlock = () => adCfg().blocks?.[adPlatform()] || adCfg().blockId || '';  // блок под устройство (кабинет РСЯ: Mobile / Desktop)
-const adOn = () => !!adBlock() && !window.VDP_PLATFORM;  // нет блока для этого устройства — нет и кнопки
+// блок под устройство (кабинет РСЯ: Mobile / Desktop): { id, type }
+const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().blockId; return typeof b === 'string' ? { id: b, type: adCfg().type || 'fullscreen' } : b || {}; };
+const adOn = () => !!adBlock().id && !window.VDP_PLATFORM;  // нет блока для этого устройства — нет и кнопки
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
@@ -32,7 +33,7 @@ function vdpPause(on) {
 function adWatch(done) {
   if (!adOn()) return done?.(false);
   if (adLeft()) { toast(L(`Следующий ролик за награду — через ${adMins()} мин.`, `Next rewarded video in ${adMins()} min`)); return done?.(false); }
-  const c = adCfg(), t0 = Date.now(); let settled = false;
+  const c = adBlock(), t0 = Date.now(); let settled = false;
   // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
   const finish = (ok, why = '') => {
     if (settled) return; settled = true; clearTimeout(guard); vdpPause(false);
@@ -54,11 +55,12 @@ function adWatch(done) {
   const guard = setTimeout(() => finish(false, 'timeout'), 90000);  // ответа нет совсем (нет показов, блокировщик) — кнопка снова доступна
   track('ad_open', { detail: c.type });
   vdpPause(true);
+  if (c.type === 'banner') return adBanner(c, finish, guard);
   adScript().then(() => {
     window.yaContextCb.push(() => {
       try {
         Ya.Context.AdvManager.render({
-          blockId: adBlock(), type: c.type || 'fullscreen', platform: adPlatform(),
+          blockId: c.id, type: c.type || 'fullscreen', platform: adPlatform(),
           onRender: () => track('ad_render', { detail: c.type }),
           onRewarded: ok => finish(!!ok, 'norew'),                                  // блок «с вознаграждением»: досмотрел
           onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(ms > AD_MIN_SHOW, `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
@@ -67,6 +69,36 @@ function adWatch(done) {
       } catch (e) { finish(false, `ex:${e?.message || ''}`); }
     });
   }).catch(() => finish(false, 'script'));
+}
+
+// Баннер (компьютеры): наше окно на весь экран, внутри — баннер Яндекса и отсчёт 10 секунд; награда — только если баннер показался
+const AD_BANNER_SEC = 10;
+function adBanner(c, finish, guard) {
+  const box = Object.assign(document.createElement('div'), { className: 'ad-over', role: 'dialog' });
+  const slot = `yandex_rtb_${c.id}`;
+  box.innerHTML = `<div class="ad-box glass"><div class="ad-head"><b>🎬 ${L('Реклама', 'Advertisement')}</b><span id="adLeft">${L('загружается…', 'loading…')}</span><button type="button" class="ad-x" id="adX" aria-label="${L('Закрыть без награды', 'Close without reward')}">✕</button></div>
+    <div class="ad-slot" id="${slot}"></div>
+    <button type="button" class="btn-main" id="adGet" disabled>${L(`Получить +${money(AD_REWARD)}`, `Get +${money(AD_REWARD)}`)}</button></div>`;
+  document.body.append(box);
+  let shown = false, left = AD_BANNER_SEC, tick = 0;
+  const end = (ok, why) => { clearInterval(tick); clearTimeout(noFill); box.remove(); finish(ok, why); };
+  const start = () => {
+    if (shown) return; shown = true; clearTimeout(guard); track('ad_render', { detail: 'banner' });
+    tick = setInterval(() => {
+      left--; $('adLeft').textContent = left > 0 ? L(`награда через ${left} с`, `reward in ${left}s`) : L('можно забирать!', 'ready!');
+      if (left <= 0) { clearInterval(tick); $('adGet').disabled = false; }
+    }, 1000);
+  };
+  const noFill = setTimeout(() => { if (!shown) end(false, 'nofill'); }, 9000);  // за 9 с баннер не пришёл — показов нет
+  $('adX').onclick = () => end(false, shown ? `close${AD_BANNER_SEC - left}s` : 'close0s');
+  $('adGet').onclick = () => end(true);
+  adScript().then(() => window.yaContextCb.push(() => {
+    try {
+      Ya.Context.AdvManager.render({ blockId: c.id, renderTo: slot, onRender: start, onError: e => end(false, `err:${e?.type || ''}:${e?.code || e?.message || ''}`) });
+      // на случай, если onRender не вызвался: баннер уже в слоте
+      const seen = setInterval(() => { if (!box.isConnected) return clearInterval(seen); if ($(slot)?.querySelector('iframe, img, a')) { clearInterval(seen); start(); } }, 500);
+    } catch (e) { end(false, `ex:${e?.message || ''}`); }
+  })).catch(() => end(false, 'script'));
 }
 
 // Кнопка «Реклама за награду» (или когда снова можно)

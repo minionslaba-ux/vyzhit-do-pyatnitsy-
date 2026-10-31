@@ -1480,3 +1480,11 @@ body:has(#game:not([hidden])) .toast-bar.on { transform: translate(-50%, 0); }
 .btn-ad:disabled { opacity: .55; }
 /* реклама на экране — игра на паузе, нажатия по ней не проходят */
 body.ad-pause .app { pointer-events: none; }
+/* реклама-баннер за награду на компьютере (js/ads.js) */
+.ad-over { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px; background: rgba(6, 4, 16, .82); backdrop-filter: blur(4px); }
+.ad-box { width: min(760px, 100%); display: grid; gap: 12px; padding: 14px; border-radius: 22px; }
+.ad-head { display: flex; align-items: center; gap: 10px; }
+.ad-head span { margin-left: auto; color: var(--text-2); font-weight: 800; font-variant-numeric: tabular-nums; }
+.ad-x { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(var(--w-rgb),.25); background: transparent; color: var(--text); }
+.ad-slot { min-height: 280px; display: grid; place-items: center; border-radius: 14px; background: rgba(var(--w-rgb),.04); overflow: hidden; }
+.ad-box #adGet:disabled { opacity: .4; filter: grayscale(.6); cursor: default; }

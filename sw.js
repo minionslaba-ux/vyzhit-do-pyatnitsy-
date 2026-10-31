@@ -2,7 +2,7 @@
 // Свои файлы — «сначала сеть»: есть интернет — всегда свежая версия (браузер сам переспрашивает сервер по ETag, это дёшево);
 // нет сети или сервер не ответил за 4 секунды — из кэша. Шрифты Google — из кэша, обновляются в фоне.
 // Supabase, Telegram и прочие внешние запросы — только из сети.
-const CACHE = 'vdp-v68';
+const CACHE = 'vdp-v69';
 const SHELL = ['./', 'index.html', 'en.html', 'css/style.css', 'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js', 'js/game.js', 'js/ui-menu.js', 'js/npc.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/topup.js', 'js/login.js', 'js/app.js',
   'data/pool.json', 'data/pool2.json', 'data/pool3.json', 'data/events.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png'];
 
