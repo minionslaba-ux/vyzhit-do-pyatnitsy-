@@ -111,6 +111,7 @@ const LEVELS = [null,
   { name: L('Топ-менеджмент', 'Top management'), ico: '👑', neg: 1.12, desc: L('Третий год: самые сложные решения и самые высокие ставки', 'Year three: the hardest calls and the highest stakes') },
 ];
 const LEVEL_MAX = 3;
+const LEVEL_FILES = [['pool_l1a', 1], ['pool_l1b', 1], ['pool_l1c', 1], ['pool_l1d', 1], ['pool_l2a', 2], ['pool_l3a', 3], ['pool_l3b', 3], ['pool_l3c', 3]];
 const levelOf = c => Math.min(LEVEL_MAX, Math.max(1, (c && c.level) || 1));
 const diffStage = (c, r = typeof rankIdx === 'function' ? rankIdx() : 0) => c && c.week <= 3 && r <= 1 ? 0 : r <= 1 ? 1 : r <= 4 ? 2 : 3;
 // Вторая и третья пачки (data/pool2.json, pool3.json) по исходным числам мягче: её минусы усилены ещё в 1,1 раза — так сложность как у первой тысячи
@@ -136,7 +137,11 @@ const dataReady = (async () => {
       q = enById(q, eq, (x, t) => ({ ...x, ...t }));
     }
     // уровень карьеры: у каждого свои карточки — 1-й год pool.json, 2-й pool2.json, 3-й pool3.json (LEVELS ниже)
-    POOL = p.map(c => ({ ...boost(norm(c)), lvl: 1 })).concat(p2.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })), p3.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 }))); QUIZ = q;
+    // дополнительные наборы уровней (data/pool_l1a…l3c.json): 1-й уровень — 3000 карточек, 2-й и 3-й — по 2500
+    const extra = await Promise.all(LEVEL_FILES.map(([f]) => fetch(`data/${f}.json`).then(r => r.ok ? r.json() : []).catch(() => [])));
+    const extraEn = EN ? await Promise.all(LEVEL_FILES.map(([f]) => en(f))) : [];
+    const lvlCards = LEVEL_FILES.flatMap(([, lvl], i) => (EN ? enCards(extra[i], extraEn[i]) : extra[i]).map(c => ({ ...boost(norm(c), lvl > 1 ? POOL2_DOWN : 1), lvl })));
+    POOL = p.map(c => ({ ...boost(norm(c)), lvl: 1 })).concat(p2.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })), p3.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })), lvlCards); QUIZ = q;
     const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
