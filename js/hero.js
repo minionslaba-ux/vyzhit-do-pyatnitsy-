@@ -264,7 +264,7 @@ function heroCard() {
   const keepCv = cardView && cardKey === key && box.querySelector('canvas');
   if (keepCv) keepCv.remove();
   box.innerHTML = `<canvas class="hero-cv hero-mini" data-framing="bust" aria-label="${esc(h.name)}"></canvas>
-    <div class="hero-info"><b>${esc(h.name)}</b><small>${PROF[C2.prof]?.icon || ''} ${esc(PROF[C2.prof]?.name || '')} · ${heroStatus(h)}</small>
+    <div class="hero-info"><b>${esc(h.name)}</b><small>${PROF[C2.prof]?.icon || ''} ${esc(profLabel(C2.prof))} · ${heroStatus(h)}</small>
       ${moodScaleHtml(h)}<small>${L('Счёт', 'Balance')} ${money(C2.bank)}${C2.loan ? ` · ${L('кредит', 'loan')} ${money(C2.loan)}` : ''}</small>
       ${n ? `<button class="btn-main hero-req" type="button" id="hcAsk">${n.ico} ${L('Просит', 'Wants')}: ${esc(needText(n, h, 't'))} · ${money(n.price)}</button>` : `<small class="hero-ok">${L('Сейчас ничего не просит', 'Not asking for anything right now')}</small>`}
       <span class="hero-btns"><button class="btn-chip" type="button" id="hcShop">🛍️ ${L('Покупки', 'Shopping')}</button>${topupBtn(0, '')}

@@ -1638,3 +1638,7 @@ html.light .menu > .panel.form { box-shadow: 0 14px 36px rgba(var(--p-rgb),.2), 
 .btn-chip:active, .me-badge:active, .sound:active, .icon-btn:active, .ps-x:active { transform: scale(.95); }
 .btn-link:active { opacity: .7; }
 @media (prefers-reduced-motion: reduce) { .bd-card, .tp-sw i, .tp-auto, .tp-buy, .prof, .play2 .btn-main { transition: none; } .tp-buy { animation: none; } }
+.prof-own { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 13px; font-weight: 800; color: var(--text-2); }
+.prof-own input { width: 100%; padding: 11px 12px; border-radius: 14px; border: 1.5px dashed rgba(var(--c-rgb),.5); background: rgba(var(--w-rgb),.04); color: var(--text); font: inherit; font-size: 15px; font-weight: 700; }
+.prof-own input:focus { outline: none; border-style: solid; border-color: var(--cyan); box-shadow: 0 0 18px rgba(var(--c-rgb),.3); }
+.prof-own small { font-family: var(--f-mono); font-size: 10.5px; font-weight: 500; }

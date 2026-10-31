@@ -55,7 +55,7 @@ function renderMenu() {
       <div class="stat-box"><b>${Cm.worked}</b><span>${L('отработано', 'worked')}</span></div>
       <div class="stat-box"><b>${Cm.firings}</b><span>${L('увольнений', 'times fired')}</span></div>
       <div class="stat-box"><b>${Cm.companies.length}</b><span>${L('компаний', 'companies')}</span></div>
-      <div class="cc-trait">${PROF[Cm.prof].name} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>
+      <div class="cc-trait">${esc(profLabel(Cm.prof))} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>
       <div class="money" style="grid-column:1/-1"><div><b>${money(Cm.bank || 0)}</b><span>${L(`на счёте · оклад ${money(Cm.salary || 2)}/день`, `in the bank · salary ${money(Cm.salary || 2)}/day`)}</span>${window.VDP_PLATFORM ? '' : topupBtn(0, '')}</div><div><b>${fmtDays(Cm.vacation || 0)} ${L('дн.', 'days')}</b><span>${L(`отпуска из ${VAC_YEAR}`, `vacation of ${VAC_YEAR}`)}</span></div></div>
       ${certBtnHtml(Cm)}
       ${certAdHtml(Cm)}
@@ -77,6 +77,10 @@ function renderMenu() {
   bus.emit('menu');
 }
 $('profs').onchange = () => { prefs.prof = getProf(); store.set(KEY.prefs, prefs); };
+// Своя профессия: название игрок пишет сам (видно ему — в карьере, итогах, на карточке персонажа); бонусы — как у выбранной в списке
+$('profOwn').value = prefs.profCustom || '';
+$('profOwn').oninput = () => { prefs.profCustom = $('profOwn').value.replace(/[<>]/g, '').replace(/\s+/g, ' ').trim().slice(0, 28); store.set(KEY.prefs, prefs); };
+$('profOwn').onchange = () => { if (prefs.profCustom) track('prof_custom'); };
 $('traits').onchange = () => { prefs.trait = getTrait(); store.set(KEY.prefs, prefs); };
 $('openBoard').onclick = () => openBoard('menu', 'rating');
 $('openPeople').onclick = () => openBoard('menu', 'people');

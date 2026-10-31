@@ -1072,7 +1072,7 @@ function lose(k, high) {
   views.end.innerHTML = `<div class="end-sheet glass">
     <span class="kicker">${career ? L(`Вас уволили · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()} · ${esc(company)}`, `Fired · ${dayName(d)} ${phaseName(slotPh(S.step)).toLowerCase()} · ${esc(company)}`) : L(`Неделя закончилась досрочно · ${DAYS[d].toLowerCase()}, ${ph.name.toLowerCase()}`, `Week ended early · ${dayName(d)} ${phaseName(slotPh(S.step)).toLowerCase()}`)}</span>
     <h1 class="lose">${high ? L('ПЕРЕГРЕВ', 'OVERHEAT') : L('НЕДЕЛЯ ЗАВАЛЕНА', 'WEEK WRECKED')}</h1>
-    <p class="cause">${D.title} · ${esc(S.name)}, ${PROF[S.prof].name.toLowerCase()}</p>
+    <p class="cause">${D.title} · ${esc(S.name)}, ${esc(prefs.profCustom && S.prof === prefs.prof ? prefs.profCustom : PROF[S.prof].name.toLowerCase())}</p>
     <p>${D.text}</p>
     <p class="trait-line">${TRAITS[S.trait || 'workaholic'].name}: ${traitText('lose', S.trait)}</p>
     ${finalGrid(k)}

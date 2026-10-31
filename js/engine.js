@@ -21,6 +21,8 @@ const PROF = {
   cooler:     { name: L('Хранитель кулера', 'Keeper of the Cooler'), icon: '🚰', bonus: { energy: 15, boss: -5 }, perk: L('Энергия +15 · Босс −5', 'Energy +15 · Boss −5') },
   intern:     { name: L('Вечный стажёр', 'Eternal Intern'), icon: '🎒', bonus: { energy: 10, colleagues: 10, psyche: -10 }, perk: L('Энергия +10 · Коллеги +10 · Кукуха −10', 'Energy +10 · Team +10 · Sanity −10') },
 };
+// Название профессии для показа самому игроку: своё (prefs.profCustom), если он его написал
+const profLabel = k => (typeof prefs !== 'undefined' && prefs.profCustom && k === prefs.prof) ? prefs.profCustom : (PROF[k]?.name || '');
 // DAYS и PHASES — ключи логики (c.day, c.phase): не переводить; показывать — dayName(i), phaseName(i) из js/i18n.js
 const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
 const PHASES = [{ name: 'Утро' }, { name: 'День' }, { name: 'Вечер' }];
