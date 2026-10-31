@@ -89,14 +89,39 @@
       later: (f, ms) => { const id = setTimeout(f, ms); T.push(id); return id; },
       every: (f, ms) => { const id = setInterval(f, ms); I.push(id); return id; },
       on: (t, ev, f, o) => { t.addEventListener(ev, f, o); F.push(() => t.removeEventListener(ev, f, o)); },
-      // перетаскивание по клеткам: нажали на одной, отпустили на другой — как два нажатия (клик тогда не срабатывает)
-      drag: (bd, cells, tap) => {
-        let from = -1;
-        const at = e => { const t = document.elementFromPoint(e.clientX, e.clientY); return cells.findIndex(c => c === t || c.contains(t)); };
-        bd.style.touchAction = 'none';
-        bd.addEventListener('pointerdown', e => { from = at(e); });
-        bd.addEventListener('pointerup', e => { const to = at(e); if (from >= 0 && to >= 0 && to !== from) { tap(from); tap(to); } from = -1; });
-        bd.addEventListener('pointercancel', () => { from = -1; });
+      // Перетаскивание: фишка едет за пальцем, отпустили на другой клетке — ход. Нажатия по очереди тоже работают.
+      // items — клетки/столбики; ghost(i) — что тащить (элемент или null); move(from, to) — сделать ход (to = −1, если мимо)
+      drag: (box, items, { ghost = () => null, move }) => {
+        let from = -1, g = null, src = null, x0 = 0, y0 = 0, moved = false;
+        const at = (x, y) => { const t = document.elementFromPoint(x, y); return items.findIndex(c => c === t || c.contains(t)); };
+        const stop = () => { g?.remove(); g = null; if (src) src.style.opacity = ''; src = null; from = -1; };
+        box.style.touchAction = 'none';
+        U.on(box, 'pointerdown', e => {
+          if (e.button > 0) return;
+          from = items.findIndex(c => c === e.target || c.contains(e.target)); moved = false; x0 = e.clientX; y0 = e.clientY;
+          src = from >= 0 ? ghost(from) : null;
+        });
+        U.on(box, 'pointermove', e => {
+          if (from < 0) return;
+          if (!moved && Math.hypot(e.clientX - x0, e.clientY - y0) > 8) {
+            moved = true; try { box.setPointerCapture(e.pointerId); } catch {}
+            if (src) { const r = src.getBoundingClientRect(); g = src.cloneNode(true);
+              Object.assign(g.style, { position: 'fixed', left: 0, top: 0, width: r.width + 'px', height: r.height + 'px', margin: 0, zIndex: 60, pointerEvents: 'none', transform: 'scale(1.15)', filter: 'drop-shadow(0 8px 12px rgba(0,0,0,.5))' });
+              document.body.append(g); src.style.opacity = '.3'; }
+          }
+          if (g) g.style.translate = `${e.clientX - parseFloat(g.style.width) / 2}px ${e.clientY - parseFloat(g.style.height) / 2}px`;
+        });
+        U.on(box, 'pointerup', e => {
+          const f = from, mv = moved; stop();
+          if (f < 0 || !mv) return;   // это было нажатие — сработает обычный клик
+          const t = at(e.clientX, e.clientY);
+          if (t !== f) move(f, t);
+          suppress = true; setTimeout(() => { suppress = false; }, 0);
+        });
+        U.on(box, 'pointercancel', stop);
+        let suppress = false;
+        U.on(box, 'click', e => { if (suppress) { e.stopPropagation(); e.preventDefault(); } }, true);
+        F.push(stop);
       },
       W: (max = 440) => Math.floor(Math.max(260, Math.min((root.clientWidth || 360) - 16, max))),
       clear: () => { root.innerHTML = ''; return el('div', 'bg1-wrap', null, root); },
@@ -199,7 +224,7 @@
       const st = U.el('span', 'bg1-st', '', bar), cnt = U.el('span', 'bg1-dim', '', bar);
       const bd = U.board(w, 8, 'bg1-ck');
       const cells = []; for (let s = 0; s < 64; s++) { const c = U.el('div', 'bg1-cell ' + (((s >> 3) + (s & 7)) % 2 ? 'bg1-dk' : 'bg1-lt'), null, bd); c.onclick = () => tap(s); cells.push(c); }
-      U.drag(bd, cells, tap);
+      U.drag(bd, cells, { ghost: i => turn === 1 && !done ? cells[i].querySelector('.bg1-me') : null, move: (f, t) => { if (t < 0) return; if (!sel || sel.path.length === 1) tap(f); tap(t); } });
       const row = U.el('div', 'bg1-row', null, w), give = U.el('button', 'bg1-btn', L('🏳️ Сдаться', '🏳️ Resign'), row);
       give.onclick = () => !done && finish(false, L('Вы сдались. Босс доволен собой.', 'You resigned. The Boss is pleased.'));
       let turn = 1, sel = null, legal = ckMoves(b, 1), last = [], myMoves = 0, quiet = 0, done = false;
@@ -276,7 +301,7 @@
     const bar = U.el('div', 'bg1-bar', null, w), st = U.el('span', 'bg1-st', '', bar), cnt = U.el('span', 'bg1-dim', '', bar);
     const bd = U.board(w, 8);
     const cells = []; for (let s = 0; s < 64; s++) { const c = U.el('div', 'bg1-cell ' + (((s >> 3) + (s & 7)) % 2 ? 'bg1-dk' : 'bg1-lt') + (inA(s) ? ' bg1-zone2' : inP(s) ? ' bg1-zone' : ''), null, bd); c.onclick = () => tap(s); cells.push(c); }
-    U.drag(bd, cells, tap);
+    U.drag(bd, cells, { ghost: i => turn === 1 && !done ? cells[i].querySelector('.bg1-me') : null, move: (f, t) => { if (t < 0) return; tap(f); tap(t); } });
     let sel = null, ds = [], my = 0, their = 0, turn = 1, done = false, last = [];
     function render() {
       cells.forEach((c, s) => {
@@ -457,6 +482,8 @@
       const tiles = {}; let moves = 0, done = false;
       const DOCS = ['📄', '📑', '📃', '🧾', '📋'];
       for (let v = 1; v < N * N; v++) { const t = U.el('div', 'bg1-tile', `<b><i>${DOCS[v % DOCS.length]}</i>${v}</b>`, bd); t.style.width = t.style.height = cs + 'px'; t.onclick = () => tap(a.indexOf(v)); tiles[v] = t; }
+      const tl = Object.keys(tiles).map(Number), tEls = tl.map(v => tiles[v]);
+      U.drag(bd, tEls, { move: f => tap(a.indexOf(tl[f])) });
       function render() {
         a.forEach((v, i) => { if (!v) return; const t = tiles[v]; t.style.left = (i % N) * cs + 'px'; t.style.top = Math.floor(i / N) * cs + 'px'; t.classList.toggle('bg1-ok', v === i + 1); });
         mv.textContent = L(`Ходов: ${moves}`, `Moves: ${moves}`);
@@ -745,6 +772,7 @@
       const names = [L('Входящие', 'Inbox'), L('В работе', 'In progress'), L('Архив', 'Archive')];
       let sel = -1, moves = 0, done = false;
       const els = pegs.map((_, p) => { const e = U.el('div', 'bg1-peg', null, box); e.onclick = () => tap(p); return e; });
+      U.drag(box, els, { ghost: p => done ? null : els[p].querySelector('.bg1-fd:last-of-type'), move: (f, t) => { if (t < 0 || !pegs[f].length) return; sel = -1; tap(f); tap(t); } });
       function render() {
         els.forEach((e, p) => {
           e.innerHTML = `<small>${names[p]}</small>`; e.classList.toggle('bg1-on', p === sel);
