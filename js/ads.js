@@ -7,7 +7,9 @@ const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window ? 'touch' : 'desktop';
 // блок под устройство (кабинет РСЯ: Mobile / Desktop): { id, type }
 const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().blockId; return typeof b === 'string' ? { id: b, type: adCfg().type || 'fullscreen' } : b || {}; };
-const adOn = () => !!adBlock().id && !window.VDP_PLATFORM;  // нет блока для этого устройства — нет и кнопки
+// adOff — Яндекс ответил, что площадка не включена (PAGE_DISABLED: сайт ещё не прошёл модерацию РСЯ) — до перезагрузки не пробуем
+let adOff = '';
+const adOn = () => !!adBlock().id && !window.VDP_PLATFORM && !adOff;  // нет блока для этого устройства — нет и кнопки
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
@@ -38,7 +40,8 @@ function adWatch(done, opts = {}) {
   const c = adBlock(), t0 = Date.now(); let settled = false;
   // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
   const finish = (ok, why = '') => {
-    if (settled) return; settled = true; clearTimeout(guard); vdpPause(false);
+    if (settled) return; settled = true; clearTimeout(guard); clearTimeout(noShow); loading?.remove(); obs?.disconnect(); vdpPause(false);
+    if (/PAGE_DISABLED|BLOCK_DISABLED|PAGE_NOT_FOUND/i.test(why)) adOff = why;
     if (opts.forced) { prefs.adForcedAt = Date.now(); prefs.adWeeks = 0; store.set(KEY.prefs, prefs); track(ok ? 'ad_forced' : 'ad_fail', { detail: `forced:${c.type}:${why}`.slice(0, 60) }); return done?.(ok); }
     if (ok) {
       prefs.adAt = Date.now(); store.set(KEY.prefs, prefs);
@@ -49,22 +52,42 @@ function adWatch(done, opts = {}) {
       if (typeof S !== 'undefined' && S && !views.game.hidden) renderBars?.();
     } else {
       track('ad_fail', { detail: `${c.type}:${why}`.slice(0, 60) });
-      toast(why === 'script' ? L('Реклама не загрузилась — возможно, включён блокировщик рекламы', 'The ad didn’t load — an ad blocker may be on')
+      toast(adOff ? L('Реклама пока недоступна: сайт ещё на проверке у Яндекса', 'Ads aren’t available yet: the site is still under review')
+        : why === 'cancel' ? L('Показ рекламы отменён', 'Ad cancelled')
+        : why === 'script' ? L('Реклама не загрузилась — возможно, включён блокировщик рекламы', 'The ad didn’t load — an ad blocker may be on')
         : why.startsWith('close') ? L('Реклама закрыта раньше времени — награда только за просмотр', 'The ad was closed too early — the reward is for watching')
         : L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
     }
     done?.(ok);
   };
-  const guard = setTimeout(() => finish(false, 'timeout'), 90000);  // ответа нет совсем (нет показов, блокировщик) — кнопка снова доступна
+  const guard = setTimeout(() => finish(false, 'timeout'), 90000);  // ролик открылся, но не закрылся — страховка
   track('ad_open', { detail: c.type });
   vdpPause(true);
+  let loading = null, noShow = 0, obs = null;
   if (c.type === 'banner') return adBanner(c, finish, guard, opts.forced);
+  // Пока реклама грузится — наше окно «Загружаем…» с «Отменой»; не открылась за 8 с — игра продолжается сама
+  loading = Object.assign(document.createElement('div'), { className: 'ad-over ad-loading', role: 'dialog' });
+  loading.innerHTML = `<div class="ad-box glass"><b>🎬 ${L('Загружаем рекламу…', 'Loading the ad…')}</b><button type="button" class="btn-ghost" id="adCancel">${L('Отмена', 'Cancel')}</button></div>`;
+  document.body.append(loading);
+  $('adCancel').onclick = () => finish(false, 'cancel');
+  let shown = false;
+  // реклама открылась: наше окно убираем; под рекламой остаётся «Вернуться в игру» — если слой Яндекса не появился, игрок не застрянет
+  const opened = () => {
+    if (shown) return; shown = true; clearTimeout(noShow); obs?.disconnect(); track('ad_render', { detail: c.type });
+    loading.innerHTML = `<button type="button" class="btn-ghost ad-back" id="adBack">${L('Вернуться в игру', 'Back to the game')}</button>`;
+    loading.classList.add('ad-under');
+    $('adBack').onclick = () => { const ms = Date.now() - t0; finish(c.type !== 'rewarded' && ms > AD_MIN_SHOW, `back${Math.round(ms / 1000)}s`); };
+  };
+  noShow = setTimeout(() => { if (!shown) finish(false, 'nofill'); }, 8000);
+  // показ замечаем и по onRender, и по появлению рекламного слоя Яндекса на странице
+  obs = typeof MutationObserver !== 'undefined' ? new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1 && n !== loading && n.parentElement === document.body && !n.matches?.('.ad-over, .ad-pill, script, style, link') && (n.matches?.('iframe') || n.querySelector?.('iframe')) && n.getBoundingClientRect().height > innerHeight * 0.5) opened(); }) : null;
+  obs?.observe(document.body, { childList: true });
   adScript().then(() => {
     window.yaContextCb.push(() => {
       try {
         Ya.Context.AdvManager.render({
           blockId: c.id, type: c.type || 'fullscreen', platform: adPlatform(),
-          onRender: () => track('ad_render', { detail: c.type }),
+          onRender: opened,
           onRewarded: ok => finish(!!ok, 'norew'),                                  // блок «с вознаграждением»: досмотрел
           onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(ms > AD_MIN_SHOW, `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
           onError: e => finish(false, `err:${e?.type || ''}:${e?.code || e?.message || ''}`),
