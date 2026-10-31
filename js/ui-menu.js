@@ -290,6 +290,7 @@ const ago = iso => {
 };
 const stepName = st => `${dayName(dayOf(st)).slice(0, EN ? 3 : 2)}, ${phaseName(slotPh(st)).toLowerCase()}`;
 function personStatus(p) {
+  if (p.npc) return `<span class="st on"><i></i>${L('на связи', 'available')}</span>`;
   const fresh = Date.now() - new Date(p.updated_at) < 10 * 60000;
   if (fresh && p.status === 'playing') return `<span class="st play"><i></i>${L('играет', 'playing')} · ${stepName(p.step)}</span>`;
   if (fresh) return `<span class="st on"><i></i>${L('в сети', 'online')}</span>`;
@@ -334,7 +335,7 @@ async function renderBoard(quiet) {
       if (!rows.length) { list.innerHTML = L('<div class="lb-empty"><span class="big">Пусто</span>Пока никого нет.</div>', '<div class="lb-empty"><span class="big">Empty</span>Nobody here yet.</div>'); return; }
       list.innerHTML = rows.map(p => `<div class="lb-row person${p.tag === tag ? ' me' : ''}">
         <span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
-        <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? L(' (вы)', ' (you)') : ''}</b><small>${esc(p.dept || L('без отдела', 'no department'))}</small>
+        <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? L(' (вы)', ' (you)') : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}</small>
           <small class="lb-meta">${L('недель', 'weeks')}: ${p.games || 0} · ${L('побед', 'wins')}: ${p.wins || 0}${p.games ? ` · ${L('лучшее', 'best')}: ${p.best_won ? `${p.best_total}/400` : stepName(p.best_step)}` : ''}</small></span>
         <span class="lb-res">${personStatus(p)}${canInvite && p.tag !== tag && p.short_id ? `<button class="btn-chip" data-invite="${p.short_id}">${L('Позвать в офис', 'Invite to office')}</button>` : ''}</span></div>`).join('');
       bindInvite(list);
@@ -468,7 +469,7 @@ $('bell').onclick = () => {
 // ---------- кто сейчас в игре: позвать в свой офис ----------
 let onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
 const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
-  <span class="lb-who"><b>${esc(p.name)}${p.desk ? ` <span class="desk-mini">${esc(p.desk)}</span>` : ''}</b><small>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
+  <span class="lb-who"><b>${esc(p.name)}${p.desk ? ` <span class="desk-mini">${esc(p.desk)}</span>` : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
   <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-dm="${p.short_id}" data-name="${esc(p.name)}">${L('Написать', 'Message')}</button><button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
 const bindInvite = root => {
   root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
@@ -481,7 +482,7 @@ async function renderOnlineBox() {
   try {
     const rows = await onlineNow();
     box.hidden = false;
-    box.innerHTML = `<div class="ob-head"><b><i class="live-dot"></i>${L('Сейчас в игре', 'Playing now')}: ${rows.length}</b><button class="btn-chip" type="button" id="obAll">${L('Все участники', 'All players')}</button></div>
+    box.innerHTML = `<div class="ob-head"><b><i class="live-dot"></i>${L('Сейчас в игре', 'Playing now')}: ${rows.filter(r => !r.npc).length}</b><button class="btn-chip" type="button" id="obAll">${L('Все участники', 'All players')}</button></div>
       ${rows.length ? `<div class="board-list">${rows.slice(0, 6).map(onlineRow).join('')}</div>` : `<p class="field-note">${L('Пока никого. Позовите коллег по ссылке — кнопка ниже.', 'Nobody yet. Invite coworkers with a link — button below.')}</p>`}`;
     bindInvite(box); $('obAll').onclick = () => openBoard('menu', 'people');
   } catch { box.hidden = true; }
@@ -492,7 +493,7 @@ async function showOnlineModal() {
   m.innerHTML = `<div class="modal-box glass online-modal" role="dialog" aria-modal="true" aria-labelledby="olTitle"><h2 id="olTitle">${L('Сейчас в игре', 'Playing now')}</h2><p>${L('Загружаю…', 'Loading…')}</p></div>`;
   m.hidden = false; m.onclick = e => { if (e.target === m) m.hidden = true; };
   const rows = await onlineNow().catch(() => []);
-  m.querySelector('.modal-box').innerHTML = `<h2 id="olTitle">${L('Сейчас в игре', 'Playing now')}: ${rows.length}</h2>
+  m.querySelector('.modal-box').innerHTML = `<h2 id="olTitle">${L('Сейчас в игре', 'Playing now')}: ${rows.filter(r => !r.npc).length}</h2>
     ${rows.length ? `<div class="board-list">${rows.map(onlineRow).join('')}</div>` : `<p>${L('Сейчас никого нет.', 'Nobody’s on right now.')}</p>`}
     <p class="field-note">${L('Позвать в офис — и вы будете играть турниры и общаться в чате офиса.', 'Invite them to your office — then you can play tournaments and chat together.')}</p>
     <button class="btn-ghost" type="button" id="olClose">${L('Вернуться к неделе', 'Back to the week')}</button>`;

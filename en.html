@@ -170,7 +170,7 @@
         <button class="btn-main btn-play" id="start" data-en="Play">Play</button>
         <button class="btn-main btn-day" id="startDaily" data-en="Daily Week">Daily Week</button>
       </div>
-      <button class="btn-ghost btn-break" type="button" id="openBreaks" data-en="☕ Break time: 50 mini-games">☕ Break time: 50 mini-games</button>
+      <div class="brk-day" id="brkDay"><button class="btn-ghost btn-break" type="button" id="openBreaks" data-en="☕ Break time: 50 mini-games">☕ Break time: 50 mini-games</button></div>
       <div class="pane" id="paneOffice">
         <div class="online-box" id="onlineBox" hidden></div>
         <div class="office-cta" id="officeCta" hidden><span data-en="<b>Your own Office</b> Build a team: create an Office and invite coworkers via link or ID."><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice" data-en="Create an Office">Create an Office</button></div>
@@ -212,6 +212,10 @@
         <div class="row2"><button class="btn-ghost" id="openCollection" data-en="Collection">Collection</button><button class="btn-ghost" id="openSuggest" data-en="Suggest a situation">Suggest a situation</button></div>
         <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Remind me in my calendar</button></div>
         <div class="cast-list" id="castList" hidden></div>
+      </div>
+      <div class="ps-sec">
+        <b class="ps-cap" data-en="Appearance">Appearance</b>
+        <div class="theme-pick" id="themePick" role="group" aria-label="Цветовая тема" data-en-aria-label="Color theme"></div>
       </div>
       <div class="ps-sec">
         <b class="ps-cap" data-en="Account">Account</b>

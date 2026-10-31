@@ -121,6 +121,7 @@ async function playBreak(n, opts = {}) {
         t.n++; store.set('vdp-break-day', t);
         prefs.breakBuff = Math.min(BREAK_BUFF_MAX, (prefs.breakBuff || 0) + BREAK_BUFF); store.set(KEY.prefs, prefs);
         const now = addCash(1);
+        renderBreakDay();  // бейдж награды на карточке «Разминка дня» в меню
         reward = L(`+1 у.е.${now ? '' : ' (придут в карьеру)'} · бодрость +${BREAK_BUFF} на следующую неделю`, `+$1${now ? '' : ' (goes to your career)'} · +${BREAK_BUFF} boost for next week`);
       }
       track('break_end', { detail: `${n}:${won ? 1 : 0}:${score ?? ''}` });
@@ -159,6 +160,7 @@ bus.on('deck', S2 => {
 
 document.addEventListener('DOMContentLoaded', () => { const b = $('openBreaks'); if (b) b.onclick = openBreaks; });
 if (document.readyState !== 'loading') { const b = $('openBreaks'); if (b) b.onclick = openBreaks; }
+
 
 // ---------- разминка сама приходит в игру ----------
 // Короткие игры — для разминки перед неделей и для предложений
@@ -204,3 +206,23 @@ bus.on('weekEnd', x => {
     o.querySelector('.brk-x').onclick = () => { o.remove(); prefs.brkNoAsk = true; store.set(KEY.prefs, prefs); toast(L('Хорошо, не будем предлагать. Разминка — в меню.', 'Okay, no more offers. Breaks are in the menu.')); };
   }, 1800);
 });
+
+// ---------- «Разминка дня» в главном меню ----------
+// Одна короткая игра на день — одинаковая у всех (по дате), сыграть в одно касание; ниже — ссылка на все 50
+const brkOfDay = () => BREAK_QUICK[Math.floor(seeded(`brk-day-${today()}`)() * BREAK_QUICK.length)];
+function renderBreakDay() {
+  const box = $('brkDay'); if (!box) return;
+  const n = brkOfDay(), b = BREAKS.find(x => x[0] === n); if (!b) return;
+  const left = BREAK_DAY_REWARDS - brkToday().n, best = brkBest()[n], cat = BREAK_CATS.find(c => c[0] === b[1]);
+  const badge = left > 0 ? `<span class="bd-badge">${L('+1 у.е. · бодрость', '+$1 · boost')}</span>`
+    : best != null ? `<span class="bd-badge bd-rec">🏆 ${esc(String(best))}</span>` : '';
+  box.innerHTML = `<button type="button" class="bd-card brk-c-${b[1]}" id="brkDayGo">
+      <span class="bd-ico" aria-hidden="true">${b[2]}</span>
+      <span class="bd-txt"><small class="bd-kick">☕ ${L('Разминка дня', 'Break of the day')}${cat ? ` · ${esc(cat[2])}` : ''}</small><b>${esc(b[3])}</b><span class="bd-desc">${esc(b[4])}</span></span>
+      ${badge}<span class="bd-play" aria-hidden="true">▶</span></button>
+    <button type="button" class="btn-link bd-all" id="openBreaks">${L('Все 50 разминок →', 'All 50 breaks →')}</button>`;
+  $('brkDayGo').onclick = () => { track('break_day', { detail: String(n) }); playBreak(n); };
+  $('openBreaks').onclick = openBreaks;
+}
+bus.on('menu', renderBreakDay);
+renderBreakDay();

@@ -23,7 +23,7 @@ $('tubesL').innerHTML = RES.slice(0, 2).map(tube).join('');
 $('tubesR').innerHTML = RES.slice(2).map(tube).join('');
 const setPhase = p => { document.body.dataset.phase = p; };
 
-// ---------- 23 цветовых тем (17 тёмных и 6 светлых): каждую неделю — своя ----------
+// ---------- 31 цветовая тема (23 тёмные и 8 светлых): каждую неделю — своя, или та, что выбрана в профиле ----------
 // m — главный акцент (кнопки, заголовки), c — второй (рамки, часы), p — свечение фона. Цвета шкал и ▲▼ не меняются: у них свой смысл
 // light — светлая тема: тёмный текст, светлые панели (html.light в css/style.css)
 const THEMES = [
@@ -35,13 +35,13 @@ const THEMES = [
   { name: L('Бумага', 'Paper'),       m: '#c2410c', c: '#1d4ed8', p: '#f59e0b', bg: '#f7f2e8', light: true },
   { name: L('Лаванда', 'Lavender'),      m: '#c48bff', c: '#ff9de2', p: '#7a5cff', bg: '#0a0712' },
   { name: L('Мандарин', 'Tangerine'),     m: '#ff9a2e', c: '#2ec4ff', p: '#ff5e2e', bg: '#0d0905' },
-  { name: L('Мятный день', 'Mint Day'),  m: '#0f9d6f', c: '#7c3aed', p: '#34d399', bg: '#eefaf5', light: true },
+  { name: L('Мятный день', 'Mint Day'),  m: '#0c8461', c: '#7c3aed', p: '#34d399', bg: '#eefaf5', light: true },
   { name: L('Мята', 'Mint'),         m: '#3de8c0', c: '#ff7aa8', p: '#2fb38f', bg: '#060d0c' },
   { name: L('Рубин', 'Ruby'),        m: '#ff2e55', c: '#ffb02e', p: '#b3122f', bg: '#0e0508' },
   { name: L('Небо', 'Sky'),         m: '#2563eb', c: '#db2777', p: '#60a5fa', bg: '#eef5ff', light: true },
   { name: L('Электрик', 'Electric'),     m: '#5c6bff', c: '#00e5ff', p: '#3a2bff', bg: '#06061a' },
   { name: L('Золото', 'Gold'),       m: '#ffcf3d', c: '#ff8a3d', p: '#b38a1f', bg: '#0d0b05' },
-  { name: L('Персик', 'Peach'),       m: '#e8590c', c: '#0d9488', p: '#fb923c', bg: '#fff3ec', light: true },
+  { name: L('Персик', 'Peach'),       m: '#c84b0a', c: '#0d9488', p: '#fb923c', bg: '#fff3ec', light: true },
   { name: L('Фуксия', 'Fuchsia'),       m: '#ff2ea6', c: '#ffe14d', p: '#a3125f', bg: '#0e050b' },
   { name: L('Аврора', 'Aurora'),       m: '#4dffb5', c: '#9b6bff', p: '#2bb3ff', bg: '#050c10' },
   { name: L('Сирень', 'Lilac'),       m: '#7c3aed', c: '#e11d48', p: '#a78bfa', bg: '#f5f0ff', light: true },
@@ -50,12 +50,28 @@ const THEMES = [
   { name: L('Индиго', 'Indigo'),       m: '#8b7bff', c: '#ff6be1', p: '#4b2bff', bg: '#07061a' },
   { name: L('Токсик', 'Toxic'),       m: '#7cff2e', c: '#2ee8ff', p: '#2e8b1f', bg: '#060d05' },
   { name: L('Лёд', 'Ice'),          m: '#e6f0ff', c: '#8fd3ff', p: '#5c7cff', bg: '#08090d' },
+  // Новые темы — только в конец списка: номер темы хранится в prefs.theme.
+  // tx / tx2 / tx3 — свои оттенки текста (основной, вторичный, третичный), если общие не подходят к фону
+  { name: L('Утренний кофе', 'Morning Latte'), m: '#8f4a1f', c: '#2f6b6f', p: '#d9a066', bg: '#f5ece1', light: true, tx: '#2a1c13', tx2: '#6a5444', tx3: '#45342a' },
+  { name: L('Северное сияние', 'Northern Lights'), m: '#38f2c8', c: '#ff7ad9', p: '#3b5bff', bg: '#030b16' },
+  { name: L('Закат в опенспейсе', 'Open-Space Sunset'), m: '#ff9466', c: '#b3a4ff', p: '#ff4f8b', bg: '#170b19', tx: '#fff1ea', tx2: '#cdb6c4', tx3: '#ead8df' },
+  { name: L('Мятный понедельник', 'Mint Monday'), m: '#0b7660', c: '#2949c9', p: '#8fe3c8', bg: '#ebf8f2', light: true, tx: '#10241f', tx2: '#4a5f59', tx3: '#2b3f3a' },
+  { name: L('Неоновая пятница', 'Neon Friday'), m: '#c6ff1a', c: '#ff4fae', p: '#7a2bff', bg: '#08050f' },
+  { name: L('Графит и золото', 'Graphite & Gold'), m: '#e8b64c', c: '#c5cad6', p: '#7a6430', bg: '#121316', tx: '#f4f1ea', tx2: '#b9b4a8', tx3: '#dcd7cc' },
+  { name: L('Чертёж', 'Blueprint'), m: '#ffb347', c: '#6fd3ff', p: '#1e5eff', bg: '#071630', tx: '#eef5ff', tx2: '#a9bcd9', tx3: '#d3e0f2' },
+  { name: L('Высокий контраст', 'High Contrast'), m: '#ffe600', c: '#00e5ff', p: '#3a3a3a', bg: '#000000', hc: true, tx: '#ffffff', tx2: '#e6e6e6', tx3: '#ffffff' },
 ];
 const rgbOf = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
 const mixW = (h, k) => '#' + rgbOf(h).map(v => Math.round(v + (255 - v) * k).toString(16).padStart(2, '0')).join('');
 const mixB = (h, k) => '#' + rgbOf(h).map(v => Math.round(v * (1 - k)).toString(16).padStart(2, '0')).join('');
-// Неделя карьеры → своя тема по кругу; вне карьеры — по календарной неделе
+// Неделя карьеры → своя тема по кругу; вне карьеры — по календарной неделе. Игрок может закрепить тему в профиле (prefs.theme)
+// Насовсем бесплатно — классика, «Утренний кофе» и «Высокий контраст»; остальные — 15 у.е. (старые) и 25 у.е. (новые)
+const THEME_FREE = [0, 23, 30];
+const themePrice = i => THEME_FREE.includes(i) ? 0 : i >= 23 ? 25 : 15;
+const themeOwned = i => !themePrice(i) || (prefs.themesOwned || []).includes(i);
+const themeFixed = () => Number.isInteger(prefs.theme) && THEMES[prefs.theme] && themeOwned(prefs.theme) ? prefs.theme : null;
 function themeIndex() {
+  if (themeFixed() != null) return themeFixed();
   const w = C?.week || Math.floor((Date.now() / 864e5 + 3) / 7);
   return (w - 1 + THEMES.length * 100) % THEMES.length;
 }
@@ -70,11 +86,67 @@ function applyTheme(i = themeIndex()) {
   st.setProperty('--cyan', t.c); st.setProperty('--cyan-l', tone(t.c, .45)); st.setProperty('--cyan-xl', tone(t.c, .78));
   st.setProperty('--bg-rgb', rgbOf(t.bg).join(',')); st.setProperty('--hi', t.light ? '#14121f' : '#fff'); st.setProperty('--w-rgb', t.light ? '20,18,40' : '255,255,255');
   document.documentElement.classList.toggle('light', !!t.light);
+  document.documentElement.classList.toggle('hc', !!t.hc);
+  // свои цвета текста темы; иначе — общие из css (тёмные или html.light)
+  for (const [k, v] of [['--text', t.tx], ['--text-2', t.tx2], ['--text-3', t.tx3]]) v ? st.setProperty(k, v) : st.removeProperty(k);
   st.setProperty('--m-rgb', rgbOf(t.m).join(',')); st.setProperty('--c-rgb', rgbOf(t.c).join(',')); st.setProperty('--p-rgb', rgbOf(t.p).join(','));
   st.setProperty('--bg', t.bg);
   document.querySelector('meta[name=theme-color]')?.setAttribute('content', t.bg);
   return t;
 }
+// «Оформление» в профиле: «Авто» (тема меняется каждую неделю — бесплатно, по кругу идут все темы) или любая тема насовсем.
+// Насовсем бесплатно — классика, «Утренний кофе» и «Высокий контраст» (доступность); остальные покупаются один раз за у.е.
+// из карьеры: старые темы — 15 у.е., новые — 25. Купленные — prefs.themesOwned. Покупавшим у.е. картой бесплатно не даём.
+let themePreview = null;  // тема, которую примеряют перед покупкой
+function themePreviewEnd() { if (themePreview == null) return; themePreview = null; applyTheme(); }
+function renderThemePicker() {
+  const box = $('themePick'); if (!box) return;
+  const cur = themeFixed(), pv = themePreview, name = THEMES[pv ?? themeIndex()].name;
+  let foot = `<small class="tp-name">${cur == null ? L(`Сейчас: «${name}»`, `Now: “${name}”`) : L(`Выбрано: «${name}»`, `Selected: “${name}”`)}</small>`;
+  if (pv != null) {
+    const price = themePrice(pv), C2 = careerNow(), enough = C2 && C2.bank >= price;
+    foot = `<div class="tp-buy"><span>👀 ${L(`Примерка: «${name}»`, `Preview: “${name}”`)}<small>${L(`навсегда за ${price} у.е.`, `yours forever for ${money(price)}`)}${C2 ? L(` · на счёте ${money(C2.bank)}`, ` · balance ${money(C2.bank)}`) : ''}</small></span>
+      ${enough ? `<button type="button" class="btn-main tp-go" data-theme-buy="${pv}">${L(`Купить за ${price} у.е.`, `Buy for ${money(price)}`)}</button>`
+        : `<button type="button" class="btn-main tp-go" data-theme-topup="${pv}">💰 ${L('Пополнить', 'Top up')}</button>`}
+      <button type="button" class="btn-link" data-theme-cancel>${L('Отмена', 'Cancel')}</button></div>`;
+  }
+  box.innerHTML = `<button type="button" class="tp-auto${cur == null && pv == null ? ' on' : ''}" data-theme="auto" aria-pressed="${cur == null}"><span aria-hidden="true">🔄</span><span>${L('Авто', 'Auto')}<small>${L('меняется каждую неделю · бесплатно', 'changes every week · free')}</small></span></button>`
+    + THEMES.map((t, i) => {
+      const own = themeOwned(i), lbl = own ? t.name : L(`${t.name} — ${themePrice(i)} у.е.`, `${t.name} — ${money(themePrice(i))}`);
+      return `<button type="button" class="tp-sw${cur === i ? ' on' : ''}${pv === i ? ' pv' : ''}${own ? '' : ' lock'}" data-theme="${i}" title="${esc(lbl)}" aria-label="${esc(lbl)}" aria-pressed="${cur === i}"><i style="--sw-bg:${t.bg};--sw-m:${t.m};--sw-c:${t.c}"></i>${own ? '' : `<small>🔒${themePrice(i)}</small>`}</button>`;
+    }).join('') + foot;
+}
+function themeBuy(i) {
+  const price = themePrice(i), C2 = careerNow();
+  if (!C2 || C2.bank < price) return openTopup({ need: lackOf(price), why: L(`Тема «${THEMES[i].name}» — ${price} у.е.`, `“${THEMES[i].name}” theme — ${money(price)}`), then: renderThemePicker });
+  C2.bank -= price; C2.spent = (C2.spent || 0) + price; careerSave(C2);
+  prefs.themesOwned = [...new Set([...(prefs.themesOwned || []), i])]; prefs.theme = i; store.set(KEY.prefs, prefs);
+  track('theme_buy', { detail: `${i}:${price}` });
+  themePreview = null; applyTheme();
+  try { renderMenu(); } catch { renderThemePicker(); }  // баланс в карточке карьеры тоже обновится
+  toast(L(`🎨 Тема «${THEMES[i].name}» ваша — навсегда`, `🎨 The “${THEMES[i].name}” theme is yours to keep`));
+}
+$('themePick')?.addEventListener('click', e => {
+  const t = e.target;
+  if (!t.closest('[data-theme-topup]')) e.stopPropagation();  // профиль не закрывается: тема меняется на глазах; «Пополнить» — новое окно
+  if (t.closest('[data-theme-buy]')) return themeBuy(+t.closest('[data-theme-buy]').dataset.themeBuy);
+  if (t.closest('[data-theme-topup]')) return themeBuy(+t.closest('[data-theme-topup]').dataset.themeTopup);
+  if (t.closest('[data-theme-cancel]')) { themePreviewEnd(); return renderThemePicker(); }
+  const b = t.closest('[data-theme]'); if (!b) return;
+  const i = b.dataset.theme === 'auto' ? null : +b.dataset.theme;
+  if (i != null && !themeOwned(i)) {  // чужая тема — примерка: видно сразу на всём экране
+    themePreview = i; applyTheme(i); renderThemePicker(); track('theme_try', { detail: String(i) });
+    return $('themePick').querySelector('.tp-go')?.focus({ preventScroll: true });
+  }
+  themePreview = null;
+  if (i == null) delete prefs.theme; else prefs.theme = i;
+  store.set(KEY.prefs, prefs); applyTheme(); renderThemePicker();
+  $('themePick').querySelector(`[data-theme="${b.dataset.theme}"]`)?.focus({ preventScroll: true });
+});
+// renderMenu возвращает свою тему; если профиль открыт посреди примерки — примерка остаётся
+bus.on('menu', () => { if (themePreview != null && !$('profSheet')?.hidden) applyTheme(themePreview); else themePreview = null; renderThemePicker(); });
+// закрыли профиль посреди примерки — вернуть свою тему
+if ($('profSheet')) new MutationObserver(() => { if ($('profSheet').hidden && themePreview != null) { themePreviewEnd(); renderThemePicker(); } }).observe($('profSheet'), { attributes: true, attributeFilter: ['hidden'] });
 
 // Офис за окном: утром пусто, днём все на местах, вечером горит одна лампа
 (() => {
