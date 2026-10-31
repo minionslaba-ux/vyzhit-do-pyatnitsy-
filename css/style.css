@@ -49,13 +49,13 @@ button { cursor: pointer; }
 .neon-m { color: var(--magenta); text-shadow: 0 0 14px rgba(var(--m-rgb),.8); }
 
 /* ---------- кнопки ---------- */
-.btn-main, .btn-ghost { width: 100%; border-radius: 999px; font-family: var(--f-display); font-weight: 800; letter-spacing: .02em; transition: background .15s, box-shadow .15s, color .15s, transform .08s; }
+.btn-main, .btn-ghost { width: 100%; border-radius: 999px; font-family: var(--f-display); font-weight: 800; letter-spacing: .02em; transition: background .15s, box-shadow .15s, color .15s, filter .15s, transform .08s; }
 .btn-main { padding: 16px 20px; border: 0; background: var(--magenta); color: var(--bg); font-size: 16px; box-shadow: 0 0 30px rgba(var(--m-rgb),.7); }
-.btn-main:hover { background: #ff7be3; }
+.btn-main:hover { filter: brightness(1.1) saturate(1.05); }  /* тон от темы, а не один розовый на все */
 .btn-ghost { padding: 13px 16px; background: transparent; color: var(--cyan-xl); border: 2px solid var(--cyan); font-size: 13px; box-shadow: 0 0 18px rgba(var(--c-rgb),.3); }
 .btn-ghost:hover { background: rgba(var(--c-rgb),.14); box-shadow: 0 0 30px rgba(var(--c-rgb),.6); color: var(--hi); }
 .btn-main:active, .btn-ghost:active, .ans:active { transform: scale(.98); }
-.btn-chip { flex: none; border: 1.5px solid rgba(var(--m-rgb),.6); border-radius: 999px; background: transparent; color: var(--magenta-l); padding: 6px 12px; font-weight: 800; font-size: 12px; box-shadow: 0 0 12px rgba(var(--m-rgb),.3); }
+.btn-chip { flex: none; border: 1.5px solid rgba(var(--m-rgb),.6); border-radius: 999px; background: transparent; color: var(--magenta-l); padding: 6px 12px; font-weight: 800; font-size: 12px; box-shadow: 0 0 12px rgba(var(--m-rgb),.3); transition: transform .08s, background .15s; }
 .btn-chip:hover { background: rgba(var(--m-rgb),.16); color: var(--hi); }
 .icon-btn { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; padding: 0; background: transparent; border: 1.5px solid var(--line); color: var(--text-2); font-family: var(--f-mono); font-size: 15px; }
 .icon-btn:hover { border-color: var(--cyan); color: var(--cyan-xl); box-shadow: 0 0 14px rgba(var(--c-rgb),.4); }
@@ -1540,3 +1540,69 @@ body.ad-pause .app { pointer-events: none; }
 .brk-offer { display: flex; gap: 6px; align-items: stretch; }
 .brk-offer .btn-break { flex: 1; margin-top: 0; }
 .brk-x { flex: none; width: 40px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 20px; cursor: pointer; }
+
+/* «Разминка дня» в главном меню (js/break.js → renderBreakDay): игра дня в одно касание и ссылка на все 50 */
+.brk-day { display: grid; gap: 2px; }
+.bd-card { --cc: 45,226,230; position: relative; width: 100%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 12px 12px 12px 10px;
+  border-radius: 20px; border: 1.5px solid rgba(var(--cc),.5); color: var(--text); font: inherit; text-align: left; cursor: pointer;
+  background: radial-gradient(130% 150% at 0% 0%, rgba(var(--cc),.24), transparent 55%), linear-gradient(135deg, rgba(var(--c-rgb),.07), rgba(var(--m-rgb),.09)), rgba(var(--bg-rgb),.5);
+  box-shadow: 0 8px 22px rgba(0,0,0,.28), 0 0 22px rgba(var(--cc),.14), inset 0 1px 0 rgba(var(--w-rgb),.08);
+  transition: transform .1s, box-shadow .15s, border-color .15s; }
+.bd-card:hover { border-color: rgba(var(--cc),.85); box-shadow: 0 10px 26px rgba(0,0,0,.3), 0 0 30px rgba(var(--cc),.28), inset 0 1px 0 rgba(var(--w-rgb),.1); }
+.bd-card:active { transform: scale(.98); }
+.bd-ico { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 16px; font-size: 30px; line-height: 1;
+  background: radial-gradient(circle at 35% 30%, rgba(var(--cc),.5), rgba(var(--cc),.14) 70%); box-shadow: 0 0 18px rgba(var(--cc),.35), inset 0 1px 0 rgba(255,255,255,.25); }
+.bd-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.bd-kick { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--f-mono); font-size: 10.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-l); }
+.bd-txt b { font-family: var(--f-display); font-size: 15px; font-weight: 800; line-height: 1.15; }
+.bd-desc { font-size: 12px; line-height: 1.3; color: var(--text-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.bd-badge { position: absolute; top: -10px; right: 14px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 900; white-space: nowrap;
+  background: var(--up); color: #11160a; box-shadow: 0 0 12px rgba(212,255,58,.45); }
+.bd-badge.bd-rec { background: var(--panel); color: var(--up); border: 1px solid rgba(var(--w-rgb),.18); box-shadow: none; }
+.bd-play { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; padding-left: 2px; font-size: 13px;
+  background: var(--magenta); color: var(--bg); box-shadow: 0 0 16px rgba(var(--m-rgb),.55); transition: transform .15s; }
+.bd-card:hover .bd-play { transform: scale(1.08); }
+.bd-all { justify-self: center; font-size: 13px; padding: 6px 10px; }
+html.light .bd-card { box-shadow: 0 8px 22px rgba(var(--p-rgb),.18), inset 0 1px 0 rgba(255,255,255,.6); background: radial-gradient(130% 150% at 0% 0%, rgba(var(--cc),.2), transparent 55%), rgba(255,255,255,.7); }
+html.light .bd-badge:not(.bd-rec) { color: #fff; box-shadow: none; }
+html.light .bd-play { color: #fff; }
+
+/* «Оформление» в профиле (js/game.js → renderThemePicker): «Авто» и кружки тем */
+.theme-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 8px 6px; align-items: start; justify-items: center; }
+.tp-auto { grid-column: 1 / -1; justify-self: stretch; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 14px; border: 1.5px solid var(--line);
+  background: rgba(var(--w-rgb),.03); color: var(--text); font: inherit; font-size: 14px; font-weight: 800; text-align: left; transition: border-color .15s, background .15s, transform .1s; }
+.tp-auto small { display: block; font-size: 11.5px; font-weight: 700; color: var(--text-2); }
+.tp-auto.on { border-color: var(--cyan); background: rgba(var(--c-rgb),.1); box-shadow: 0 0 16px rgba(var(--c-rgb),.25); }
+.tp-auto:active { transform: scale(.98); }
+.tp-sw { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0; border: 0; background: none; color: var(--text-2); font: inherit; cursor: pointer; }
+.tp-sw i { display: block; width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(var(--w-rgb),.2);
+  background: radial-gradient(circle, var(--sw-bg) 0 33%, transparent 35%), conic-gradient(from 225deg, var(--sw-m) 0 50%, var(--sw-c) 50% 100%); transition: transform .12s, box-shadow .15s; }
+.tp-sw small { font-size: 10px; font-weight: 900; line-height: 1; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tp-sw.lock i { filter: saturate(.75) brightness(.9); }
+.tp-sw:hover i { transform: scale(1.1); }
+.tp-sw:active i { transform: scale(.92); }
+.tp-sw.on i { border-color: var(--bg); box-shadow: 0 0 0 2px var(--hi); transform: scale(1.08); }
+.tp-sw.pv i { border-color: var(--bg); box-shadow: 0 0 0 2px var(--magenta); filter: none; transform: scale(1.08); }
+.tp-buy { grid-column: 1 / -1; justify-self: stretch; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 10px; padding: 10px 12px; border-radius: 16px;
+  border: 1.5px solid rgba(var(--m-rgb),.55); background: rgba(var(--m-rgb),.08); font-size: 13.5px; font-weight: 800; animation: psIn .18s ease-out; }
+.tp-buy small { display: block; font-size: 11.5px; color: var(--text-2); font-weight: 700; }
+.tp-buy .tp-go { width: auto; padding: 10px 14px; font-size: 13px; }
+.tp-buy .btn-link { grid-column: 1 / -1; justify-self: center; font-size: 12.5px; padding: 2px 6px; }
+.tp-name { grid-column: 1 / -1; justify-self: start; font-size: 12px; color: var(--text-2); }
+
+/* Высокий контраст: чёткие рамки, плотные панели без размытия */
+html.hc { --line: rgba(255,255,255,.55); --glass: rgba(255,255,255,.05); }
+html.hc .glass, html.hc .panel { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
+html.hc .btn-ghost { color: #fff; }
+html.hc .prof:has(input:checked) b { color: #fff; }
+
+/* Меню: глубина панели и отклик на нажатие */
+.menu > .panel.form { box-shadow: 0 18px 44px rgba(0,0,0,.32), 0 0 40px rgba(var(--p-rgb),.12), inset 0 1px 0 rgba(var(--w-rgb),.08); }
+html.light .menu > .panel.form { box-shadow: 0 14px 36px rgba(var(--p-rgb),.2), inset 0 1px 0 rgba(255,255,255,.7); }
+.prof { transition: border-color .15s, box-shadow .15s, background .15s, transform .1s; }
+.prof:active { transform: scale(.97); }
+.play2 .btn-main { transition: background .15s, box-shadow .15s, filter .15s, transform .1s; }
+.play2 .btn-main:active { transform: scale(.96); }
+.btn-chip:active, .me-badge:active, .sound:active, .icon-btn:active, .ps-x:active { transform: scale(.95); }
+.btn-link:active { opacity: .7; }
+@media (prefers-reduced-motion: reduce) { .bd-card, .tp-sw i, .tp-auto, .tp-buy, .prof, .play2 .btn-main { transition: none; } .tp-buy { animation: none; } }
