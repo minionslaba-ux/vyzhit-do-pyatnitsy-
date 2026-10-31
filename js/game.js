@@ -219,7 +219,8 @@ const slotOf = (day, phase) => slotOfPhase(DAYS.indexOf(day), PHASES.findIndex(p
 // Неделя: карточки по расписанию → карточки вида недели (или пакета) → одна карточка профессии → случайные события
 // classic — классическая неделя из cards.js; иначе карточки берутся из большого пула.
 // seen — уже показанные карточки: из них ничего не берётся, так карточки не повторяются
-function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [], profCard = true, packCards = [], classic = true, seen = null }) {
+function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [], profCard = true, packCards = [], classic = true, seen = null, lvl = 0 }) {
+  const LP = levelPool(lvl);  // карьера: карточки своего уровня
   const unseen = c => !seen || !seen.has(c.id);
   const used = new Set(), deck = [], randomPack = [...RANDOM_CARDS, ...extraRandom].filter(unseen); // свежая копия на каждую неделю
   const rules = WEEK_TYPES[type].rules, fixed = new Map();
@@ -228,12 +229,12 @@ function buildDeck({ prof, type = 'normal', rng = Math.random, extraRandom = [],
     const d = dayOf(i), ph = PHASES[slotPh(i)];
     if (fixed.has(i)) { const c = byId[fixed.get(i)]; deck.push({ id: c.id, time: c.time || slotTime(i), fixed: true }); continue; }
     const ok = c => c.phase === ph.name && !used.has(c.id);
-    const fresh = classic ? [] : POOL.filter(c => ok(c) && unseen(c));
+    const fresh = classic ? [] : LP.filter(c => ok(c) && unseen(c));
     const special = CARDS.filter(c => ok(c) && c.day === DAYS[d]);
     // классических карточек 15 на 25 слотов — недостающие берём из большого пула
     let pool = fresh.length ? fresh : special.length ? special : CARDS.filter(c => ok(c) && !c.day);
-    if (!pool.length) pool = POOL.filter(c => ok(c) && unseen(c));
-    if (!pool.length) pool = [...CARDS, ...POOL].filter(c => c.phase === ph.name && !used.has(c.id));
+    if (!pool.length) pool = LP.filter(c => ok(c) && unseen(c));
+    if (!pool.length) pool = [...CARDS, ...LP].filter(c => c.phase === ph.name && !used.has(c.id));
     const standard = rnd(pool, rng); used.add(standard.id);
     deck.push({ id: standard.id, time: standard.time || slotTime(i) });
   }
@@ -321,6 +322,18 @@ function newCareer() {
   C.res = freshRes(first.perk);
   saveCareer(); heroCreate(startWeek);  // сначала — выбрать персонажа (js/hero.js)
 }
+// Новый год карьеры на уровне lvl: персонаж, питомцы, деньги и аттестация остаются; недели, компании и счётчики — с нуля
+function startLevel(lvl) {
+  const keep = C, first = rnd(VACANCIES.filter(v => v.level === Math.min(lvl, 3)));
+  C = { prof: keep.prof, trait: keep.trait, week: 1, stage: 'work', company: first.name, companies: [first.name], res: null, level: lvl,
+    worked: 0, firings: 0, passed: 0, failed: 0, newJob: false, bank: keep.bank || 0, earned: 0, cert: keep.cert, payV: keep.payV, vacation: 0, vacUsed: 0,
+    hero: keep.hero, levelsDone: Math.max(keep.levelsDone || 0, levelOf(keep)) };
+  C.salary = salaryFor(first); C.res = freshRes(first.perk);
+  store.del(KEY.save); saveCareer();
+  track('level_start', { detail: String(lvl) });
+  toast(L(`${LEVELS[lvl].ico} Уровень ${lvl}: «${LEVELS[lvl].name}» — новые карточки!`, `${LEVELS[lvl].ico} Level ${lvl}: “${LEVELS[lvl].name}” — new cards!`));
+  startWeek();
+}
 function continueCareer() {
   C = store.get(KEY.career, null);
   if (!C) return newCareer();
@@ -335,11 +348,13 @@ function continueCareer() {
   startWeek();
 }
 // Показанные карточки копятся между карьерами; когда в фазе дня почти не остаётся новых, круг начинается заново
-function seenSet() {
-  const seen = new Set(store.get(KEY.seen, []));
+// Карточки уровня; если у уровня мало карточек (английская версия: перевод ещё не готов) — весь пул
+const levelPool = lvl => { if (!lvl) return POOL; const a = POOL.filter(c => c.lvl === lvl); return a.length >= 150 ? a : POOL; };
+function seenSet(lvl = 0) {
+  const seen = new Set(store.get(KEY.seen, [])), LP = levelPool(lvl);
   for (const ph of PHASES) {
-    const left = POOL.filter(c => c.phase === ph.name && !seen.has(c.id)).length;
-    if (POOL.length && left < 5) POOL.filter(c => c.phase === ph.name).forEach(c => seen.delete(c.id));
+    const left = LP.filter(c => c.phase === ph.name && !seen.has(c.id)).length;
+    if (LP.length && left < 5) LP.filter(c => c.phase === ph.name).forEach(c => seen.delete(c.id));
   }
   return seen;
 }
@@ -349,10 +364,11 @@ function startWeek() {
   S = newWeekState({ mode: 'career', res: C.res, type, extra: { prof: C.prof, trait: C.trait } });
   S.diff = diffStage(C);  // сложность стадии карьеры (DIFF в js/engine.js) — на всю неделю
   if (C.bank < 0) { S.res.psyche = Math.max(5, S.res.psyche - 10); setTimeout(() => toast(L(`Долг ${C.bank} у.е. давит: Кукуха −10`, `${money(-C.bank)} of debt weighs on you: Sanity −10`)), 400); }
-  const seen = seenSet(), classic = !seen.has('__classic') || !POOL.length;  // классическая неделя — только в самый первый раз
+  const lvl = levelOf(C); S.lvl = lvl;
+  const seen = seenSet(lvl), classic = lvl === 1 && (!seen.has('__classic') || !POOL.length);  // классическая неделя — только в самый первый раз
   const season = type === 'normal' && !classic ? activeSeason() : null;
   if (season) S.season = season.id;
-  S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title && !seen.has(c.id)) : [] });
+  S.deck = buildDeck({ prof: C.prof, type, extraRandom: SUGGESTED, classic, seen, lvl, packCards: season ? SEASON_CARDS.filter(c => c.season === season.title && !seen.has(c.id)) : [] });
   if (!classic) placeCastCard(S.deck);
   bus.emit('deck', S);
   for (const s of S.deck) seen.add(s.id);
@@ -468,7 +484,7 @@ function renderBars() {
   if (!busy && !views.game.hidden) answerWarn();  // шкала вошла в опасную зону или вышла из неё (магазин) — обновить метки ответов
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
-const headerLine = () => S.mode === 'career' && C ? L(`Неделя ${C.week}/${YEAR} · ${C.company}`, `Week ${C.week}/${YEAR} · ${C.company}`) : S.mode === 'daily' ? `${L('Неделя дня', 'Daily Week')} ${dayLabel(S.day)}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}`
+const headerLine = () => S.mode === 'career' && C ? (levelOf(C) > 1 ? L(`Ур. ${levelOf(C)} · `, `Lv ${levelOf(C)} · `) : '') + L(`Неделя ${C.week}/${YEAR} · ${C.company}`, `Week ${C.week}/${YEAR} · ${C.company}`) : S.mode === 'daily' ? `${L('Неделя дня', 'Daily Week')} ${dayLabel(S.day)}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}`
   : S.mode === 'tour' ? `${L('Турнир', 'Tournament')} · ${S.tourTeam}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}` : PACK?.company || '';
 
 function renderCard() {
@@ -598,7 +614,7 @@ function effectsOf(side) {
     let v = raw[r.k] || 0;
     if (r.k === 'boss' && rules.bossMul) v = Math.round(v * rules.bossMul / 5) * 5;
     if (r.k === 'psyche' && v < 0 && rules.psycheNegMul) v = Math.round(v * rules.psycheNegMul / 5) * 5;
-    if (D && v < 0) v = Math.max(D.cap, Math.round(v * D.neg));  // стадия карьеры: новичкам мягче, руководителям жёстче
+    if (D && v < 0) v = Math.max(D.cap, Math.round(v * D.neg * (LEVELS[S.lvl || 1]?.neg || 1)));  // стадия карьеры: новичкам мягче, руководителям жёстче
     const item = v <= -10 && free.find(i => ITEMS[i].stat === r.k && !blocked.some(b => b.item === i));
     if (item) blocked.push({ item, stat: r.k, v });
     eff[r.k] = item ? 0 : v;
@@ -1284,11 +1300,14 @@ function yearEnd() {
     <p>${L('Где вы успели поработать:', 'Where you clocked in this year:')}</p>
     <ul class="companies">${C.companies.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
     ${endingsHtml(got)}
-    <div class="stack"><button class="btn-main" id="again">${L('Новый год карьеры', 'New career year')}</button>
+    ${levelOf(C) < LEVEL_MAX ? `<div class="lvl-next"><span class="lvl-next-ico" aria-hidden="true">${LEVELS[levelOf(C) + 1].ico}</span><div><b>${L(`Открыт уровень ${levelOf(C) + 1} из ${LEVEL_MAX}: «${LEVELS[levelOf(C) + 1].name}»`, `Level ${levelOf(C) + 1} of ${LEVEL_MAX} unlocked: “${LEVELS[levelOf(C) + 1].name}”`)}</b><small>${LEVELS[levelOf(C) + 1].desc}. ${L('Новые 52 недели и новые карточки. Персонаж, питомцы и деньги остаются с вами.', 'A new 52 weeks with brand-new cards. Your character, pets and money stay with you.')}</small></div></div>`
+      : `<div class="lvl-next"><span class="lvl-next-ico" aria-hidden="true">🏆</span><div><b>${L('Все три уровня пройдены — вы легенда офиса!', 'All three levels done — you’re an office legend!')}</b><small>${L('Можно сыграть третий уровень ещё раз или начать путь заново.', 'Replay level three or start the journey over.')}</small></div></div>`}
+    <div class="stack">${levelOf(C) < LEVEL_MAX ? `<button class="btn-main" id="nextLevel">${L(`Уровень ${levelOf(C) + 1} →`, `Level ${levelOf(C) + 1} →`)}</button>` : ''}<button class="${levelOf(C) < LEVEL_MAX ? 'btn-ghost' : 'btn-main'}" id="again">${levelOf(C) < LEVEL_MAX ? L('Начать карьеру заново', 'Start over') : L('Ещё год на 3-м уровне', 'Another year on level 3')}</button>
       <button class="btn-ghost" id="toBoard">${L('Рейтинг офиса', 'Office leaderboard')}</button><button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div>
   </div>`;
   show('end'); bindCommon();
-  $('again').onclick = () => { store.del(KEY.career); newCareer(); };
+  $('again').onclick = () => levelOf(C) >= LEVEL_MAX ? startLevel(LEVEL_MAX) : (store.del(KEY.career), newCareer());
+  if ($('nextLevel')) $('nextLevel').onclick = () => startLevel(levelOf(C) + 1);
   if (C.worked >= 40) confetti();
 }
 

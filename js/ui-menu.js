@@ -50,7 +50,7 @@ function renderMenu() {
   if (Cm && Cm.payV !== 2) { payFix(Cm); store.set(KEY.career, Cm); }
   if (Cm) {
     const where = Cm.stage === 'search' ? L('ищет работу', 'job hunting') : Cm.company;
-    $('careerCard').innerHTML = `<div class="cc-head"><b>${L('Неделя', 'Week')} ${Math.min(Cm.week, YEAR)}/${YEAR}</b><span>${esc(where)}</span></div>
+    $('careerCard').innerHTML = `<div class="cc-level">${LEVELS[levelOf(Cm)].ico} ${L(`Уровень ${levelOf(Cm)} из ${LEVEL_MAX}`, `Level ${levelOf(Cm)} of ${LEVEL_MAX}`)} · ${LEVELS[levelOf(Cm)].name}</div><div class="cc-head"><b>${L('Неделя', 'Week')} ${Math.min(Cm.week, YEAR)}/${YEAR}</b><span>${esc(where)}</span></div>
       <div class="cc-bar"><i style="width:${(Math.min(Cm.week - 1, YEAR) / YEAR) * 100}%"></i></div>
       <div class="stat-box"><b>${Cm.worked}</b><span>${L('отработано', 'worked')}</span></div>
       <div class="stat-box"><b>${Cm.firings}</b><span>${L('увольнений', 'times fired')}</span></div>
