@@ -1540,3 +1540,17 @@ body.ad-pause .app { pointer-events: none; }
 .brk-offer { display: flex; gap: 6px; align-items: stretch; }
 .brk-offer .btn-break { flex: 1; margin-top: 0; }
 .brk-x { flex: none; width: 40px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 20px; cursor: pointer; }
+/* ---------- опасная зона: шкала пульсирует красным, ⚠ у трубки; ответ, который толкает её к краю, — с меткой ⚠ (js/game.js answerWarn) ---------- */
+.tube-wrap.danger .tube { border-color: #ff3b6b; animation: dzPulse 1.1s ease-in-out infinite alternate; }
+.tube-wrap.low.danger .tube { animation: dzPulse 1.1s ease-in-out infinite alternate, shiver 2.4s ease-in-out infinite; }
+@keyframes dzPulse { from { box-shadow: inset 0 0 18px var(--c-inner), 0 0 4px rgba(255,59,107,.35); } to { box-shadow: inset 0 0 18px rgba(255,59,107,.35), 0 0 16px rgba(255,59,107,.85); } }
+.tube-wrap.danger::after { content: '⚠'; position: absolute; top: 20px; right: 0; width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%;
+  font-size: 10px; line-height: 1; color: #fff; background: #ff3b6b; box-shadow: 0 0 8px rgba(255,59,107,.8); pointer-events: none; }
+.ans.dz { box-shadow: inset 0 0 0 1px rgba(255,59,107,.45), 0 0 14px rgba(255,59,107,.22); }
+.dz-badge { position: absolute; bottom: -9px; left: 12px; padding: 1px 7px; border-radius: 999px; font-family: var(--f-body); font-size: 10.5px; font-weight: 800; line-height: 1.35;
+  color: #ffd0da; background: var(--panel, #160a24); border: 1px solid rgba(255,59,107,.7); box-shadow: 0 0 8px rgba(255,59,107,.35); white-space: nowrap; pointer-events: none; }
+.ans.yes .dz-badge { left: auto; right: 12px; }
+html.light .dz-badge { background: #fff; color: #c4002f; }
+@media (prefers-reduced-motion: reduce) {
+  .tube-wrap.danger .tube, .tube-wrap.low.danger .tube { animation: none; box-shadow: inset 0 0 18px var(--c-inner), 0 0 10px rgba(255,59,107,.7); }
+}

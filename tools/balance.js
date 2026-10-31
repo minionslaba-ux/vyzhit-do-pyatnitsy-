@@ -1,6 +1,7 @@
 // Симуляция баланса «Выжить до пятницы»: сколько недель закрывают разные игроки,
 // какие карточки чаще всего заканчивают неделю и есть ли ответы, которые «всегда правильные».
 // Запуск: node tools/balance.js [недель=10000] [минусы=1.5] [плюсы=1.2] [плюсы Энергии=1.5]
+// Только стадии карьеры: STAGES=1 node tools/balance.js · как было до стадий: BASE=1 · доля «смотрит стрелки» у обычного игрока: LOOK=0.3 (так BASE=1 даёт ~21%, как в аналитике)
 // Множители (минусы ×1.5, плюсы ×1.2, у Энергии ×1.5) и предел ±30 — как в игре (POOL_BOOST в js/engine.js).
 // «Внимательный» игрок видит только то, что показывает игра: направление (▲/▼) и силу (одна или две стрелки).
 const fs = require('fs');
@@ -69,6 +70,70 @@ for (const [name, s] of [['случайный', random], ['внимательн�
     console.log(`${name.padEnd(13)} ${label.padEnd(30)} закрывают неделю: ${pct(ok / N)}`);
   }
 }
+
+// ---------- по стадиям карьеры: таблица DIFF из js/engine.js ----------
+// Карьера: старт 50% ± бонус профессии, после закрытой недели шкалы наполовину возвращаются к 50, 1–2 предмета на свои шкалы
+// (+1 с должности «Специалист», +2 у генерального), второй шанс — вопрос на эрудицию (верно ~60%), у новичка ещё и «кофе».
+// Реклама «последний шанс» не считается. BASE=1 — как было до стадий (все множители 1, без кофе и предела).
+const engine = fs.readFileSync(__dirname + '/../js/engine.js', 'utf8');
+const DIFF = process.env.DIFF ? JSON.parse(process.env.DIFF) : process.env.BASE ? [0, 1, 2, 3].map(() => ({ neg: 1, cap: -30 })) : eval(engine.split('// DIFF:start')[1].split('// DIFF:end')[0].replace(/const DIFF =/, '').replace(/L\(('[^']*'), '[^']*'\)/g, '$1').replace(/;\s*$/, ''));
+const QUIZ_OK = +(process.env.QUIZ_OK || .6);
+const PROFB = [{ colleagues: 15, psyche: -5 }, { boss: 15, energy: -5 }, { psyche: 15, colleagues: -5 }, { energy: 15, psyche: -5 }, { boss: 15, colleagues: -5 },
+  { psyche: 15, boss: -5 }, { colleagues: 15, energy: -5 }, { energy: 15, boss: -5 }, { energy: 10, colleagues: 10, psyche: -10 }];
+const STAGES = [  // стадия → должность (бонус предметов) и недели, которые прогоняем подряд
+  { d: 0, extra: 0, weeks: 3, label: 'новичок, недели 1–3' },
+  { d: 1, extra: 0, weeks: 4, label: 'стажёр/младший' },
+  { d: 2, extra: 1, weeks: 4, label: 'специалист…ведущий' },
+  { d: 3, extra: 1, weeks: 4, label: 'тимлид…директор' },
+  { d: 3, extra: 2, weeks: 4, label: 'генеральный' },
+];
+function careerWeek(strategy, D, extra, res) {
+  res = { ...res };
+  const items = new Set([...KEYS].sort(() => Math.random() - .5).slice(0, Math.min(4, (Math.random() < .5 ? 1 : 2) + extra)));
+  let coffee = !!D.save, quiz = true;
+  const effFor = (c, side) => Object.fromEntries(KEYS.map(k => {
+    let v = eff(c, side)[k];
+    if (v < 0) v = Math.max(D.cap, Math.round(v * D.neg));
+    return [k, v <= -10 && items.has(k) ? 0 : v];  // предмет на этой шкале: игра показывает ◆ вместо ▼
+  }));
+  for (let i = 0; i < WEEK; i++) {
+    const c = rnd(phases[SLOT[i % SLOT.length]]);
+    const side = strategy(c, res, effFor), e = effFor(c, side);
+    for (const k of KEYS) { if (eff(c, side)[k] <= -10 && items.has(k) && e[k] === 0) items.delete(k); res[k] = Math.max(0, Math.min(100, res[k] + e[k])); }
+    const dead = KEYS.find(k => res[k] <= 0 || res[k] >= 100);
+    if (!dead) continue;
+    if (coffee) { coffee = false; res[dead] = res[dead] >= 100 ? 95 : 5; continue; }
+    if (quiz && Math.random() < QUIZ_OK) { quiz = false; res[dead] = res[dead] >= 100 ? 80 : 20; continue; }
+    return [false, i + 1];
+  }
+  return [true, res];
+}
+const carefulS = (c, res, effFor) => {  // как careful, но видит стрелки уже с поправками стадии и предметами
+  const score = side => { const e = effFor(c, side); return KEYS.reduce((a, k) => { const v = res[k] + seen(e[k]) * 10; return a + Math.abs(v - 50) + (v <= 10 || v >= 90 ? 80 : 0); }, 0); };
+  return score('left') <= score('right') ? 'left' : 'right';
+};
+// «Обычный» игрок (по аналитике: 11 из 53 недель до правки ≈ 21%): на части карточек смотрит стрелки, на остальных жмёт кнопку не глядя (на телефоне так быстрее)
+const LOOK = +(process.env.LOOK || .3);
+const typical = (c, res, effFor) => Math.random() < LOOK ? carefulS(c, res, effFor) : random();
+console.log(`\nВыживаемость по стадиям карьеры${process.env.BASE ? ' (BASE: без стадий, как было)' : ''} · вопрос второго шанса верен в ${QUIZ_OK * 100}% · без рекламы:`);
+for (const st of STAGES) {
+  const D = DIFF[st.d], out = {};
+  for (const [name, s] of [['внимательный', carefulS], ['обычный', typical]]) {
+    let ok = 0, n = 0; const deaths = [];
+    for (let r = 0; r < N / st.weeks; r++) {
+      let res = null;
+      for (let w = 0; w < st.weeks; w++) {
+        if (!res) { const b = rnd(PROFB); res = Object.fromEntries(KEYS.map(k => [k, 50 + (b[k] || 0)])); }
+        const [won, x] = careerWeek(s, D, st.extra, res); n++;
+        if (won) { ok++; res = Object.fromEntries(KEYS.map(k => [k, Math.round((x[k] + 50) / 2)])); } else { deaths.push(x); res = null; }
+      }
+    }
+    deaths.sort((a, b) => a - b);
+    out[name] = `${pct(ok / n).padStart(6)} (медиана увольнения — карточка ${deaths[deaths.length >> 1] || '—'})`;
+  }
+  console.log(`  ${st.label.padEnd(20)} минусы ×${D.neg}, предел ${D.cap}${D.save ? ', кофе' : ''}`.padEnd(62) + ` внимательный ${out['внимательный']} · обычный ${out['обычный']}`);
+}
+if (process.env.STAGES) process.exit(0);
 
 // Карточки-убийцы: случайный игрок с предметами и вторым шансом (как средний новичок)
 for (let i = 0; i < N; i++) week(random, { track: true });
