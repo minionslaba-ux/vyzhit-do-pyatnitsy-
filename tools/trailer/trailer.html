@@ -1,228 +1,230 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Nunito:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=block" rel="stylesheet">
+<!-- Заставка «Выжить до пятницы», 18 с. Кадры настоящей игры снимает capture.js (Playwright),
+     здесь — монтаж: склейки в ритм 128 bpm, зум, крупные подписи, карьера и финальная карточка.
+     frame(t) рисует момент t (с); render.js вызывает его 30 раз в секунду. Адрес: trailer.html?cap=<папка кадров>&mode=tall|wide -->
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Nunito:wght@800;900&family=JetBrains+Mono:wght@700;800&display=block" rel="stylesheet">
 <style>
-:root { --bg: #07070d; --mag: #ff3bd4; --cyan: #2de2e6; --lime: #d4ff3a; --down: #ff3b6b; --text: #f2f0ff; }
+:root { --bg: #07070d; --mag: #ff3bd4; --cyan: #2de2e6; --lime: #d4ff3a; --red: #ff3b6b; --text: #f2f0ff; }
 * { box-sizing: border-box; margin: 0; }
-html, body { width: var(--W); height: var(--H); overflow: hidden; background: var(--bg); color: var(--text); font-family: Nunito, sans-serif; }
-#stage { position: absolute; left: 50%; top: 0; width: 540px; height: 960px; margin-left: -270px; overflow: hidden; }
-.bgfull { position: absolute; inset: 0; background: radial-gradient(70% 50% at 15% 105%, rgba(178,107,255,.38), transparent 60%), radial-gradient(60% 45% at 90% -5%, rgba(45,226,230,.3), transparent 60%), var(--bg); }
-#city { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; opacity: .5; }
-#city svg { width: 100%; height: 100%; }
-.cw { fill: rgba(255,255,255,.05); } .cw.on { fill: rgba(255,214,120,.65); }
-.bld { fill: #12121f; }
+html, body { overflow: hidden; background: var(--bg); color: var(--text); font-family: Nunito, sans-serif; }
+#stage { position: absolute; left: 0; top: 0; width: 540px; height: 960px; overflow: hidden; background: var(--bg); }
+body.wide #stage { width: 960px; height: 540px; }
 .abs { position: absolute; }
-/* сцена 1: заголовок */
-#title { left: 0; right: 0; top: 330px; text-align: center; font-family: Unbounded; font-weight: 800; text-transform: uppercase; line-height: 1; }
-#title .a { display: block; font-size: 72px; color: #fff; text-shadow: 0 0 22px rgba(255,59,212,.6); }
-#title .b { display: block; font-size: 52px; color: var(--mag); text-shadow: 0 0 18px var(--mag), 0 0 50px rgba(255,59,212,.6); }
-#title small { display: block; margin-top: 22px; font-family: 'JetBrains Mono'; font-size: 16px; letter-spacing: .2em; color: #7df9ff; text-shadow: 0 0 10px var(--cyan); }
-/* интерфейс игры */
-#ui { inset: 0; }
-#clock { left: 0; right: 0; top: 52px; text-align: center; font-family: 'JetBrains Mono'; font-weight: 700; font-size: 74px; color: #7df9ff; text-shadow: 0 0 14px rgba(45,226,230,.9), 0 0 44px rgba(45,226,230,.5); }
-#day { left: 0; right: 0; top: 30px; text-align: center; font-family: Unbounded; font-weight: 600; font-size: 15px; letter-spacing: .14em; color: #fff; }
-#segs { left: 50%; top: 150px; transform: translateX(-50%); display: flex; gap: 5px; }
-#segs i { width: 18px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); }
-#segs i.d { background: #7df9ff; box-shadow: 0 0 8px var(--cyan); } #segs i.n { background: var(--mag); box-shadow: 0 0 10px var(--mag); }
-#tubes { left: 0; right: 0; top: 196px; display: flex; justify-content: center; gap: 22px; }
-.tw { position: relative; display: flex; flex-direction: column; align-items: center; gap: 7px; width: 92px; }
-.tube { position: relative; width: 50px; height: 150px; border-radius: 26px; border: 2.5px solid var(--cb); box-shadow: inset 0 0 18px var(--ci); overflow: hidden; }
-.fill { position: absolute; left: 5px; right: 5px; bottom: 5px; border-radius: 20px; background: linear-gradient(var(--cl), var(--c)); box-shadow: 0 0 24px var(--c); }
-.lbl { font-weight: 900; font-size: 16px; color: var(--cl); }
-.pct { font-family: 'JetBrains Mono'; font-size: 14px; color: #b9b4d6; margin-top: -4px; }
-.zone { font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 700; letter-spacing: .06em; color: #ffb03b; text-shadow: 0 0 8px #ff8a3b; min-height: 14px; }
-.tw[data-k=psyche] { --c: #b26bff; --cl: #e2c2ff; --cb: rgba(178,107,255,.6); --ci: rgba(178,107,255,.25); }
-.tw[data-k=energy] { --c: #c6f01a; --cl: #f2ffb8; --cb: rgba(212,255,58,.55); --ci: rgba(212,255,58,.2); }
-.tw[data-k=boss] { --c: #ff3b6b; --cl: #ffc2d0; --cb: rgba(255,90,130,.6); --ci: rgba(255,59,107,.22); }
-.tw[data-k=colleagues] { --c: #2de2e6; --cl: #c8feff; --cb: rgba(45,226,230,.6); --ci: rgba(45,226,230,.22); }
-.fnum { position: absolute; left: 50%; top: 40px; transform: translateX(-50%); font-family: 'JetBrains Mono'; font-weight: 700; font-size: 26px; white-space: nowrap; }
-.fnum.u { color: var(--lime); text-shadow: 0 0 12px var(--lime); } .fnum.d { color: var(--down); text-shadow: 0 0 12px var(--down); }
-.steam { position: absolute; left: 50%; top: -18px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(rgba(255,255,255,.7), transparent 70%); }
-#card { left: 40px; right: 40px; top: 470px; height: 300px; padding: 26px; border-radius: 30px; background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 2px solid var(--glow); box-shadow: 0 0 40px var(--glows); transform-origin: 50% 120%; }
-.head { display: flex; align-items: center; gap: 12px; }
-.face { width: 62px; height: 62px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px rgba(255,255,255,.15); }
-.face svg { width: 100%; height: 100%; display: block; }
-.face .brow, .face .ln { fill: none; stroke: #1b1424; stroke-width: 2.4; stroke-linecap: round; } .face .fl { fill: #3a1424; } .face .eyes { fill: #1b1424; }
-.face .glasses { fill: rgba(255,255,255,.12); stroke: #1b1424; stroke-width: 1.8; }
-.who { font-family: Unbounded; font-weight: 600; font-size: 14px; letter-spacing: .1em; padding: 8px 16px; border-radius: 99px; border: 1.5px solid rgba(255,59,212,.6); color: #ff8be6; }
-.ctext { margin-top: 20px; font-weight: 900; font-size: 27px; line-height: 1.22; color: #fff; }
-.stamp { position: absolute; top: 96px; padding: 8px 16px; border: 4px solid currentColor; border-radius: 12px; font-family: Unbounded; font-weight: 800; font-size: 22px; background: rgba(7,7,13,.9); }
-.stamp.r { left: 24px; color: #7df9ff; transform: rotate(-11deg); text-shadow: 0 0 12px var(--cyan); }
-.stamp.l { right: 24px; color: #ff8be6; transform: rotate(11deg); text-shadow: 0 0 12px var(--mag); }
-#ans { left: 40px; right: 40px; top: 796px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-#ans span { padding: 18px 12px; border-radius: 20px; text-align: center; font-weight: 900; font-size: 17px; }
-#ans .l { border: 2px solid var(--mag); color: #ffc2ef; } #ans .r { border: 2px solid var(--cyan); color: #c8feff; }
-/* текстовые вставки */
-#beat { left: 30px; right: 30px; top: 470px; text-align: center; font-family: Unbounded; font-weight: 800; text-transform: uppercase; line-height: 1.05; }
-#beat b { display: block; font-size: 54px; color: #fff; text-shadow: 0 0 22px rgba(255,59,212,.7); }
-#beat i { display: block; margin-top: 14px; font-style: normal; font-family: Nunito; font-weight: 900; font-size: 26px; text-transform: none; color: #ffc2d0; }
-#dim { inset: 0; background: rgba(7,7,13,.78); }
-#flash { inset: 0; }
+#bg { inset: -10%; background: radial-gradient(60% 45% at 12% 100%, rgba(178,107,255,.45), transparent 60%), radial-gradient(55% 40% at 95% 0%, rgba(45,226,230,.35), transparent 60%), radial-gradient(50% 40% at 70% 70%, rgba(255,59,212,.22), transparent 60%), var(--bg); }
+#grid { inset: 0; background-image: linear-gradient(rgba(45,226,230,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(45,226,230,.07) 1px, transparent 1px); background-size: 40px 40px; }
+/* «экран» игры: в вертикальном формате — весь кадр, в горизонтальном — телефон справа */
+#phone { left: 0; top: 0; width: 540px; height: 960px; overflow: hidden; }
+body.wide #phone { left: 610px; top: 24px; width: 276px; height: 492px; border-radius: 32px; box-shadow: 0 0 0 7px #15151f, 0 0 0 9px rgba(255,59,212,.75), 0 0 60px rgba(255,59,212,.45), 0 30px 80px rgba(0,0,0,.6); }
+#vid { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+#vidDim { inset: 0; background: #07070d; opacity: 0; }
+/* подписи */
+.cap { position: absolute; left: 0; right: 0; text-align: center; font-family: Unbounded; font-weight: 900; text-transform: uppercase; line-height: 1; opacity: 0; }
+.cap > span { display: inline-block; padding: 12px 20px 14px; border-radius: 16px; background: rgba(7,7,13,.88); box-shadow: 0 10px 40px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.08); }
+.cap i { font-style: normal; }
+.cap .l { color: var(--lime); text-shadow: 0 0 18px rgba(212,255,58,.7); } .cap .m { color: var(--mag); text-shadow: 0 0 18px rgba(255,59,212,.8); } .cap .c { color: var(--cyan); text-shadow: 0 0 18px rgba(45,226,230,.8); } .cap .r { color: var(--red); text-shadow: 0 0 18px rgba(255,59,107,.8); }
+.cap.big { font-size: 48px; } .cap.mid { font-size: 34px; }
+.cap .sub { display: block; margin-top: 10px; font-family: Nunito; font-weight: 900; font-size: 22px; text-transform: none; color: #fff; }
+body.wide .cap { left: 40px; right: auto; width: 520px; }
+body.wide .cap > span { background: none; box-shadow: none; padding: 0; }
+body.wide .cap.big { font-size: 52px; } body.wide .cap.mid { font-size: 40px; }
+/* крючок */
+#hook { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: Unbounded; font-weight: 900; text-transform: uppercase; line-height: .95; }
+#hook .w1 { font-size: 58px; color: #fff; text-shadow: 0 0 26px rgba(255,59,212,.7), 0 6px 0 rgba(0,0,0,.4); }
+#hook .w2 { font-size: 50px; color: var(--mag); text-shadow: 0 0 22px var(--mag), 0 0 60px rgba(255,59,212,.6); margin-top: 8px; }
+#hook .clk { margin-top: 34px; font-family: 'JetBrains Mono'; font-weight: 800; font-size: 80px; color: #7df9ff; text-shadow: 0 0 16px var(--cyan), 0 0 50px rgba(45,226,230,.6); }
+#hook .clk.hot { color: #ff8be6; text-shadow: 0 0 16px var(--mag), 0 0 50px rgba(255,59,212,.7); }
+/* карьера */
+#career { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+#career h2 { font-family: Unbounded; font-weight: 900; font-size: 54px; text-transform: uppercase; color: #fff; text-shadow: 0 0 22px rgba(255,59,212,.7); }
+#career .x { font-family: 'JetBrains Mono'; font-weight: 800; font-size: 26px; color: var(--lime); text-shadow: 0 0 14px rgba(212,255,58,.7); margin-bottom: 10px; }
+#career .lv { display: flex; align-items: center; gap: 16px; width: 450px; padding: 16px 20px; border-radius: 22px; background: rgba(20,20,34,.94); border: 2px solid var(--cl); box-shadow: 0 0 30px var(--cs); }
+#career .lv i { font-style: normal; font-size: 44px; }
+#career .lv b { display: block; font-family: Unbounded; font-weight: 800; font-size: 23px; color: #fff; text-transform: uppercase; }
+#career .lv small { display: block; margin-top: 4px; font-family: 'JetBrains Mono'; font-weight: 700; font-size: 15px; color: var(--cl); }
+#career .lv:nth-of-type(1) { --cl: #2de2e6; --cs: rgba(45,226,230,.35); } #career .lv:nth-of-type(2) { --cl: #d4ff3a; --cs: rgba(212,255,58,.3); } #career .lv:nth-of-type(3) { --cl: #ff3bd4; --cs: rgba(255,59,212,.45); }
+body.wide #career { right: 360px; gap: 9px; } body.wide #hook { right: 360px; } body.wide #career h2 { font-size: 46px; } body.wide #career .lv { width: 500px; padding: 10px 18px; } body.wide #career .x { font-size: 22px; margin-bottom: 4px; }
+/* мини-игры: счётчик */
+#fifty { left: 0; right: 0; top: 30px; text-align: center; font-family: Unbounded; font-weight: 900; text-transform: uppercase; opacity: 0; }
+#fifty b { display: inline-block; font-size: 50px; line-height: 1; padding: 10px 22px 14px; border-radius: 18px; background: var(--lime); color: #07070d; box-shadow: 0 0 40px rgba(212,255,58,.6); }
+#fifty small { display: block; margin-top: 12px; font-size: 28px; color: #fff; }
+#fifty small span { display: inline-block; padding: 6px 16px 8px; border-radius: 12px; background: rgba(7,7,13,.88); }
+body.wide #fifty { left: 40px; right: auto; width: 520px; top: 180px; } body.wide #fifty b { font-size: 46px; white-space: nowrap; } body.wide #fifty small span { background: none; }
 /* финал */
-#doorL, #doorR { top: 0; bottom: 0; width: 50.5%; background: linear-gradient(90deg, #0b0b16, #171730); }
-#doorL { left: 0; border-right: 4px solid var(--mag); box-shadow: 0 0 40px var(--mag); } #doorR { right: 0; border-left: 4px solid var(--mag); box-shadow: 0 0 40px var(--mag); }
-#big { left: 0; right: 0; top: 330px; text-align: center; }
-#big .t { font-family: 'JetBrains Mono'; font-weight: 700; font-size: 120px; color: #7df9ff; text-shadow: 0 0 22px var(--cyan), 0 0 70px var(--cyan); }
-#big .s { margin-top: 18px; font-family: Unbounded; font-weight: 800; font-size: 40px; line-height: 1.05; color: var(--mag); text-shadow: 0 0 18px var(--mag); text-transform: uppercase; }
-#conf { inset: 0; }
-#end { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; }
-#end .logo .a { display: block; font-family: Unbounded; font-weight: 800; font-size: 66px; color: #fff; text-transform: uppercase; line-height: 1; text-shadow: 0 0 22px rgba(255,59,212,.6); }
-#end .logo .b { display: block; font-family: Unbounded; font-weight: 800; font-size: 47px; color: var(--mag); text-transform: uppercase; line-height: 1; text-shadow: 0 0 18px var(--mag); }
-#end .q { font-weight: 900; font-size: 28px; color: #fff; }
-#end .free { font-family: 'JetBrains Mono'; font-size: 16px; color: #b9b4d6; letter-spacing: .04em; }
-#end .url { padding: 16px 30px; border-radius: 99px; background: var(--mag); color: var(--bg); font-family: Unbounded; font-weight: 800; font-size: 26px; box-shadow: 0 0 40px rgba(255,59,212,.75); }
-/* горизонтальный кадр: по бокам — тот же город, сцена в центре */
-body.wide #stage { top: 60px; transform: scale(1); }
+#end { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+#end .logo .a { display: block; font-family: Unbounded; font-weight: 900; font-size: 76px; color: #fff; text-transform: uppercase; line-height: 1; text-shadow: 0 0 26px rgba(255,59,212,.6); }
+#end .logo .b { display: block; font-family: Unbounded; font-weight: 900; font-size: 54px; color: var(--mag); text-transform: uppercase; line-height: 1.05; text-shadow: 0 0 20px var(--mag), 0 0 60px rgba(255,59,212,.6); }
+#end .free { font-family: Unbounded; font-weight: 900; font-size: 30px; text-transform: uppercase; padding: 16px 32px 18px; border-radius: 99px; background: var(--lime); color: #07070d; box-shadow: 0 0 40px rgba(212,255,58,.6); }
+#end .url { font-family: 'JetBrains Mono'; font-weight: 800; font-size: 32px; color: #7df9ff; text-shadow: 0 0 14px var(--cyan); }
+#end .tags { font-family: Nunito; font-weight: 900; font-size: 19px; color: #c9c4e6; }
+#fan { inset: 0; }
+#fan img { position: absolute; width: 190px; height: 338px; border-radius: 22px; box-shadow: 0 0 0 4px #15151f, 0 0 0 6px rgba(45,226,230,.5), 0 20px 50px rgba(0,0,0,.6); object-fit: cover; }
+body.wide #end { gap: 18px; } body.wide #end .logo .a { font-size: 66px; } body.wide #end .logo .b { font-size: 47px; }
+#flash { inset: 0; background: #fff; opacity: 0; }
+#vign { inset: 0; background: radial-gradient(80% 70% at 50% 50%, transparent 50%, rgba(255,30,80,.7)); opacity: 0; }
+#bar { left: 0; bottom: 0; height: 5px; width: 0; background: linear-gradient(90deg, var(--cyan), var(--mag), var(--lime)); box-shadow: 0 0 12px var(--mag); }
 </style></head>
 <body>
-<div class="bgfull"></div>
 <div id="stage">
-  <div id="city" class="abs"></div>
-  <div id="ui" class="abs">
-    <div id="day" class="abs"></div><div id="clock" class="abs">09:00</div><div id="segs" class="abs"></div>
-    <div id="tubes" class="abs"></div>
-    <div id="card" class="abs"></div>
-    <div id="ans" class="abs"><span class="l"></span><span class="r"></span></div>
-  </div>
-  <div id="dim" class="abs"></div>
-  <div id="beat" class="abs"></div>
-  <div id="title" class="abs"><span class="a">Выжить</span><span class="b">до пятницы</span><small>ПОНЕДЕЛЬНИК · 09:00</small></div>
-  <div id="flash" class="abs"></div>
-  <div id="doorL" class="abs"></div><div id="doorR" class="abs"></div>
-  <div id="big" class="abs"><div class="t">17:59</div><div class="s">Неделя<br>пережита</div></div>
-  <canvas id="conf" class="abs" width="540" height="960"></canvas>
+  <div id="bg" class="abs"></div><div id="grid" class="abs"></div>
+  <div id="phone" class="abs"><img id="vid" alt=""><div id="vidDim" class="abs"></div></div>
+  <div id="vign" class="abs"></div>
+  <div id="caps"></div>
+  <div id="fifty" class="abs"><b>50 мини-игр</b><small><span id="fiftySub"></span></small></div>
+  <div id="hook" class="abs"><div class="w1">Доживёшь</div><div class="w2">до пятницы?</div><div class="clk" id="hookClk">09:00</div></div>
+  <div id="career" class="abs"><h2>Карьера</h2><div class="x">3 уровня × 52 недели</div>
+    <div class="lv"><i>🐟</i><div><b>Офисный планктон</b><small>год 1 · дедлайны и кулер</small></div></div>
+    <div class="lv"><i>📊</i><div><b>Средний менеджмент</b><small>год 2 · интриги и планёрки</small></div></div>
+    <div class="lv"><i>👑</i><div><b>Топ-менеджмент</b><small>год 3 · самые жёсткие решения</small></div></div></div>
+  <div id="fan" class="abs"></div>
   <div id="end" class="abs"><div class="logo"><span class="a">Выжить</span><span class="b">до пятницы</span></div>
-    <div class="q">А вы доживёте до пятницы?</div><div class="free">Бесплатно · без регистрации · 5 минут</div><div class="url">survivefriday.com</div></div>
+    <div class="free">Играй бесплатно</div><div class="url">survivefriday.com</div><div class="tags">Без регистрации · в браузере и на телефоне</div></div>
+  <div id="flash" class="abs"></div>
+  <div id="bar" class="abs"></div>
 </div>
 <script>
-// портреты — те же, что в игре (faces.js подключается из репозитория)
-</script>
-<script src="../../js/faces.js"></script>
-<script>
+const Q = new URLSearchParams(location.search), CAP = (Q.get('cap') || 'cap').replace(/\/$/, ''), WIDE = Q.get('mode') === 'wide', POSTER = Q.has('poster');  // poster — кадр для обложки: игра под заголовком не размыта
+if (WIDE) document.body.classList.add('wide');
+const SW = WIDE ? 960 : 540, SH = WIDE ? 540 : 960;
 const $ = id => document.getElementById(id);
 const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const seg = (t, a, b) => cl((t - a) / (b - a));
-const ease = x => 1 - Math.pow(1 - x, 3), inout = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const ease = x => 1 - Math.pow(1 - x, 3), back = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 const lerp = (a, b, x) => a + (b - a) * x;
-// город с окнами
-let seed = 5; const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-let city = '', x = 0, wins = 0;
-while (x < 560) { const w = 34 + Math.floor(r() * 50), h = 120 + Math.floor(r() * 230); city += `<rect class="bld" x="${x}" y="${440 - h}" width="${w}" height="${h}"/>`;
-  for (let wy = 450 - h; wy < 430; wy += 18) for (let wx = x + 7; wx < x + w - 9; wx += 13) if (r() > .4) city += `<rect class="cw" data-i="${wins++}" x="${wx}" y="${wy}" width="6" height="9"/>`;
-  x += w + 5; }
-$('city').innerHTML = `<svg viewBox="0 0 540 440" preserveAspectRatio="xMidYMax slice">${city}</svg>`;
-const cws = [...document.querySelectorAll('.cw')].sort(() => r() - .5);
-// шкалы
-const RES = [['psyche', 'Кукуха'], ['energy', 'Энергия'], ['boss', 'Босс'], ['colleagues', 'Коллеги']];
-$('tubes').innerHTML = RES.map(([k, n]) => `<div class="tw" data-k="${k}"><div class="tube"><div class="fill" id="f-${k}"></div></div><span class="lbl">${n}</span><span class="pct" id="p-${k}"></span><span class="zone" id="z-${k}"></span><span class="fnum" id="n-${k}"></span><span class="steam" id="s-${k}"></span></div>`).join('');
-$('segs').innerHTML = '<i></i>'.repeat(15);
-const CARDS = [
-  { who: 'Босс', face: { skin: 1, hair: 'short', hairC: '#55555f', shirt: '#26263f', tie: '#ff3b6b', bg: '#3a1020' }, glow: '#ff3bd4', text: 'Пятница, 17:55. «Есть минутка? Там ма-а-аленькая правка».', l: 'Я уже дома', r: 'Сделаю', side: 'r', mood: 'joy' },
-  { who: 'Роберт', face: { skin: 2, hair: 'afro', hairC: '#ff3bd4', shirt: '#d4ff3a', bow: true, bg: '#1a1a2e' }, glow: '#2de2e6', text: 'Роберт зовёт на корпоратив в стиле 80-х. Парик уже куплен. На вас.', l: 'Сослаться на дедлайн', r: 'Надеть парик', side: 'l', mood: 'sad' },
+// Ритм: 128 bpm, «дроп» в 2,1 с; все склейки — на долях (те же числа — в sound.py)
+const B = 60 / 128, D = 2.1, at = k => D + k * B, DUR = 18;
+const END = at(28.5);
+// Клипы: [папка, t0, t1, первый кадр, скорость, зум в начале, зум в конце, фокус x %, фокус y %, куски кадров — растягиваются на весь клип]
+const CLIPS = [
+  ['card', 0, at(0), 0, 0.2, 1.3, 1.22, 50, 30],
+  ['card', at(0), at(6), 0, 1.0, 1.1, 1.0, 50, 45, [[6, 37], [44, 93]]],  // без пустых кадров между карточками
+  ['danger', at(6), at(9), 2, 1.0, 1.3, 1.6, 50, 21],
+  ['hero', at(9), at(12), 0, 1.2, 1.3, 1.45, 50, 30],
+  ['hero', at(12), at(15), 50, 0, 1.5, 1.6, 30, 38],
+  ['moto', at(15), at(17.5), 0, 0.75, 1.4, 1.3, 64, 42],
+  ['flowers', at(17.5), at(19), 4, 1.0, 1.55, 1.45, 50, 42],
+  ['pet', at(19), at(20.5), 4, 1.0, 1.55, 1.45, 50, 42],
+  ['b13', at(20.5), at(21.5), 2, 1.0, 1.2, 1.1, 50, 58],
+  ['b22', at(21.5), at(22.5), 2, 1.0, 1.2, 1.1, 50, 58],
+  ['b1', at(22.5), at(23.5), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['b32', at(23.5), at(24.5), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['b11', at(24.5), at(25.5), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['store', at(25.5), at(26.5), 4, 1.0, 1.2, 1.1, 50, 35],
+  ['feed', at(26.5), at(27.5), 6, 1.0, 1.2, 1.1, 50, 30],
+  ['board', at(27.5), at(28.5), 6, 1.0, 1.2, 1.1, 50, 35],
 ];
-let cardShown = -1;
-function showCard(i) {
-  if (cardShown === i) return; cardShown = i; const c = CARDS[i];
-  $('card').style.setProperty('--glow', c.glow); $('card').style.setProperty('--glows', c.glow + '55');
-  $('card').innerHTML = `<div class="head"><span class="face">${faceSvg(c.face, 'neutral')}</span><span class="who">${c.who}</span></div><div class="ctext">${c.text}</div><div class="stamp ${c.side}">${c.side === 'r' ? c.r : c.l}</div>`;
-  $('ans').children[0].textContent = '← ' + c.l; $('ans').children[1].textContent = c.r + ' →';
+const FRAMES = { card: 110, danger: 50, hero: 54, moto: 45, flowers: 32, pet: 32, b13: 22, b22: 22, b1: 22, b32: 22, b11: 22, store: 26, feed: 30, board: 30 };
+// Подписи: [t0, t1, html, размер, y (доля высоты кадра), наклон °]
+const CAPS = [
+  [at(0) + .05, at(3), '<span><i class="l">Свайпай</i><br>решения</span>', 'big', .82, -3],
+  [at(3), at(6), '<span>Держи <i class="c">4 шкалы</i><br>в балансе</span>', 'mid', .82, 2],
+  [at(6) + .05, at(9), '<span><i class="r">0% или 100%</i><br>— конец недели!</span>', 'mid', .70, -2],
+  [at(9) + .05, at(12), '<span>Твой <i class="m">3D&#8209;герой</i></span>', 'mid', .82, -2],
+  [at(15) + .05, at(17.5), '<span>Покупай <i class="l">мечты</i></span>', 'big', .82, -3],
+  [at(17.5), at(19), '<span><i class="m">Цветы</i>, мото, лодки</span>', 'mid', .82, 2],
+  [at(19), at(20.5), '<span><i class="c">Питомцы</i> и дети</span>', 'mid', .82, -2],
+  [at(25.5), at(26.5), '<span><i class="l">Магазин</i></span>', 'big', .86, -2],
+  [at(26.5), at(27.5), '<span>Лента и <i class="m">подарки</i></span>', 'mid', .86, 2],
+  [at(27.5), at(28.5), '<span>Рейтинг<br><i class="c">недели дня</i><i class="sub">офисы с коллегами</i></span>', 'mid', .83, -2],
+];
+const FIFTY = [[at(20.5), 'найди отличия'], [at(21.5), 'аркады'], [at(22.5), 'шашки'], [at(23.5), 'слова'], [at(24.5), 'пазлы']];
+$('caps').innerHTML = CAPS.map(([, , h, c], i) => `<div class="cap ${c}" id="cap${i}">${h}</div>`).join('');
+const src = (name, i) => `${CAP}/${name}/${String(Math.max(0, Math.min(FRAMES[name] - 1, i))).padStart(4, '0')}.jpg`;
+// финальный веер из кадров игры: [папка, кадр, наклон, x, верх/низ]
+const FAN = [['card', 60, -14, -150, 0], ['moto', 10, 12, 150, 0], ['board', 20, -9, -125, 1], ['b13', 15, 10, 135, 1]];
+$('fan').innerHTML = FAN.map(([n, i]) => `<img src="${src(n, i)}" alt="">`).join('');
+let lastSrc = '';
+async function setVid(s) {
+  if (s === lastSrc) return; lastSrc = s;
+  const v = $('vid'); v.src = s; try { await v.decode(); } catch {}
 }
-function setMood(m) { const g = document.querySelector('#card .expr'); if (g && g.dataset.m !== m) { g.dataset.m = m; g.innerHTML = exprSvg(m); } }
-function tubes(vals, nums, numK) {
-  for (const [k] of RES) {
-    const v = Math.round(vals[k]);
-    $('f-' + k).style.height = `calc(${v}% - 10px)`; $('p-' + k).textContent = v + '%';
-    $('z-' + k).textContent = v >= 80 ? 'ПЕРЕГРЕВ' : v <= 20 ? 'НА ГРАНИ' : '';
-    $('z-' + k).style.color = v >= 80 ? '#ffb03b' : '#ff3b6b';
-    const n = nums && nums[k]; const el = $('n-' + k);
-    if (n) { el.textContent = (n > 0 ? '+' : '−') + Math.abs(n); el.className = 'fnum ' + (n > 0 ? 'u' : 'd'); el.style.opacity = 1 - numK; el.style.transform = `translate(-50%, ${-numK * 50}px) scale(${1 + .3 * (1 - numK)})`; }
-    else el.style.opacity = 0;
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].filter(im => im.src).map(im => im.decode().catch(() => {}))]);
+
+async function frame(t) {
+  // кадр игры
+  const c = CLIPS.find(c => t >= c[1] && t < c[2]);
+  if (c) {
+    const [name, t0, t1, f0, sp, z0, z1, fx, fy, parts] = c, k = (t - t0) / (t1 - t0);
+    let fi = Math.round(f0 + (t - t0) * 30 * sp);
+    if (parts) { let x = k * parts.reduce((a, [p, q]) => a + q - p, 0); for (const [p, q] of parts) { if (x < q - p) { fi = Math.floor(p + x); break; } x -= q - p; fi = q - 1; } }
+    await setVid(src(name, fi));
+    const punch = 1 + .1 * Math.pow(1 - seg(t, t0, t0 + .18), 2);  // «удар» зумом на склейке
+    const v = $('vid');
+    v.style.transformOrigin = `${fx}% ${fy}%`;
+    v.style.transform = `scale(${lerp(z0, z1, ease(k)) * punch})`;
+    v.style.filter = t < at(0) && !(POSTER && WIDE) ? 'blur(3px)' : 'none';
   }
-}
-const A = { psyche: 55, energy: 65, boss: 50, colleagues: 60 };
-const D1 = { psyche: -15, energy: -20, boss: 25, colleagues: 0 }, D2 = { psyche: 15, energy: 5, boss: 0, colleagues: -15 };
-const add = (a, d, k) => Object.fromEntries(Object.keys(a).map(x => [x, a[x] + (d[x] || 0) * k]));
-// конфетти
-const conf = Array.from({ length: 140 }, () => ({ x: r() * 540, y: -r() * 400, vy: 3 + r() * 5, vx: (r() - .5) * 3, s: 5 + r() * 7, c: ['#ff3bd4', '#2de2e6', '#d4ff3a', '#b26bff', '#fff'][Math.floor(r() * 5)], a: r() * 6 }));
-function confetti(k) {
-  const cv = $('conf'), ctx = cv.getContext('2d'); ctx.clearRect(0, 0, 540, 960);
-  if (k <= 0) return;
-  for (const p of conf) { const f = k * 60; ctx.save(); ctx.translate(p.x + p.vx * f, p.y + p.vy * f * 1.6); ctx.rotate(p.a + f * .1); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); }
-}
-const op = (id, v) => { $(id).style.opacity = v; $(id).style.visibility = v > .001 ? 'visible' : 'hidden'; };
-// кадр по времени t (секунды); общая длина 15 с
-window.frame = t => {
-  // сцена 1: заголовок (0–2.4)
-  const s1 = seg(t, .2, 1.1), flick = t < 1.1 ? (Math.sin(t * 60) > -.2 ? 1 : .3) : 1;
-  op('title', t < 2.4 ? s1 * flick : 1 - seg(t, 2.4, 2.8));
-  $('title').style.transform = `scale(${lerp(.92, 1, ease(s1)) + seg(t, 2.4, 2.8) * .1})`;
-  // окна города загораются к вечеру
-  const lit = Math.floor(cws.length * (.15 + .55 * seg(t, 0, 12)));
-  cws.forEach((w, i) => w.classList.toggle('on', i < lit && t < 12.8));
-  // интерфейс (2.6–10.3)
-  op('ui', seg(t, 2.6, 3.0) * (1 - seg(t, 10.2, 10.5)));
-  // время и день
-  const days = ['ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА'];
-  let clock = '09:00', day = 0, step = 0;
-  if (t > 5.6) { clock = '13:00'; step = 1; } if (t > 7.2) { clock = '17:00'; step = 2; }
-  if (t > 7.6) { day = 1 + Math.min(3, Math.floor((t - 7.6) / .35)); clock = ['09:00', '13:00', '17:00'][Math.floor((t - 7.6) / .12) % 3]; step = 3 + Math.floor((t - 7.6) / .12) % 11; }
-  if (t > 9.0) { day = 4; clock = '17:55'; step = 14; }
-  $('clock').textContent = clock; $('day').textContent = days[day];
-  [...$('segs').children].forEach((s, i) => s.className = i < step ? 'd' : i === step ? 'n' : '');
-  // карточка 1: появляется, тянется вправо, улетает
-  const c1in = ease(seg(t, 2.8, 3.3)), drag1 = inout(seg(t, 3.6, 4.4)), fly1 = seg(t, 4.5, 4.9);
-  const c2in = ease(seg(t, 5.0, 5.5)), drag2 = inout(seg(t, 5.9, 6.6)), fly2 = seg(t, 6.7, 7.1);
-  let vals = A, nums = null, nk = 0;
-  if (t < 5.0) {
-    showCard(0);
-    const dx = drag1 * 110 + fly1 * 700;
-    $('card').style.transform = `translate(${dx}px, ${(1 - c1in) * 40}px) rotate(${dx / 16}deg)`; $('card').style.opacity = c1in * (1 - fly1);
-    document.querySelector('#card .stamp').style.opacity = drag1;
-    setMood(drag1 > .3 ? 'joy' : 'neutral');
-    if (t > 4.6) { const k = seg(t, 4.6, 5.3); vals = add(A, D1, ease(k)); nums = D1; nk = seg(t, 4.6, 5.6); }
-  } else {
-    showCard(1); const B = add(A, D1, 1);
-    const dx = -drag2 * 110 - fly2 * 700;
-    $('card').style.transform = `translate(${dx}px, ${(1 - c2in) * 40}px) rotate(${dx / 16}deg)`; $('card').style.opacity = c2in * (1 - fly2) * (1 - seg(t, 7.3, 7.6));
-    document.querySelector('#card .stamp').style.opacity = drag2;
-    setMood(drag2 > .3 ? 'sad' : 'neutral');
-    vals = B;
-    if (t > 6.8) { vals = add(B, D2, ease(seg(t, 6.8, 7.4))); nums = D2; nk = seg(t, 6.8, 7.8); }
-    if (t > 7.6) { const k = seg(t, 7.6, 9.0); vals = { psyche: 55 + Math.sin(t * 9) * 18, energy: 50 + Math.cos(t * 7) * 22, boss: 75 + Math.sin(t * 5) * 10, colleagues: 45 + Math.cos(t * 8) * 15 }; }
-    if (t > 9.0) vals = { psyche: 48, energy: 30, boss: lerp(84, 100, ease(seg(t, 9.6, 10.2))), colleagues: 52 };
+  $('phone').style.opacity = t >= END ? 0 : 1;
+  $('vidDim').style.opacity = t < at(0) ? (POSTER && WIDE ? .5 : .6) : (t >= at(12) && t < at(15)) ? .72 : 0;
+  if (WIDE) $('phone').style.transform = `rotate(${-3 + Math.sin(t * .8) * .6}deg)`;
+  // белая вспышка на склейках
+  let fl = 0;
+  for (const cc of CLIPS) if (t >= cc[1] && cc[1] > 0) fl = Math.max(fl, .35 * (1 - seg(t, cc[1], cc[1] + .12)));
+  if (t >= at(0)) fl = Math.max(fl, .55 * (1 - seg(t, at(0), at(0) + .22)));
+  if (t >= END) fl = Math.max(fl, .55 * (1 - seg(t, END, END + .25)));
+  $('flash').style.opacity = fl;
+  // крючок: «Доживёшь до пятницы?» и часы 09:00 → 18:00
+  const hk = $('hook');
+  hk.style.opacity = t < at(0) ? 1 : 0;
+  if (t < at(0)) {
+    const w1 = hk.querySelector('.w1'), w2 = hk.querySelector('.w2'), ck = $('hookClk');
+    const a1 = seg(t, .02, .32), a2 = seg(t, .42, .72), a3 = seg(t, .8, 1.0);
+    w1.style.transform = `scale(${lerp(2.6, 1, back(a1))})`; w1.style.opacity = a1 > 0 ? 1 : 0;
+    w2.style.transform = `scale(${lerp(2.6, 1, back(a2))}) rotate(${-3 * a2}deg)`; w2.style.opacity = a2 > 0 ? 1 : 0;
+    ck.style.opacity = a3; ck.style.transform = `translateY(${(1 - ease(a3)) * 30}px)`;
+    const m = Math.min(18 * 60, Math.floor(lerp(9 * 60, 18 * 60, Math.pow(seg(t, .9, 1.9), 1.7))));
+    ck.textContent = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+    ck.classList.toggle('hot', m >= 17 * 60);
+    const shake = t > 1.85 && !POSTER ? Math.sin(t * 90) * 5 : 0;
+    hk.style.transform = `translateX(${shake}px) scale(${1 + .04 * seg(t, 1.5, 2.1)})`;
   }
-  tubes(vals, nums, nk);
-  op('ans', 1);
-  // пар над Боссом в перегреве
-  const boil = t > 9.0 && t < 10.4 ? 1 : 0;
-  ['psyche', 'energy', 'boss', 'colleagues'].forEach(k => { const s = $('s-' + k); const on = k === 'boss' && boil; s.style.opacity = on ? .5 + .5 * Math.sin(t * 20) : 0; s.style.transform = `translateY(${on ? -((t * 40) % 20) : 0}px) scale(${1 + ((t * 2) % 1)})`; });
-  // текстовые вставки поверх
-  const beats = [[7.7, 8.5, '15 решений', 'с понедельника по пятницу'], [8.5, 9.3, '4 шкалы', 'держите их в балансе'], [9.3, 10.4, '0% — конец', 'и 100% — тоже']];
-  const b = beats.find(([a, z]) => t >= a && t < z);
-  op('dim', b ? .55 : 0);
-  if (b) { $('beat').innerHTML = `<b>${b[2]}</b><i>${b[3]}</i>`; const k = seg(t, b[0], b[0] + .2); op('beat', k * (1 - seg(t, b[1] - .12, b[1]))); $('beat').style.transform = `scale(${lerp(1.25, 1, ease(k))})`; } else op('beat', 0);
-  // вспышка перегрева
-  const fl = seg(t, 10.05, 10.2) * (1 - seg(t, 10.2, 10.6));
-  $('flash').style.background = `radial-gradient(circle at 50% 30%, rgba(255,90,40,${.2 * fl}), rgba(255,40,60,${.6 * fl}))`;
-  // финал: пятница 17:59 → 18:00, двери, неделя пережита (10.5–13.2)
-  const fin = t >= 10.5 && t < 13.4;
-  op('big', fin ? seg(t, 10.5, 10.8) * (1 - seg(t, 13.0, 13.4)) : 0);
-  $('big').querySelector('.t').textContent = t < 11.4 ? '17:59' : '18:00';
-  $('big').querySelector('.t').style.transform = t >= 11.4 && t < 11.6 ? `perspective(400px) rotateX(${(1 - seg(t, 11.4, 11.6)) * -90}deg)` : '';
-  op($('big').querySelector('.s').id || 'bigs', 1);
-  $('big').querySelector('.s').style.opacity = seg(t, 11.7, 12.0);
-  const doorsIn = seg(t, 10.4, 10.7), doorsOpen = inout(seg(t, 11.5, 12.4));
-  op('doorL', fin ? doorsIn : 0); op('doorR', fin ? doorsIn : 0);
-  $('doorL').style.transform = `translateX(${-doorsOpen * 102}%)`; $('doorR').style.transform = `translateX(${doorsOpen * 102}%)`;
-  confetti(t > 11.7 && t < 13.6 ? seg(t, 11.7, 13.6) : 0);
-  // концовка (13.2–15)
-  const e = seg(t, 13.2, 13.7); op('end', e);
-  $('end').style.transform = `scale(${lerp(.94, 1, ease(e))})`;
-  $('end').querySelector('.url').style.transform = `scale(${1 + .04 * Math.sin(t * 6) * seg(t, 13.8, 14.2)})`;
-};
-// у #big .s нет id — держим видимым через стиль
-document.querySelector('#big .s').id = 'bigs';
-window.ready = document.fonts.ready.then(() => true);
-frame(0);
+  // подписи
+  CAPS.forEach(([t0, t1, , cls, y, rot], i) => {
+    const e = $('cap' + i), on = t >= t0 && t < t1;
+    if (!on) { e.style.opacity = 0; return; }
+    const a = seg(t, t0, t0 + .22), out = seg(t, t1 - .1, t1);
+    e.style.top = (WIDE ? .5 : y) * SH + 'px';
+    e.style.transform = `translateY(-50%) scale(${lerp(1.8, 1, back(a)) * (1 - .15 * out)}) rotate(${rot * (1 - a * .4)}deg)`;
+    e.style.opacity = 1 - out;
+  });
+  // «50 мини-игр»
+  const fOn = t >= at(20.5) && t < at(25.5), fi = $('fifty');
+  fi.style.opacity = fOn ? 1 : 0;
+  if (fOn) {
+    const a = seg(t, at(20.5), at(20.5) + .25), sub = [...FIFTY].reverse().find(f => t >= f[0]);
+    fi.querySelector('b').style.transform = `scale(${lerp(2, 1, back(a)) * (1 + .07 * Math.max(0, 1 - (t - sub[0]) / .15))}) rotate(-2deg)`;
+    $('fiftySub').textContent = sub[1];
+    $('fiftySub').style.transform = `scale(${lerp(1.5, 1, ease(seg(t, sub[0], sub[0] + .15)))})`;
+  }
+  // карьера: 3 уровня
+  const cOn = t >= at(12) && t < at(15), ca = $('career');
+  ca.style.opacity = cOn ? 1 - seg(t, at(15) - .1, at(15)) : 0;
+  if (cOn) {
+    ca.querySelector('h2').style.transform = `scale(${lerp(1.9, 1, back(seg(t, at(12), at(12) + .25)))})`;
+    ca.querySelector('.x').style.opacity = seg(t, at(12) + .15, at(12) + .35);
+    ca.querySelectorAll('.lv').forEach((e, i) => { const a = seg(t, at(12) + .3 + i * B * .8, at(12) + .55 + i * B * .8); e.style.opacity = a; e.style.transform = `translateX(${(1 - back(a)) * (i % 2 ? 320 : -320)}px)`; });
+  }
+  // опасность: красная пульсация в такт
+  $('vign').style.opacity = t >= at(6) && t < at(9) ? .45 + .55 * Math.abs(Math.cos((t - at(6)) * Math.PI / B)) : 0;
+  // финальная карточка
+  const eOn = t >= END, en = $('end');
+  en.style.opacity = eOn ? 1 : 0; $('fan').style.opacity = eOn ? 1 : 0;
+  if (eOn) {
+    const e = t - END;
+    en.querySelector('.logo').style.transform = `scale(${lerp(2.3, 1, back(seg(e, 0, .35))) * (1 + .025 * Math.abs(Math.sin(e * Math.PI / B)))})`;
+    const fr = en.querySelector('.free'), fa = seg(e, .3, .55); fr.style.opacity = fa; fr.style.transform = `scale(${lerp(.4, 1, back(fa)) * (1 + .045 * (e > .6 ? Math.abs(Math.sin((e - .6) * Math.PI / B)) : 0))})`;
+    const ur = en.querySelector('.url'), ua = seg(e, .55, .8); ur.style.opacity = ua; ur.style.transform = `translateY(${(1 - ease(ua)) * 30}px)`;
+    en.querySelector('.tags').style.opacity = seg(e, .85, 1.15);
+    [...$('fan').children].forEach((im, i) => {
+      const [, , rot, dx, low] = FAN[i], a = ease(seg(e, .05 + i * .06, .5 + i * .06));
+      const x = SW / 2 - 95 + dx * (WIDE ? 2.6 : 1), y = WIDE ? (low ? 300 : -110) : (low ? 640 : -20);
+      im.style.left = x + 'px'; im.style.top = (y + (1 - a) * (low ? 400 : -400)) + 'px';
+      im.style.transform = `rotate(${rot + e * (i % 2 ? 1.5 : -1.5)}deg)`; im.style.opacity = .4 * a; im.style.filter = 'blur(1.5px)';
+    });
+  }
+  $('bar').style.width = (t / END * 100) + '%';
+  $('bar').style.opacity = eOn || POSTER ? 0 : 1;
+}
+window.frame = frame;
 </script>
 </body></html>

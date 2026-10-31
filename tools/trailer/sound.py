@@ -1,56 +1,110 @@
-# Звук заставки: синтвейв-бас и бочка 112 bpm, свайпы, щелчки, пар перегрева, звонок 18:00, финальный аккорд
+# Звук заставки (18 с, без чужой музыки — всё синтезируется): крючок с тиканьем часов и подъёмом,
+# «дроп» в 2,1 с — электро-бит 128 bpm (бочка, клэп, хэты, бас с «качелями», арпеджио), удары на склейках,
+# сирена на «опасности», свайпы, монетки на покупках, блипы в мини-играх, финальный аккорд.
+# Тайминг совпадает с trailer.html: B = 60/128, D = 2.1, at(k) = D + k·B.
+# Запуск: python3 tools/trailer/sound.py tools/trailer/sound.wav
 import numpy as np, wave, sys
-SR = 44100; DUR = 15.0; n = int(SR * DUR); t = np.arange(n) / SR
-out = np.zeros(n)
-def add(sig, at):
-    i = int(at * SR); j = min(n, i + len(sig)); out[i:j] += sig[:j - i]
-def env(L, a=.005, r=.2):
-    x = np.arange(int(L * SR)) / SR; return np.minimum(1, x / a) * np.exp(-x / r)
-beat = 60 / 112
-# бочка и хэт с 2.6 до 10.4 и с 13.2
-for k in range(80):
-    at = 2.6 + k * beat
-    if at > 10.4: break
-    L = .35; x = np.arange(int(L * SR)) / SR
-    add(np.sin(2 * np.pi * (50 + 90 * np.exp(-x * 30)) * x) * np.exp(-x * 9) * .55, at)
-    add(np.random.randn(int(.05 * SR)) * env(.05, .001, .015) * .12, at + beat / 2)
-# бас: арпеджио ля-минора
-notes = [55, 55, 65.4, 73.4, 55, 55, 82.4, 73.4]
-for k in range(64):
-    at = 2.6 + k * beat / 2
-    if at > 10.4: break
-    f = notes[k % 8]; L = beat / 2; x = np.arange(int(L * SR)) / SR
-    saw = 2 * (x * f % 1) - 1
-    add(saw * np.exp(-x * 5) * .16, at)
-# пэд с начала (неоновое «включение»)
-x = t[:int(2.6 * SR)]
-pad = sum(np.sin(2 * np.pi * f * x) for f in (220, 261.6, 329.6)) / 3 * np.minimum(1, x / 1.2) * .14
-add(pad, 0)
-# свайпы (шум с фильтром «вжух») и щелчок степлера
-def whoosh():
-    L = .35; x = np.arange(int(L * SR)) / SR; s = np.random.randn(len(x))
-    s = np.convolve(s, np.ones(12) / 12, 'same'); return s * np.sin(np.pi * x / L) * .35
-def click():
-    L = .06; x = np.arange(int(L * SR)) / SR; return (np.random.randn(len(x)) * .6 + np.sin(2 * np.pi * 1800 * x)) * np.exp(-x * 90) * .4
-for at in (4.4, 6.6): add(whoosh(), at); add(click(), at + .1)
-# всплывающие числа: «динь»
-for at in (4.65, 6.85):
-    L = .25; x = np.arange(int(L * SR)) / SR; add(np.sin(2 * np.pi * 1320 * x) * np.exp(-x * 14) * .18, at)
-# быстрые дни: тики
-for k in range(12): add(click() * .5, 7.6 + k * .12)
-# перегрев: шипение и удар
-L = 1.0; x = np.arange(int(L * SR)) / SR
-add(np.random.randn(len(x)) * np.minimum(1, x / .6) * .12, 9.2); add(np.sin(2 * np.pi * (60 + 200 * np.exp(-x * 8)) * x) * np.exp(-x * 4) * .5, 10.1)
-# 18:00 — звонок и открытие дверей
-for i, f in enumerate((1046.5, 1318.5, 1568)):
-    L = 1.2; x = np.arange(int(L * SR)) / SR; add(np.sin(2 * np.pi * f * x) * np.exp(-x * 3) * .16, 11.4 + i * .09)
-add(whoosh() * 1.4, 11.5)
-# финальный аккорд и пульс бочки на концовке
-x = t[:int(1.8 * SR)]
-add(sum(np.sin(2 * np.pi * f * x) for f in (220, 277.2, 329.6, 440)) / 4 * np.minimum(1, x / .05) * np.exp(-x * 1.2) * .3, 13.2)
-for k in range(4):
-    L = .35; x = np.arange(int(L * SR)) / SR; add(np.sin(2 * np.pi * (50 + 90 * np.exp(-x * 30)) * x) * np.exp(-x * 9) * .5, 13.2 + k * beat)
-out = out / max(1e-9, np.abs(out).max()) * .85
-out[-int(.4 * SR):] *= np.linspace(1, 0, int(.4 * SR))
-w = wave.open(sys.argv[1], 'wb'); w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((out * 32767).astype('<i2').tobytes()); w.close()
+SR = 44100; DUR = 18.0; n = int(SR * DUR)
+L = np.zeros(n); R = np.zeros(n)
+rng = np.random.default_rng(7)
+B = 60 / 128; D = 2.1
+at = lambda k: D + k * B
+END = at(28.5)
+
+def add(sig, t, pan=0.0, g=1.0):
+    i = int(t * SR); j = min(n, i + len(sig))
+    if i >= n or j <= i: return
+    s = sig[:j - i] * g
+    L[i:j] += s * (1 - max(0, pan)); R[i:j] += s * (1 + min(0, pan))
+def T(sec): return np.arange(int(sec * SR)) / SR
+def env(x, a, r): return np.minimum(1, x / a) * np.exp(-x / r)
+def lp(s, k):  # простой фильтр низких частот (скользящее среднее)
+    return np.convolve(s, np.ones(k) / k, 'same')
+def saw(f, x): return 2 * ((x * f) % 1) - 1
+def sq(f, x): return np.sign(np.sin(2 * np.pi * f * x))
+
+def kick(g=1.0):
+    x = T(.4); return np.sin(2 * np.pi * (45 * x + 110 / 28 * (1 - np.exp(-x * 28)))) * np.exp(-x * 7) * g
+def clap():
+    x = T(.25); s = rng.standard_normal(len(x)); s = s - lp(s, 6)
+    e = np.exp(-x * 25) + .6 * np.exp(-np.maximum(0, x - .012) * 30) * (x > .012) + .4 * np.exp(-np.maximum(0, x - .024) * 30) * (x > .024)
+    return s * e * .5
+def hat(open_=False):
+    x = T(.18 if open_ else .05); s = rng.standard_normal(len(x)); s = s - lp(s, 3)
+    return s * np.exp(-x * (18 if open_ else 70)) * .12
+def boom():  # удар-«бум» на склейках
+    x = T(1.2); return (np.sin(2 * np.pi * (38 * x + 160 / 9 * (1 - np.exp(-x * 9)))) * np.exp(-x * 2.8) * .9
+                        + lp(rng.standard_normal(len(x)), 4) * np.exp(-x * 12) * .25)
+def whoosh(L_=.32, up=True):
+    x = T(L_); s = rng.standard_normal(len(x)); k = 3 if up else 10
+    s = s - lp(s, k); return s * np.sin(np.pi * x / L_) ** 2 * .22
+def blip(f, L_=.09, g=.16):
+    x = T(L_); return sq(f, x) * env(x, .002, L_ / 3) * g
+def coin():
+    x = T(.35); return (np.sin(2 * np.pi * 1975 * x) * (x < .07) + np.sin(2 * np.pi * 2637 * x) * (x >= .07)) * np.exp(-x * 9) * .18
+
+# ---------- крючок 0–2,1 с: тиканье, подъём, два удара на словах ----------
+for k in range(14):
+    t = .05 + k * .14
+    x = T(.03); add(np.sin(2 * np.pi * (2400 if k % 2 else 1800) * x) * np.exp(-x * 160) * .35, t, .3 if k % 2 else -.3)
+x = T(2.1)
+riser = lp(rng.standard_normal(len(x)), 2) * (x / 2.1) ** 2.2 * .35
+riser += saw(110 * 2 ** (x * 1.2), x) * (x / 2.1) ** 2 * .08
+add(riser, 0)
+add(boom() * .9, .02); add(boom() * .8, .42)
+add(blip(880, .12, .12), .8); add(blip(1320, .12, .12), .95)
+# «стоп»-хлопок перед дропом
+add(clap() * 1.2, at(0) - B / 2)
+
+# ---------- основной бит с дропа до финала ----------
+bass_notes = [55.0, 55.0, 65.41, 73.42, 55.0, 82.41, 73.42, 65.41]   # ля-минор
+arp = [440, 523.25, 659.25, 783.99, 659.25, 523.25, 587.33, 659.25]
+k = 0
+while at(k / 4) < END:
+    t = at(k / 4); beat = k // 4; sub = k % 4
+    if sub == 0:
+        add(kick(), t)
+        if beat % 2 == 1: add(clap(), t, 0)
+    add(hat(open_=(sub == 2)), t, .35 if sub % 2 else -.35, .9 if sub == 2 else .6)
+    # бас: восьмые с «качелями» (тише сразу после бочки)
+    if sub in (0, 2):
+        f = bass_notes[(k // 2) % 8]; x = T(B / 2)
+        s = lp(saw(f, x) + .5 * saw(f * 1.01, x), 6) * env(x, .004, .16)
+        add(s, t, 0, .3 if sub == 2 else .18)
+    # арпеджио — шестнадцатые, громче после 4-й доли
+    if beat >= 4:
+        f = arp[k % 8] * (2 if beat >= 20 else 1); x = T(B / 4)
+        add(sq(f, x) * env(x, .002, .05) * .045, t, -.5 if k % 2 else .5)
+    k += 1
+# удары и «вжух» на склейках
+for kk in [6, 9, 12, 15, 17.5, 19, 20.5, 21.5, 22.5, 23.5, 24.5, 25.5, 26.5, 27.5]:
+    add(whoosh(.28), at(kk) - .2, .4 if int(kk * 2) % 2 else -.4)
+for kk in [6, 9, 12, 15, 20.5, 25.5]: add(boom() * .55, at(kk))
+# свайпы карточек (кадры card: 34 и 88 → 1,13 и 2,93 с от at(0))
+for t in (at(0) + 0.8, at(0) + 2.6): add(whoosh(.3), t, .6); add(blip(1600, .05, .1), t + .25)
+# опасность: сирена
+x = T(3 * B); add(np.sin(2 * np.pi * (700 + 250 * np.sin(2 * np.pi * 2.2 * x)) * x) * .07 * np.minimum(1, x / .1) * np.minimum(1, (3 * B - x) / .1), at(6))
+# герой и карьера: «звёздочки», три ступени карьеры
+for i, f in enumerate((523.25, 659.25, 783.99)): add(blip(f, .25, .12), at(12) + .3 + i * B * .8)
+add(blip(1046.5, .4, .08), at(9) + .1)
+# покупки: монетки
+for kk in (15.2, 17.6, 19.1): add(coin(), at(kk))
+# мини-игры: блипы на каждой склейке
+for i, kk in enumerate((20.5, 21.5, 22.5, 23.5, 24.5)): add(blip([660, 784, 880, 988, 1175][i], .1, .13), at(kk) + .05)
+# соцсети: «дзынь» уведомлений
+for kk in (25.6, 26.6, 27.6): add(np.sin(2 * np.pi * 1568 * T(.3)) * np.exp(-T(.3) * 12) * .14, at(kk))
+
+# ---------- финал: удар, аккорд, отзвук ----------
+add(boom() * 1.1, END); add(kick(1.2), END)
+x = T(DUR - END)
+chord = sum(lp(saw(f, x), 8) + np.sin(2 * np.pi * f * x) for f in (220, 261.63, 329.63, 440, 523.25)) / 10
+add(chord * np.minimum(1, x / .02) * np.exp(-x * .7) * .55, END)
+for i, f in enumerate((1046.5, 1318.5, 1568, 2093)): add(np.sin(2 * np.pi * f * T(1.2)) * np.exp(-T(1.2) * 3) * .1, END + .3 + i * .09, .3 * (i % 2 * 2 - 1))
+for kk in range(4): add(kick(.6), END + B * (kk + 1)) if kk < 3 else None
+
+out = np.stack([L, R], 1)
+out = np.tanh(out / np.abs(out).max() * 1.6) / np.tanh(1.6) * .9   # мягкий лимитер
+fade = int(.5 * SR); out[-fade:] *= np.linspace(1, 0, fade)[:, None]
+w = wave.open(sys.argv[1], 'wb'); w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
+w.writeframes((out * 32767).astype('<i2').tobytes()); w.close()
 print('sound ok')
