@@ -129,7 +129,7 @@ document.addEventListener('click', e => {
   e.preventDefault(); productPay(b);
 });
 // Покупка за рубли товара с фиксированной ценой (цену и у.е. считает сервер, robokassa-pay): starter, coffee
-const PRODUCT_RUB = { starter: STARTER.rub, coffee: 100 }, PRODUCT_UE = { starter: STARTER.ue, coffee: 10 };
+const PRODUCT_RUB = { starter: STARTER.rub, coffee: 100, noads: 99 }, PRODUCT_UE = { starter: STARTER.ue, coffee: 10, noads: 0 };
 async function productPay(btn) {
   const product = btn.dataset.product, card = btn.closest('.shp-pay'), box = btn.closest('.modal-box') || document;
   const agree = card?.querySelector('input[type=checkbox]') || box.querySelector('#tuAgree'), err = card?.querySelector('.join-err') || box.querySelector('#tuErr');
@@ -161,7 +161,7 @@ async function productPay(btn) {
 const coffeeBadge = () => (prefs.coffeeN || 0) > 0 ? `<span class="shp-maecenas" title="${L('Купил кофе разработчикам', 'Bought the devs a coffee')}">☕ ${L('Меценат', 'Patron')}${prefs.coffeeN > 1 ? ` ×${prefs.coffeeN}` : ''}</span>` : '';
 const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM ? '' : `<div class="shp-coffee shp-pay">
   <b>☕ ${L('Кофе разработчикам', 'A coffee for the devs')} — 100 ₽</b>
-  <p>${L('Игру делает один человек по вечерам. Купите ему кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Buy him a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
+  <p>${L('Игру делает один человек по вечерам. Угостите разработчика кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Treat the developer to a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
   ${coffeeBadge() ? `<p class="shp-ok">${L('Ваш значок:', 'Your badge:')} ${coffeeBadge()} — ${L('спасибо!', 'thank you!')}</p>` : ''}
   <label class="tu-agree"><input type="checkbox" id="${id}CofAgree"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>
   <p class="join-err" role="alert"></p>
@@ -179,6 +179,7 @@ function coffeeThanks() {
 
 // Зачисление (js/topup.js, claimPaid): у.е. уже на счёте, здесь — подарки. Повторное зачисление подарки не дублирует
 function shopGrantProduct(product) {
+  if (product === 'noads') { noAdsAdd(30); track('noads_rub'); toast(L('🚫 30 дней без рекламы — спасибо!', '🚫 30 ad-free days — thank you!')); return; }
   if (product === 'coffee') { prefs.coffeeN = (prefs.coffeeN || 0) + 1; savePrefs(); track('coffee_buy', { detail: String(prefs.coffeeN) }); setTimeout(coffeeThanks, 900); return; }
   if (product !== 'starter' || prefs.starterDone) { prefs.starterDone = prefs.starterDone || product === 'starter'; savePrefs(); return; }
   prefs.starterDone = true;
@@ -396,7 +397,12 @@ function openStore(section = '', after) {
       <section id="shpNoads" class="shp-sec"><h3 class="hs-h">🚫 ${L('Без рекламы', 'Ad-free')}</h3>
         <p class="field-note">${noAdsOn() ? `<b class="shp-ok">✓ ${prefs.noAdsForever ? L('Реклама отключена навсегда', 'Ads are off forever') : L(`Реклама отключена: ещё ${pl(noAdsDays(), 'день', 'дня', 'дней', 'day', 'days')}`, `Ads are off: ${pl(noAdsDays(), '', '', '', 'more day', 'more days')}`)}</b> · ` : ''}${L('Ни обязательной рекламы между неделями и после разминок, ни всплывающих предложений. «Реклама за награду» остаётся — только если сами нажмёте.', 'No ads between weeks or after warm-ups and no ad pop-ups. Rewarded ads stay — only when you tap them.')}</p>
         ${prefs.noAdsForever ? '' : rows([['d30', '📅', L('30 дней без рекламы', '30 days ad-free'), NOADS.d30.price, L('продлевает текущий срок', 'extends your current period')], ['forever', '♾️', L('Навсегда', 'Forever'), NOADS.forever.price, L('один раз — и больше никакой рекламы', 'pay once — no more ads, ever')]],
-          ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}</section>
+          ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}}
+        ${prefs.noAdsForever || window.VDP_PLATFORM ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
+          <p>${L('Оплата картой или СБП, без трат у.е. Срок складывается с текущим.', 'Pay by card, no $ spent. Adds to your current period.')}</p>
+          <label class="tu-agree"><input type="checkbox"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>
+          <p class="join-err" role="alert"></p>
+          <button class="btn-main" type="button" data-product="noads">${L('Купить за 99 ₽', 'Buy for 99 ₽')}</button></div>`}</section>
       <section id="shpBoost" class="shp-sec"><h3 class="hs-h">⚡ ${L('Бустеры', 'Boosters')}</h3>
         ${rows([['x2', '⚡', L('x2 у.е. за неделю', 'x2 $ for a week'), X2_PRICE, (prefs.x2Weeks || 0) ? L(`зарплата недели — ещё раз · запас: ${prefs.x2Weeks} нед.`, `this week’s pay again · stocked: ${prefs.x2Weeks} wk`) : L('зарплата ближайшей недели — ещё раз', 'your next week’s pay, once more')],
           ['hints', '💡', L(`${HINTS_PACK.n} подсказок`, `${HINTS_PACK.n} hints`), HINTS_PACK.price, L(`вместо ${money(HINTS_PACK.n * HINT_BASE)}${prefs.freeHints ? ` · есть: ${prefs.freeHints}` : ''}`, `instead of ${money(HINTS_PACK.n * HINT_BASE)}${prefs.freeHints ? ` · you have ${prefs.freeHints}` : ''}`)]],

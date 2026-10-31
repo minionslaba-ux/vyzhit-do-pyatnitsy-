@@ -17,6 +17,8 @@ const PRODUCTS: Record<string, { ue: number; rub: number; title: string }> = {
   starter: { ue: 30, rub: 149, title: 'Стартовый набор «Выжить до пятницы»: 30 у.е. и подарки' },
   // цифровой товар (не пожертвование): значок «☕ Меценат» в профиле + 10 у.е.; можно покупать сколько угодно раз
   coffee: { ue: 10, rub: 100, title: 'Кофе разработчикам: значок «Меценат» и 10 у.е. в «Выжить до пятницы»' },
+  // 30 дней без обязательной рекламы; можно продлевать
+  noads: { ue: 0, rub: 99, title: '«Выжить до пятницы»: 30 дней без рекламы' },
 };
 const FIRST_BONUS = 0.5;  // +50% у.е. к первому оплаченному пополнению
 
@@ -29,7 +31,7 @@ Deno.serve(async req => {
     const prod = typeof product === 'string' && product ? PRODUCTS[product] : null;
     if (product && !prod) return json({ error: 'bad_product' }, 400);
     const n = prod ? prod.ue : Math.floor(Number(ue));
-    if (!(n >= 1 && n <= 500)) return json({ error: 'bad_amount' }, 400);
+    if (!(n >= (prod ? 0 : 1) && n <= 500)) return json({ error: 'bad_amount' }, 400);
     const url = Deno.env.get('SUPABASE_URL')!, db = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false, autoRefreshToken: false } });
     if (typeof access_token !== 'string' || !access_token) return json({ error: 'no_session' }, 401);
     const { data: { user } } = await db.auth.getUser(access_token);
