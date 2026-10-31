@@ -769,6 +769,7 @@ $('gExit').onclick = () => {
 // Предлагается сама, когда шкала у края (не чаще раза в игровой день), и всегда — по кнопке «Подсказка» у счёта
 const HINT_BASE = 2;
 const hintPriceNow = () => Math.max(1, HINT_BASE - (typeof rankPerk === 'function' ? rankPerk('hint') : 0));
+const hintFree = () => (prefs.freeHints || 0) > 0;  // бесплатные подсказки из магазина (js/shop.js): Стартовый набор, сезон, наборы
 // Чем дальше самая слабая шкала от 0 и 100 после ответа, тем ответ безопаснее; конец недели — хуже всего
 function hintScore(side) {
   const { eff } = effectsOf(side), after = RES.map(r => ({ k: r.k, v: clamp(S.res[r.k] + (eff[r.k] || 0)) }));
@@ -785,7 +786,7 @@ function cardTools() {
   const el = $('ctools'); if (!el) return;
   const got = S.hintStep === S.step;
   el.className = 'card-tools';
-  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : money(hintPriceNow())}</b></button>
+  el.innerHTML = `<button class="ct-btn ct-hint${got ? ' done' : ''}" type="button" id="ctHint" ${got ? 'disabled' : ''}>💡 ${L('Подсказка', 'Hint')} <b>${got ? '✓' : hintFree() ? `🎟️×${prefs.freeHints}` : money(hintPriceNow())}</b></button>
     <button class="ct-btn ct-shop" type="button" id="ctShop">🛒 ${L('Магазин', 'Shop')} <b id="ctBank">${money(C.bank)}</b></button>`;
   $('ctHint').onclick = () => hintBar();
   $('ctShop').onclick = openShop;
@@ -794,16 +795,17 @@ function hintBar() {
   const el = $('ctools');
   if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
-  const can = C.bank >= hintPriceNow();
+  const can = hintFree() || C.bank >= hintPriceNow();
   el.className = 'card-tools ask';
-  el.innerHTML = (can ? `<button class="ct-btn ct-hint" type="button" id="hbYes">💡 ${L('Получить', 'Get it')} <b>${money(hintPriceNow())}</b></button>`
+  el.innerHTML = (can ? `<button class="ct-btn ct-hint" type="button" id="hbYes">💡 ${L('Получить', 'Get it')} <b>${hintFree() ? L(`🎟️ бесплатно · ${prefs.freeHints}`, `🎟️ free · ${prefs.freeHints}`) : money(hintPriceNow())}</b></button>`
     : `<button class="ct-btn ct-hint" type="button" id="hbYes" data-topup="${lackOf(hintPriceNow())}" data-topup-back="tools" data-topup-why="${esc(L(`Подсказка стоит ${money(hintPriceNow())} · на счёте ${money(C.bank)}`, `A hint costs ${money(hintPriceNow())} · you have ${money(C.bank)}`))}">💰 ${L('Пополнить', 'Top up')} <b>${L(`не хватает ${lackOf(hintPriceNow())}`, `$${lackOf(hintPriceNow())} short`)}</b></button>`) + `
     <button class="ct-btn ct-no" type="button" id="hbNo">${L('Отказаться', 'No thanks')}</button>`;
   FX.pulse(el, 'on', 500);
   $('hbNo').onclick = cardTools;
   $('hbYes').onclick = () => {
-    if (C.bank < hintPriceNow() || busy) return;
-    C.bank -= hintPriceNow(); C.spent = (C.spent || 0) + hintPriceNow(); saveCareer(); renderBars(); sfx.item(); bus.emit('hint');
+    if ((!hintFree() && C.bank < hintPriceNow()) || busy) return;
+    if (hintFree()) { prefs.freeHints--; store.set(KEY.prefs, prefs); } else { C.bank -= hintPriceNow(); C.spent = (C.spent || 0) + hintPriceNow(); saveCareer(); }
+    renderBars(); sfx.item(); bus.emit('hint');
     const best = hintAdvice();
     S.hintStep = S.step;
     el.className = 'card-tools said';

@@ -108,6 +108,19 @@ function buildPet(T, b) {
     u.bubbles = [];
     for (let i = 0; i < 5; i++) { const bb = add(sph(0.01, 8, 6), new T.MeshBasicMaterial({ color: '#e8f8ff', transparent: true, opacity: 0.7 }), 0.2, 0.36 + i * 0.07, 0.05); bb.castShadow = false; u.bubbles.push(bb); }
   }
+  // редкие породы из магазина (js/shop.js): корона и/или мерцающие искры вокруг
+  if (b.crown && u.head) {
+    const gold = phys(b.crown, 0.25, { metalness: 0.9, clearcoat: 1 }), top = u.kind === 'parrot' ? 0.07 : 0.12;
+    const cr = new T.Group(); cr.position.set(0, top, -0.01); u.head.add(cr);
+    add(new T.CylinderGeometry(0.05, 0.055, 0.035, 16, 1, true), gold, 0, 0, 0, cr);
+    for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2; add(new T.ConeGeometry(0.012, 0.04, 6), gold, Math.cos(a) * 0.05, 0.035, Math.sin(a) * 0.05, cr); }
+    add(sph(0.012, 10, 8), phys('#ff2e55', 0.2, { clearcoat: 1 }), 0, 0.005, 0.054, cr);
+  }
+  if (b.glow) {
+    const sp = new T.Group(); sp.position.y = u.kind === 'fish' ? 0.5 : u.kind === 'parrot' ? 0.6 : 0.35; g.add(sp); u.sparkle = sp;
+    const gm = new T.MeshBasicMaterial({ color: b.glow, transparent: true, opacity: 0.85 });
+    for (let i = 0; i < 7; i++) { const a = i / 7 * Math.PI * 2; const o = add(new T.OctahedronGeometry(0.018), gm, Math.cos(a) * 0.32, Math.sin(i * 1.7) * 0.08, Math.sin(a) * 0.32, sp); o.castShadow = false; }
+  }
   g.scale.setScalar(s);
   g.userData = u;
   return g;
@@ -156,6 +169,7 @@ async function petViewer(canvas, breed, { action = null, interactive = true, yaw
         u.bubbles.forEach((bb, i) => { bb.position.y = 0.36 + ((t * 0.15 + i * 0.07) % 0.34); });
       }
     }
+    if (u.sparkle) { u.sparkle.rotation.y = t * 0.8; u.sparkle.children.forEach((o, i) => { o.rotation.y = t * 3 + i; o.scale.setScalar(0.7 + Math.abs(Math.sin(t * 2 + i)) * 0.6); }); }
     const blink = now > nextBlink && now < nextBlink + 120; if (now > nextBlink + 120) nextBlink = now + 2500 + Math.random() * 2500;
     for (const e of u.eyes) e.scale.y = blink ? 0.1 : 1;
     renderer.render(scene, cam);
