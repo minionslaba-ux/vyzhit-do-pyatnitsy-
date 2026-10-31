@@ -13,130 +13,261 @@
 
   // ---------- общие помощники ----------
   const CSS = `
-.bgq4-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 8px 190px; box-sizing: border-box; }
-.bgq4-top { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; color: var(--text-2); }
-.bgq4-top b { color: var(--text); }
-.bgq4-bar { width: 100%; height: 6px; border-radius: 6px; background: rgba(var(--w-rgb),.08); overflow: hidden; }
-.bgq4-bar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--cyan), var(--magenta)); box-shadow: 0 0 10px rgba(var(--c-rgb),.7); transition: width .25s linear; }
-.bgq4-bar.low i { background: var(--down); box-shadow: 0 0 10px var(--down); }
-.bgq4-btn { font: inherit; font-weight: 800; font-size: 14px; color: var(--text); background: rgba(var(--w-rgb),.05); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 14px; cursor: pointer; }
-.bgq4-btn:active { transform: scale(.96); }
-.bgq4-btn.main { background: var(--magenta); color: var(--bg); border-color: var(--magenta); box-shadow: 0 0 18px rgba(var(--m-rgb),.55); }
-.bgq4-btn.cy { border-color: rgba(var(--c-rgb),.7); color: var(--cyan-l); }
+/* фиксированная палитра игр 31–40 (не зависит от цветовой темы) */
+.bgq4-wrap { --pk: #ff3bd4; --pk2: #b81a95; --tl: #2de2e6; --tl2: #0f97a0; --ok: #46d47c; --ok2: #1c9550; --mid: #ffb43a; --mid2: #d27a12; --bad: #ff4d6d; --bad2: #c4173b;
+  --ink: #2a1d10; --ez: cubic-bezier(.2,.8,.2,1);
+  width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 8px 190px; box-sizing: border-box; font-variant-numeric: tabular-nums; }
+.bgq4-top { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; font-weight: 800; font-size: 13px; color: var(--text-2); }
+.bgq4-top > span { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px; background: linear-gradient(180deg, rgba(var(--w-rgb),.10), rgba(var(--w-rgb),.03)); border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 3px 10px rgba(0,0,0,.25); white-space: nowrap; }
+.bgq4-top b { color: var(--text); font-variant-numeric: tabular-nums; }
+.bgq4-top b.bump { animation: bgq4-bump .35s var(--ez); display: inline-block; }
+@keyframes bgq4-bump { 40% { transform: scale(1.45); color: var(--up); } }
+.bgq4-bar { width: 100%; height: 8px; border-radius: 8px; background: rgba(0,0,0,.35); box-shadow: inset 0 1px 2px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.06); overflow: hidden; flex: none; }
+.bgq4-bar i { display: block; height: 100%; width: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--tl), #8f7bff 55%, var(--pk)); box-shadow: 0 0 10px rgba(45,226,230,.6), inset 0 1px 0 rgba(255,255,255,.45); transition: width .25s linear; }
+.bgq4-bar.low i { background: linear-gradient(90deg, var(--bad2), var(--bad)); box-shadow: 0 0 12px var(--bad); animation: bgq4-pulse .5s ease-in-out infinite alternate; }
+@keyframes bgq4-pulse { to { opacity: .55; } }
+.bgq4-btn { font: inherit; font-weight: 800; font-size: 14px; color: var(--text); background: linear-gradient(180deg, rgba(var(--w-rgb),.12), rgba(var(--w-rgb),.03)); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 3px 0 rgba(0,0,0,.35), 0 6px 14px rgba(0,0,0,.25); transition: transform .12s var(--ez), box-shadow .12s, filter .15s; }
+.bgq4-btn:hover { filter: brightness(1.12); }
+.bgq4-btn:active { transform: translateY(2px) scale(.96); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(0,0,0,.35); }
+.bgq4-btn.main { background: linear-gradient(180deg, #ff7ae4, var(--pk) 45%, var(--pk2)); color: #fff; border-color: rgba(255,255,255,.25); text-shadow: 0 1px 2px rgba(80,0,60,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 #7d0f64, 0 8px 22px rgba(255,59,212,.4); }
+.bgq4-btn.cy { background: linear-gradient(180deg, rgba(45,226,230,.22), rgba(45,226,230,.06)); border-color: rgba(45,226,230,.55); color: var(--cyan-l); }
 .bgq4-btn:disabled { opacity: .4; cursor: default; }
 .bgq4-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
-.bgq4-kb { width: 100%; display: flex; flex-direction: column; gap: 6px; }
+/* панель-рамка (безель) */
+.bgq4-board { position: relative; box-sizing: border-box; border-radius: 20px; padding: 10px; background: linear-gradient(160deg, #26203f, #13111f 70%); box-shadow: 0 12px 30px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(255,255,255,.06); }
+/* буквенные плитки — «слоновая кость» */
+.bg31-t, .bg34-l { --ty: 0px; font: inherit; font-weight: 900; color: var(--ink); border: 0; border-radius: 12px; cursor: pointer; padding: 0; display: grid; place-items: center;
+  background: linear-gradient(180deg, #fffdf7 0%, #f7ead0 52%, #ecd5a5 100%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.95), inset 0 -3px 0 rgba(170,125,60,.28), 0 4px 0 #a97f42, 0 8px 14px rgba(0,0,0,.45);
+  transform: translateY(var(--ty)); transition: transform .16s var(--ez), box-shadow .16s, opacity .2s; text-shadow: 0 1px 0 rgba(255,255,255,.7); }
+.bg31-t:active:not(:disabled), .bg34-l:active:not(:disabled) { --ty: 3px; box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(170,125,60,.25), 0 1px 0 #a97f42, 0 3px 6px rgba(0,0,0,.4); }
+.bg31-t:disabled, .bg34-scr .bg34-l:disabled { opacity: .22; --ty: 4px; box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 0 0 #a97f42; cursor: default; }
+/* клавиатура */
+.bgq4-kb { width: 100%; display: flex; flex-direction: column; gap: 7px; }
 .bgq4-kr { display: flex; gap: 4px; justify-content: center; }
-.bgq4-k { flex: 1 1 0; max-width: 44px; min-width: 0; height: 46px; padding: 0; border-radius: 8px; border: 1px solid var(--line); background: rgba(var(--w-rgb),.09); color: var(--text); font: inherit; font-weight: 800; font-size: 16px; cursor: pointer; }
-.bgq4-k.wide { flex: 1.6 1 0; max-width: 72px; font-size: 13px; }
-.bgq4-k:active { background: rgba(var(--c-rgb),.35); }
-.bgq4-k.s-c { background: var(--up); color: #10140a; border-color: var(--up); }
-.bgq4-k.s-p { background: #ff9d2e; color: #1a0e00; border-color: #ff9d2e; }
-.bgq4-k.s-a { background: rgba(var(--w-rgb),.02); color: rgba(var(--w-rgb),.28); border-color: transparent; }
-.bgq4-k.s-ok { background: rgba(var(--c-rgb),.25); border-color: var(--cyan); color: var(--cyan-l); }
-.bgq4-k.s-no { background: rgba(255,59,107,.15); color: rgba(var(--w-rgb),.3); border-color: transparent; }
+.bgq4-k { flex: 1 1 0; max-width: 44px; min-width: 0; height: 46px; padding: 0; border-radius: 9px; border: 0; color: #f4f2ff; font: inherit; font-weight: 800; font-size: 16px; cursor: pointer;
+  background: linear-gradient(180deg, #47426a, #2c2846); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 3px 0 #17142a, 0 5px 8px rgba(0,0,0,.35); transition: transform .1s, background .3s, box-shadow .1s, color .3s; }
+.bgq4-k.wide { flex: 1.6 1 0; max-width: 72px; font-size: 13px; background: linear-gradient(180deg, #5b4f8c, #3a3263); }
+.bgq4-k:active { transform: translateY(2px) scale(.96); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 0 #17142a; }
+.bgq4-k.s-c { background: linear-gradient(180deg, #6ce899, var(--ok) 50%, var(--ok2)); color: #fff; text-shadow: 0 1px 1px rgba(0,60,20,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 3px 0 #11643a, 0 5px 8px rgba(0,0,0,.35); }
+.bgq4-k.s-p { background: linear-gradient(180deg, #ffd27a, var(--mid) 50%, var(--mid2)); color: #3a2000; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 0 #8c4f05, 0 5px 8px rgba(0,0,0,.35); }
+.bgq4-k.s-a { background: #1b1928; color: #5f5b78; box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
+.bgq4-k.s-ok { background: linear-gradient(180deg, #6ff3f5, var(--tl) 50%, var(--tl2)); color: #032a2c; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 0 #0a5f66, 0 5px 8px rgba(0,0,0,.35); }
+.bgq4-k.s-no { background: #2a1520; color: rgba(255,120,150,.4); box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
+.bgq4-k:disabled { cursor: default; }
 .bgq4-shake { animation: bgq4-sh .35s; }
 @keyframes bgq4-sh { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.bgq4-note { color: var(--text-2); font-size: 13px; text-align: center; margin: 0; }
+.bgq4-note { color: var(--text-2); font-size: 12.5px; text-align: center; margin: 0; line-height: 1.35; }
 .bgq4-big { font-size: 15px; text-align: center; margin: 4px 0; }
+/* всплывающие «+1» и конфетти */
+.bgq4-float { position: fixed; z-index: 60; pointer-events: none; transform: translate(-50%, -50%); font: 900 20px var(--f-body, sans-serif); color: #fff; text-shadow: 0 2px 0 rgba(0,0,0,.35), 0 0 12px var(--fc, #46d47c); animation: bgq4-fl .9s var(--ez) forwards; white-space: nowrap; }
+@keyframes bgq4-fl { 0% { opacity: 0; transform: translate(-50%, -20%) scale(.6); } 20% { opacity: 1; transform: translate(-50%, -70%) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -190%) scale(1); } }
+.bgq4-cf { position: fixed; z-index: 60; pointer-events: none; width: 7px; height: 10px; border-radius: 2px; animation: bgq4-cf .9s cubic-bezier(.15,.7,.3,1) forwards; }
+@keyframes bgq4-cf { to { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--r)); } }
+/* меню: карточки вариантов */
+.bgq4-opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+.bgq4-opt { font: inherit; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 6px 12px; border-radius: 18px; cursor: pointer; border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(165deg, #2c2549, #161325); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 4px 0 #0b0a14, 0 10px 22px rgba(0,0,0,.4); transition: transform .14s var(--ez), box-shadow .14s, border-color .2s; }
+.bgq4-opt:hover { border-color: rgba(255,59,212,.6); }
+.bgq4-opt:active { transform: translateY(3px) scale(.97); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 1px 0 #0b0a14; }
+.bgq4-opt.rec { border-color: rgba(255,59,212,.7); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 4px 0 #0b0a14, 0 0 22px rgba(255,59,212,.35); }
+.bgq4-opt .ic { display: grid; gap: 2px; width: 46px; height: 46px; margin-bottom: 4px; }
+.bgq4-opt .ic i { border-radius: 2px; background: linear-gradient(180deg, #fff, #e6e2f5); box-shadow: 0 1px 0 rgba(0,0,0,.3); }
+.bgq4-opt .ic i:nth-child(3n+1) { background: linear-gradient(180deg, #ff8be6, var(--pk)); }
+.bgq4-opt b { font-size: 20px; color: #fff; }
+.bgq4-opt small { font-size: 11.5px; color: #b9b4d6; font-weight: 700; }
+.bgq4-opt em { font-style: normal; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: rgba(255,59,212,.2); color: #ff8be6; }
 
-.bg31-cur { min-height: 52px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 900; letter-spacing: 4px; color: var(--cyan-l); text-shadow: 0 0 14px rgba(var(--c-rgb),.7); }
-.bg31-tiles { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
-.bg31-t { width: min(13vw, 54px); height: min(13vw, 54px); border-radius: 12px; border: 2px solid rgba(var(--m-rgb),.7); background: rgba(var(--m-rgb),.12); color: var(--text); font: inherit; font-size: 24px; font-weight: 900; cursor: pointer; box-shadow: 0 0 12px rgba(var(--m-rgb),.3); }
-.bg31-t:disabled { opacity: .25; box-shadow: none; }
+/* 31 — офисные слова */
+.bg31-cur { min-height: 50px; display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
+.bg31-cur i { font-style: normal; width: 34px; height: 40px; border-radius: 8px; display: grid; place-items: center; font-size: 22px; font-weight: 900; color: #032a2c;
+  background: linear-gradient(180deg, #a8fbff, var(--tl) 60%, var(--tl2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 3px 0 #0a5f66, 0 0 14px rgba(45,226,230,.45); animation: bgq4-in .18s var(--ez); }
+.bg31-cur .ph { color: var(--text-2); font-size: 14px; font-weight: 700; opacity: .7; }
+@keyframes bgq4-in { from { transform: translateY(8px) scale(.6); opacity: 0; } }
+.bg31-board { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 14px 8px 16px; }
+.bg31-tiles { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
+.bg31-t { width: min(12vw, 52px); height: min(12vw, 52px); font-size: min(6.4vw, 26px); }
 .bg31-found { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 100%; }
-.bg31-found span { padding: 3px 8px; border-radius: 999px; background: rgba(var(--c-rgb),.12); border: 1px solid rgba(var(--c-rgb),.5); font-size: 13px; font-weight: 700; }
-.bg31-found span.x { border-color: rgba(212,255,58,.6); background: rgba(212,255,58,.1); }
+.bg31-found span { padding: 3px 9px; border-radius: 999px; background: linear-gradient(180deg, rgba(45,226,230,.22), rgba(45,226,230,.08)); border: 1px solid rgba(45,226,230,.5); color: var(--text); font-size: 13px; font-weight: 800; animation: bgq4-in .3s var(--ez); }
+.bg31-found span.x { border-color: rgba(255,180,58,.6); background: linear-gradient(180deg, rgba(255,180,58,.25), rgba(255,180,58,.08)); }
 
-.bg32-board { display: grid; gap: 6px; --t: min(56px, 15vw, calc((100vh - 400px) / 6.4)); }
+/* 32 — слово дня */
+.bg32-board { display: grid; gap: 6px; --t: min(54px, 14vw, calc((100vh - 420px) / 6.4)); perspective: 600px; padding: 10px; }
 .bg32-row { display: grid; grid-template-columns: repeat(5, var(--t)); gap: 6px; }
-.bg32-c { position: relative; width: var(--t); height: var(--t); border: 2px solid var(--line); border-radius: 8px; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--t) * .5); text-transform: uppercase; background: rgba(var(--w-rgb),.03); }
-.bg32-c.f { border-color: rgba(var(--w-rgb),.45); }
-.bg32-c.s-c { background: var(--up); border-color: var(--up); color: #10140a; }
-.bg32-c.s-p { background: #ff9d2e; border-color: #ff9d2e; color: #1a0e00; }
-.bg32-c.s-a { background: rgba(var(--w-rgb),.1); border-color: transparent; color: rgba(var(--w-rgb),.6); }
-.bg32-c.s-c::after, .bg32-c.s-p::after { position: absolute; top: 1px; right: 4px; font-size: 11px; line-height: 1.2; font-weight: 900; }
+.bg32-c { position: relative; width: var(--t); height: var(--t); border: 2px solid rgba(255,255,255,.12); border-radius: 9px; box-sizing: border-box; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--t) * .5); text-transform: uppercase; color: #f4f2ff;
+  background: linear-gradient(180deg, rgba(0,0,0,.3), rgba(255,255,255,.03)); box-shadow: inset 0 2px 4px rgba(0,0,0,.45); }
+.bg32-c.f { border-color: rgba(255,255,255,.55); background: linear-gradient(180deg, #3a3558, #26223d); box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 3px 8px rgba(0,0,0,.35); animation: bg32-type .14s var(--ez); }
+@keyframes bg32-type { 50% { transform: scale(1.1); } }
+.bg32-c.s-c, .bg32-c.s-p, .bg32-c.s-a { border-color: transparent; }
+.bg32-c.s-c { background: linear-gradient(180deg, #74eba2, var(--ok) 55%, var(--ok2)); color: #fff; text-shadow: 0 1px 2px rgba(0,70,30,.55); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 #11643a, 0 0 14px rgba(70,212,124,.35); }
+.bg32-c.s-p { background: linear-gradient(180deg, #ffd884, var(--mid) 55%, var(--mid2)); color: #3a2000; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 3px 0 #8c4f05; }
+.bg32-c.s-a { background: linear-gradient(180deg, #2c2a3f, #232134); color: rgba(255,255,255,.42); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 2px 0 #121019; }
+.bg32-c.s-c::after, .bg32-c.s-p::after { position: absolute; top: 1px; right: 4px; font-size: 10px; line-height: 1.2; font-weight: 900; opacity: .8; text-shadow: none; }
 .bg32-c.s-c::after { content: '✓'; }
 .bg32-c.s-p::after { content: '?'; }
-.bg32-c.pop { animation: bg32-pop .35s; }
-@keyframes bg32-pop { 50% { transform: scale(1.12) rotateX(60deg); } }
+.bg32-c.flip { animation: bg32-flip .5s ease-in-out both; }
+@keyframes bg32-flip { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
+.bg32-c.win { animation: bg32-win .6s var(--ez) both; }
+@keyframes bg32-win { 30% { transform: translateY(-14px); } 55% { transform: translateY(2px); } 75% { transform: translateY(-4px); } }
+.bg32-c.pop { animation: bg32-type .3s; }
 .bg32-leg { display: flex; gap: 10px; font-size: 11px; color: var(--text-2); flex-wrap: wrap; justify-content: center; }
-.bg32-leg i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 3px; font-style: normal; font-size: 9px; line-height: 12px; text-align: center; color: #111; font-weight: 900; }
+.bg32-leg i { display: inline-block; width: 13px; height: 13px; border-radius: 4px; vertical-align: -2px; margin-right: 4px; font-style: normal; font-size: 9px; line-height: 13px; text-align: center; color: #111; font-weight: 900; box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+.bg32-ans { display: inline-flex; gap: 4px; margin: 6px 0 2px; perspective: 500px; }
+.bg32-ans i { font-style: normal; width: 30px; height: 34px; border-radius: 7px; display: grid; place-items: center; font-weight: 900; font-size: 18px; color: #fff; background: linear-gradient(180deg, #74eba2, var(--ok) 55%, var(--ok2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 #11643a; animation: bg32-flip .5s ease-in-out both; }
+.bg32-cd { display: inline-block; padding: 2px 9px; border-radius: 999px; background: rgba(var(--w-rgb),.08); border: 1px solid var(--line); font-variant-numeric: tabular-nums; }
 
-.bg33-pick { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
-.bg33-pick button { min-width: 38px; padding: 6px 8px; font-size: 12px; }
-.bg33-pick button.on { border-color: var(--magenta); color: var(--magenta-l); box-shadow: 0 0 10px rgba(var(--m-rgb),.4); }
-.bg33-grid { display: grid; gap: 2px; touch-action: manipulation; }
+/* 33 — кроссворд */
+.bg33-pick { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.bg33-pick button { min-width: 34px; height: 30px; padding: 0 9px; font-size: 12px; border-radius: 999px; }
+.bg33-pick button.on { background: linear-gradient(180deg, #ff7ae4, var(--pk) 50%, var(--pk2)); color: #fff; border-color: rgba(255,255,255,.3); box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 0 #7d0f64, 0 0 14px rgba(255,59,212,.45); }
+.bg33-grid { display: grid; gap: 2px; touch-action: manipulation; padding: 8px; border-radius: 16px; background: linear-gradient(160deg, #26203f, #100e1b); box-shadow: 0 12px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(255,255,255,.06); }
 .bg33-c { position: relative; width: var(--cs); height: var(--cs); }
-.bg33-c.l { background: rgba(var(--w-rgb),.92); color: #0b0b14; border-radius: 4px; cursor: pointer; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--cs) * .52); }
-.bg33-c.l.w { background: #bff3ff; }
-.bg33-c.l.a { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
-.bg33-c.l.bad { color: var(--down); }
-.bg33-c.l.ok { background: var(--up); }
-.bg33-c small { position: absolute; top: 1px; left: 3px; font-size: calc(var(--cs) * .24); font-weight: 700; color: #333; }
-.bg33-clue { width: 100%; min-height: 44px; box-sizing: border-box; padding: 8px 10px; border-radius: 12px; background: rgba(var(--c-rgb),.1); border: 1.5px solid rgba(var(--c-rgb),.5); display: flex; gap: 8px; align-items: center; font-size: 14px; }
-.bg33-clue span { flex: 1; }
+.bg33-c.l { color: #1b1a2a; border-radius: 4px; cursor: pointer; display: grid; place-items: center; font-weight: 900; font-size: calc(var(--cs) * .52);
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.9), transparent 60%), linear-gradient(180deg, #fffdf5, #efe8d6); box-shadow: inset 0 -2px 0 rgba(120,100,60,.18), 0 1px 2px rgba(0,0,0,.4); transition: background .15s, transform .15s var(--ez); }
+.bg33-c.l.w { background: linear-gradient(180deg, #fff6c4, #ffe58a); }
+.bg33-c.l.a { background: linear-gradient(180deg, #ff9eea, #ff5adb); color: #fff; text-shadow: 0 1px 2px rgba(120,0,90,.5); box-shadow: 0 0 0 2px #fff, 0 0 16px rgba(255,59,212,.75); z-index: 1; transform: scale(1.06); }
+.bg33-c.l span { display: inline-block; }
+.bg33-c.l.bad { color: #d0103f; background: linear-gradient(180deg, #ffe1e7, #ffc2cf); }
+.bg33-c.l.ok { background: linear-gradient(180deg, #a6f5c3, #5fdc8e); color: #0d3d20; animation: bg32-win .6s var(--ez) both; animation-delay: var(--d, 0s); }
+.bg33-c small { position: absolute; top: 1px; left: 3px; font-size: calc(var(--cs) * .24); font-weight: 800; color: #6a5f80; line-height: 1; }
+.bg33-c.l.a small { color: #fff; }
+.bg33-clue { width: 100%; min-height: 44px; box-sizing: border-box; padding: 6px 8px; border-radius: 14px; background: linear-gradient(180deg, rgba(45,226,230,.16), rgba(45,226,230,.05)); border: 1px solid rgba(45,226,230,.45); display: flex; gap: 8px; align-items: center; font-size: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+.bg33-clue span { flex: 1; line-height: 1.25; }
+.bg33-clue span b { display: inline-block; padding: 1px 7px; margin-right: 3px; border-radius: 999px; background: linear-gradient(180deg, #ff7ae4, var(--pk2)); color: #fff; font-size: 12px; }
 .bg33-clue button { flex: none; padding: 4px 10px; }
+.bg33-ctl .bgq4-btn { padding: 7px 12px; font-size: 13px; }
 .bg33-list { width: 100%; font-size: 13px; color: var(--text-2); columns: 2; column-gap: 14px; }
 .bg33-list p { margin: 0 0 5px; break-inside: avoid; cursor: pointer; }
 .bg33-list p.done { text-decoration: line-through; opacity: .5; }
 .bg33-list h4 { margin: 0 0 4px; color: var(--text); font-size: 13px; }
+.bg33-wrap .bgq4-k { height: 40px; }
+.bg33-wrap { gap: 8px; }
 
+/* 34 — анаграммы */
+.bg34-board { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 8px 18px; }
 .bg34-scr, .bg34-ans { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; min-height: 50px; }
-.bg34-l { width: min(9vw, 44px); height: min(11vw, 50px); border-radius: 10px; font: inherit; font-weight: 900; font-size: 20px; cursor: pointer; display: grid; place-items: center; padding: 0; }
-.bg34-scr .bg34-l { border: 2px solid rgba(var(--m-rgb),.7); background: rgba(var(--m-rgb),.12); color: var(--text); }
-.bg34-scr .bg34-l:disabled { opacity: .15; }
-.bg34-ans .bg34-l { border: 2px dashed rgba(var(--c-rgb),.6); background: rgba(var(--c-rgb),.06); color: var(--cyan-l); }
-.bg34-ans.ok .bg34-l { border: 2px solid var(--up); color: var(--up); }
+.bg34-l { width: min(8.6vw, 44px); height: min(10.6vw, 50px); font-size: min(5.4vw, 22px); }
+.bg34-ans .bg34-l { background: linear-gradient(180deg, rgba(0,0,0,.4), rgba(255,255,255,.04)); box-shadow: inset 0 2px 5px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.08); color: var(--cyan-l); text-shadow: 0 0 10px rgba(45,226,230,.6); border-radius: 10px; }
+.bg34-ans .bg34-l.has { background: linear-gradient(180deg, #a8fbff, var(--tl) 60%, var(--tl2)); color: #032a2c; text-shadow: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 3px 0 #0a5f66; animation: bgq4-in .16s var(--ez); }
+.bg34-ans.ok .bg34-l { background: linear-gradient(180deg, #74eba2, var(--ok) 55%, var(--ok2)); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 #11643a, 0 0 16px rgba(70,212,124,.5); animation: bg32-win .5s var(--ez) both; }
+.bg34-ans.ok .bg34-l:nth-child(2) { animation-delay: .04s; } .bg34-ans.ok .bg34-l:nth-child(3) { animation-delay: .08s; } .bg34-ans.ok .bg34-l:nth-child(4) { animation-delay: .12s; } .bg34-ans.ok .bg34-l:nth-child(5) { animation-delay: .16s; } .bg34-ans.ok .bg34-l:nth-child(n+6) { animation-delay: .2s; }
+.bg34-hint { display: inline-flex; gap: 6px; align-items: center; padding: 4px 12px; border-radius: 999px; background: rgba(255,59,212,.14); border: 1px solid rgba(255,59,212,.45); color: #ffd1f4; font-size: 13px; font-weight: 800; margin: 0; }
 
-.bg35-mail { width: 100%; box-sizing: border-box; border-radius: 16px; border: 1.5px solid rgba(var(--c-rgb),.5); background: var(--panel); padding: 12px; }
-.bg35-hd { font-size: 12px; color: var(--text-2); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-bottom: 10px; }
-.bg35-hd b { color: var(--text); }
-.bg35-ph { display: flex; flex-wrap: wrap; gap: 10px 14px; justify-content: center; }
+/* 35 — письмо босса */
+.bg35-mail { width: 100%; box-sizing: border-box; border-radius: 16px; overflow: hidden; background: linear-gradient(180deg, #fbfaff, #eeebf7); color: #1d1a2e; box-shadow: 0 14px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.2); }
+.bg35-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: linear-gradient(180deg, #3a3460, #2a2548); color: #e8e4ff; font-size: 12px; font-weight: 800; }
+.bg35-bar i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; box-shadow: inset 0 -1px 0 rgba(0,0,0,.25); }
+.bg35-bar i:nth-child(1) { background: #ff5f57; } .bg35-bar i:nth-child(2) { background: #febc2e; } .bg35-bar i:nth-child(3) { background: #28c840; }
+.bg35-bar span { margin-left: 6px; opacity: .85; }
+.bg35-hd { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #5a5670; border-bottom: 1px solid rgba(20,18,40,.12); padding: 10px 12px; }
+.bg35-hd b { color: #1d1a2e; }
+.bg35-av { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; background: radial-gradient(circle at 35% 30%, #ffd27a, #ff8a3d); box-shadow: 0 2px 6px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.6); }
+.bg35-hd .t { display: flex; flex-direction: column; gap: 1px; line-height: 1.25; min-width: 0; }
+.bg35-flag { margin-left: auto; padding: 2px 8px; border-radius: 999px; background: #ffe0e6; color: #d0103f; font-weight: 900; font-size: 11px; }
+.bg35-ph { display: flex; flex-wrap: wrap; gap: 10px 14px; justify-content: center; padding: 14px 10px 16px; background: repeating-linear-gradient(180deg, transparent 0 27px, rgba(80,70,140,.06) 27px 28px); perspective: 500px; }
 .bg35-w { display: flex; gap: 3px; white-space: nowrap; }
-.bg35-ch { width: min(7.2vw, 30px); height: min(9vw, 38px); border-bottom: 3px solid var(--cyan); display: grid; place-items: center; font-weight: 900; font-size: min(5.6vw, 22px); }
-.bg35-ch.p { border: 0; width: auto; color: var(--text-2); }
-.bg35-ch.on { color: var(--up); animation: bg32-pop .35s; }
-.bg35-ch.miss { color: var(--down); }
-.bg35-lives { font-size: 18px; letter-spacing: 3px; }
+.bg35-ch { width: min(7vw, 28px); height: min(8.6vw, 36px); border-radius: 6px; display: grid; place-items: center; font-weight: 900; font-size: min(5.2vw, 20px); color: #1d1a2e;
+  background: linear-gradient(180deg, #e3dff0, #d6d1e8); box-shadow: inset 0 2px 3px rgba(40,30,80,.18), inset 0 -2px 0 #2de2e6; }
+.bg35-ch.got { background: linear-gradient(180deg, #fffdf7, #f2e3c2); box-shadow: inset 0 1px 0 #fff, 0 2px 0 #b48a4a, 0 3px 5px rgba(0,0,0,.18); }
+.bg35-ch.p { box-shadow: none; background: none; width: auto; color: #5a5670; }
+.bg35-ch.on { color: var(--ok2); animation: bg32-flip .45s ease-in-out both; }
+.bg35-ch.miss { color: #d0103f; background: linear-gradient(180deg, #ffe1e7, #ffc8d3); box-shadow: inset 0 -2px 0 #ff4d6d; }
+.bg35-lives { display: inline-flex; gap: 4px; padding: 5px 12px; border-radius: 999px; font-size: 17px; background: linear-gradient(180deg, rgba(var(--w-rgb),.1), rgba(var(--w-rgb),.03)); border: 1px solid var(--line); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 3px 10px rgba(0,0,0,.25); }
+.bg35-lives span { transition: transform .25s var(--ez), opacity .25s, filter .25s; }
+.bg35-lives span.x { animation: bgq4-in .3s var(--ez); filter: drop-shadow(0 0 6px rgba(255,120,40,.7)); }
 
-.bg36-grid { display: grid; gap: 2px; touch-action: none; --cs: min(34px, calc((100vw - 40px) / var(--n))); }
-.bg36-c { width: var(--cs); height: var(--cs); display: grid; place-items: center; font-weight: 800; font-size: calc(var(--cs) * .55); border-radius: 6px; background: rgba(var(--w-rgb),.05); }
-.bg36-c.f { background: rgba(var(--m-rgb),.28); color: var(--magenta-xl, #fff); }
-.bg36-c.s { background: var(--cyan); color: #04131a; box-shadow: 0 0 10px var(--cyan); }
-.bg36-c.anchor { outline: 2px solid var(--cyan); }
+/* 36 — найди слова */
+.bg36-board { padding: 8px; border-radius: 18px; }
+.bg36-grid { display: grid; gap: 2px; touch-action: none; --cs: min(34px, calc((100vw - 56px) / var(--n))); }
+.bg36-c { width: var(--cs); height: var(--cs); display: grid; place-items: center; font-weight: 800; font-size: calc(var(--cs) * .55); border-radius: 7px; color: #ece9ff; background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); transition: background .2s, transform .15s var(--ez), color .2s; }
+.bg36-c.f { background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 70%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
+.bg36-c.f.new { animation: bg32-win .5s var(--ez) both; animation-delay: var(--d, 0s); }
+.bg36-c.s { background: linear-gradient(180deg, #a8fbff, var(--tl) 60%, var(--tl2)); color: #032a2c; text-shadow: none; box-shadow: 0 0 12px rgba(45,226,230,.7); transform: scale(1.08); z-index: 1; }
+.bg36-c.anchor { box-shadow: 0 0 0 2px var(--tl), 0 0 12px rgba(45,226,230,.7); }
 .bg36-words { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-.bg36-words span { padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; font-weight: 800; }
-.bg36-words span.f { text-decoration: line-through; color: var(--up); border-color: rgba(212,255,58,.5); }
+.bg36-words span { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12.5px; font-weight: 800; background: linear-gradient(180deg, rgba(var(--w-rgb),.08), rgba(var(--w-rgb),.02)); transition: all .25s; }
+.bg36-words span.f { text-decoration: line-through; color: #fff; border-color: transparent; background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 80%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); text-decoration-color: rgba(255,255,255,.7); }
 
-.bg37-line { width: 100%; box-sizing: border-box; min-height: 92px; padding: 12px; border-radius: 16px; border: 1.5px dashed rgba(var(--c-rgb),.5); background: rgba(var(--c-rgb),.05); font-size: 18px; font-weight: 800; line-height: 1.5; text-align: center; color: var(--cyan-l); }
-.bg37-line.ok { border-style: solid; border-color: var(--up); color: var(--up); }
-.bg37-chips { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
-.bg37-chip { font: inherit; font-weight: 800; font-size: 16px; padding: 9px 13px; border-radius: 12px; border: 1.5px solid rgba(var(--m-rgb),.6); background: rgba(var(--m-rgb),.1); color: var(--text); cursor: pointer; }
+/* 37 — пословицы */
+.bg37-line { width: 100%; box-sizing: border-box; min-height: 100px; padding: 14px 14px 14px 28px; border-radius: 6px 18px 18px 6px; position: relative; color: #1f2a5a; font-size: 18px; font-weight: 800; line-height: 28px; text-align: center;
+  background: linear-gradient(90deg, transparent 18px, rgba(255,80,120,.35) 18px 19.5px, transparent 19.5px), repeating-linear-gradient(180deg, transparent 0 27px, rgba(60,90,200,.18) 27px 28px), linear-gradient(180deg, #fffef8, #f6f0de);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45), inset 0 1px 0 #fff; transition: box-shadow .3s; }
+.bg37-line .ph { color: #a6a0b8; font-weight: 700; font-size: 14px; }
+.bg37-line span { display: inline-block; animation: bgq4-in .22s var(--ez); }
+.bg37-line.ok { box-shadow: 0 10px 26px rgba(0,0,0,.45), 0 0 0 3px var(--ok), 0 0 26px rgba(70,212,124,.55); }
+.bg37-line.ok::after { content: '✓'; position: absolute; top: -10px; right: -8px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 17px; background: linear-gradient(180deg, #74eba2, var(--ok2)); box-shadow: 0 3px 8px rgba(0,0,0,.4); animation: bgq4-in .3s var(--ez); }
+.bg37-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.bg37-chip { font: inherit; font-weight: 800; font-size: 16px; padding: 9px 13px; border-radius: 12px; border: 0; color: #fff; cursor: pointer;
+  background: linear-gradient(180deg, #4b4270, #2e2849); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), inset 0 -2px 0 rgba(255,59,212,.5), 0 3px 0 #17142a, 0 6px 12px rgba(0,0,0,.35); transition: transform .12s var(--ez), box-shadow .12s; animation: bgq4-in .25s var(--ez) both; }
+.bg37-chip:active { transform: translateY(2px) scale(.96); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 0 #17142a; }
 .bg37-chip:disabled { visibility: hidden; }
+.bg37-chip.bgq4-shake { background: linear-gradient(180deg, #7a2a45, #4a1528); }
 
-.bg38-q { width: 100%; box-sizing: border-box; min-height: 96px; padding: 14px; border-radius: 16px; background: var(--panel); border: 1.5px solid var(--line); font-size: 17px; font-weight: 700; line-height: 1.35; display: flex; align-items: center; justify-content: center; text-align: center; }
-.bg38-opts { width: 100%; display: grid; gap: 8px; }
-.bg38-o { font: inherit; text-align: left; font-size: 15px; font-weight: 700; padding: 12px 14px; border-radius: 14px; border: 1.5px solid rgba(var(--c-rgb),.45); background: rgba(var(--c-rgb),.06); color: var(--text); cursor: pointer; }
-.bg38-o.ok { background: var(--up); color: #10140a; border-color: var(--up); }
-.bg38-o.no { background: var(--down); color: #fff; border-color: var(--down); }
+/* 38 — блиц-викторина */
+.bg38-q { position: relative; overflow: hidden; width: 100%; box-sizing: border-box; min-height: 104px; padding: 16px; border-radius: 20px; background: linear-gradient(150deg, #3a2a6a, #1c1735 60%, #14112a); color: #fff; box-shadow: 0 12px 28px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12); font-size: 17px; font-weight: 800; line-height: 1.35; display: flex; align-items: center; justify-content: center; text-align: center; }
+.bg38-q::before { content: '?'; position: absolute; right: -6px; bottom: -34px; font-size: 130px; font-weight: 900; color: rgba(255,255,255,.06); line-height: 1; }
+.bg38-q span { position: relative; animation: bgq4-in .25s var(--ez); }
+.bg38-opts { width: 100%; display: grid; gap: 9px; }
+.bg38-o { font: inherit; text-align: left; font-size: 15px; font-weight: 700; padding: 10px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,.1); color: #f4f2ff; cursor: pointer; display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(180deg, #2f2a4b, #1f1b33); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 3px 0 #0e0c18, 0 6px 14px rgba(0,0,0,.3); transition: transform .12s var(--ez), box-shadow .12s, background .2s; animation: bgq4-in .25s var(--ez) both; }
+.bg38-o:nth-child(2) { animation-delay: .04s; } .bg38-o:nth-child(3) { animation-delay: .08s; } .bg38-o:nth-child(4) { animation-delay: .12s; }
+.bg38-o > b { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: #fff; background: linear-gradient(180deg, #ff7ae4, var(--pk2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+.bg38-o:active { transform: translateY(2px) scale(.98); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 #0e0c18; }
+.bg38-o.ok { background: linear-gradient(180deg, #74eba2, var(--ok) 55%, var(--ok2)); color: #fff; border-color: transparent; text-shadow: 0 1px 2px rgba(0,70,30,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 0 #11643a, 0 0 18px rgba(70,212,124,.45); }
+.bg38-o.ok > b, .bg38-o.no > b { background: rgba(255,255,255,.3); }
+.bg38-o.no { background: linear-gradient(180deg, #ff7d95, var(--bad) 55%, var(--bad2)); color: #fff; border-color: transparent; box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 3px 0 #7d0b24; }
 
-.bg39-grid { display: grid; gap: 6px; width: 100%; perspective: 800px; }
-.bg39-card { position: relative; aspect-ratio: 3 / 4; cursor: pointer; transform-style: preserve-3d; transition: transform .35s; }
+/* 39 — мемори «Визитки» */
+.bg39-grid { display: grid; gap: 7px; width: 100%; perspective: 900px; }
+.bg39-card { position: relative; aspect-ratio: 3 / 4; cursor: pointer; transform-style: preserve-3d; transition: transform .42s cubic-bezier(.3,.9,.3,1.15); }
+.bg39-card:active:not(.up):not(.m) { transform: scale(.95); }
 .bg39-card.up, .bg39-card.m { transform: rotateY(180deg); }
-.bg39-card > div { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 3px; box-sizing: border-box; text-align: center; }
-.bg39-back { background: repeating-linear-gradient(45deg, rgba(var(--m-rgb),.25) 0 6px, rgba(var(--m-rgb),.1) 6px 12px); border: 1.5px solid rgba(var(--m-rgb),.6); font-size: 18px; }
-.bg39-face { transform: rotateY(180deg); background: #f4f4f8; color: #15151f; border: 1.5px solid var(--cyan); }
-.bg39-face b { font-size: clamp(18px, 7vw, 30px); line-height: 1; }
-.bg39-face small { font-size: 9.5px; line-height: 1.1; font-weight: 700; }
-.bg39-card.m .bg39-face { border-color: var(--up); box-shadow: 0 0 10px rgba(212,255,58,.6); opacity: .8; }
+.bg39-card > div { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 11px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px; box-sizing: border-box; text-align: center; overflow: hidden; }
+.bg39-back { background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.14), transparent 55%), linear-gradient(150deg, #3b2a78, #1d1640 60%, #140f2c); box-shadow: 0 4px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18); }
+.bg39-back::before { content: ''; position: absolute; inset: 5px; border-radius: 7px; border: 1px solid rgba(255,206,120,.45); background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 4px, transparent 4px 8px); }
+.bg39-back i { position: relative; width: 38%; aspect-ratio: 1; transform: rotate(45deg); border-radius: 18%; background: linear-gradient(135deg, #ffe7a8, #e3a53c 60%, #b77a1c); box-shadow: 0 2px 6px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.6); }
+.bg39-back i::after { content: ''; position: absolute; inset: 28%; border-radius: 30%; background: linear-gradient(135deg, #2a1f55, #3b2a78); }
+.bg39-face { transform: rotateY(180deg); background: linear-gradient(180deg, #ffffff, #f1eff8); color: #15151f; box-shadow: 0 4px 10px rgba(0,0,0,.4); justify-content: flex-start !important; padding-top: 0 !important; }
+.bg39-face::before { content: ''; flex: none; align-self: stretch; height: 16%; margin: 0 -4px 4px; background: linear-gradient(90deg, hsl(var(--h) 85% 58%), hsl(calc(var(--h) + 40) 85% 62%)); }
+.bg39-face b { flex: none; width: 54%; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; font-size: clamp(16px, 6.4vw, 28px); line-height: 1; background: radial-gradient(circle at 35% 30%, #fff, hsl(var(--h) 70% 90%)); box-shadow: 0 2px 5px rgba(0,0,0,.15), inset 0 0 0 2px hsl(var(--h) 70% 75%); }
+.bg39-face small { font-size: 9.5px; line-height: 1.1; font-weight: 800; color: #2a2840; }
+.bg39-face::after { content: ''; width: 60%; height: 7px; margin-top: auto; margin-bottom: 4px; background: repeating-linear-gradient(180deg, #d9d6e6 0 2px, transparent 2px 5px); border-radius: 2px; }
+.bg39-card.m .bg39-face { box-shadow: 0 0 0 2.5px var(--ok), 0 0 16px rgba(70,212,124,.6); }
+.bg39-card.m .bg39-face::after { content: '✓'; position: absolute; right: 4px; bottom: 4px; width: 18px; height: 18px; margin: 0; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 900; color: #fff; background: linear-gradient(180deg, #74eba2, var(--ok2)); }
+.bg39-card.m { animation: bg39-m .45s var(--ez); }
+@keyframes bg39-m { 50% { transform: rotateY(180deg) scale(1.1); } }
+.bg39-card.no .bg39-face { box-shadow: 0 0 0 2.5px var(--bad), 0 0 14px rgba(255,77,109,.5); }
 .bg39-grid.six small { display: none; }
+.bg39-grid.six .bg39-face b { width: 66%; margin-top: 6%; }
+.bg39-grid.six .bg39-face::after { display: none; }
 
-.bg40-pad { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: min(86vw, 380px); }
-.bg40-b { aspect-ratio: 1; border-radius: 24px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 18%, transparent); font-size: clamp(40px, 14vw, 64px); cursor: pointer; transition: transform .08s, box-shadow .12s, background .12s; display: grid; place-items: center; }
-.bg40-b.lit { background: var(--c); box-shadow: 0 0 40px var(--c); transform: scale(1.04); }
+/* 40 — повтори за боссом */
+.bg40-pad { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: min(84vw, 360px, calc(100vh - 330px)); padding: 12px; border-radius: 50%; background: radial-gradient(circle, #221d3a 60%, #13111f); box-shadow: 0 16px 36px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(255,255,255,.06); }
+.bg40-b { position: relative; aspect-ratio: 1; border: 0; font-size: clamp(30px, 10vw, 50px); cursor: pointer; display: grid; place-items: center; transition: transform .1s, box-shadow .15s, filter .15s;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, #fff 0%), color-mix(in srgb, var(--c) 30%, #0d0b16) 70%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -8px 16px rgba(0,0,0,.45), 0 5px 0 color-mix(in srgb, var(--c) 30%, #000); filter: saturate(.9) brightness(.92); }
+.bg40-b:nth-child(1) { border-radius: 100% 16px 16px 16px; } .bg40-b:nth-child(2) { border-radius: 16px 100% 16px 16px; }
+.bg40-b:nth-child(3) { border-radius: 16px 16px 16px 100%; } .bg40-b:nth-child(4) { border-radius: 16px 16px 100% 16px; }
+.bg40-b span { filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); transition: transform .15s var(--ez); }
+.bg40-b:nth-child(1) span { translate: 12% 12%; } .bg40-b:nth-child(2) span { translate: -12% 12%; } .bg40-b:nth-child(3) span { translate: 12% -12%; } .bg40-b:nth-child(4) span { translate: -12% -12%; }
+.bg40-b.lit { filter: none; background: radial-gradient(circle at 35% 30%, #fff, var(--c) 55%, color-mix(in srgb, var(--c) 70%, #000)); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 2px 0 color-mix(in srgb, var(--c) 30%, #000), 0 0 36px var(--c), 0 0 70px color-mix(in srgb, var(--c) 50%, transparent); transform: translateY(3px); }
+.bg40-b.lit span { transform: scale(1.15); }
 .bg40-b:disabled { cursor: default; }
-.bg40-st { font-size: 18px; font-weight: 900; min-height: 26px; text-align: center; }
+.bg40-hub { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;
+  background: radial-gradient(circle at 35% 30%, #4a4270, #1a1630 70%); box-shadow: 0 0 0 6px #171428, 0 6px 16px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.2); color: #fff; }
+.bg40-hub .face { font-size: clamp(22px, 8vw, 36px); line-height: 1; transition: transform .2s var(--ez); }
+.bg40-hub b { font-size: 15px; font-variant-numeric: tabular-nums; color: #ffd1f4; }
+.bg40-hub.show .face { animation: bg40-talk .5s ease-in-out infinite alternate; }
+@keyframes bg40-talk { to { transform: scale(1.12) rotate(-4deg); } }
+.bg40-st { font-size: 17px; font-weight: 900; min-height: 26px; text-align: center; padding: 4px 14px; border-radius: 999px; background: linear-gradient(180deg, rgba(var(--w-rgb),.1), rgba(var(--w-rgb),.03)); border: 1px solid var(--line); }
+.bg40-st.ok { color: var(--up); } .bg40-st.no { color: var(--down); }
+.bg40-go { font-size: 17px; padding: 12px 28px; border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bgq4-shake, .bg32-c.flip, .bg32-c.win, .bg33-c.l.ok, .bg36-c.f.new, .bg34-ans.ok .bg34-l, .bg40-hub.show .face, .bgq4-bar.low i, .bg39-card.m { animation: none !important; }
+  .bg39-card { transition-duration: .01s; }
+}
 `;
   const css = () => { if (!document.getElementById('bg-style-4')) { const s = document.createElement('style'); s.id = 'bg-style-4'; s.textContent = CSS; document.head.append(s); } };
   const mk = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
@@ -195,6 +326,25 @@
     return { get left() { return left; }, stop: () => T.stop(id) };
   }
   const bar = () => mk('div', 'bgq4-bar', '<i></i>');
+  // Эффекты: всплывающие «+1», конфетти, подпрыгивание счётчика (с учётом prefers-reduced-motion)
+  const RM = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };
+  const floatTxt = (el, txt, col) => {
+    if (!el || !el.isConnected) return;
+    const r = el.getBoundingClientRect(), e = mk('div', 'bgq4-float', txt);
+    e.style.left = (r.left + r.width / 2) + 'px'; e.style.top = (r.top + r.height / 2) + 'px'; if (col) e.style.setProperty('--fc', col);
+    document.body.append(e); setTimeout(() => e.remove(), 950);
+  };
+  const CF = ['#ff3bd4', '#2de2e6', '#ffb43a', '#46d47c', '#a77bff', '#ffffff'];
+  const burst = (el, n = 16) => {
+    if (!el || !el.isConnected || RM()) return;
+    const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    for (let i = 0; i < n; i++) {
+      const e = mk('i', 'bgq4-cf'), a = Math.random() * Math.PI * 2, d = 40 + Math.random() * 80;
+      e.style.cssText = `left:${x}px;top:${y}px;background:${CF[i % CF.length]};--dx:${(Math.cos(a) * d).toFixed(1)}px;--dy:${(Math.sin(a) * d + 30).toFixed(1)}px;--r:${Math.round(Math.random() * 540 - 270)}deg`;
+      document.body.append(e); setTimeout(() => e.remove(), 950);
+    }
+  };
+  const bump = el => { if (!el) return; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); };
 
   // =====================================================================
   // 31. Офисные слова — составьте слова из 7 букв за 90 секунд
@@ -216,9 +366,10 @@
     const list = mk('div', 'bg31-found');
     const note = mk('p', 'bgq4-note', L('Слова от 3 букв, существительные в начальной форме. Каждую букву — не больше раз, чем она есть.', 'Words of 3+ letters. Use each tile once per word.'));
     const fin = Object.assign(mk('button', 'bgq4-btn', L('Закончить', 'Finish')), { type: 'button' });
-    w.append(cur, tiles, ctl, list, note, fin); root.append(w);
+    const board = mk('div', 'bgq4-board bg31-board'); board.append(cur, tiles, ctl);
+    w.append(board, list, note, fin); root.append(w);
     const draw = () => {
-      cur.textContent = sel.map(i => letters[i]).join('') || '·';
+      cur.innerHTML = sel.length ? sel.map((i, k) => `<i${k === sel.length - 1 ? '' : ' style="animation:none"'}>${letters[i]}</i>`).join('') : `<span class="ph">${L('Нажимайте на буквы', 'Tap the letters')}</span>`;
       tiles.innerHTML = '';
       letters.forEach((ch, i) => { const b = Object.assign(mk('button', 'bg31-t', ch), { type: 'button', disabled: sel.includes(i) || over }); b.onclick = () => tap(i); tiles.append(b); });
       w.querySelector('.n').textContent = found.length;
@@ -233,7 +384,8 @@
       if (found.includes(word)) { shake(cur); api.toast(L('Это слово уже есть', 'Already found')); sel = []; draw(); return; }
       found.push(word); api.sfx.item?.();
       list.prepend(mk('span', comSet.has(word) ? '' : 'x', api.esc(word.toLowerCase())));
-      sel = []; draw();
+      floatTxt(cur, '+1'); if (word.length >= 5) burst(cur, 14);
+      sel = []; draw(); bump(w.querySelector('.n'));
       if (common.every(x => found.includes(x))) finish();
     };
     const finish = () => {
@@ -282,24 +434,25 @@
     };
     const w = mk('div', 'bgq4-wrap');
     const top = mk('p', 'bgq4-note', prev ? L(`Вчерашнее слово: <b>${api.esc(prev.ans)}</b>${prev.done ? (prev.won ? ` — вы угадали с ${prev.rows.length}-й попытки` : ' — не угадано') : ''}`, `Yesterday’s word: <b>${api.esc(prev.ans)}</b>${prev.done ? (prev.won ? ` — solved in ${prev.rows.length}` : ' — missed') : ''}`) : L('Существительное из 5 букв. Новое слово — каждый день в полночь.', 'A 5-letter word. A new one every day at midnight.'));
-    const board = mk('div', 'bg32-board');
-    const leg = mk('div', 'bg32-leg', `<span><i style="background:var(--up)">✓</i>${L('на месте', 'right spot')}</span><span><i style="background:#ff9d2e">?</i>${L('есть, но не тут', 'wrong spot')}</span><span><i style="background:rgba(255,255,255,.18)"></i>${L('нет в слове', 'not in word')}</span>`);
+    const board = mk('div', 'bg32-board bgq4-board');
+    const leg = mk('div', 'bg32-leg', `<span><i style="background:#46d47c">✓</i>${L('на месте', 'right spot')}</span><span><i style="background:#ffb43a">?</i>${L('есть, но не тут', 'wrong spot')}</span><span><i style="background:#2c2a3f"></i>${L('нет в слове', 'not in word')}</span>`);
     const msg = mk('div', 'bgq4-big');
     const kb = keyboard(api, k => key(k), { enter: true, back: true });
     w.append(top, board, leg, msg, kb.el); root.append(w);
     const cells = [];
     for (let r = 0; r < 6; r++) { const row = mk('div', 'bg32-row'); cells.push([]); for (let c = 0; c < 5; c++) { const e = mk('div', 'bg32-c'); cells[r].push(e); row.append(e); } board.append(row); }
-    const rank = { a: 1, p: 2, c: 3 }, kstate = {};
+    const rank = { a: 1, p: 2, c: 3 }, kstate = {}, FLIP = 260, REVEAL = 4 * 260 + 520;
     const paintRow = (r, anim) => {
       const g = rows[r], s = score(g);
       g.split('').forEach((ch, i) => {
         const e = cells[r][i]; e.textContent = ch;
-        const go = () => { e.className = 'bg32-c s-' + s[i] + (anim ? ' pop' : ''); e.setAttribute('aria-label', ch + ' ' + ({ c: L('на месте', 'correct'), p: L('не на месте', 'misplaced'), a: L('нет', 'absent') }[s[i]])); };
-        anim ? T.after(go, i * 140) : go();
+        const go = () => { e.className = 'bg32-c s-' + s[i] + (anim ? ' flip' : ''); e.setAttribute('aria-label', ch + ' ' + ({ c: L('на месте', 'correct'), p: L('не на месте', 'misplaced'), a: L('нет', 'absent') }[s[i]])); };
+        // переворот плитки: на середине поворота она меняет цвет
+        if (anim) { T.after(() => { e.className = 'bg32-c f flip'; }, i * FLIP); T.after(go, i * FLIP + 250); } else go();
         if (!kstate[ch] || rank[s[i]] > rank[kstate[ch]]) kstate[ch] = s[i];
       });
       const paintKeys = () => Object.entries(kstate).forEach(([ch, st]) => kb.mark(ch, 's-' + st));
-      anim ? T.after(paintKeys, 700) : paintKeys();
+      anim ? T.after(paintKeys, REVEAL) : paintKeys();
     };
     const drawCur = () => { const r = rows.length; if (r >= 6) return; for (let i = 0; i < 5; i++) { cells[r][i].textContent = cur[i] || ''; cells[r][i].className = 'bg32-c' + (cur[i] ? ' f' : ''); } };
     rows.forEach((_, r) => paintRow(r, false));
@@ -309,7 +462,8 @@
     };
     const showDone = () => {
       const won = rows.includes(answer);
-      msg.innerHTML = `${won ? L(`Угадано с ${rows.length}-й попытки!`, `Solved in ${rows.length}!`) : L(`Слово дня: <b>${api.esc(answer)}</b>`, `The word was <b>${api.esc(answer)}</b>`)}<br><span class="bgq4-note">${L('Следующее слово через', 'Next word in')} <b class="cd"></b></span>`;
+      const tiles = `<br><span class="bg32-ans">${[...answer].map((c, i) => `<i style="animation-delay:${(i * .12).toFixed(2)}s">${api.esc(c)}</i>`).join('')}</span>`;
+      msg.innerHTML = `${won ? L(`🎉 Угадано с ${rows.length}-й попытки!`, `🎉 Solved in ${rows.length}!`) : L('Слово дня:', 'The word was:') + tiles}<br><span class="bgq4-note">${L('Следующее слово через', 'Next word in')} <b class="cd bg32-cd"></b></span>`;
       const btn = Object.assign(mk('button', 'bgq4-btn cy', L('📋 Поделиться', '📋 Share')), { type: 'button', onclick: share });
       msg.append(mk('br'), btn);
       const cd = msg.querySelector('.cd');
@@ -326,11 +480,12 @@
         const won = rows[rows.length - 1] === answer;
         if (won || rows.length >= 6) {
           over = true; save();
+          if (won) T.after(() => { cells[rows.length - 1].forEach((e, i) => { e.style.animationDelay = (i * .09) + 's'; e.className = 'bg32-c s-c win'; }); burst(board, 22); }, REVEAL);
           T.after(() => {
             showDone();
             api.end(won ? { score: rows.length, won: true, lowerBetter: true, text: L(`Слово дня «${answer}» угадано с ${rows.length}-й попытки. Завтра — новое.`, `You got “${answer}” in ${rows.length}. New word tomorrow.`) }
               : { won: false, text: L(`Загаданное слово: «${answer}». Завтра будет новое.`, `The word was “${answer}”. New word tomorrow.`) });
-          }, 900);
+          }, REVEAL + (won ? 700 : 150));
         } else save();
         return;
       }
@@ -411,7 +566,7 @@
     const { L, EN } = api, T = timers(api), KEY = 'vdp-break-w33', SETS = EN ? CW_EN : CW_RU;
     const st = lsGet(KEY, {}), lang = EN ? 'en' : 'ru', solved = new Set(st[lang] || []);
     let idx = SETS.findIndex((_, i) => !solved.has(i)); if (idx < 0) idx = Math.floor(api.rng() * SETS.length);
-    const w = mk('div', 'bgq4-wrap'); root.append(w);
+    const w = mk('div', 'bgq4-wrap bg33-wrap'); root.append(w);
     let over = false, secs = 0, pen = 0, clockId = null;
     const start = i => {
       idx = i; w.innerHTML = ''; secs = 0; pen = 0; if (clockId) T.stop(clockId);
@@ -421,7 +576,7 @@
       const pick = mk('div', 'bg33-pick');
       SETS.forEach((s, j) => { const b = Object.assign(mk('button', 'bgq4-btn' + (j === i ? ' on' : ''), `${j + 1}${solved.has(j) ? '✓' : ''}`), { type: 'button', title: s[0] }); b.onclick = () => { if (!over && j !== idx) start(j); }; pick.append(b); });
       const top = mk('div', 'bgq4-top', `<span>✏️ <b>${api.esc(title)}</b></span><span>⏱ <b class="t">0:00</b></span>`);
-      const cs = Math.max(26, Math.min(46, Math.floor((Math.min(root.clientWidth || 360, 600) - 24) / cols) - 2, Math.floor((innerHeight - 400) / rows)));
+      const cs = Math.max(26, Math.min(46, Math.floor((Math.min(root.clientWidth || 360, 600) - 40) / cols) - 2, Math.floor((innerHeight - 425) / rows)));
       const grid = mk('div', 'bg33-grid'); grid.style.gridTemplateColumns = `repeat(${cols}, var(--cs))`; grid.style.setProperty('--cs', cs + 'px');
       const cell = {}, val = {};
       for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { const e = mk('div', 'bg33-c'); grid.append(e); cell[r + ',' + c] = e; }
@@ -430,7 +585,7 @@
       P.forEach(p => { const e = cell[p.r + ',' + p.c]; if (!e.querySelector('small')) e.prepend(mk('small', '', p.num)); });
       Object.keys(sol).forEach(k => { const e = cell[k]; e.classList.add('l'); e.append(mk('span')); e.onclick = () => select(k); });
       const clue = mk('div', 'bg33-clue', `<button type="button" class="bgq4-btn" data-m="-1">◀</button><span></span><button type="button" class="bgq4-btn" data-m="1">▶</button>`);
-      const ctl = mk('div', 'bgq4-row', `<button type="button" class="bgq4-btn cy" data-a="hint">💡 ${L('Буква', 'Letter')} +20 ${L('с', 's')}</button><button type="button" class="bgq4-btn" data-a="chk">🔍 ${L('Проверить', 'Check')} +10 ${L('с', 's')}</button>`);
+      const ctl = mk('div', 'bgq4-row bg33-ctl', `<button type="button" class="bgq4-btn cy" data-a="hint">💡 ${L('Буква', 'Letter')} +20 ${L('с', 's')}</button><button type="button" class="bgq4-btn" data-a="chk">🔍 ${L('Проверить', 'Check')} +10 ${L('с', 's')}</button>`);
       const kb = keyboard(api, k => key(k), { back: true });
       const list = mk('div', 'bg33-list');
       w.append(pick, top, grid, clue, kb.el, ctl, list);
@@ -458,7 +613,8 @@
       const check = () => {
         if (!allFilled()) return;
         if (Object.keys(sol).every(k => val[k] === sol[k])) {
-          over = true; T.stop(clockId); Object.keys(sol).forEach(k => { cell[k].classList.add('ok'); cell[k].classList.remove('a', 'w'); });
+          over = true; T.stop(clockId); Object.keys(sol).forEach(k => { const [r, c] = k.split(',').map(Number); cell[k].style.setProperty('--d', ((r + c) * .05).toFixed(2) + 's'); cell[k].classList.add('ok'); cell[k].classList.remove('a', 'w'); });
+          burst(grid, 24);
           solved.add(idx); st[lang] = [...solved]; lsSet(KEY, st);
           const total = secs + pen;
           api.end({ score: total, won: true, lowerBetter: true, text: L(`Кроссворд «${api.esc(title)}» разгадан за ${fmtT(total)}${pen ? ` (из них штраф ${pen} с)` : ''}. Разгадано ${solved.size} из ${SETS.length}.`, `“${api.esc(title)}” solved in ${fmtT(total)}${pen ? ` (incl. ${pen}s penalty)` : ''}. Solved ${solved.size} of ${SETS.length}.`) });
@@ -507,16 +663,17 @@
     const w = mk('div', 'bgq4-wrap');
     w.innerHTML = `<div class="bgq4-top"><span>${L('Слово', 'Word')} <b class="r"></b>/${ROUNDS}</span><span>✅ <b class="s">0</b></span><span>⏱ <b class="t"></b></span></div>`;
     const tb = bar(); w.append(tb);
-    const hint = mk('p', 'bgq4-note');
+    const hint = mk('p', 'bg34-hint');
     const ansEl = mk('div', 'bg34-ans'), scrEl = mk('div', 'bg34-scr');
     const ctl = mk('div', 'bgq4-row', `<button type="button" class="bgq4-btn" data-a="clr">↺ ${L('Сбросить', 'Reset')}</button><button type="button" class="bgq4-btn cy" data-a="skip">⏭ ${L('Пропустить', 'Skip')}</button>`);
-    w.append(hint, ansEl, scrEl, ctl, mk('p', 'bgq4-note', L('Нажимайте буквы по порядку. Нажатие на букву в ответе вернёт её обратно.', 'Tap letters in order. Tap a letter in the answer to put it back.')));
+    const board = mk('div', 'bgq4-board bg34-board'); board.append(hint, ansEl, scrEl);
+    w.append(board, ctl, mk('p', 'bgq4-note', L('Нажимайте буквы по порядку. Нажатие на букву в ответе вернёт её обратно.', 'Tap letters in order. Tap a letter in the answer to put it back.')));
     root.append(w);
     const draw = () => {
       w.querySelector('.r').textContent = Math.min(round + 1, ROUNDS); w.querySelector('.s').textContent = solvedN;
-      hint.textContent = L(`Профессия из ${word.length} букв`, `A ${word.length}-letter job`);
+      hint.textContent = '👷 ' + L(`Профессия из ${word.length} букв`, `A ${word.length}-letter job`);
       ansEl.innerHTML = ''; scrEl.innerHTML = '';
-      for (let i = 0; i < word.length; i++) { const j = ans[i]; const b = Object.assign(mk('button', 'bg34-l', j != null ? scr[j] : ''), { type: 'button' }); b.onclick = () => { if (j == null || over) return; ans.splice(i, 1); draw(); }; ansEl.append(b); }
+      for (let i = 0; i < word.length; i++) { const j = ans[i]; const b = Object.assign(mk('button', 'bg34-l' + (j != null ? ' has' : ''), j != null ? scr[j] : ''), { type: 'button' }); if (j != null && i < ans.length - 1) b.style.animation = 'none'; b.onclick = () => { if (j == null || over) return; ans.splice(i, 1); draw(); }; ansEl.append(b); }
       scr.forEach((ch, j) => { const b = Object.assign(mk('button', 'bg34-l', ch), { type: 'button', disabled: ans.includes(j) }); b.onclick = () => tap(j); scrEl.append(b); });
     };
     const next = () => {
@@ -529,7 +686,7 @@
       if (over || ans.includes(j) || ans.length >= word.length) return;
       ans.push(j); api.buzz('tap'); draw();
       if (ans.length === word.length) {
-        if (ans.map(i => scr[i]).join('') === word) { solvedN++; api.sfx.item?.(); ansEl.classList.add('ok'); round++; T.after(next, 450); }
+        if (ans.map(i => scr[i]).join('') === word) { solvedN++; api.sfx.item?.(); ansEl.classList.add('ok'); floatTxt(ansEl, '+1'); burst(ansEl, 12); bump(w.querySelector('.s')); round++; T.after(next, 650); }
         else { shake(ansEl); api.buzz('danger'); T.after(() => { if (ans.length === word.length) { ans = []; draw(); } }, 450); }
       }
     };
@@ -581,7 +738,7 @@
     const phrase = norm(text), need = new Set([...phrase].filter(ch => isLetter(ch, EN)));
     const got = new Set(), tried = new Set(); let miss = 0, over = false;
     const w = mk('div', 'bgq4-wrap');
-    const mail = mk('div', 'bg35-mail', `<div class="bg35-hd">${L('От', 'From')}: <b>${L('Босс', 'The Boss')}</b> · ${L('Тема', 'Subject')}: <b>${api.esc(subj)}</b> ❗</div><div class="bg35-ph"></div>`);
+    const mail = mk('div', 'bg35-mail', `<div class="bg35-bar"><i></i><i></i><i></i><span>✉️ ${L('Входящие', 'Inbox')}</span></div><div class="bg35-hd"><span class="bg35-av">👔</span><span class="t"><span>${L('От', 'From')}: <b>${L('Босс', 'The Boss')}</b></span><span>${L('Тема', 'Subject')}: <b>${api.esc(subj)}</b></span></span><span class="bg35-flag">❗ ${L('Важно', 'Urgent')}</span></div><div class="bg35-ph"></div>`);
     const lives = mk('div', 'bg35-lives');
     const kb = keyboard(api, k => guess(k));
     w.append(mail, lives, mk('p', 'bgq4-note', L('Угадывайте буквы. Можно ошибиться 6 раз.', 'Guess letters. You may miss 6 times.')), kb.el); root.append(w);
@@ -593,11 +750,11 @@
         for (const ch of word) {
           if (!isLetter(ch, EN)) { we.append(mk('div', 'bg35-ch p', api.esc(ch))); continue; }
           const shown = got.has(ch);
-          we.append(mk('div', 'bg35-ch' + (shown && ch === fresh ? ' on' : '') + (!shown && reveal ? ' miss' : ''), shown || reveal ? ch : ''));
+          we.append(mk('div', 'bg35-ch' + (shown ? ' got' : '') + (shown && ch === fresh ? ' on' : '') + (!shown && reveal ? ' miss' : ''), shown || reveal ? ch : ''));
         }
         ph.append(we);
       });
-      lives.textContent = '✉️'.repeat(MAX - miss) + '🔥'.repeat(miss);
+      lives.innerHTML = Array.from({ length: MAX }, (_, i) => i < MAX - miss ? '<span>✉️</span>' : '<span class="x">🔥</span>').join('');
       lives.title = L(`Осталось ошибок: ${MAX - miss}`, `Misses left: ${MAX - miss}`);
     };
     const guess = k => {
@@ -606,7 +763,7 @@
       if (need.has(k)) { got.add(k); kb.mark(k, 's-ok'); api.buzz('tap'); api.sfx.item?.(); }
       else { miss++; kb.mark(k, 's-no'); api.buzz('danger'); shake(lives); }
       draw(false, k);
-      if ([...need].every(ch => got.has(ch))) { over = true; api.end({ score: MAX - miss, won: true, text: L(`Письмо расшифровано! Ошибок: ${miss}.`, `Email decoded! Misses: ${miss}.`) }); }
+      if ([...need].every(ch => got.has(ch))) { over = true; burst(mail, 22); api.end({ score: MAX - miss, won: true, text: L(`Письмо расшифровано! Ошибок: ${miss}.`, `Email decoded! Misses: ${miss}.`) }); }
       else if (miss >= MAX) { over = true; draw(true); api.end({ score: null, won: false, text: L(`Босс писал: «${api.esc(text)}»`, `The boss wrote: “${api.esc(text)}”`) }); }
     };
     physKeys(api, k => guess(k));
@@ -618,6 +775,7 @@
   // =====================================================================
   const WS_RU = 'ОТЧЕТ ПАПКА КОФЕ ПРИНТЕР СТЕПЛЕР ДЕДЛАЙН ПЛАНЕРКА ОФИС БОСС ПРЕМИЯ ОТПУСК КУЛЕР СКРЕПКА МИТИНГ ДОГОВОР ПРОЕКТ ЗАРПЛАТА ПЕЧАТЬ ТАБЛИЦА ЗВОНОК ПОЧТА ПЯТНИЦА КАРЬЕРА АВАНС БЮДЖЕТ ОБЕД ЛИФТ ПРОПУСК МОНИТОР КЛИЕНТ ШРЕДЕР ФИКУС ГРАФИК СМЕТА РЕЗЮМЕ ВАКАНСИЯ СТИКЕР БЕЙДЖ НОУТБУК КАЛЕНДАРЬ';
   const WS_EN = 'REPORT FOLDER COFFEE PRINTER STAPLER DEADLINE MEETING OFFICE BOSS BONUS HOLIDAY COOLER PAPERCLIP CONTRACT PROJECT SALARY STAMP SCANNER TABLE PHONE EMAIL FRIDAY CAREER BUDGET LUNCH ELEVATOR BADGE MONITOR CLIENT SHREDDER PLANT CHART INVOICE RESUME LAPTOP CALENDAR MEMO DESK INBOX';
+  const FC36 = ['#ff3bd4', '#2de2e6', '#ffb43a', '#46d47c', '#a77bff', '#ff6b6b', '#4da3ff', '#e6c229'];
   B[36] = (root, api) => {
     css();
     const { L, EN } = api, T = timers(api), N = (root.clientWidth || 360) >= 380 ? 10 : 9, COUNT = 7, LIMIT = 180;
@@ -648,7 +806,8 @@
     const cells = [];
     for (let i = 0; i < N * N; i++) { const e = mk('div', 'bg36-c', g[Math.floor(i / N)][i % N]); e.dataset.i = i; cells.push(e); grid.append(e); }
     const words = mk('div', 'bg36-words', placed.map(p => `<span>${p.word}</span>`).join(''));
-    w.append(grid, words, mk('p', 'bgq4-note', L('Проведите пальцем от первой буквы до последней — или нажмите на первую, затем на последнюю. Слова идут в любую сторону, в том числе по диагонали.', 'Drag from the first letter to the last — or tap the first, then the last. Words go in any direction, diagonals too.')));
+    const gb = mk('div', 'bgq4-board bg36-board'); gb.append(grid);
+    w.append(gb, words, mk('p', 'bgq4-note', L('Проведите пальцем от первой буквы до последней — или нажмите на первую, затем на последнюю. Слова идут в любую сторону, в том числе по диагонали.', 'Drag from the first letter to the last — or tap the first, then the last. Words go in any direction, diagonals too.')));
     root.append(w);
     let secs = 0, over = false, start = null, sel = [], anchor = null;
     const tEl = w.querySelector('.t');
@@ -667,10 +826,12 @@
       const s = sel.map(i => g[Math.floor(i / N)][i % N]).join(''), rs = [...s].reverse().join('');
       const p = placed.find(p => !p.found && (p.word === s || p.word === rs) && sel.length === p.word.length);
       if (p) {
-        p.found = true; p.cells = sel.slice(); p.cells.forEach(i => cells[i].classList.add('f')); api.sfx.item?.(); api.buzz('item');
-        words.children[placed.indexOf(p)].classList.add('f');
+        const nf = placed.filter(x => x.found).length, col = FC36[nf % FC36.length];
+        p.found = true; p.cells = sel.slice(); p.cells.forEach((i, k) => { const c = cells[i]; c.style.setProperty('--fc', col); c.style.setProperty('--d', (k * .04).toFixed(2) + 's'); c.classList.remove('f', 'new'); void c.offsetWidth; c.classList.add('f', 'new'); }); api.sfx.item?.(); api.buzz('item');
+        const wc = words.children[placed.indexOf(p)]; wc.style.setProperty('--fc', col); wc.classList.add('f');
+        floatTxt(cells[p.cells[p.cells.length >> 1]], '+1', col); bump(w.querySelector('.n'));
         w.querySelector('.n').textContent = placed.filter(x => x.found).length;
-        if (placed.every(x => x.found)) finish(true);
+        if (placed.every(x => x.found)) { burst(grid, 26); finish(true); }
       } else if (sel.length > 1) { shake(grid); }
       sel = []; paint();
     };
@@ -729,19 +890,19 @@
     w.append(lineEl, chips, mk('p', 'bgq4-note', L('Нажимайте слова по порядку. Ошибка — минус 20 очков из 100 за пословицу.', 'Tap the words in order. Each mistake costs 20 of the 100 points per proverb.')));
     root.append(w);
     const start = () => {
-      words = toks(list[round]); pos = 0; miss = 0; busy = false; lineEl.classList.remove('ok'); lineEl.textContent = '';
+      words = toks(list[round]); pos = 0; miss = 0; busy = false; lineEl.classList.remove('ok'); lineEl.innerHTML = `<span class="ph">${L('Нажимайте слова по порядку…', 'Tap the words in order…')}</span>`;
       do { order = api.shuffle(words.map((_, i) => i), api.rng); } while (words.length > 2 && order.every((x, i) => x === i));
       chips.innerHTML = '';
-      order.forEach(i => { const b = Object.assign(mk('button', 'bg37-chip', api.esc(words[i])), { type: 'button' }); b.onclick = () => tap(b, i); chips.append(b); });
+      order.forEach((i, k) => { const b = Object.assign(mk('button', 'bg37-chip', api.esc(words[i])), { type: 'button' }); b.style.animationDelay = (k * .035).toFixed(3) + 's'; b.onclick = () => tap(b, i); chips.append(b); });
       w.querySelector('.r').textContent = round + 1; w.querySelector('.m').textContent = 0;
     };
     const tap = (b, i) => {
       if (over || busy) return;
       if (words[i] === words[pos]) {
-        b.disabled = true; pos++; lineEl.textContent = words.slice(0, pos).join(' '); api.buzz('tap');
+        b.disabled = true; pos++; lineEl.innerHTML = words.slice(0, pos).map((x, k) => `<span${k === pos - 1 ? '' : ' style="animation:none"'}>${api.esc(x)}</span>`).join(' '); api.buzz('tap');
         if (pos === words.length) {
           busy = true; const pts = Math.max(20, 100 - miss * 20); total += pts; w.querySelector('.s').textContent = total;
-          lineEl.classList.add('ok'); api.sfx.item?.(); round++;
+          lineEl.classList.add('ok'); api.sfx.item?.(); floatTxt(lineEl, '+' + pts); burst(lineEl, 18); bump(w.querySelector('.s')); round++;
           setTimeout(() => { if (over) return; if (round >= ROUNDS) finish(); else start(); }, 1100);
         }
       } else { miss++; w.querySelector('.m').textContent = miss; shake(b); api.buzz('danger'); }
@@ -780,18 +941,18 @@
       const show = () => {
         const q = qs[i]; lock = false;
         w.querySelector('.r').textContent = i + 1;
-        qEl.textContent = q.q;
+        qEl.innerHTML = `<span>${api.esc(q.q)}</span>`;
         opts.innerHTML = '';
         api.shuffle(q.a.map((t, k) => [t, k === 0]), api.rng).forEach(([t, ok], k) => {
-          const b = Object.assign(mk('button', 'bg38-o', `<b>${'ABCD'[k] || ''}</b>  ${api.esc(t)}`), { type: 'button' }); b.dataset.ok = ok ? 1 : '';
+          const b = Object.assign(mk('button', 'bg38-o', `<b>${'ABCD'[k] || ''}</b><span>${api.esc(t)}</span>`), { type: 'button' }); b.dataset.ok = ok ? 1 : '';
           b.onclick = () => pick(b); opts.append(b);
         });
       };
       const pick = b => {
         if (over || lock) return; lock = true;
         const ok = !!b.dataset.ok;
-        if (ok) { right++; b.classList.add('ok'); api.sfx.item?.(); api.buzz('item'); }
-        else { b.classList.add('no'); opts.querySelector('[data-ok="1"]')?.classList.add('ok'); api.buzz('danger'); }
+        if (ok) { right++; b.classList.add('ok'); api.sfx.item?.(); api.buzz('item'); floatTxt(b, '+1'); bump(w.querySelector('.s')); }
+        else { b.classList.add('no'); shake(b); opts.querySelector('[data-ok="1"]')?.classList.add('ok'); api.buzz('danger'); }
         w.querySelector('.s').textContent = right;
         T.after(() => { i++; if (i >= qs.length) finish(); else show(); }, ok ? 450 : 900);
       };
@@ -824,9 +985,10 @@
     css();
     const { L } = api, T = timers(api);
     const w = mk('div', 'bgq4-wrap'); root.append(w);
-    w.innerHTML = `<p class="bgq4-big">${L('Выберите размер стола:', 'Pick the table size:')}</p>`;
-    const row = mk('div', 'bgq4-row');
-    [[4, 4], [4, 5], [6, 6]].forEach(([c, r]) => row.append(Object.assign(mk('button', 'bgq4-btn' + (c * r === 20 ? ' main' : ''), `${c}×${r}<br><small>${L(`${c * r / 2} пар`, `${c * r / 2} pairs`)}</small>`), { type: 'button', onclick: () => play(c, r) })));
+    w.innerHTML = `<p class="bgq4-big">🪪 ${L('Выберите размер стола:', 'Pick the table size:')}</p>`;
+    const row = mk('div', 'bgq4-opts');
+    [[4, 4, L('Легко', 'Easy')], [4, 5, L('Средне', 'Medium')], [6, 6, L('Сложно', 'Hard')]].forEach(([c, r, lv]) => row.append(Object.assign(mk('button', 'bgq4-opt' + (c * r === 20 ? ' rec' : ''),
+      `<span class="ic" style="grid-template-columns:repeat(${c},1fr)">${'<i></i>'.repeat(c * r)}</span><b>${c}×${r}</b><small>${L(`${c * r / 2} пар`, `${c * r / 2} pairs`)}</small><em>${lv}</em>`), { type: 'button', onclick: () => play(c, r) })));
     w.append(row, mk('p', 'bgq4-note', L('Рекорд — наименьшее число ходов (ход — две открытые визитки).', 'Record = fewest moves (a move is two flipped cards).')));
     const play = (C, Rn) => {
       const pairs = C * Rn / 2, deck = api.shuffle(api.shuffle(CARDS, api.rng).slice(0, pairs).flatMap(x => [x, x]), api.rng);
@@ -838,7 +1000,7 @@
       let open = [], moves = 0, got = 0, lock = false, secs = 0, over = false;
       const tEl = w.querySelector('.t'), clockId = T.every(() => { secs++; tEl.textContent = fmtT(secs); }, 1000);
       const els = deck.map((cd, i) => {
-        const e = mk('div', 'bg39-card', `<div class="bg39-back">🪪</div><div class="bg39-face"><b>${cd[0]}</b><small>${api.esc(api.EN ? cd[2] : cd[1])}</small></div>`);
+        const e = mk('div', 'bg39-card', `<div class="bg39-back"><i></i></div><div class="bg39-face" style="--h:${(CARDS.indexOf(cd) * 47) % 360}"><b>${cd[0]}</b><small>${api.esc(api.EN ? cd[2] : cd[1])}</small></div>`);
         e.setAttribute('role', 'button'); e.setAttribute('aria-label', L('Визитка', 'Card') + ' ' + (i + 1));
         e.onclick = () => flip(i); grid.append(e); return e;
       });
@@ -850,9 +1012,9 @@
         const [a, b] = open;
         if (deck[a] === deck[b]) {
           els[a].classList.add('m'); els[b].classList.add('m'); open = []; got++; api.sfx.item?.();
-          w.querySelector('.pr').textContent = got;
+          w.querySelector('.pr').textContent = got; bump(w.querySelector('.pr')); T.after(() => burst(els[b], 10), 250);
           if (got === pairs) { over = true; T.stop(clockId); T.after(() => api.end({ score: moves, won: true, lowerBetter: true, text: L(`Стол ${C}×${Rn}: все визитки разобраны за ${moves} ходов и ${fmtT(secs)}.`, `${C}×${Rn} table: cleared in ${moves} moves and ${fmtT(secs)}.`) }), 500); }
-        } else { lock = true; T.after(() => { els[a].classList.remove('up'); els[b].classList.remove('up'); open = []; lock = false; }, 800); }
+        } else { lock = true; T.after(() => { els[a].classList.add('no'); els[b].classList.add('no'); }, 380); T.after(() => { els[a].classList.remove('up', 'no'); els[b].classList.remove('up', 'no'); open = []; lock = false; }, 800); }
       };
     };
   };
@@ -881,18 +1043,20 @@
     const stEl = mk('div', 'bg40-st', L('Нажмите «Начать» и повторяйте за боссом', 'Press Start and repeat after the boss'));
     const info = mk('div', 'bgq4-top', `<span>${L('Длина', 'Length')}: <b class="n">0</b></span><span>🏆 <b>${api.best ?? '—'}</b></span>`);
     const pad = mk('div', 'bg40-pad');
-    const btns = PADS.map(([ico, col], i) => { const b = Object.assign(mk('button', 'bg40-b', ico), { type: 'button', disabled: true }); b.style.setProperty('--c', col); b.onpointerdown = e => { e.preventDefault(); press(i); }; pad.append(b); return b; });
-    const go = Object.assign(mk('button', 'bgq4-btn main', '▶ ' + L('Начать', 'Start')), { type: 'button' });
+    const btns = PADS.map(([ico, col], i) => { const b = Object.assign(mk('button', 'bg40-b', `<span>${ico}</span>`), { type: 'button', disabled: true }); b.style.setProperty('--c', col); b.onpointerdown = e => { e.preventDefault(); press(i); }; pad.append(b); return b; });
+    const hub = mk('div', 'bg40-hub', '<span class="face">👔</span><b>0</b>'); pad.append(hub);
+    const face = (f, cls) => { hub.firstChild.textContent = f; hub.classList.toggle('show', cls === 'show'); };
+    const go = Object.assign(mk('button', 'bgq4-btn main bg40-go', '▶ ' + L('Начать', 'Start')), { type: 'button' });
     w.append(info, stEl, pad, go, mk('p', 'bgq4-note', L('Клавиши 1–4 тоже работают.', 'Keys 1–4 work too.'))); root.append(w);
     let seq = [], step = 0, mode = 'idle';
     const light = (i, ms) => { btns[i].classList.add('lit'); tone(PADS[i][2], ms / 1000 + .05); T.after(() => btns[i].classList.remove('lit'), ms); };
     const playSeq = () => {
       mode = 'show'; btns.forEach(b => b.disabled = true);
-      stEl.textContent = L('Босс показывает…', 'The boss is showing…');
-      w.querySelector('.n').textContent = seq.length;
+      stEl.textContent = L('Босс показывает…', 'The boss is showing…'); stEl.className = 'bg40-st'; face('👔', 'show');
+      w.querySelector('.n').textContent = seq.length; hub.lastChild.textContent = seq.length;
       const on = Math.max(220, 480 - seq.length * 18), gap = Math.max(90, 170 - seq.length * 5);
       seq.forEach((p, k) => T.after(() => light(p, on), 500 + k * (on + gap)));
-      T.after(() => { mode = 'input'; step = 0; btns.forEach(b => b.disabled = false); stEl.textContent = L('Ваша очередь!', 'Your turn!'); }, 500 + seq.length * (on + gap));
+      T.after(() => { mode = 'input'; step = 0; btns.forEach(b => b.disabled = false); stEl.textContent = L('Ваша очередь!', 'Your turn!'); face('🧐'); }, 500 + seq.length * (on + gap));
     };
     const grow = () => { seq.push(Math.floor(api.rng() * 4)); playSeq(); };
     const press = i => {
@@ -903,12 +1067,12 @@
         tone(110, .55, 'sawtooth', .12); api.buzz('lose');
         btns[seq[step]].classList.add('lit'); T.after(() => btns[seq[step]]?.classList.remove('lit'), 700);
         const score = seq.length - 1, won = score >= 5;
-        stEl.textContent = L('Не та кнопка!', 'Wrong button!');
+        stEl.textContent = L('Не та кнопка!', 'Wrong button!'); stEl.className = 'bg40-st no'; face('😠'); shake(pad);
         setTimeout(() => api.end({ score, won, text: L(`Вы повторили последовательность из ${score} шагов.`, `You repeated a sequence of ${score} steps.`) + (won ? '' : L(' Для зачёта нужно 5.', ' You need 5 to win.')) }), 800);
         return;
       }
       step++;
-      if (step === seq.length) { mode = 'show'; btns.forEach(b => b.disabled = true); stEl.textContent = L('Отлично!', 'Nice!'); T.after(grow, 600); }
+      if (step === seq.length) { mode = 'show'; btns.forEach(b => b.disabled = true); stEl.textContent = L('Отлично!', 'Nice!'); stEl.className = 'bg40-st ok'; face('😎'); floatTxt(hub, '+1'); if (seq.length % 5 === 0) burst(hub, 16); T.after(grow, 600); }
     };
     go.onclick = () => { go.hidden = true; tone(1, .01); seq = []; grow(); };
     const keyH = e => { const j = '1234'.indexOf(e.key); if (j >= 0) press(j); };
