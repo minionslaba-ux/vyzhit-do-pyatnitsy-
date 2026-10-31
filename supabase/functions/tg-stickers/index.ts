@@ -61,7 +61,7 @@ Deno.serve(async req => {
     for (const g of gs || []) {
       const st = fileId ? await api('sendSticker', { chat_id: g.chat_id, sticker: fileId, disable_notification: true }) : null;
       const m = await api('sendMessage', { chat_id: g.chat_id, disable_notification: true,
-        text: '🕔 Стикеры «Выжить до пятницы» — офисная жизнь в 24 картинках.\n🕔 Survive till Friday stickers — office life in 24 pics.',
+        text: '🕔 Стикеры «Выжить до пятницы» — офисная жизнь в 28 картинках.\n🕔 Survive till Friday stickers — office life in 28 pics.',
         reply_markup: { inline_keyboard: [[{ text: '➕ Добавить стикеры · Add stickers', url: link }], [{ text: '▶ Играть · Play', url: `https://t.me/${me.result.username}?startapp` }]] } });
       posted.push({ chat: g.chat_id, sticker: st ? !!st.ok : null, sent: !!m.ok, err: m.ok ? st?.description : m.description });
       await new Promise(r2 => setTimeout(r2, 1100));
