@@ -509,14 +509,28 @@ function renderCard() {
 // если кнопки ответов не помещаются — ужимаем верх в два шага (без ленты «в игре», ниже шкалы и часы), текст карточки подгоняется
 function fitGame() {
   const g = views.game; if (g.hidden) return;
-  g.classList.remove('tight', 'tighter');
+  g.classList.remove('tight', 'tighter', 'squeeze'); $('card').style.maxHeight = '';
   fitCardText();
-  const vh = () => window.visualViewport?.height || innerHeight;
+  // видимая высота минус «полоска домой» iPhone (safe-area снизу), которую эмуляторы не учитывают
+  const vh = () => (window.visualViewport?.height || innerHeight) - safeBottom();
   const small = () => parseFloat($('card').querySelector('.text')?.style.fontSize || 99) < 16;  // текст пришлось сильно уменьшить
   const over = () => $('btnL').getBoundingClientRect().bottom > vh() - 2 || small();
   if (over()) { g.classList.add('tight'); fitCardText(); }
   if (over()) { g.classList.add('tighter'); fitCardText(); }
+  // последняя страховка: ответы всегда на экране — карточка ужимается, а её текст прокручивается внутри
+  const extra = $('btnL').getBoundingClientRect().bottom - (vh() - 6);
+  if (extra > 0) { const c = $('card'); g.classList.add('squeeze'); c.style.maxHeight = Math.max(120, c.getBoundingClientRect().height - extra) + 'px'; }
+  const tx = $('card').querySelector('.text'); if (tx && tx.scrollHeight > tx.clientHeight + 1) g.classList.add('squeeze');  // текст длинный даже мелким шрифтом — прокрутка, а не обрезка
 }
+let safeB = null;
+function safeBottom() {
+  if (safeB == null) { const pr = document.createElement('div'); pr.style.cssText = 'position:fixed;bottom:0;height:0;padding-bottom:env(safe-area-inset-bottom);visibility:hidden';
+    document.body.append(pr); safeB = parseFloat(getComputedStyle(pr).paddingBottom) || 0; pr.remove(); }
+  return safeB;
+}
+// iOS: панели Safari и клавиатура появляются с задержкой — подогнать ещё раз
+addEventListener('orientationchange', () => { safeB = null; setTimeout(fitGame, 350); });
+window.visualViewport?.addEventListener('scroll', () => requestAnimationFrame(fitGame));
 window.visualViewport?.addEventListener('resize', () => requestAnimationFrame(fitGame));
 // Текст карточки целиком помещается в карточку: если не влезает — шрифт плавно уменьшается (до 14 px), без прокрутки
 function fitCardText() {
