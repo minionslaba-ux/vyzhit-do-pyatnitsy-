@@ -61,6 +61,34 @@ function buildHero(T, p) {
     jk.scale.z = 0.72; jk.material.side = T.DoubleSide;
   }
   // руки: плечо → предплечье → кисть; кольцо на безымянном у тех, кто в браке
+  // кисть: ладонь, четыре пальца из двух фаланг и большой палец, чуть согнуты к ладони (расслабленная рука).
+  // Крепится к группе предплечья (el) — все позы и предметы в руке работают как раньше. Геометрия общая на обе руки, мало полигонов.
+  const hk = f ? 0.98 : 1.12;
+  const palmGeo = new T.CapsuleGeometry(0.5, 1, 4, 12), wristGeo = new T.CapsuleGeometry(0.021 * hk, 0.03 * hk, 3, 10);
+  const capG = new Map(), cap = (r, l) => { const key = r + ':' + l; if (!capG.has(key)) capG.set(key, new T.CapsuleGeometry(r * hk, l * hk, 3, 8)); return capG.get(key); };
+  const ringM = p.married ? phys('#f0c75a', 0.2, { metalness: 0.9, clearcoat: 1 }) : null;
+  // [смещение вдоль ширины ладони (z; указательный — вперёд, к большому пальцу), подъём костяшки, радиус, 1-я фаланга, 2-я фаланга]
+  const FINGERS = [[0.0255, 0, 0.0074, 0.033, 0.026], [0.0085, -0.003, 0.0077, 0.036, 0.028], [-0.0085, 0.001, 0.0073, 0.034, 0.026], [-0.0245, 0.007, 0.0064, 0.026, 0.021]];
+  const buildHand = (s, el, ring) => {
+    const in_ = -s;  // в сторону ладони (к телу, когда рука опущена)
+    const hg = new T.Group(); hg.position.set(0, -0.262, 0.004); el.add(hg);
+    add(wristGeo, skin, 0, -0.008 * hk, 0, hg).scale.set(0.78, 1, 1.25);  // запястье: плоское, как ладонь
+    const palm = add(palmGeo, skin, 0, -0.04 * hk, 0, hg); palm.scale.set(0.034 * hk, 0.046 * hk, 0.074 * hk);  // ладонь: капсула, сплющенная в «скруглённый брусок»
+    FINGERS.forEach(([z, dy, r, l1, l2], i) => {
+      const k1 = new T.Group(); k1.position.set(in_ * 0.003 * hk, (-0.074 + dy) * hk, z * hk); hg.add(k1);
+      k1.rotation.set(-z * 2.2, 0, in_ * (0.22 + i * 0.05));  // веер пальцев и лёгкий изгиб в костяшке
+      add(cap(r, l1), skin, 0, -l1 * hk / 2, 0, k1);
+      const k2 = new T.Group(); k2.position.y = -l1 * hk; k2.rotation.z = in_ * (0.42 + i * 0.06); k1.add(k2);
+      add(cap(r * 0.92, l2), skin, 0, -l2 * hk / 2, 0, k2);
+      if (ring && i === 2) { const rg = add(new T.TorusGeometry(r * hk * 1.12, 0.0022 * hk, 6, 14), ringM, 0, -l1 * hk * 0.45, 0, k1); rg.rotation.x = Math.PI / 2; }  // кольцо на безымянном
+    });
+    const th = new T.Group(); th.position.set(in_ * 0.009 * hk, -0.026 * hk, 0.028 * hk); hg.add(th);
+    th.rotation.set(-0.3, 0, in_ * 0.2);  // большой палец — вперёд-вниз и к ладони
+    add(cap(0.0095, 0.024), skin, 0, -0.012 * hk, 0, th);
+    const t2 = new T.Group(); t2.position.y = -0.024 * hk; t2.rotation.set(-0.1, 0, in_ * 0.3); th.add(t2);
+    add(cap(0.0084, 0.018), skin, 0, -0.009 * hk, 0, t2);
+    return hg;
+  };
   const arms = [], sx = f ? 0.158 : 0.212;
   for (const s of [-1, 1]) {
     const sh = new T.Group(); sh.position.set(s * sx * H, 1.39 * H, 0); body.add(sh);
@@ -68,8 +96,7 @@ function buildHero(T, p) {
     add(new T.CapsuleGeometry(f ? 0.042 : 0.054, 0.24, 8, 16), sleeve, 0, -0.16, 0, sh);
     const el = new T.Group(); el.position.set(0, -0.31, 0); sh.add(el);
     add(new T.CapsuleGeometry(f ? 0.035 : 0.045, 0.22, 8, 16), p.short && !p.jacket ? skin : sleeve, 0, -0.13, 0, el);
-    const hand = add(sph(f ? 0.04 : 0.047), skin, 0, -0.285, 0.005, el); hand.scale.set(0.85, 1.2, 0.68);
-    if (s === -1 && p.married) { const ring = add(new T.TorusGeometry(0.019, 0.006, 8, 20), phys('#f0c75a', 0.2, { metalness: 0.9, clearcoat: 1 }), 0, -0.305, 0, el); ring.rotation.x = Math.PI / 2; }
+    buildHand(s, el, s === -1 && p.married);
     sh.rotation.z = s * (f ? 0.2 : 0.12);
     arms.push({ sh, el, rest: s * (f ? 0.2 : 0.12) });
   }
