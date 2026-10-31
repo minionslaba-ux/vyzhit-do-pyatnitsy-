@@ -1476,3 +1476,5 @@ html.light .tu-btn { color: #8a6400 !important; }
 /* во время недели всплывашки — сверху, у часов: внизу они закрывали кнопки ответов */
 body:has(#game:not([hidden])) .toast-bar { bottom: auto; top: calc(max(14px, env(safe-area-inset-top, 0px)) + 4px); transform: translate(-50%, -20px); }
 body:has(#game:not([hidden])) .toast-bar.on { transform: translate(-50%, 0); }
+.btn-ad { border-color: rgba(45,226,138,.55) !important; }
+.btn-ad:disabled { opacity: .55; }

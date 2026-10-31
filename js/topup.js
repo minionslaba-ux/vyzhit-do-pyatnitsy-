@@ -32,6 +32,7 @@ function openTopup({ need = 0, why = '', then } = {}) {
       <p class="join-err" id="tuErr" role="alert"></p>
       <button class="btn-main" type="button" id="tuPay">${L('Оплатить', 'Pay')} ${rub(n)}</button>
       <p class="tu-alt">${L('Или заработайте в игре: зарплата, премии за дедлайны, задания дня, награды за друзей.', 'Or earn it in the game: salary, deadline bonuses, daily quests, referral rewards.')}</p>
+      ${adBtnHtml()}
       <button class="btn-ghost" type="button" id="tuClose">${L('Не сейчас', 'Not now')}</button></div>`;
     m.hidden = false;
     const set = x => { n = Math.max(1, Math.min(500, x)); $('tuN').textContent = n; $('tuSum').textContent = rub(n); $('tuPay').textContent = `${L('Оплатить', 'Pay')} ${rub(n)}`; m.querySelectorAll('.tu-pack').forEach(b => b.classList.toggle('on', +b.dataset.n === n)); };

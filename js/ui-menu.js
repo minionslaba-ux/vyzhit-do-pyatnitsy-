@@ -58,6 +58,7 @@ function renderMenu() {
       <div class="cc-trait">${PROF[Cm.prof].name} · ${TRAITS[Cm.trait || 'workaholic'].name}</div>
       <div class="money" style="grid-column:1/-1"><div><b>${money(Cm.bank || 0)}</b><span>${L(`на счёте · оклад ${money(Cm.salary || 2)}/день`, `in the bank · salary ${money(Cm.salary || 2)}/day`)}</span>${window.VDP_PLATFORM ? '' : topupBtn(0, '')}</div><div><b>${fmtDays(Cm.vacation || 0)} ${L('дн.', 'days')}</b><span>${L(`отпуска из ${VAC_YEAR}`, `vacation of ${VAC_YEAR}`)}</span></div></div>
       ${certBtnHtml(Cm)}
+      ${adBtnHtml('btn-ghost btn-ad" style="grid-column:1/-1')}
       ${!careerSave && Cm.stage === 'work' && (Cm.vacation || 0) >= 7 && Cm.week <= YEAR ? '<button class="btn-ghost btn-vac" id="menuVac" style="grid-column:1/-1">' + L('Уйти в отпуск на неделю (7 дн.)', 'Take a week of vacation (7 days)') + '</button>' : ''}`;
     if ($('certBtn')) $('certBtn').onclick = () => certStart();
     if ($('menuVac')) $('menuVac').onclick = () => { C = store.get(KEY.career, null); takeVacation(); };
