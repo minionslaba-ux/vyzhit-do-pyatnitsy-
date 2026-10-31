@@ -1713,3 +1713,7 @@ html.light .shp-ok, html.light .shp-sc-cell.got em { color: #0f8a55; }
 .shp-coffee p { margin: 0; font-size: 13px; color: var(--text-2); }
 .shp-coffee .tu-agree { font-size: 12px; }
 .shp-maecenas { display: inline-block; justify-self: start; width: max-content; padding: 1px 8px; margin: 2px 0; border-radius: 999px; font-size: 12px; font-weight: 900; color: #3a1d00; background: linear-gradient(135deg, #ffcf3d, #ff9a2e); white-space: nowrap; }
+/* Документы магазина на виду (требование платёжных систем): сразу под заголовком */
+.legal-top { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin: 8px 0 2px; font-size: 13px; font-weight: 800; }
+.legal-top a { color: var(--text-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(var(--w-rgb),.3); padding: 2px 0; }
+.legal-top a:hover { color: var(--text); }
