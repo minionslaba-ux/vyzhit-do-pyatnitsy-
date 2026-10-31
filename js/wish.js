@@ -262,6 +262,7 @@ function goodsPicker(catId, after) {
 }
 
 function buyGoods(cat, list, price, mood, after) {
+  voiceUnlock();
   const C2 = careerNow(), h = C2.hero;
   if (C2.bank < price) return;
   C2.bank -= price; C2.spent = (C2.spent || 0) + price;
@@ -285,6 +286,7 @@ const TOON_LEN = { market: n => Math.min(15000, 6500 + n * 750), delivery: () =>
 const OUTING_FX = { latte: '☕', book: '📖', cinema: '🍿', dinner: '🕯️', spa: '🫧', concert: '🎶', tent: '🌲', workshop: '🎨', camp: '🌲', music: '🎵', party: '🎈', ball: '⚽' };
 const RIDE_BG = { boat: 'water', car: 'city', moto: 'city', bike: 'park', scooter: 'park', skate: 'park' };
 function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after) {
+  voiceUnlock();  // мультик запускается по нажатию «Купить» — разрешаем речь сейчас, реплика прозвучит в кульминации (iOS)
   const m = $('modal'), C2 = careerNow();
   dropView();
   const x = list[0], who = kid || h, fem = kid ? kid.g === 'f' : heroFem(h), nm = esc(who.name);
@@ -332,7 +334,8 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
   const cap = i => { const p = stage.querySelector('.tn-cap'); if (p && caps[i]) { p.textContent = caps[i]; p.classList.remove('on'); void p.offsetWidth; p.classList.add('on'); } };
   // голос: в кульминации — реплика к ситуации (поехали / красота / мечта сбылась / спасибо, люблю, рад), в конце — «спасибо»
   const voice = kid ? kidVoice(kid) : heroVoice(h);
-  const peak = lineFor(kid ? 'kid_thanks' : { ride: 'ride', fish: 'ride', salon: 'beauty', need: 'big' }[kind] || rnd(['thanks', 'love', 'joy']), fem);
+  const gift = cat?.id === 'flowers' || x?.id === 'flowers' ? 'flowers' : cat?.id === 'sweets' || kind === 'delivery' ? 'gift' : null;  // цветы / сладкое — «Цветы? Мне? Ну ты даёшь!»
+  const peak = lineFor(kid ? 'kid_thanks' : gift || { ride: 'ride', fish: 'ride', salon: 'beauty', need: 'big' }[kind] || rnd(['thanks', 'love', 'joy']), fem);
   const bye = lineFor(kid ? 'kid_thanks' : rnd(['thanks', 'love']), fem);
   let spoke = false;
   const sayPeak = () => { if (spoke) return; spoke = true; const b = stage.querySelector('.tn-say'); b.textContent = `«${peak}»`; b.hidden = false; say(peak, voice); };

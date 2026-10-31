@@ -12,6 +12,12 @@ const LINES_RU = {
     'Спасибо, это то, что нужно!', 'Благодарю от всего сердца!', 'Спасибо! Теперь можно и до пятницы дожить.', 'Спасибо, ты моя опора!', 'Спасибо, без тебя бы не справил{ся}.', 'Спасибо, у меня нет слов!',
     'Спасибо! Обнимаю!', 'Спасибо, это так трогательно!', 'Спасибо, ты всегда рядом!', 'Ой, спасибо! Я сейчас расплачусь.', 'Спасибо, это было очень нужно!', 'Спасибо за заботу!', 'Спасибо, ты чудо!',
     'Спасибо, теперь я самый счастливый человек в офисе!', 'Спасибо! Вечер спасён.', 'Спасибо, я в долгу не останусь!'],
+  // подарок — цветы (12) и сладкое / приятные мелочи (12): говорит в мультике покупки
+  flowers: ['Цветы? Мне? Ну ты даёшь!', 'Спасибо, это так приятно!', 'Какие красивые! Спасибо!', 'Ой, цветы! Я прямо растаял{а}!', 'Мне давно не дарили цветов. Спасибо!',
+    'Вот это букет! Спасибо!', 'Как они пахнут! Спасибо тебе!', 'Цветы без повода — это лучшее! Спасибо!', 'Спасибо! Поставлю на самое видное место.', 'Ну ты даёшь! Я так рад{а}!',
+    'Какая красота! Я тронут{а}!', 'Спасибо, теперь дома пахнет весной!'],
+  gift: ['Это мне? Спасибо, это так приятно!', 'Ну ты даёшь! Спасибо!', 'Какой сюрприз! Спасибо!', 'Спасибо, ты меня балуешь!', 'Ой, как приятно! Спасибо!', 'Вкуснятина! Спасибо!',
+    'Ты знаешь, чем меня порадовать. Спасибо!', 'Спасибо, это то, что нужно!', 'Вот это подарок! Я так рад{а}!', 'Спасибо! Ты лучше всех!', 'Ох, не ожидал{а}! Спасибо!', 'Спасибо, это так мило!'],
   // люблю — тёплые слова (25)
   love: ['Я люблю тебя!', 'Люблю тебя больше всех!', 'Ты у меня самый лучший человек!', 'Обожаю тебя!', 'Как же я тебя люблю!', 'Ты — мой человек.', 'С тобой мне ничего не страшно.',
     'Люблю тебя до луны и обратно!', 'Ты делаешь меня счастливым человеком.', 'Хорошо, что ты у меня есть.', 'Ты — моё лучшее решение.', 'Люблю, когда ты так заботишься.', 'Мне с тобой так повезло!',
@@ -63,6 +69,8 @@ const LINES_RU = {
 };
 const LINES_EN = {
   thanks: ['Thank you!', 'Thanks so much!', 'You’re the best, thank you!', 'Wow, thank you!', 'You spoil me, thanks!', 'Thanks, this is just what I needed!', 'Thank you from the bottom of my heart!', 'Thanks, you’re a lifesaver!'],
+  flowers: ['Flowers? For me? You shouldn’t have!', 'Thank you, that’s so sweet!', 'They’re beautiful! Thank you!', 'Flowers for no reason — the best! Thanks!', 'They smell wonderful! Thank you!'],
+  gift: ['For me? Thank you, that’s so sweet!', 'Oh, you shouldn’t have! Thanks!', 'What a surprise! Thank you!', 'You spoil me, thanks!', 'Yum! Thank you!', 'Just what I needed. Thank you!'],
   love: ['I love you!', 'Love you to the moon and back!', 'I’m so lucky to have you!', 'You’re my favorite person!', 'You make me so happy!'],
   joy: ['I’m so happy!', 'Yay!', 'Best day of the week!', 'I can’t believe it!', 'Dream come true!', 'Woo-hoo!'],
   plead: ['Please!', 'Pretty please!', 'I really need this!', 'Oh, come on, please!', 'Just this once!', 'It would make my whole week!', 'Please, I’ve earned it!'],
@@ -536,11 +544,28 @@ let voicesRu = [];
 const loadVoices = () => { try { const all = speechSynthesis.getVoices(); voicesRu = all.filter(v => v.lang?.toLowerCase().startsWith(EN ? 'en' : 'ru')); } catch {} };
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
 const FEM_V = /female|женск|milena|irina|alena|alyona|anna|katya|google рус|samantha|victoria|karen|zira|tessa|moira/i, MALE_V = /male|мужск|yuri|pavel|maxim|dmitr|daniel|alex|fred|david|george/i;
+// iOS Safari (и часть мобильных браузеров) озвучивает речь, только если первая фраза запущена прямо в обработчике
+// нажатия. Реплики персонажа звучат позже (в кульминации мультика, через таймер) — поэтому в момент нажатия
+// «разблокируем» синтезатор беззвучной пустой фразой. Вызывается из кнопок покупки и при любом нажатии, пока не сработает.
+let voiceReady = false, unlockAt = 0;
+function voiceUnlock() {
+  if (!('speechSynthesis' in window) || !prefs.sound || performance.now() - unlockAt < 400) return;  // одно нажатие — одна разблокировка
+  try {
+    unlockAt = performance.now();
+    if (!voicesRu.length) loadVoices();
+    if (speechSynthesis.speaking || speechSynthesis.pending) { voiceReady = true; return; }  // уже говорит — разблокировано
+    const u = new SpeechSynthesisUtterance(' ');
+    u.volume = 0; u.rate = 10; u.lang = EN ? 'en-US' : 'ru-RU';
+    speechSynthesis.speak(u); voiceReady = true;
+  } catch {}
+}
+if ('speechSynthesis' in window) for (const ev of ['touchend', 'click']) document.addEventListener(ev, () => { if (!voiceReady) voiceUnlock(); }, { capture: true, passive: true });
+let utter = null;  // держим ссылку: иначе сборщик мусора в некоторых браузерах обрывает фразу на полуслове
 // who: { fem, kid } — подбирает голос и высоту: мужчина ниже, женщина выше, ребёнок — ещё выше и быстрее
 function say(text, { fem = false, kid = false } = {}) {
   if (!prefs.sound || !text || !('speechSynthesis' in window)) return;
   try {
-    speechSynthesis.cancel();
+    if (!voicesRu.length) loadVoices();
     const u = new SpeechSynthesisUtterance(text.replace(/[^\p{L}\p{N}\s.,!?…—«»'’-]/gu, ''));
     u.lang = EN ? 'en-US' : 'ru-RU';
     const pick = voicesRu.find(v => (fem || kid ? FEM_V : MALE_V).test(v.name) && !(fem || kid ? MALE_V : FEM_V).test(v.name)) || voicesRu[0];
@@ -548,7 +573,11 @@ function say(text, { fem = false, kid = false } = {}) {
     const femVoice = pick && FEM_V.test(pick.name);
     u.pitch = kid ? 1.75 : fem ? (femVoice ? 1.1 : 1.45) : (femVoice ? 0.55 : 0.85);
     u.rate = kid ? 1.12 : 1.02; u.volume = 1;
-    speechSynthesis.speak(u);
+    utter = u;
+    // cancel() и сразу speak() в Safari иногда «съедает» новую фразу — прерываем, только если что-то звучит, и говорим чуть позже
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(() => { try { speechSynthesis.speak(u); } catch {} }, 60); }
+    else speechSynthesis.speak(u);
+    if (speechSynthesis.paused) speechSynthesis.resume();
   } catch {}
 }
 // Сказать реплику ситуации и вернуть её текст (для подписи)
