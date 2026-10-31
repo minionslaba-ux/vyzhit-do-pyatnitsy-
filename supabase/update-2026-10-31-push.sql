@@ -1,4 +1,4 @@
--- Пуш-уведомления браузера (уже применено в проекте Supabase). Функции push-subscribe / push-send — ещё НЕ развёрнуты.
+-- Пуш-уведомления браузера (уже применено в проекте Supabase). Функции push-subscribe и push-send развёрнуты.
 create table if not exists public.push_subs (
   endpoint   text primary key check (endpoint ~ '^https://' and char_length(endpoint) < 1000),
   p256dh     text not null,
@@ -20,3 +20,8 @@ create table if not exists public.push_keys (
 );
 alter table public.push_keys enable row level security;
 revoke all on public.push_keys from anon, authenticated;
+
+-- Расписание рассылки (UTC): 06:40, 10:40, 16:40 = 09:40, 13:40, 19:40 по Москве. Ключ запуска берётся из закрытой таблицы.
+select cron.schedule('push-morning', '40 6 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
+select cron.schedule('push-day', '40 10 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
+select cron.schedule('push-evening', '40 16 * * *', $$select net.http_post(url := 'https://auequuxfcwdshblqrwbd.supabase.co/functions/v1/push-send', headers := '{"Content-Type": "application/json"}'::jsonb, body := jsonb_build_object('key', (select cron_key from public.push_keys where id = 1)))$$);
