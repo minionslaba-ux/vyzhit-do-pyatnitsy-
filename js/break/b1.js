@@ -21,8 +21,8 @@
 .bg1-dk { background: #1b1b2c; } .bg1-lt { background: #2a2a40; }
 .bg1-ck .bg1-lt { background: #34324a; cursor: default; }
 .bg1-pc { width: 78%; height: 78%; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-style: normal; font-size: calc(var(--cs) * .4); box-sizing: border-box; transition: transform .15s; }
-.bg1-me { background: radial-gradient(circle at 35% 30%, var(--magenta-l), var(--magenta) 60%, #a01f86); box-shadow: 0 0 10px rgba(var(--m-rgb),.7), inset 0 -3px 0 rgba(0,0,0,.25); }
-.bg1-ai { background: radial-gradient(circle at 35% 30%, var(--cyan-l), var(--cyan) 60%, #13868a); box-shadow: 0 0 10px rgba(var(--c-rgb),.6), inset 0 -3px 0 rgba(0,0,0,.25); }
+.bg1-me { background: radial-gradient(circle at 35% 30%, #ff9be9, #ff3bd4 60%, #a01f86); box-shadow: 0 0 10px rgba(255,59,212,.7), inset 0 -3px 0 rgba(0,0,0,.25); }
+.bg1-ai { background: radial-gradient(circle at 35% 30%, #a6fbff, #2de2e6 60%, #13868a); box-shadow: 0 0 10px rgba(45,226,230,.6), inset 0 -3px 0 rgba(0,0,0,.25); }
 .bg1-mv .bg1-me { outline: 2px dashed rgba(var(--w-rgb),.45); outline-offset: 2px; }
 .bg1-sel { background: rgba(var(--m-rgb),.35) !important; }
 .bg1-sel .bg1-pc { transform: scale(1.1); }
@@ -89,6 +89,15 @@
       later: (f, ms) => { const id = setTimeout(f, ms); T.push(id); return id; },
       every: (f, ms) => { const id = setInterval(f, ms); I.push(id); return id; },
       on: (t, ev, f, o) => { t.addEventListener(ev, f, o); F.push(() => t.removeEventListener(ev, f, o)); },
+      // перетаскивание по клеткам: нажали на одной, отпустили на другой — как два нажатия (клик тогда не срабатывает)
+      drag: (bd, cells, tap) => {
+        let from = -1;
+        const at = e => { const t = document.elementFromPoint(e.clientX, e.clientY); return cells.findIndex(c => c === t || c.contains(t)); };
+        bd.style.touchAction = 'none';
+        bd.addEventListener('pointerdown', e => { from = at(e); });
+        bd.addEventListener('pointerup', e => { const to = at(e); if (from >= 0 && to >= 0 && to !== from) { tap(from); tap(to); } from = -1; });
+        bd.addEventListener('pointercancel', () => { from = -1; });
+      },
       W: (max = 440) => Math.floor(Math.max(260, Math.min((root.clientWidth || 360) - 16, max))),
       clear: () => { root.innerHTML = ''; return el('div', 'bg1-wrap', null, root); },
       menu(title, opts, cb, note) {
@@ -182,7 +191,7 @@
     const LV = [null, [L('Стажёр', 'Intern'), '🧑‍🎓'], [L('Мидл', 'Mid-level'), '🧑‍💼'], [L('Директор', 'Director'), '👔']];
     U.menu(L('Кто сядет за доску?', 'Who takes the board?'), [1, 2, 3].map(v => ({ v, t: `${LV[v][1]} ${LV[v][0]}`,
       s: [, L('Ходит как попало', 'Moves at random'), L('Смотрит на ход вперёд', 'Looks one move ahead'), L('Просчитывает варианты', 'Calculates deep lines')][v] })), play,
-      L('Русские шашки: бить обязательно (и назад тоже), дамка ходит далеко. Вы — розовые и ходите первыми.', 'Russian checkers: captures are mandatory (backwards too), kings fly. You are pink and move first.'));
+      L('Русские шашки: бить обязательно (и назад тоже), дамка ходит далеко. Ваши шашки — розовые, внизу; ходите первыми. Нажмите шашку, потом клетку (или перетащите пальцем).', 'Russian checkers: captures are mandatory (backwards too), kings fly. Yours are pink, at the bottom; you move first. Tap a piece, then a square (or drag it).'));
     function play(level) {
       let b = Array(64).fill(0);
       for (let s = 0; s < 64; s++) { const r = s >> 3, c = s & 7; if ((r + c) % 2) { if (r < 3) b[s] = -1; else if (r > 4) b[s] = 1; } }
@@ -190,6 +199,7 @@
       const st = U.el('span', 'bg1-st', '', bar), cnt = U.el('span', 'bg1-dim', '', bar);
       const bd = U.board(w, 8, 'bg1-ck');
       const cells = []; for (let s = 0; s < 64; s++) { const c = U.el('div', 'bg1-cell ' + (((s >> 3) + (s & 7)) % 2 ? 'bg1-dk' : 'bg1-lt'), null, bd); c.onclick = () => tap(s); cells.push(c); }
+      U.drag(bd, cells, tap);
       const row = U.el('div', 'bg1-row', null, w), give = U.el('button', 'bg1-btn', L('🏳️ Сдаться', '🏳️ Resign'), row);
       give.onclick = () => !done && finish(false, L('Вы сдались. Босс доволен собой.', 'You resigned. The Boss is pleased.'));
       let turn = 1, sel = null, legal = ckMoves(b, 1), last = [], myMoves = 0, quiet = 0, done = false;
@@ -266,6 +276,7 @@
     const bar = U.el('div', 'bg1-bar', null, w), st = U.el('span', 'bg1-st', '', bar), cnt = U.el('span', 'bg1-dim', '', bar);
     const bd = U.board(w, 8);
     const cells = []; for (let s = 0; s < 64; s++) { const c = U.el('div', 'bg1-cell ' + (((s >> 3) + (s & 7)) % 2 ? 'bg1-dk' : 'bg1-lt') + (inA(s) ? ' bg1-zone2' : inP(s) ? ' bg1-zone' : ''), null, bd); c.onclick = () => tap(s); cells.push(c); }
+    U.drag(bd, cells, tap);
     let sel = null, ds = [], my = 0, their = 0, turn = 1, done = false, last = [];
     function render() {
       cells.forEach((c, s) => {
