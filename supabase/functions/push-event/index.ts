@@ -1,9 +1,10 @@
-// Пуш по событию (вызывает триггер базы push_notify): личное сообщение (dm) или приглашение в офис (invite).
-// Получателю — на все его подписки; не чаще одного пуша о сообщениях в 3 минуты (переписка не превращается в шквал).
+// Пуш по событию (вызывает триггер базы push_notify): личное сообщение (dm), приглашение в офис (invite) или подарок (gift).
+// Получателю — на все его подписки; не чаще одного пуша о сообщениях и подарках в 3 минуты (переписка не превращается в шквал).
 // Защита — cron_key из закрытой таблицы push_keys (его подставляет триггер).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import webpush from 'npm:web-push@3.6.7';
 
+const GIFTS: Record<string, string> = { coffee: '☕', donut: '🍩', rose: '🌹', champagne: '🍾', trophy: '🏆', diamond: '💎' };
 const cut = (s: string, n: number) => (s || '').replace(/\s+/g, ' ').trim().slice(0, n) + ((s || '').length > n ? '…' : '');
 
 Deno.serve(async req => {
@@ -30,13 +31,21 @@ Deno.serve(async req => {
       const name = cut(p?.name || 'Коллега', 24), team = cut(t?.name || 'офис', 30);
       msg = { t: `🏢 Приглашение в «${team}»`, b: `${name} зовёт тебя в свой офис — играть вместе и соревноваться.`, url: '/?open=invite&utm_source=push&utm_medium=web&utm_campaign=invite',
         en: { t: `🏢 Invite to “${team}”`, b: `${name} invites you to their Office — play together and compete.` } };
+    } else if (kind === 'gift') {
+      const { data: g } = await db.from('gifts').select('from_player, to_player, gift').eq('id', id).maybeSingle();
+      if (!g) return new Response('no gift', { status: 404 });
+      to = g.to_player; from = g.from_player;
+      const { data: p } = await db.from('players').select('name').eq('player_id', from).maybeSingle();
+      const name = cut(p?.name || 'Коллега', 24), ico = GIFTS[g.gift] || '🎁';
+      msg = { t: `🎁 ${name} дарит вам ${ico}`, b: 'Загляните в игру — подарок поднимет настроение вашему герою.', url: '/?open=gifts&utm_source=push&utm_medium=web&utm_campaign=gift',
+        en: { t: `🎁 ${name} sent you ${ico}`, b: 'Open the game — the gift will cheer up your character.' } };
     } else return new Response('bad kind', { status: 400 });
 
     const { data: subs } = await db.from('push_subs').select('endpoint, p256dh, auth, lang, last_event_at').eq('player_id', to);
     const now = Date.now();
     let sent = 0;
     for (const s of subs || []) {
-      if (kind === 'dm' && s.last_event_at && now - new Date(s.last_event_at).getTime() < 3 * 60e3) continue;
+      if ((kind === 'dm' || kind === 'gift') && s.last_event_at && now - new Date(s.last_event_at).getTime() < 3 * 60e3) continue;
       const m = s.lang === 'en' ? { ...msg!.en, url: msg!.url } : msg!;
       try {
         await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, JSON.stringify({ t: m.t, b: m.b, url: m.url, tag: kind }), { TTL: 24 * 3600, urgency: 'high' });

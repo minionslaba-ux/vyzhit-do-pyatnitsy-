@@ -114,7 +114,7 @@ async function playBreak(n, opts = {}) {
     end({ score = null, won = true, text = '', lowerBetter = false } = {}) {
       if (ended) return; ended = true;
       cleanups.splice(0).forEach(f => { try { f(); } catch {} });
-      const b = brkBest(); let rec = false;
+      const b = brkBest(), had = b[n] != null; let rec = false;
       if (score != null && won && (b[n] == null || (lowerBetter ? score < b[n] : score > b[n]))) { b[n] = score; store.set('vdp-break-best', b); rec = true; }
       const t = brkToday(); let reward = '';
       if (won && t.n < BREAK_DAY_REWARDS) {
@@ -125,6 +125,7 @@ async function playBreak(n, opts = {}) {
         reward = L(`+1 у.е.${now ? '' : ' (придут в карьеру)'} · бодрость +${BREAK_BUFF} на следующую неделю`, `+$1${now ? '' : ' (goes to your career)'} · +${BREAK_BUFF} boost for next week`);
       }
       track('break_end', { detail: `${n}:${won ? 1 : 0}:${score ?? ''}` });
+      if (rec && had) track('break_record', { detail: `${n}:${score}` });  // побит прежний рекорд — в «Ленту»
       // После каждой партии — обязательный рекламный ролик (без награды), потом итог. Кроме покупавших у.е. картой.
       const show = () => {
       won ? sfx.win?.() : sfx.lose?.();

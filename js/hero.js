@@ -155,6 +155,7 @@ function fulfill(C2, h, n, credit) {
   if (n.id === 'wedding') h.married = true;
   if (h.pending === n.id) h.pending = null;
   careerSave(C2); sfx.coins?.();
+  track('hero_buy', { detail: `need:${n.id}:${n.price}` });  // крупные покупки (машина, квартира) попадают в «Ленту»
   toast(credit ? L(`${n.ico} Куплено в кредит. Долг банку: ${money(C2.loan)}`, `${n.ico} Bought on credit. You owe the bank ${money(C2.loan)}`)
     : L(`${n.ico} Куплено! ${h.name} доволен${heroFem(h) ? 'а' : ''}`, `${n.ico} Done! ${h.name} is happy`));
   return true;

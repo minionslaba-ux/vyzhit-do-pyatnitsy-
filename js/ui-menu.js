@@ -312,7 +312,7 @@ function openBoard(from, mode) {
 const rowsScore = (rows, tag) => rows.map((e, i) => { const r = resultText(e), medal = i < 3;
   return `<div class="lb-row${e.tag === tag ? ' me' : ''}">
     <span class="lb-pos${medal ? ' medal' : ''}">${String(i + 1).padStart(2, '0')}</span>
-    <span class="lb-who"><b>${esc(e.avatar || '')} ${esc(e.name)}</b><small>${esc(e.dept || L('без отдела', 'no department'))}${e.prof ? ` · ${PROF[e.prof]?.name || ''}` : ''}</small></span>
+    <span class="lb-who"><b>${esc(e.avatar || '')} ${esc(e.name)}</b><small>${esc(e.dept || L('без отдела', 'no department'))}${e.prof ? ` · ${esc(profOf(e))}` : ''}</small></span>
     <span class="lb-res ${e.won ? 'won' : 'lost'}"><b>${r.main}</b><small>${r.sub}</small></span></div>`; }).join('');
 async function renderBoard(quiet) {
   const onlyDept = $('onlyDept').checked;
@@ -339,7 +339,7 @@ async function renderBoard(quiet) {
       if (!rows.length) { list.innerHTML = L('<div class="lb-empty"><span class="big">Пусто</span>Пока никого нет.</div>', '<div class="lb-empty"><span class="big">Empty</span>Nobody here yet.</div>'); return; }
       list.innerHTML = rows.map(p => `<div class="lb-row person${p.tag === tag ? ' me' : ''}">
         <span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
-        <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? L(' (вы)', ' (you)') : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}</small>
+        <span class="lb-who"><b>${esc(p.name)}${p.tag === tag ? L(' (вы)', ' (you)') : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}${p.prof_custom ? ' · ' + esc(profOf(p)) : ''}</small>
           <small class="lb-meta">${L('недель', 'weeks')}: ${p.games || 0} · ${L('побед', 'wins')}: ${p.wins || 0}${p.games ? ` · ${L('лучшее', 'best')}: ${p.best_won ? `${p.best_total}/400` : stepName(p.best_step)}` : ''}</small></span>
         <span class="lb-res">${personStatus(p)}${canInvite && p.tag !== tag && p.short_id ? `<button class="btn-chip" data-invite="${p.short_id}">${L('Позвать в офис', 'Invite to office')}</button>` : ''}</span></div>`).join('');
       bindInvite(list);
@@ -473,7 +473,7 @@ $('bell').onclick = () => {
 // ---------- кто сейчас в игре: позвать в свой офис ----------
 let onlineNow = async () => { const me = await myTag, now = Date.now(); return ((await board.people()) || []).filter(p => p.tag !== me && now - new Date(p.updated_at) < 5 * 60000); };
 const onlineRow = p => `<div class="lb-row person"><span class="lb-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span>
-  <span class="lb-who"><b>${esc(p.name)}${p.desk ? ` <span class="desk-mini">${esc(p.desk)}</span>` : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</small></span>
+  <span class="lb-who"><b>${esc(p.name)}${p.desk ? ` <span class="desk-mini">${esc(p.desk)}</span>` : ''}</b><small>${p.npc ? `<span class="npc-tag" style="margin:0">🤖 ${L('персонаж игры', 'game character')}</span> · ` : ''}${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + esc(profOf(p)) : ''}</small></span>
   <span class="lb-res">${personStatus(p)}${p.short_id ? `<button class="btn-chip" type="button" data-dm="${p.short_id}" data-name="${esc(p.name)}">${L('Написать', 'Message')}</button><button class="btn-chip" type="button" data-invite="${p.short_id}">${L('Позвать', 'Invite')}</button>` : ''}</span></div>`;
 const bindInvite = root => {
   root.querySelectorAll('[data-invite]').forEach(b => b.onclick = () => inviteToOffice(b.dataset.invite, b));
@@ -684,7 +684,7 @@ async function showChat(channel) {
   setPhase('evening'); clearInterval(chatTimer); chatLast = ''; chatChannel = channel;
   views.end.innerHTML = `<div class="chat">
     <div class="board-head"><button class="back-btn" id="chBack" type="button">${L('← Назад', '← Back')}</button><h2>${channel === 'team' ? L('Чат офиса', 'Office chat') : L('Общий чат', 'General chat')}</h2><span class="back-sp"></span></div>
-    <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="false">${L('Личные', 'Direct')}</button></div>
+    <div class="tabs tabs4" role="tablist"><button class="tab" role="tab" id="chFeed" aria-selected="false">${L('Лента', 'Feed')}</button><button class="tab" role="tab" id="chTeam" aria-selected="${channel === 'team'}">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="${channel === 'global'}">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="false">${L('Личные', 'Direct')}</button></div>
     <div class="chat-list panel" id="chList" aria-live="polite"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div>
     <form class="chat-form" id="chForm"><input id="chText" maxlength="300" placeholder="${L('Сообщение', 'Message')}" autocomplete="off" aria-label="${L('Сообщение', 'Message')}"><button class="btn-main" type="submit">${L('Отправить', 'Send')}</button></form>
   </div>`;
@@ -694,6 +694,8 @@ async function showChat(channel) {
   $('chTeam').onclick = () => { leave(); showChat('team'); };
   $('chAll').onclick = () => { leave(); showChat('global'); };
   $('chDm').onclick = () => { leave(); showDmInbox(); };
+  $('chFeed').onclick = () => { leave(); showFeed(); };
+  socChatExtras();
   await board.touch('menu').catch(() => {});
   const load = async () => {
     if (!$('chList')) return clearInterval(chatTimer);
@@ -713,8 +715,10 @@ async function showChat(channel) {
       }
       list.innerHTML = rows.length ? rows.map(m => `<div class="msg${m.mine ? ' mine' : ''}"><span class="ava-s" aria-hidden="true">${esc(m.avatar || '🙂')}</span>
         <span class="meta">${m.mine ? '' : `<b>${esc(m.name)}</b> · `}${new Date(m.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}${m.dept && !m.mine ? ` · ${esc(m.dept)}` : ''}</span>
-        <span class="bubble">${esc(m.msg)}</span>
+        ${m.gift ? socGiftBubble(m.name, m.gift_to, m.gift) : `<span class="bubble">${esc(m.msg)}</span>`}
+        ${socSlot('msg', m.msg_id, m.short_id, m.name, m.mine)}
         <span class="msg-act">${m.can_hide ? `<button data-hide="${m.msg_id}">${L('Скрыть', 'Hide')}</button>` : ''}${m.mine ? '' : `<button data-report="${m.msg_id}">${L('Пожаловаться', 'Report')}</button>`}</span></div>`).join('') : L('<div class="lb-empty"><span class="big">Тишина</span>Сообщений пока нет. Напишите первыми!</div>', '<div class="lb-empty"><span class="big">Crickets</span>No messages yet. Break the ice!</div>');
+      socDecorate(list, 'msg');
       list.querySelectorAll('[data-hide]').forEach(b => b.onclick = async () => {
         try { await board.rpc('hide_message', { p_id: prefs.playerId, p_msg: +b.dataset.hide }); toast(L('Сообщение скрыто', 'Message hidden')); chatLast = ''; load(); } catch (err) { toast(err.message); } });
       list.querySelectorAll('[data-report]').forEach(b => b.onclick = async () => {
@@ -744,22 +748,23 @@ let openDm = async function (short, name) {
   if (!registered()) return dmNeedAccount();
   const m = $('modal'); clearInterval(dmTimer); dmOpen = short;
   m.innerHTML = `<div class="modal-box glass dm-box" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
-    <div class="dm-head"><h2 id="dmTitle">✉ ${esc(name || L('Игрок', 'Player'))}</h2><button class="ip-x" type="button" id="dmClose" aria-label="${L('Закрыть', 'Close')}">×</button></div>
+    <div class="dm-head"><h2 id="dmTitle">✉ ${esc(name || L('Игрок', 'Player'))}</h2><button class="btn-chip soc-dm-gift" type="button" id="dmGift">🎁 ${L('Подарок', 'Gift')}</button><button class="ip-x" type="button" id="dmClose" aria-label="${L('Закрыть', 'Close')}">×</button></div>
     <div class="dm-list" id="dmList" aria-live="polite"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div>
     <form class="chat-form" id="dmForm"><input id="dmText" maxlength="300" placeholder="${L('Сообщение', 'Message')}" autocomplete="off" aria-label="${L('Сообщение', 'Message')}"><button class="btn-main" type="submit">${L('Отправить', 'Send')}</button></form></div>`;
   m.hidden = false;
   const close = () => { clearInterval(dmTimer); dmOpen = ''; m.hidden = true; };
   $('dmClose').onclick = close; m.onclick = e => { if (e.target === m) close(); };
-  let sig = '';
+  $('dmGift').onclick = () => { clearInterval(dmTimer); dmOpen = ''; socGiftPicker({ kind: lastId ? 'dm' : 'profile', id: lastId || null, to: short, name, back: () => openDm(short, name) }); };
+  let sig = '', lastId = 0;
   const load = async () => {
     if (!$('dmList') || dmOpen !== short) return clearInterval(dmTimer);
     try {
       const rows = ((await board.rpc('dm_thread', { p_id: prefs.playerId, p_with: short })) || []).reverse();
-      const s2 = rows.map(r => r.msg_id).join(','); if (s2 === sig) return; sig = s2;
+      const s2 = rows.map(r => r.msg_id).join(','); if (s2 === sig) return; sig = s2; lastId = rows.length ? rows[rows.length - 1].msg_id : 0;
       const list = $('dmList');
-      list.innerHTML = rows.length ? rows.map(r => `<div class="msg${r.mine ? ' mine' : ''}"><span class="meta">${new Date(r.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}</span><span class="bubble">${esc(r.msg)}</span></div>`).join('')
+      list.innerHTML = rows.length ? rows.map(r => `<div class="msg${r.mine ? ' mine' : ''}"><span class="meta">${new Date(r.sent_at).toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' })}</span>${r.gift ? socGiftBubble(r.mine ? L('Вы', 'You') : name, r.mine ? name : L('вам', 'you'), r.gift) : `<span class="bubble">${esc(r.msg)}</span>`}${r.mine ? '' : socSlot('dm', r.msg_id, short, name, false)}</div>`).join('')
         : `<div class="lb-empty">${L('Напишите первым — например, позовите в свой офис или вызовите на неделю дня.', 'Say hi first — invite them to your office or challenge them to the Daily Week.')}</div>`;
-      list.scrollTop = list.scrollHeight;
+      list.scrollTop = list.scrollHeight; socDecorate(list, 'dm');
     } catch (err) { $('dmList').innerHTML = `<div class="lb-empty">${esc(err.message)}</div>`; }
   };
   $('dmForm').onsubmit = async e => {
@@ -777,13 +782,14 @@ async function showDmInbox() {
   setPhase('evening'); clearInterval(chatTimer); chatChannel = 'dm';
   views.end.innerHTML = `<div class="chat">
     <div class="board-head"><button class="back-btn" id="chBack" type="button">${L('← Назад', '← Back')}</button><h2>${L('Личные сообщения', 'Direct messages')}</h2><span class="back-sp"></span></div>
-    <div class="tabs" role="tablist"><button class="tab" role="tab" id="chTeam" aria-selected="false">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="false">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="true">${L('Личные', 'Direct')}</button></div>
+    <div class="tabs tabs4" role="tablist"><button class="tab" role="tab" id="chFeed" aria-selected="false">${L('Лента', 'Feed')}</button><button class="tab" role="tab" id="chTeam" aria-selected="false">${L('Офис', 'Office')}</button><button class="tab" role="tab" id="chAll" aria-selected="false">${L('Все игроки', 'Everyone')}</button><button class="tab" role="tab" id="chDm" aria-selected="true">${L('Личные', 'Direct')}</button></div>
     <div class="chat-list panel board-list" id="chList"><div class="lb-empty">${L('Загружаю…', 'Loading…')}</div></div></div>`;
   views.end.classList.add('chat-view'); show('end');
   const leave = () => { chatChannel = ''; views.end.classList.remove('chat-view'); };
   $('chBack').onclick = () => { leave(); renderMenu(); };
   $('chTeam').onclick = () => { leave(); showChat('team'); };
   $('chAll').onclick = () => { leave(); showChat('global'); };
+  $('chFeed').onclick = () => { leave(); showFeed(); };
   try {
     const rows = (await board.rpc('dm_inbox', { p_id: prefs.playerId })) || [];
     $('chList').innerHTML = rows.length ? rows.map((r, i) => `<button class="lb-row person dm-row" type="button" data-i="${i}"><span class="lb-ava" aria-hidden="true">${esc(r.with_avatar || '🙂')}</span>
@@ -797,7 +803,7 @@ function personPop(p) {
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass person-pop" role="dialog" aria-modal="true" aria-labelledby="ppName">
     <span class="pp-ava" aria-hidden="true">${esc(p.avatar || '🙂')}</span><h2 id="ppName">${esc(p.name)}</h2>
-    <p>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + PROF[p.prof].name : ''}</p><p>${personStatus(p)}</p>
+    <p>${esc(p.dept || L('без отдела', 'no department'))}${p.prof && PROF[p.prof] ? ' · ' + esc(profOf(p)) : ''}${p.prof_custom && !p.npc ? ` <button class="btn-link soc-rep-title" type="button" data-rep-title="${esc(p.short_id || '')}">${L('Пожаловаться на название', 'Report title')}</button>` : ''}</p><p>${personStatus(p)}</p>
     ${p.rank && typeof RANKS !== 'undefined' && RANKS[p.rank] ? `<p class="pp-rank">🎖️ ${RANKS[p.rank].name}</p>` : ''}${p.desk ? `<p class="pp-desk" title="${L('Рабочий стол', 'Desk')}">${esc(p.desk)}</p>` : ''}
     ${p.npc ? `<p class="npc-note">🎭 ${L('Персонаж игры: отвечает сам, пока живых коллег в сети мало', 'A game character: replies on their own while few real players are online')}</p>` : ''}
     <div class="row2"><button class="btn-main" type="button" id="ppDm">✉ ${L('Написать', 'Message')}</button><button class="btn-ghost" type="button" id="ppInv">🏢 ${L('Позвать в офис', 'Invite to office')}</button></div>

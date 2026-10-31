@@ -1128,6 +1128,7 @@ function lose(k, high) {
   record(false, k, high);
   bus.emit('weekEnd', { won: false, mode: S.mode, step: S.step, res: { ...S.res }, stat: k, high });
   track('week_end', { mode: S.mode, won: false, step: S.step, card: S.deck[S.step]?.id, detail: `${k}${high ? ':100' : ':0'}` });
+  if (career) track('fired', { mode: 'career', step: S.step, detail: VACANCIES.find(v => v.name === company)?.id || '' });  // в «Ленту»: откуда (id компании) и в какой день
   $('next').focus({ preventScroll: true });
 }
 

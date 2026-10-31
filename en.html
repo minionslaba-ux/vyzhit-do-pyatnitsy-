@@ -179,6 +179,7 @@
       <button class="btn-ghost shp-btn" type="button" id="openStore" data-en="🛒 Shop">🛒 Shop</button>
       <div class="shp-season-slot" id="seasonCard" hidden></div>
       <div class="pane" id="paneOffice">
+        <div class="online-box soc-live" id="socLive" hidden></div>
         <div class="online-box" id="onlineBox" hidden></div>
         <div class="office-cta" id="officeCta" hidden><span data-en="<b>Your own Office</b> Build a team: create an Office and invite coworkers via link or ID."><b>Свой офис</b> Соберите команду: создайте офис и позовите коллег по ссылке или по ID.</span><button class="btn-main" type="button" id="ctaOffice" data-en="Create an Office">Create an Office</button></div>
         <div class="row2"><button class="btn-ghost" id="openOffice" data-en="My Office">My Office</button><button class="btn-ghost" id="openChat" data-en="Chat">Chat</button></div>
@@ -220,6 +221,7 @@
         <div class="streak-row"><span id="streakLine"></span><button class="btn-chip" type="button" id="remindDaily" data-en="Remind me in my calendar">Remind me in my calendar</button></div>
         <div class="cast-list" id="castList" hidden></div>
       </div>
+      <div class="ps-sec soc-prof" id="socProfile" hidden></div>
       <div class="ps-sec">
         <b class="ps-cap" data-en="Sounds">Sounds</b>
         <div class="snd-row"><button class="icon-btn snd-tg" type="button" id="sndToggle" aria-label="Звук" data-en-aria-label="Sound"></button><input class="snd-vol" type="range" id="sndVol" min="0" max="100" step="5" value="80" aria-label="Громкость звуков" data-en-aria-label="Sound volume"><span class="snd-val" id="sndVolVal">80%</span></div>
@@ -333,6 +335,7 @@
 <script src="js/game.js"></script>
 <script src="js/ui-menu.js"></script>
 <script src="js/npc.js"></script>
+<script src="js/social.js"></script>
 <script src="js/meta.js"></script>
 <script src="js/hero3d.js"></script>
 <script src="js/pets3d.js"></script>
