@@ -39,6 +39,7 @@ function levelUp(r) {
     <h2 id="lvlTitle">${x.name}</h2><p>${L('Новый бонус', 'New perk')}: <b>${x.perk}</b></p>
     <button class="btn-main" type="button" id="lvlOk">${L('Ура!', 'Woohoo!')}</button></div>`;
   m.hidden = false; sfx.win?.(); confetti();
+  track('rank_up', { detail: String(r) });  // в «Ленту»: номер должности, название игра подставит на языке читателя
   $('lvlOk').onclick = () => { m.hidden = true; };
   syncDesk();
 }
