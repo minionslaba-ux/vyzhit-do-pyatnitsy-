@@ -35,12 +35,19 @@ def build(name, patch_index=None, extra=()):
     print(f'{path}: {os.path.getsize(path) // 1024} КБ')
 
 
+def no_rtb(html):
+    # Рекламная сеть Яндекса — только на сайте: в каталогах игр своя реклама, чужой код запрещён
+    start = html.index('<!-- Yandex.RTB')
+    end = html.index('</head>', start)
+    return html[:start] + html[end:]
+
+
 def yandex(html):
     # SDK — до скриптов игры; Telegram-скрипт каталогу не нужен
     start = html.index('<script>\n  // Скрипт Telegram')
     end = html.index('</script>', start) + len('</script>')
-    return html[:start] + '<script src="/sdk.js"></script>\n<script src="js/platform-yandex.js"></script>' + html[end:]
+    return no_rtb(html[:start] + '<script src="/sdk.js"></script>\n<script src="js/platform-yandex.js"></script>' + html[end:])
 
 
-build('itch.zip')
+build('itch.zip', no_rtb)
 build('yandex.zip', yandex, extra=['js/platform-yandex.js'])

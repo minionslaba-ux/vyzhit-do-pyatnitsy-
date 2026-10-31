@@ -76,7 +76,7 @@ async function certStart(after) {
   const tick = setInterval(() => {
     const now = performance.now(), dt = (now - last) / 1000; last = now;
     if (!$('cqTime')) return;
-    if (lock || away || document.hidden) return;
+    if (lock || away || document.hidden || window.vdpPaused) return;
     left = Math.max(0, left - dt);
     const el = $('cqTime'), bar = $('cqBar');
     el.textContent = `⏱ ${Math.ceil(left)}`; el.classList.toggle('warn', left <= 5); bar.style.width = `${left / CERT_TIME * 100}%`;

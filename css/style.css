@@ -1478,3 +1478,5 @@ body:has(#game:not([hidden])) .toast-bar { bottom: auto; top: calc(max(14px, env
 body:has(#game:not([hidden])) .toast-bar.on { transform: translate(-50%, 0); }
 .btn-ad { border-color: rgba(45,226,138,.55) !important; }
 .btn-ad:disabled { opacity: .55; }
+/* реклама на экране — игра на паузе, нажатия по ней не проходят */
+body.ad-pause .app { pointer-events: none; }

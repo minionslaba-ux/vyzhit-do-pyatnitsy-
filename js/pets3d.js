@@ -132,7 +132,7 @@ async function petViewer(canvas, breed, { action = null, interactive = true, yaw
   const RMp = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const frame = now => {
     if (!alive) return; raf = requestAnimationFrame(frame);
-    if (document.hidden || !canvas.isConnected) return;
+    if (document.hidden || !canvas.isConnected || window.vdpPaused) return;
     const t = (now - t0) / 1000, at = (now - actT) / 1000, u = pet.userData;
     if (!drag) yaw += ((yawRest + Math.sin(t * 0.3) * 0.25) - yaw) * 0.03;
     pet.rotation.y = u.kind === 'fish' ? 0 : yaw;

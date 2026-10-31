@@ -328,7 +328,7 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
     if (!alive) return;
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.1, (now - last) / 1000); last = now; ka = 1 - Math.exp(-dt * 8);
-    if (document.hidden || !canvas.isConnected) return;
+    if (document.hidden || !canvas.isConnected || window.vdpPaused) return;  // реклама на экране — 3D не рисуем
     const t = (now - t0) / 1000, u = hero.userData, at = (now - actT) / 1000;
     if (action === 'spin') yaw += dt * 7.5;
     else if (!drag) {

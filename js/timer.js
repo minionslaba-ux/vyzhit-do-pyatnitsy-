@@ -18,7 +18,7 @@ const ansWarnEl = () => {
   return el;
 };
 const ansOn = () => S && (prefs.gamesPlayed || 0) >= 1 && !views.game.hidden;
-const ansPaused = () => busy || splashOn || !$('modal').hidden || document.hidden || ($('coach') && !$('coach').hidden) || ($('splash') && !$('splash').hidden);
+const ansPaused = () => window.vdpPaused || busy || splashOn || !$('modal').hidden || document.hidden || ($('coach') && !$('coach').hidden) || ($('splash') && !$('splash').hidden);
 function answerTimerReset() {
   ansLeft = ANSWER_TIME; ansWarned = false; ansLast = performance.now();
   ansWarnEl().hidden = true;

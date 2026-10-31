@@ -1,19 +1,30 @@
 // Реклама за награду: игрок сам решает посмотреть ролик Рекламной сети Яндекса — и получает 1 у.е. на счёт карьеры.
-// Не чаще раза в 20 минут (и само предложение — тоже). Скрипт рекламы грузится, только когда игрок нажал «Смотреть»:
-// без этого сайт не тянет чужой код. На игровых платформах (Яндекс Игры и т. п.) — их собственная реклама, здесь выключено.
+// Не чаще раза в 20 минут (и само предложение — тоже). Ролик — только по нажатию игрока, никогда посреди решения карточки;
+// на время ролика игра на паузе. Полноэкранный формат сам подстраивается под телефон (touch) и компьютер (desktop). На игровых платформах (Яндекс Игры и т. п.) — их собственная реклама, здесь выключено.
 // Блок и тип — SUPABASE_CONFIG.ads в js/config.js.
 const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 5000;
 const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adOn = () => !!adCfg().blockId && !window.VDP_PLATFORM;
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
+// Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
 let adLoad = null;
-const adScript = () => adLoad || (adLoad = new Promise((ok, fail) => {
+const adScript = () => window.Ya?.Context ? Promise.resolve() : adLoad || (adLoad = new Promise((ok, fail) => {
   window.yaContextCb = window.yaContextCb || [];
   const s = Object.assign(document.createElement('script'), { src: 'https://yandex.ru/ads/system/context.js', async: true });
   s.onload = ok; s.onerror = () => { adLoad = null; fail(new Error('ads blocked')); };
   document.head.append(s);
 }));
+
+// Пауза игры на время ролика (требование модерации): стоят таймер ответа и аттестации, звук и голоса выключены,
+// 3D не рисуется, нажатия по игре не проходят
+function vdpPause(on) {
+  window.vdpPaused = on;
+  document.body.classList.toggle('ad-pause', on);
+  try { on ? actx?.suspend() : actx?.resume(); } catch {}
+  try { if (on) speechSynthesis.cancel(); } catch {}
+  document.querySelectorAll('video, audio').forEach(v => { try { on ? v.pause() : null; } catch {} });
+}
 
 // Показать ролик. done(true) — награда начислена
 function adWatch(done) {
@@ -21,7 +32,7 @@ function adWatch(done) {
   if (adLeft()) { toast(L(`Следующий ролик за награду — через ${adMins()} мин.`, `Next rewarded video in ${adMins()} min`)); return done?.(false); }
   const c = adCfg(), t0 = Date.now(); let settled = false;
   const finish = ok => {
-    if (settled) return; settled = true; clearTimeout(guard);
+    if (settled) return; settled = true; clearTimeout(guard); vdpPause(false);
     if (ok) {
       prefs.adAt = Date.now(); store.set(KEY.prefs, prefs);
       addCash(AD_REWARD); sfx.coins?.();
@@ -34,6 +45,7 @@ function adWatch(done) {
   };
   const guard = setTimeout(() => finish(false), 90000);  // ответа нет совсем (нет показов, блокировщик) — кнопка снова доступна
   track('ad_open', { detail: c.type });
+  vdpPause(true);
   adScript().then(() => {
     window.yaContextCb.push(() => {
       try {
