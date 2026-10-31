@@ -150,9 +150,10 @@ function breakModal(why, back, from, to, h) {
         ${back ? `<p class="rollback">⏪ ${L(`Откат на ${back} ${back === 1 ? 'неделю' : 'недели'}: неделя ${from} → ${to}`, `Back ${back} week${back > 1 ? 's' : ''}: week ${from} → ${to}`)}</p>` : `<p>${L('Это первый срыв — предупреждение. Второй откатит карьеру на неделю назад, третий — на две.', 'First breakdown — a warning. The second sets your career back a week, the third — two weeks.')}</p>`}</div></div>
     ${moodScaleHtml(h)}
     <p class="hero-lead">${L('Поднимайте настроение: исполняйте желания, дарите цветы, покупайте продукты и одежду.', 'Keep their mood up: grant wishes, buy flowers, groceries and clothes.')}</p>
-    <div class="hero-acts"><button class="btn-main" type="button" id="brShop">🛍️ ${L('Порадовать', 'Cheer them up')}</button><button class="btn-ghost" type="button" id="brOk">${L('Понятно', 'Got it')}</button></div>`, heroLook(h), 'sad');
+    <div class="hero-acts">${adBreakBtn(back)}<button class="btn-main" type="button" id="brShop">🛍️ ${L('Порадовать', 'Cheer them up')}</button><button class="btn-ghost" type="button" id="brOk">${L('Понятно', 'Got it')}</button></div>`, heroLook(h), 'sad');
   sfx.lose?.(); setTimeout(() => say(cry, heroVoice(h)), 500);
   $('brOk').onclick = close;
+  adBreakBind(c => { const r = m.querySelector('.rollback'); if (r) r.textContent = L(`⏪ Откат уменьшен рекламой: неделя ${c.week}`, `⏪ Rollback reduced by an ad: week ${c.week}`); });
   $('brShop').onclick = () => { close(); heroShop(); };
   return m;
 }
@@ -234,7 +235,7 @@ function goodsPicker(catId, after) {
     const worn = id => h.worn?.includes(id);
     m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="gpTitle">
       <h2 id="gpTitle">${cat.ico} ${esc(cat.t)} · ${esc(h.name)}</h2>
-      <p class="hero-lead">${L(`На счёте ${money(C2.bank)}`, `Balance ${money(C2.bank)}`)} · ${isCart ? L('наберите корзину — чем разнообразнее, тем лучше настроение', 'fill the cart — the more variety, the better the mood') : L('выберите вариант — дороже, значит радостнее', 'pick one — pricier means happier')}</p>
+      <p class="hero-lead">${L(`На счёте ${money(C2.bank)}`, `Balance ${money(C2.bank)}`)} · ${isCart ? L('наберите корзину — чем разнообразнее, тем лучше настроение', 'fill the cart — the more variety, the better the mood') : L('выберите вариант — дороже, значит радостнее', 'pick one — pricier means happier')} ${adChip()}</p>
       <div class="gp-list${isCart ? ' cart' : ''}">${cat.items.filter(x => !x.g || x.g === heroPreset(h).g).map(x => {
         const short = C2.bank < x.price && !isCart, has = x.own && h.have?.includes(x.id);
         if (has) return `<div class="gp-item worn"><span class="gp-ico" aria-hidden="true">${x.ico}</span><span class="gp-txt"><b>${esc(goodText(x, h))}</b><small>${L('уже есть', 'owned')}</small></span><em class="gp-own">✓ ${L('есть', 'owned')}</em></div>`;
@@ -429,7 +430,7 @@ function kidShop(i, after) {
   dropView();
   m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="ksTitle">
     <h2 id="ksTitle">${kidEmoji(k)} ${esc(k.name)}, ${kidYears(k.age)}</h2>
-    <p class="hero-lead">${L(`На счёте ${money(C2.bank)} · настроение ${esc(k.name)}: ${k.mood}/100. Подарок ребёнку радует и ${esc(h.name)}.`, `Balance ${money(C2.bank)} · ${esc(k.name)}’s mood: ${k.mood}/100. A gift for the kid cheers ${esc(h.name)} up too.`)}</p>
+    <p class="hero-lead">${L(`На счёте ${money(C2.bank)} · настроение ${esc(k.name)}: ${k.mood}/100. Подарок ребёнку радует и ${esc(h.name)}.`, `Balance ${money(C2.bank)} · ${esc(k.name)}’s mood: ${k.mood}/100. A gift for the kid cheers ${esc(h.name)} up too.`)} ${adChip()}</p>
     <div class="gp-list">${KID_GOODS.map(x => {
       const has = x.own && k.have.includes(x.id), short = C2.bank < x.price;
       return `<div class="gp-item${has ? ' worn' : short ? ' short' : ''}"><span class="gp-ico" aria-hidden="true">${x.ico}</span>
@@ -455,7 +456,7 @@ function kidWishPop(k, x) {
     <div class="hero-ask"><canvas class="hero-cv" data-framing="kid"></canvas>
       <div class="hero-bubble"><b id="heroTitle">${x.ico} ${esc(k.name)}, ${kidYears(k.age)}</b><p>«${esc(parentWord(h))}, ${esc(x.ask.charAt(0).toLowerCase() + x.ask.slice(1))}»</p><p class="say">«${esc(plead)}»</p><span>${esc(x.t)} · ${money(x.price)} · ${L('на счёте', 'balance')} ${money(C.bank)}</span></div></div>
     <div class="hero-acts">${can ? `<button class="btn-main" type="button" id="kwBuy">${x.ico} ${L(`Купить за ${money(x.price)}`, `Buy for ${money(x.price)}`)}</button>`
-      : topupBtn(lackOf(x.price), 'kidWish', L(`${k.name} просит: ${x.t} за ${money(x.price)}`, `${k.name} wants: ${x.t} for ${money(x.price)}`), 'btn-main tu-btn')}
+      : topupBtn(lackOf(x.price), 'kidWish', L(`${k.name} просит: ${x.t} за ${money(x.price)}`, `${k.name} wants: ${x.t} for ${money(x.price)}`), 'btn-main tu-btn') + adChip()}
       <button class="btn-link" type="button" id="kwNo">${L(`Не сейчас (${k.name} обидится)`, `Not now (${k.name} will sulk)`)}</button></div>`, k.look, 'ask');
   kidWishBack = () => kidWishPop(k, x);
   if ($('kwBuy')) $('kwBuy').onclick = () => { close(); buyKid(k, x, done); };

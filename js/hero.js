@@ -222,7 +222,7 @@ function heroAsk() {
     <div class="money"><div><b>${money(n.price)}</b><span>${L('стоит', 'costs')}</span></div><div><b>${money(C2.bank)}</b><span>${L('на счёте', 'balance')}</span></div></div>
     <div class="hero-acts">
       ${can ? `<button class="btn-main" type="button" id="haPay">${L(`Купить за ${money(n.price)}`, `Buy for ${money(n.price)}`)}</button>`
-        : topupBtn(lackOf(n.price), 'heroAsk', L(`${h.name} просит: ${needText(n, h, 't')} за ${money(n.price)}`, `${h.name} wants: ${needText(n, h, 't')} for ${money(n.price)}`), 'btn-main tu-btn')}
+        : topupBtn(lackOf(n.price), 'heroAsk', L(`${h.name} просит: ${needText(n, h, 't')} за ${money(n.price)}`, `${h.name} wants: ${needText(n, h, 't')} for ${money(n.price)}`), 'btn-main tu-btn') + adChip()}
       <button class="btn-ghost" type="button" id="haLoan" ${loanOk ? '' : 'disabled'}>${loanOk ? L(`В кредит: вернуть ${money(loanCost(n))}`, `On credit: repay ${money(loanCost(n))}`) : L('Банк больше не даёт кредит', 'The bank won’t lend more')}</button>
       <button class="btn-ghost" type="button" id="haBonus" ${h.wantBonus ? 'disabled' : ''}>${h.wantBonus ? L('Задача на премию уже ждёт', 'A bonus task is already lined up') : L('📋 Взять задачу на премию', '📋 Take a bonus task')}</button>
       <button class="btn-link" type="button" id="haLater">${L(`Отложить (${h.name} расстроится)`, `Later (${h.name} will be upset)`)}</button>

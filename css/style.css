@@ -1488,3 +1488,6 @@ body.ad-pause .app { pointer-events: none; }
 .ad-x { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(var(--w-rgb),.25); background: transparent; color: var(--text); }
 .ad-slot { min-height: 280px; display: grid; place-items: center; border-radius: 14px; background: rgba(var(--w-rgb),.04); overflow: hidden; }
 .ad-box #adGet:disabled { opacity: .4; filter: grayscale(.6); cursor: default; }
+.ad-chip { border-color: rgba(45,226,138,.6) !important; color: #2de28a; white-space: nowrap; }
+.ad-pill { position: fixed; left: 50%; translate: -50% 0; top: calc(max(14px, env(safe-area-inset-top, 0px)) + 52px); z-index: 45; max-width: calc(100% - 32px); padding: 9px 16px; border-radius: 99px; border: 1.5px solid #2de28a;
+  background: rgba(12, 30, 22, .92); color: #b9ffd8; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; box-shadow: 0 8px 24px rgba(45,226,138,.3); animation: slidein .35s ease-out; }

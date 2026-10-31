@@ -577,7 +577,7 @@ function choose(side) {
     if (dead) {  // busy остаётся до следующей недели
       best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save);
       const fire = () => lose(dead.k, !deadLow);
-      setTimeout(() => { if (!window.groupOffer?.(fire)) fire(); }, pause);  // не в группе Telegram — сначала предложить вступить
+      setTimeout(() => adRescue(dead.k, !deadLow, () => { if (!window.groupOffer?.(fire)) fire(); }), pause);  // сначала — реклама «последний шанс»  // не в группе Telegram — сначала предложить вступить
       return;
     }
     advance();
@@ -663,6 +663,7 @@ function deadlineWork(c, side) {
   S.deadline = null; S.dlWon = (S.dlWon || 0) + 1; bus.emit('deadlineDone', d);
   d.reward = Math.round(d.reward * (1 + (typeof rankPerk === 'function' ? rankPerk('deadline') : 0)));
   pay(d.reward); S.earned = (S.earned || 0) + d.reward; renderBars(); renderDeadlineChip(); FX.coin(d.reward); sfx.coins();
+  setTimeout(() => adDouble(d.reward, L('Премия за задачу', 'Task bonus')), 3600);
   smsPop(L('Банк', 'Bank'), L(`Премия за «${d.title}»: +${money(d.reward)} · баланс ${money(C.bank)}`, `Bonus for “${d.title}”: +${money(d.reward)} · balance ${money(C.bank)}`));
 }
 // Вечер дня сдачи прошёл, а задача не сделана — штраф
@@ -712,7 +713,7 @@ function openShop() {
   const render = () => {
     m.innerHTML = `<div class="modal-box glass shop-box" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
       <h2 id="shopTitle">${L('Магазин мощей', 'Power Shop')}</h2>
-      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${money(C.salary)}/день`, `pay ${money(C.salary)}/day`)} ${topupBtn(0, 'shop')}</p>
+      <p class="shop-bal">${L('На счёте', 'Balance')}: <b>${money(C.bank)}</b> · ${L(`оклад ${money(C.salary)}/день`, `pay ${money(C.salary)}/day`)} ${topupBtn(0, 'shop')} ${adChip()}</p>
       <span class="shop-sec">${L('Предметы — гасят один удар −10 и сильнее', 'Items — each blocks one hit of −10 or worse')}</span>
       <div class="shop-list">${Object.entries(SHOP).map(([id, price]) => `<button class="shop-item${C.bank < price ? ' short' : ''}" data-item="${id}" ${S.items.length >= 6 ? 'disabled' : ''} ${C.bank < price ? `data-topup="${lackOf(price)}" data-topup-back="shop"` : ''}>
         <b>${ITEMS[id].name}</b><small>${ITEMS[id].text}</small><span class="price">${C.bank < price ? `💰 ${L('не хватает', 'short')} ${lackOf(price)}` : money(price)}</span></button>`).join('')}</div>
@@ -867,7 +868,7 @@ function secondChance(k, high) {
         const best = store.get(KEY.best, { step: 0, wins: 0 });
         best.step = Math.max(best.step, S.step); store.set(KEY.best, best); store.del(KEY.save);
         const fire = () => lose(k, high);
-        if (!window.groupOffer?.(fire)) fire();
+        adRescue(k, high, () => { if (!window.groupOffer?.(fire)) fire(); });
       }
     };
   };

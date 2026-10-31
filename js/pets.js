@@ -121,7 +121,7 @@ function petShop(i, after) {
   m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="psTitle">
     <h2 id="psTitle">${k.ico} ${esc(p.name)} · ${esc(petBreed(p.breed).t)}</h2>
     <canvas class="pet-cv small" aria-label="${esc(p.name)}"></canvas>
-    <p class="hero-lead">${L(`Настроение ${p.mood}/100 · на счёте ${money(C2.bank)}`, `Mood ${p.mood}/100 · balance ${money(C2.bank)}`)}${p.last.p_food !== C2.week ? ` · <b class="pet-hungry">${L('🥣 ждёт корм на эту неделю', '🥣 waiting for this week’s food')}</b>` : ''}</p>
+    <p class="hero-lead">${L(`Настроение ${p.mood}/100 · на счёте ${money(C2.bank)}`, `Mood ${p.mood}/100 · balance ${money(C2.bank)}`)}${p.last.p_food !== C2.week ? ` · <b class="pet-hungry">${L('🥣 ждёт корм на эту неделю', '🥣 waiting for this week’s food')}</b>` : ''} ${adChip()}</p>
     <div class="gp-list">${petGoodsFor(p).map(x => {
       const s = petState(x, p, C2.week), short = C2.bank < x.price;
       return `<div class="gp-item${s.st !== 'open' ? ' worn' : short ? ' short' : ''}"><span class="gp-ico" aria-hidden="true">${x.ico}</span>
@@ -216,7 +216,7 @@ function petWishPop(p) {
   m.innerHTML = `<div class="modal-box glass hero-box" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
     <canvas class="pet-cv" aria-label="${esc(p.name)}"></canvas>
     <div class="hero-bubble"><b id="pwTitle">${k.ico} ${esc(p.name)} ${esc(ask)}</b><p class="say">«${esc(petLine(p))}»</p><span>${want.ico} ${esc(want.t)} · ${money(want.price)} · ${L('на счёте', 'balance')} ${money(C.bank)}</span></div>
-    <div class="hero-acts">${C.bank >= want.price ? `<button class="btn-main" type="button" id="pwBuy">${want.ico} ${L(`Купить за ${money(want.price)}`, `Buy for ${money(want.price)}`)}</button>` : topupBtn(lackOf(want.price), 'petWish', `${p.name}: ${want.t} — ${money(want.price)}`, 'btn-main tu-btn')}
+    <div class="hero-acts">${C.bank >= want.price ? `<button class="btn-main" type="button" id="pwBuy">${want.ico} ${L(`Купить за ${money(want.price)}`, `Buy for ${money(want.price)}`)}</button>` : topupBtn(lackOf(want.price), 'petWish', `${p.name}: ${want.t} — ${money(want.price)}`, 'btn-main tu-btn') + adChip()}
       <button class="btn-link" type="button" id="pwNo">${L(`Потом (${p.name} загрустит)`, `Later (${p.name} will be sad)`)}</button></div></div>`;
   m.hidden = false;
   petWishBack = () => petWishPop(p);

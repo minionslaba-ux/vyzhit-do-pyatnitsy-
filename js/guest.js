@@ -13,6 +13,7 @@ function guestGate(go) {
     <button class="btn-main" type="button" id="ggReg">✅ ${L('Зарегистрироваться бесплатно', 'Sign up for free')}</button>
     <p class="field-note">${L(`Или играйте без аккаунта: ${money(GUEST_PRICE)} за каждую неделю с игрового счёта (сейчас на счёте ${money(bank)}).`, `Or keep playing without an account: ${money(GUEST_PRICE)} per week from your in-game balance (you have ${money(bank)}).`)}</p>
     ${can ? `<button class="btn-ghost" type="button" id="ggPay">${L(`Сыграть неделю за ${money(GUEST_PRICE)}`, `Play a week for ${money(GUEST_PRICE)}`)}</button>` : `<p class="join-err">${L('На игровом счёте не хватает у.е.', 'Not enough $ in your balance')}</p>`}
+    ${adReady() ? `<button class="btn-ghost btn-ad" type="button" id="ggAd">🎬 ${L('Сыграть неделю за просмотр рекламы', 'Play a week for watching an ad')}</button>` : ''}
     <button class="btn-link" type="button" id="ggBack">${L('В меню', 'Main menu')}</button></div>`;
   m.hidden = false;
   $('ggReg').onclick = () => { m.hidden = true; renderJoin('register', L('Регистрация бесплатна. После неё игра продолжится без ограничений.', 'Signing up is free. After that you can play with no limits.')); };
@@ -22,6 +23,7 @@ function guestGate(go) {
     m.hidden = true; toast(L(`Неделя оплачена: −${money(GUEST_PRICE)} · на счёте ${money(c.bank)}`, `Week paid: −${money(GUEST_PRICE)} · balance ${money(c.bank)}`));
     go();
   };
+  if ($('ggAd')) $('ggAd').onclick = () => { m.hidden = true; adWatch(ok => { if (!ok) guestGate(go); }, { why: 'guest', give: () => { setTimeout(go, 300); return L('🎬 Спасибо! Неделя открыта', '🎬 Thanks! The week is unlocked'); } }); };
   $('ggBack').onclick = () => { m.hidden = true; renderMenu(); };
 }
 // Новая неделя в любом режиме проходит через проверку
