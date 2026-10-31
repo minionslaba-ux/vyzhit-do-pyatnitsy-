@@ -26,7 +26,7 @@
 - `article.md` — черновик статьи для Habr / vc.ru «Как я сделал офисную игру».
 - `videos.md` — 12 сценариев коротких роликов для TikTok, Reels, Shorts.
 - `b2b.md` — письмо HR для бесплатного пилота, предложение коворкингам, сценарий турнира на корпоративе.
-- `video/zastavka-9x16.mp4` и `video/zastavka-16x9.mp4` — заставка 15 секунд со звуком: Reels, Shorts, TikTok, Telegram, YouTube. Исходник — `tools/trailer/`.
+- `video/zastavka-9x16.mp4` и `video/zastavka-16x9.mp4` — заставка 33 секунды со звуком (кадры настоящей игры): Reels, Shorts, TikTok, Telegram, YouTube. Исходник — `tools/trailer/`.
 - `video-prompts.md` — 10 промтов для генераторов видео в стиле игры.
 - `stickers/` — 12 стикеров 512×512 PNG с прозрачным фоном для Telegram.
 - `poster-a4.jpg` — постер A4 (300 dpi) с QR-кодом; `qr.svg`, `qr.png` — сам QR (ведёт на игру с `utm_source=poster`).
