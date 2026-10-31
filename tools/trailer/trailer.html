@@ -23,11 +23,11 @@ body.wide #phone { left: 610px; top: 24px; width: 276px; height: 492px; border-r
 .cap > span { display: inline-block; padding: 12px 20px 14px; border-radius: 16px; background: rgba(7,7,13,.88); box-shadow: 0 10px 40px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.08); }
 .cap i { font-style: normal; }
 .cap .l { color: var(--lime); text-shadow: 0 0 18px rgba(212,255,58,.7); } .cap .m { color: var(--mag); text-shadow: 0 0 18px rgba(255,59,212,.8); } .cap .c { color: var(--cyan); text-shadow: 0 0 18px rgba(45,226,230,.8); } .cap .r { color: var(--red); text-shadow: 0 0 18px rgba(255,59,107,.8); }
-.cap.big { font-size: 48px; } .cap.mid { font-size: 34px; }
+.cap.big { font-size: 48px; } .cap.mid { font-size: 34px; } .cap.sm { font-size: 28px; }
 .cap .sub { display: block; margin-top: 10px; font-family: Nunito; font-weight: 900; font-size: 22px; text-transform: none; color: #fff; }
 body.wide .cap { left: 40px; right: auto; width: 520px; }
 body.wide .cap > span { background: none; box-shadow: none; padding: 0; }
-body.wide .cap.big { font-size: 52px; } body.wide .cap.mid { font-size: 40px; }
+body.wide .cap.big { font-size: 52px; } body.wide .cap.mid { font-size: 40px; } body.wide .cap.sm { font-size: 32px; }
 /* крючок */
 #hook { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: Unbounded; font-weight: 900; text-transform: uppercase; line-height: .95; }
 #hook .w1 { font-size: 58px; color: #fff; text-shadow: 0 0 26px rgba(255,59,212,.7), 0 6px 0 rgba(0,0,0,.4); }
@@ -46,6 +46,7 @@ body.wide .cap.big { font-size: 52px; } body.wide .cap.mid { font-size: 40px; }
 body.wide #career { right: 360px; gap: 9px; } body.wide #hook { right: 360px; } body.wide #career h2 { font-size: 46px; } body.wide #career .lv { width: 500px; padding: 10px 18px; } body.wide #career .x { font-size: 22px; margin-bottom: 4px; }
 /* мини-игры: счётчик */
 #fifty { left: 0; right: 0; top: 30px; text-align: center; font-family: Unbounded; font-weight: 900; text-transform: uppercase; opacity: 0; }
+#fifty b.cyan { background: var(--cyan); box-shadow: 0 0 40px rgba(45,226,230,.6); }
 #fifty b { display: inline-block; font-size: 50px; line-height: 1; padding: 10px 22px 14px; border-radius: 18px; background: var(--lime); color: #07070d; box-shadow: 0 0 40px rgba(212,255,58,.6); }
 #fifty small { display: block; margin-top: 12px; font-size: 28px; color: #fff; }
 #fifty small span { display: inline-block; padding: 6px 16px 8px; border-radius: 12px; background: rgba(7,7,13,.88); }
@@ -57,6 +58,7 @@ body.wide #fifty { left: 40px; right: auto; width: 520px; top: 180px; } body.wid
 #end .free { font-family: Unbounded; font-weight: 900; font-size: 30px; text-transform: uppercase; padding: 16px 32px 18px; border-radius: 99px; background: var(--lime); color: #07070d; box-shadow: 0 0 40px rgba(212,255,58,.6); }
 #end .url { font-family: 'JetBrains Mono'; font-weight: 800; font-size: 32px; color: #7df9ff; text-shadow: 0 0 14px var(--cyan); }
 #end .tags { font-family: Nunito; font-weight: 900; font-size: 19px; color: #c9c4e6; }
+#end .tag2 { white-space: nowrap; font-family: Nunito; font-weight: 900; font-size: 19px; color: #fff; padding: 8px 18px; border-radius: 14px; background: rgba(255,59,212,.16); border: 1.5px solid rgba(255,59,212,.6); }
 #fan { inset: 0; }
 #fan img { position: absolute; width: 190px; height: 338px; border-radius: 22px; box-shadow: 0 0 0 4px #15151f, 0 0 0 6px rgba(45,226,230,.5), 0 20px 50px rgba(0,0,0,.6); object-fit: cover; }
 body.wide #end { gap: 18px; } body.wide #end .logo .a { font-size: 66px; } body.wide #end .logo .b { font-size: 47px; }
@@ -70,7 +72,7 @@ body.wide #end { gap: 18px; } body.wide #end .logo .a { font-size: 66px; } body.
   <div id="phone" class="abs"><img id="vid" alt=""><div id="vidDim" class="abs"></div></div>
   <div id="vign" class="abs"></div>
   <div id="caps"></div>
-  <div id="fifty" class="abs"><b>50 мини-игр</b><small><span id="fiftySub"></span></small></div>
+  <div id="fifty" class="abs"><b class="lime">50 мини-игр</b><small><span id="fiftySub"></span></small></div>
   <div id="hook" class="abs"><div class="w1">Доживёшь</div><div class="w2">до пятницы?</div><div class="clk" id="hookClk">09:00</div></div>
   <div id="career" class="abs"><h2>Карьера</h2><div class="x">3 уровня × 52 недели</div>
     <div class="lv"><i>🐟</i><div><b>Офисный планктон</b><small>год 1 · дедлайны и кулер</small></div></div>
@@ -78,7 +80,7 @@ body.wide #end { gap: 18px; } body.wide #end .logo .a { font-size: 66px; } body.
     <div class="lv"><i>👑</i><div><b>Топ-менеджмент</b><small>год 3 · самые жёсткие решения</small></div></div></div>
   <div id="fan" class="abs"></div>
   <div id="end" class="abs"><div class="logo"><span class="a">Выжить</span><span class="b">до пятницы</span></div>
-    <div class="free">Играй бесплатно</div><div class="url">survivefriday.com</div><div class="tags">Без регистрации · в браузере и на телефоне</div></div>
+    <div class="free">Играй бесплатно</div><div class="url">survivefriday.com</div><div class="tag2">Игра от выгорания · доживи до пятницы с юмором</div><div class="tags">Без регистрации · в браузере и на телефоне</div></div>
   <div id="flash" class="abs"></div>
   <div id="bar" class="abs"></div>
 </div>
@@ -92,42 +94,69 @@ const seg = (t, a, b) => cl((t - a) / (b - a));
 const ease = x => 1 - Math.pow(1 - x, 3), back = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 const lerp = (a, b, x) => a + (b - a) * x;
 // Ритм: 128 bpm, «дроп» в 2,1 с; все склейки — на долях (те же числа — в sound.py)
-const B = 60 / 128, D = 2.1, at = k => D + k * B, DUR = 18;
-const END = at(28.5);
+const B = 60 / 128, D = 2.1, at = k => D + k * B, DUR = 33.3;
+const END = at(61);
 // Клипы: [папка, t0, t1, первый кадр, скорость, зум в начале, зум в конце, фокус x %, фокус y %, куски кадров — растягиваются на весь клип]
 const CLIPS = [
   ['card', 0, at(0), 0, 0.2, 1.3, 1.22, 50, 30],
-  ['card', at(0), at(6), 0, 1.0, 1.1, 1.0, 50, 45, [[6, 37], [44, 93]]],  // без пустых кадров между карточками
-  ['danger', at(6), at(9), 2, 1.0, 1.3, 1.6, 50, 21],
-  ['hero', at(9), at(12), 0, 1.2, 1.3, 1.45, 50, 30],
-  ['hero', at(12), at(15), 50, 0, 1.5, 1.6, 30, 38],
-  ['moto', at(15), at(17.5), 0, 0.75, 1.4, 1.3, 64, 42],
-  ['flowers', at(17.5), at(19), 4, 1.0, 1.55, 1.45, 50, 42],
-  ['pet', at(19), at(20.5), 4, 1.0, 1.55, 1.45, 50, 42],
-  ['b13', at(20.5), at(21.5), 2, 1.0, 1.2, 1.1, 50, 58],
-  ['b22', at(21.5), at(22.5), 2, 1.0, 1.2, 1.1, 50, 58],
-  ['b1', at(22.5), at(23.5), 2, 1.0, 1.25, 1.15, 50, 45],
-  ['b32', at(23.5), at(24.5), 2, 1.0, 1.25, 1.15, 50, 45],
-  ['b11', at(24.5), at(25.5), 2, 1.0, 1.25, 1.15, 50, 45],
-  ['store', at(25.5), at(26.5), 4, 1.0, 1.2, 1.1, 50, 35],
-  ['feed', at(26.5), at(27.5), 6, 1.0, 1.2, 1.1, 50, 30],
-  ['board', at(27.5), at(28.5), 6, 1.0, 1.2, 1.1, 50, 35],
+  ['card', at(0), at(10), 0, 1.0, 1.1, 1.0, 50, 45, [[4, 37], [45, 92], [104, 143]]],  // без пустых кадров между карточками
+  ['danger', at(10), at(13), 2, 1.0, 1.3, 1.6, 50, 21],
+  ['hero', at(13), at(16), 0, 1.2, 1.3, 1.45, 50, 30],
+  ['hero', at(16), at(19), 50, 0, 1.5, 1.6, 30, 38],
+  ['levelup', at(19), at(22), 0, 1.0, 1.25, 1.12, 50, 45],
+  ['moto', at(22), at(24.5), 0, 0.8, 1.4, 1.3, 58, 42],
+  ['flowers', at(24.5), at(26), 4, 1.0, 1.55, 1.45, 50, 42],
+  ['yacht', at(26), at(28.5), 0, 1.0, 1.4, 1.3, 55, 42],
+  ['pet', at(28.5), at(30), 4, 1.0, 1.55, 1.45, 50, 42],
+  ['b46', at(30), at(31), 2, 1.0, 1.2, 1.1, 50, 45],
+  ['b50', at(31), at(32), 2, 1.0, 1.2, 1.1, 50, 45],
+  ['b49', at(32), at(33), 2, 1.0, 1.2, 1.1, 50, 45],
+  ['b48', at(33), at(34), 2, 1.0, 1.2, 1.1, 50, 45],
+  ['b13', at(34), at(35), 2, 1.0, 1.2, 1.1, 50, 58],
+  ['b1', at(35), at(36), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['b32', at(36), at(37), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['b11', at(37), at(38), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['b36', at(38), at(39), 2, 1.0, 1.25, 1.15, 50, 45],
+  ['themes', at(39), at(42.5), 0, 1.0, 1.45, 1.35, 50, 50],
+  ['stickers', at(42.5), at(46), 0, 1.0, 1.15, 1.08, 50, 62],
+  ['gifts', at(46), at(49.5), 0, 1.0, 1.3, 1.2, 50, 45],
+  ['streak', at(49.5), at(52.5), 0, 1.0, 1.4, 1.3, 50, 40],
+  ['anketa', at(52.5), at(54.5), 0, 1.0, 1.3, 1.2, 50, 35],
+  ['quote', at(54.5), at(56.5), 2, 1.0, 1.4, 1.3, 50, 50],
+  ['store', at(56.5), at(58), 4, 1.0, 1.2, 1.1, 50, 35],
+  ['feed', at(58), at(59.5), 6, 1.0, 1.2, 1.1, 50, 30],
+  ['board', at(59.5), at(61), 6, 1.0, 1.2, 1.1, 50, 35],
 ];
-const FRAMES = { card: 110, danger: 50, hero: 54, moto: 45, flowers: 32, pet: 32, b13: 22, b22: 22, b1: 22, b32: 22, b11: 22, store: 26, feed: 30, board: 30 };
+const FRAMES = { card: 150, danger: 50, hero: 54, levelup: 45, moto: 40, flowers: 32, yacht: 40, pet: 32, b46: 22, b50: 22, b49: 22, b48: 22, b13: 22, b1: 22, b32: 22, b11: 22, b36: 22,
+  themes: 54, stickers: 54, gifts: 54, streak: 45, anketa: 30, quote: 30, store: 26, feed: 30, board: 30 };
 // Подписи: [t0, t1, html, размер, y (доля высоты кадра), наклон °]
 const CAPS = [
-  [at(0) + .05, at(3), '<span><i class="l">Свайпай</i><br>решения</span>', 'big', .82, -3],
-  [at(3), at(6), '<span>Держи <i class="c">4 шкалы</i><br>в балансе</span>', 'mid', .82, 2],
-  [at(6) + .05, at(9), '<span><i class="r">0% или 100%</i><br>— конец недели!</span>', 'mid', .70, -2],
-  [at(9) + .05, at(12), '<span>Твой <i class="m">3D&#8209;герой</i></span>', 'mid', .82, -2],
-  [at(15) + .05, at(17.5), '<span>Покупай <i class="l">мечты</i></span>', 'big', .82, -3],
-  [at(17.5), at(19), '<span><i class="m">Цветы</i>, мото, лодки</span>', 'mid', .82, 2],
-  [at(19), at(20.5), '<span><i class="c">Питомцы</i> и дети</span>', 'mid', .82, -2],
-  [at(25.5), at(26.5), '<span><i class="l">Магазин</i></span>', 'big', .86, -2],
-  [at(26.5), at(27.5), '<span>Лента и <i class="m">подарки</i></span>', 'mid', .86, 2],
-  [at(27.5), at(28.5), '<span>Рейтинг<br><i class="c">недели дня</i><i class="sub">офисы с коллегами</i></span>', 'mid', .83, -2],
+  [at(0) + .05, at(2), '<span><i class="r">Выгорел</i><br>на работе?</span>', 'big', .80, -3],
+  [at(2), at(4), '<span>Перезагрузись<br><i class="l">за 5 минут</i></span>', 'mid', .80, 2],
+  [at(4), at(7), '<span><i class="l">Свайпай</i><br>решения</span>', 'big', .82, -3],
+  [at(7), at(10), '<span>Держи <i class="c">4 шкалы</i><br>в балансе</span>', 'mid', .82, 2],
+  [at(10) + .05, at(13), '<span><i class="r">0% или 100%</i><br>— конец недели!</span>', 'mid', .70, -2],
+  [at(13) + .05, at(16), '<span>Твой <i class="m">3D&#8209;герой</i></span>', 'mid', .82, -2],
+  [at(19) + .05, at(22), '<span>Доживи до пятницы&nbsp;—<br><i class="l">получи повышение</i></span>', 'sm', .84, 2],
+  [at(22) + .05, at(24.5), '<span>Покупай <i class="l">мечты</i></span>', 'big', .82, -3],
+  [at(24.5), at(26), '<span><i class="m">Цветы</i>, мото, лодки</span>', 'mid', .82, 2],
+  [at(26), at(28.5), '<span><i class="c">Редкие вещи:</i><br>своя яхта</span>', 'mid', .82, -2],
+  [at(28.5), at(30), '<span><i class="c">Питомцы</i> и дети</span>', 'mid', .82, 2],
+  [at(39) + .05, at(42.5), '<span><i class="m">31 тема</i><br>оформления</span>', 'mid', .84, -2],
+  [at(42.5), at(46), '<span>Фирменные<br><i class="l">стикеры</i></span>', 'mid', .30, 2],
+  [at(46), at(49.5), '<span>Дари <i class="m">подарки</i><br>коллегам</span>', 'mid', .84, -2],
+  [at(49.5), at(52.5), '<span><i class="r">День 5 подряд</i> —<br><i class="l">бонус растёт</i></span>', 'sm', .80, 2],
+  [at(52.5), at(54.5), '<span>Анкета<br><i class="c">соискателя</i></span>', 'mid', .82, -2],
+  [at(54.5), at(56.5), '<span><i class="m">Цитаты</i> великих</span>', 'mid', .82, 2],
+  [at(56.5), at(58), '<span><i class="l">Магазин</i></span>', 'big', .86, -2],
+  [at(58), at(59.5), '<span>Лента <i class="m">офиса</i></span>', 'mid', .86, 2],
+  [at(59.5), at(61), '<span>Рейтинг<br><i class="c">недели дня</i><i class="sub">офисы с коллегами</i></span>', 'mid', .83, -2],
 ];
-const FIFTY = [[at(20.5), 'найди отличия'], [at(21.5), 'аркады'], [at(22.5), 'шашки'], [at(23.5), 'слова'], [at(24.5), 'пазлы']];
+// плашки над серией коротких склеек: [t0, t1, заголовок, цвет, подписи по склейкам]
+const GROUPS = [
+  [at(30), at(34), 'Сними стресс', 'cyan', [[at(30), 'дыхание перед планёркой'], [at(31), 'дзен-сад'], [at(32), 'пупырка'], [at(33), 'погладь кота']]],
+  [at(34), at(39), '50 мини-игр', 'lime', [[at(34), 'найди отличия'], [at(35), 'шашки'], [at(36), 'слова'], [at(37), 'пазлы'], [at(38), 'найди слова']]],
+];
 $('caps').innerHTML = CAPS.map(([, , h, c], i) => `<div class="cap ${c}" id="cap${i}">${h}</div>`).join('');
 const src = (name, i) => `${CAP}/${name}/${String(Math.max(0, Math.min(FRAMES[name] - 1, i))).padStart(4, '0')}.jpg`;
 // финальный веер из кадров игры: [папка, кадр, наклон, x, верх/низ]
@@ -152,10 +181,10 @@ async function frame(t) {
     const v = $('vid');
     v.style.transformOrigin = `${fx}% ${fy}%`;
     v.style.transform = `scale(${lerp(z0, z1, ease(k)) * punch})`;
-    v.style.filter = t < at(0) && !(POSTER && WIDE) ? 'blur(3px)' : 'none';
+    v.style.filter = t < at(0) && !(POSTER && WIDE) ? (WIDE ? 'blur(3px)' : 'blur(7px) brightness(.8)') : 'none';
   }
   $('phone').style.opacity = t >= END ? 0 : 1;
-  $('vidDim').style.opacity = t < at(0) ? (POSTER && WIDE ? .5 : .6) : (t >= at(12) && t < at(15)) ? .72 : 0;
+  $('vidDim').style.opacity = t < at(0) ? (POSTER && WIDE ? .5 : WIDE ? .6 : .78) : (t >= at(16) && t < at(19)) ? .72 : 0;
   if (WIDE) $('phone').style.transform = `rotate(${-3 + Math.sin(t * .8) * .6}deg)`;
   // белая вспышка на склейках
   let fl = 0;
@@ -187,25 +216,26 @@ async function frame(t) {
     e.style.transform = `translateY(-50%) scale(${lerp(1.8, 1, back(a)) * (1 - .15 * out)}) rotate(${rot * (1 - a * .4)}deg)`;
     e.style.opacity = 1 - out;
   });
-  // «50 мини-игр»
-  const fOn = t >= at(20.5) && t < at(25.5), fi = $('fifty');
-  fi.style.opacity = fOn ? 1 : 0;
-  if (fOn) {
-    const a = seg(t, at(20.5), at(20.5) + .25), sub = [...FIFTY].reverse().find(f => t >= f[0]);
-    fi.querySelector('b').style.transform = `scale(${lerp(2, 1, back(a)) * (1 + .07 * Math.max(0, 1 - (t - sub[0]) / .15))}) rotate(-2deg)`;
+  // плашки «Сними стресс» и «50 мини-игр»
+  const g = GROUPS.find(g => t >= g[0] && t < g[1]), fi = $('fifty');
+  fi.style.opacity = g ? 1 : 0;
+  if (g) {
+    const [g0, , title, col, subs] = g, a = seg(t, g0, g0 + .25), sub = [...subs].reverse().find(f => t >= f[0]), bb = fi.querySelector('b');
+    bb.textContent = title; bb.className = col;
+    bb.style.transform = `scale(${lerp(2, 1, back(a)) * (1 + .07 * Math.max(0, 1 - (t - sub[0]) / .15))}) rotate(-2deg)`;
     $('fiftySub').textContent = sub[1];
     $('fiftySub').style.transform = `scale(${lerp(1.5, 1, ease(seg(t, sub[0], sub[0] + .15)))})`;
   }
   // карьера: 3 уровня
-  const cOn = t >= at(12) && t < at(15), ca = $('career');
-  ca.style.opacity = cOn ? 1 - seg(t, at(15) - .1, at(15)) : 0;
+  const cOn = t >= at(16) && t < at(19), ca = $('career');
+  ca.style.opacity = cOn ? 1 - seg(t, at(19) - .1, at(19)) : 0;
   if (cOn) {
-    ca.querySelector('h2').style.transform = `scale(${lerp(1.9, 1, back(seg(t, at(12), at(12) + .25)))})`;
-    ca.querySelector('.x').style.opacity = seg(t, at(12) + .15, at(12) + .35);
-    ca.querySelectorAll('.lv').forEach((e, i) => { const a = seg(t, at(12) + .3 + i * B * .8, at(12) + .55 + i * B * .8); e.style.opacity = a; e.style.transform = `translateX(${(1 - back(a)) * (i % 2 ? 320 : -320)}px)`; });
+    ca.querySelector('h2').style.transform = `scale(${lerp(1.9, 1, back(seg(t, at(16), at(16) + .25)))})`;
+    ca.querySelector('.x').style.opacity = seg(t, at(16) + .15, at(16) + .35);
+    ca.querySelectorAll('.lv').forEach((e, i) => { const a = seg(t, at(16) + .3 + i * B * .8, at(16) + .55 + i * B * .8); e.style.opacity = a; e.style.transform = `translateX(${(1 - back(a)) * (i % 2 ? 320 : -320)}px)`; });
   }
   // опасность: красная пульсация в такт
-  $('vign').style.opacity = t >= at(6) && t < at(9) ? .45 + .55 * Math.abs(Math.cos((t - at(6)) * Math.PI / B)) : 0;
+  $('vign').style.opacity = t >= at(10) && t < at(13) ? .45 + .55 * Math.abs(Math.cos((t - at(10)) * Math.PI / B)) : 0;
   // финальная карточка
   const eOn = t >= END, en = $('end');
   en.style.opacity = eOn ? 1 : 0; $('fan').style.opacity = eOn ? 1 : 0;
@@ -214,7 +244,8 @@ async function frame(t) {
     en.querySelector('.logo').style.transform = `scale(${lerp(2.3, 1, back(seg(e, 0, .35))) * (1 + .025 * Math.abs(Math.sin(e * Math.PI / B)))})`;
     const fr = en.querySelector('.free'), fa = seg(e, .3, .55); fr.style.opacity = fa; fr.style.transform = `scale(${lerp(.4, 1, back(fa)) * (1 + .045 * (e > .6 ? Math.abs(Math.sin((e - .6) * Math.PI / B)) : 0))})`;
     const ur = en.querySelector('.url'), ua = seg(e, .55, .8); ur.style.opacity = ua; ur.style.transform = `translateY(${(1 - ease(ua)) * 30}px)`;
-    en.querySelector('.tags').style.opacity = seg(e, .85, 1.15);
+    en.querySelector('.tag2').style.opacity = seg(e, .8, 1.05); en.querySelector('.tag2').style.transform = `translateY(${(1 - ease(seg(e, .8, 1.05))) * 20}px)`;
+    en.querySelector('.tags').style.opacity = seg(e, 1.0, 1.3);
     [...$('fan').children].forEach((im, i) => {
       const [, , rot, dx, low] = FAN[i], a = ease(seg(e, .05 + i * .06, .5 + i * .06));
       const x = SW / 2 - 95 + dx * (WIDE ? 2.6 : 1), y = WIDE ? (low ? 300 : -110) : (low ? 640 : -20);

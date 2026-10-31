@@ -22,6 +22,16 @@ const DAILY = [['Катя', '🌸', 'Бухгалтерия', 312], ['Дима',
   ['Игорь', '🧔', 'IT', 263], ['Аня', '🐱', 'Дизайн', 255], ['Тимур', '🚀', 'Продажи', 240], ['Ольга', '☕', 'Бухгалтерия', 233], ['Лёша', '🙃', 'IT', 0]]
   .map(([name, avatar, dept, total], i) => ({ tag: 't' + i, name, avatar, dept, prof: 'marketer', won: total > 0, step: total ? 25 : 14, total, created_at: ago(30 + i * 7), mode: 'daily' }));
 
+// чат офиса: сообщения, стикеры и подарки (новые — сверху, как отдаёт сервер)
+const CHAT = [
+  { name: 'Марина', avatar: '🦊', msg: '[st:07]', m: 1 },
+  { name: 'Дима', avatar: '😎', msg: 'Кто на кофе? ☕', m: 2 },
+  { name: 'Катя', avatar: '🌸', gift: 'donut', gift_to: 'Дима', m: 3 },
+  { name: 'Игорь', avatar: '🧔', msg: 'Пятница уже близко, держитесь!', m: 5 },
+  { name: 'Аня', avatar: '🐱', msg: '[st:03]', m: 6 },
+  { name: 'Тимур', avatar: '🚀', msg: 'Босс опять «на минутку» позвал 😅', m: 8 },
+].map((r, i) => ({ msg_id: 50 - i, short_id: 's' + i, dept: '', mine: false, sent_at: ago(r.m), ...r }));
+
 async function open(b) {
   const ctx = await b.newContext({ viewport: { width: 540, height: 960 }, deviceScaleFactor: 2, serviceWorkers: 'block', locale: 'ru-RU', reducedMotion: 'no-preference' });
   await ctx.addInitScript(() => {
@@ -30,7 +40,10 @@ async function open(b) {
   });
   await ctx.route(/supabase\.co|mc\.yandex|yandex\.ru|googletagmanager|telegram\.org|vk\.com/, r => {
     const u = r.request().url();
-    const body = /feed_latest/.test(u) ? FEED : /daily_leaderboard/.test(u) ? DAILY : /leaderboard/.test(u) ? DAILY : /supabase/.test(u) ? [] : '';
+    if (/post_message/.test(u)) { const a = JSON.parse(r.request().postData() || '{}'); CHAT.unshift({ msg_id: 100 + CHAT.length, short_id: 'me', name: 'Костя', avatar: '😏', mine: true, msg: a.p_text, sent_at: new Date().toISOString() }); return r.fulfill({ status: 200, contentType: 'application/json', body: 'null' }); }
+    if (/send_gift/.test(u)) { const a = JSON.parse(r.request().postData() || '{}'); CHAT.unshift({ msg_id: 100 + CHAT.length, short_id: 'me', name: 'Костя', avatar: '😏', mine: true, gift: a.p_gift, gift_to: 'Марина', sent_at: new Date().toISOString() }); return r.fulfill({ status: 200, contentType: 'application/json', body: 'null' }); }
+    if (/my_team/.test(u)) return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([{ name: 'Отдел маркетинга', code: 'ABC123' }]) });
+    const body = /get_messages/.test(u) ? CHAT : /feed_latest/.test(u) ? FEED : /daily_leaderboard/.test(u) ? DAILY : /leaderboard/.test(u) ? DAILY : /supabase/.test(u) ? [] : '';
     return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
   });
   const p = await ctx.newPage(); p.on('pageerror', e => console.log('  pageerror:', e.message));
@@ -92,12 +105,14 @@ const SCENES = {
   // 1) карточки: появление, подсветка ответа, свайп вправо, новая карточка, свайп влево
   card: async s => {
     await week(s);
-    await rec(s, 'card', 110, async i => {
+    await rec(s, 'card', 150, async i => {
       await s.ev(() => { $('coach').hidden = true; });
       if (i === 12) await s.ev(() => preview('right'));
       if (i === 34) await s.ev(() => { clearPreview(); choose('right'); });
-      if (i === 70) await s.ev(() => preview('left'));
+      if (i === 66) await s.ev(() => preview('left'));
       if (i === 88) await s.ev(() => { clearPreview(); choose('left'); });
+      if (i === 118) await s.ev(() => preview('right'));
+      if (i === 138) await s.ev(() => { clearPreview(); choose('right'); });
     });
   },
   // 2) опасность: шкалы у края — «на грани» и «перегрев»
@@ -113,7 +128,7 @@ const SCENES = {
   },
   moto: async s => {
     await toon(() => { const it = GOODS.flatMap(g => g.items).find(i => i.id === 'moto'); playToon({ kind: 'ride', prop: 'moto', cat: GOODS.find(g => g.items.includes(it)), list: [it], mood: 32, h: careerNow().hero }); })(s);
-    await load(s); await wait(s, 4200); await rec(s, 'moto', 45);
+    await load(s); await wait(s, 3300); await rec(s, 'moto', 40);
   },
   flowers: async s => {
     await toon(() => { const c = GOODS.find(g => g.id === 'flowers'), it = c.items[2]; playToon({ kind: 'delivery', cat: c, list: [it], mood: 18, h: careerNow().hero }); })(s);
@@ -124,10 +139,6 @@ const SCENES = {
     await load(s); await wait(s, 2300); await rec(s, 'pet', 32);
   },
   b13: async s => { await brk(s, 13); await rec(s, 'b13', 22, async i => { if (i === 8) await s.p.mouse.click(150, 300); }); },
-  b22: async s => {
-    await brk(s, 22, async s => { await s.p.mouse.move(270, 600); await s.p.mouse.down(); await s.p.mouse.up(); await s.p.clock.runFor(1500); });
-    await rec(s, 'b22', 22, async i => { await s.p.mouse.move(200 + i * 7, 600); });
-  },
   b1: async s => { await brk(s, 1, async s => { await clickText(s, '.brk-root button', 'Мидл'); }); await rec(s, 'b1', 22); },
   b32: async s => {
     const type = (w, enter) => s.ev(([w, enter]) => { const k = ch => [...document.querySelectorAll('.bgq4-k')].find(b => b.textContent === ch)?.click(); for (const ch of w) k(ch); if (enter) k('Ввод'); }, [w, enter]);
@@ -135,6 +146,72 @@ const SCENES = {
     await rec(s, 'b32', 22, async i => { if (i % 3 === 0 && i < 15) await type('СТОЛЫ'[i / 3]); });
   },
   b11: async s => { await brk(s, 11, async s => { await clickText(s, '.brk-root button', '3 × 3'); }); await rec(s, 'b11', 22); },
+  // --- вторая волна: повышение, редкие вещи, «сними стресс», темы, стикеры, подарки, серия, анкета, цитаты ---
+  levelup: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => { const c = careerNow(); Object.assign(c, { week: 53, worked: 48, passed: 3, failed: 1, firings: 1, earned: 420 }); careerSave(c); C = c; yearEnd(); });
+    await wait(s, 300); await s.ev(() => document.querySelector('.lvl-next')?.scrollIntoView({ block: 'center' })); await wait(s, 200);
+    await rec(s, 'levelup', 45);
+  },
+  yacht: async s => {
+    await toon(() => { const x = rareItemById('r_yacht'); playToon({ kind: 'ride', prop: 'boat', list: [x], mood: 45, h: careerNow().hero }); })(s);
+    await load(s); await wait(s, 2400); await rec(s, 'yacht', 40);
+  },
+  b46: async s => { await brk(s, 46, async s => { await clickText(s, '.brk-root button', 'Начать'); await wait(s, 1200); }); await rec(s, 'b46', 22); },
+  b50: async s => {
+    await brk(s, 50); await s.p.mouse.move(90, 300); await s.p.mouse.down();
+    for (let i = 0; i < 20; i++) await s.p.mouse.move(90 + i * 9, 300 + 60 * Math.sin(i / 3), { steps: 2 });
+    await rec(s, 'b50', 22, async i => { await s.p.mouse.move(270 + i * 9, 300 + 60 * Math.sin((i + 20) / 3), { steps: 2 }); });
+    await s.p.mouse.up();
+  },
+  b49: async s => {
+    await brk(s, 49);
+    const pt = i => [70 + (i % 8) * 55, 120 + Math.floor(i / 8) * 55 + (i % 2) * 20];
+    for (let i = 0; i < 10; i++) { const [x, y] = pt(i * 3); await s.p.mouse.click(x, y); await wait(s, 60, 0); }
+    await rec(s, 'b49', 22, async i => { if (i % 2 === 0) { const [x, y] = pt(31 + i * 2); await s.p.mouse.click(x, y); } });
+  },
+  b48: async s => {
+    await brk(s, 48); await s.p.mouse.move(200, 330); await s.p.mouse.down();
+    await rec(s, 'b48', 22, async i => { await s.p.mouse.move(200 + 140 * Math.abs(Math.sin(i / 4)), 320 + (i % 3) * 8, { steps: 3 }); });
+    await s.p.mouse.up();
+  },
+  b36: async s => { await brk(s, 36); await rec(s, 'b36', 22); },
+  themes: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => { renderMenu(); openProfile(); $('themePick').scrollIntoView({ block: 'center' }); }); await wait(s, 600);
+    const order = [3, 9, 14, 20, 26, 7];
+    await rec(s, 'themes', 54, async i => { if (i % 9 === 4) await s.ev(k => document.querySelectorAll('.tp-sw')[k]?.click(), order[(i - 4) / 9]); });
+  },
+  stickers: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => showChat('team')); await load(s, 800); await wait(s, 600);
+    await rec(s, 'stickers', 54, async i => {
+      if (i === 6) await s.ev(() => document.querySelector('.soc-stb')?.click());
+      if (i === 28) { await s.ev(() => document.querySelector('.soc-stp [data-st="9"]')?.click()); await load(s, 600); }
+      if (i === 30) await load(s, 400);
+    });
+  },
+  gifts: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => showChat('team')); await load(s, 800); await wait(s, 600);
+    await rec(s, 'gifts', 54, async i => {
+      if (i === 3) await s.ev(() => socGiftPicker({ kind: 'msg', id: 50, to: 's0', name: 'Марина' }));
+      if (i === 13) await s.ev(() => document.querySelector('[data-g="champagne"]')?.click());
+      if (i === 22) { await s.ev(() => $('sgGo').click()); await load(s, 600); }
+    });
+  },
+  streak: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => { prefs.gamesPlayed = 3; prefs.dayStreak = { last: new Date(Date.now() - 864e5).toISOString().slice(0, 10), count: 4, claimed: true }; store.set(KEY.prefs, prefs); if ($('viralPop')) $('viralPop').hidden = true; showDayStreak(); });
+    await wait(s, 400); await rec(s, 'streak', 45, async i => { if (i === 22) await s.ev(() => $('stkGo').click()); });
+  },
+  anketa: async s => { await menuWithMoney(s); await s.ev(() => anketaOpen()); await wait(s, 800); await rec(s, 'anketa', 30); },
+  quote: async s => {
+    await menuWithMoney(s);
+    await s.ev(() => { renderMenu(); }); await load(s, 800); await wait(s, 500);
+    await s.ev(() => { if ($('viralPop')) $('viralPop').hidden = true; $('qtDay')?.scrollIntoView({ block: 'center' }); }); await wait(s, 300);
+    await rec(s, 'quote', 30, async i => { if (i === 12) { await s.ev(() => $('qtMore').click()); } });
+  },
   store: async s => { await menuWithMoney(s); await s.ev(() => openStore()); await wait(s, 400); await rec(s, 'store', 26); },
   feed: async s => { await menuWithMoney(s); await s.ev(() => showFeed()); await wait(s, 200); await rec(s, 'feed', 30); },
   board: async s => { await menuWithMoney(s); await s.ev(() => openBoard('menu', 'daily')); await wait(s, 200); await rec(s, 'board', 30); },
