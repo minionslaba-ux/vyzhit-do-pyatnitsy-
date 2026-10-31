@@ -1,3 +1,14 @@
+// Высота экрана для вёрстки (--app-h): реально видимая область. 100dvh в Telegram на iPhone и в части браузеров бывает
+// больше видимого — тогда низ экрана (кнопки ответов) уезжал за край, а прокрутки нет. Берём высоту из Telegram или visualViewport.
+(() => {
+  const set = () => {
+    const tg = window.Telegram?.WebApp, vv = window.visualViewport;
+    const h = (tg?.initData && tg.viewportStableHeight) || vv?.height || window.innerHeight;
+    if (h > 200) document.documentElement.style.setProperty('--app-h', Math.round(h) + 'px');
+  };
+  set(); addEventListener('resize', set); window.visualViewport?.addEventListener('resize', set);
+  addEventListener('orientationchange', () => setTimeout(set, 350)); addEventListener('load', () => { set(); window.Telegram?.WebApp?.onEvent?.('viewportChanged', set); setTimeout(set, 500); });
+})();
 // Язык игры: русский (ru) или английский (en). Подключается первым — до cards.js.
 // Выбор: ?lang=en / ?lang=ru в адресе, переключатель в профиле; кто уже играл — русский; иначе — по языкам браузера.
 // В коде текст пишется парой: L('по-русски', 'in English'). Данные (карточки, вопросы) — в data/en/*.json поверх русских по id.

@@ -23,6 +23,8 @@ html, body { height: 100%; }
 /* Telegram на компьютере во весь экран: сверху его кнопки «Закрыть / ⋯» — отступ под них */
 html.tgfs body { box-sizing: border-box; padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px)); }
 @supports (height: 100dvh) { html, body { height: 100dvh; } }  /* на телефоне учитывает панели браузера и клавиатуру */
+html, body { height: var(--app-h, 100dvh); }  /* видимая высота из js/i18n.js — надёжнее dvh в Telegram и Safari */
+.view.game { overflow-y: auto; overscroll-behavior: contain; }  /* запасной выход: если всё же не влезло — экран игры прокручивается */
 body {
   background:
     radial-gradient(900px 500px at 15% 110%, rgba(var(--p-rgb),.22), transparent 60%),
