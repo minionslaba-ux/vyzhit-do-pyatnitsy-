@@ -1149,6 +1149,15 @@ body:has(#menu[hidden]) .me-top { display: none; }
 .ps-x { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--text); font-size: 22px; line-height: 1; cursor: pointer; }
 .ps-sec { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
 .ps-cap { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-2); }
+.snd-row { display: flex; align-items: center; gap: 12px; }
+.snd-vol { flex: 1; min-width: 0; height: 28px; margin: 0; background: transparent; accent-color: var(--cyan); -webkit-appearance: none; appearance: none; cursor: pointer; }
+.snd-vol::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--cyan) var(--p, 80%), rgba(var(--w-rgb),.14) var(--p, 80%)); }
+.snd-vol::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.snd-vol::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(var(--w-rgb),.14); }
+.snd-vol::-moz-range-progress { height: 6px; border-radius: 3px; background: var(--cyan); }
+.snd-vol::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.snd-vol:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 6px; }
+.snd-val { flex: none; min-width: 42px; text-align: right; font-family: var(--f-mono); font-size: 13px; color: var(--text-2); }
 .btn-danger { color: #ff5b7f !important; }
 /* в меню колокольчик слева, справа — плашка профиля */
 body:has(#menu:not([hidden])) .bell { right: auto; left: 12px; }
