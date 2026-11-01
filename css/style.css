@@ -2137,3 +2137,10 @@ html.light .rnd-tag.ret-mtag { color: #8a5a00; }
 .qt-vk { padding: 0 12px; font-weight: 800; color: #fff; background: #0077ff; border-color: #0077ff; }
 .qt-vk:hover, .qt-vk:focus-visible { background: #1a86ff; border-color: #1a86ff; }
 .share-grid .sh-vk { background: #0077ff; color: #fff; border-color: #0077ff; font-weight: 800; }
+
+/* «Поделиться» в итоге мини-игры */
+.brk-share { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; font-size: 13px; color: var(--text-2); }
+.brk-share button { min-height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(var(--w-rgb),.05); color: var(--text); font-weight: 700; font-size: 14px; }
+.brk-share button[data-sh="tg"] { background: #2aabee; border-color: #2aabee; color: #fff; }
+.brk-share .sh-vk { background: #0077ff; border-color: #0077ff; color: #fff; }
+.brk-share button:active { transform: scale(.96); }

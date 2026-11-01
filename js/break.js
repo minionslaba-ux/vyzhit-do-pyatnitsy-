@@ -134,8 +134,10 @@ async function playBreak(n, opts = {}) {
       r.innerHTML = `<b>${won ? (rec ? L('🏆 Новый рекорд!', '🏆 New record!') : L('✅ Готово!', '✅ Done!')) : L('Не получилось', 'Not this time')}</b>
         ${text ? `<p>${text}</p>` : ''}${score != null ? `<p>${L('Результат', 'Score')}: <b>${esc(String(score))}</b></p>` : ''}${reward ? `<p class="brk-reward">🎁 ${reward}</p>` : won ? `<p class="brk-note">${L('Награды на сегодня собраны — играйте для рекордов', 'Today’s rewards are collected — play for records')}</p>` : ''}
         ${then ? `<button class="btn-main" type="button" id="brkGo">${L('За работу →', 'Back to work →')}</button>`
-          : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}`;
+          : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}}
+        ${won && n !== 51 ? `<div class="brk-share" aria-label="${L('Поделиться результатом', 'Share your score')}"><span aria-hidden="true">📣</span><button type="button" data-sh="tg">Telegram</button><button type="button" data-sh="vk" class="sh-vk">${L('ВКонтакте', 'VK')}</button><button type="button" data-sh="more">${L('Ещё…', 'More…')}</button></div>` : ''}`;
       r.hidden = false; r.classList.toggle('brk-win', !!won);
+      r.querySelectorAll('[data-sh]').forEach(btn => btn.onclick = () => brkShare(n, score, rec, btn.dataset.sh));
       if (won && !matchMedia('(prefers-reduced-motion: reduce)').matches) {  // конфетти
         const cf = Object.assign(document.createElement('div'), { className: 'brk-conf' }), cols = ['#ff3bd4', '#2de2e6', '#d4ff3a', '#ffaa28', '#b26bff'];
         for (let i = 0; i < 40; i++) { const e = document.createElement('i'); e.style.cssText = `left:${Math.random() * 100}%;background:${cols[i % 5]};animation-duration:${1.4 + Math.random() * 1.4}s;animation-delay:${Math.random() * .4}s`; cf.append(e); }
@@ -150,6 +152,25 @@ async function playBreak(n, opts = {}) {
     },
   };
   try { impl(root, api); } catch (e) { root.innerHTML = `<p class="brk-load">${L('Ошибка игры', 'Game error')}</p>`; console.error(e); }
+}
+
+// Поделиться результатом мини-игры: ссылка открывает у друга ту же разминку (startapp=brk-N в Telegram, ?brk=N на сайте)
+async function brkShare(n, score, rec, via) {
+  const meta = BREAKS.find(b => b[0] === n); if (!meta) return;
+  const title = `${meta[2]} ${meta[3]}`;
+  const text = score != null
+    ? L(`${rec ? 'Новый рекорд' : 'Мой результат'} в «${title}» — ${score}! Сможешь лучше? Мини-игра для перерыва в «Выжить до пятницы»:`, `${rec ? 'New record' : 'My score'} in “${title}”: ${score}! Can you beat it? A break-time mini-game in Survive till Friday:`)
+    : L(`Прошёл(а) «${title}» — попробуй и ты! Мини-игра для перерыва в «Выжить до пятницы»:`, `Beat “${title}” — your turn! A break-time mini-game in Survive till Friday:`);
+  const ref = typeof myTag !== 'undefined' && typeof shortId === 'function' ? shortId(await myTag) : '';
+  const tg = window.SUPABASE_CONFIG?.telegram;
+  const tgLink = tg?.bot ? `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=brk-${n}${ref ? `_ref-${ref}` : ''}` : '';
+  const site = `${typeof gameUrl === 'function' ? gameUrl() : 'https://survivefriday.com/'}?brk=${n}${ref ? `&ref=${ref}` : ''}`;
+  track('share', { detail: `break:${n}:${via}` });
+  const enc = encodeURIComponent;
+  if (via === 'tg') { const u = `https://t.me/share/url?url=${enc(tgLink || site)}&text=${enc(text)}`; TG?.openTelegramLink ? TG.openTelegramLink(u) : window.open(u, '_blank', 'noopener'); }
+  else if (via === 'vk') vkShare(site + '&utm_source=vk', text, 'break');
+  else if (navigator.share && !TG) navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url: site }).catch(() => {});
+  else navigator.clipboard?.writeText(`${text} ${tgLink || site}`).then(() => toast(L('Ссылка скопирована — вставьте её в чат', 'Link copied — paste it into a chat')), () => toast(`${text} ${site}`));
 }
 
 // Бодрость от разминок — в начале следующей рабочей недели карьеры

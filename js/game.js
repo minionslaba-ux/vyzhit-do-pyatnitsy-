@@ -1019,6 +1019,7 @@ function secondChance(k, high) {
     $('qRes').textContent = ok ? L(`Верно! «${resName(k)}» отступает от края на 20%.`, `Correct! ${resName(k)} pulls back 20% from the edge.`) : picked === -1 ? L(`Время вышло. Правильный ответ: «${q.options[q.answer]}».`, `Time’s up. The answer was “${q.options[q.answer]}”.`) : L(`Неверно. Правильный ответ: «${q.options[q.answer]}».`, `Wrong. The answer was “${q.options[q.answer]}”.`);
     $('qNext').textContent = ok ? L('Продолжить неделю', 'Back to the week') : L('Принять судьбу', 'Accept your fate');
     $('qAfter').hidden = false; $('qNext').focus({ preventScroll: true });
+    setTimeout(() => $('qNext')?.scrollIntoView({ block: 'end', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }), 250);  // кнопка «Дальше» не прячется под краем экрана
     ok ? sfx.item() : sfx.stamp();
     track('quiz', { won: ok, card: q.id, mode: S.mode });
     $('qNext').onclick = () => {
