@@ -2246,16 +2246,13 @@ html.light .ml-clues li.hint { color: #8a5a00; }
 /* Кабинет психолога Миры (js/psy.js) */
 .psy-open { width: 100%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; margin-top: 10px; padding: 12px 14px; border-radius: 18px;
   border: 1.5px solid rgba(45,226,138,.55); background: radial-gradient(120% 140% at 0% 0%, rgba(45,226,138,.16), transparent 60%), var(--panel); text-align: left; cursor: pointer; }
-.psy-open > span:first-child { font-size: 30px; }
+.psy-open .psy-mini { width: 46px; height: 46px; box-shadow: 0 0 0 2px rgba(45,226,138,.45); }
+.psy-open:hover .psy-mini svg, .psy-open:focus-visible .psy-mini svg { animation: psyNod .9s ease-in-out; }
 .psy-open b { display: block; font-size: 15px; }
 .psy-open small { display: block; font-size: 12.5px; color: var(--text-2); line-height: 1.3; }
 .psy-open i { font-style: normal; font-size: 22px; color: var(--text-2); }
 .psy-open:active { transform: scale(.98); }
 .psy-box { max-width: 440px; }
-.psy-head { display: flex; align-items: center; gap: 12px; }
-.psy-ava { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; font-size: 30px; background: rgba(45,226,138,.15); border: 1px solid rgba(45,226,138,.45); }
-.psy-head b { font-size: 18px; display: block; }
-.psy-head small { color: var(--text-2); font-size: 12.5px; }
 .psy-body { display: grid; gap: 8px; }
 .psy-greet { margin: 4px 0 0; font-size: 15px; line-height: 1.4; }
 .psy-kick { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #2de28a; }
@@ -2335,3 +2332,53 @@ html.light .psy-kick { color: #0b7a45; }
   .oc-banner { grid-template-columns: 30px minmax(0, 1fr); }
   .oc-banner .btn-main { grid-column: 1 / -1; width: 100%; padding: 9px 12px; }
 }
+
+/* Кабинет Миры: анимированная сцена */
+.psy-scene { position: relative; flex: none; margin: -4px -4px 0; border-radius: 18px; overflow: hidden; height: 132px; min-height: 132px; border: 1px solid rgba(45,226,138,.3);
+  --ps-wall: #173a31; --ps-wall2: #0f2620; --ps-floor: #3a2a22; --ps-rug: #6b3b5a; --ps-chair: #b26bff; --ps-card: #2de28a; --ps-ink: #1b1424; --ps-sky: #3a6fb0; }
+html.light .psy-scene { --ps-wall: #d9f2e6; --ps-wall2: #c3e8d6; --ps-floor: #c8a78d; --ps-rug: #e7a6c9; --ps-sky: #9fd3ff; }
+.psy-scene-svg { display: block; width: 100%; height: 100%; }
+.psy-scene .ps-wall { fill: var(--ps-wall); } .psy-scene .ps-floor { fill: var(--ps-floor); } .psy-scene .ps-rug { fill: var(--ps-rug); opacity: .7; }
+.psy-scene .ps-frame { fill: #f3e7d3; } .psy-scene .ps-sky { fill: var(--ps-sky); } .psy-scene .ps-bar { stroke: #f3e7d3; stroke-width: 3; }
+.psy-scene .ps-sun { fill: #ffd23a; } .psy-scene .ps-cloud { fill: #fff; opacity: .9; animation: psCloud 14s linear infinite; }
+.psy-scene .ps-shelf rect:first-child { fill: #8a5a3b; }
+.psy-scene .ps-pot { fill: #c9643b; } .psy-scene .ps-leaves { fill: #2fb36b; transform-origin: 116px 90px; animation: psSway 5s ease-in-out infinite; }
+.psy-scene .ps-glow { fill: #ffd23a; opacity: .14; animation: psGlow 4s ease-in-out infinite; } .psy-scene .ps-pole { stroke: #4a4a55; stroke-width: 3; fill: none; } .psy-scene .ps-shade { fill: #ffb43a; }
+.psy-scene .ps-chair rect { fill: var(--ps-chair); } .psy-scene .ps-chair rect:first-child { fill: #8f4fe0; }
+.psy-scene .ps-cardigan { fill: var(--ps-card); } .psy-scene .ps-collar { fill: #fff; stroke: none; }
+.psy-scene .ps-note { fill: #fff8e1; } .psy-scene .ps-lines { stroke: #9a9aa6; stroke-width: 1.4; }
+.psy-scene .ps-table rect:first-child, .psy-scene .ps-table > path { fill: #8a5a3b; stroke: #8a5a3b; stroke-width: 3; }
+.psy-scene .ps-mug { fill: #ff8be6; } .psy-scene .ps-handle { fill: none; stroke: #ff8be6; stroke-width: 2.4; }
+.psy-scene .ps-steam path { fill: none; stroke: rgba(255,255,255,.7); stroke-width: 2; stroke-linecap: round; animation: psSteam 3s ease-in infinite; }
+.psy-scene .ps-steam path:last-child { animation-delay: 1.5s; }
+html.light .psy-scene .ps-steam path { stroke: rgba(90,86,112,.5); }
+.psy-scene .brow, .psy-scene .ln { fill: none; stroke: var(--ps-ink); stroke-width: 2.4; stroke-linecap: round; }
+.psy-scene .fl, .psy-scene .mtalk { fill: #3a1424; } .psy-scene .eyes { fill: var(--ps-ink); transform-origin: 32px 31px; animation: blink 4.5s infinite; }
+.psy-scene .glasses { fill: rgba(255,255,255,.15); stroke: var(--ps-ink); stroke-width: 1.8; } .psy-scene .blush { fill: #ff7aa8; opacity: .35; }
+.psy-scene .mtalk { opacity: 0; }
+.psy-scene .mira-body { transform-origin: 164px 104px; animation: psBreathe 4s ease-in-out infinite; }
+.psy-scene .mira-head { transform-origin: 164px 66px; transform-box: view-box; animation: psHead 6s ease-in-out infinite; }
+.psy-scene .expr { transition: transform .4s ease; }
+.psy-scene.think .expr { transform: translate(1.5px, -1.8px); }
+.psy-scene.talk .expr > :last-child { opacity: 0; }
+.psy-scene.talk .mtalk { opacity: 1; transform-origin: 32px 43px; transform-box: view-box; animation: psTalk .26s ease-in-out infinite alternate; }
+.psy-scene.talk .mira-head { animation: psNodTalk .9s ease-in-out infinite; }
+.psy-scene.emote .mira-head { animation: psNodTalk .4s ease-in-out 1; }
+.psy-scene.sad .blush, .psy-scene[data-mood="sad"] .blush { opacity: .15; }
+.psy-scene.bye .mira { animation: psBye .65s ease-in forwards; }
+.psy-name { margin: 2px 0 0; flex: none; }
+.psy-name b { font-size: 18px; margin-right: 6px; } .psy-name small { font-size: 12.5px; color: var(--text-2); }
+.psy-scene .ps-sit { transform: translateY(5px) scale(1.14); transform-origin: 164px 106px; transform-box: view-box; }
+.psy-body.psy-in > * { animation: psIn .45s ease both; } .psy-body.psy-in > *:nth-child(2) { animation-delay: .12s; } .psy-body.psy-in > *:nth-child(3) { animation-delay: .22s; }
+@keyframes psCloud { from { transform: translateX(-30px); } to { transform: translateX(60px); } }
+@keyframes psSway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes psGlow { 0%, 100% { opacity: .1; } 50% { opacity: .22; } }
+@keyframes psSteam { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-8px); } }
+@keyframes psBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.025, 1.035); } }
+@keyframes psHead { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-3deg); } 70% { transform: rotate(2deg) translateY(1px); } }
+@keyframes psNodTalk { 0%, 100% { transform: rotate(0) translateY(0); } 50% { transform: rotate(2deg) translateY(1.5px); } }
+@keyframes psTalk { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+@keyframes psBye { 30% { transform: translateY(-3px); } 100% { transform: translateY(2px); opacity: .85; } }
+@keyframes psIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes psyNod { 50% { transform: rotate(-6deg); } }
+@media (prefers-reduced-motion: reduce) { .psy-scene *, .psy-body.psy-in > *, .psy-open .psy-mini svg { animation: none !important; } }
