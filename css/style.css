@@ -2223,3 +2223,22 @@ html.light .qt-kick { color: #8a5a00; }
 html.light .qt-btn.qt-share { color: #b0127a; border-color: rgba(176,18,122,.45); }
 /* Кнопки «Продолжить неделю» / «Неделя дня»: слова целиком, на узких экранах шрифт чуть меньше */
 @media (max-width: 460px) { .play2 .btn-main { font-size: clamp(13px, 4vw, 19px); padding-left: 8px; padding-right: 8px; } .play2 .btn-main small { white-space: nowrap; font-size: clamp(9.5px, 2.85vw, 11px); } }
+
+/* «Крот в офисе» (js/mole.js) */
+.ml-sus { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin: 8px 0; }
+.ml-s { display: grid; justify-items: center; gap: 2px; padding: 8px 2px; border-radius: 14px; background: var(--panel); border: 1.5px solid var(--line); font-size: 12px; text-align: center; min-width: 0; }
+.ml-s b { font-size: 13px; overflow-wrap: anywhere; }
+.ml-s small { color: var(--text-2); font-size: 10.5px; line-height: 1.15; overflow-wrap: anywhere; }
+.ml-ico { font-size: 24px; }
+button.ml-s { cursor: pointer; border-color: rgba(var(--m-rgb),.55); }
+button.ml-s:hover, button.ml-s:focus-visible { background: rgba(var(--m-rgb),.15); }
+button.ml-s:active { transform: scale(.96); }
+.ml-note { font-size: 12px; color: var(--text-2); margin: 0; }
+.ml-new { font-size: 16px; line-height: 1.4; padding: 10px 12px; border-radius: 14px; background: rgba(var(--c-rgb),.1); border: 1px solid rgba(var(--c-rgb),.35); }
+.ml-clues { margin: 6px 0; padding-left: 20px; display: grid; gap: 4px; font-size: 13.5px; text-align: left; }
+.ml-clues li.hint { color: #ffd28a; }
+.ml-all summary { cursor: pointer; font-size: 13px; color: var(--text-2); }
+.ml-meet { margin: 10px 0; padding: 12px; border-radius: 18px; border: 1.5px solid rgba(var(--m-rgb),.6); background: rgba(var(--m-rgb),.08); display: grid; gap: 6px; text-align: center; }
+.ml-meet b { font-size: 17px; }
+.ml-ach { font-size: 13px; color: #2de28a; font-weight: 800; }
+html.light .ml-clues li.hint { color: #8a5a00; }
