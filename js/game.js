@@ -680,8 +680,9 @@ function react(card, eff, side) {
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
 }
 
-function choose(side) {
+function choose(side, sure) {
   if (busy || splashOn || !S) return;
+  if (!sure && !prefs.dzNoAsk && dzRisk(side).length && $('modal').hidden) return dzConfirm(side);  // ответ с ⚠ — сначала «Вы уверены?»
   busy = true; sfx.swipe?.(); sfx.stapler(); buzz('tap');
   const card = $('card'), dir = side === 'left' ? -1 : 1, c = current();
   card.style.transition = RM.matches ? 'opacity .12s' : `transform .38s ${EASE}, opacity .38s`;
@@ -777,6 +778,29 @@ function answerWarn() {
 const dzText = () => L('⚠ на ответе: эта шкала уже у края, а ответ толкает её ещё ближе. 0% или 100% — конец недели.', '⚠ on an answer: this meter is already near the edge and the answer pushes it further. 0% or 100% ends the week.');
 function dzExplain(why) { toast(`${dzText()}${why ? ` (${why})` : ''}`); }
 // один раз за всё время — короткое объяснение при первой такой метке
+// Какие шкалы этот ответ толкает к краю (та же логика, что у метки ⚠)
+function dzRisk(side) {
+  if (!S?.deck?.[S.step]) return [];
+  const hide = WEEK_TYPES[S.type].rules.hideBoss, { eff } = effectsOf(side);
+  return RES.filter(r => !(hide && r.k === 'boss') && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
+}
+// Окно «Опасный ответ»: Да — отвечаем, Нет — карточка возвращается на место. Галочка — больше не спрашивать
+function dzConfirm(side) {
+  const bad = dzRisk(side), m = $('modal'), card = $('card');
+  const back = () => { if (card) { card.style.transition = `transform .3s ${EASE}, opacity .2s`; card.style.transform = ''; card.style.opacity = ''; card.classList.add('idle'); } clearPreview(); };
+  const lines = bad.map(r => { const low = S.res[r.k] <= 20; return `<li><b>${esc(r.name)}</b> — ${L('сейчас', 'now')} ${S.res[r.k]}%, ${low ? L('ответ опустит ещё ниже ▼', 'this answer pushes it lower ▼') : L('ответ поднимет ещё выше ▲', 'this answer pushes it higher ▲')}</li>`; }).join('');
+  m.innerHTML = `<div class="modal-box glass cert-box dz-box" role="alertdialog" aria-modal="true" aria-labelledby="dzTitle"><span class="lvl-ico" aria-hidden="true">⚠️</span>
+    <h2 id="dzTitle">${L(bad.length > 1 ? 'Опасный ответ для шкал' : `Опасный ответ для шкалы «${esc(bad[0].name)}»`, bad.length > 1 ? 'Risky answer for your meters' : `Risky answer for ${esc(bad[0].name)}`)}</h2>
+    <ul class="dz-list">${lines}</ul>
+    <p class="dz-note">${L('0% или 100% — конец недели. Вы уверены?', '0% or 100% ends the week. Are you sure?')}</p>
+    <div class="row2"><button class="btn-ghost" type="button" id="dzNo">${L('Нет, подумаю', 'No, let me think')}</button><button class="btn-main" type="button" id="dzYes">${L('Да, отвечаю', 'Yes, go')}</button></div>
+    <label class="dz-skip"><input type="checkbox" id="dzSkip"> ${L('Больше не спрашивать', 'Don’t ask again')}</label></div>`;
+  m.hidden = false; $('dzNo').focus();
+  const close = () => { if ($('dzSkip')?.checked) { prefs.dzNoAsk = true; store.set(KEY.prefs, prefs); toast(L('Хорошо, больше не спрашиваем. Метка ⚠ на ответах останется.', 'Okay, no more questions. The ⚠ badge stays on answers.')); } m.hidden = true; m.innerHTML = ''; };
+  $('dzYes').onclick = () => { close(); track('dz_confirm', { detail: bad.map(r => r.k).join(',') }); choose(side, true); };
+  $('dzNo').onclick = () => { close(); back(); track('dz_cancel', { detail: bad.map(r => r.k).join(',') }); };
+  m.onclick = e => { if (e.target === m) { close(); back(); } };
+}
 function dzFirstTip() { if (prefs.dzTip) return; prefs.dzTip = 1; store.set(KEY.prefs, prefs); setTimeout(() => toast(dzText()), 700); }
 // Полоска задачи над карточкой: что сделать, сколько осталось, до когда и какой ответ на этой карточке засчитается
 function renderDeadlineChip() {

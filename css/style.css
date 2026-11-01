@@ -2177,3 +2177,13 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 
 /* Метка «⚠ Коллеги ▼ к 0%» на ответе: нажимается (объяснение), не шире кнопки */
 .dz-badge { pointer-events: auto; cursor: help; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; top: -10px; bottom: auto; z-index: 2; }
+
+/* Окно «Опасный ответ» (js/game.js: dzConfirm) */
+.dz-box h2 { font-size: 20px; }
+.dz-list { margin: 4px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; text-align: left; font-size: 15px; }
+.dz-list li { padding: 8px 12px; border-radius: 12px; background: rgba(255,59,107,.1); border: 1px solid rgba(255,59,107,.35); }
+.dz-list b { color: #ffd0da; }
+.dz-note { margin: 4px 0; font-size: 14px; color: var(--text-2); }
+.dz-skip { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-2); cursor: pointer; margin-top: 2px; }
+.dz-skip input { width: 18px; height: 18px; accent-color: var(--magenta); }
+.dz-box .row2 .btn-main, .dz-box .row2 .btn-ghost { font-size: 16px; padding-left: 10px; padding-right: 10px; white-space: nowrap; }
