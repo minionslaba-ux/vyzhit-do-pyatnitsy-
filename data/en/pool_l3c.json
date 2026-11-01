@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l3c_001",
+  "who": "Assistant",
+  "text": "Your assistant bumped your morning swim for a call with a shareholder. Third time this month. The swimsuit in your briefcase is starting to take it personally. Restore the swim?",
+  "left": "Put the swim back",
+  "right": "Take the shareholder call"
+ },
+ {
+  "id": "l3c_002",
+  "who": "Calendar",
+  "text": "Your calendar shows three meetings at 9:00 sharp. Your assistant insists “you can be in several places at once.” Which one stays?",
+  "left": "Keep the board meeting",
+  "right": "Keep the team meeting"
+ },
+ {
+  "id": "l3c_003",
+  "who": "Driver",
+  "text": "On the way to the office, your driver suggests “a shortcut through the backstreets.” Last time the shortcut took forty minutes and included a tour of garages. Trust him?",
+  "left": "Take the backstreets",
+  "right": "Insist on the avenue jam"
+ },
+ {
+  "id": "l3c_004",
+  "who": "Assistant",
+  "text": "Your assistant drops a folder on your desk: “Sign by 10:00.” It holds one hundred twelve documents. Read each one or trust the lawyers?",
+  "left": "Sign without reading",
+  "right": "Read every page"
+ },
+ {
+  "id": "l3c_005",
+  "who": "Board chair",
+  "text": "The board chair calls at 7:40 a.m.: “You’re not asleep, are you? I’ve been thinking about strategy.” Judging by his voice, he’s been thinking all night.",
+  "left": "Listen and take notes",
+  "right": "Ask to postpone a day"
+ },
+ {
+  "id": "l3c_006",
+  "who": "Inner voice",
+  "text": "Morning. You stand at your office’s panoramic window overlooking the city. Beautiful. And absolutely nobody to talk to about it. Call an old friend?",
+  "left": "Call a college friend",
+  "right": "Dive into email"
+ },
+ {
+  "id": "l3c_007",
+  "who": "CFO",
+  "text": "The CFO and the sales director arrived at the same moment, each claiming to be first. Both clutch presentations and glare at each other. Who goes in?",
+  "left": "See the CFO",
+  "right": "See the sales director"
+ },
+ {
+  "id": "l3c_008",
+  "who": "Assistant",
+  "text": "Your assistant designed you “the perfect executive morning”: up at 5:00, meditation, a run, reading. You usually wake at 7:20. Try it?",
+  "left": "Try getting up at 5:00",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3c_009",
+  "who": "Town hall",
+  "text": "The all-company meeting is in an hour. The speechwriter’s draft uses the word “synergy” eleven times. Rewrite it?",
+  "left": "Rewrite in your own words",
+  "right": "Read it as is"
+ },
+ {
+  "id": "l3c_010",
+  "who": "Elevator",
+  "text": "You end up in the elevator with an intern. He freezes and stares at the wall as if you were a fire alarm. Speak first?",
+  "left": "Ask how he likes it here",
+  "right": "Let him ride in peace"
+ },
+ {
+  "id": "l3c_011",
+  "who": "Assistant",
+  "text": "Your assistant asks if she can add a “Think” block to your calendar. Without it, she says, you only think in the elevator. Agree?",
+  "left": "Add the “Think” block",
+  "right": "Give the slot to meetings"
+ },
+ {
+  "id": "l3c_012",
+  "who": "Business trip",
+  "text": "You’ve landed in another time zone. Local time: morning. Your body clock: 3 a.m. Negotiations start in an hour. How do you hold up?",
+  "left": "Down three espressos",
+  "right": "Move talks to the evening"
+ },
+ {
+  "id": "l3c_013",
+  "who": "Driver",
+  "text": "Your driver turned on a morning radio show. The hosts are joking about bosses who are always late. You’re late.",
+  "left": "Laugh along with him",
+  "right": "Ask him to switch it off and speed up"
+ },
+ {
+  "id": "l3c_014",
+  "who": "Values",
+  "text": "Internal comms asks if they can paint a quote of yours on the lobby wall. They made the quote up themselves. Sounds good, but you never said it.",
+  "left": "Allow the pretty quote",
+  "right": "Offer a real one"
+ },
+ {
+  "id": "l3c_015",
+  "who": "Deputy",
+  "text": "Your deputy announces from the doorway that “it’s time to talk about the future.” You hope he means strategy, not your chair. Talk now?",
+  "left": "Talk right now",
+  "right": "Schedule it for Friday"
+ },
+ {
+  "id": "l3c_016",
+  "who": "Family",
+  "text": "At breakfast your kid asks: “Are you really the boss? Then why are you always at work?” You have to answer before the porridge gets cold.",
+  "left": "Explain responsibility",
+  "right": "Promise a free Saturday"
+ },
+ {
+  "id": "l3c_017",
+  "who": "Board of directors",
+  "text": "Overnight, the board sent twenty comments on the strategy. Half contradict the other half. Reply to each?",
+  "left": "Reply to each personally",
+  "right": "Send one combined reply"
+ },
+ {
+  "id": "l3c_018",
+  "who": "Assistant",
+  "text": "Your assistant allotted you exactly 12 minutes for lunch between meetings. The restaurant downstairs takes twenty to serve soup. How do you eat?",
+  "left": "Snack bar in the elevator",
+  "right": "Blow the schedule for soup"
+ },
+ {
+  "id": "l3c_019",
+  "who": "COO",
+  "text": "Once again the COO tells the meeting that all problems stem from sales. The sales director is slowly turning red. Step in?",
+  "left": "Stop the squabble",
+  "right": "Let them blow off steam"
+ },
+ {
+  "id": "l3c_020",
+  "who": "Succession pool",
+  "text": "HR asks you to name three possible successors to your role. You realize you’ll have to choose with all three candidates in the same meeting.",
+  "left": "Name three honestly",
+  "right": "Ask for six more months"
+ },
+ {
+  "id": "l3c_021",
+  "who": "Mentoring",
+  "text": "A young manager in your mentoring program asks whether she should leave for a startup. Honestly, in her place you’d go.",
+  "left": "Be honest: “Go”",
+  "right": "Talk her into staying"
+ },
+ {
+  "id": "l3c_022",
+  "who": "Charity",
+  "text": "A foundation the company supports invites you to personally teach a workshop for kids. It falls right in the middle of quarter-end close. Go?",
+  "left": "Go to the kids",
+  "right": "Send your deputy"
+ },
+ {
+  "id": "l3c_023",
+  "who": "Lounge",
+  "text": "The airport business lounge has free oysters, a massage chair, and total silence. An hour until boarding, 240 unread emails. Which do you choose?",
+  "left": "The massage chair",
+  "right": "Clear the inbox"
+ },
+ {
+  "id": "l3c_024",
+  "who": "Assistant",
+  "text": "Your assistant approaches with a notepad: “Forty-two people want a meeting with you this week. Here’s the list.” Whom do you cut?",
+  "left": "Cut all internal ones",
+  "right": "Cut external partners"
+ },
+ {
+  "id": "l3c_025",
+  "who": "CFO",
+  "text": "The CFO suggests slashing the company celebrations budget to show the board some savings. The hallway is already buzzing about the New Year’s quiz.",
+  "left": "Cut the celebrations",
+  "right": "Find savings elsewhere"
+ },
+ {
+  "id": "l3c_026",
+  "who": "Town hall",
+  "text": "Town hall. An employee in the back row asks into the mic: “Why do directors get heated parking spots and we don’t?” The room goes silent.",
+  "left": "Promise heating for all",
+  "right": "Explain the budgets"
+ },
+ {
+  "id": "l3c_027",
+  "who": "Marketing director",
+  "text": "The marketing director brought a new version of the company values. There are nine now, one of them “Drive.” He can’t explain what drive is.",
+  "left": "Approve all nine",
+  "right": "Send it back for rework"
+ },
+ {
+  "id": "l3c_028",
+  "who": "Board of directors",
+  "text": "At the board meeting, a shareholder asks a question only your deputy can answer. The deputy is on vacation at a remote lake with no signal.",
+  "left": "Improvise confidently",
+  "right": "Promise an answer by email"
+ },
+ {
+  "id": "l3c_029",
+  "who": "Corporate lawyer",
+  "text": "Legal warns that your witty post on the company social network has spread through chats, and someone is now quoting it to journalists. Delete it?",
+  "left": "Delete the post",
+  "right": "Keep it and joke it off"
+ },
+ {
+  "id": "l3c_030",
+  "who": "Driver",
+  "text": "On the way to an important meeting, your driver mentions his son can’t find an internship. He looks at you hopefully in the mirror. Help?",
+  "left": "Promise to talk to HR",
+  "right": "Steer talk to the weather"
+ },
+ {
+  "id": "l3c_031",
+  "who": "Inner voice",
+  "text": "At the strategy session, everyone nods at your every word. Even when, as a test, you propose something deliberately odd. That’s worrying.",
+  "left": "Ask: “Who disagrees?”",
+  "right": "Enjoy the moment"
+ },
+ {
+  "id": "l3c_032",
+  "who": "Assistant",
+  "text": "Your assistant booked a restaurant for your partner dinner with a fourteen-course tasting menu. Dinner will end around midnight. Change it?",
+  "left": "Keep the tasting menu",
+  "right": "Book a regular steakhouse"
+ },
+ {
+  "id": "l3c_033",
+  "who": "HR director",
+  "text": "The HR director proposes a “no-meeting Wednesday” for the top team. The board asked for reports specifically on Wednesdays.",
+  "left": "Introduce quiet day",
+  "right": "Leave Wednesday as is"
+ },
+ {
+  "id": "l3c_034",
+  "who": "Internal rival",
+  "text": "The sales director publicly took credit for an idea the CFO brought. The CFO looks at you: justice is in your hands.",
+  "left": "Correct it publicly",
+  "right": "Sort it out privately"
+ },
+ {
+  "id": "l3c_035",
+  "who": "Press office",
+  "text": "The press office wants an interview photo “in an informal setting.” The informal setting is you in a sweater next to a ficus.",
+  "left": "Pose with the ficus",
+  "right": "Shoot at your desk"
+ },
+ {
+  "id": "l3c_036",
+  "who": "Family",
+  "text": "Your partner texts at lunch: “You remember the parent-teacher meeting is at 7 tonight?” You didn’t. At 7 you have an investor call.",
+  "left": "Go to the meeting",
+  "right": "Stay on the call"
+ },
+ {
+  "id": "l3c_037",
+  "who": "Assistant",
+  "text": "Your assistant is heading home and asks if you need her for anything else. You realize that without her you couldn’t even find your own passport. Let her go?",
+  "left": "Let her go with thanks",
+  "right": "Ask her to stay an hour"
+ },
+ {
+  "id": "l3c_038",
+  "who": "Business trip",
+  "text": "Evening at a hotel in another city. Your partners invite you to karaoke “to strengthen the relationship.” Your internal clock already says 4 a.m.",
+  "left": "Sing one song and leave",
+  "right": "Stay in your room"
+ },
+ {
+  "id": "l3c_039",
+  "who": "Loneliness",
+  "text": "Friday evening. The team heads to a bar but doesn’t invite you: “It’s just awkward, you’re the CEO.” Through the glass you can see them laughing.",
+  "left": "Drop by uninvited",
+  "right": "Quietly go home"
+ },
+ {
+  "id": "l3c_040",
+  "who": "Driver",
+  "text": "Your driver has been waiting at the entrance since 8 p.m. It’s now ten. You’re not done yet, and you know he hasn’t had dinner. What now?",
+  "left": "Let him go, take a taxi",
+  "right": "Ask him to wait another hour"
+ },
+ {
+  "id": "l3c_041",
+  "who": "Shareholder",
+  "text": "The main shareholder invites you fishing this weekend. You don’t like fishing, but personnel decisions will be made there.",
+  "left": "Go fishing",
+  "right": "Cite family plans"
+ },
+ {
+  "id": "l3c_042",
+  "who": "Health",
+  "text": "At your checkup, the company doctor gently says your blood pressure is like a pilot’s in turbulence. He advises a vacation. Your next one is in 2029.",
+  "left": "Take a week off now",
+  "right": "Buy a monitor, keep working"
+ },
+ {
+  "id": "l3c_043",
+  "who": "Assistant",
+  "text": "At 9 p.m. your assistant sends tomorrow’s schedule. The first meeting is a 6:30 a.m. video call with the Vladivostok office. Confirm?",
+  "left": "Confirm the early call",
+  "right": "Ask to move it to evening"
+ },
+ {
+  "id": "l3c_044",
+  "who": "Deputy",
+  "text": "Your deputy has stayed late and offers to have some tea. Looks like he wants to get something off his chest. You still have a stack of documents to sign.",
+  "left": "Have tea and listen",
+  "right": "Say you’re swamped"
+ },
+ {
+  "id": "l3c_045",
+  "who": "Mentor",
+  "text": "Your former mentor, long retired, calls in the evening “just to see how you are.” You realize you haven’t spoken honestly with anyone in ages. Open up?",
+  "left": "Pour your heart out",
+  "right": "Say everything’s great"
+ },
+ {
+  "id": "l3c_046",
+  "who": "Company apartment",
+  "text": "The company rented you an apartment near the office “for convenience.” Now you literally live two minutes from work. And everybody knows it.",
+  "left": "Sleep at the company flat",
+  "right": "Commute home as before"
+ },
+ {
+  "id": "l3c_047",
+  "who": "Family",
+  "text": "Your partner mentions your anniversary. Your assistant has already booked a table, flowers, and a gift. Convenient, sure, but a little sad.",
+  "left": "Choose the gift yourself",
+  "right": "Trust the assistant"
+ },
+ {
+  "id": "l3c_048",
+  "who": "CFO",
+  "text": "The CFO calls at 10 p.m.: the bank wants to revisit the credit line. The board meets in the morning. Prepare now?",
+  "left": "Prep until 2 a.m.",
+  "right": "Have the team do it by morning"
+ },
+ {
+  "id": "l3c_049",
+  "who": "Messenger",
+  "text": "In the top team’s chat, someone accidentally posted: “Here he goes again with his agile methodologies.” “He” is you.",
+  "left": "Reply with humor",
+  "right": "Hold a debrief tomorrow"
+ },
+ {
+  "id": "l3c_050",
+  "who": "Charity ball",
+  "text": "A charity ball. The host announces an auction and asks “our esteemed CEO” to raise a paddle first. The lot: a painting of a cat for $500,000.",
+  "left": "Buy the cat",
+  "right": "Pretend to be texting"
+ },
+ {
+  "id": "l3c_051",
+  "who": "Airport",
+  "text": "Flight at 6:05 a.m. Your assistant booked a car for 3:40 “to be safe.” The driver texts he’s already outside. It’s 3:10 and you’re still in pajamas.",
+  "left": "Get ready in ten minutes",
+  "right": "Ask him to wait till 3:40"
+ },
+ {
+  "id": "l3c_052",
+  "who": "Jet lag",
+  "text": "Day three of the trip. Your body is convinced it’s night, though the sun is out and there’s a business breakfast. You’re holding your spoon like a microphone.",
+  "left": "Drink coffee and hang on",
+  "right": "Skip breakfast and sleep"
+ },
+ {
+  "id": "l3c_053",
+  "who": "Hotel",
+  "text": "You’ve been put in a presidential suite with a grand piano and three bathrooms. You spent half an hour finding the light switch. Being late is now inevitable.",
+  "left": "Call reception",
+  "right": "Go to the meeting half-dark"
+ },
+ {
+  "id": "l3c_054",
+  "who": "Interpreter",
+  "text": "At negotiations abroad, the interpreter spends three minutes translating your joke. Your partners aren’t laughing. He seems to be explaining all of Russian literature.",
+  "left": "Keep joking",
+  "right": "Switch to dry numbers"
+ },
+ {
+  "id": "l3c_055",
+  "who": "Driver",
+  "text": "Your driver arrived in a new company car and is waiting for compliments. It’s luxurious but smells like it was doused in “Ocean Breeze” air freshener.",
+  "left": "Praise the car",
+  "right": "Open all the windows"
+ },
+ {
+  "id": "l3c_056",
+  "who": "Assistant",
+  "text": "Your assistant reports you’ve once again left your charger, belt, and one cufflink at a hotel. The hotel is in another country. Buy new ones or wait for a parcel?",
+  "left": "Buy it all at the airport",
+  "right": "Go beltless till it arrives"
+ },
+ {
+  "id": "l3c_057",
+  "who": "Business trip",
+  "text": "Morning in a new city. The hosts sent the itinerary: factory floor at 7:00, lunch with the governor at 1:00, sauna at 8:00. Skip the sauna?",
+  "left": "Skip the sauna",
+  "right": "Do the whole program"
+ },
+ {
+  "id": "l3c_058",
+  "who": "Airplane",
+  "text": "On the plane, the business-class passenger next to you recognizes you and spends the flight pitching his business plan. Four hours to landing, and you wanted to sleep.",
+  "left": "Fake a deep sleep",
+  "right": "Listen and give advice"
+ },
+ {
+  "id": "l3c_059",
+  "who": "Time zones",
+  "text": "You held a video meeting with the Moscow team. Only afterward did you realize it was 4:30 a.m. in Moscow. Everyone attended. Everyone acted perky.",
+  "left": "Apologize, send all to bed",
+  "right": "Say: “Great discipline!”"
+ },
+ {
+  "id": "l3c_060",
+  "who": "Shopping",
+  "text": "Your partner asks you to bring back a special cheese from your trip. To buy it, you’d have to visit a market across town before your flight.",
+  "left": "Go get the cheese",
+  "right": "Buy cheese at duty-free"
+ },
+ {
+  "id": "l3c_061",
+  "who": "Driver",
+  "text": "Your driver suggests driving past the lake this morning: “It’s pretty, and you’re on your phone in the back anyway.” It adds fifteen minutes.",
+  "left": "Take the lake route",
+  "right": "Take the shortest way"
+ },
+ {
+  "id": "l3c_062",
+  "who": "Passport control",
+  "text": "An hour-long line at passport control. Your partners are waiting in the lobby. There’s a fast lane for business travelers, but it’s closed for a “technical pause.”",
+  "left": "Wait in the regular line",
+  "right": "Call partners and apologize"
+ },
+ {
+  "id": "l3c_063",
+  "who": "Investors",
+  "text": "An investor roadshow: five cities in four days. You’re giving the same speech for the twelfth time and are no longer sure it’s true.",
+  "left": "Add some improv",
+  "right": "Read from the page"
+ },
+ {
+  "id": "l3c_064",
+  "who": "Business trip",
+  "text": "On the trip, your partners suggest skipping the negotiations to “stroll the old town and have a heart-to-heart.” The deal is up in the air.",
+  "left": "Go for a stroll",
+  "right": "Insist on the meeting room"
+ },
+ {
+  "id": "l3c_065",
+  "who": "Restaurant",
+  "text": "Your partners ordered the national dish and are watching with interest to see how you’ll eat it. The dish is looking back at you.",
+  "left": "Eat it with a smile",
+  "right": "Admit you don’t dare"
+ },
+ {
+  "id": "l3c_066",
+  "who": "Assistant",
+  "text": "Your assistant sends the trip expense report for signature. It includes “Minibar — $250.” You only took water from the minibar.",
+  "left": "Pay and forget it",
+  "right": "Take it up with the hotel"
+ },
+ {
+  "id": "l3c_067",
+  "who": "Video call",
+  "text": "You’re running a board meeting by video from a hotel room. Behind you: an unmade bed and your socks hanging on the floor lamp.",
+  "left": "Turn on background blur",
+  "right": "Act like it’s on purpose"
+ },
+ {
+  "id": "l3c_068",
+  "who": "Partner",
+  "text": "A foreign partner gives you an enormous statuette. It won’t fit in carry-on, and leaving it behind would be rude. What do you do?",
+  "left": "Ship it, pay the courier",
+  "right": "Carry it through three airports"
+ },
+ {
+  "id": "l3c_069",
+  "who": "Driver",
+  "text": "At a red light, your driver admits he moonlights as a cab driver on weekends using the company car. He says it would just sit idle otherwise.",
+  "left": "Turn a blind eye",
+  "right": "Have a stern talk"
+ },
+ {
+  "id": "l3c_070",
+  "who": "Conference",
+  "text": "At an international conference, you speak right after a Nobel laureate. Everyone gave him a standing ovation. They’re planning to listen to you while on their phones.",
+  "left": "Open with a personal story",
+  "right": "Read your prepared talk"
+ },
+ {
+  "id": "l3c_071",
+  "who": "Assistant",
+  "text": "Your assistant asks whether to book eight flights for next month. You do the math and realize you’ll spend six nights at home.",
+  "left": "Book all eight",
+  "right": "Swap half for video calls"
+ },
+ {
+  "id": "l3c_072",
+  "who": "Branch office",
+  "text": "You’re visiting a regional branch. They hastily painted the fence, laid a carpet, and hung your portrait. The paint is still wet.",
+  "left": "Ask them to take it down",
+  "right": "Pose next to the portrait"
+ },
+ {
+  "id": "l3c_073",
+  "who": "Branch office",
+  "text": "The branch director whispers that all is well, but the workers on the floor look like they want to say something. Talk to them without managers present?",
+  "left": "Talk to the workers",
+  "right": "Trust the branch director"
+ },
+ {
+  "id": "l3c_074",
+  "who": "Business trip",
+  "text": "The meeting ended two hours early. You could visit a museum you’ve dreamed of since childhood, or change your ticket and fly home.",
+  "left": "Go to the museum",
+  "right": "Fly home early"
+ },
+ {
+  "id": "l3c_075",
+  "who": "Airport",
+  "text": "Your flight is delayed six hours. Your assistant suggests chartering a private jet at company expense. The CFO will be “thrilled.”",
+  "left": "Charter the jet",
+  "right": "Wait with everyone else"
+ },
+ {
+  "id": "l3c_076",
+  "who": "Delegation",
+  "text": "A foreign delegation is visiting. Protocol asks you to learn a greeting in their language. Three words, but the stress falls unpredictably.",
+  "left": "Learn the greeting",
+  "right": "Say hello in English"
+ },
+ {
+  "id": "l3c_077",
+  "who": "Board of directors",
+  "text": "A board member happens to be on your flight and offers to swap seats so you can “calmly discuss a couple of things.” It’s a nine-hour flight.",
+  "left": "Sit next to him",
+  "right": "Plead paperwork"
+ },
+ {
+  "id": "l3c_078",
+  "who": "Hotel",
+  "text": "Midnight at the hotel. Your body demands breakfast. Room service only offers a club sandwich costing a courier’s daily wage.",
+  "left": "Order the sandwich",
+  "right": "Snack on nuts from your bag"
+ },
+ {
+  "id": "l3c_079",
+  "who": "Business trip",
+  "text": "Last evening of the trip. The local team throws you a farewell dinner with toasts. Your flight is in three hours, and you haven’t packed.",
+  "left": "Stay for dinner",
+  "right": "Thank them and go pack"
+ },
+ {
+  "id": "l3c_080",
+  "who": "Jet lag",
+  "text": "You’re home. Your body is on Singapore time, so at 2 a.m. you’re wide awake and itching to clear your inbox. The family is asleep.",
+  "left": "Clear the inbox",
+  "right": "Lie there counting sheep"
+ },
+ {
+  "id": "l3c_081",
+  "who": "Driver",
+  "text": "Your driver is bringing you home from the airport at night and can barely keep his eyes open. He’s been driving your guests since morning. Offer to take the wheel?",
+  "left": "Drive yourself",
+  "right": "Stop for coffee"
+ },
+ {
+  "id": "l3c_082",
+  "who": "Family",
+  "text": "Your kid greets you home from the trip with a drawing: you waving from an airplane window. At home, you mostly exist in photos.",
+  "left": "Promise a week of no travel",
+  "right": "Hug them and go unpack"
+ },
+ {
+  "id": "l3c_083",
+  "who": "Souvenirs",
+  "text": "The team expects souvenirs from your trip. You only managed to grab three fridge magnets at the airport. There are forty people in the office.",
+  "left": "Magnets for the best three",
+  "right": "Order pastries for all"
+ },
+ {
+  "id": "l3c_084",
+  "who": "Assistant",
+  "text": "At 11 p.m. your assistant reports your return flight was canceled; the next one is in two days. There’s an option with three connections, arriving the morning of the board meeting.",
+  "left": "Fly with the connections",
+  "right": "Join the board remotely"
+ },
+ {
+  "id": "l3c_085",
+  "who": "Hotel",
+  "text": "In the hotel lobby, you run into the CEO of a rival company. He’s bored too and suggests a drink. The conversation could be useful.",
+  "left": "Have a drink with him",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3c_086",
+  "who": "Video call",
+  "text": "You’re on a trip, and back home your kid has a school show. Your partner holds up the phone: forty parents and one little duckling. The duckling is searching for you.",
+  "left": "Watch the whole show",
+  "right": "Wave and go back to dinner"
+ },
+ {
+  "id": "l3c_087",
+  "who": "Town hall",
+  "text": "Communications suggests opening the town hall by riding onto the stage on a hoverboard. “To keep it informal.” Rehearsal in an hour.",
+  "left": "Ride the hoverboard",
+  "right": "Walk out as usual"
+ },
+ {
+  "id": "l3c_088",
+  "who": "Assistant",
+  "text": "Your assistant takes her first sick day in five years. The temp sent you a schedule with every meeting in London time.",
+  "left": "Fix the schedule yourself",
+  "right": "Cancel everything till she’s back"
+ },
+ {
+  "id": "l3c_089",
+  "who": "Board of directors",
+  "text": "A break in the board meeting. An independent director comes up and whispers that your CFO is “too chummy with a shareholder.” What do you say?",
+  "left": "Thank him for the tip",
+  "right": "Say you trust your team"
+ },
+ {
+  "id": "l3c_090",
+  "who": "Mentoring",
+  "text": "Your mentee brought forty questions in a spreadsheet. The first: “How did you become CEO?” That answer usually takes an hour.",
+  "left": "Tell the whole story",
+  "right": "Send a link to an interview"
+ },
+ {
+  "id": "l3c_091",
+  "who": "Loneliness",
+  "text": "You’re dining alone in the hotel restaurant. At the next table, a birthday party. The waiter asks if you’d like to be seated “with people.”",
+  "left": "Join the party",
+  "right": "Stay at your table"
+ },
+ {
+  "id": "l3c_092",
+  "who": "Lounge",
+  "text": "In the business lounge, a former employee you once fired recognizes you. He smiles and walks over. Nowhere to retreat.",
+  "left": "Talk like a human",
+  "right": "Rush off to board"
+ },
+ {
+  "id": "l3c_093",
+  "who": "Assistant",
+  "text": "Your assistant set up a color system for your calendar: red for board, yellow for team, green for personal. There’s no green at all this week.",
+  "left": "Add at least one green",
+  "right": "Say that’s the plan"
+ },
+ {
+  "id": "l3c_094",
+  "who": "Business trip",
+  "text": "Your hosts take you “to see the future site.” It’s six hours by SUV across a field. There’s no site yet — just a stake in the ground.",
+  "left": "Go see the stake",
+  "right": "Look at the deck photos"
+ },
+ {
+  "id": "l3c_095",
+  "who": "Pilot",
+  "text": "The private jet pilot says weather forces a landing in the neighboring city. That’s four hours by car to the negotiations.",
+  "left": "Drive four hours",
+  "right": "Negotiate by video"
+ },
+ {
+  "id": "l3c_096",
+  "who": "Driver",
+  "text": "On the way home, your driver puts on his favorite music — sappy old crooner ballads. He’s happy, you’re not, but it’s the first thing he’s said all week: “Mind if I do?”",
+  "left": "Listen to the ballads",
+  "right": "Ask for silence"
+ },
+ {
+  "id": "l3c_097",
+  "who": "Assistant",
+  "text": "Your assistant found a free hour on Wednesday in your calendar. The first in a month. Three members of the top team have already claimed it.",
+  "left": "Give the hour to the CFO",
+  "right": "Keep it for yourself"
+ },
+ {
+  "id": "l3c_098",
+  "who": "Airport",
+  "text": "You’re waved through the VIP terminal while your whole team on the same flight stands in the regular line. They wave at you through the glass.",
+  "left": "Join the regular line",
+  "right": "Wave back"
+ },
+ {
+  "id": "l3c_099",
+  "who": "Business trip",
+  "text": "You’re back from a long trip. Your desk is buried in paper, there are eight hundred emails, and your deputy handled everything perfectly without you.",
+  "left": "Praise the deputy publicly",
+  "right": "Take everything back at once"
+ },
+ {
+  "id": "l3c_100",
+  "who": "Values",
+  "text": "Consultants were paid a fortune to craft the company mission: “Doing good so things are good.” The all-staff presentation is today.",
+  "left": "Present it cheerfully",
+  "right": "Ask for a rewrite"
+ },
+ {
+  "id": "l3c_101",
+  "who": "Internal comms",
+  "text": "Communications wants you to record a short daily “Word from the CEO” video for staff every morning. The camera is already set up in your office.",
+  "left": "Record every day",
+  "right": "Once a month, tops"
+ },
+ {
+  "id": "l3c_102",
+  "who": "Open space",
+  "text": "You announced you’d sit in the open-plan office with everyone. On day one, a dead silence and a ring of empty desks formed around you.",
+  "left": "Go back to your office",
+  "right": "Stay and endure the silence"
+ },
+ {
+  "id": "l3c_103",
+  "who": "Dress code",
+  "text": "You came in wearing jeans to show informality. The entire top team came in jeans because you did it last Friday. Today is Monday.",
+  "left": "Make jeans the norm",
+  "right": "Bring back the suits"
+ },
+ {
+  "id": "l3c_104",
+  "who": "HR director",
+  "text": "The HR director suggests top-team morning stand-ups: “standing, fifteen minutes.” Last time “standing” lasted an hour and a half.",
+  "left": "Introduce stand-ups",
+  "right": "Leave things as is"
+ },
+ {
+  "id": "l3c_105",
+  "who": "Town hall",
+  "text": "Town hall questions are collected anonymously. First: “When are raises coming?” Second: “Is it true you have a yacht?” You don’t. Answer?",
+  "left": "Answer both honestly",
+  "right": "Answer only the first"
+ },
+ {
+  "id": "l3c_106",
+  "who": "Values",
+  "text": "The meeting room wall reads: “We value each other’s time.” The meeting in this room is running forty minutes late because of you.",
+  "left": "Apologize to everyone",
+  "right": "Act like it’s normal"
+ },
+ {
+  "id": "l3c_107",
+  "who": "Pulse survey",
+  "text": "Engagement survey results: 43% of staff “don’t understand the company strategy.” Another 12% “don’t know who the CEO is.”",
+  "left": "Meet with departments",
+  "right": "Email out the strategy"
+ },
+ {
+  "id": "l3c_108",
+  "who": "Brand identity",
+  "text": "The designers want approval for a new logo. It’s nearly identical to the old one, but they say it “breathes.” It costs as much as a downtown apartment.",
+  "left": "Approve the new one",
+  "right": "Keep the old one"
+ },
+ {
+  "id": "l3c_109",
+  "who": "Coffee machine",
+  "text": "You stand in line at the coffee machine to be closer to the people. The line instantly parts and everyone waves you to the front. Total silence.",
+  "left": "Go back to the end",
+  "right": "Grab coffee and leave"
+ },
+ {
+  "id": "l3c_110",
+  "who": "Town hall",
+  "text": "At the town hall, an employee asks if there will be layoffs. The board hasn’t decided, but it’s on the table. The room awaits your answer.",
+  "left": "Honest: “I don’t know”",
+  "right": "Say: “None planned”"
+ },
+ {
+  "id": "l3c_111",
+  "who": "Values",
+  "text": "An employee called you out for violating the “Openness” value: you decided on the office move without discussion. The email copies everyone.",
+  "left": "Admit the mistake publicly",
+  "right": "Reply privately and briefly"
+ },
+ {
+  "id": "l3c_112",
+  "who": "Culture",
+  "text": "The new product director brought a “no-filter feedback” culture from his last company. Three employees have already cried in the restroom.",
+  "left": "Back the new approach",
+  "right": "Talk to him about tact"
+ },
+ {
+  "id": "l3c_113",
+  "who": "Hackathon",
+  "text": "The dev team invites you to judge the hackathon. The best project: a bot that answers questions in the CEO’s voice. It sounds more convincing than you.",
+  "left": "Give the bot first place",
+  "right": "Pick a serious project"
+ },
+ {
+  "id": "l3c_114",
+  "who": "Company newsletter",
+  "text": "The company newsletter wants you for its “CEO in Their Own Words” column. First question: “Your favorite dish in our cafeteria?” You’ve never eaten there.",
+  "left": "Go eat there, then answer",
+  "right": "Name a dish at random"
+ },
+ {
+  "id": "l3c_115",
+  "who": "Internal comms",
+  "text": "A “Management Memes” channel has appeared in the company messenger. 600 subscribers. The most popular meme is about your habit of saying “essentially.”",
+  "left": "Subscribe to the channel",
+  "right": "Quietly ask to close it"
+ },
+ {
+  "id": "l3c_116",
+  "who": "Campus",
+  "text": "The architects presented a new office design with slides, hammocks, and a nap room. The CFO is clutching his heart. The staff are dreaming.",
+  "left": "Approve the slides",
+  "right": "Normal office, good coffee"
+ },
+ {
+  "id": "l3c_117",
+  "who": "Culture",
+  "text": "Managers complain that since your rallying cry, “Let’s be bolder about making mistakes,” staff have been boldly making million-dollar mistakes. Adjust the slogan?",
+  "left": "Adjust the slogan",
+  "right": "Defend the mistake culture"
+ },
+ {
+  "id": "l3c_118",
+  "who": "Team games",
+  "text": "The top team is offered a team-building exercise: build a raft from barrels and paddle it across a lake. The CFO can’t swim and isn’t mentioning it.",
+  "left": "Cancel the raft",
+  "right": "Paddle, in life jackets"
+ },
+ {
+  "id": "l3c_119",
+  "who": "Employee",
+  "text": "An employee sends you personally a six-page letter of ideas to improve the company. Half are sensible, one is brilliant. Read it all?",
+  "left": "Read and reply",
+  "right": "Forward it to HR"
+ },
+ {
+  "id": "l3c_120",
+  "who": "Town hall",
+  "text": "Mid-town hall, the sound cuts out, and for ten minutes you present a strategy nobody hears. The audience nods politely. Start over?",
+  "left": "Repeat it all from the top",
+  "right": "Email the slides"
+ },
+ {
+  "id": "l3c_121",
+  "who": "Values",
+  "text": "Sales closed a huge deal by slightly overpromising to the client. Technically that’s against the “Honesty” value, but the board is thrilled.",
+  "left": "Praise the deal",
+  "right": "Talk about methods"
+ },
+ {
+  "id": "l3c_122",
+  "who": "Culture",
+  "text": "The back office wants a “Hawaiian shirt Friday” dress code. You’re asked to set the example. The shirt has already been bought.",
+  "left": "Wear the shirt",
+  "right": "Support it, but dress as usual"
+ },
+ {
+  "id": "l3c_123",
+  "who": "Inner voice",
+  "text": "You realize that in the past month you haven’t spoken to a single rank-and-file employee. Only deputies, the board, and your assistant.",
+  "left": "Lunch in the cafeteria",
+  "right": "Request a mood report"
+ },
+ {
+  "id": "l3c_124",
+  "who": "Employee",
+  "text": "In the elevator, a woman from accounting asks whether it’s true the office is moving out to the suburbs. The rumor’s been going for a week. Nothing’s decided yet.",
+  "left": "Tell it like it is",
+  "right": "Joke and walk off"
+ },
+ {
+  "id": "l3c_125",
+  "who": "Town hall",
+  "text": "The evening town hall ran two hours. Now staff in the chat are saying you “ate their evening.” Many had to rush to pick up kids from daycare.",
+  "left": "Apologize in the chat",
+  "right": "Say it was important"
+ },
+ {
+  "id": "l3c_126",
+  "who": "Company party",
+  "text": "New Year’s party. The host announces: “And now our CEO will sing us a song!” Nobody warned you.",
+  "left": "Sing with the crowd",
+  "right": "Pass the mic to your deputy"
+ },
+ {
+  "id": "l3c_127",
+  "who": "Company party",
+  "text": "At the party, a guy from logistics, emboldened, tells you everything he thinks about your strategy. He’s about seventy percent right.",
+  "left": "Listen and take notes",
+  "right": "Turn it into a joke"
+ },
+ {
+  "id": "l3c_128",
+  "who": "Company party",
+  "text": "The party is winding down. Everyone’s waiting for you to leave so the real party can start. You can tell by how they look at you.",
+  "left": "Slip out at ten",
+  "right": "Stay till the end"
+ },
+ {
+  "id": "l3c_129",
+  "who": "Values",
+  "text": "In the evening, you find an email: an employee quit and, in his farewell note, called the company values “pretty wallpaper.” A hundred people are cc’d.",
+  "left": "Reply to him publicly",
+  "right": "Discuss it with the top team"
+ },
+ {
+  "id": "l3c_130",
+  "who": "Podcast",
+  "text": "The company podcast wants you for an episode, “An Evening with the CEO.” You’re to talk about your failures. You have enough for a whole season.",
+  "left": "Talk about failures",
+  "right": "Talk about wins"
+ },
+ {
+  "id": "l3c_131",
+  "who": "Chat",
+  "text": "The company chat has a poll: “What should we name the new meeting room?” The winner: “The CEO Memorial Room.” It’s a joke, but it got lots of votes.",
+  "left": "Go along with the joke",
+  "right": "Suggest another name"
+ },
+ {
+  "id": "l3c_132",
+  "who": "Culture",
+  "text": "In the evening you notice half the analytics team stays until ten. They say that’s “just how it’s done.” You never asked for that.",
+  "left": "Kick everyone out",
+  "right": "Don’t interfere"
+ },
+ {
+  "id": "l3c_133",
+  "who": "Family",
+  "text": "Your partner asks why you’re reading the company engagement survey on a Saturday morning. You don’t know either. But there’s a lot about you in it.",
+  "left": "Close the laptop",
+  "right": "Read to the end"
+ },
+ {
+  "id": "l3c_134",
+  "who": "Motivation",
+  "text": "You recorded a motivational video for staff. The editor sends a version with upbeat music and slow-motion shots of you gazing into the distance.",
+  "left": "Release it as is",
+  "right": "Reshoot it simpler"
+ },
+ {
+  "id": "l3c_135",
+  "who": "Wall display",
+  "text": "For the company anniversary, staff made a wall display of your quotes. You don’t remember half of them; one is clearly from a movie. Your assistant asks whether to hang it in your office.",
+  "left": "Hang it in your office",
+  "right": "Hang it in the lobby"
+ },
+ {
+  "id": "l3c_136",
+  "who": "Inner voice",
+  "text": "You catch yourself talking to your kid at home in town-hall tone: “Let’s sync up on the weekend plan.” Your kid looks at you with pity.",
+  "left": "Laugh at yourself",
+  "right": "Keep going, it works"
+ },
+ {
+  "id": "l3c_137",
+  "who": "Company party",
+  "text": "The company anniversary party. The board came too and stands apart. The team stands apart. You’re in the middle, glass in hand.",
+  "left": "Go to the team",
+  "right": "Go to the board"
+ },
+ {
+  "id": "l3c_138",
+  "who": "Culture",
+  "text": "HR proposes scrapping the Friday reports as a sign of trust in staff. The board reads those reports over coffee every Friday.",
+  "left": "Scrap the reports",
+  "right": "Keep the reports"
+ },
+ {
+  "id": "l3c_139",
+  "who": "Culture",
+  "text": "Staff petitioned to bring dogs back to the office. 300 signatures. The CFO is allergic, and the lawyer is afraid of dachshunds.",
+  "left": "Dogs on Fridays",
+  "right": "Politely refuse"
+ },
+ {
+  "id": "l3c_140",
+  "who": "Internal comms",
+  "text": "The mock-up for the new company calendar arrives in the evening. Every month features a photo of you in a different look. July: you with a fishing rod.",
+  "left": "Approve the calendar",
+  "right": "Ask for staff photos"
+ },
+ {
+  "id": "l3c_141",
+  "who": "Values",
+  "text": "You’re writing a letter to staff about values. It’s 2 a.m. and the letter runs four screens. It seems to be a manifesto.",
+  "left": "Send the manifesto",
+  "right": "Cut it to five lines"
+ },
+ {
+  "id": "l3c_142",
+  "who": "Company party",
+  "text": "After the party, an accountant admits he saw you dancing. He promises to keep quiet, but there’s a huge secret in his eyes.",
+  "left": "Ask him to keep quiet",
+  "right": "Say: “I’m a great dancer”"
+ },
+ {
+  "id": "l3c_143",
+  "who": "Gratitude",
+  "text": "You decided to write three employees a handwritten thank-you every week. By Friday it turns out your handwriting is terrible.",
+  "left": "Keep writing by hand",
+  "right": "Switch to e-cards"
+ },
+ {
+  "id": "l3c_144",
+  "who": "Values",
+  "text": "A shareholder demands adding “Efficiency” to the company values by replacing “Care.” Staff love “Care” and chose it themselves.",
+  "left": "Replace it as demanded",
+  "right": "Defend “Care” to the board"
+ },
+ {
+  "id": "l3c_145",
+  "who": "Survey",
+  "text": "HR sent a word cloud from the survey “Describe the CEO in one word.” The biggest words: “Busy,” “Distant,” and, for some reason, “Penguin.”",
+  "left": "Ask why “penguin”",
+  "right": "Discuss “distant” with HR"
+ },
+ {
+  "id": "l3c_146",
+  "who": "Culture",
+  "text": "You started a tradition: the last Friday of the month is “Ideas Friday,” when anyone can bring you a proposal. Forty people showed up.",
+  "left": "Hear them all till night",
+  "right": "Reschedule half"
+ },
+ {
+  "id": "l3c_147",
+  "who": "Open door",
+  "text": "You announced an open-door policy. By morning there’s a line in reception: some with ideas, some with complaints about a desk neighbor, some just to look.",
+  "left": "See everyone",
+  "right": "Book via your assistant"
+ },
+ {
+  "id": "l3c_148",
+  "who": "Culture",
+  "text": "Top managers stopped taking vacations because you don’t. HR calls it “the captain effect.” What now?",
+  "left": "Take a vacation first",
+  "right": "Make them go, you stay"
+ },
+ {
+  "id": "l3c_149",
+  "who": "Values",
+  "text": "On your way out, the cleaner mentions that the values on the wall have been hanging crooked “since last year.” You look — they really are.",
+  "left": "Rehang them yourself",
+  "right": "Ask facilities"
+ },
+ {
+  "id": "l3c_150",
+  "who": "Sales director",
+  "text": "This morning the sales director took the only parking spot next to yours. The CFO always used to park there. A parking war has begun.",
+  "left": "Set a parking rota",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l3c_151",
+  "who": "CFO",
+  "text": "The CFO arrives at 7:30 to be first to see you. The sales director found out and now arrives at 7:15. Tomorrow they’ll apparently sleep here.",
+  "left": "Appointments only",
+  "right": "Come in at 9:00 yourself"
+ },
+ {
+  "id": "l3c_152",
+  "who": "Stand-up",
+  "text": "At the top-team stand-up, the IT director and security director argue over whose server it is. Meanwhile the server is down. Settle it now?",
+  "left": "Assign an owner",
+  "right": "Get the server up first"
+ },
+ {
+  "id": "l3c_153",
+  "who": "Deputy",
+  "text": "Your first deputy increasingly says “the board and I decided.” The board really does seem to be deciding things with him. Without you.",
+  "left": "Talk to him directly",
+  "right": "Call the board chair"
+ },
+ {
+  "id": "l3c_154",
+  "who": "Successor",
+  "text": "The board asks you to prepare a successor within two years. The best candidate is the young product director. The other deputies will object.",
+  "left": "Announce the choice openly",
+  "right": "Choose quietly"
+ },
+ {
+  "id": "l3c_155",
+  "who": "IT director",
+  "text": "At 8 a.m. the IT director sends you a twenty-page email on why marketing is to blame for the failed project. Marketing is cc’d.",
+  "left": "Reply all",
+  "right": "Invite both for coffee"
+ },
+ {
+  "id": "l3c_156",
+  "who": "Talent pool",
+  "text": "You see HR’s “talent pool” list for the first time. It includes people you’ve never met and leaves out your best department head.",
+  "left": "Redo the list yourself",
+  "right": "Trust HR"
+ },
+ {
+  "id": "l3c_157",
+  "who": "Board of directors",
+  "text": "The board hired an outside consultant to “assess top-team effectiveness.” He wants to interview you first. The questions are a surprise.",
+  "left": "Go in unprepared",
+  "right": "Prep all evening"
+ },
+ {
+  "id": "l3c_158",
+  "who": "Assistant",
+  "text": "Your assistant whispers that the deputies’ assistants already know whom you’ll pick as successor. You don’t know yourself yet.",
+  "left": "Find the rumor’s source",
+  "right": "Laugh and forget it"
+ },
+ {
+  "id": "l3c_159",
+  "who": "Inner voice",
+  "text": "One morning you realize your deputy does your job better than you. It’s pride and mild panic at the same time.",
+  "left": "Give him more power",
+  "right": "Keep key issues for yourself"
+ },
+ {
+  "id": "l3c_160",
+  "who": "COO",
+  "text": "The COO handed in his resignation. Reason: “I don’t see room to grow.” You can see only one position above his — yours.",
+  "left": "Offer a new role",
+  "right": "Let him go in peace"
+ },
+ {
+  "id": "l3c_161",
+  "who": "Marketing director",
+  "text": "At the meeting, the marketing and sales directors sit at opposite ends of the table, though seats are free nearby. They haven’t spoken in a week.",
+  "left": "Seat them together",
+  "right": "Pretend not to notice"
+ },
+ {
+  "id": "l3c_162",
+  "who": "Strategy session",
+  "text": "Strategy session. The CFO and sales director argue about the plan so hard their markers are tearing the flipchart paper. Lunch was an hour ago.",
+  "left": "Call lunch",
+  "right": "Push to a decision"
+ },
+ {
+  "id": "l3c_163",
+  "who": "Board of directors",
+  "text": "A board member proposes his acquaintance for your job, “an experienced crisis manager.” For now, as an adviser. Refuse?",
+  "left": "Take the adviser",
+  "right": "Refuse with arguments"
+ },
+ {
+  "id": "l3c_164",
+  "who": "Successor",
+  "text": "The successor you’re grooming has started making your presentations better than you do. The board likes it. For some reason, you don’t so much.",
+  "left": "Let him present to the board",
+  "right": "Keep presenting yourself"
+ },
+ {
+  "id": "l3c_165",
+  "who": "Rivalry",
+  "text": "Two deputies race to send you reports at 11:59 p.m. to show their diligence. You only get to read them at lunch the next day.",
+  "left": "Ban emails after 8 p.m.",
+  "right": "Praise whoever’s later"
+ },
+ {
+  "id": "l3c_166",
+  "who": "CEO",
+  "text": "The board chair publicly praises your deputy, calling him “our future.” You were planning to be their present for another five years.",
+  "left": "Thank him for the praise",
+  "right": "Clarify timing privately"
+ },
+ {
+  "id": "l3c_167",
+  "who": "HR director",
+  "text": "The HR director proposes a “Top Team Mediation” session with a psychologist. Every deputy has already invented an urgent business trip.",
+  "left": "Make attendance mandatory",
+  "right": "Cancel the session"
+ },
+ {
+  "id": "l3c_168",
+  "who": "Intrigue",
+  "text": "You accidentally see two deputies discussing how to “outlast” you. It’s in the shared messenger — they just forgot.",
+  "left": "Talk to both",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l3c_169",
+  "who": "Mentoring",
+  "text": "A former protégé you developed for five years is leaving for a competitor. He says: “It’s thanks to you that I grew this much.” A compliment and a punch in one.",
+  "left": "Wish him luck",
+  "right": "Make a counteroffer"
+ },
+ {
+  "id": "l3c_170",
+  "who": "CFO",
+  "text": "The CFO pointedly brings a calculator to meetings and tallies the losses aloud for every idea the deputies pitch. The deputies are worn out.",
+  "left": "Ask him to count later",
+  "right": "Back the CFO"
+ },
+ {
+  "id": "l3c_171",
+  "who": "Talent pool",
+  "text": "High-potential employees ask you for “a clear career ladder.” You realize there is a ladder — it just has three rungs.",
+  "left": "Create new positions",
+  "right": "Explain honestly"
+ },
+ {
+  "id": "l3c_172",
+  "who": "Newcomer",
+  "text": "The new strategy director from a big corporation says “At my last company…” for the seventh time in his very first meeting.",
+  "left": "Gently stop him",
+  "right": "Listen, might be useful"
+ },
+ {
+  "id": "l3c_173",
+  "who": "Board of directors",
+  "text": "The board wants a ranking of top managers from best to worst. The ranking will most likely leak to them.",
+  "left": "Make an honest ranking",
+  "right": "Describe all, no ranks"
+ },
+ {
+  "id": "l3c_174",
+  "who": "Motivation",
+  "text": "You propose shared KPIs for the top team to end the departmental wars. Each deputy immediately explains why his KPI is special.",
+  "left": "Insist on shared KPIs",
+  "right": "Keep individual ones"
+ },
+ {
+  "id": "l3c_175",
+  "who": "Mentoring",
+  "text": "The board asks you to mentor the main shareholder’s son. He’s an intern with four iPhones and the idea that in a year he’ll be a director.",
+  "left": "Take on the mentoring",
+  "right": "Suggest another mentor"
+ },
+ {
+  "id": "l3c_176",
+  "who": "Assistant",
+  "text": "The CFO’s assistant and the sales director’s assistant fought over a meeting room. Now their bosses aren’t speaking. A chain reaction.",
+  "left": "Free up another room",
+  "right": "Tell them to sort it out"
+ },
+ {
+  "id": "l3c_177",
+  "who": "Successor",
+  "text": "In the evening, a successor candidate invites you to dinner “to discuss mentoring.” You suspect he wants to find out when you’re leaving.",
+  "left": "Go and talk openly",
+  "right": "Postpone to “sometime”"
+ },
+ {
+  "id": "l3c_178",
+  "who": "Resignation",
+  "text": "You write yourself a letter: “In three years I’ll hand over the company.” You can send it to the board or just keep it in drafts.",
+  "left": "Send it to the board",
+  "right": "Keep it in drafts"
+ },
+ {
+  "id": "l3c_179",
+  "who": "Intrigue",
+  "text": "At 10 p.m. the board chair writes: “We need to discuss the situation with your deputy.” No explanation. Morning is a long way off.",
+  "left": "Call right now",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l3c_180",
+  "who": "CFO",
+  "text": "The CFO lingers in your office and admits he’s tired of fighting the sales director. He wants peace but won’t surrender first.",
+  "left": "Arrange a three-way meeting",
+  "right": "Tell him to hang in there"
+ },
+ {
+  "id": "l3c_181",
+  "who": "Top team",
+  "text": "You threw an informal dinner for the top team to ease tension. Everyone came, and everyone is on their phones, texting each other.",
+  "left": "Bring a phone basket",
+  "right": "Get your phone out too"
+ },
+ {
+  "id": "l3c_182",
+  "who": "Sales director",
+  "text": "The sales director calls late in the evening: “It’s him or me.” Him being the marketing director. The company needs both.",
+  "left": "Choose sales",
+  "right": "Don’t choose, make peace"
+ },
+ {
+  "id": "l3c_183",
+  "who": "Inner voice",
+  "text": "Evening. You reread the list of your deputies and try to recall which of them you trust completely. The list is shorter than you’d like.",
+  "left": "Talk to each one",
+  "right": "Hire one more"
+ },
+ {
+  "id": "l3c_184",
+  "who": "Family",
+  "text": "Your partner listens to you at dinner and says: “You talk about your top team like it’s a TV series.” You realize this season has dragged on.",
+  "left": "Talk about family instead",
+  "right": "Binge an episode together"
+ },
+ {
+  "id": "l3c_185",
+  "who": "Mentor",
+  "text": "Your own mentor says over video that you have no plan for life after the job. “Who will you be when you’re no longer CEO?”",
+  "left": "Think about it seriously",
+  "right": "Say it’s too early"
+ },
+ {
+  "id": "l3c_186",
+  "who": "Board of directors",
+  "text": "The board chair invites you to his country club for “a friendly game” of tennis. You last held a racket in college.",
+  "left": "Accept the challenge",
+  "right": "Suggest dinner instead"
+ },
+ {
+  "id": "l3c_187",
+  "who": "Deputy",
+  "text": "Your deputy asks to run the Monday stand-ups instead of you. He says it’s so you can “catch up on sleep.” Sounds caring. Or not.",
+  "left": "Allow it",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3c_188",
+  "who": "Talent pool",
+  "text": "Before the board meeting, HR sends you a “talent map” — a nine-by-nine grid with dots. You’re in the “High potential, low energy” box.",
+  "left": "Laugh and show the team",
+  "right": "Take offense, ask for a recount"
+ },
+ {
+  "id": "l3c_189",
+  "who": "Rivalry",
+  "text": "Two deputies simultaneously requested the same budget for the same project. The projects are different, but both are called “Digital Transformation.”",
+  "left": "Give it to one",
+  "right": "Split it in half"
+ },
+ {
+  "id": "l3c_190",
+  "who": "Successor",
+  "text": "At a colleague’s farewell party, your successor jokes: “Soon I’ll be taking over this office.” Everyone laughs a bit louder than you’d like.",
+  "left": "Joke back",
+  "right": "Take him aside"
+ },
+ {
+  "id": "l3c_191",
+  "who": "Resignation",
+  "text": "The former CEO, your predecessor, still comes to the office and has lunch with staff. They love him. You, for now, they respect.",
+  "left": "Invite him as an adviser",
+  "right": "Gently limit the visits"
+ },
+ {
+  "id": "l3c_192",
+  "who": "CFO",
+  "text": "The CFO asks you personally to sign off on his bonus, which is bigger than yours. It’s all per contract. Colleagues will definitely find out.",
+  "left": "Sign it",
+  "right": "Hold it for review"
+ },
+ {
+  "id": "l3c_193",
+  "who": "Top team",
+  "text": "You proposed a two-day mountain retreat for the top team, “no laptops.” Everyone has asked whether there’s Wi-Fi. One asked twice.",
+  "left": "No Wi-Fi",
+  "right": "Wi-Fi for an hour a day"
+ },
+ {
+  "id": "l3c_194",
+  "who": "Board of directors",
+  "text": "The updated leadership lineup went up on the company website. Your photo is mistakenly captioned with the CFO’s name, and his with yours. He’s already noticed.",
+  "left": "Fix it immediately",
+  "right": "Wait, let him enjoy it"
+ },
+ {
+  "id": "l3c_195",
+  "who": "Mentoring",
+  "text": "At your regular meeting, the board’s mentor says: “You’re too kind to your team.” You were just about to praise someone.",
+  "left": "Praise them anyway",
+  "right": "Hold off on the praise"
+ },
+ {
+  "id": "l3c_196",
+  "who": "IT director",
+  "text": "At 11 p.m. the IT director sends a screenshot of the security director replying to him with an eye-roll emoji. He asks you to “deal with it.”",
+  "left": "Talk to both tomorrow",
+  "right": "Reply: “You’re adults”"
+ },
+ {
+  "id": "l3c_197",
+  "who": "Tandem",
+  "text": "The board proposes a “co-CEO” setup: you and the sales director running things together. Sounds like partnership; looks like surveillance.",
+  "left": "Agree",
+  "right": "Defend sole leadership"
+ },
+ {
+  "id": "l3c_198",
+  "who": "Employee",
+  "text": "A department head comes to you over his director’s head with a great idea. His director didn’t authorize this and will probably be angry.",
+  "left": "Hear the idea",
+  "right": "Send it via the director"
+ },
+ {
+  "id": "l3c_199",
+  "who": "Resignation",
+  "text": "In the evening you look through old photos from your first year at the company. Back then you carried boxes yourself during the move. Now you don’t know where the stapler is.",
+  "left": "Do something hands-on tomorrow",
+  "right": "Shelve the nostalgia"
+ },
+ {
+  "id": "l3c_200",
+  "who": "Fitness trainer",
+  "text": "A company-paid personal trainer awaits you at 6:00 in the corporate gym. He smiles the way people who love burpees smile.",
+  "left": "Go to the workout",
+  "right": "Text that you have a meeting"
+ },
+ {
+  "id": "l3c_201",
+  "who": "Health",
+  "text": "The company nutritionist sent a meal plan: seven meals a day, weighed to the gram. Your actual breakfast: coffee in the car.",
+  "left": "Try the plan",
+  "right": "Stick with car coffee"
+ },
+ {
+  "id": "l3c_202",
+  "who": "Family",
+  "text": "Your kid asks you to drive them to school yourself, not the driver. “Everyone’s parents drive them, and I get Uncle Seryozha.” The meeting starts at 8:30.",
+  "left": "Drive them yourself",
+  "right": "Promise Friday"
+ },
+ {
+  "id": "l3c_203",
+  "who": "Alarm clock",
+  "text": "The alarm rang at 5:30. Your smartwatch reports four hours of sleep and suggests a “recovery day.” The watch apparently doesn’t know about the board.",
+  "left": "Sleep another hour",
+  "right": "Get up and go"
+ },
+ {
+  "id": "l3c_204",
+  "who": "Doctor",
+  "text": "The company doctor calls with your checkup results: “Nothing serious, but no more than two cups of coffee.” You’ve already had three today.",
+  "left": "Switch to tea",
+  "right": "Hide cup four from the doctor"
+ },
+ {
+  "id": "l3c_205",
+  "who": "Meditation",
+  "text": "Your assistant put ten minutes of meditation in your calendar. During it, the board chair calls. The phone buzzes in the silence.",
+  "left": "Finish the silence",
+  "right": "Take the call"
+ },
+ {
+  "id": "l3c_206",
+  "who": "Family",
+  "text": "Your partner reminds you: your kid has a swim meet today, final at 10:00. You promised to come. At 10:00 you have a meeting with the bank.",
+  "left": "Go to the swim meet",
+  "right": "Ask for a video"
+ },
+ {
+  "id": "l3c_207",
+  "who": "Loneliness",
+  "text": "You arrive at the office before everyone. The security guard is the only person who says “good morning” to you without a report or a request. He’s waiting for your reply.",
+  "left": "Chat with the guard",
+  "right": "Nod and walk on"
+ },
+ {
+  "id": "l3c_208",
+  "who": "Driver",
+  "text": "In the car, your driver hands you a container: “My wife sent pancakes. You skipped breakfast again, didn’t you?” They’re still warm.",
+  "left": "Eat them gratefully",
+  "right": "Decline out of awkwardness"
+ },
+ {
+  "id": "l3c_209",
+  "who": "Perks",
+  "text": "The company assigned you a business-class car. The new facilities manager mixed things up and sent a convertible. It’s November and raining.",
+  "left": "Ride in the convertible",
+  "right": "Call a taxi"
+ },
+ {
+  "id": "l3c_210",
+  "who": "Perks",
+  "text": "Your assistant says you’re entitled to a personal chef at the office. The chef asks about your dietary preferences. You’ve eaten sandwiches for fifteen years.",
+  "left": "Order a sandwich",
+  "right": "Order something fancy"
+ },
+ {
+  "id": "l3c_211",
+  "who": "Health",
+  "text": "After three flights this week, your back is telling you exactly what it thinks. The company masseur is free at 8:00. The budget meeting is also at 8:00.",
+  "left": "Go to the massage",
+  "right": "Go to the meeting"
+ },
+ {
+  "id": "l3c_212",
+  "who": "Perks",
+  "text": "You have a reserved table in the cafeteria with a white tablecloth. Staff steer around it like it’s a museum exhibit.",
+  "left": "Ditch the cloth, sit with all",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3c_213",
+  "who": "Lounge",
+  "text": "You have access to the business center’s VIP zone with hammocks and an aquarium. You went once and got lost. Your assistant says to rest there at least once.",
+  "left": "Try a hammock",
+  "right": "Work at your desk"
+ },
+ {
+  "id": "l3c_214",
+  "who": "Health",
+  "text": "Mid-meeting, you realize you haven’t had water since morning and can’t remember if you ate. The CFO is still explaining depreciation.",
+  "left": "Call a break",
+  "right": "Hear him out to the end"
+ },
+ {
+  "id": "l3c_215",
+  "who": "Loneliness",
+  "text": "You want advice on a tough personnel decision. Your deputies are interested parties, the board even more so. There’s nobody to ask.",
+  "left": "Call a coach",
+  "right": "Decide alone"
+ },
+ {
+  "id": "l3c_216",
+  "who": "Perks",
+  "text": "New policy: top managers get engraved company watches. Yours was mistakenly engraved “Employee of the Month.”",
+  "left": "Wear it with pride",
+  "right": "Send it back to be redone"
+ },
+ {
+  "id": "l3c_217",
+  "who": "Health",
+  "text": "Your assistant cancels your lunch with an investor because you’ve lost your voice. The investor thinks you’re playing hard to get.",
+  "left": "Call him in a whisper",
+  "right": "Postpone a week"
+ },
+ {
+  "id": "l3c_218",
+  "who": "Family",
+  "text": "Your kid messages: “I drew our family, you’re not in it because you’re on a business trip.” You’re not on a trip — you’re in the next building.",
+  "left": "Go home for lunch",
+  "right": "Call in the evening"
+ },
+ {
+  "id": "l3c_219",
+  "who": "Perks",
+  "text": "Procurement sent you an ergonomic chair that cost as much as a used car. It massages, heats, and seems to eavesdrop.",
+  "left": "Sit back and enjoy",
+  "right": "Give it to the meeting room"
+ },
+ {
+  "id": "l3c_220",
+  "who": "Company psychologist",
+  "text": "The company psychologist gently offers you a session. Staff go to him, but his log has a blank line where the CEO should be.",
+  "left": "Book a session",
+  "right": "Say you’re fine"
+ },
+ {
+  "id": "l3c_221",
+  "who": "Loneliness",
+  "text": "In the cafeteria, you sit at a shared table. Within two minutes the staff remember urgent business and leave. You’re left with your salad.",
+  "left": "Come back tomorrow",
+  "right": "Eat in your office"
+ },
+ {
+  "id": "l3c_222",
+  "who": "Perks",
+  "text": "You’re offered a personal stylist before an interview with a business paper. The stylist suggests thick-rimmed glasses “for a visionary look.” Your eyesight is fine.",
+  "left": "Wear the glasses",
+  "right": "Stay yourself"
+ },
+ {
+  "id": "l3c_223",
+  "who": "Health",
+  "text": "For the third time today, your smartwatch suggests you “breathe.” For the third time, you brush it off. The watch seems to be getting offended.",
+  "left": "Breathe for a minute",
+  "right": "Turn off notifications"
+ },
+ {
+  "id": "l3c_224",
+  "who": "Loneliness",
+  "text": "Friday evening. You realize that all your friends from the past five years are either subordinates, partners, or their spouses.",
+  "left": "Call a school friend",
+  "right": "Stay at the office"
+ },
+ {
+  "id": "l3c_225",
+  "who": "Family",
+  "text": "At bedtime your kid asks if they can become a CEO too. Then adds: “But I want to come home before dinner.”",
+  "left": "Promise to come home earlier",
+  "right": "Explain the job’s perks"
+ },
+ {
+  "id": "l3c_226",
+  "who": "Health",
+  "text": "You fall asleep on the couch in your suit with the laptop on your stomach. Your partner wakes you at midnight and quietly closes the laptop.",
+  "left": "Go to bed",
+  "right": "Finish the email"
+ },
+ {
+  "id": "l3c_227",
+  "who": "Family",
+  "text": "Evening at home: a “family board meeting.” Agenda: summer vacation. Your partner has prepared a presentation. For once, you’re not the one chairing.",
+  "left": "Agree to the beach",
+  "right": "Suggest combining with business"
+ },
+ {
+  "id": "l3c_228",
+  "who": "Perks",
+  "text": "You’ve been invited to a private executives’ club. The company pays the membership. Meetings Wednesday evenings, dress code: tuxedo.",
+  "left": "Join the club",
+  "right": "Decline"
+ },
+ {
+  "id": "l3c_229",
+  "who": "Loneliness",
+  "text": "At 11 p.m. you scroll your feed and see your team celebrating a colleague’s birthday. Nobody told you — probably too shy.",
+  "left": "Congratulate in the group chat",
+  "right": "Put the phone down"
+ },
+ {
+  "id": "l3c_230",
+  "who": "Perks",
+  "text": "The company yacht is free this weekend. The CFO cautiously reminds you the board asked to sell it. The yacht is named after you.",
+  "left": "One last sail",
+  "right": "List it for sale now"
+ },
+ {
+  "id": "l3c_231",
+  "who": "Health",
+  "text": "You went to the gym for the first time in a year. The next morning everything hurts, including your pride. At 9:00 you have to give a talk standing up.",
+  "left": "Speak standing",
+  "right": "Sit and joke about it"
+ },
+ {
+  "id": "l3c_232",
+  "who": "Family",
+  "text": "Your partner asks you not to bring your work phone on Saturday’s forest hike. The board sometimes calls on Saturdays. Just to “clarify.”",
+  "left": "Leave the phone home",
+  "right": "Take it “just in case”"
+ },
+ {
+  "id": "l3c_233",
+  "who": "Coach",
+  "text": "Over video, your coach asks you to draw a “wheel of life.” You fill in the “Work” sector completely. The rest are empty.",
+  "left": "Sign up for balance training",
+  "right": "Say the wheel is lying"
+ },
+ {
+  "id": "l3c_234",
+  "who": "Hobby",
+  "text": "You played guitar as a kid. Now it gathers dust in your office for gravitas. Your assistant asks if she can move it for cleaning.",
+  "left": "Play it tonight, alone",
+  "right": "Lobby decor it is"
+ },
+ {
+  "id": "l3c_235",
+  "who": "Perks",
+  "text": "Your new car has a massage seat, a fridge, and privacy curtains. The driver says all your predecessors used them.",
+  "left": "Turn it all on",
+  "right": "Work on the way"
+ },
+ {
+  "id": "l3c_236",
+  "who": "Family",
+  "text": "Your teenager sent you a link to an article: “How to Talk to a Workaholic Parent.” Either a joke or a cry for help.",
+  "left": "Call and talk",
+  "right": "Reply with an emoji"
+ },
+ {
+  "id": "l3c_237",
+  "who": "Loneliness",
+  "text": "You realize the longest conversation you had today was with the car’s voice assistant. It was the only one that didn’t argue or ask for money.",
+  "left": "Call your parents",
+  "right": "Chat with it some more"
+ },
+ {
+  "id": "l3c_238",
+  "who": "Perks",
+  "text": "You’re offered a badge that opens every door in the office. Including the server room, the chef’s kitchen, and the paper storeroom. Sounds like a superpower.",
+  "left": "Take the master badge",
+  "right": "Keep the regular one"
+ },
+ {
+  "id": "l3c_239",
+  "who": "Head chef",
+  "text": "The executive dining room’s head chef is offended you ordered pizza for a meeting. Now he’s threatening to quit. The board loves his risotto.",
+  "left": "Apologize to the chef",
+  "right": "Keep pizza for the teams"
+ },
+ {
+  "id": "l3c_240",
+  "who": "Perks",
+  "text": "The company paid for your lifetime golf club membership. You don’t know which end of the club to hold, and there’s an investor tournament Saturday.",
+  "left": "Take a lesson",
+  "right": "Go as a spectator"
+ },
+ {
+  "id": "l3c_241",
+  "who": "Health",
+  "text": "At the dentist, they recognized you and let you skip the line. The line looks at you the way your staff look at the executive parking.",
+  "left": "Get in line",
+  "right": "Go in, since they let you"
+ },
+ {
+  "id": "l3c_242",
+  "who": "Family",
+  "text": "Your partner wants to move to another city closer to the grandparents. You’re the CEO with an office here. A talk tonight has been promised.",
+  "left": "Discuss remote with the board",
+  "right": "Ask your partner to wait"
+ },
+ {
+  "id": "l3c_243",
+  "who": "Health",
+  "text": "You took your first sick day in years. At 9 p.m. your deputy writes: “Sorry to bother you, just one question.” There are nine questions.",
+  "left": "Answer all nine",
+  "right": "Answer tomorrow"
+ },
+ {
+  "id": "l3c_244",
+  "who": "Perks",
+  "text": "You have your own coffee machine in your office. Staff drop by supposedly for a quick consultation and leave with lattes.",
+  "left": "Move it to the lobby",
+  "right": "Close your office door"
+ },
+ {
+  "id": "l3c_245",
+  "who": "Loneliness",
+  "text": "After a tough meeting you want to vent to someone. Your assistant looks at you expectantly, ready to listen — but you’re her boss.",
+  "left": "Vent to your assistant",
+  "right": "Vent to your journal"
+ },
+ {
+  "id": "l3c_246",
+  "who": "Perks",
+  "text": "The hotel sent an expensive bottle of wine, fruit, and a note: “For our esteemed director.” You have a board meeting at nine tomorrow.",
+  "left": "Open the wine",
+  "right": "Give it to your driver"
+ },
+ {
+  "id": "l3c_247",
+  "who": "Family",
+  "text": "Your parent calls to talk about blood pressure and seedlings. You hold the phone while reading the shareholder report.",
+  "left": "Put the report down, listen",
+  "right": "Listen with half an ear"
+ },
+ {
+  "id": "l3c_248",
+  "who": "Loneliness",
+  "text": "You crack a joke at the stand-up. Everyone laughs, even those who didn’t hear it. You realize you’ll never know if it was actually funny.",
+  "left": "Tell a worse one on purpose",
+  "right": "Stop joking altogether"
+ },
+ {
+  "id": "l3c_249",
+  "who": "Health",
+  "text": "Your sleep tracker sends a weekly report: “Average sleep: 4 hours 50 minutes. You’re on par with a newborn, minus the naps.”",
+  "left": "Bed at ten tonight",
+  "right": "Buy more coffee"
+ },
+ {
+  "id": "l3c_250",
+  "who": "Charity",
+  "text": "A foundation the company supports asks you to run a charity half marathon. Donations double if the CEO finishes.",
+  "left": "Sign up and run",
+  "right": "Donate personally, no running"
+ },
+ {
+  "id": "l3c_251",
+  "who": "Charity",
+  "text": "Staff are collecting food for an animal shelter. The box by reception is half empty. Everyone’s watching to see if the CEO brings anything.",
+  "left": "Bring a whole sack",
+  "right": "Donate money quietly"
+ },
+ {
+  "id": "l3c_252",
+  "who": "Volunteering",
+  "text": "HR proposes a volunteering day at a shelter for directors. A photographer is already booked. You suspect the photos matter more than the shelter.",
+  "left": "Go without the photographer",
+  "right": "Go with the photographer"
+ },
+ {
+  "id": "l3c_253",
+  "who": "Charity",
+  "text": "The board wants to cut the charity program budget by a third. The foundation’s director found out before you and is already calling.",
+  "left": "Fight for the budget",
+  "right": "Explain the board’s decision"
+ },
+ {
+  "id": "l3c_254",
+  "who": "Mentoring",
+  "text": "Your mentee messages at 7 a.m.: “Can I call? I got promoted and I’m panicking.” You haven’t even washed your face.",
+  "left": "Call right away",
+  "right": "Reply: “In an hour”"
+ },
+ {
+  "id": "l3c_255",
+  "who": "Mentoring",
+  "text": "The board is launching a mentoring program for women leaders and asks you to run it. Saturday mornings.",
+  "left": "Take on the program",
+  "right": "Suggest another format"
+ },
+ {
+  "id": "l3c_256",
+  "who": "Assistant",
+  "text": "Your assistant has a new idea: read you the top three news stories aloud every morning while you take off your coat. Neither you nor your coat is ready.",
+  "left": "Try it for a week",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3c_257",
+  "who": "Assistant",
+  "text": "Your assistant compiled the birthdays of all one hundred forty head-office employees. She suggests you congratulate each personally.",
+  "left": "Congratulate everyone",
+  "right": "Only the top team"
+ },
+ {
+  "id": "l3c_258",
+  "who": "Driver",
+  "text": "Your driver missed a turn because you were loudly arguing on the phone with a shareholder. Now you’re going via the bridge. Twenty minutes late.",
+  "left": "Apologize to the driver",
+  "right": "Call ahead and warn them"
+ },
+ {
+  "id": "l3c_259",
+  "who": "Assistant",
+  "text": "Your assistant noticed you’ve worn the same shirt three days running and tactfully left a new one on your desk. Still in the package. Exactly your size.",
+  "left": "Change and say thanks",
+  "right": "Say it’s a principle"
+ },
+ {
+  "id": "l3c_260",
+  "who": "Employee",
+  "text": "A receptionist asks if he can talk to you about his career. “Five minutes, while the elevator goes up.” The elevator goes to the 34th floor.",
+  "left": "Talk in the elevator",
+  "right": "Book via your assistant"
+ },
+ {
+  "id": "l3c_261",
+  "who": "Town hall",
+  "text": "Before the town hall, your assistant whispers that your mic is checked, slides are ready, but there’s a journalist in the audience posing as an employee.",
+  "left": "Speak as usual",
+  "right": "Speak cautiously"
+ },
+ {
+  "id": "l3c_262",
+  "who": "New city",
+  "text": "You flew to a branch 4,000 miles away. At 8 a.m. local time, breakfast awaits at the miners’ canteen. Your body demands sleep; your conscience demands porridge.",
+  "left": "Go to breakfast",
+  "right": "Sleep till lunch"
+ },
+ {
+  "id": "l3c_263",
+  "who": "Board of directors",
+  "text": "A board member asks you to take his niece as an intern. “Just for the summer, she’s very smart.” There are no openings.",
+  "left": "Create an internship",
+  "right": "Suggest an open competition"
+ },
+ {
+  "id": "l3c_264",
+  "who": "Corporate lawyer",
+  "text": "Legal reports that someone recorded your comment about a competitor in the elevator yesterday. For now, it’s only a rumor.",
+  "left": "Warn the board now",
+  "right": "Wait and see"
+ },
+ {
+  "id": "l3c_265",
+  "who": "Inner voice",
+  "text": "In the morning you rehearse your board speech in the mirror. The reflection looks unconvincing. Especially on the word “breakthrough.”",
+  "left": "Drop “breakthrough”",
+  "right": "Rehearse till you win"
+ },
+ {
+  "id": "l3c_266",
+  "who": "Business trip",
+  "text": "Your assistant booked you a train to the branch because it’s “closer to the people.” The train takes 14 hours. The plane takes two.",
+  "left": "Take the train",
+  "right": "Switch to the plane"
+ },
+ {
+  "id": "l3c_267",
+  "who": "Mentoring",
+  "text": "Your mentee asks you to read his business school application essay. He calls you “the greatest example in my life.” And makes four typos.",
+  "left": "Fix the typos",
+  "right": "Forward it to an editor"
+ },
+ {
+  "id": "l3c_268",
+  "who": "Charity",
+  "text": "A charity offers to name a new children’s playground after you. The board thinks it’s great PR. You feel a bit awkward.",
+  "left": "Accept the honor",
+  "right": "Name it after the company"
+ },
+ {
+  "id": "l3c_269",
+  "who": "CSR committee",
+  "text": "Staff propose giving an hour of work every Friday to volunteer projects. The board asks how that will affect revenue.",
+  "left": "Back the staff",
+  "right": "Suggest once a month"
+ },
+ {
+  "id": "l3c_270",
+  "who": "Mentoring",
+  "text": "Your longtime mentee became a CEO himself and now calls not for advice, but to offer you a partnership. The roles have flipped.",
+  "left": "Hear the offer",
+  "right": "Be happy for him, decline"
+ },
+ {
+  "id": "l3c_271",
+  "who": "Mentoring",
+  "text": "Your mentee confesses she wants to quit her career and open a pastry shop. You remember wanting to be an architect once.",
+  "left": "Support the dream",
+  "right": "Suggest another year to think"
+ },
+ {
+  "id": "l3c_272",
+  "who": "Charity auction",
+  "text": "A charity auction. Your CFO and a rival CEO are bidding for the same painting. The price already exceeds the CFO’s annual bonus.",
+  "left": "Stop the CFO",
+  "right": "Let him win"
+ },
+ {
+  "id": "l3c_273",
+  "who": "Charity",
+  "text": "Teens from the orphanage the company sponsors sent a thank-you video. You’re watching it in the car for the third time. The driver tactfully stays silent.",
+  "left": "Go visit them",
+  "right": "Send more gifts"
+ },
+ {
+  "id": "l3c_274",
+  "who": "Assistant",
+  "text": "Your assistant is going on vacation and leaves you a twelve-page guide: “How to Live Without Me.” Item one: “Your email password.”",
+  "left": "Learn the guide",
+  "right": "Get a temp assistant"
+ },
+ {
+  "id": "l3c_275",
+  "who": "Assistant",
+  "text": "Your assistant refuses to go home while you’re still in the office. It’s 9:30 p.m. You need two more hours, and she has two kids at home.",
+  "left": "Leave with her",
+  "right": "Firmly send her home"
+ },
+ {
+  "id": "l3c_276",
+  "who": "Driver",
+  "text": "Your driver, taking you home, mentions he’s retiring in a month. He’s driven you for all seven years. A gift is in order.",
+  "left": "Throw a farewell party",
+  "right": "Give him an envelope"
+ },
+ {
+  "id": "l3c_277",
+  "who": "Driver",
+  "text": "The new driver is very quiet and drives perfectly. You catch yourself missing the old one, who used to recap TV shows.",
+  "left": "Start a conversation",
+  "right": "Enjoy the silence"
+ },
+ {
+  "id": "l3c_278",
+  "who": "Mentoring",
+  "text": "In the evening, your mentee sends slides for his first board presentation. Slide thirteen has your photo captioned “My Inspiration.”",
+  "left": "Ask him to remove it",
+  "right": "Keep it, it matters to him"
+ },
+ {
+  "id": "l3c_279",
+  "who": "Evening call",
+  "text": "The CEO of a rival company calls. Not about business — just to ask how you’re coping. “Same here. Nobody to talk to.”",
+  "left": "Have a heart-to-heart",
+  "right": "Plead a busy schedule"
+ },
+ {
+  "id": "l3c_280",
+  "who": "Loneliness",
+  "text": "You’re at an industry awards gala. Hundreds of familiar faces around you. You realize you don’t want to talk honestly with any of them.",
+  "left": "Leave early",
+  "right": "Work the room till the end"
+ },
+ {
+  "id": "l3c_281",
+  "who": "Inner voice",
+  "text": "For the first time in six months, you’re home at 7 p.m. You don’t know what to do with yourself. The fridge looks at you in surprise.",
+  "left": "Cook the family dinner",
+  "right": "Open the laptop"
+ },
+ {
+  "id": "l3c_282",
+  "who": "Family",
+  "text": "Your kid asks for help with economics homework. Topic: “How a Company Works.” The textbook thinks the CEO just signs papers.",
+  "left": "Explain with examples",
+  "right": "Say the textbook’s right"
+ },
+ {
+  "id": "l3c_283",
+  "who": "Company event",
+  "text": "The employee awards ceremony. You’re handing out the forty-eighth certificate, saying “congratulations” every time. Thirty to go.",
+  "left": "Say something unique to each",
+  "right": "Keep going fast"
+ },
+ {
+  "id": "l3c_284",
+  "who": "Congratulations",
+  "text": "You promised to record a video tribute for a company veteran who’s worked here 40 years. The videographer left, and you’re offered a phone instead.",
+  "left": "Shoot it on the phone",
+  "right": "Postpone till tomorrow"
+ },
+ {
+  "id": "l3c_285",
+  "who": "Employee",
+  "text": "The cleaner asks permission to put her violets on your office windowsill. “It’s sunny here, and they’re sad in the storeroom.”",
+  "left": "Welcome the violets",
+  "right": "Send her to facilities"
+ },
+ {
+  "id": "l3c_286",
+  "who": "Assistant",
+  "text": "Your assistant reports you haven’t answered your mom’s calls for three days. Your mom called the assistant to ask if her child is still alive.",
+  "left": "Call Mom right away",
+  "right": "Have her say “all good”"
+ },
+ {
+  "id": "l3c_287",
+  "who": "Board of directors",
+  "text": "A shareholder wants a charity report framed as “how many customers did this bring us.” The foundation staff consider the question an insult.",
+  "left": "Run the numbers",
+  "right": "Explain the value differently"
+ },
+ {
+  "id": "l3c_288",
+  "who": "Town hall",
+  "text": "Before the town hall, you learn half the audience are newcomers who’ve never seen you. Your prepared speech is full of references to old stories.",
+  "left": "Tell the story from scratch",
+  "right": "Read the prepared text"
+ },
+ {
+  "id": "l3c_289",
+  "who": "Charity",
+  "text": "Staff organized a run in honor of the company. You promised to run. In the morning, everyone’s in sneakers and you’re dressed for a business lunch.",
+  "left": "Run in your suit",
+  "right": "Help at the finish line"
+ },
+ {
+  "id": "l3c_290",
+  "who": "Assistant",
+  "text": "Your assistant sends a list: eight emails have waited over a week for a reply. Among them: your favorite university professor and the tax office.",
+  "left": "Start with the professor",
+  "right": "Start with the tax office"
+ },
+ {
+  "id": "l3c_291",
+  "who": "Charity",
+  "text": "A famous musician will perform at the company foundation’s charity night — but only if you personally join him on stage with a tambourine.",
+  "left": "Grab the tambourine",
+  "right": "Offer a team member"
+ },
+ {
+  "id": "l3c_292",
+  "who": "Mentoring",
+  "text": "A student in the school program “A Day with the CEO” follows you all day taking notes. In the evening he asks: “So when do you do real work?”",
+  "left": "Ponder the question",
+  "right": "Joke it off"
+ },
+ {
+  "id": "l3c_293",
+  "who": "Town hall",
+  "text": "Before the town hall, the hall smells of paint: overnight someone painted over the words “Where’s our bonus?” on the wall. Your assistant asks whether to mention it.",
+  "left": "Mention it with humor",
+  "right": "Pretend nothing happened"
+ },
+ {
+  "id": "l3c_294",
+  "who": "Mentoring",
+  "text": "The board learns you spend four hours a week on mentoring. The chair asks whether there are “no higher-priority tasks.”",
+  "left": "Defend the mentoring",
+  "right": "Cut it to an hour"
+ },
+ {
+  "id": "l3c_295",
+  "who": "Charity",
+  "text": "At home, your kid says the school is collecting books for a village library. You recall two hundred management books gathering dust in your office.",
+  "left": "Donate the management books",
+  "right": "Buy new kids’ books"
+ },
+ {
+  "id": "l3c_296",
+  "who": "Assistant",
+  "text": "Your assistant secretly put “Lunch with family” in your calendar for Thursday and password-protected it. The board wants to hold a meeting then.",
+  "left": "Family lunch",
+  "right": "Board meeting"
+ },
+ {
+  "id": "l3c_297",
+  "who": "Mentoring",
+  "text": "In a mentoring session, your mentee disagrees with you for the first time — and argues so well you lose. He’s nervous.",
+  "left": "Concede defeat",
+  "right": "Keep arguing"
+ },
+ {
+  "id": "l3c_298",
+  "who": "Driver",
+  "text": "Your driver found out you love old songs and made a playlist from your youth for the car. Listening to it, you somehow feel sad.",
+  "left": "Thank him and sing along",
+  "right": "Ask for the news"
+ },
+ {
+  "id": "l3c_299",
+  "who": "Inner voice",
+  "text": "Today is the anniversary of your appointment as CEO. Only you remember — and the bank, which sent congratulations with a credit card offer.",
+  "left": "Celebrate with the team",
+  "right": "Work as usual"
+ },
+ {
+  "id": "l3c_300",
+  "who": "Calendar",
+  "text": "Your calendar pings: “In 5 minutes — meeting with yourself.” You didn’t schedule that. Your assistant says nothing and smiles mysteriously.",
+  "left": "Hold the meeting",
+  "right": "Give the slot to deputies"
+ },
+ {
+  "id": "l3c_301",
+  "who": "Assistant",
+  "text": "Your assistant quit. On his first day, the new assistant mistook the board chair for a courier and asked him to sign for a pizza delivery.",
+  "left": "Laugh and explain",
+  "right": "Apologize to the chair, fast"
+ },
+ {
+  "id": "l3c_302",
+  "who": "Assistant",
+  "text": "Your assistant asks what to tell a journalist who wants your daily routine for an article, “The Morning of a Successful Person.” Your mornings are chaos.",
+  "left": "Tell the truth",
+  "right": "Invent a pretty morning"
+ },
+ {
+  "id": "l3c_303",
+  "who": "Calendar",
+  "text": "Your calendar was opened to the whole company “in the spirit of transparency.” Now everyone can see “Dentist” and a block labeled “Do not disturb, thinking.”",
+  "left": "Keep it open",
+  "right": "Hide personal items"
+ },
+ {
+  "id": "l3c_304",
+  "who": "Driver",
+  "text": "Your driver reports the car is in the shop, and the loaner is a twelve-seat minibus. It’s forty minutes to the office.",
+  "left": "Give staff a ride en route",
+  "right": "Ride the bus alone"
+ },
+ {
+  "id": "l3c_305",
+  "who": "Driver",
+  "text": "Your driver knows everything: which deputies lunch together, who goes to job interviews, who cries in the car. Today he hints he knows something important.",
+  "left": "Ask him directly",
+  "right": "Keep the driver out of it"
+ },
+ {
+  "id": "l3c_306",
+  "who": "Elevator",
+  "text": "The business center has a separate elevator for executives. Today it’s broken, and you’re standing in the general line. Staff are visibly tense.",
+  "left": "Joke about the elevator",
+  "right": "Walk up to the 20th floor"
+ },
+ {
+  "id": "l3c_307",
+  "who": "Perks",
+  "text": "Your office has a smart desk that rises on its own if you sit for over an hour. It’s now rising mid-video call with the board.",
+  "left": "Stand up and carry on",
+  "right": "Disable it forever"
+ },
+ {
+  "id": "l3c_308",
+  "who": "Town hall",
+  "text": "Your assistant suggests starting the town hall with a minute of silence so “everyone can tune in.” The board suggests starting with numbers.",
+  "left": "Start with silence",
+  "right": "Start with numbers"
+ },
+ {
+  "id": "l3c_309",
+  "who": "Meeting",
+  "text": "At the morning meeting, not one deputy looked up from their laptop. Everyone’s in their slides; only you are looking at people. And nobody at you.",
+  "left": "Close the laptops",
+  "right": "Open yours too"
+ },
+ {
+  "id": "l3c_310",
+  "who": "Business trip",
+  "text": "On the trip, your assistant booked you into the same hotel as your competitors. At breakfast you end up at a table with their CEO.",
+  "left": "Have breakfast together",
+  "right": "Order room service"
+ },
+ {
+  "id": "l3c_311",
+  "who": "Values",
+  "text": "At onboarding, a new employee asks: “How does the value ‘Courage’ show up in practice?” You look at HR. HR looks at you.",
+  "left": "Tell a real story",
+  "right": "Pass it to HR"
+ },
+ {
+  "id": "l3c_312",
+  "who": "CFO",
+  "text": "The CFO reports there’s no budget for shareholder gifts this year. Shareholders are used to gifts. Especially engraved cognac.",
+  "left": "Send greeting cards",
+  "right": "Find budget in marketing"
+ },
+ {
+  "id": "l3c_313",
+  "who": "Board chair",
+  "text": "The board chair sent you a leadership book with notes in the margins. At Friday’s meeting he’ll ask what you think. It’s 600 pages.",
+  "left": "Read it overnight",
+  "right": "Read a summary"
+ },
+ {
+  "id": "l3c_314",
+  "who": "Morning ritual",
+  "text": "You decided to walk to the office “for your health.” Security didn’t recognize you without the driver and demanded your badge. The driver has it.",
+  "left": "Wait for confirmation",
+  "right": "Call your assistant"
+ },
+ {
+  "id": "l3c_315",
+  "who": "Assistant",
+  "text": "Your assistant very politely but firmly informs you that you can’t hold a meeting at 3 p.m. because “you promised yourself lunch at 3.”",
+  "left": "Have lunch",
+  "right": "Hold the meeting"
+ },
+ {
+  "id": "l3c_316",
+  "who": "Meeting",
+  "text": "The top-team meeting is in its third hour. The decision was obvious from minute one, but everyone wants to have their say.",
+  "left": "Announce the decision now",
+  "right": "Let everyone speak"
+ },
+ {
+  "id": "l3c_317",
+  "who": "Strategy director",
+  "text": "The strategy director presents the strategy on 47 slides. The last slide shows a pyramid suspiciously like last year’s pyramid.",
+  "left": "Point out the resemblance",
+  "right": "Approve it"
+ },
+ {
+  "id": "l3c_318",
+  "who": "Assistant",
+  "text": "Your assistant says the chief accountant is waiting “for just one signature.” She comes in pushing a cart of documents. The cart squeaks.",
+  "left": "Sign after checking",
+  "right": "Delegate to a deputy"
+ },
+ {
+  "id": "l3c_319",
+  "who": "Leadership",
+  "text": "Training asks you to give young managers a lecture: “How I Make Decisions.” You realize you make them differently every time.",
+  "left": "Tell it honestly",
+  "right": "Use a ready-made framework"
+ },
+ {
+  "id": "l3c_320",
+  "who": "Board of directors",
+  "text": "The board is discussing your bonus. You’re asked to step out. For twenty minutes you stand in the hallway studying a ficus.",
+  "left": "Sit by the ficus",
+  "right": "Go chat with staff"
+ },
+ {
+  "id": "l3c_321",
+  "who": "Employee",
+  "text": "A courier who happens to be in the elevator asks: “So what do you do here?” You ponder how to answer without sounding arrogant.",
+  "left": "Tell him honestly",
+  "right": "“A little bit of everything”"
+ },
+ {
+  "id": "l3c_322",
+  "who": "Lunch",
+  "text": "At a business lunch, the restaurant brings the bill addressed to “Director.” The partners are watching. Etiquette says you pay; the budget says split.",
+  "left": "Pay for everything",
+  "right": "Split the bill"
+ },
+ {
+  "id": "l3c_323",
+  "who": "PR",
+  "text": "The press office wants a social media series: “The CEO Tries Other Jobs.” Today: you at the cafeteria checkout.",
+  "left": "Work the register",
+  "right": "Skip the series"
+ },
+ {
+  "id": "l3c_324",
+  "who": "Assistant",
+  "text": "Your assistant accidentally sent the board your draft report with comments like “need to embellish this.” The board has already read it.",
+  "left": "Explain honestly",
+  "right": "Apologize for the assistant"
+ },
+ {
+  "id": "l3c_325",
+  "who": "Rivalry",
+  "text": "The sales director complains the CFO “kills” all his ideas. The CFO complains sales “burns money.” Both are right.",
+  "left": "Set a joint budget",
+  "right": "Side with finance"
+ },
+ {
+  "id": "l3c_326",
+  "who": "Assistant",
+  "text": "Your assistant made you a “cheat sheet” before dinner with partners: wives’ names, hobbies, favorite wines. One page is marked: “Don’t mention fishing.”",
+  "left": "Learn the cheat sheet",
+  "right": "Improvise"
+ },
+ {
+  "id": "l3c_327",
+  "who": "Perks",
+  "text": "Procurement sent you a chair upholstered in ostrich leather. Ordered by mistake, non-returnable. The team sits on chairs from 2012.",
+  "left": "Put it in the meeting room",
+  "right": "Keep it for yourself"
+ },
+ {
+  "id": "l3c_328",
+  "who": "Board of directors",
+  "text": "A shareholder demands his observer attend every top-team meeting. The observer says nothing, takes notes, and occasionally coughs.",
+  "left": "Accept the observer",
+  "right": "Offer weekly reports"
+ },
+ {
+  "id": "l3c_329",
+  "who": "Town hall",
+  "text": "The town hall host picks a question from the floor: “What do you do when you’re tired?” The room waits for sincerity.",
+  "left": "Tell the truth",
+  "right": "Say: “I don’t get tired”"
+ },
+ {
+  "id": "l3c_330",
+  "who": "IT director",
+  "text": "The IT director wants to roll out a system that tracks employee activity. The HR director threatens to quit the same day.",
+  "left": "Roll it out",
+  "right": "Turn IT down"
+ },
+ {
+  "id": "l3c_331",
+  "who": "Employee",
+  "text": "At a meeting, a marketing staffer gives you an opinion opposite to her director’s. The marketing director visibly turns pink.",
+  "left": "Back her courage",
+  "right": "Table the debate"
+ },
+ {
+  "id": "l3c_332",
+  "who": "Assistant",
+  "text": "At 8 p.m. your assistant writes: “Sorry, tomorrow you have three meetings at 9, two at 10, and five at 11. I did what I could.” You believe her.",
+  "left": "Cancel half",
+  "right": "Bring it on"
+ },
+ {
+  "id": "l3c_333",
+  "who": "Driver",
+  "text": "Driving you home, your driver unexpectedly says: “You spoke well at the town hall today. The guys in the garage watched.” You’re touched.",
+  "left": "Ask what they liked",
+  "right": "Nod your thanks"
+ },
+ {
+  "id": "l3c_334",
+  "who": "Loneliness",
+  "text": "You come home and everyone’s asleep. A note on the table: “Dinner’s in the fridge. We love you.” You eat standing in the dark.",
+  "left": "Leave early tomorrow",
+  "right": "Get used to it"
+ },
+ {
+  "id": "l3c_335",
+  "who": "Assistant",
+  "text": "Your assistant left a tangerine on your desk with a note: “You didn’t have lunch. I checked.” Heartwarming — and a little embarrassing.",
+  "left": "Buy her flowers",
+  "right": "Actually eat lunch tomorrow"
+ },
+ {
+  "id": "l3c_336",
+  "who": "Conference",
+  "text": "Evening networking at an industry conference. You’re by the canapé table, and eleven startups swarm you with pitches. The canapés are running out.",
+  "left": "Hear them all",
+  "right": "Escape to the coat check"
+ },
+ {
+  "id": "l3c_337",
+  "who": "Company party",
+  "text": "At the summer company party, you’re asked to kick off the soccer match with a ceremonial kick. The ball flies straight through accounting’s window.",
+  "left": "Pay for the glass yourself",
+  "right": "Declare a new tradition"
+ },
+ {
+  "id": "l3c_338",
+  "who": "Business trip",
+  "text": "At the hotel, you realize you forgot your phone charger. The board calls every hour. Battery: 7%. The lobby sells only smartwatch chargers.",
+  "left": "Turn off the phone",
+  "right": "Go find a charger at night"
+ },
+ {
+  "id": "l3c_339",
+  "who": "Family",
+  "text": "Your partner asks what you want for your birthday. You think for a minute and realize you want to sleep. Nothing else.",
+  "left": "Ask for a day off",
+  "right": "Ask for a new briefcase"
+ },
+ {
+  "id": "l3c_340",
+  "who": "Party",
+  "text": "A classmate invites you to his birthday. Everyone will talk about country houses, mortgages, and kids. You’re afraid you’ll only talk about the board.",
+  "left": "Go and listen",
+  "right": "Plead work"
+ },
+ {
+  "id": "l3c_341",
+  "who": "Perks",
+  "text": "For your anniversary, the company gave you a rocking chair engraved “To Our Captain.” It looks like they’re seeing you off to retirement.",
+  "left": "Put it in your office",
+  "right": "Take it to the country house"
+ },
+ {
+  "id": "l3c_342",
+  "who": "Email",
+  "text": "At 11:40 p.m. you see an email from legal: “Urgent. Need your signature by 9:00.” The document is twenty pages in English, and the lawyer isn’t answering.",
+  "left": "Read and sign",
+  "right": "Sign after a morning call"
+ },
+ {
+  "id": "l3c_343",
+  "who": "Board of directors",
+  "text": "The board chair sends a seven-minute evening voice message on “how he sees the company in ten years.” He sees it on the Moon.",
+  "left": "Listen and reply",
+  "right": "Reply: “Let’s discuss in person”"
+ },
+ {
+  "id": "l3c_344",
+  "who": "Inner voice",
+  "text": "You’re on the office balcony at 9 p.m. Below, the last employees are leaving. Someone waves at you. It seems to be an intern you’ve never seen.",
+  "left": "Go down and talk",
+  "right": "Wave back"
+ },
+ {
+  "id": "l3c_345",
+  "who": "Assistant",
+  "text": "Your assistant relays that the board wants an “informal meeting” at a sauna on Saturday. All other details are classified.",
+  "left": "Go to the sauna",
+  "right": "Suggest a restaurant"
+ },
+ {
+  "id": "l3c_346",
+  "who": "Family",
+  "text": "Your kid is learning violin and wants to play for you over video. You’re in a meeting room; the meeting ends in forty minutes.",
+  "left": "Step out to listen",
+  "right": "Ask them to play later"
+ },
+ {
+  "id": "l3c_347",
+  "who": "Mentor",
+  "text": "The board chair says he sees himself in you thirty years ago. You consider his schedule and three divorces and shrug.",
+  "left": "Enjoy the compliment",
+  "right": "Ask what he regrets"
+ },
+ {
+  "id": "l3c_348",
+  "who": "Company retreat",
+  "text": "After an offsite strategy session, the top team sings around a campfire. They hand you the guitar because “you’re the boss.” You know three chords.",
+  "left": "Play three chords",
+  "right": "Pass the guitar"
+ },
+ {
+  "id": "l3c_349",
+  "who": "Dinner",
+  "text": "Dinner with investors has run until 1 a.m. The quietest investor has finally started talking — about his childhood. This will take a while.",
+  "left": "Listen to the end",
+  "right": "Politely wrap up"
+ },
+ {
+  "id": "l3c_350",
+  "who": "Headhunter",
+  "text": "7:50 a.m. A headhunter calls: a competitor offers you the CEO chair with double the bonus. His voice is velvety. Hear him out?",
+  "left": "Hear the offer",
+  "right": "Hang up"
+ },
+ {
+  "id": "l3c_351",
+  "who": "Board secretary",
+  "text": "The board secretary sends the minutes of the last meeting. Your line “we need to think about it” is recorded as “the CEO agrees.”",
+  "left": "Demand a correction",
+  "right": "Leave it"
+ },
+ {
+  "id": "l3c_352",
+  "who": "Smartwatch",
+  "text": "Your smartwatch reports: “You walked 312 steps today. That’s fewer than your cat.” The cat apparently works harder than you.",
+  "left": "Walk to the meeting",
+  "right": "Take off the watch"
+ },
+ {
+  "id": "l3c_353",
+  "who": "Press secretary",
+  "text": "The press secretary reports your yawning photo from an industry forum became a meme. Caption: “When the board report is 300 pages.”",
+  "left": "Make it your avatar",
+  "right": "Ask for it to be removed"
+ },
+ {
+  "id": "l3c_354",
+  "who": "Minority shareholder",
+  "text": "A minority shareholder has been in the lobby since morning with a sign: “Where are the dividends?” Hand-drawn and surprisingly beautiful. Security awaits orders.",
+  "left": "Go out and talk",
+  "right": "Use the back door"
+ },
+ {
+  "id": "l3c_355",
+  "who": "Courier",
+  "text": "A courier brought you a huge unsigned bouquet. Reception is guessing who it’s from. Your assistant is guessing loudest. You have no idea.",
+  "left": "Leave it at reception",
+  "right": "Take it to your office"
+ },
+ {
+  "id": "l3c_356",
+  "who": "Union",
+  "text": "The union chair requests a meeting “as soon as possible.” He’s smiling but holding a folder labeled “Demands.” It’s a thick folder.",
+  "left": "See him right away",
+  "right": "Postpone a week"
+ },
+ {
+  "id": "l3c_357",
+  "who": "Chief accountant",
+  "text": "The chief accountant reports your travel authorization has expired, so you’ve technically been “on a business trip” for a week. A signature is needed.",
+  "left": "Backdate it",
+  "right": "Redo it by the book"
+ },
+ {
+  "id": "l3c_358",
+  "who": "Navigator",
+  "text": "The car’s navigator routes you past your old school. The driver asks if you’d like to stop and look. Ten minutes late.",
+  "left": "Stop at the school",
+  "right": "Keep driving"
+ },
+ {
+  "id": "l3c_359",
+  "who": "Intern",
+  "text": "An intern mistakenly brought you a vacation request with your name instead of his. Dates: two weeks in August.",
+  "left": "Sign it, since it’s here",
+  "right": "Hand it back laughing"
+ },
+ {
+  "id": "l3c_360",
+  "who": "Board of directors",
+  "text": "The board scheduled a meeting for 8 a.m. Saturday, “while heads are fresh.” Your head is only fresh on Saturdays after 11.",
+  "left": "Show up perky",
+  "right": "Ask to reschedule"
+ },
+ {
+  "id": "l3c_361",
+  "who": "Competitor",
+  "text": "A rival CEO posts a photo of himself jogging at 5 a.m. Your board has already liked it.",
+  "left": "Go for a jog too",
+  "right": "Go back to sleep"
+ },
+ {
+  "id": "l3c_362",
+  "who": "Security",
+  "text": "Security blocked your badge because it was “used after hours too often.” The system suspects you’re an intruder.",
+  "left": "Wait to be unblocked",
+  "right": "Hop the turnstile"
+ },
+ {
+  "id": "l3c_363",
+  "who": "Reception",
+  "text": "Yesterday the receptionist greeted you at 8 a.m. with “Good evening.” Today she says “Welcome back.” You’d stepped out for ten minutes.",
+  "left": "Joke back",
+  "right": "Rethink your schedule"
+ },
+ {
+  "id": "l3c_364",
+  "who": "Investor",
+  "text": "A new investor asks you to describe the company “in one word.” The CFO whispers “stability,” marketing whispers “drive,” and you’re thinking “fatigue.”",
+  "left": "Say “stability”",
+  "right": "Say “people”"
+ },
+ {
+  "id": "l3c_365",
+  "who": "Auditor",
+  "text": "The external auditor asks you to personally explain why meeting-room coffee cost more than the warehouse repairs. You don’t know, but you can guess who loves lattes.",
+  "left": "Find the culprits",
+  "right": "Take responsibility"
+ },
+ {
+  "id": "l3c_366",
+  "who": "Journalist",
+  "text": "A business journalist asks: “What book are you reading right now?” The honest answer: a bedtime story for your kids. Your assistant blinks nervously.",
+  "left": "Name the fairy tale",
+  "right": "Name a strategy book"
+ },
+ {
+  "id": "l3c_367",
+  "who": "VIP client",
+  "text": "A key client demands the CEO personally attend negotiations. They’re in another city in three hours. Your day is packed.",
+  "left": "Go in person",
+  "right": "Send the sales director"
+ },
+ {
+  "id": "l3c_368",
+  "who": "Supplier",
+  "text": "After negotiations, a major supplier tries to hand you a “gift.” Judging by the weight, something very expensive. Compliance is in the hallway.",
+  "left": "Refuse in front of all",
+  "right": "Hand it to compliance"
+ },
+ {
+  "id": "l3c_369",
+  "who": "Union",
+  "text": "The union asks you to install air conditioning on the shop floors. This year’s budget was eaten by the new reporting system the board demanded.",
+  "left": "Find money for AC",
+  "right": "Promise next year"
+ },
+ {
+  "id": "l3c_370",
+  "who": "Analysts",
+  "text": "Industry analysts cut their forecast for the company. The board is unhappy. The analyst, by the way, is a former intern you once didn’t hire.",
+  "left": "Call him personally",
+  "right": "Ignore it"
+ },
+ {
+  "id": "l3c_371",
+  "who": "Board of directors",
+  "text": "The board decided you need a “voice coach” to sound more confident. The coach wants you to say “We are growing” one tone lower.",
+  "left": "Work with the coach",
+  "right": "Refuse the coach"
+ },
+ {
+  "id": "l3c_372",
+  "who": "Client",
+  "text": "An important client invites you to negotiate “on a mountain walk.” Up a mountain. On foot. A two-hour climb. Your last hike was in school.",
+  "left": "Hit the trail",
+  "right": "Suggest a meeting room"
+ },
+ {
+  "id": "l3c_373",
+  "who": "Bank",
+  "text": "The banker insists you sign the loan agreement personally and only at their branch. It’s across town, and the line is first-come, first-served.",
+  "left": "Go to the bank",
+  "right": "Arrange a proxy"
+ },
+ {
+  "id": "l3c_374",
+  "who": "Compliance",
+  "text": "The compliance officer asks you to take the mandatory online course “Anti-Corruption Basics” with everyone else. It’s two hours of childish questions.",
+  "left": "Take it like everyone",
+  "right": "Ask to mark it done"
+ },
+ {
+  "id": "l3c_375",
+  "who": "Intern",
+  "text": "An intern messages you his idea for a new product with a rocket emoji. It’s not bad. His manager doesn’t know.",
+  "left": "Reply to the intern",
+  "right": "Forward to his manager"
+ },
+ {
+  "id": "l3c_376",
+  "who": "Market regulator",
+  "text": "The industry regulator wants a report by end of day. The report is ready, but it has three errors nobody can find.",
+  "left": "Send it on time",
+  "right": "Ask for one more day"
+ },
+ {
+  "id": "l3c_377",
+  "who": "Conference",
+  "text": "The panel moderator introduces you as “one of the most creative CEOs in the industry.” You prepared a talk on cost-cutting.",
+  "left": "Play up the image",
+  "right": "Talk about costs"
+ },
+ {
+  "id": "l3c_378",
+  "who": "Video call",
+  "text": "Mid-video call with the board, your kid’s drawing appears on screen — they accidentally started screen-sharing from the home tablet.",
+  "left": "Laugh along",
+  "right": "Apologize, fast"
+ },
+ {
+  "id": "l3c_379",
+  "who": "Lunch with the board",
+  "text": "At lunch with the board, a whole fish is served. You can’t eat a whole fish gracefully, and the chair is watching closely.",
+  "left": "Eat it however you can",
+  "right": "Say you’re full"
+ },
+ {
+  "id": "l3c_380",
+  "who": "Headhunter",
+  "text": "The headhunter calls again, this time in the evening: “Thought it over? They’ll add a car, a driver, and a personal chef.” Your driver is right there, hearing everything.",
+  "left": "Decline in front of him",
+  "right": "Ask for time to think"
+ },
+ {
+  "id": "l3c_381",
+  "who": "Minority shareholder",
+  "text": "At the annual meeting, a minority shareholder asks: “Why does the company even need a CEO?” The room laughs. The chair doesn’t.",
+  "left": "Answer with humor",
+  "right": "Answer seriously, in detail"
+ },
+ {
+  "id": "l3c_382",
+  "who": "Union",
+  "text": "The union invites you to join “as a sign of solidarity.” A joke, of course, but they’re already prepping a photo for the bulletin board.",
+  "left": "Pose for the joke",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3c_383",
+  "who": "Neighbor",
+  "text": "Your country-house neighbor spotted you at the store and asked you to get his son “a job at your company, anything.” The son is right there, chewing gum and staring at his phone.",
+  "left": "Give him HR’s contact",
+  "right": "Explain the hiring process"
+ },
+ {
+  "id": "l3c_384",
+  "who": "Cat",
+  "text": "At home, the cat won’t leave your side all evening, purring. The first family member all week who wants nothing from you. Except food.",
+  "left": "Lounge with the cat",
+  "right": "Open the laptop beside it"
+ },
+ {
+  "id": "l3c_385",
+  "who": "Robot vacuum",
+  "text": "For the third night in a row, the robot vacuum is stuck by your door. It seems to be the only one waiting for you. Your partner has gone to bed.",
+  "left": "Spend the morning with your partner",
+  "right": "Sleep at the office"
+ },
+ {
+  "id": "l3c_386",
+  "who": "Board of directors",
+  "text": "Over dinner, a board member offers you, “confidentially,” a seat on another company’s board. Prestigious, but it takes three evenings a month.",
+  "left": "Accept the offer",
+  "right": "Decline"
+ },
+ {
+  "id": "l3c_387",
+  "who": "Business school",
+  "text": "A business school invites you to teach an evening course for executives. The pay is low, but students will hang on your every word.",
+  "left": "Take the course",
+  "right": "Decline"
+ },
+ {
+  "id": "l3c_388",
+  "who": "Investor",
+  "text": "An investor invites you to a nightclub to “continue the conversation.” You haven’t been to a nightclub in fifteen years. The last one was called “Disco.”",
+  "left": "Go and dance",
+  "right": "Plead an early flight"
+ },
+ {
+  "id": "l3c_389",
+  "who": "Journalist",
+  "text": "A journalist calls back to check a quote. You said: “It’s a difficult situation.” His version: “CEO admits crisis.” It runs in the morning.",
+  "left": "Get it corrected",
+  "right": "Let it go"
+ },
+ {
+  "id": "l3c_390",
+  "who": "Voice assistant",
+  "text": "Asked to “play something relaxing,” your home voice assistant played a recording of your own town hall speech. Apparently you listen to it a lot.",
+  "left": "Listen critically",
+  "right": "Turn it off, enjoy silence"
+ },
+ {
+  "id": "l3c_391",
+  "who": "Teenager",
+  "text": "Your teen asked for advice for the first time — on how to be a leader on the student council. You feel prouder than at any board meeting.",
+  "left": "Share your mistakes",
+  "right": "Give a leadership book"
+ },
+ {
+  "id": "l3c_392",
+  "who": "Client",
+  "text": "Late in the evening, a key client calls you personally, bypassing all managers. He’s unhappy. His account manager, your sales director, doesn’t know about the call.",
+  "left": "Handle it yourself",
+  "right": "Pass it to sales"
+ },
+ {
+  "id": "l3c_393",
+  "who": "CFO",
+  "text": "At year-end, the CFO suggests “nicely” shifting some expenses into January so the board sees a record. The audit is in March.",
+  "left": "Refuse",
+  "right": "Allow the “nicely”"
+ },
+ {
+  "id": "l3c_394",
+  "who": "Partner",
+  "text": "Your partner suggests talking before bed about “anything but work.” Five minutes later you notice you’re talking about the board.",
+  "left": "Start over",
+  "right": "Finish the board story"
+ },
+ {
+  "id": "l3c_395",
+  "who": "Security",
+  "text": "On your way out, the guard says you’re the last person in the building today. Again. He’s asking whether to set up a cot for you.",
+  "left": "Leave before the guard",
+  "right": "Joke about the cot"
+ },
+ {
+  "id": "l3c_396",
+  "who": "Supplier",
+  "text": "The office coffee supplier offers to install a vending machine in the lobby with your face on it. “Coffee from the CEO.” Staff will love it. Probably.",
+  "left": "Install the machine",
+  "right": "Decline"
+ },
+ {
+  "id": "l3c_397",
+  "who": "Minority shareholder",
+  "text": "A small shareholder sent you an eight-page handwritten letter of management advice. Some of it is surprisingly on point.",
+  "left": "Reply personally",
+  "right": "Pass to investor relations"
+ },
+ {
+  "id": "l3c_398",
+  "who": "Former colleague",
+  "text": "A college classmate you started with as interns now works for you as warehouse manager. He invites you to a barbecue like old times. “If you’re not too stuck-up now.”",
+  "left": "Go to the barbecue",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3c_399",
+  "who": "Jet lag",
+  "text": "You’re back from across the ocean and wide awake at 5 a.m. The office opens at 8. You could have three quiet hours or wake the top team with ideas.",
+  "left": "Post ideas in the team chat",
+  "right": "Walk the empty city"
+ },
+ {
+  "id": "l3c_400",
+  "who": "Business class",
+  "text": "For the first time, you’re entitled to fly business class. The seat turns into a bed, but you can’t find the button and sit upright for eight hours, too shy to ask.",
+  "left": "Call the flight attendant",
+  "right": "Sit with dignity"
+ },
+ {
+  "id": "l3c_401",
+  "who": "Deputy’s driver",
+  "text": "Your deputy’s driver asks to meet you: he’d also like to drive the CEO. Your own driver is standing right there pretending not to hear.",
+  "left": "Promise to think about it",
+  "right": "Shut it down right away"
+ },
+ {
+  "id": "l3c_402",
+  "who": "Town hall",
+  "text": "You’re preparing a town hall and decide to take questions unscripted. The PR director goes pale and suggests at least “a couple of planted questions.”",
+  "left": "Answer live",
+  "right": "Agree to plants"
+ },
+ {
+  "id": "l3c_403",
+  "who": "Mentoring",
+  "text": "Your mentee showed up twenty minutes late, apologizing: “Your CFO held me up.” The CFO is her boss.",
+  "left": "Talk to the CFO",
+  "right": "Shorten the meeting"
+ },
+ {
+  "id": "l3c_404",
+  "who": "Board of directors",
+  "text": "A morning email: next week the board will conduct a “360-degree CEO assessment.” Your driver is also on the list of people surveyed.",
+  "left": "Prepare for it",
+  "right": "Rely on your reputation"
+ },
+ {
+  "id": "l3c_405",
+  "who": "Successor",
+  "text": "The board asks you to let your successor run the company for a week while you “observe from the sidelines.” You don’t know how to sit idle.",
+  "left": "Take a week’s vacation",
+  "right": "Lurk in the office"
+ },
+ {
+  "id": "l3c_406",
+  "who": "Coffee",
+  "text": "The chef in the executive dining room noticed your love of cappuccino and now draws your portrait in the foam. Each day the portrait looks more serious.",
+  "left": "Ask for a kitten",
+  "right": "Photograph the portrait"
+ },
+ {
+  "id": "l3c_407",
+  "who": "Values",
+  "text": "Staff noticed the elevator poster says “We save energy,” while your office light was on all night. The photo has gone through every chat.",
+  "left": "Admit it and joke",
+  "right": "Blame the cleaners"
+ },
+ {
+  "id": "l3c_408",
+  "who": "Business trip",
+  "text": "You wake up in a hotel and for five minutes can’t remember which city you’re in. Same curtains, parking lot view. Your talk is in an hour.",
+  "left": "Ask reception",
+  "right": "Guess from the breakfast menu"
+ },
+ {
+  "id": "l3c_409",
+  "who": "CFO",
+  "text": "The CFO brings an analysis: giving up the executive floor would save more than cutting couriers. The board is thrilled.",
+  "left": "Move in with the staff",
+  "right": "Keep the floor"
+ },
+ {
+  "id": "l3c_410",
+  "who": "Assistant",
+  "text": "Your assistant is at the doctor. For the first time in a year, you’re booking a meeting room in the company system yourself. The system asks who you even are.",
+  "left": "Register yourself",
+  "right": "Ask IT for help"
+ },
+ {
+  "id": "l3c_411",
+  "who": "HR director",
+  "text": "The HR director asks you to personally conduct the exit interview with a key engineer who’s leaving. He’s leaving because of your decision.",
+  "left": "Have the talk",
+  "right": "Leave it to HR"
+ },
+ {
+  "id": "l3c_412",
+  "who": "Family",
+  "text": "Before school, your kid seriously asks if they can take your business card to class. It’s for a presentation, “My Parents’ Jobs.”",
+  "left": "Visit the class yourself",
+  "right": "Hand over the card"
+ },
+ {
+  "id": "l3c_413",
+  "who": "Meeting",
+  "text": "You introduce a “no phones in meetings” rule. Five minutes later you’re taking a call from the board chair amid silent group reproach.",
+  "left": "Phone into the basket",
+  "right": "Step out to talk"
+ },
+ {
+  "id": "l3c_414",
+  "who": "Perks",
+  "text": "You were issued a company card with no limit. Your assistant cautiously asks if you need anything for your office. All you need is a decent lamp.",
+  "left": "Buy a simple lamp",
+  "right": "Order a designer one"
+ },
+ {
+  "id": "l3c_415",
+  "who": "Mentoring",
+  "text": "A young branch director asks you to mentor him. He admires your management style — which you’ve long wanted to change yourself.",
+  "left": "Share your doubts",
+  "right": "Teach it as is"
+ },
+ {
+  "id": "l3c_416",
+  "who": "Town hall",
+  "text": "Right before the town hall, you discover a coffee stain on your jacket. Three minutes till you go on stage. Staff are taking their seats.",
+  "left": "Speak without the jacket",
+  "right": "Borrow your deputy’s"
+ },
+ {
+  "id": "l3c_417",
+  "who": "Rivalry",
+  "text": "The marketing director asks to report directly to you, bypassing the sales director. The sales director doesn’t know yet.",
+  "left": "Agree",
+  "right": "Keep the structure"
+ },
+ {
+  "id": "l3c_418",
+  "who": "Board of directors",
+  "text": "The board wants your key metrics displayed in real time in the meeting room. Everyone who walks in will see your “performance.”",
+  "left": "Agree to the display",
+  "right": "Offer a monthly report"
+ },
+ {
+  "id": "l3c_419",
+  "who": "Jet lag",
+  "text": "Jet lag hits you in an important meeting. You closed your eyes for a second and opened them to find everyone waiting for your opinion. On an unknown topic.",
+  "left": "Admit it and ask again",
+  "right": "Say: “I agree with colleagues”"
+ },
+ {
+  "id": "l3c_420",
+  "who": "Town hall",
+  "text": "At the town hall, staff ask how you spend your weekends. Honest answer: working. The PR director whispers: “yachting.”",
+  "left": "Tell the truth",
+  "right": "Say “yachting”"
+ },
+ {
+  "id": "l3c_421",
+  "who": "Charity",
+  "text": "A charity wants to film you reading a fairy tale to kids. The director asks you to play a “kind wizard.” The costume is already sewn.",
+  "left": "Wear the costume",
+  "right": "Read in regular clothes"
+ },
+ {
+  "id": "l3c_422",
+  "who": "Successor",
+  "text": "The board wants your successor to shadow you at every meeting “for training.” Now there are three in the car: you, the driver, and a guy with a notepad.",
+  "left": "Take him along",
+  "right": "Key meetings only"
+ },
+ {
+  "id": "l3c_423",
+  "who": "Top team",
+  "text": "You ask each deputy to name one mistake of theirs this quarter. Everyone names colleagues’ mistakes. The silence rings like a glass at a wedding.",
+  "left": "Start with your own",
+  "right": "Run an anonymous survey"
+ },
+ {
+  "id": "l3c_424",
+  "who": "Perks",
+  "text": "You learn your annual entertainment budget is bigger than the entire HR department’s. The HR director learns it too.",
+  "left": "Cut your budget",
+  "right": "Change nothing"
+ },
+ {
+  "id": "l3c_425",
+  "who": "Family",
+  "text": "Mid-negotiation, your kid calls: they left their biology project at home. Without it, they’ll fail. The driver is free.",
+  "left": "Send the driver",
+  "right": "Say: “Learn to plan”"
+ },
+ {
+  "id": "l3c_426",
+  "who": "Business trip",
+  "text": "At negotiations in Asia, your partner lavishes praise on your company, then says “we’ll think about it.” A local adviser whispers that’s a polite “no.”",
+  "left": "Offer a discount now",
+  "right": "Accept the no, fly home"
+ },
+ {
+  "id": "l3c_427",
+  "who": "Health",
+  "text": "You sneezed in the middle of the board meeting. The chair looks at you as if you’d leaked a trade secret. Two more hours to go.",
+  "left": "Take sick leave after",
+  "right": "Tea with lemon, endure"
+ },
+ {
+  "id": "l3c_428",
+  "who": "Mentoring",
+  "text": "Your mentee proposes “reverse mentoring”: he’ll teach you new social media and memes. Lesson one: how to make a short video. With a dance, of course.",
+  "left": "Dance",
+  "right": "Stick to theory"
+ },
+ {
+  "id": "l3c_429",
+  "who": "Town hall",
+  "text": "The company’s long-retired founder shows up at the town hall. His standing ovation lasts longer than yours. He waves: “Say a few words.”",
+  "left": "Give him the stage",
+  "right": "Stick to your program"
+ },
+ {
+  "id": "l3c_430",
+  "who": "Leadership",
+  "text": "For the first time, you tell the top team: “I don’t know what to do.” Silence. Some start taking notes, some start panicking.",
+  "left": "Ask for ideas",
+  "right": "Say: “Kidding, there’s a plan”"
+ },
+ {
+  "id": "l3c_431",
+  "who": "Security",
+  "text": "Security offers you a bodyguard for public events. He’s nearly seven feet tall and follows you even into the cafeteria.",
+  "left": "Accept the guard",
+  "right": "Decline"
+ },
+ {
+  "id": "l3c_432",
+  "who": "Town hall",
+  "text": "After the town hall, an employee comes up: “Thank you for being honest about the layoffs. I’d been waiting.” You don’t remember her.",
+  "left": "Ask her name",
+  "right": "Nod and leave"
+ },
+ {
+  "id": "l3c_433",
+  "who": "Hotel",
+  "text": "Your hotel room has a jacuzzi, a sauna, and a sea view. You sit in it with a laptop and reports. The sea is roaring. You never even went to the window.",
+  "left": "Go down to the sea",
+  "right": "Finish the report"
+ },
+ {
+  "id": "l3c_434",
+  "who": "Jet lag",
+  "text": "You landed at 9 p.m. local time, but your body thinks it’s lunchtime. Partners invite you to dinner. You want breakfast.",
+  "left": "Go to dinner",
+  "right": "Stay in your room"
+ },
+ {
+  "id": "l3c_435",
+  "who": "Driver",
+  "text": "In the evening your driver confesses he wants to study logistics. If you help with a recommendation, you’ll need a new driver.",
+  "left": "Write the recommendation",
+  "right": "Ask him to wait a year"
+ },
+ {
+  "id": "l3c_436",
+  "who": "Loneliness",
+  "text": "You’re celebrating your promotion at a restaurant. On the table: cake, champagne, and you. The board’s congratulations came as a letter signed “Secretariat.”",
+  "left": "Call your family",
+  "right": "Invite the team tomorrow"
+ },
+ {
+  "id": "l3c_437",
+  "who": "Company party",
+  "text": "You’re congratulating the team on a great year and suddenly realize you don’t know half the people on stage by name. They’re standing there, waiting.",
+  "left": "Honestly ask their names",
+  "right": "Speak in generalities"
+ },
+ {
+  "id": "l3c_438",
+  "who": "Board of directors",
+  "text": "The board chair invites you to a family dinner “just because.” His wife spends the whole evening describing what the previous CEO was like.",
+  "left": "Listen and nod",
+  "right": "Steer talk to dessert"
+ },
+ {
+  "id": "l3c_439",
+  "who": "Business trip",
+  "text": "Last evening of the trip. The souvenir shop closes in twenty minutes, and everyone at home expects souvenirs, including the dog.",
+  "left": "Run to the shop",
+  "right": "Buy it all at the airport"
+ },
+ {
+  "id": "l3c_440",
+  "who": "Family",
+  "text": "Your kid asks why your phone has a contact saved as “Board Chair!!!” while your mom is just “Mom.” Fair question.",
+  "left": "Rename Mom",
+  "right": "Explain hierarchy"
+ },
+ {
+  "id": "l3c_441",
+  "who": "Values",
+  "text": "In the evening you learn staff call the company values “the five commandments.” One of them, in their version: “Thou shalt not disturb the CEO before lunch.”",
+  "left": "Laugh and share it",
+  "right": "Hold a clarification session"
+ },
+ {
+  "id": "l3c_442",
+  "who": "Lounge",
+  "text": "You’re stuck in the airport business lounge for six hours. You’ve eaten everything, drunk everything, napped, and even showered. The board wants a call.",
+  "left": "Call the board",
+  "right": "Start writing a memoir"
+ },
+ {
+  "id": "l3c_443",
+  "who": "Successor",
+  "text": "In the evening, your successor sends you his plan for “the first hundred days in your job.” It’s good. Too good. It includes replacing the furniture in your office.",
+  "left": "Give detailed feedback",
+  "right": "Put it off till tomorrow"
+ },
+ {
+  "id": "l3c_444",
+  "who": "Family",
+  "text": "Your parent watches your TV interview and calls: “You sound so serious. You used to love singing in the choir.” It’s true.",
+  "left": "Sing down the phone",
+  "right": "Say: “Those days are gone”"
+ },
+ {
+  "id": "l3c_445",
+  "who": "Health",
+  "text": "You wake at night and start thinking about the quarterly report. You think until 5 a.m. Then you sleep fifteen minutes and dream about the report.",
+  "left": "Start a journal",
+  "right": "Get up and finish it"
+ },
+ {
+  "id": "l3c_446",
+  "who": "Inner voice",
+  "text": "For the first time since your appointment, you take the subway. Nobody recognizes you. You’re thrilled by how wonderful it is to be invisible.",
+  "left": "Ride it every Friday",
+  "right": "Back to the driver tomorrow"
+ },
+ {
+  "id": "l3c_447",
+  "who": "Messenger",
+  "text": "An evening message from an unknown number: “I’m from your logistics department. Can I ask you a question directly?” It’s 10 p.m.",
+  "left": "Reply",
+  "right": "Ask them to write in the morning"
+ },
+ {
+  "id": "l3c_448",
+  "who": "Assistant",
+  "text": "Your assistant sent you a good-night wish and tomorrow’s list. You realize she’s the only person who wishes you good night every day.",
+  "left": "Give her a raise",
+  "right": "Wish her the same"
+ },
+ {
+  "id": "l3c_449",
+  "who": "Company party",
+  "text": "At the New Year’s party, you drew the courier van driver as your Secret Santa. You know nothing about him except the make of his van.",
+  "left": "Ask colleagues about him",
+  "right": "Give a gift card"
+ },
+ {
+  "id": "l3c_450",
+  "who": "Traffic jam",
+  "text": "You’ve been stuck in traffic for an hour. Your driver offers to put on a flashing light “a friend gave him.” It’s in the glove box, blinking suspiciously.",
+  "left": "Drive honestly",
+  "right": "Start the meeting from the car"
+ },
+ {
+  "id": "l3c_451",
+  "who": "Town hall",
+  "text": "The HR director proposes holding the town hall at the factory gate instead of a hall, “to be closer.” It’s morning, five below.",
+  "left": "Go out to the gate",
+  "right": "Hold it in a warm hall"
+ },
+ {
+  "id": "l3c_452",
+  "who": "Board of directors",
+  "text": "The board chair writes at 6:45 a.m.: “Seen the morning news?” No link. You haven’t. There are about a thousand news items today.",
+  "left": "Reply: “Not yet”",
+  "right": "Spend an hour searching"
+ },
+ {
+  "id": "l3c_453",
+  "who": "Morning",
+  "text": "Getting ready for work, you spot a gray streak in the mirror. It wasn’t there yesterday. Yesterday was a board meeting.",
+  "left": "Dye it",
+  "right": "Wear it like a medal"
+ },
+ {
+  "id": "l3c_454",
+  "who": "Values",
+  "text": "An employee sends you a card: “Thank you for allowing remote work. My son sees me in the mornings for the first time.” The board wants to scrap remote work.",
+  "left": "Defend remote work",
+  "right": "Prepare staff for the change"
+ },
+ {
+  "id": "l3c_455",
+  "who": "Mentor",
+  "text": "Your mentor from a previous company texts: “Saw you in the news. Don’t forget why it all started.” You stare at the screen for a long time.",
+  "left": "Call him back",
+  "right": "Reply with an emoji"
+ },
+ {
+  "id": "l3c_456",
+  "who": "Driver",
+  "text": "Your driver showed up in a new suit. He says he bought it because “now I drive the CEO, I have to look the part.” It’s too big for him.",
+  "left": "Compliment the suit",
+  "right": "Offer a uniform allowance"
+ },
+ {
+  "id": "l3c_457",
+  "who": "Business trip",
+  "text": "Your morning flight is delayed, and you’re in the waiting area for three hours with half your sales team, flying to the same trade show. They’re trying very hard not to look at you.",
+  "left": "Sit with them and chat",
+  "right": "Go to the VIP lounge"
+ },
+ {
+  "id": "l3c_458",
+  "who": "Values",
+  "text": "Internal comms proposes a weekly “five minutes of gratitude” at the stand-up. The deputies have already rolled their eyes.",
+  "left": "Introduce it",
+  "right": "Drop the idea"
+ },
+ {
+  "id": "l3c_459",
+  "who": "Family",
+  "text": "Your partner asks you to stay with your sick kid for two hours this morning during a doctor’s visit. The investment committee is at 10:00.",
+  "left": "Stay home",
+  "right": "Call a babysitter"
+ },
+ {
+  "id": "l3c_460",
+  "who": "Perks",
+  "text": "You’re offered a top-floor office with a terrace. The terrace is home to pigeons who consider it theirs. They’re polite but stubborn.",
+  "left": "Move to the terrace",
+  "right": "Leave it to the pigeons"
+ },
+ {
+  "id": "l3c_461",
+  "who": "Inner voice",
+  "text": "In the morning you realize that all week you never once did what you truly love about work: coming up with new things. It all went to approvals.",
+  "left": "Block a morning for ideas",
+  "right": "Keep approving"
+ },
+ {
+  "id": "l3c_462",
+  "who": "Town hall",
+  "text": "At the morning town hall, the tech guy mixed up the files. Instead of the “Strategy” slide, the screen shows your vacation photo in a bucket hat.",
+  "left": "Talk about the vacation",
+  "right": "Ask for the slides back"
+ },
+ {
+  "id": "l3c_463",
+  "who": "CFO",
+  "text": "The CFO asks you not to take the company car on vacation “because the board counts the miles.” You weren’t going to, but now you’re offended.",
+  "left": "Say it’s unnecessary",
+  "right": "Thank him for vigilance"
+ },
+ {
+  "id": "l3c_464",
+  "who": "Board of directors",
+  "text": "The board demands cutting one person from the top team. At the morning stand-up, all the deputies smile at you especially warmly.",
+  "left": "Name someone now",
+  "right": "Fight for everyone"
+ },
+ {
+  "id": "l3c_465",
+  "who": "Inner voice",
+  "text": "One morning you suddenly realize you no longer remember your favorite movie. The last film you watched was on a plane, on fast-forward.",
+  "left": "Family movie night",
+  "right": "Add it to your to-do list"
+ },
+ {
+  "id": "l3c_466",
+  "who": "Talent pool",
+  "text": "You promised young leaders quarterly one-on-ones. The quarter is ending. Meetings held: zero. They’re politely reminding you.",
+  "left": "Do them all this week",
+  "right": "Push to next quarter"
+ },
+ {
+  "id": "l3c_467",
+  "who": "Strategy session",
+  "text": "At the strategy session, the facilitator asks everyone to draw the company as an animal. The CFO draws a turtle. Sales draws a cheetah. A fight is inevitable.",
+  "left": "Draw a dolphin",
+  "right": "Stop the exercise"
+ },
+ {
+  "id": "l3c_468",
+  "who": "Board of directors",
+  "text": "At a meeting, the board chair praises a competitor: “Now their CEO is on fire.” You’re a CEO too, and you’d probably like to be on fire as well.",
+  "left": "Joke about extinguishers",
+  "right": "Ask what he likes exactly"
+ },
+ {
+  "id": "l3c_469",
+  "who": "Business trip",
+  "text": "You’re abroad, and back home the board moved its meeting to today. Eight-hour time difference. The meeting is at your midnight.",
+  "left": "Join at midnight",
+  "right": "Have a deputy stand in"
+ },
+ {
+  "id": "l3c_470",
+  "who": "Mentoring",
+  "text": "You’re mentoring a branch director by video. The connection drops every minute. You end up talking to yourself; he’s talking to your frozen image.",
+  "left": "Switch to phone",
+  "right": "Reschedule"
+ },
+ {
+  "id": "l3c_471",
+  "who": "Town hall",
+  "text": "You decided to answer staff questions live in the company chat. Within five minutes there are two hundred. One: “Can I go on vacation?”",
+  "left": "Answer for an hour",
+  "right": "Answer five picks"
+ },
+ {
+  "id": "l3c_472",
+  "who": "Perks",
+  "text": "The executive dining room chef offers a six-course “tasting lunch.” Your meeting is in thirty minutes. The chef looks hopeful.",
+  "left": "Eat all six",
+  "right": "Take one course to go"
+ },
+ {
+  "id": "l3c_473",
+  "who": "Rivalry",
+  "text": "The sales director and the development director simultaneously sent you their versions of the same shareholder letter. One is in verse.",
+  "left": "Pick the verse",
+  "right": "Pick the boring one"
+ },
+ {
+  "id": "l3c_474",
+  "who": "Employee",
+  "text": "An engineer on site says your new safety rules were “written by people who’ve never set foot on the floor.” He’s right. You wrote them.",
+  "left": "Spend a day on the floor",
+  "right": "Have deputies rewrite them"
+ },
+ {
+  "id": "l3c_475",
+  "who": "Board of directors",
+  "text": "The board demands a “quick win” by quarter-end. You know a quick win now means a slow defeat a year from now.",
+  "left": "Deliver the quick win",
+  "right": "Convince the board to wait"
+ },
+ {
+  "id": "l3c_476",
+  "who": "Assistant",
+  "text": "Your assistant accidentally booked you two meeting rooms, two restaurants, and two flights for the same date. Now it’s your call, and canceling is awkward.",
+  "left": "Cancel the extras yourself",
+  "right": "Have her sort it"
+ },
+ {
+  "id": "l3c_477",
+  "who": "Values",
+  "text": "At lunch you overhear staff: “Values are what the CEO says, not what the CEO does.” You’re waiting for your business lunch.",
+  "left": "Go over and talk",
+  "right": "Reflect in silence"
+ },
+ {
+  "id": "l3c_478",
+  "who": "Health",
+  "text": "After five presentations in a row, the sight of spreadsheets makes you queasy. The CFO starts the sixth with “this one’s simple.”",
+  "left": "Ask him to just say it",
+  "right": "Sit through number six"
+ },
+ {
+  "id": "l3c_479",
+  "who": "PR",
+  "text": "The PR director suggests a personal blog “for a human image.” First post: a photo with your dog. You don’t have a dog. He’s already found a suitable one.",
+  "left": "Get your own dog",
+  "right": "Blog without a dog"
+ },
+ {
+  "id": "l3c_480",
+  "who": "Loneliness",
+  "text": "You invite the top team to lunch with no agenda. Everyone agrees and shows up with laptops “just in case.” An agenda appears on its own.",
+  "left": "Ban the laptops",
+  "right": "Accept it"
+ },
+ {
+  "id": "l3c_481",
+  "who": "Corporate lawyer",
+  "text": "Legal brings a non-compete agreement for executives: after leaving, you can’t work in the industry for ten years. You have to sign too.",
+  "left": "Sign it",
+  "right": "Demand softer terms for all"
+ },
+ {
+  "id": "l3c_482",
+  "who": "Delegation",
+  "text": "Partners from abroad are visiting, and your college-age daughter wants to interpret “for practice.” She knows the language perfectly but blushes easily.",
+  "left": "Let her interpret",
+  "right": "Hire a professional"
+ },
+ {
+  "id": "l3c_483",
+  "who": "Company party",
+  "text": "At the pre-New Year party, the team gave you a funny calendar of your quotes. Most popular: “Let’s get it done yesterday.”",
+  "left": "Hang it in your office",
+  "right": "Gift it to the board chair"
+ },
+ {
+  "id": "l3c_484",
+  "who": "Business trip",
+  "text": "After three days of negotiations abroad, you crave home-style dumplings. The hotel restaurant offers only oysters and truffles.",
+  "left": "Eat the oysters",
+  "right": "Find street food"
+ },
+ {
+  "id": "l3c_485",
+  "who": "Driver",
+  "text": "While driving you, your driver quietly says: “You know, in your shoes I’d sleep more.” Best advice you’ve had all year.",
+  "left": "Nap in the car",
+  "right": "Back to email"
+ },
+ {
+  "id": "l3c_486",
+  "who": "Family",
+  "text": "Your partner is tired of every “I’ll be home soon” meaning “in three hours” and proposes a house fine: each late arrival means a week of dishes.",
+  "left": "Accept the rules",
+  "right": "Propose another fine"
+ },
+ {
+  "id": "l3c_487",
+  "who": "Board of directors",
+  "text": "The board chair calls Saturday evening from the golf club: “I want to discuss something, but not now. Get some rest.” Resting after that is impossible.",
+  "left": "Call back immediately",
+  "right": "Wait for Monday"
+ },
+ {
+  "id": "l3c_488",
+  "who": "Loneliness",
+  "text": "You’re having dinner with your main competitor and realize you’re laughing heartily for the first time in a month. He understands you better than anyone.",
+  "left": "Make it a monthly dinner",
+  "right": "Never meet again"
+ },
+ {
+  "id": "l3c_489",
+  "who": "Perks",
+  "text": "You’re handed the keys to the company retreat with a pool. You arrive on Saturday and find the sales department vacationing there.",
+  "left": "Join them",
+  "right": "Quietly leave"
+ },
+ {
+  "id": "l3c_490",
+  "who": "Mentoring",
+  "text": "In the evening, an email from a former mentee: “I’m a CEO myself now. And I understand why you sometimes stayed silent in meetings.”",
+  "left": "Write a long reply",
+  "right": "Call to congratulate her"
+ },
+ {
+  "id": "l3c_491",
+  "who": "Business trip",
+  "text": "Back at the hotel after dinner, your key card doesn’t work. Reception has a line of a forty-person delegation. All of them are your clients.",
+  "left": "Wait in line",
+  "right": "Call your assistant"
+ },
+ {
+  "id": "l3c_492",
+  "who": "Company party",
+  "text": "At the company party, an employee challenges you to a friendly game of ping-pong. He’s the office champion. Everyone stops dancing to watch.",
+  "left": "Play him",
+  "right": "Decline with humor"
+ },
+ {
+  "id": "l3c_493",
+  "who": "Inner voice",
+  "text": "You look at next week’s schedule: 63 meetings. Not one is called “Rest.” Not one is even called “Lunch.”",
+  "left": "Cross out ten",
+  "right": "Add more coffee"
+ },
+ {
+  "id": "l3c_494",
+  "who": "Family",
+  "text": "Your kid announces they’ve decided to become a CEO, “like you, but with a cat and no working evenings.” Sounds like the best business plan of the year.",
+  "left": "Back the business plan",
+  "right": "Explain reality"
+ },
+ {
+  "id": "l3c_495",
+  "who": "Health",
+  "text": "Your personal trainer sent a weekly program. Every morning at 6:00: running. Every evening at 9:00: stretching. In between, you run a company.",
+  "left": "Follow the program",
+  "right": "Cut it in half"
+ },
+ {
+  "id": "l3c_496",
+  "who": "Town hall",
+  "text": "After the town hall, anonymous feedback arrives: “Finally the CEO spoke like a human being.” The board thinks you were “too candid.”",
+  "left": "Keep it up",
+  "right": "Adjust your tone"
+ },
+ {
+  "id": "l3c_497",
+  "who": "Values",
+  "text": "Signing the day’s last email, you notice the company slogan in your signature: “We’re always available.” It’s 11:58 p.m. The slogan suddenly sounds like a threat.",
+  "left": "Turn off the phone",
+  "right": "Send the email"
+ },
+ {
+  "id": "l3c_498",
+  "who": "Driver",
+  "text": "Your driver suggests taking “the long way along the waterfront, no calls” home on Fridays. That’s twenty extra minutes of silence.",
+  "left": "Take the waterfront",
+  "right": "Take the shortest route"
+ },
+ {
+  "id": "l3c_499",
+  "who": "Family",
+  "text": "For the first time in a year, you come home for dinner without a laptop. Your family eyes you suspiciously and cautiously asks if you’ve been fired.",
+  "left": "Laugh and hug everyone",
+  "right": "Quickly find laptop work"
+ },
+ {
+  "id": "l3c_500",
+  "who": "Loneliness",
+  "text": "End of the week. You realize you survived: the board is happy, the team is holding up, you still remember your kids’ names. Time to exhale. Or check email?",
+  "left": "Exhale",
+  "right": "Check email"
+ }
+]

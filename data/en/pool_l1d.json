@@ -1,0 +1,3502 @@
+[
+  {
+    "id": "l1d_001",
+    "who": "First client",
+    "text": "You’ve been trusted with your very own client. At 8:40 he’s already calling: “You’re one of the new ones? Then get me someone senior.” Your reply?",
+    "left": "Call a senior colleague",
+    "right": "“I’m running your project now”"
+  },
+  {
+    "id": "l1d_002",
+    "who": "Client",
+    "text": "On a call, the client calls you by the previous manager’s name for the fifth time. That person quit six months ago. Correct him or just answer to it?",
+    "left": "Answer to the wrong name",
+    "right": "Politely reintroduce yourself"
+  },
+  {
+    "id": "l1d_003",
+    "who": "Client",
+    "text": "6:50 p.m. The client wants a “quick” call to go over “a couple of small things.” There are twenty-three small things on the list. Agree?",
+    "left": "Move it to the morning",
+    "right": "Call right now"
+  },
+  {
+    "id": "l1d_004",
+    "who": "Mentor",
+    "text": "Your mentor assigns your first solo client call and sits next to you with a notepad. The pen is already clicking. Call with him there?",
+    "left": "Ask him to step out",
+    "right": "Call while he takes notes"
+  },
+  {
+    "id": "l1d_005",
+    "who": "Client",
+    "text": "The client sent design feedback: “Make it livelier somehow, but serious.” Ask him what that means?",
+    "left": "Clarify point by point",
+    "right": "Guess and send it"
+  },
+  {
+    "id": "l1d_006",
+    "who": "Call script",
+    "text": "The script says to use the client’s name three times a minute. The client is now suspicious and asks if you’re a robot. Stick to the script?",
+    "left": "Talk like a human",
+    "right": "Strictly by the script"
+  },
+  {
+    "id": "l1d_007",
+    "who": "Messenger",
+    "text": "The client added you on his personal messenger “for speed,” and at 9:30 p.m. sends a photo of his cat captioned “also working.” Reply?",
+    "left": "Like the cat",
+    "right": "Reply from the office tomorrow"
+  },
+  {
+    "id": "l1d_008",
+    "who": "Client",
+    "text": "The client arrived an hour early and is already in the meeting room. You’re still taking off your jacket, slides unopened since last night. Start?",
+    "left": "Ask him to wait with coffee",
+    "right": "Start as is"
+  },
+  {
+    "id": "l1d_009",
+    "who": "Team lead",
+    "text": "The client wants a 30% discount. Your limit is 5%. Your team lead is in meetings till evening, and the client wants an answer now. What do you do?",
+    "left": "Promise to “check”",
+    "right": "Offer 5% and hold firm"
+  },
+  {
+    "id": "l1d_010",
+    "who": "Client",
+    "text": "On a video call, the client forgot to mute and is telling a colleague you’re still “totally green.” You hear everything. Let him know?",
+    "left": "Cough tactfully",
+    "right": "Pretend you can’t hear"
+  },
+  {
+    "id": "l1d_011",
+    "who": "Email",
+    "text": "You accidentally sent the client a draft with the note “check whether he’s an idiot.” It’s gone. Now what?",
+    "left": "Call and apologize",
+    "right": "Recall it and pray"
+  },
+  {
+    "id": "l1d_012",
+    "who": "Call center",
+    "text": "First shift on the support line. The headset smells like someone else’s coffee, and a queue of 47 calls is blinking red. How do you start?",
+    "left": "Wipe the headset first",
+    "right": "Jump right in"
+  },
+  {
+    "id": "l1d_013",
+    "who": "Client",
+    "text": "The client asks when it’ll be ready. You have no idea, and a coworker behind you holds up three fingers. Three days? Weeks? Hours?",
+    "left": "Say “three days”",
+    "right": "“I’ll check and call back”"
+  },
+  {
+    "id": "l1d_014",
+    "who": "Client",
+    "text": "The client thanks you and emails your boss praising you. The whole team is cc’d. Coworkers are silent. How do you react?",
+    "left": "Thank the team",
+    "right": "Modestly accept the glory"
+  },
+  {
+    "id": "l1d_015",
+    "who": "Voice on the phone",
+    "text": "“Hello, it’s me again.” The client calls for the third morning in a row with the same question. The answer hasn’t changed, and he doesn’t like it. Answer?",
+    "left": "Patiently repeat it",
+    "right": "Transfer to a senior"
+  },
+  {
+    "id": "l1d_016",
+    "who": "Client meeting",
+    "text": "At your first meeting, the client asks about a contract clause you’re seeing for the first time. All eyes on you. What do you do?",
+    "left": "Honestly say “I’ll check”",
+    "right": "Confidently improvise"
+  },
+  {
+    "id": "l1d_017",
+    "who": "Client",
+    "text": "Friday evening, the client writes “Urgent!!!” then goes silent. An hour later: “Never mind.” Reply anything?",
+    "left": "“OK, write if needed”",
+    "right": "Stay silent till Monday"
+  },
+  {
+    "id": "l1d_018",
+    "who": "Client database",
+    "text": "You were given a “warm” client list. Half the numbers don’t exist; the rest ask you to stop calling. What do you do with it?",
+    "left": "Complain to your lead",
+    "right": "Keep dialing to the end"
+  },
+  {
+    "id": "l1d_019",
+    "who": "Client",
+    "text": "At a meeting, the client suggests dropping formalities and tells a joke. It’s not funny, and your lead is watching you. Laugh?",
+    "left": "Smile politely",
+    "right": "Laugh heartily"
+  },
+  {
+    "id": "l1d_020",
+    "who": "Client",
+    "text": "The client sent a gift: a huge fruit basket with a note to you personally. Coworkers are eyeing the pineapple. Share?",
+    "left": "Put it in the kitchen",
+    "right": "Take it home"
+  },
+  {
+    "id": "l1d_021",
+    "who": "Team lead",
+    "text": "Your lead hands you “the toughest client” with the words “everyone cut their teeth on him.” His profile has three skull emojis. Take him?",
+    "left": "Ask for an easier one",
+    "right": "Take him with a smile"
+  },
+  {
+    "id": "l1d_022",
+    "who": "Client",
+    "text": "The client wants the presentation “in a normal format.” You sent three formats; he wants a fourth you’ve never heard of. Figure it out?",
+    "left": "Ask the designer",
+    "right": "Offer a screen-share call"
+  },
+  {
+    "id": "l1d_023",
+    "who": "Client",
+    "text": "8:10 p.m. The client sends an eleven-minute voice message. The first two minutes are about traffic. Listen now?",
+    "left": "Listen at 2x speed",
+    "right": "Leave it till morning"
+  },
+  {
+    "id": "l1d_024",
+    "who": "Mentor",
+    "text": "Your mentor says to “smile into the phone” on client calls. You smile so hard your cheeks cramp. Keep practicing?",
+    "left": "Keep smiling",
+    "right": "Talk normally"
+  },
+  {
+    "id": "l1d_025",
+    "who": "Client",
+    "text": "The client complains you answered his email in forty minutes, not five. He tells your lead. Will you justify yourself?",
+    "left": "Apologize and speed up",
+    "right": "Explain you were in a meeting"
+  },
+  {
+    "id": "l1d_026",
+    "who": "Team chat",
+    "text": "Evening, team chat: “Who handled client Petrov? He’s thrilled!” It was you, but the credit seems to be going to your mentor. Speak up?",
+    "left": "Stay modestly quiet",
+    "right": "Write “That was me!”"
+  },
+  {
+    "id": "l1d_027",
+    "who": "Client",
+    "text": "A client showed up unannounced, and all meeting rooms are taken. He’s at reception with a box of samples. Where do you take him?",
+    "left": "To the kitchen coffee machine",
+    "right": "Beg a room from neighbors"
+  },
+  {
+    "id": "l1d_028",
+    "who": "Client",
+    "text": "The client has stalled on signing for a week and suddenly asks: “Would you buy from yourselves?” Your answer?",
+    "left": "“Of course, no doubt”",
+    "right": "Honest pros and cons"
+  },
+  {
+    "id": "l1d_029",
+    "who": "Client",
+    "text": "The client invited you to his milestone birthday. Refusing is awkward; going means Friday night in a restaurant with strangers. Go?",
+    "left": "Politely decline",
+    "right": "Go for an hour"
+  },
+  {
+    "id": "l1d_030",
+    "who": "Phone",
+    "text": "Unknown number calling. Could be a new client, could be another service survey. You’re in the elevator. Answer?",
+    "left": "Answer and whisper",
+    "right": "Call back from the office"
+  },
+  {
+    "id": "l1d_031",
+    "who": "Client",
+    "text": "The client found an error on the invoice and is loudly outraged. Accounting made the mistake, but he’s calling you. Who apologizes?",
+    "left": "Apologize for everyone",
+    "right": "Transfer to Accounting"
+  },
+  {
+    "id": "l1d_032",
+    "who": "Client",
+    "text": "As he leaves, the client asks for your “personal number, just in case.” His “cases” happen daily. Give it?",
+    "left": "Work number only",
+    "right": "Give your personal one"
+  },
+  {
+    "id": "l1d_033",
+    "who": "Mentor",
+    "text": "Before the meeting, your mentor whispers: “Whatever you do, don’t mention deadlines.” A minute later, the client’s first question is about deadlines. Your move?",
+    "left": "Talk about the weather",
+    "right": "Give honest deadlines"
+  },
+  {
+    "id": "l1d_034",
+    "who": "Client",
+    "text": "The client sent a photo of a spec handwritten on a napkin. Half the words are blurred by coffee. Ask again or decipher it yourself?",
+    "left": "Decipher what you can",
+    "right": "Call and ask"
+  },
+  {
+    "id": "l1d_035",
+    "who": "Client",
+    "text": "The client thanks you and promises to “recommend you to friends.” Half an hour later his friends call — six of them, all with questions. Answer all today?",
+    "left": "Answer everyone now",
+    "right": "Schedule them for tomorrow"
+  },
+  {
+    "id": "l1d_036",
+    "who": "CRM",
+    "text": "You forgot to log yesterday’s call in the CRM. This morning the system marked you “ineffective” and notified your lead. What now?",
+    "left": "Log it retroactively",
+    "right": "Explain to your lead"
+  },
+  {
+    "id": "l1d_037",
+    "who": "Client",
+    "text": "At a meeting, the client pulls out a competitor’s deck and asks why you’re pricier. The script has no answer. How do you wriggle out?",
+    "left": "List your advantages",
+    "right": "Promise to compare and follow up"
+  },
+  {
+    "id": "l1d_038",
+    "who": "Client",
+    "text": "The client closed the deal! Your mentor suggests celebrating at a bar, but you have another meeting at eight tomorrow. Go?",
+    "left": "Go for one drink",
+    "right": "Go home and sleep"
+  },
+  {
+    "id": "l1d_039",
+    "who": "Client review",
+    "text": "A client left a review: “Politeness top-notch, understanding zero.” It’s up on the big office screen. Your reaction?",
+    "left": "Joke about it publicly",
+    "right": "Ask to take it down"
+  },
+  {
+    "id": "l1d_040",
+    "who": "Client",
+    "text": "The client has rescheduled three times. The fourth time he writes: “Can we do it right now?” You’re in the lunch line. Agree?",
+    "left": "Ditch the line",
+    "right": "Ask for half an hour"
+  },
+  {
+    "id": "l1d_041",
+    "who": "Client",
+    "text": "In the evening, the client sends the contract: “see what I’ve changed.” He changed everything, including your company’s name. Deal with it today?",
+    "left": "Sit down and compare",
+    "right": "Send to Legal tomorrow"
+  },
+  {
+    "id": "l1d_042",
+    "who": "Team lead",
+    "text": "At stand-up, you’re asked to talk about your first client. As you speak, your lead corrects every other word. Keep going?",
+    "left": "Finish the story",
+    "right": "Hand over to your mentor"
+  },
+  {
+    "id": "l1d_043",
+    "who": "Client",
+    "text": "The client wants it “like everyone else’s, but special.” Deadline: tomorrow. One version or two?",
+    "left": "Two versions",
+    "right": "One, confidently"
+  },
+  {
+    "id": "l1d_044",
+    "who": "Client",
+    "text": "The client wants a proposal “by end of day.” You’re one step from the door, jacket on. Go back?",
+    "left": "Send it from home at 11 p.m.",
+    "right": "Promise it by 9 a.m."
+  },
+  {
+    "id": "l1d_045",
+    "who": "Reception",
+    "text": "Reception calls: a client is here who was “just passing by.” No meeting, no name in the calendar. Go down?",
+    "left": "Go down smiling",
+    "right": "Ask a coworker to greet him"
+  },
+  {
+    "id": "l1d_046",
+    "who": "Client",
+    "text": "The client unexpectedly praises you in front of your lead and asks that only you handle him from now on. Your mentor looks sour. Your reply?",
+    "left": "Thank him and agree",
+    "right": "Suggest handling it together"
+  },
+  {
+    "id": "l1d_047",
+    "who": "Client",
+    "text": "Right before month-end close, the client asks to delay payment “a couple of days.” Your first bonus depends on it. Agree?",
+    "left": "Agree without argument",
+    "right": "Politely insist"
+  },
+  {
+    "id": "l1d_048",
+    "who": "Client",
+    "text": "On a call, the client thinks you’re an answering machine and says slowly and loudly: “CON-NECT ME TO A HU-MAN.” Your response?",
+    "left": "Play the machine",
+    "right": "Explain you’re human"
+  },
+  {
+    "id": "l1d_049",
+    "who": "Client",
+    "text": "At a meeting, the client accidentally spills coffee on your laptop. He’s apologizing in horror. The meeting is in full swing. What now?",
+    "left": "Say “No big deal”",
+    "right": "Stop and save the laptop"
+  },
+  {
+    "id": "l1d_050",
+    "who": "Inner voice",
+    "text": "Today your first client praised you, then a second said you let him down. Evening, on the subway, replaying both talks. What do you do?",
+    "left": "Write a lessons-learned plan",
+    "right": "Put on a show and let go"
+  },
+  {
+    "id": "l1d_051",
+    "who": "Sales manager",
+    "text": "Today’s quota: a hundred cold calls. It’s 9:05, and you’re still looking for the “headset” button on this phone. How do you start?",
+    "left": "Ask your neighbor",
+    "right": "Press every button"
+  },
+  {
+    "id": "l1d_052",
+    "who": "Cold call",
+    "text": "You call a company, and a kid answers and asks you to wait for Mom. Mom is the very procurement director you need. Wait?",
+    "left": "Wait for Mom",
+    "right": "Apologize and hang up"
+  },
+  {
+    "id": "l1d_053",
+    "who": "Cold call",
+    "text": "The person on the line politely hears your entire script, then asks: “Do you actually believe this yourself?” Your answer?",
+    "left": "“With all my heart!”",
+    "right": "Laugh and talk honestly"
+  },
+  {
+    "id": "l1d_054",
+    "who": "Call counter",
+    "text": "5:45 p.m. Your counter says 61 calls out of 100. Coworkers are heading home and invite you along. Stay to hit the quota?",
+    "left": "Push to a hundred",
+    "right": "Leave with everyone"
+  },
+  {
+    "id": "l1d_055",
+    "who": "Sales script",
+    "text": "The new script opens with “Don’t hang up, this isn’t an ad!” It’s an ad. Say it?",
+    "left": "Read it as written",
+    "right": "Write your own opener"
+  },
+  {
+    "id": "l1d_056",
+    "who": "Client’s assistant",
+    "text": "For the fifth time, the assistant says the director is “in a meeting.” You can hear the director laughing loudly in the background. Push harder?",
+    "left": "Call yourself a “partner”",
+    "right": "Call back another day"
+  },
+  {
+    "id": "l1d_057",
+    "who": "Cold call",
+    "text": "Last call of the day: the person is so happy to talk to a human that he’s been describing his vegetable garden for half an hour. He won’t buy anything. Interrupt?",
+    "left": "Hear about the garden",
+    "right": "Politely wrap up"
+  },
+  {
+    "id": "l1d_058",
+    "who": "Star seller",
+    "text": "The team’s top seller offers to teach you his “magic phrase” if you bring him coffee for a week. Deal?",
+    "left": "Fetch the coffee",
+    "right": "Learn on your own"
+  },
+  {
+    "id": "l1d_059",
+    "who": "Cold call",
+    "text": "You dial a number from the list and reach your own aunt. She’s delighted and wants to chat about family dinner. Your manager is listening in. Now what?",
+    "left": "Sell to your aunt",
+    "right": "Chat with your aunt"
+  },
+  {
+    "id": "l1d_060",
+    "who": "Sales manager",
+    "text": "At the team review, the manager plays your worst call “for training purposes.” Everyone hears your “uhhh” on loop. Your reaction?",
+    "left": "Laugh along",
+    "right": "Ask for a private review"
+  },
+  {
+    "id": "l1d_061",
+    "who": "Inner voice",
+    "text": "Today you heard “not interested” 43 times and one “get lost.” On the way home, you want to lie down on the sidewalk. How do you recover?",
+    "left": "Run in the park",
+    "right": "Pizza and a blanket"
+  },
+  {
+    "id": "l1d_062",
+    "who": "Cold call",
+    "text": "Morning, first call. Your just-woke-up voice sounds like you’re calling from a cave. Clear your throat or dial right away?",
+    "left": "Warm up in the restroom",
+    "right": "Dial right away"
+  },
+  {
+    "id": "l1d_063",
+    "who": "Contact list",
+    "text": "The call list includes a company that closed five years ago. The number now belongs to a pizzeria, and the pizzeria is willing to listen. Pitch?",
+    "left": "Sell to the pizzeria",
+    "right": "Clean up the list"
+  },
+  {
+    "id": "l1d_064",
+    "who": "Cold call",
+    "text": "7 p.m. You finally reach a client who was unavailable all day. He says: “Go ahead, I’ve got five minutes.” You’re on your way out. What now?",
+    "left": "Pitch standing up",
+    "right": "Set it up for tomorrow"
+  },
+  {
+    "id": "l1d_065",
+    "who": "Call chart",
+    "text": "The manager posted the call rankings. You’re dead last, with a sad face drawn next to your name. What do you do?",
+    "left": "Overtake at least one person",
+    "right": "Draw the sad face a hat"
+  },
+  {
+    "id": "l1d_066",
+    "who": "Cold call",
+    "text": "A prospect asks where you got his number. Honest answer: “It’s a purchased list, we have no idea.” Your version?",
+    "left": "“You were recommended”",
+    "right": "Honestly admit it"
+  },
+  {
+    "id": "l1d_067",
+    "who": "Seller coworker",
+    "text": "The coworker next to you calls so loudly that your prospect asks if you’re at a bazaar. Ask him to keep it down?",
+    "left": "Ask him to be quieter",
+    "right": "Move to a meeting room"
+  },
+  {
+    "id": "l1d_068",
+    "who": "Cold call",
+    "text": "On your last call, someone finally says “Yes, interested.” But they want a callback on Saturday at 10 a.m. Agree?",
+    "left": "Book Saturday",
+    "right": "Suggest Monday"
+  },
+  {
+    "id": "l1d_069",
+    "who": "Morning huddle",
+    "text": "At the sales huddle, everyone chants “We dial, we sell!” It’s your first time; you don’t know the words or moves. Join in?",
+    "left": "Shout loudest",
+    "right": "Quietly mouth along"
+  },
+  {
+    "id": "l1d_070",
+    "who": "Cold call",
+    "text": "The person has listened in silence for three minutes. You’re not sure he’s even there, but occasionally he breathes. Keep talking?",
+    "left": "Finish the script",
+    "right": "Ask “Are you there?”"
+  },
+  {
+    "id": "l1d_071",
+    "who": "Sales manager",
+    "text": "The manager demands you smile on calls and puts a little mirror in front of you. Your reflection looks very unhappy. Look in the mirror?",
+    "left": "Smile at yourself",
+    "right": "Quietly turn it around"
+  },
+  {
+    "id": "l1d_072",
+    "who": "Cold call",
+    "text": "Instead of listening, the person starts selling you a sales course. And he sells better than you. Hear him out?",
+    "left": "Listen and take notes",
+    "right": "Hang up"
+  },
+  {
+    "id": "l1d_073",
+    "who": "Sales mentor",
+    "text": "Your mentor teaches you to “mirror” the other person. Today’s first client talks very fast, with a stutter. Mirror him?",
+    "left": "Talk at your own pace",
+    "right": "Mirror as instructed"
+  },
+  {
+    "id": "l1d_074",
+    "who": "Cold call",
+    "text": "You mixed up the cards and call the client “Anatoly Petrovich.” She’s Anastasia Pavlovna and informs you of it very coldly. Your move?",
+    "left": "Apologize and restart",
+    "right": "Turn it into a joke"
+  },
+  {
+    "id": "l1d_075",
+    "who": "Call counter",
+    "text": "You notice a coworker hits his quota by dialing his own number and hanging up. The counter counts it as a call. Tell the manager?",
+    "left": "Keep quiet",
+    "right": "Drop him a hint"
+  },
+  {
+    "id": "l1d_076",
+    "who": "Cold call",
+    "text": "First call of the day, and right away: “Yes, send the contract.” You’re not ready for success — you don’t have a contract template. Now what?",
+    "left": "Promise it in an hour",
+    "right": "Hand over to your mentor"
+  },
+  {
+    "id": "l1d_077",
+    "who": "Lunch",
+    "text": "The sales team lunches together, comparing how many deals they closed. You have nothing to brag about. Sit with them?",
+    "left": "Sit and soak up advice",
+    "right": "Eat alone"
+  },
+  {
+    "id": "l1d_078",
+    "who": "Cold call",
+    "text": "The person on the call is an intern just like you, and also selling. You’re both reading scripts at each other. What next?",
+    "left": "Have a heart-to-heart",
+    "right": "Finish your script"
+  },
+  {
+    "id": "l1d_079",
+    "who": "Sales chat",
+    "text": "Evening party in the sales chat: someone closed a big deal. Everyone’s sending fire emojis. Your day: zero. Join in?",
+    "left": "Send fire emojis",
+    "right": "Mute notifications"
+  },
+  {
+    "id": "l1d_080",
+    "who": "Sales manager",
+    "text": "The manager proposes a “contest”: first to twenty calls picks Friday’s pizza. Your rival is the team veteran. What do you do?",
+    "left": "Accept the challenge",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_081",
+    "who": "Cold call",
+    "text": "The prospect asks you to email everything. You know “email it to me” means “go away.” Keep pushing?",
+    "left": "Push per the script",
+    "right": "Send it and let go"
+  },
+  {
+    "id": "l1d_082",
+    "who": "Cold call",
+    "text": "You got the time zone wrong and woke a client in Vladivostok at 2 a.m. He politely asks if you’re okay. Your move?",
+    "left": "Apologize and hang up",
+    "right": "Apologize and pitch anyway"
+  },
+  {
+    "id": "l1d_083",
+    "who": "Headset",
+    "text": "Your headset has hissed all morning; clients sound like they’re under a pillow. IT promises a new one “by Thursday.” It’s Monday. What do you pick?",
+    "left": "Call from your cell",
+    "right": "Borrow one from a vacationer"
+  },
+  {
+    "id": "l1d_084",
+    "who": "Cold call",
+    "text": "The client asks about something not in the script. He seems to know more about the product than you. Admit it?",
+    "left": "“Good question, I’ll check”",
+    "right": "Wriggle out with generalities"
+  },
+  {
+    "id": "l1d_085",
+    "who": "Sales manager",
+    "text": "The manager listens to your calls on a second headset and writes notes on sticky notes. He’s running out of sticky notes. How do you carry on?",
+    "left": "Ignore it",
+    "right": "Ask for a review after shift"
+  },
+  {
+    "id": "l1d_086",
+    "who": "Cold call",
+    "text": "In the evening, you call through the “rejected” list. One of them says: “I liked you yesterday, let’s meet.” At 8 a.m. What now?",
+    "left": "Agree to eight",
+    "right": "Ask for lunchtime"
+  },
+  {
+    "id": "l1d_087",
+    "who": "Subway",
+    "text": "You rehearse your script aloud on the subway, and an old lady next to you asks with interest where she can buy your service. Tell her?",
+    "left": "Give her the pitch",
+    "right": "Fall silent, embarrassed"
+  },
+  {
+    "id": "l1d_088",
+    "who": "Cold call",
+    "text": "You’re interrupted: “You’re the third person from your company today.” Seems coworkers used the same list. What do you say?",
+    "left": "Apologize for everyone",
+    "right": "Go confront coworkers"
+  },
+  {
+    "id": "l1d_089",
+    "who": "Sales manager",
+    "text": "At day’s end, the manager asks why your conversion rate is zero. You honestly don’t know. Answer?",
+    "left": "Blame the bad list",
+    "right": "Ask to review your calls"
+  },
+  {
+    "id": "l1d_090",
+    "who": "Sales floor",
+    "text": "The team rings a bell for every deal. All week, your bell hasn’t rung once. A coworker suggests ringing it “for the vibes.” What do you do?",
+    "left": "Ring it for laughs",
+    "right": "Decline and keep dialing"
+  },
+  {
+    "id": "l1d_091",
+    "who": "Cold call",
+    "text": "The client wants the price now, without “all those needs questions.” The script forbids quoting a price before minute five. Say it?",
+    "left": "Quote the price now",
+    "right": "Stick to the script"
+  },
+  {
+    "id": "l1d_092",
+    "who": "Cold call",
+    "text": "You hit a phone menu so long that by “press nine” you’ve forgotten why you called. Fight through to a human?",
+    "left": "Mash zero till you win",
+    "right": "Cross it off the list"
+  },
+  {
+    "id": "l1d_093",
+    "who": "Inner voice",
+    "text": "At home, out of habit, you answer the phone: “Good evening, this is the company…” It’s your mom. She’s mildly shocked. How do you recover?",
+    "left": "Admit you’re overworked",
+    "right": "Sell Mom something"
+  },
+  {
+    "id": "l1d_094",
+    "who": "Cold call",
+    "text": "First number on the list is marked “DO NOT CALL!!! BITES.” The manager says it’s “an old joke.” Call?",
+    "left": "Call boldly",
+    "right": "Skip it"
+  },
+  {
+    "id": "l1d_095",
+    "who": "Cold call",
+    "text": "The client agrees to meet, but only if you come in person to his out-of-town office, forty minutes by train. Go?",
+    "left": "Go today",
+    "right": "Suggest a video call"
+  },
+  {
+    "id": "l1d_096",
+    "who": "Seller coworker",
+    "text": "A coworker offers to swap lists: your “warm” one for his “promising” one. His list has “archive” in the name. Swap?",
+    "left": "Swap",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_097",
+    "who": "Cold call",
+    "text": "In the evening, you reach someone who once did cold sales himself. He listens, sighs, and buys “out of solidarity.” Your reaction?",
+    "left": "Thank him warmly",
+    "right": "Try an upsell too"
+  },
+  {
+    "id": "l1d_098",
+    "who": "Sales manager",
+    "text": "The manager suggests calling standing up — “it makes your voice more confident.” An hour later your legs ache, and your voice is the same. Keep standing?",
+    "left": "Stand till lunch",
+    "right": "Quietly sit down"
+  },
+  {
+    "id": "l1d_099",
+    "who": "Cold call",
+    "text": "The client asks you to “call back in six months.” The CRM can’t set a reminder more than a month out. What do you do?",
+    "left": "Write it on paper",
+    "right": "Set monthly reminders"
+  },
+  {
+    "id": "l1d_100",
+    "who": "Inner voice",
+    "text": "You dream you’re calling a client, and the client is your alarm clock. The alarm declines your offer. You wake at 3 a.m. Now what?",
+    "left": "Count sheep",
+    "right": "Jot down script ideas"
+  },
+  {
+    "id": "l1d_101",
+    "who": "Team lead",
+    "text": "9:02. “Please do a little spreadsheet by ten, it’s a five-minute job.” It has four tabs and links to files you can’t access. Take it on?",
+    "left": "Do what you can",
+    "right": "Request access first"
+  },
+  {
+    "id": "l1d_102",
+    "who": "Analyst",
+    "text": "The analyst asks you to “quickly” export a year of data by 3 p.m. The export has been loading for forty minutes and shows 3%. What now?",
+    "left": "Wait and pray",
+    "right": "Warn about the delay"
+  },
+  {
+    "id": "l1d_103",
+    "who": "Team lead",
+    "text": "5:58 p.m. A task lands with “by morning.” Your lead’s morning starts at 7:00; yours at 9:30. When will you do it?",
+    "left": "Tonight from home",
+    "right": "By 9:30"
+  },
+  {
+    "id": "l1d_104",
+    "who": "Secretary",
+    "text": "You need to print and bind forty copies for a meeting in twenty minutes. The printer does a page a minute. Your plan?",
+    "left": "Run to a printer upstairs",
+    "right": "Suggest showing it on screen"
+  },
+  {
+    "id": "l1d_105",
+    "who": "Marketer",
+    "text": "The marketer wants a photo for a post in ten minutes: “Something positive but not cliché.” What do you pick?",
+    "left": "A cat in a tie",
+    "right": "Search half an hour for perfect"
+  },
+  {
+    "id": "l1d_106",
+    "who": "Team lead",
+    "text": "You’ve got three urgent tasks from three different people. All are “top priority.” Who do you ask about priorities?",
+    "left": "Ask your lead",
+    "right": "Do them in order received"
+  },
+  {
+    "id": "l1d_107",
+    "who": "Team lead",
+    "text": "Leaving for the day, your lead tosses out: “Sketch some talking points by morning, nothing complicated.” Topic: the company’s five-year strategy. What do you do?",
+    "left": "Write till midnight",
+    "right": "Jot down five bullets"
+  },
+  {
+    "id": "l1d_108",
+    "who": "Report template",
+    "text": "The weekly report is due at 10:00. Overnight, the template was updated — forty required fields instead of ten. Fill them all?",
+    "left": "Fill in all forty",
+    "right": "Do the key ones and flag it"
+  },
+  {
+    "id": "l1d_109",
+    "who": "Coworker",
+    "text": "A coworker asks you to proofread his deck “five minutes before the meeting.” It’s 63 slides in 15-point font. What do you choose?",
+    "left": "Proof the first ten",
+    "right": "Honestly say no"
+  },
+  {
+    "id": "l1d_110",
+    "who": "Accounting",
+    "text": "Accounting calls: the expense report must be in “right now” or your taxi won’t be reimbursed. The receipts are in your winter coat at home. What do you say?",
+    "left": "Submit without receipts",
+    "right": "Go home for them"
+  },
+  {
+    "id": "l1d_111",
+    "who": "Messenger",
+    "text": "7:30 p.m. Your lead writes: “Fix one comma in the contract, the client’s waiting.” The contract is on your work computer; you’re home. Your response?",
+    "left": "Connect remotely",
+    "right": "Ask a coworker at the office"
+  },
+  {
+    "id": "l1d_112",
+    "who": "Team lead",
+    "text": "The morning call moved an hour earlier, and you promised to “finish the slides in the morning.” Twenty minutes to go. Your move?",
+    "left": "Finish them in the taxi",
+    "right": "Show what you have"
+  },
+  {
+    "id": "l1d_113",
+    "who": "Company email",
+    "text": "You need to send an event invite to a hundred people in half an hour. Email blocks more than twenty messages an hour. Your plan?",
+    "left": "Split across three inboxes",
+    "right": "Ask an assistant for help"
+  },
+  {
+    "id": "l1d_114",
+    "who": "Team lead",
+    "text": "Your lead asks you to translate a letter into English “in about ten minutes.” Your English peaked at a school contest. Admit it?",
+    "left": "Use an online translator",
+    "right": "Admit it, offer an alternative"
+  },
+  {
+    "id": "l1d_115",
+    "who": "Client team",
+    "text": "Friday, 5:50 p.m. You’re told to prepare gift bags for clients by Monday. No bags, no gifts, no budget. What now?",
+    "left": "Do it all weekend",
+    "right": "Make a list and leave"
+  },
+  {
+    "id": "l1d_116",
+    "who": "Timer",
+    "text": "You set a 25-minute Pomodoro timer to focus. During it, four people came over with “quick questions.” What next?",
+    "left": "Hang a “Do Not Disturb” sign",
+    "right": "Answer everyone in turn"
+  },
+  {
+    "id": "l1d_117",
+    "who": "Team lead",
+    "text": "You urgently need a certificate for a tender. It ships at 3:00; it’s 2:20. One person issues it, and he’s at lunch. What do you do?",
+    "left": "Call him at the cafeteria",
+    "right": "Go to the cafeteria yourself"
+  },
+  {
+    "id": "l1d_118",
+    "who": "Designer",
+    "text": "The designer wants the layout approved in twenty minutes. You haven’t received the client’s edits, and the layout has last year’s date. Approve?",
+    "left": "Approve as is",
+    "right": "Fix the date yourself"
+  },
+  {
+    "id": "l1d_119",
+    "who": "Team lead",
+    "text": "At 8 p.m. your lead writes “do a little report by morning,” and at 11 p.m.: “no, never mind.” You’re halfway done. How do you react?",
+    "left": "Send the unfinished one",
+    "right": "Delete and forget it"
+  },
+  {
+    "id": "l1d_120",
+    "who": "Office manager",
+    "text": "The office manager needs every employee’s signature on a greeting card by 9 a.m. It’s 8:40, and three people are in. How do you collect them?",
+    "left": "Run around every floor",
+    "right": "Forge a couple"
+  },
+  {
+    "id": "l1d_121",
+    "who": "Coworker",
+    "text": "A coworker forgot to do his part of a task, and now it’s on you, due in an hour. He’s already gone on sick leave. Do it for him?",
+    "left": "Do it for him",
+    "right": "Tell your lead"
+  },
+  {
+    "id": "l1d_122",
+    "who": "Lawyer",
+    "text": "The lawyer wants three contracts cross-checked by 4 p.m. Each is eighty pages of fine print. It’s 3:05. What do you do?",
+    "left": "Skim all three",
+    "right": "Check at least one fully"
+  },
+  {
+    "id": "l1d_123",
+    "who": "Team lead",
+    "text": "5:59 p.m. “Please fix the numbers in the spreadsheet, it’ll take two minutes.” Two minutes become an hour and a half. Where do you stop?",
+    "left": "Finish it",
+    "right": "Stop at 6:30"
+  },
+  {
+    "id": "l1d_124",
+    "who": "Project chat",
+    "text": "Panic in the project chat: “Does anyone know where the final version of the deck is?” You seem to have the final one — but you have four. Your move?",
+    "left": "Send all four",
+    "right": "Compare and send one"
+  },
+  {
+    "id": "l1d_125",
+    "who": "Team lead",
+    "text": "Fifteen minutes before the presentation, your lead asks to “add a couple of charts so it looks solid.” There’s no data for charts. Your move?",
+    "left": "Draw pretty circles",
+    "right": "Say there’s no data"
+  },
+  {
+    "id": "l1d_126",
+    "who": "Courier",
+    "text": "A courier comes for documents in ten minutes. They’re in the safe, and the key is with the accountant, who’s at the dentist. Your plan?",
+    "left": "Reschedule the courier",
+    "right": "Hunt for a spare key"
+  },
+  {
+    "id": "l1d_127",
+    "who": "Coworker",
+    "text": "You’re heading out when a coworker asks you to help print “a couple of pages.” The printer jammed and wants a restart. Will you rescue her?",
+    "left": "Stay and fix it",
+    "right": "Show the button and leave"
+  },
+  {
+    "id": "l1d_128",
+    "who": "Team lead",
+    "text": "In the morning you get a task “by lunch”; an hour later you’re asked why it isn’t done. In your lead’s view, lunch is at eleven. Your reaction?",
+    "left": "Speed up, no questions",
+    "right": "Ask when lunch is"
+  },
+  {
+    "id": "l1d_129",
+    "who": "Spreadsheet",
+    "text": "You found a formula error that makes the whole quarterly spreadsheet wrong. It’s due in twenty minutes. What now?",
+    "left": "Fix it quietly",
+    "right": "Report it and ask for time"
+  },
+  {
+    "id": "l1d_130",
+    "who": "Project manager",
+    "text": "The project manager gave you a task for Monday, but Friday morning asked for it “today, if possible.” Is it possible?",
+    "left": "Do it today",
+    "right": "Leave it for Monday"
+  },
+  {
+    "id": "l1d_131",
+    "who": "Messenger",
+    "text": "9:15 p.m. A coworker writes: “Remember where we saved the report file? It’s due in the morning.” You vaguely remember. Join the search?",
+    "left": "Search the cloud together",
+    "right": "Give a hint and log off"
+  },
+  {
+    "id": "l1d_132",
+    "who": "Team lead",
+    "text": "Your lead, from the doorway: “Is the slide I mentioned yesterday ready?” You remember no slide. Your answer?",
+    "left": "“Almost ready”",
+    "right": "Ask which one"
+  },
+  {
+    "id": "l1d_133",
+    "who": "Task tracker",
+    "text": "In the tracker, you’re assigned a task due “yesterday.” It was created this morning. Do it or ask questions?",
+    "left": "Do it quietly",
+    "right": "Ask the author"
+  },
+  {
+    "id": "l1d_134",
+    "who": "Office manager",
+    "text": "The office manager wants a room for thirty people tomorrow, found within half an hour. Every venue in town is booked for a conference. Where do you look?",
+    "left": "Call around cafes",
+    "right": "Suggest going online"
+  },
+  {
+    "id": "l1d_135",
+    "who": "Team lead",
+    "text": "Your lead goes on vacation and leaves you a list of “small things” for the week. Two pages, double-sided. Take it all?",
+    "left": "Take it all",
+    "right": "Discuss priorities"
+  },
+  {
+    "id": "l1d_136",
+    "who": "Alarm",
+    "text": "Your alarm didn’t go off, and an urgent report is due at 9:30. It’s 9:05; the report is on your work computer. Plan?",
+    "left": "Taxi to the office",
+    "right": "Say it’ll be in at 10:30"
+  },
+  {
+    "id": "l1d_137",
+    "who": "Team lead",
+    "text": "“Make it look nice,” your lead says, and leaves for two hours. Nobody knows what “nice” means. What do you do?",
+    "left": "Make three versions",
+    "right": "Make one your way"
+  },
+  {
+    "id": "l1d_138",
+    "who": "Coworker",
+    "text": "A coworker asks you to cover his call in five minutes: “Just listen in.” On the call, you’re the first one asked to speak. Your choice?",
+    "left": "Improvise",
+    "right": "Admit you’re filling in"
+  },
+  {
+    "id": "l1d_139",
+    "who": "Inner voice",
+    "text": "You spent all day on small urgent tasks and didn’t do a single important one. It’s evening. Stay and do one?",
+    "left": "Stay an hour",
+    "right": "Leave, start in the morning"
+  },
+  {
+    "id": "l1d_140",
+    "who": "Team lead",
+    "text": "“I need three promo ideas for stand-up.” Stand-up is in twelve minutes. You have one idea: a cookie discount in the cafeteria. Now what?",
+    "left": "Pitch the cookies",
+    "right": "Borrow ideas from rivals"
+  },
+  {
+    "id": "l1d_141",
+    "who": "Supply room",
+    "text": "Supplies needs the stationery order by 2 p.m., or the next delivery is a month out. The team ran out of pens yesterday. How many to order?",
+    "left": "A box for everyone",
+    "right": "Order just for yourself"
+  },
+  {
+    "id": "l1d_142",
+    "who": "Team lead",
+    "text": "Your lead cancels a task you’ve worked on for three days and gives you a new one — “also urgent.” Argue?",
+    "left": "Accept and start",
+    "right": "Ask why it was canceled"
+  },
+  {
+    "id": "l1d_143",
+    "who": "Team chat",
+    "text": "In the evening, the team chat asks for a volunteer to prepare a summary for the director by morning. Silence. The pause drags on. Your move?",
+    "left": "Volunteer",
+    "right": "Stay silent too"
+  },
+  {
+    "id": "l1d_144",
+    "who": "Email",
+    "text": "You open your inbox: twenty emails marked “Urgent.” Eight are about a missing mug. Where do you start?",
+    "left": "First come, first served",
+    "right": "Most important first"
+  },
+  {
+    "id": "l1d_145",
+    "who": "Team lead",
+    "text": "You’re asked for a “half-page” memo. An hour later your lead adds: “And the appendices.” There are seven. Can you manage?",
+    "left": "Do all seven",
+    "right": "Send the memo alone"
+  },
+  {
+    "id": "l1d_146",
+    "who": "Coworker",
+    "text": "A coworker begs you to watch his computer until an export finishes: “Twenty minutes, tops.” It’s been an hour and a half. Your call?",
+    "left": "Keep waiting",
+    "right": "Hit “Cancel” and leave"
+  },
+  {
+    "id": "l1d_147",
+    "who": "Team lead",
+    "text": "Your lead thanks you for a quick job and immediately hands you another “since you’re so good at this.” How do you react?",
+    "left": "Take it and smile",
+    "right": "Say you’re done for today"
+  },
+  {
+    "id": "l1d_148",
+    "who": "Alarm",
+    "text": "Deadline day, and you got up at six to get it all done. At 6:15 you find yourself cleaning the fridge. What next?",
+    "left": "Finish the fridge",
+    "right": "Sit down to the report"
+  },
+  {
+    "id": "l1d_149",
+    "who": "Team lead",
+    "text": "Your urgent report is done an hour early. Your lead didn’t ask for it early. Send now or hold it till the deadline?",
+    "left": "Send it now",
+    "right": "Rest and send on time"
+  },
+  {
+    "id": "l1d_150",
+    "who": "Inner voice",
+    "text": "You hit every deadline this week but you’re so tired you can’t remember your subway stop. How do you celebrate?",
+    "left": "Bath and early bed",
+    "right": "Invite friends to a cafe"
+  },
+  {
+    "id": "l1d_151",
+    "who": "Inner voice",
+    "text": "For three days you’ve nodded at stand-up whenever someone says “capex.” You still don’t know what it is, and it’s too late to ask. Now what?",
+    "left": "Secretly google it",
+    "right": "Whisper to your neighbor"
+  },
+  {
+    "id": "l1d_152",
+    "who": "Mentor",
+    "text": "Your mentor explained the task in thirty seconds and left. You caught one word: “urgent.” Chase him down the hall?",
+    "left": "Catch him and ask",
+    "right": "Figure it out yourself"
+  },
+  {
+    "id": "l1d_153",
+    "who": "Coworker",
+    "text": "You’ve spent an hour on a spreadsheet formula. A coworker glances over: “It’s just a VLOOKUP.” You don’t know what that is. Admit it?",
+    "left": "Ask him to show you",
+    "right": "Say “Oh, right!”"
+  },
+  {
+    "id": "l1d_154",
+    "who": "Inner voice",
+    "text": "6:30 p.m. You still don’t get how to fill in the report. Everyone’s gone except the stern senior specialist. Approach him?",
+    "left": "Go ask him",
+    "right": "Leave, try tomorrow"
+  },
+  {
+    "id": "l1d_155",
+    "who": "Stand-up",
+    "text": "At stand-up, the lead asks: “Everyone clear on the task?” All nod. You don’t get it, but you nodded on autopilot. What next?",
+    "left": "Raise your hand and ask",
+    "right": "Ask coworkers afterward"
+  },
+  {
+    "id": "l1d_156",
+    "who": "Team chat",
+    "text": "You ask the group chat how to request vacation, then see the answer pinned since last year. Delete your question?",
+    "left": "Delete before anyone sees",
+    "right": "Leave it and say thanks"
+  },
+  {
+    "id": "l1d_157",
+    "who": "Sysadmin",
+    "text": "Third trip this week to the sysadmin with the same problem. He sighs the moment he sees you. Go again?",
+    "left": "Go with chocolate",
+    "right": "Read forums till evening"
+  },
+  {
+    "id": "l1d_158",
+    "who": "Inner voice",
+    "text": "All day you pretended to understand the new system. Tomorrow you have to close your first deal in it. Tonight’s your last chance. What do you do?",
+    "left": "Watch tutorial videos",
+    "right": "Ask for help tomorrow"
+  },
+  {
+    "id": "l1d_159",
+    "who": "Senior coworker",
+    "text": "A senior coworker offers: “If anything’s unclear, just ask.” Five minutes later you have twelve unclear things. How many do you ask?",
+    "left": "All twelve",
+    "right": "The top three"
+  },
+  {
+    "id": "l1d_160",
+    "who": "Team lead",
+    "text": "Your lead asks for a pivot table. You’ve never made one. He’s waiting for “Can you handle it?”",
+    "left": "“Of course I can”",
+    "right": "“Could you show me once?”"
+  },
+  {
+    "id": "l1d_161",
+    "who": "Coworker",
+    "text": "You asked a coworker how to send an invoice. He explained so fast and with so many acronyms it got even more confusing. Ask again?",
+    "left": "Ask him to slow down",
+    "right": "Thank him and suffer"
+  },
+  {
+    "id": "l1d_162",
+    "who": "Inner voice",
+    "text": "In the evening you recall saying “Yes, I’m aware” three times today about things you weren’t aware of. Your conscience stirs. What do you do?",
+    "left": "Come clean tomorrow",
+    "right": "Cram it all tonight"
+  },
+  {
+    "id": "l1d_163",
+    "who": "Employee handbook",
+    "text": "The new-hire handbook says: “Don’t hesitate to ask questions.” Below, in fine print: “FAQ answers are in the 200-page knowledge base.” Where do you go?",
+    "left": "Read the knowledge base",
+    "right": "Ask coworkers"
+  },
+  {
+    "id": "l1d_164",
+    "who": "Mentor",
+    "text": "Your mentor is on vacation, and you’re stuck on a task. His messenger status says “online.” Message him?",
+    "left": "Send a short note",
+    "right": "Don’t bother him"
+  },
+  {
+    "id": "l1d_165",
+    "who": "Coworker",
+    "text": "A coworker from the next department mistook you for a presentation expert and asked for advice. You’re not an expert. What do you do?",
+    "left": "Be honest",
+    "right": "Advise confidently"
+  },
+  {
+    "id": "l1d_166",
+    "who": "Inner voice",
+    "text": "You finished a task but aren’t at all sure it’s right. Send it to your lead, or show a coworker first?",
+    "left": "Show a coworker",
+    "right": "Send it as is"
+  },
+  {
+    "id": "l1d_167",
+    "who": "Printer",
+    "text": "The new touchscreen printer demands “badge authentication.” Third time tapping your badge; the printer beeps. The line behind you grows. What now?",
+    "left": "Ask for help",
+    "right": "Pretend you changed your mind"
+  },
+  {
+    "id": "l1d_168",
+    "who": "Team lead",
+    "text": "Your lead sent a task mentioning “CF by RC.” You’ve never seen this before. Ask him or dig yourself?",
+    "left": "Ask your lead",
+    "right": "Search for half a day"
+  },
+  {
+    "id": "l1d_169",
+    "who": "Meeting",
+    "text": "At a meeting, someone asks you about a project you joined yesterday. Everyone waits. Your answer?",
+    "left": "“I’m still getting up to speed”",
+    "right": "Confidently guess"
+  },
+  {
+    "id": "l1d_170",
+    "who": "Messenger",
+    "text": "A coworker texts in the evening: “Hey, did that task work out for you? Mine didn’t.” Admit yours didn’t either?",
+    "left": "Admit it, solve it together",
+    "right": "Say “almost” and log off"
+  },
+  {
+    "id": "l1d_171",
+    "who": "Coffee machine",
+    "text": "The new coffee machine has forty buttons labeled in Italian. There’s a line behind you, and you’re pressing everything. Admit defeat?",
+    "left": "Ask someone to show you",
+    "right": "Grab a tea bag"
+  },
+  {
+    "id": "l1d_172",
+    "who": "Senior coworker",
+    "text": "You notice a senior coworker made an error in a report. He’s experienced; you’re in week three. Tell him?",
+    "left": "Point it out tactfully",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_173",
+    "who": "Company portal",
+    "text": "You’re looking on the portal for how to get a courier pass and spend half an hour wandering through “Values” and “Mission.” Ask the office manager?",
+    "left": "Ask",
+    "right": "Keep searching"
+  },
+  {
+    "id": "l1d_174",
+    "who": "Inner voice",
+    "text": "Everyone around seems to have it all figured out. You feel like you’ll be exposed as an impostor any minute. How do you help yourself tonight?",
+    "left": "List this week’s wins",
+    "right": "Browse job ads, just in case"
+  },
+  {
+    "id": "l1d_175",
+    "who": "Team lead",
+    "text": "Your lead asks: “You’ve handled this client before, right?” No, never, but he looks hopeful. Your answer?",
+    "left": "Honestly “No”",
+    "right": "“Yes, a bit”"
+  },
+  {
+    "id": "l1d_176",
+    "who": "Coworker",
+    "text": "The coworker you keep running to with questions put up a sign: “Questions after 4 p.m.” It’s 11 a.m. What do you do?",
+    "left": "Wait till 4 p.m.",
+    "right": "Ask someone else"
+  },
+  {
+    "id": "l1d_177",
+    "who": "Inner voice",
+    "text": "You’re rewriting a client email for the fifth time, afraid of mistakes. You could ask a coworker to check it. But what if he thinks you can’t cope?",
+    "left": "Ask him to check",
+    "right": "Send it unchecked"
+  },
+  {
+    "id": "l1d_178",
+    "who": "Mentor",
+    "text": "Your mentor texts in the evening: “How’s it going? All clear?” You have forty questions but don’t want to look clueless. Your reply?",
+    "left": "List the main questions",
+    "right": "“All great!”"
+  },
+  {
+    "id": "l1d_179",
+    "who": "Training",
+    "text": "You’re offered a two-week morning onboarding course. You feel like you’re managing fine already. Your move?",
+    "left": "Sign up",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_180",
+    "who": "Team lead",
+    "text": "You can see you won’t make the deadline. Ask for help now, or hope for a miracle by end of day. Your choice?",
+    "left": "Ask for help",
+    "right": "Hope for a miracle"
+  },
+  {
+    "id": "l1d_181",
+    "who": "Coworker",
+    "text": "A coworker complains to your lead that you “ask too many questions.” The lead calls you in for a talk. How do you explain?",
+    "left": "Promise to ask less",
+    "right": "Explain you’re learning"
+  },
+  {
+    "id": "l1d_182",
+    "who": "Inner voice",
+    "text": "You’re too shy to ask if you can leave at six. Everyone stays till seven. Tonight you have movie tickets. What do you do?",
+    "left": "Quietly leave at six",
+    "right": "Give the tickets away"
+  },
+  {
+    "id": "l1d_183",
+    "who": "Cleaner",
+    "text": "In one morning, the cleaner explains how the office works better than HR did in a week. Take notes on her advice?",
+    "left": "Listen carefully",
+    "right": "Politely go back to work"
+  },
+  {
+    "id": "l1d_184",
+    "who": "Team lead",
+    "text": "Your lead casually asks if you understand the new bonus system. You’ve read the policy three times and understood nothing. Your move?",
+    "left": "Honestly admit it",
+    "right": "Nod and forget it"
+  },
+  {
+    "id": "l1d_185",
+    "who": "Newbie chat",
+    "text": "In the newbies’ chat, someone asks exactly what’s bugging you too. Nobody knows. Go ask the lead for everyone?",
+    "left": "Go ask",
+    "right": "Wait for someone else"
+  },
+  {
+    "id": "l1d_186",
+    "who": "Inner voice",
+    "text": "Your question at today’s meeting got a snicker. All evening you replay it. How do you get over it?",
+    "left": "Call a friend and laugh",
+    "right": "Vow to never ask again"
+  },
+  {
+    "id": "l1d_187",
+    "who": "Mentor",
+    "text": "Your mentor offers daily ten-minute Q&A sessions. They start at 8:30, half an hour before work. Agree?",
+    "left": "Agree",
+    "right": "Ask for lunchtime"
+  },
+  {
+    "id": "l1d_188",
+    "who": "Coworker",
+    "text": "You asked a coworker for a contract template, and he sent his personal “All the Important Stuff” folder: 400 untitled files. How do you search?",
+    "left": "Ask for the specific file",
+    "right": "Open them one by one"
+  },
+  {
+    "id": "l1d_189",
+    "who": "Meeting",
+    "text": "Everyone at the meeting is talking “synergy” and “quick wins.” You’re writing the words down to look them up later. Your neighbor peeks at your notebook. Say what?",
+    "left": "Laugh and confess",
+    "right": "Close the notebook"
+  },
+  {
+    "id": "l1d_190",
+    "who": "Inner voice",
+    "text": "You stayed late again because you were too shy to ask for help with a report. The report is nearly done; you’re nearly dead. The lesson?",
+    "left": "Ask right away tomorrow",
+    "right": "It’s a character thing"
+  },
+  {
+    "id": "l1d_191",
+    "who": "Team lead",
+    "text": "In the morning your lead says: “Don’t be afraid of mistakes, everyone learns.” In the evening, he yells over a typo. What to believe?",
+    "left": "Don’t fear, just do",
+    "right": "Triple-check everything"
+  },
+  {
+    "id": "l1d_192",
+    "who": "Desk neighbor",
+    "text": "Your desk neighbor always helps, but after each favor tells you about fishing for forty minutes. You need help again. Your move?",
+    "left": "Ask and hear about fish",
+    "right": "Struggle alone"
+  },
+  {
+    "id": "l1d_193",
+    "who": "Company chatbot",
+    "text": "The company chatbot answers every question with: “Please contact your manager.” You asked where the restroom is. What now?",
+    "left": "Ask your manager",
+    "right": "Find it with a map app"
+  },
+  {
+    "id": "l1d_194",
+    "who": "Inner voice",
+    "text": "Today, for the first time, you honestly said “I don’t know, teach me.” The world didn’t end. How do you celebrate?",
+    "left": "Treat yourself to a pastry",
+    "right": "Log it in your wins diary"
+  },
+  {
+    "id": "l1d_195",
+    "who": "Morning stand-up",
+    "text": "At stand-up you’re asked to “share your progress.” Your progress: you finally figured out what “progress” means at this company. Your answer?",
+    "left": "Joke honestly",
+    "right": "Vaguely say “ramping up”"
+  },
+  {
+    "id": "l1d_196",
+    "who": "Analyst",
+    "text": "The analyst offers to teach you pivot tables, but only during lunch. You’ve been hungry since morning. What now?",
+    "left": "Learn with a sandwich",
+    "right": "Go to lunch"
+  },
+  {
+    "id": "l1d_197",
+    "who": "Senior coworker",
+    "text": "A senior coworker grumbles: “In my day, we figured it out ourselves.” Then sits down and patiently explains. How do you thank him?",
+    "left": "Buy him a coffee",
+    "right": "Ask again tomorrow"
+  },
+  {
+    "id": "l1d_198",
+    "who": "Inner voice",
+    "text": "All day you were afraid to ask if you understood the task right. In the evening: you didn’t, it’s all wasted. Tomorrow?",
+    "left": "Redo it in the morning",
+    "right": "Redo it now"
+  },
+  {
+    "id": "l1d_199",
+    "who": "Mentor",
+    "text": "Your mentor asked you to keep a question list and bring it daily. By 9 a.m., yours is two pages long. Bring it?",
+    "left": "Pick the top five",
+    "right": "Bring it all"
+  },
+  {
+    "id": "l1d_200",
+    "who": "HR",
+    "text": "The new-hire HR survey asks: “How comfortable are you asking questions? 1 to 10.” Your honest answer is 3. What do you do?",
+    "left": "Give 3 and explain",
+    "right": "Give 8"
+  },
+  {
+    "id": "l1d_201",
+    "who": "Email",
+    "text": "You notice that yesterday you sent a client an invoice with an extra zero. He hasn’t replied yet. Call first or wait?",
+    "left": "Call and confess",
+    "right": "Wait and hope"
+  },
+  {
+    "id": "l1d_202",
+    "who": "Team lead",
+    "text": "At the meeting, your lead is looking for whoever mixed up the dates in the mailing. It was you. Everyone’s silent. Raise your hand?",
+    "left": "Confess at once",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_203",
+    "who": "Coworker",
+    "text": "A coworker blamed his mistake on “the new hire.” You’re the only new hire, and you never touched it. Defend yourself?",
+    "left": "Calmly show the emails",
+    "right": "Endure it for peace"
+  },
+  {
+    "id": "l1d_204",
+    "who": "Inner voice",
+    "text": "You accidentally deleted the shared project folder. The trash is empty. It’s 7 p.m., and nobody’s noticed yet. What do you do?",
+    "left": "Message the sysadmin now",
+    "right": "Play dumb tomorrow"
+  },
+  {
+    "id": "l1d_205",
+    "who": "Report",
+    "text": "In the morning you learn every figure in your report is in dollars when it should be in thousands. It’s already with the director. Your move?",
+    "left": "Fix it and email the director",
+    "right": "Ask your lead to cover"
+  },
+  {
+    "id": "l1d_206",
+    "who": "Accounting",
+    "text": "Accounting calls: you mixed up the bank details, and the money went to another company. It’ll be returned, but in a month. Who tells the lead?",
+    "left": "Tell him yourself",
+    "right": "Let Accounting tell him"
+  },
+  {
+    "id": "l1d_207",
+    "who": "Project chat",
+    "text": "You accidentally sent a voice message meant for your mom about soup to the work chat. Everyone’s already listened. Delete it?",
+    "left": "Delete and apologize",
+    "right": "Keep it, joke about soup"
+  },
+  {
+    "id": "l1d_208",
+    "who": "Team lead",
+    "text": "8 p.m., your lead writes: “Did you send the client the old version?” You did. A messenger reply would sit there till morning. Answer?",
+    "left": "Answer honestly now",
+    "right": "Tell him in person tomorrow"
+  },
+  {
+    "id": "l1d_209",
+    "who": "Mentor",
+    "text": "Your mistake surfaced yesterday, and your mentor took the blame in front of the lead. This morning he acts like nothing happened. Thank him?",
+    "left": "Thank him privately",
+    "right": "Confess to the lead"
+  },
+  {
+    "id": "l1d_210",
+    "who": "Spreadsheet",
+    "text": "You found an error in the shared spreadsheet — a senior coworker made it six months ago, and every calculation since is wrong. How do you raise it?",
+    "left": "Tell him privately",
+    "right": "Post in the group chat"
+  },
+  {
+    "id": "l1d_211",
+    "who": "Client",
+    "text": "The client is unhappy about a typo in his name on a certificate. Two hundred have already been printed. How do you fix it?",
+    "left": "Reprint at your own expense",
+    "right": "Apologize and fix by pen"
+  },
+  {
+    "id": "l1d_212",
+    "who": "Inner voice",
+    "text": "In the evening you reread an email you sent today and see you signed it “With love.” It went to the tax office. What do you do?",
+    "left": "Send a correction",
+    "right": "Accept it and laugh"
+  },
+  {
+    "id": "l1d_213",
+    "who": "Stand-up",
+    "text": "At stand-up, the lead says “someone” didn’t enter data into the system, staring at the ceiling. You’re not sure it wasn’t you. Your move?",
+    "left": "Quietly check",
+    "right": "Ask “Is that me?”"
+  },
+  {
+    "id": "l1d_214",
+    "who": "Coworker",
+    "text": "You notice a coworker spent half a day redoing his work because of your mistake. He didn’t say a word. Your move?",
+    "left": "Apologize with a pastry",
+    "right": "Don’t bring it up"
+  },
+  {
+    "id": "l1d_215",
+    "who": "Supplies",
+    "text": "You ordered forty boxes of paper instead of four. Movers are already carrying them in. Where do they go?",
+    "left": "Build a wall of boxes",
+    "right": "Arrange a return"
+  },
+  {
+    "id": "l1d_216",
+    "who": "Team lead",
+    "text": "Your lead calls you in “to talk about yesterday.” You don’t know which thing: yesterday had three small slip-ups. How do you start?",
+    "left": "Confess all three",
+    "right": "Wait for him to speak"
+  },
+  {
+    "id": "l1d_217",
+    "who": "Email",
+    "text": "You hit “Reply All” on a complaint about the office coffee. The recipients: the whole company, including the CEO. How do you recover?",
+    "left": "Apologize to everyone",
+    "right": "Act like it was on purpose"
+  },
+  {
+    "id": "l1d_218",
+    "who": "Printer",
+    "text": "You sent a hundred pages of vacation photos to the shared printer, and it froze on page thirty. The line is getting angry. What do you choose?",
+    "left": "Confess and cancel",
+    "right": "Flee to lunch"
+  },
+  {
+    "id": "l1d_219",
+    "who": "Client",
+    "text": "You promised a client something the company doesn’t do. He’s already happily told his director. What now?",
+    "left": "Confess to the client",
+    "right": "Ask your lead to fix it"
+  },
+  {
+    "id": "l1d_220",
+    "who": "Messenger",
+    "text": "A coworker writes in the evening: “Don’t worry, everyone makes mistakes. Just don’t do it again.” You don’t know which mistake. Ask?",
+    "left": "Ask",
+    "right": "Reply “Thanks, got it”"
+  },
+  {
+    "id": "l1d_221",
+    "who": "Team lead",
+    "text": "In the morning your lead says: “Your mistake yesterday cost the company money. But I believe in you.” How do you respond?",
+    "left": "Propose a fix plan",
+    "right": "Just nod"
+  },
+  {
+    "id": "l1d_222",
+    "who": "Meeting",
+    "text": "At an all-hands, you share the wrong file: your shopping list instead of the report. Everyone sees “chocolate for after the chewing-out.” Now what?",
+    "left": "Laugh with everyone",
+    "right": "Close it fast and apologize"
+  },
+  {
+    "id": "l1d_223",
+    "who": "Coworker",
+    "text": "A coworker offers to “quietly” fix your mistake so the lead won’t find out. In return, you cover his Saturday shift. Your move?",
+    "left": "Agree",
+    "right": "Confess to the lead yourself"
+  },
+  {
+    "id": "l1d_224",
+    "who": "Inner voice",
+    "text": "You made a mistake, fixed it, and the lead didn’t even scold you. But all evening you replay the moment. What helps?",
+    "left": "A walk and music",
+    "right": "Note the lesson, move on"
+  },
+  {
+    "id": "l1d_225",
+    "who": "Pass",
+    "text": "You forgot your pass at home and have called security three times this morning to open the door. The guard now recognizes you and sighs. What do you say?",
+    "left": "Go home for the pass",
+    "right": "Stay inside all day"
+  },
+  {
+    "id": "l1d_226",
+    "who": "Team lead",
+    "text": "Your mistake spawned a new “three approvals” rule. Now the whole team gets every email approved three times. Coworkers know where the rule came from. Your reaction?",
+    "left": "Apologize to the team",
+    "right": "Act like it’s not you"
+  },
+  {
+    "id": "l1d_227",
+    "who": "Client",
+    "text": "You mixed up two clients and sent one the other’s proposal — with the other’s prices. Call both?",
+    "left": "Call both",
+    "right": "Call only the first"
+  },
+  {
+    "id": "l1d_228",
+    "who": "Team chat",
+    "text": "Evening chat: who left the kettle on? It boiled dry and set off the fire alarm. It might have been you. What now?",
+    "left": "Confess, just in case",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_229",
+    "who": "Mentor",
+    "text": "Your mentor tells you that in his first month he once sent a contract to the wrong client. You feel noticeably better. Share your own flops?",
+    "left": "Share honestly",
+    "right": "Better not risk it"
+  },
+  {
+    "id": "l1d_230",
+    "who": "Auditor",
+    "text": "An internal auditor found an error in your documents and asks who taught you to do it this way. Your mentor did. Name him?",
+    "left": "Take it on yourself",
+    "right": "Name your mentor"
+  },
+  {
+    "id": "l1d_231",
+    "who": "Team lead",
+    "text": "Your lead wants a written explanation for being late to a client meeting. You were late because his own meeting ran an hour over. What do you do?",
+    "left": "Write exactly that",
+    "right": "Take the blame"
+  },
+  {
+    "id": "l1d_232",
+    "who": "Inner voice",
+    "text": "You caused the project delay, but your lead blamed the contractor. The contractor is upset. Your conscience nags all evening. What do you do?",
+    "left": "Tell the truth tomorrow",
+    "right": "Leave it be"
+  },
+  {
+    "id": "l1d_233",
+    "who": "Spreadsheet",
+    "text": "In the morning, the spreadsheet with your formulas suddenly shows revenue of minus $3 million. The director opens it in ten minutes. Your move?",
+    "left": "Fix it fast",
+    "right": "Warn the director"
+  },
+  {
+    "id": "l1d_234",
+    "who": "Coworker",
+    "text": "A coworker pinned a printout of your report error on the wall, captioned “Masterpiece of the Week.” Lots of people are laughing. Your reply?",
+    "left": "Autograph it",
+    "right": "Ask him to take it down"
+  },
+  {
+    "id": "l1d_235",
+    "who": "Client",
+    "text": "The client found a contract error you missed. He tells your lead: “The intern must have checked it.” Your lead looks at you questioningly. Your choice?",
+    "left": "Own it",
+    "right": "Blame Legal"
+  },
+  {
+    "id": "l1d_236",
+    "who": "Team lead",
+    "text": "Your lead wants to “break down your mistake” at the all-hands so “everyone learns.” You want to sink through the floor. Agree?",
+    "left": "Present it yourself",
+    "right": "Ask to keep it anonymous"
+  },
+  {
+    "id": "l1d_237",
+    "who": "Calendar",
+    "text": "You scheduled an important meeting for February 30. The calendar accepted it. The attendees didn’t. It’s 8:50, and the meeting is “today.” Now what?",
+    "left": "Reschedule and apologize",
+    "right": "Joke about it by email"
+  },
+  {
+    "id": "l1d_238",
+    "who": "Sysadmin",
+    "text": "The sysadmin is hunting for who downloaded a virus disguised as “free presentation templates.” The templates were really pretty. Your move?",
+    "left": "Confess",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_239",
+    "who": "Coworker",
+    "text": "A coworker admitted his mistake at the meeting — and mentioned that you saw it too and said nothing. Everyone looks at you. Your answer?",
+    "left": "Admit it and apologize",
+    "right": "Say you weren’t sure"
+  },
+  {
+    "id": "l1d_240",
+    "who": "Inner voice",
+    "text": "In the evening you’re mentally drafting your resignation speech over a tiny mistake everyone has already forgotten. Stop?",
+    "left": "Call a friend",
+    "right": "Just go to sleep"
+  },
+  {
+    "id": "l1d_241",
+    "who": "Team lead",
+    "text": "Your lead thanks you for owning your mistake promptly and says it’s rare. Coworkers look tense. How do you react?",
+    "left": "Modestly nod",
+    "right": "Say everyone does it"
+  },
+  {
+    "id": "l1d_242",
+    "who": "Courier",
+    "text": "You sent documents to the wrong address. The courier is already taking them to another city. How do you get them back?",
+    "left": "Call the delivery service",
+    "right": "Print new ones and resend"
+  },
+  {
+    "id": "l1d_243",
+    "who": "Team lead",
+    "text": "Your lead asks who’s responsible for an error in the deck. It’s shared: you inserted the numbers, a coworker made the charts. Who answers?",
+    "left": "Offer to answer together",
+    "right": "Point to the charts"
+  },
+  {
+    "id": "l1d_244",
+    "who": "Project chat",
+    "text": "You accidentally reacted with a fire emoji to a message about someone’s hamster dying. Everyone’s silent. What now?",
+    "left": "Apologize and offer condolences",
+    "right": "Quietly remove it"
+  },
+  {
+    "id": "l1d_245",
+    "who": "Inner voice",
+    "text": "After yesterday’s slip, you woke up sure everyone will look at you funny. In the elevator someone smiled at you. How do you start the day?",
+    "left": "Greet everyone",
+    "right": "Quietly sit in a corner"
+  },
+  {
+    "id": "l1d_246",
+    "who": "Team lead",
+    "text": "You confessed a mistake, and your lead says: “No big deal, I didn’t even notice.” Now the whole team knows. Was it worth it?",
+    "left": "Yes, clear conscience",
+    "right": "No, should’ve kept quiet"
+  },
+  {
+    "id": "l1d_247",
+    "who": "Coworker",
+    "text": "A coworker loudly accuses you of losing his favorite pen. It’s tucked behind his ear. Tell him?",
+    "left": "Point to his ear",
+    "right": "Give him your pen"
+  },
+  {
+    "id": "l1d_248",
+    "who": "Team lead",
+    "text": "As he leaves for the day, your lead says: “Tomorrow we’ll discuss your work.” It’s unclear what he meant. Evening ruined?",
+    "left": "Ask now",
+    "right": "Distract yourself till morning"
+  },
+  {
+    "id": "l1d_249",
+    "who": "Office manager",
+    "text": "The office manager is looking for whoever broke the meeting-room chair. You sat on it yesterday, and it creaked pitifully. Confess?",
+    "left": "Confess, just in case",
+    "right": "Stay silent"
+  },
+  {
+    "id": "l1d_250",
+    "who": "Client",
+    "text": "A client thanks you for the quick reply, and you realize you answered a question he never asked. Correct it?",
+    "left": "Correct it honestly",
+    "right": "Leave it and wait"
+  },
+  {
+    "id": "l1d_251",
+    "who": "HR",
+    "text": "Today is your first end-of-probation review. HR sent a six-page self-assessment due by lunch. How do you fill it in?",
+    "left": "Honestly, flaws included",
+    "right": "Like a dream résumé"
+  },
+  {
+    "id": "l1d_252",
+    "who": "Team lead",
+    "text": "At your review, the lead asks: “Where do you see yourself in five years?” The honest answer is “on vacation.” What do you say?",
+    "left": "Joke about vacation",
+    "right": "Talk about growing here"
+  },
+  {
+    "id": "l1d_253",
+    "who": "Review form",
+    "text": "The review form requires feedback from three coworkers. You’ve been here two weeks and know only two by name. Who’s the third?",
+    "left": "Ask the cleaner",
+    "right": "Quickly befriend someone"
+  },
+  {
+    "id": "l1d_254",
+    "who": "Inner voice",
+    "text": "Quarterly review tomorrow. You rehearse “I show initiative” in the mirror and realize you can’t recall a single initiative. What do you do?",
+    "left": "List your small wins",
+    "right": "Go to bed early"
+  },
+  {
+    "id": "l1d_255",
+    "who": "Team lead",
+    "text": "Your lead has postponed your review for the third time. Now it’s “sometime next week.” Your raise depends on it. Remind him?",
+    "left": "Politely remind him",
+    "right": "Wait silently"
+  },
+  {
+    "id": "l1d_256",
+    "who": "Competency scale",
+    "text": "On the competency scale, you got “3 out of 5” for “strategic thinking.” You’re an intern in charge of printing badges. Dispute it?",
+    "left": "Accept the score",
+    "right": "Ask about the criteria"
+  },
+  {
+    "id": "l1d_257",
+    "who": "Coworker",
+    "text": "A coworker asks you to write him a glowing review. You worked with him once, and he was an hour late. What do you write?",
+    "left": "A restrained, neutral note",
+    "right": "A glowing ode"
+  },
+  {
+    "id": "l1d_258",
+    "who": "Messenger",
+    "text": "Your lead texts in the evening: “Tomorrow at your review we’ll discuss your strengths and growth areas.” Judging by the tone, there are many growth areas. How do you prepare?",
+    "left": "List your mistakes upfront",
+    "right": "Don’t think till morning"
+  },
+  {
+    "id": "l1d_259",
+    "who": "HR",
+    "text": "Before your review, HR wants you to take a “leadership potential” test. Question one: which tree are you? What do you do?",
+    "left": "Answer “oak”",
+    "right": "Honestly answer “willow”"
+  },
+  {
+    "id": "l1d_260",
+    "who": "Team lead",
+    "text": "At your review, the lead warmly praises you for a project another intern actually did. Correct him?",
+    "left": "Correct him honestly",
+    "right": "Accept the praise"
+  },
+  {
+    "id": "l1d_261",
+    "who": "Peer feedback",
+    "text": "Anonymous feedback about you: “Eats apples too loudly.” No other comments. How do you take it?",
+    "left": "Switch to bananas",
+    "right": "Find out who wrote it"
+  },
+  {
+    "id": "l1d_262",
+    "who": "Inner voice",
+    "text": "Review done: “Good, but could be better.” You can’t tell if that’s good or bad. Mull it over tonight?",
+    "left": "Call a friend",
+    "right": "Reread notes till late"
+  },
+  {
+    "id": "l1d_263",
+    "who": "Team lead",
+    "text": "For your review, the lead wants six-month SMART goals. Your only goal so far: find out where the kettle is. Your move?",
+    "left": "Make them ambitious",
+    "right": "Keep them modest and honest"
+  },
+  {
+    "id": "l1d_264",
+    "who": "Committee",
+    "text": "A five-person committee runs your review. Three you’ve never seen. One keeps yawning. How do you carry yourself?",
+    "left": "Be peppy for the yawner",
+    "right": "Speak to your lead"
+  },
+  {
+    "id": "l1d_265",
+    "who": "Team lead",
+    "text": "The lead asks what score you’d give yourself. Every answer feels like a trap. Your choice?",
+    "left": "“A solid B”",
+    "right": "“An A, of course”"
+  },
+  {
+    "id": "l1d_266",
+    "who": "Intern chat",
+    "text": "Evening, interns compare scores in the group chat. Everyone got “excellent”; you got “satisfactory.” Post yours?",
+    "left": "Post it honestly",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_267",
+    "who": "Team lead",
+    "text": "In the morning the lead says intern promotions are “frozen till next year.” Your review is in an hour. Is there any point trying?",
+    "left": "Give it your all anyway",
+    "right": "Just go through the motions"
+  },
+  {
+    "id": "l1d_268",
+    "who": "HR",
+    "text": "HR offers you a “development plan”: courses, webinars, and mentoring. All outside work hours, in the evenings. What do you do?",
+    "left": "Agree to everything",
+    "right": "Pick one"
+  },
+  {
+    "id": "l1d_269",
+    "who": "Team lead",
+    "text": "At the review, the lead asks for your weaknesses. You say “perfectionism.” He smiles: “And for real?”",
+    "left": "Answer honestly",
+    "right": "Say “workaholism”"
+  },
+  {
+    "id": "l1d_270",
+    "who": "Inner voice",
+    "text": "After the review, you got praise but no raise. In the evening you stare out the window calculating a month’s rent. What next?",
+    "left": "Prep a money talk",
+    "right": "Sign up for courses"
+  },
+  {
+    "id": "l1d_271",
+    "who": "Coworker",
+    "text": "Before his review, a fellow intern asks for your list of achievements “for inspiration.” Your achievements are very similar. Share it?",
+    "left": "Share it",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1d_272",
+    "who": "Team lead",
+    "text": "The lead praises you publicly: “Our best intern.” Next day, the other interns greet you noticeably more coldly. Your move?",
+    "left": "Talk to them",
+    "right": "Ignore it"
+  },
+  {
+    "id": "l1d_273",
+    "who": "Self-assessment",
+    "text": "The self-assessment asks which “company value you embody”: “Drive,” “Synergy,” or “Love for the Customer.” Your pick?",
+    "left": "“Drive”",
+    "right": "“Synergy,” at random"
+  },
+  {
+    "id": "l1d_274",
+    "who": "Team lead",
+    "text": "Late at night, the lead sends a draft of your review “for approval.” Your last name is misspelled. What do you say?",
+    "left": "Fix it and approve",
+    "right": "Approve as is"
+  },
+  {
+    "id": "l1d_275",
+    "who": "Inner voice",
+    "text": "Review morning. You put on your best blazer, and it’s a size smaller than you remembered. No time to change. How do you react?",
+    "left": "Endure, don’t breathe",
+    "right": "Take it off, go in a T-shirt"
+  },
+  {
+    "id": "l1d_276",
+    "who": "Team lead",
+    "text": "At the review, the lead unexpectedly asks what you’d change about how the team works. The team sits behind a thin wall. What now?",
+    "left": "Be honest",
+    "right": "Say “All’s great”"
+  },
+  {
+    "id": "l1d_277",
+    "who": "360 review",
+    "text": "As part of a “360 review,” you’re asked to rate your manager. Anonymity is guaranteed, but the team is three people. How do you rate him?",
+    "left": "Honestly",
+    "right": "Well, just in case"
+  },
+  {
+    "id": "l1d_278",
+    "who": "Inner voice",
+    "text": "After the review you were told you “lack proactivity.” All evening you think about how to be proactive, but ideas end at “come in earlier.” What do you do?",
+    "left": "Pitch a project idea",
+    "right": "Wait for a hint"
+  },
+  {
+    "id": "l1d_279",
+    "who": "HR",
+    "text": "HR accidentally sent review results to everyone: you and your coworkers. The whole floor knows your score. Your move?",
+    "left": "Joke about it first",
+    "right": "Stay glued to your desk"
+  },
+  {
+    "id": "l1d_280",
+    "who": "Team lead",
+    "text": "The lead says: “You’re doing well, but I want to see more enthusiasm.” You already smile till your cheeks hurt. Your reply?",
+    "left": "“I’ll try harder!”",
+    "right": "Ask what exactly he needs"
+  },
+  {
+    "id": "l1d_281",
+    "who": "Coworker",
+    "text": "A coworker confides that intern scores are decided in advance and the review is a formality. Yours is tomorrow. Believe it?",
+    "left": "Prepare anyway",
+    "right": "Relax"
+  },
+  {
+    "id": "l1d_282",
+    "who": "Team chat",
+    "text": "Evening, the team chat congratulates an intern on going full-time. You haven’t been offered that yet. Congratulate him?",
+    "left": "Sincerely congratulate",
+    "right": "Silently like it"
+  },
+  {
+    "id": "l1d_283",
+    "who": "Team lead",
+    "text": "Before the review, the lead wants a “fifteen-minute” presentation on your achievements. You have about three minutes’ worth. Your choice?",
+    "left": "Stretch it to fifteen",
+    "right": "Keep it short and honest"
+  },
+  {
+    "id": "l1d_284",
+    "who": "Committee",
+    "text": "A committee member asks about a topic you’ve never studied. The others wait with interest. What now?",
+    "left": "Honestly admit it",
+    "right": "Reason with a smart face"
+  },
+  {
+    "id": "l1d_285",
+    "who": "HR",
+    "text": "HR’s form asks for “the mentor who influenced you most.” Your mentor was on vacation the whole time. Your move?",
+    "left": "Name your mentor",
+    "right": "Name the coworker who helped"
+  },
+  {
+    "id": "l1d_286",
+    "who": "Inner voice",
+    "text": "Your review says “meets expectations.” You never figured out whose expectations. Spend the evening pondering, or at the movies?",
+    "left": "Ponder",
+    "right": "Movies"
+  },
+  {
+    "id": "l1d_287",
+    "who": "Team lead",
+    "text": "First thing in the morning, the lead asks if you want feedback “honest or kind.” Your choice?",
+    "left": "Honest",
+    "right": "Kind"
+  },
+  {
+    "id": "l1d_288",
+    "who": "Team lead",
+    "text": "You’re offered a full-time job, but in another department with “slightly different tasks.” Slightly different means the warehouse. Accept?",
+    "left": "Accept",
+    "right": "Stay an intern"
+  },
+  {
+    "id": "l1d_289",
+    "who": "KPI sheet",
+    "text": "Your KPI sheet has a metric: “ideas per month.” You have zero. The lead suggests you “just write something in.” Your reaction?",
+    "left": "Write in a water-cooler idea",
+    "right": "Think up a real one"
+  },
+  {
+    "id": "l1d_290",
+    "who": "Messenger",
+    "text": "9 p.m., your lead writes: “Looked at your self-assessment. Let’s discuss.” Nothing else. You stare at the screen. What do you do?",
+    "left": "Reply “Of course!”",
+    "right": "Turn off your phone"
+  },
+  {
+    "id": "l1d_291",
+    "who": "Inner voice",
+    "text": "The morning of your review, you’re tempted to call in sick. You’re fine, just scared. What do you do?",
+    "left": "Go to the review",
+    "right": "Take the day off"
+  },
+  {
+    "id": "l1d_292",
+    "who": "Team lead",
+    "text": "The lead compares you to last year’s intern: “He did three times more in a month.” How do you react?",
+    "left": "Ask how he did it",
+    "right": "Stay silent and sulk"
+  },
+  {
+    "id": "l1d_293",
+    "who": "HR",
+    "text": "For a good review, HR offers “non-monetary motivation”: a certificate and a photo on the honor board. No money. Your move?",
+    "left": "Accept the photo",
+    "right": "Ask about money"
+  },
+  {
+    "id": "l1d_294",
+    "who": "Coworker",
+    "text": "An experienced coworker shares how she prepped for her first review: “I cried in the elevator.” Does that help?",
+    "left": "Laugh together",
+    "right": "Get even more scared"
+  },
+  {
+    "id": "l1d_295",
+    "who": "Team lead",
+    "text": "In the morning, the lead says he gave you “excellent” but asks you to keep it quiet so as “not to upset the others.” Your choice?",
+    "left": "Keep the secret",
+    "right": "Tell a close coworker"
+  },
+  {
+    "id": "l1d_296",
+    "who": "Committee",
+    "text": "Nerves made you lose your voice at the review. You’re whispering, and the committee leans in. Keep whispering?",
+    "left": "Ask for water",
+    "right": "Whisper to the end"
+  },
+  {
+    "id": "l1d_297",
+    "who": "Team lead",
+    "text": "The lead suggests “slightly tweaking” your self-assessment: removing “exhaustion” from the “well-being” field. What do you do?",
+    "left": "Remove it",
+    "right": "Keep it"
+  },
+  {
+    "id": "l1d_298",
+    "who": "Inner voice",
+    "text": "You got your first-ever bonus for your review results. Small, but yours. What do you spend it on?",
+    "left": "Cake for the team",
+    "right": "A gift for yourself"
+  },
+  {
+    "id": "l1d_299",
+    "who": "Team lead",
+    "text": "The lead asks if you remember the goals you set six months ago. You only remember that there were some. Your move?",
+    "left": "Find the document",
+    "right": "Improvise"
+  },
+  {
+    "id": "l1d_300",
+    "who": "Coworker",
+    "text": "At his own review, a coworker credits your help, calling you his “right hand.” The lead is surprised the right hand has its own tasks. What do you say?",
+    "left": "Confirm it proudly",
+    "right": "Modestly clarify your role"
+  },
+  {
+    "id": "l1d_301",
+    "who": "Timur, intern",
+    "text": "You’ve been given your first intern. Timur arrived at 8:00 with a notebook, asking what to do. You get in at 9:30 and aren’t even awake yet. Your move?",
+    "left": "Give him policies to read",
+    "right": "Invent a task, fast"
+  },
+  {
+    "id": "l1d_302",
+    "who": "Timur, intern",
+    "text": "The intern finished a task in ten minutes instead of two days. Suspiciously fast. Check it or celebrate?",
+    "left": "Check everything",
+    "right": "Send it to your lead"
+  },
+  {
+    "id": "l1d_303",
+    "who": "Vika, intern",
+    "text": "Vika the intern asks why the team does things this way. You don’t know. You’ve only been here three months yourself. Your answer?",
+    "left": "“It’s historical”",
+    "right": "“Let’s find out together”"
+  },
+  {
+    "id": "l1d_304",
+    "who": "Timur, intern",
+    "text": "7 p.m. The intern won’t go home because you haven’t left. You haven’t left because your report isn’t done. Let him go?",
+    "left": "Let him go",
+    "right": "Give him part of the report"
+  },
+  {
+    "id": "l1d_305",
+    "who": "Internship program",
+    "text": "Intern meet-and-greet day. Everyone has to share an “interesting fact.” Yours: you’re afraid of interesting facts. What now?",
+    "left": "Talk about your cat",
+    "right": "Joke and sit down"
+  },
+  {
+    "id": "l1d_306",
+    "who": "Vika, intern",
+    "text": "The intern politely corrects you in front of the lead: there’s an error in your report. She’s right. The lead looks intrigued. What do you do?",
+    "left": "Thank her",
+    "right": "Say it’s a draft"
+  },
+  {
+    "id": "l1d_307",
+    "who": "Team lead",
+    "text": "Your lead asks you to “do a bit of teaching” with the intern. Your workload stays the same. Take it?",
+    "left": "Take it",
+    "right": "Ask to drop one task"
+  },
+  {
+    "id": "l1d_308",
+    "who": "Intern chat",
+    "text": "The interns invite you to a bar to “celebrate week one.” You’re two years older than them all and one year junior in position. Your move?",
+    "left": "Go",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1d_309",
+    "who": "Timur, intern",
+    "text": "The intern brings you coffee every morning and calls you “chief.” Coworkers start smirking. Ask him to stop?",
+    "left": "Ask him to stop",
+    "right": "Enjoy the coffee"
+  },
+  {
+    "id": "l1d_310",
+    "who": "Vika, intern",
+    "text": "The intern asks to leave early for a university exam. The lead is out. It’s your call. Your choice?",
+    "left": "Let her go",
+    "right": "Call the lead"
+  },
+  {
+    "id": "l1d_311",
+    "who": "Timur, intern",
+    "text": "The intern enthusiastically pitched the lead an idea you discussed with him yesterday. It’s your idea. The lead is thrilled. What now?",
+    "left": "Stay quiet",
+    "right": "Gently clarify authorship"
+  },
+  {
+    "id": "l1d_312",
+    "who": "Inner voice",
+    "text": "Six months ago you were an intern yourself. Today the intern asked how you manage to “know everything.” You think about it all evening. Your move?",
+    "left": "Feel proud",
+    "right": "Admit you know nothing"
+  },
+  {
+    "id": "l1d_313",
+    "who": "Vika, intern",
+    "text": "The intern came to work in a suit, and the whole office is in hoodies. She panics and asks if she should change. What do you say?",
+    "left": "Say it suits her",
+    "right": "Lend her your hoodie"
+  },
+  {
+    "id": "l1d_314",
+    "who": "Timur, intern",
+    "text": "The intern accidentally forwarded your internal emails about a client to that client. Polite emails — mostly. Who apologizes?",
+    "left": "You, as mentor",
+    "right": "Let him learn"
+  },
+  {
+    "id": "l1d_315",
+    "who": "Team lead",
+    "text": "Your lead asks your opinion on whether to hire the intern full-time. He’s diligent but slow. How do you respond?",
+    "left": "Praise him",
+    "right": "Be honest"
+  },
+  {
+    "id": "l1d_316",
+    "who": "Timur, intern",
+    "text": "The intern texts in the evening: “Sorry, I can’t come tomorrow, my cat is sick.” You don’t know if that’s allowed. What now?",
+    "left": "Let him off and cover",
+    "right": "Send him to the lead"
+  },
+  {
+    "id": "l1d_317",
+    "who": "Vika, intern",
+    "text": "The intern decorated your shared desk with string lights and stickers. It looks like a kindergarten. The lead is coming soon. What do you do?",
+    "left": "Leave it",
+    "right": "Ask her to remove it"
+  },
+  {
+    "id": "l1d_318",
+    "who": "Timur, intern",
+    "text": "The intern ate someone else’s lunch from the fridge, sincerely believing “everything here is shared.” It belonged to Tamara from Accounting. Explain?",
+    "left": "Apologize together",
+    "right": "Let him handle it"
+  },
+  {
+    "id": "l1d_319",
+    "who": "Vika, intern",
+    "text": "The intern works slowly and very carefully. The task is urgent. Take it over or let her finish?",
+    "left": "Take it over",
+    "right": "Let her finish"
+  },
+  {
+    "id": "l1d_320",
+    "who": "Inner voice",
+    "text": "You catch yourself explaining a task to the intern with your lead’s phrase that used to drive you crazy: “Well, it’s obvious.” Now what?",
+    "left": "Apologize and explain",
+    "right": "He’ll get used to it"
+  },
+  {
+    "id": "l1d_321",
+    "who": "Timur, intern",
+    "text": "The intern wants to “optimize” the department and has a thirty-point list. Point one: scrap morning stand-ups. Your move?",
+    "left": "Pass it to the lead",
+    "right": "Gently talk him out of it"
+  },
+  {
+    "id": "l1d_322",
+    "who": "Vika, intern",
+    "text": "The intern asks how to ask the lead for a raise. You’ve never asked yourself. Your choice?",
+    "left": "Give bold advice",
+    "right": "Advise waiting"
+  },
+  {
+    "id": "l1d_323",
+    "who": "HR",
+    "text": "HR asks you to give the interns an office tour. You still mix up the floors yourself. What now?",
+    "left": "Lead it boldly",
+    "right": "Ask someone senior"
+  },
+  {
+    "id": "l1d_324",
+    "who": "Timur, intern",
+    "text": "The intern is collecting signatures for a petition to “introduce Pizza Fridays.” He wants you to sign first. Your move?",
+    "left": "Sign",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_325",
+    "who": "Vika, intern",
+    "text": "The intern has been late three days running. The lead asks you “what’s up with your mentee.” You don’t know. What do you say?",
+    "left": "Talk to her",
+    "right": "Say it’s not your business"
+  },
+  {
+    "id": "l1d_326",
+    "who": "Timur, intern",
+    "text": "The intern asks a question every three minutes — forty since morning. You haven’t even opened your own work. What now?",
+    "left": "Set “question hours”",
+    "right": "Answer them all"
+  },
+  {
+    "id": "l1d_327",
+    "who": "Team lead",
+    "text": "Your lead praises your intern for excellent work and doesn’t mention you. You trained him for two weeks. Your reaction?",
+    "left": "Be happy for the intern",
+    "right": "Remind them of yourself"
+  },
+  {
+    "id": "l1d_328",
+    "who": "Intern chat",
+    "text": "In the evening chat, the interns decide you’re “the coolest mentor.” You’re appointed to answer their questions on weekends. What now?",
+    "left": "Agree",
+    "right": "Gently decline"
+  },
+  {
+    "id": "l1d_329",
+    "who": "Vika, intern",
+    "text": "The intern burst into tears after a harsh email from the lead. She’s in a meeting room. You walk by with coffee. What do you do?",
+    "left": "Go in and support her",
+    "right": "Walk on by"
+  },
+  {
+    "id": "l1d_330",
+    "who": "Timur, intern",
+    "text": "The intern broke the laminator trying to laminate a sandwich “to preserve it.” The office manager asks who was supervising him. Your move?",
+    "left": "Admit it was you",
+    "right": "Blame the laminator"
+  },
+  {
+    "id": "l1d_331",
+    "who": "Vika, intern",
+    "text": "The intern offers to run a shared chat for interns and your team. It quickly turns into a meme swap. Your choice?",
+    "left": "Don’t interfere",
+    "right": "Moderate it"
+  },
+  {
+    "id": "l1d_332",
+    "who": "Inner voice",
+    "text": "Your intern is leaving after the internship for another company, at a higher salary than yours. Evening, you stare at the wall. What next?",
+    "left": "Be happy for him",
+    "right": "Open a job site"
+  },
+  {
+    "id": "l1d_333",
+    "who": "Timur, intern",
+    "text": "The intern made the morning presentation for the team. Half the data is wrong. It starts in ten minutes. What now?",
+    "left": "Fix it together, fast",
+    "right": "Let him present and learn"
+  },
+  {
+    "id": "l1d_334",
+    "who": "Team lead",
+    "text": "Your lead decided the interns will lunch with you so they “integrate into the team.” Lunch was the only quiet time in your day. Your move?",
+    "left": "Accept it",
+    "right": "Go to lunch earlier"
+  },
+  {
+    "id": "l1d_335",
+    "who": "Vika, intern",
+    "text": "The intern accidentally saw your search: “how to stop being afraid of your boss.” She nods knowingly. What do you say?",
+    "left": "Laugh together",
+    "right": "Say it’s for work"
+  },
+  {
+    "id": "l1d_336",
+    "who": "Timur, intern",
+    "text": "The intern calls in the evening: “Can I finish it tomorrow?” It was due today. You have to submit tomorrow. Your reaction?",
+    "left": "Finish it yourself",
+    "right": "Say it’s needed today"
+  },
+  {
+    "id": "l1d_337",
+    "who": "Internship program",
+    "text": "The internship coordinator wants a “mentor diary” filled in every morning. Four lines a day of “what the mentor did.” What now?",
+    "left": "Fill it all in",
+    "right": "Write “explained stuff”"
+  },
+  {
+    "id": "l1d_338",
+    "who": "Timur, intern",
+    "text": "The intern offers to automate your manual task. He’s already written a script. If it works, will you be unnecessary?",
+    "left": "Run the script",
+    "right": "Put it off"
+  },
+  {
+    "id": "l1d_339",
+    "who": "Vika, intern",
+    "text": "The intern asks for help with her thesis “for just an hour at lunch.” The topic: “crisis communications.” Ironic. What do you do?",
+    "left": "Help",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_340",
+    "who": "Coworker",
+    "text": "A veteran coworker tells you in the evening: “Barely here a week, and already teaching interns.” It stings, but it’s partly true. Your move?",
+    "left": "Take offense",
+    "right": "Laugh it off"
+  },
+  {
+    "id": "l1d_341",
+    "who": "Timur, intern",
+    "text": "The intern suggests doing quick morning exercises together right at your desks. Your desk neighbor is already rolling his eyes. Your choice?",
+    "left": "Do the exercises",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_342",
+    "who": "Team lead",
+    "text": "Your lead wants you to handle the next intern intake: reading résumés and interviewing. You have zero experience. What now?",
+    "left": "Agree",
+    "right": "Ask for time to think"
+  },
+  {
+    "id": "l1d_343",
+    "who": "Vika, intern",
+    "text": "The intern burned popcorn in the microwave. The whole floor reeks. She looks at you in horror. Your move?",
+    "left": "Take the blame",
+    "right": "Open windows, say nothing"
+  },
+  {
+    "id": "l1d_344",
+    "who": "Timur, intern",
+    "text": "The intern’s last day. He gives you a card: “Thanks for teaching me everything.” You’re not sure you taught him anything. What do you say?",
+    "left": "Get emotional",
+    "right": "Give parting advice"
+  },
+  {
+    "id": "l1d_345",
+    "who": "Inner voice",
+    "text": "In the morning you realize the intern works better than you. He comes earlier, leaves later, and remembers everything. Your move?",
+    "left": "Learn from him",
+    "right": "Ask him to try less hard"
+  },
+  {
+    "id": "l1d_346",
+    "who": "Timur, intern",
+    "text": "At a meeting, the intern loudly asks the “dumb” question everyone was afraid to ask. The lead frowns. Back him up?",
+    "left": "Back the question",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_347",
+    "who": "Vika, intern",
+    "text": "The intern wants a “real” task, not spreadsheets. There’s only one real task — and it’s your favorite. How do you respond?",
+    "left": "Give her your favorite",
+    "right": "Give her more spreadsheets"
+  },
+  {
+    "id": "l1d_348",
+    "who": "Intern chat",
+    "text": "A meme about “the mentor who’s always busy” appears in the intern chat. Everyone’s laughing. Seems it’s about you. What now?",
+    "left": "Laugh-react too",
+    "right": "Leave the chat"
+  },
+  {
+    "id": "l1d_349",
+    "who": "Timur, intern",
+    "text": "The intern was late because he “slept past his stop.” A week later you sleep past the same stop. He sees you rush in. What do you do?",
+    "left": "Admit it and laugh",
+    "right": "Put on a stern face"
+  },
+  {
+    "id": "l1d_350",
+    "who": "Team lead",
+    "text": "Your lead says the intern will be hired if you vouch for him. You have doubts. Your move?",
+    "left": "Vouch for him",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_351",
+    "who": "Mom",
+    "text": "7:50 a.m. Mom calls to ask if you’ve had breakfast. You’re running for the subway with a sandwich in your teeth. Answer?",
+    "left": "Answer on the run",
+    "right": "Decline and text later"
+  },
+  {
+    "id": "l1d_352",
+    "who": "Childhood friend",
+    "text": "A childhood friend writes: “I’m in your city just today, let’s have lunch!” Your lunch is fifteen minutes at noon, with a meeting at 12:30. Your choice?",
+    "left": "Take a long lunch",
+    "right": "Video chat instead"
+  },
+  {
+    "id": "l1d_353",
+    "who": "Grandma",
+    "text": "Grandma calls in the evening and spends forty minutes on her neighbor. You still have three emails and a raw dinner in the oven. What now?",
+    "left": "Listen to the end",
+    "right": "Promise to call on the weekend"
+  },
+  {
+    "id": "l1d_354",
+    "who": "Roommate",
+    "text": "Your roommate took over the bathroom at 7:30 and is singing opera with feeling. You leave at 7:45 and haven’t washed up. Knock?",
+    "left": "Knock politely",
+    "right": "Wash up in the kitchen"
+  },
+  {
+    "id": "l1d_355",
+    "who": "Sister",
+    "text": "Your sister texts during work hours: “Urgent! Which dress is better?” Fourteen photos attached. Your lead is right behind you. Your move?",
+    "left": "Vote for number three",
+    "right": "Reply in the evening"
+  },
+  {
+    "id": "l1d_356",
+    "who": "Friends",
+    "text": "Friends invite you to Friday board games for the third time. You decline for work for the third time. The chat jokes that you’re “a myth.” What do you say?",
+    "left": "Go this Friday",
+    "right": "Decline again"
+  },
+  {
+    "id": "l1d_357",
+    "who": "Partner",
+    "text": "Your partner made breakfast and wants to talk vacation plans. You’re running late for stand-up. How do you respond?",
+    "left": "Talk over coffee",
+    "right": "Promise to talk tonight"
+  },
+  {
+    "id": "l1d_358",
+    "who": "Mom",
+    "text": "Mom calls right in the middle of your client call. Twice. Three times. What if something happened? The client is mid-question. What do you do?",
+    "left": "Call back immediately",
+    "right": "Text “Will call back”"
+  },
+  {
+    "id": "l1d_359",
+    "who": "Friend",
+    "text": "A friend is celebrating a birthday at a restaurant. You arrive an hour late because of a report, and the cake is gone. How do you make up for it?",
+    "left": "Give a heartfelt toast",
+    "right": "Quietly sit in a corner"
+  },
+  {
+    "id": "l1d_360",
+    "who": "Nephew",
+    "text": "Your nephew sends a video: he rode a bike for the first time. You’re watching it for the fifth time in the elevator. Be late?",
+    "left": "Watch and melt",
+    "right": "Put the phone away"
+  },
+  {
+    "id": "l1d_361",
+    "who": "Family chat",
+    "text": "The family chat is planning who brings what to the country house on Saturday. You’re down for kebabs and a trailer. You don’t have a trailer. What do you do?",
+    "left": "Take it on",
+    "right": "Offer to bring salad"
+  },
+  {
+    "id": "l1d_362",
+    "who": "Partner",
+    "text": "Your partner got tired of waiting for you and ate both dinners. You get home at 9:30 p.m., starving. How do you react?",
+    "left": "Laugh and order pizza",
+    "right": "Sulk all evening"
+  },
+  {
+    "id": "l1d_363",
+    "who": "Dad",
+    "text": "At 6:30 a.m., Dad sends an article: “How to Become a Boss in a Year.” Captioned “This’ll come in handy.” Reply?",
+    "left": "Thank him with an emoji",
+    "right": "Read it on the subway"
+  },
+  {
+    "id": "l1d_364",
+    "who": "Friend",
+    "text": "A friend invites you to the cafe across the street for lunch. You promised your lead you’d eat at your desk to make the deadline. Your move?",
+    "left": "Go to the cafe",
+    "right": "Eat at your desk"
+  },
+  {
+    "id": "l1d_365",
+    "who": "Family",
+    "text": "You promised to be at your little brother’s school concert at 6 p.m. At 5:40, your lead calls you over “for a minute.” Your choice?",
+    "left": "Run to the concert",
+    "right": "Stay “a minute”"
+  },
+  {
+    "id": "l1d_366",
+    "who": "Parents",
+    "text": "Your parents decided to visit “for a week” and arrive Monday morning. You’re meeting them at the station at 7:00. What now?",
+    "left": "Meet them and be late",
+    "right": "Send them a taxi"
+  },
+  {
+    "id": "l1d_367",
+    "who": "Friend",
+    "text": "A friend asks for help with his résumé at lunchtime, because “you work in an office, you know this stuff.” You don’t. Your move?",
+    "left": "Help honestly",
+    "right": "Send an online template"
+  },
+  {
+    "id": "l1d_368",
+    "who": "Friends",
+    "text": "Friends threw a surprise party for your first month at work. It started at 7 p.m. You got free at 8:40. What do you say?",
+    "left": "Rush to catch the end",
+    "right": "Apologize and sleep"
+  },
+  {
+    "id": "l1d_369",
+    "who": "Cat",
+    "text": "The cat lay down on the shirt you set out for an important meeting. It’s covered in fur now. Five minutes left. How do you react?",
+    "left": "De-fur it with tape",
+    "right": "Wear a sweater"
+  },
+  {
+    "id": "l1d_370",
+    "who": "Mom",
+    "text": "Mom asks by text: “When did you last have a proper lunch?” You think about it and can’t remember. Your answer?",
+    "left": "“Today!”",
+    "right": "Go eat right now"
+  },
+  {
+    "id": "l1d_371",
+    "who": "Partner",
+    "text": "Your partner suggests a “phone-free evening.” Right then, your phone buzzes with the team chat. What now?",
+    "left": "Put the phone in a drawer",
+    "right": "Peek with one eye"
+  },
+  {
+    "id": "l1d_372",
+    "who": "Neighbor",
+    "text": "A neighbor in the elevator learns where you work and asks you to “get his nephew a job there.” You’re an intern on probation. What do you do?",
+    "left": "Promise to ask around",
+    "right": "Honestly explain"
+  },
+  {
+    "id": "l1d_373",
+    "who": "Friend",
+    "text": "A friend sends a beach photo: “Still at the office?” You are, it’s raining, and there’s a 3,000-row spreadsheet on screen. Reply?",
+    "left": "Send a photo of the ficus",
+    "right": "Don’t reply out of envy"
+  },
+  {
+    "id": "l1d_374",
+    "who": "Family",
+    "text": "At dinner, everyone’s discussing your weekend plans. Your only plan: “sleep.” The family wants to go to the country house. Your move?",
+    "left": "Go to the country",
+    "right": "Stay and sleep in"
+  },
+  {
+    "id": "l1d_375",
+    "who": "Neighbor’s daughter",
+    "text": "The neighbors’ daughter practices violin from 7 a.m. Today she’s especially inspired. Your alarm is set for 8:00. Your choice?",
+    "left": "Get up and be productive",
+    "right": "Earplugs and a pillow"
+  },
+  {
+    "id": "l1d_376",
+    "who": "Brother",
+    "text": "Your brother calls about a tax deduction. He’s sure that since you work in an office, you know everything about taxes. What now?",
+    "left": "Look it up together",
+    "right": "Suggest an expert"
+  },
+  {
+    "id": "l1d_377",
+    "who": "Friend",
+    "text": "A friend invites you to yoga at 8 p.m. You can make it if you leave right now. Your lead is still here. Your move?",
+    "left": "Leave for yoga",
+    "right": "Stay to the bitter end"
+  },
+  {
+    "id": "l1d_378",
+    "who": "Mom",
+    "text": "Mom sends a voice message: “You remember it’s Dad’s milestone birthday today?” You didn’t. No gift. What now?",
+    "left": "Ask to leave early",
+    "right": "Order a gift for delivery"
+  },
+  {
+    "id": "l1d_379",
+    "who": "Old classmate",
+    "text": "A former classmate writes: “I’m a department head now. How about you?” You’re a junior specialist. Your reply?",
+    "left": "Honest, with humor",
+    "right": "Embellish a little"
+  },
+  {
+    "id": "l1d_380",
+    "who": "Friends",
+    "text": "Friends text: “We’re at the bar across from your office!” You’re finishing a spreadsheet. Through the window, you can see them having fun. Your answer?",
+    "left": "Join them",
+    "right": "Wave from the window"
+  },
+  {
+    "id": "l1d_381",
+    "who": "Grandma",
+    "text": "Grandma packed you a container of meatballs this morning. The meatball aroma is spreading across the whole floor. Your reaction?",
+    "left": "Share with coworkers",
+    "right": "Hide them and endure"
+  },
+  {
+    "id": "l1d_382",
+    "who": "Partner",
+    "text": "Your partner calls midday: “Remember what day it is?” You don’t. A very long, very expressive pause follows. How do you get out of it?",
+    "left": "Confess honestly",
+    "right": "Say “Of course!” and google"
+  },
+  {
+    "id": "l1d_383",
+    "who": "Mom",
+    "text": "Mom needs help moving on Saturday. You promised your lead you’d finish a report over the weekend. What now?",
+    "left": "Help Mom",
+    "right": "Work on the report"
+  },
+  {
+    "id": "l1d_384",
+    "who": "Family chat",
+    "text": "The family chat wants a photo of your workspace “to see how you’re settling in.” Your desk is buried in papers and mugs. What do you do?",
+    "left": "Send a staged photo",
+    "right": "Send it as is"
+  },
+  {
+    "id": "l1d_385",
+    "who": "Friend",
+    "text": "A friend who already owes you money asks for more. You just got your first paycheck and wanted new sneakers. Your move?",
+    "left": "Lend it",
+    "right": "Say no"
+  },
+  {
+    "id": "l1d_386",
+    "who": "Sister",
+    "text": "Your sister asks you to babysit on Friday evening. You’re so tired from the week that you need a babysitter yourself. Your choice?",
+    "left": "Agree",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_387",
+    "who": "Parents",
+    "text": "Your parents ask when your vacation is so they can plan a family trip. You’re not eligible for six months. What now?",
+    "left": "Tell them honestly",
+    "right": "Promise to get time off"
+  },
+  {
+    "id": "l1d_388",
+    "who": "Friend",
+    "text": "A friend shares news at lunch: she’s getting married, and you’re her witness. The wedding is on a weekday, mid-reporting season. Your move?",
+    "left": "Happily agree",
+    "right": "Offer to be a guest"
+  },
+  {
+    "id": "l1d_389",
+    "who": "Partner",
+    "text": "Your partner says you mumble “approved” and “for signature” in your sleep. Time for a change?",
+    "left": "Take a day off",
+    "right": "Laugh and forget it"
+  },
+  {
+    "id": "l1d_390",
+    "who": "Friend",
+    "text": "A friend writes: “Want to run a 10K with me on Saturday?” The last time you ran was after a bus. What do you say?",
+    "left": "Sign up",
+    "right": "Promise to cheer"
+  },
+  {
+    "id": "l1d_391",
+    "who": "Family",
+    "text": "Your family asks if you’re coming to Sunday lunch. Your presentation is due Sunday. How do you respond?",
+    "left": "Go and work overnight",
+    "right": "Turn your family down"
+  },
+  {
+    "id": "l1d_392",
+    "who": "Friends",
+    "text": "Friends in the chat are debating where to celebrate New Year’s. Nobody asks you: “You’ll be working anyway.” What now?",
+    "left": "Protest and join them",
+    "right": "Say nothing"
+  },
+  {
+    "id": "l1d_393",
+    "who": "Mom",
+    "text": "Mom sends a “quick breakfast for busy people” recipe. You have to soak oats overnight, and you only remember in the morning. What do you do?",
+    "left": "Buy coffee and a bun",
+    "right": "Eat dry oats"
+  },
+  {
+    "id": "l1d_394",
+    "who": "Brother",
+    "text": "Your brother writes: “I need your signature at the notary, today before five.” You’re at work till six. Your move?",
+    "left": "Ask to leave early",
+    "right": "Move it to tomorrow"
+  },
+  {
+    "id": "l1d_395",
+    "who": "Friend",
+    "text": "For the first time in a month, you visit a friend. Ten minutes in, you’re not talking about life, but about your boss. Change the subject?",
+    "left": "Change the subject",
+    "right": "Vent to the end"
+  },
+  {
+    "id": "l1d_396",
+    "who": "Cat",
+    "text": "The cat woke you at 5 a.m. demanding breakfast. You can’t fall back asleep. Three hours till the alarm. Your choice?",
+    "left": "Get up and work",
+    "right": "Lie there petting the cat"
+  },
+  {
+    "id": "l1d_397",
+    "who": "Friend",
+    "text": "A friend is hurt you didn’t answer her message for two days. You saw it but had no time. What do you say?",
+    "left": "Apologize and call",
+    "right": "Send an emoji"
+  },
+  {
+    "id": "l1d_398",
+    "who": "Family",
+    "text": "Everyone at home is asleep, and you’re eating cold pasta over work emails. A note on the fridge: “We miss you.” What next?",
+    "left": "Close the laptop",
+    "right": "Finish the emails"
+  },
+  {
+    "id": "l1d_399",
+    "who": "Partner",
+    "text": "In the morning, your partner asks what time you’ll be home. You laugh. Your partner doesn’t. What now?",
+    "left": "Promise seven and keep it",
+    "right": "Say “We’ll see”"
+  },
+  {
+    "id": "l1d_400",
+    "who": "Mom",
+    "text": "Mom shows up at your office unannounced with homemade pies “to meet the bosses.” She’s at reception, waving at the guard. Your move?",
+    "left": "Introduce her to everyone",
+    "right": "Intercept her downstairs"
+  },
+  {
+    "id": "l1d_401",
+    "who": "Gym",
+    "text": "You bought a membership at the gym next to the office to work out in the mornings. It’s 7:00, dark and wet outside. Go?",
+    "left": "Go work out",
+    "right": "Sleep another hour"
+  },
+  {
+    "id": "l1d_402",
+    "who": "Lunch break",
+    "text": "At lunch, you could walk in the park or sit in the shared kitchen where coworkers discuss TV shows. Where to?",
+    "left": "The park, alone",
+    "right": "The kitchen, with coworkers"
+  },
+  {
+    "id": "l1d_403",
+    "who": "Guitar",
+    "text": "Your guitar has stood in the corner for three months, ever since you started this job. Tonight’s free, but you only have energy to stare at the ceiling. What do you do?",
+    "left": "Play a couple of chords",
+    "right": "Stare at the ceiling"
+  },
+  {
+    "id": "l1d_404",
+    "who": "Alarm",
+    "text": "You went to bed at 2 a.m. because of “one more episode.” The alarm rings at 7:00. You could store office supplies in the bags under your eyes. Your reaction?",
+    "left": "Get up on time",
+    "right": "Snooze for 30 minutes"
+  },
+  {
+    "id": "l1d_405",
+    "who": "Runner coworker",
+    "text": "A coworker invites you to the company running club. Tuesdays at 7 a.m., before work. Afterward everyone’s peppy and slightly suspicious. What now?",
+    "left": "Sign up",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1d_406",
+    "who": "Art classes",
+    "text": "You signed up for art classes on Wednesdays. It’s Wednesday, and at 5:55 your lead asks you to “stay an extra half hour.” What do you do?",
+    "left": "Leave for class",
+    "right": "Stay late"
+  },
+  {
+    "id": "l1d_407",
+    "who": "Bike",
+    "text": "Sunny morning. You could bike to work — forty minutes — and arrive energized but a bit sweaty. Or take the subway as usual. Your move?",
+    "left": "Bike",
+    "right": "Subway"
+  },
+  {
+    "id": "l1d_408",
+    "who": "Company soccer",
+    "text": "The team is putting together a squad for the company soccer tournament. You haven’t played since school. They’re one player short. Your choice?",
+    "left": "Take the field",
+    "right": "Be a fan"
+  },
+  {
+    "id": "l1d_409",
+    "who": "Sleep",
+    "text": "Time to sleep, but you’re lying in bed mentally editing tomorrow’s presentation. It’s midnight. What now?",
+    "left": "Get up and finish it",
+    "right": "Jot notes and sleep"
+  },
+  {
+    "id": "l1d_410",
+    "who": "Meditation",
+    "text": "Your meditation app suggests a ten-minute morning session. You’re already five minutes late. Meditate?",
+    "left": "Meditate on the subway",
+    "right": "Skip it today"
+  },
+  {
+    "id": "l1d_411",
+    "who": "Office yoga",
+    "text": "HR runs lunchtime yoga in the meeting room. The instructor asks everyone into “downward dog.” Your lead is right next to you. What now?",
+    "left": "Strike the pose",
+    "right": "Escape to lunch"
+  },
+  {
+    "id": "l1d_412",
+    "who": "Book",
+    "text": "You bought a book a month ago and read two pages. Tonight’s free, but your hand keeps reaching for the work chat. Your move?",
+    "left": "Read the book",
+    "right": "Check the work chat"
+  },
+  {
+    "id": "l1d_413",
+    "who": "Alarm",
+    "text": "The alarm went off half an hour early: you set it last night to do a workout. Now the idea feels like mockery. What do you say?",
+    "left": "Do the workout",
+    "right": "Turn it off and sleep"
+  },
+  {
+    "id": "l1d_414",
+    "who": "Chess coworker",
+    "text": "A coworker suggests lunchtime chess. Games last longer than the break. Your lead has walked by twice already. Your reaction?",
+    "left": "Finish the game",
+    "right": "Save it for tomorrow"
+  },
+  {
+    "id": "l1d_415",
+    "who": "Dancing",
+    "text": "You’ve long dreamed of dancing. The studio near home opened evening classes. They end at 10 p.m., and you’re up at 7. What now?",
+    "left": "Sign up",
+    "right": "Wait for vacation"
+  },
+  {
+    "id": "l1d_416",
+    "who": "Work chat",
+    "text": "Saturday, 9 a.m. Your lead writes in the work chat: “Anyone free today? There’s a small task.” You’re in pajamas. What do you do?",
+    "left": "Volunteer",
+    "right": "Don’t notice till Monday"
+  },
+  {
+    "id": "l1d_417",
+    "who": "Pool",
+    "text": "You brought your swim bag to the office to go after work. It’s damp — you forgot to take out the towel last time. Your move?",
+    "left": "Go anyway",
+    "right": "Skip the pool"
+  },
+  {
+    "id": "l1d_418",
+    "who": "Messenger",
+    "text": "Friday, 10:30 p.m. A coworker writes: “Still up? Want to discuss an idea for Monday.” You’re dozing off on the couch. Your choice?",
+    "left": "Discuss it now",
+    "right": "Reply “Tomorrow”"
+  },
+  {
+    "id": "l1d_419",
+    "who": "Morning run",
+    "text": "You go for a morning run and meet your lead in the park. He runs too and suggests running together. What now?",
+    "left": "Run with him",
+    "right": "Turn down another path"
+  },
+  {
+    "id": "l1d_420",
+    "who": "Hobby",
+    "text": "A coworker found out you knit and publicly ordered a scarf. Now five more people want scarves. Your move?",
+    "left": "Knit for everyone",
+    "right": "Say no"
+  },
+  {
+    "id": "l1d_421",
+    "who": "Saturday email",
+    "text": "Saturday, 7 p.m. An email from your lead marked “important.” Subject: “Thinking out loud.” Open it?",
+    "left": "Open and reply",
+    "right": "Open on Monday"
+  },
+  {
+    "id": "l1d_422",
+    "who": "Sleep",
+    "text": "You woke at 4:30 a.m. thinking you forgot to send an email. You did send it; you’re just not sure. Get up and check?",
+    "left": "Check on your phone",
+    "right": "Roll over and sleep"
+  },
+  {
+    "id": "l1d_423",
+    "who": "Sports club",
+    "text": "The company sports club holds a plank contest right in the hallway. You last eight seconds. Everyone’s watching. What do you say?",
+    "left": "Laugh at yourself",
+    "right": "Sign up for training"
+  },
+  {
+    "id": "l1d_424",
+    "who": "Sunday",
+    "text": "Sunday evening. You feel the familiar dread of Monday. You still have a couple hours of freedom. Your reaction?",
+    "left": "Walk by the river",
+    "right": "Clear email in advance"
+  },
+  {
+    "id": "l1d_425",
+    "who": "Morning coffee",
+    "text": "You used to brew stovetop coffee and read in the mornings. Now it’s instant on the run. Today you got up a bit early. What now?",
+    "left": "Brew it properly",
+    "right": "Get to the office early"
+  },
+  {
+    "id": "l1d_426",
+    "who": "Coworker",
+    "text": "A coworker brags he ran a half marathon over the weekend and asks what you did. You slept 14 hours. What do you say?",
+    "left": "Tell the truth",
+    "right": "Say you were “recovering”"
+  },
+  {
+    "id": "l1d_427",
+    "who": "Messenger",
+    "text": "Sunday, 9 p.m. Your lead schedules a “quick 15-minute call” for Monday at 8:00. The invite is in your calendar. Your move?",
+    "left": "Accept",
+    "right": "Propose 9:30"
+  },
+  {
+    "id": "l1d_428",
+    "who": "Fitness tracker",
+    "text": "Your fitness tracker reports you slept 4 hours 12 minutes, “sleep quality: low.” Thanks, tracker. Your choice?",
+    "left": "Turn the tracker off",
+    "right": "Bed at ten tonight"
+  },
+  {
+    "id": "l1d_429",
+    "who": "Chess club",
+    "text": "A lunchtime interdepartmental chess tournament. Your team can’t field a full lineup without you. What now?",
+    "left": "Play",
+    "right": "Keep working"
+  },
+  {
+    "id": "l1d_430",
+    "who": "Series",
+    "text": "Tonight: finish the series you’ve waited all year for, or sleep early to be sharp for tomorrow’s report. Your move?",
+    "left": "Series till 2 a.m.",
+    "right": "Bed at 11"
+  },
+  {
+    "id": "l1d_431",
+    "who": "Saturday alarm",
+    "text": "Saturday. The alarm went off at 7:00 out of work habit. Sleep more, or finally hit the farmers’ market?",
+    "left": "Keep sleeping",
+    "right": "Head to the market"
+  },
+  {
+    "id": "l1d_432",
+    "who": "Coworker",
+    "text": "A coworker invites you on an overnight mountain hike on Saturday. You wanted rest, but not in a tent. Your reaction?",
+    "left": "Go hiking",
+    "right": "Stay home"
+  },
+  {
+    "id": "l1d_433",
+    "who": "Work laptop",
+    "text": "You brought the work laptop home “just in case.” It’s 10 p.m., and it beckons from the desk with a blinking notification light. What now?",
+    "left": "Put it in the closet",
+    "right": "Open it “for five minutes”"
+  },
+  {
+    "id": "l1d_434",
+    "who": "Bike",
+    "text": "Your bike got a flat on the way to work. Two miles to the office, twenty minutes to stand-up. What now?",
+    "left": "Walk it",
+    "right": "Get a taxi with the bike"
+  },
+  {
+    "id": "l1d_435",
+    "who": "Company volleyball",
+    "text": "You’re invited to company volleyball after work. You last saw a ball in school. Coworkers promise “not to hit hard.” What do you do?",
+    "left": "Go play",
+    "right": "Go home"
+  },
+  {
+    "id": "l1d_436",
+    "who": "Messenger",
+    "text": "Sunday. A coworker posts a photo from the office in the group chat: “Anyone else here?” You’re at the country house. Your move?",
+    "left": "Send a garden photo",
+    "right": "Stay quiet"
+  },
+  {
+    "id": "l1d_437",
+    "who": "Monday morning",
+    "text": "You planned to work out, eat breakfast, and read. You woke up ten minutes before you had to leave. Your choice?",
+    "left": "At least eat breakfast",
+    "right": "Run to the office"
+  },
+  {
+    "id": "l1d_438",
+    "who": "Coworker",
+    "text": "At lunch, a coworker shares that he learned Spanish with an app in six months. You downloaded the same app and quit after a day. Your choice?",
+    "left": "Try again",
+    "right": "Accept it’s not for you"
+  },
+  {
+    "id": "l1d_439",
+    "who": "Inner voice",
+    "text": "Friday, 6 p.m. You promised yourself not to open work email this weekend. It has already pinged twice. What now?",
+    "left": "Mute notifications",
+    "right": "Take a look"
+  },
+  {
+    "id": "l1d_440",
+    "who": "Evening plan",
+    "text": "You decided this morning: leave at six sharp and go swimming. At 9:15, your lead books a meeting at 5:30. Your move?",
+    "left": "Decline the meeting",
+    "right": "Accept the meeting"
+  },
+  {
+    "id": "l1d_441",
+    "who": "Fitness app",
+    "text": "Your fitness app reproachfully notes you’ve walked 400 steps today. It’s 3 p.m., and most of those were to the coffee machine. What do you say?",
+    "left": "Take the stairs",
+    "right": "Ignore it"
+  },
+  {
+    "id": "l1d_442",
+    "who": "Podcast",
+    "text": "You started a time-management podcast to find time for hobbies. It’s three hours long. Your reaction?",
+    "left": "Listen at 2x",
+    "right": "Turn it off and go for a walk"
+  },
+  {
+    "id": "l1d_443",
+    "who": "Sleep",
+    "text": "You’ve slept five hours a night for a week. Today’s an important meeting, and you’re nodding off on the subway. Buy an energy drink?",
+    "left": "Buy an energy drink",
+    "right": "Drink water and hope"
+  },
+  {
+    "id": "l1d_444",
+    "who": "Coworker",
+    "text": "A coworker suggests signing up for pottery classes together on Thursdays — the only evening you usually make it to the store. What now?",
+    "left": "Sign up",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_445",
+    "who": "Messenger",
+    "text": "Saturday, 11:40 p.m. Your lead liked an old vacation photo of yours on social media. What could that mean?",
+    "left": "Delete it, just in case",
+    "right": "Don’t read into it"
+  },
+  {
+    "id": "l1d_446",
+    "who": "Exercise bike",
+    "text": "The office got an exercise bike with a laptop stand: “Work and slim down.” It’s free. Try it?",
+    "left": "Work and pedal",
+    "right": "Sit as usual"
+  },
+  {
+    "id": "l1d_447",
+    "who": "Lunch walk",
+    "text": "You decided to walk every lunch to clear your head. Today it’s pouring, and coworkers all invite you to the cafeteria. What do you do?",
+    "left": "Walk with an umbrella",
+    "right": "Go to the cafeteria"
+  },
+  {
+    "id": "l1d_448",
+    "who": "Inner voice",
+    "text": "Evening. You scroll social media where everyone’s traveling, running marathons, and baking bread. You ate instant noodles over the sink. Your move?",
+    "left": "Close the app and read",
+    "right": "Go straight to bed"
+  },
+  {
+    "id": "l1d_449",
+    "who": "Sunday",
+    "text": "Sunday morning. You woke up refreshed for the first time in a month. Do something for yourself, or prep for the week?",
+    "left": "For yourself",
+    "right": "Prep for the week"
+  },
+  {
+    "id": "l1d_450",
+    "who": "Company chat",
+    "text": "The company chat announces a 5K run on Saturday morning. Participation is “voluntary, but highly encouraged.” What now?",
+    "left": "Run it",
+    "right": "Don’t register"
+  },
+  {
+    "id": "l1d_451",
+    "who": "Inner voice",
+    "text": "Monday morning. You woke up tired even after nine hours of sleep. The thought of the office makes you want to become a cactus. What now?",
+    "left": "Take an unpaid day off",
+    "right": "Go in and hold on"
+  },
+  {
+    "id": "l1d_452",
+    "who": "Mirror",
+    "text": "Brushing your teeth, you realize you haven’t smiled before lunch for three days straight. Your reflection looks like a quarterly report. Your move?",
+    "left": "Play your favorite song",
+    "right": "No time, run"
+  },
+  {
+    "id": "l1d_453",
+    "who": "Coffee machine",
+    "text": "You realize you’re on your fourth coffee before 10 a.m. and still rereading the same sentence for the fifth time. What do you say?",
+    "left": "Step out for air",
+    "right": "Fifth coffee"
+  },
+  {
+    "id": "l1d_454",
+    "who": "Subway",
+    "text": "You rode past your stop because you were lost in work thoughts. Again. Third time this week. Your reaction?",
+    "left": "Call ahead and warn them",
+    "right": "Quietly be late"
+  },
+  {
+    "id": "l1d_455",
+    "who": "Coworker",
+    "text": "A coworker remarks: “You’ve seemed kind of colorless lately.” You sense it’s not about your sweater. Talk about it?",
+    "left": "Admit you’re tired",
+    "right": "Laugh it off"
+  },
+  {
+    "id": "l1d_456",
+    "who": "Morning chat",
+    "text": "7:10 a.m. Twenty messages in the work chat already, though the workday starts at nine. You’re still in bed. Read them?",
+    "left": "Read them in bed",
+    "right": "Read them at the office"
+  },
+  {
+    "id": "l1d_457",
+    "who": "Inner voice",
+    "text": "You’ve stood at the office door for five minutes and can’t go in. Your legs won’t move. Security is eyeing you. What now?",
+    "left": "Force yourself in",
+    "right": "Walk around the block"
+  },
+  {
+    "id": "l1d_458",
+    "who": "Alarm",
+    "text": "The alarm rings, and you dream of an illness that would legally let you stay home. Nothing serious, just a week’s worth. Warning sign?",
+    "left": "Book a therapist",
+    "right": "Get up, don’t think"
+  },
+  {
+    "id": "l1d_459",
+    "who": "Team lead",
+    "text": "Your lead asks why you’ve been silent at stand-up for three days. You used to at least joke. What do you say?",
+    "left": "Honestly admit fatigue",
+    "right": "Say everything’s fine"
+  },
+  {
+    "id": "l1d_460",
+    "who": "Calendar",
+    "text": "You open your calendar and find your last work-free day off was six weeks ago. Request a day off?",
+    "left": "Request it",
+    "right": "Hold out till vacation"
+  },
+  {
+    "id": "l1d_461",
+    "who": "Morning bus",
+    "text": "You fell asleep on the bus and woke up repeating “Yes, I’ll have it by lunch.” Your neighbor looks at you with sympathy. What do you do?",
+    "left": "Burst out laughing",
+    "right": "Pretend it was a call"
+  },
+  {
+    "id": "l1d_462",
+    "who": "Messenger",
+    "text": "Saturday morning. A coworker writes: “Can you check one number in the report? Five minutes.” You just made coffee. Your move?",
+    "left": "Check the number",
+    "right": "Reply on Monday"
+  },
+  {
+    "id": "l1d_463",
+    "who": "Inner voice",
+    "text": "You notice you don’t care whether you get praised or scolded today. You used to care. Your choice?",
+    "left": "Talk to loved ones",
+    "right": "Keep going on autopilot"
+  },
+  {
+    "id": "l1d_464",
+    "who": "HR",
+    "text": "HR sends a survey: “How do you feel at work?” Options range from “great” to “very good.” Your answer is “nothing.” What now?",
+    "left": "Write “nothing” in comments",
+    "right": "Choose “good”"
+  },
+  {
+    "id": "l1d_465",
+    "who": "Team lead",
+    "text": "Your lead suggests you “spearhead a new initiative,” since you’re so responsible. You’re already swamped. Your move?",
+    "left": "Decline",
+    "right": "Agree"
+  },
+  {
+    "id": "l1d_466",
+    "who": "Sunday morning",
+    "text": "Sunday morning. You woke up from dreaming you were answering an email. You want to check you didn’t actually send it. What do you do?",
+    "left": "Check your email",
+    "right": "Hide the phone till noon"
+  },
+  {
+    "id": "l1d_467",
+    "who": "Coworker",
+    "text": "In the morning, a coworker leaves a chocolate bar and a note: “You’re holding up great.” You nearly cry at your desk. Your reaction?",
+    "left": "Thank her and talk",
+    "right": "Hide your feelings"
+  },
+  {
+    "id": "l1d_468",
+    "who": "To-do list",
+    "text": "Today’s to-do list is longer than the workday. You add one more item: “don’t lose your mind.” What now?",
+    "left": "Cross off half",
+    "right": "Try to do it all"
+  },
+  {
+    "id": "l1d_469",
+    "who": "Inner voice",
+    "text": "You woke up thinking “What’s the point of all this?” The kettle boiled, but no answer. What do you do with this morning?",
+    "left": "Have a slow breakfast",
+    "right": "Bury yourself in tasks"
+  },
+  {
+    "id": "l1d_470",
+    "who": "Mentor",
+    "text": "Your mentor pulls you aside: “Listen, you look completely worn out. Take a day off, I’ll cover.” Accept?",
+    "left": "Accept",
+    "right": "Refuse"
+  },
+  {
+    "id": "l1d_471",
+    "who": "Team lead",
+    "text": "Your lead suggests coming in Saturday “for half a day” to tie up loose ends. He promises “a day off sometime later.” What do you do?",
+    "left": "Come in Saturday",
+    "right": "Decline"
+  },
+  {
+    "id": "l1d_472",
+    "who": "Inner voice",
+    "text": "You’ve stared at a spreadsheet for twenty minutes and haven’t done a single thing. Your brain just refuses. Your move?",
+    "left": "Take a walk break",
+    "right": "Sit till it works"
+  },
+  {
+    "id": "l1d_473",
+    "who": "Messenger",
+    "text": "Friday, 9 p.m. Your lead writes: “Have a great weekend! P.S. Need the report Monday at 9:00.” It’s not started. Your choice?",
+    "left": "Work Saturday",
+    "right": "Start Monday at seven"
+  },
+  {
+    "id": "l1d_474",
+    "who": "Inner voice",
+    "text": "You got home, sat on the hallway floor, and stayed there twenty minutes without taking off your jacket. Sound familiar?",
+    "left": "Call a friend",
+    "right": "Open the laptop"
+  },
+  {
+    "id": "l1d_475",
+    "who": "Work chat",
+    "text": "11:15 p.m. A coworker posts “good night” in the group chat, followed by twenty project questions. Answer?",
+    "left": "Answer now",
+    "right": "Mute till morning"
+  },
+  {
+    "id": "l1d_476",
+    "who": "Messenger",
+    "text": "Sunday, 8 p.m. A message from your lead: “Can you come in early tomorrow?” No explanation. What now?",
+    "left": "Reply “Of course”",
+    "right": "Ask how early"
+  },
+  {
+    "id": "l1d_477",
+    "who": "Inner voice",
+    "text": "You notice you no longer look forward to weekends: you just lie there dreading Monday. Time for a change?",
+    "left": "Plan a mini-trip",
+    "right": "Keep enduring"
+  },
+  {
+    "id": "l1d_478",
+    "who": "Family",
+    "text": "At home, they say you’ve become irritable and always on your phone. You’re on your phone right now. Your move?",
+    "left": "Put the phone down",
+    "right": "Snap back"
+  },
+  {
+    "id": "l1d_479",
+    "who": "Email",
+    "text": "Friday, 6:05 p.m. Jacket on, and an email arrives: “Not urgent, but if you get it done today, that’d be great.” What do you say?",
+    "left": "Do it today",
+    "right": "Leave it for Monday"
+  },
+  {
+    "id": "l1d_480",
+    "who": "Inner voice",
+    "text": "Third evening in a row you’re having chips for dinner because you’re too drained to cook. The fridge looks at you reproachfully. Your reaction?",
+    "left": "Order real food",
+    "right": "Chips again"
+  },
+  {
+    "id": "l1d_481",
+    "who": "Work phone",
+    "text": "You turned off your work phone for the weekend for the first time in a month. On Monday: 47 missed calls. Your move?",
+    "left": "Go through them in order",
+    "right": "Answer only important ones"
+  },
+  {
+    "id": "l1d_482",
+    "who": "Messenger",
+    "text": "Saturday night at the movies with friends, and your lead writes: “Urgent! Call me.” It’s the best part of the film. What now?",
+    "left": "Step out and call",
+    "right": "Finish, then call back"
+  },
+  {
+    "id": "l1d_483",
+    "who": "Inner voice",
+    "text": "On your day off, you catch yourself ironing shirts and mentally rehearsing Monday’s stand-up. Stop?",
+    "left": "Put on a comedy",
+    "right": "Finish rehearsing"
+  },
+  {
+    "id": "l1d_484",
+    "who": "Coworker",
+    "text": "A coworker texts in the evening: “I think I’m burning out. How about you?” You stare at the message for a long time, not knowing what to say. What do you do?",
+    "left": "Suggest meeting to talk",
+    "right": "Send “hang in there”"
+  },
+  {
+    "id": "l1d_485",
+    "who": "Work laptop",
+    "text": "You promised yourself not to open the laptop after eight. It’s 8:01. Notification: “You were mentioned.” Your move?",
+    "left": "Open it",
+    "right": "Don’t open it"
+  },
+  {
+    "id": "l1d_486",
+    "who": "Inner voice",
+    "text": "In the evening you suddenly cry at a yogurt commercial. It’s not the yogurt or the ad. You’re just very, very tired. What do you do?",
+    "left": "Bed at nine",
+    "right": "Finish tasks first"
+  },
+  {
+    "id": "l1d_487",
+    "who": "Vacation",
+    "text": "Four months till vacation. Every evening you count the days on a calculator. Today: 121. Your choice?",
+    "left": "Take a couple days early",
+    "right": "Endure till the end"
+  },
+  {
+    "id": "l1d_488",
+    "who": "Team lead",
+    "text": "Your lead notices you’ve stayed late all week and says: “Great job, but go home.” How do you respond?",
+    "left": "Listen to him",
+    "right": "Stay another hour"
+  },
+  {
+    "id": "l1d_489",
+    "who": "Messenger",
+    "text": "Sunday, 10 p.m. A coworker forwards a client email: “First thing in the morning.” You’re about to sleep. What now?",
+    "left": "Read it before bed",
+    "right": "Read it in the morning"
+  },
+  {
+    "id": "l1d_490",
+    "who": "Inner voice",
+    "text": "In the evening you realize you can’t remember the last time you laughed. Not a polite smile — really laughed. Your move?",
+    "left": "Invite friends this weekend",
+    "right": "Stare at the wall"
+  },
+  {
+    "id": "l1d_491",
+    "who": "Friday",
+    "text": "Friday, 7 p.m. Everyone’s gone, and you’re sitting in the empty office, unsure why you stayed. Nothing left for today. What do you say?",
+    "left": "Leave immediately",
+    "right": "Do something else"
+  },
+  {
+    "id": "l1d_492",
+    "who": "Family chat",
+    "text": "Mom writes in the family chat: “You’ve kind of disappeared. Everything okay?” You type “yes” and delete it. Your reaction?",
+    "left": "Call Mom",
+    "right": "Write “yes”"
+  },
+  {
+    "id": "l1d_493",
+    "who": "Inner voice",
+    "text": "You got home, lay on the couch, and realized you’d had your shoulders up by your ears all day. They ache. Do something?",
+    "left": "Book a massage",
+    "right": "Lie there and endure"
+  },
+  {
+    "id": "l1d_494",
+    "who": "Messenger",
+    "text": "Friday, 11:30 p.m. Your lead sends a Monday meme captioned “Get ready.” Funny?",
+    "left": "Reply with an emoji",
+    "right": "Don’t reply"
+  },
+  {
+    "id": "l1d_495",
+    "who": "Inner voice",
+    "text": "Evening. You opened a job site “just to look” and spent two hours there. No applications sent. What now?",
+    "left": "Send one application",
+    "right": "Close it and forget"
+  },
+  {
+    "id": "l1d_496",
+    "who": "Friend",
+    "text": "A friend sends a “Are You Burned Out?” quiz. You maxed out every item. What do you do?",
+    "left": "Take a vacation",
+    "right": "Laugh and ignore it"
+  },
+  {
+    "id": "l1d_497",
+    "who": "Work email",
+    "text": "You catch yourself checking work email at the theater during intermission. The play is about the meaning of life. Your move?",
+    "left": "Put the phone away",
+    "right": "Answer a couple emails"
+  },
+  {
+    "id": "l1d_498",
+    "who": "Inner voice",
+    "text": "Sunday evening. You’re meal-prepping for the week, ironing shirts, and planning the day. Is this self-care or battle prep?",
+    "left": "Call it self-care",
+    "right": "Don’t prep anything"
+  },
+  {
+    "id": "l1d_499",
+    "who": "Team lead",
+    "text": "At the end of the day, your lead asks how you’re doing. First time in three months. You’re not ready for that question. Your choice?",
+    "left": "Tell him honestly",
+    "right": "Say “Fine”"
+  },
+  {
+    "id": "l1d_500",
+    "who": "Inner voice",
+    "text": "Friday. The week is over, and you survived. No energy to celebrate, but you made it. How do you mark it?",
+    "left": "Blissfully do nothing",
+    "right": "Plan Monday right away"
+  }
+]

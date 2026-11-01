@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l3b_001",
+  "who": "On-call engineer",
+  "text": "6:40 a.m. The company website has been down for forty minutes, and the on-call engineer keeps sending nothing but a fire emoji. Join the call straight from the bathroom?",
+  "left": "Wait for a proper report",
+  "right": "Dive into the call in a towel"
+ },
+ {
+  "id": "l3b_002",
+  "who": "Board of directors",
+  "text": "The majority shareholder heard about the app outage from the news before hearing it from you. His message: “So I have to read the papers to know what’s going on in my own company?”",
+  "left": "Call him and repent",
+  "right": "Figure out the outage first"
+ },
+ {
+  "id": "l3b_003",
+  "who": "CTO",
+  "text": "The CTO suggests rolling back yesterday’s release — which kills the new feature you proudly unveiled to the press yesterday. Roll back?",
+  "left": "Roll back and eat the shame",
+  "right": "Fix it live, no rollback"
+ },
+ {
+  "id": "l3b_004",
+  "who": "Call center",
+  "text": "A billing glitch has the call center taking 300 calls an hour since morning. The shift lead is begging for reinforcements from the office. Send in middle management?",
+  "left": "Everyone on the phones",
+  "right": "Let them handle it"
+ },
+ {
+  "id": "l3b_005",
+  "who": "Lobby display",
+  "text": "The giant lobby screen showing service uptime is proudly glowing 94.2% today. Guests for the investor breakfast are walking right past it. Switch it off?",
+  "left": "Yank the plug",
+  "right": "Leave it: we value transparency"
+ },
+ {
+  "id": "l3b_006",
+  "who": "Warehouse manager",
+  "text": "Morning call from the warehouse: after an update, the sorting robot is arranging parcels alphabetically by the couriers’ last names. Stop the conveyor for half a day?",
+  "left": "Stop it and investigate",
+  "right": "Whole office sorts by hand"
+ },
+ {
+  "id": "l3b_007",
+  "who": "Press office",
+  "text": "The press office asks what to call the outage in the official statement: “maintenance” or, honestly, “a failure.” Journalists are already using the word “collapse.”",
+  "left": "“Scheduled maintenance”",
+  "right": "Honest: “It broke, we’re fixing it”"
+ },
+ {
+  "id": "l3b_008",
+  "who": "Alarm clock",
+  "text": "Your alarm says 5:30, and your phone shows 47 missed calls. The payment gateway went down overnight and nobody dared wake you. Scold the on-call team?",
+  "left": "Praise their independence",
+  "right": "New rule: always wake me"
+ },
+ {
+  "id": "l3b_009",
+  "who": "Executive director",
+  "text": "At the morning meeting it turns out the backup data center has been paid for three years and never once tested. Today it finally has to be switched on. Tell the board?",
+  "left": "Confess to the board now",
+  "right": "Quietly test it first"
+ },
+ {
+  "id": "l3b_010",
+  "who": "Supplier",
+  "text": "Your main parts supplier says the truck is stuck at the border and the line will stop by lunch. Emergency air freight costs triple. Pay up?",
+  "left": "Pay for the plane",
+  "right": "Stop the line for a day"
+ },
+ {
+  "id": "l3b_011",
+  "who": "Coffee machine",
+  "text": "The reception coffee machine dies on the very day the quality inspectors visit. The secretary offers to run to the café for twenty cappuccinos. Allow it?",
+  "left": "Send her for coffee",
+  "right": "Serve water from the cooler"
+ },
+ {
+  "id": "l3b_012",
+  "who": "CFO",
+  "text": "The CFO is tallying losses from last night’s outage and wants to postpone quarterly bonuses. The engineers heroically fixed everything all night. Your call?",
+  "left": "Keep bonuses for the heroes",
+  "right": "Freeze bonuses for everyone"
+ },
+ {
+  "id": "l3b_013",
+  "who": "Exec chat",
+  "text": "Since 7 a.m. the exec chat has been arguing whose fault the outage is: IT, product, or marketing, who “overpromised.” Step in?",
+  "left": "End it with an order",
+  "right": "Let them blow off steam"
+ },
+ {
+  "id": "l3b_014",
+  "who": "Support bot",
+  "text": "After the outage, the website support bot answers every customer with one line: “Don’t worry, everything’s under control, probably.” Turn it off?",
+  "left": "Off — let humans take calls",
+  "right": "Keep it, it’s kind of cute"
+ },
+ {
+  "id": "l3b_015",
+  "who": "Security",
+  "text": "The server crash killed the electronic badges. Two hundred employees are queuing at the turnstiles, and security asks permission to let people in by ID. What do you do?",
+  "left": "Let them in with ID",
+  "right": "Wait for the system fix"
+ },
+ {
+  "id": "l3b_016",
+  "who": "IT director",
+  "text": "The IT director asks for one thing at the meeting: “Please stop asking every five minutes when it’ll be fixed.” You’ve already asked nine times. Hold back?",
+  "left": "Leave the room and wait",
+  "right": "Ask a tenth time"
+ },
+ {
+  "id": "l3b_017",
+  "who": "Client relations",
+  "text": "Your biggest client demands compensation for four hours of downtime — equal to a full year’s contract. Legal says the contract entitles them to a twentieth of that. Haggle?",
+  "left": "Pay generously, keep them",
+  "right": "Stick to the contract"
+ },
+ {
+  "id": "l3b_018",
+  "who": "Board of directors",
+  "text": "The board wants a written report on the outage’s causes by 3 p.m. Engineers will know the cause by evening, at best. What do you write?",
+  "left": "Honest: “We don’t know yet”",
+  "right": "A “most likely” version"
+ },
+ {
+  "id": "l3b_019",
+  "who": "Product manager",
+  "text": "The product manager wants to turn the outage into a promo: “We went down, you get 20% off!” Marketing loves it, finance is horrified. Approve it?",
+  "left": "Approve the discount",
+  "right": "Just apologize"
+ },
+ {
+  "id": "l3b_020",
+  "who": "News feed",
+  "text": "While you’re at lunch, the outage hits the top of the news. Most-liked comment: “Do they even have a CEO?” Finish your soup?",
+  "left": "Calmly finish the soup",
+  "right": "Ditch the soup, go on air"
+ },
+ {
+  "id": "l3b_021",
+  "who": "Chief engineer",
+  "text": "The chief engineer found the cause: a bug in code he himself wrote five years ago. He asks you not to name him at the post-mortem. Agree?",
+  "left": "No names",
+  "right": "Name him: accountability"
+ },
+ {
+  "id": "l3b_022",
+  "who": "Logistics manager",
+  "text": "Your packaging supplier went bankrupt; in a week there’ll be nothing to pack products in. Logistics found a replacement: bright pink boxes. Take them?",
+  "left": "Pink boxes it is",
+  "right": "Keep searching blindly"
+ },
+ {
+  "id": "l3b_023",
+  "who": "Quality control",
+  "text": "Quality control found a defective batch that’s already on store shelves. Announce a recall now, or first assess the scale?",
+  "left": "Recall immediately",
+  "right": "Crunch the numbers first"
+ },
+ {
+  "id": "l3b_024",
+  "who": "Hero employee",
+  "text": "An intern single-handedly found the source of the outage while the seniors hunted for someone to blame. He’s shy and asks not to be praised publicly. Reward him?",
+  "left": "Reward him in front of all",
+  "right": "Give a quiet bonus"
+ },
+ {
+  "id": "l3b_025",
+  "who": "News column",
+  "text": "An industry site publishes “Five Signs a Company Is on Its Last Legs.” Four of the five are lifted straight from yesterday’s outage. Respond?",
+  "left": "Write a rebuttal",
+  "right": "Ignore the article"
+ },
+ {
+  "id": "l3b_026",
+  "who": "Major partner",
+  "text": "Your distribution partner offers to take over your logistics for a while, “as a friend.” The fine print: five-year exclusivity. Sign?",
+  "left": "Sign and save the deadlines",
+  "right": "Refuse and improvise"
+ },
+ {
+  "id": "l3b_027",
+  "who": "Shift supervisor",
+  "text": "The plant stopped because of a broken part made in only one country. A mechanic offers to machine a copy in his brother-in-law’s garage. Risk it?",
+  "left": "Trust the garage",
+  "right": "Wait three weeks for the real one"
+ },
+ {
+  "id": "l3b_028",
+  "who": "Data breach",
+  "text": "The security specialist goes pale: the customer address database has been posted on a forum. The law requires notifying customers. Email all 400,000 today?",
+  "left": "Notify them today",
+  "right": "Verify it’s real first"
+ },
+ {
+  "id": "l3b_029",
+  "who": "Security director",
+  "text": "The breach investigation shows the database password was “Admin2019,” written on a sticky note on a monitor. Your monitor. How do you present this at the review?",
+  "left": "Own it publicly",
+  "right": "Call it “human error”"
+ },
+ {
+  "id": "l3b_030",
+  "who": "Lawyer",
+  "text": "Legal advises against apologizing for the breach in the public statement: an apology could be used in court. The PR lead says without one you’ll be eaten alive. Who do you listen to?",
+  "left": "Listen to legal",
+  "right": "Apologize like a human"
+ },
+ {
+  "id": "l3b_031",
+  "who": "Assistant",
+  "text": "Your assistant books the fifth crisis meeting of the day. The previous four mostly discussed when to meet again. Cancel the fifth?",
+  "left": "Cancel it",
+  "right": "Hold it, with a timer"
+ },
+ {
+  "id": "l3b_032",
+  "who": "Hackers",
+  "text": "The anonymous thieves who stole the database send a ransom demand, politely signed “Kind regards.” Security says don’t reply. The board wants to “make a deal.” Your decision?",
+  "left": "No negotiations",
+  "right": "Hand it to the board"
+ },
+ {
+  "id": "l3b_033",
+  "who": "Retail chain",
+  "text": "A retail chain threatens to pull your products over missed deliveries. You could divert stock from another region that needs it just as badly. Reallocate?",
+  "left": "Save the big chain",
+  "right": "Don’t short the regions"
+ },
+ {
+  "id": "l3b_034",
+  "who": "Chief accountant",
+  "text": "The chief accountant reminds you: because of the payment system crash, salaries won’t go out today. Staff don’t know yet. Announce now or hope for a miracle by evening?",
+  "left": "Announce now",
+  "right": "Wait till evening"
+ },
+ {
+  "id": "l3b_035",
+  "who": "Night shift",
+  "text": "9 p.m. The service is finally back up. The on-call team suggests celebrating with pizza at the office. The board expects your final report by morning. Who are you with tonight?",
+  "left": "Pizza with the team",
+  "right": "Write the board report"
+ },
+ {
+  "id": "l3b_036",
+  "who": "Board member",
+  "text": "A board member calls at 10:30 p.m. asking whether it’s time to “refresh” IT leadership after the outage. The IT director is your longtime ally. Your answer?",
+  "left": "Stand by your ally",
+  "right": "Agree to think about it"
+ },
+ {
+  "id": "l3b_037",
+  "who": "Son",
+  "text": "At dinner your schoolboy son asks: “Is that your company’s website everyone’s joking about?” He shows you the jokes on his phone. Explain or laugh?",
+  "left": "Laugh along",
+  "right": "Lecture on reliability"
+ },
+ {
+  "id": "l3b_038",
+  "who": "Support team",
+  "text": "By evening, support has answered 11,000 complaints and asks for tomorrow off for the whole shift. Tomorrow is forecast to be even worse. Let them go?",
+  "left": "Give the day, hire help",
+  "right": "Promise time off later"
+ },
+ {
+  "id": "l3b_039",
+  "who": "Press secretary",
+  "text": "The evening news wants you live at 9 p.m. about the outage. You’ve been on your feet since dawn in a shirt with a coffee stain. Agree?",
+  "left": "Go on air as is",
+  "right": "Send the press secretary"
+ },
+ {
+  "id": "l3b_040",
+  "who": "Inner voice",
+  "text": "Your inner voice whispers that the outage could have been prevented if, six months ago, you’d signed the budget for backups instead of the new lounge. Talk it over?",
+  "left": "Admit it to yourself",
+  "right": "Tell the voice to shut up"
+ },
+ {
+  "id": "l3b_041",
+  "who": "Shift supervisor",
+  "text": "Late evening. The night shift supervisor says restarting the line needs your personal order and a wet-ink signature. The office is an hour away. Go?",
+  "left": "Drop everything and drive",
+  "right": "Sign over video call"
+ },
+ {
+  "id": "l3b_042",
+  "who": "Deputy",
+  "text": "Your deputy suggests giving every customer a $15 promo code as an apology. It’ll fix the reviews and empty the marketing budget. Do it?",
+  "left": "Hand out promo codes",
+  "right": "Just send a letter"
+ },
+ {
+  "id": "l3b_043",
+  "who": "Neighbor",
+  "text": "Your country-house neighbor saw you on the news and drops by with homemade kvass “for moral support” — then stays to tell you about his own work disaster back in 1998.",
+  "left": "Listen till midnight",
+  "right": "Claim the board is calling"
+ },
+ {
+  "id": "l3b_044",
+  "who": "Review committee",
+  "text": "The internal outage review committee wants to interview everyone involved before the weekend. That’s 60 people and two evenings. Speed it up?",
+  "left": "Interview only key people",
+  "right": "Interview everyone properly"
+ },
+ {
+  "id": "l3b_045",
+  "who": "Shareholder",
+  "text": "A minority shareholder posts an evening video, “What’s going on with this company?”, and racks up 40,000 views. Reply with your own video?",
+  "left": "Film a reply in the kitchen",
+  "right": "Stay quiet till morning"
+ },
+ {
+  "id": "l3b_046",
+  "who": "Logistics center",
+  "text": "Overnight the warehouse fire alarm went off: the smoke came from the guard’s toaster. But the goods are already soaked in foam. Tell customers about delays?",
+  "left": "Announce the delay",
+  "right": "Quietly ship what’s left"
+ },
+ {
+  "id": "l3b_047",
+  "who": "Business partner",
+  "text": "Your business partner invites you for drinks tonight “to forget this day.” Tomorrow at 8 a.m. you meet the regulator about the outage. Go?",
+  "left": "Just one hour",
+  "right": "Prepare for the meeting"
+ },
+ {
+  "id": "l3b_048",
+  "who": "Security service",
+  "text": "Security wants all 3,000 employees to change passwords by morning after the breach. Half will forget the new one by lunch. Do it?",
+  "left": "Everyone changes tonight",
+  "right": "Start with management"
+ },
+ {
+  "id": "l3b_049",
+  "who": "Co-founder’s wife",
+  "text": "Your co-founder’s wife messages you privately: he hasn’t slept in three days because of the outage and won’t answer his phone. She asks you to send him home. Step in?",
+  "left": "Send him home by force",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l3b_050",
+  "who": "Chief engineer",
+  "text": "At day’s end the chief engineer brings a plan to “rebuild the whole architecture over the weekend.” Eyes blazing, plan on a napkin. Give your blessing?",
+  "left": "Bless the enthusiasm",
+  "right": "Send him to bed"
+ },
+ {
+  "id": "l3b_051",
+  "who": "Night guard",
+  "text": "The night guard found the server room wide open, the key hanging on a nail under a sign reading “Server room key.” Handle it yourself?",
+  "left": "Take the key home",
+  "right": "Raise hell in the morning"
+ },
+ {
+  "id": "l3b_052",
+  "who": "Inbox",
+  "text": "Checking email before bed: a message from the regulator titled “Questions about the incident,” marked urgent. Open it now?",
+  "left": "Open it and lose sleep",
+  "right": "Open it in the morning"
+ },
+ {
+  "id": "l3b_053",
+  "who": "Investment fund",
+  "text": "The fund that owns 30% of the company offers to send “their crisis manager” to help. He’d sit in your office. Accept?",
+  "left": "Accept the fund’s help",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3b_054",
+  "who": "Journalist",
+  "text": "7:05 a.m. A journalist with a mic waits outside your building: “Is it true the company is for sale?” You’re in sweatpants holding a trash bag. Stop?",
+  "left": "Answer, trash bag in hand",
+  "right": "Walk silently to the bins"
+ },
+ {
+  "id": "l3b_055",
+  "who": "Press secretary",
+  "text": "The press secretary brings the morning roundup: 14 articles about you; three call you “charismatic,” one calls you “gloomy.” Get upset over the one?",
+  "left": "Reread “gloomy” three times",
+  "right": "Frame “charismatic”"
+ },
+ {
+  "id": "l3b_056",
+  "who": "Business daily",
+  "text": "A business paper wants a cover photo for its “Top 50 Leaders” ranking. The photographer arrives at 8 a.m. and wants you “in your natural habitat” — in the kitchen with porridge.",
+  "left": "Pose with the porridge",
+  "right": "Send the official portrait"
+ },
+ {
+  "id": "l3b_057",
+  "who": "Editor",
+  "text": "A trade magazine editor wants your column “on leadership” by 10 a.m. You promised it two weeks ago and successfully forgot. Write it yourself?",
+  "left": "Write it in an hour",
+  "right": "Hand it to PR"
+ },
+ {
+  "id": "l3b_058",
+  "who": "Reporter",
+  "text": "A reporter calls to check a quote: supposedly you said “Competitors don’t scare us, they amuse us.” You said “don’t scare us.” Insist on a fix?",
+  "left": "Demand the exact quote",
+  "right": "Keep it, sounds punchy"
+ },
+ {
+  "id": "l3b_059",
+  "who": "Morning show",
+  "text": "Live morning radio. Instead of the economy, the host asks what you had for breakfast. You had yesterday’s pizza. Confess?",
+  "left": "Confess to the pizza",
+  "right": "Say “oatmeal with berries”"
+ },
+ {
+  "id": "l3b_060",
+  "who": "Blogger",
+  "text": "A popular business blogger wants an interview, but only “walk-and-talk” style at 6 a.m. on the waterfront while he jogs. Agree?",
+  "left": "Run alongside and answer",
+  "right": "Offer coffee at the office"
+ },
+ {
+  "id": "l3b_061",
+  "who": "Press office",
+  "text": "The press office forgot to mention that a press release went out quoting you on a “breakthrough innovation.” You’re seeing it for the first time and have no idea which innovation. Now what?",
+  "left": "Memorize your own quote",
+  "right": "Chew out the press office"
+ },
+ {
+  "id": "l3b_062",
+  "who": "Newspaper",
+  "text": "In the morning paper, your photo is captioned with the name of your rival’s CEO. His photo has yours. Call the editors?",
+  "left": "Demand a correction",
+  "right": "Call the rival for a laugh"
+ },
+ {
+  "id": "l3b_063",
+  "who": "PR director",
+  "text": "The PR director pitches a new strategy: “be closer to the people” — starting with a personal blog you post to every morning. Try it?",
+  "left": "Start the blog",
+  "right": "Leave PR to the pros"
+ },
+ {
+  "id": "l3b_064",
+  "who": "TV channel",
+  "text": "A TV channel sends interview questions in advance. Question seven: “Why are your employees complaining en masse on social media?” This is the first you’ve heard of it.",
+  "left": "Cancel the interview",
+  "right": "Study the complaints, fast"
+ },
+ {
+  "id": "l3b_065",
+  "who": "Assistant",
+  "text": "Your assistant has written you an interview “backstory”: you wake at five, read a book a day, and don’t drink coffee. All false except “wake.” Approve?",
+  "left": "Tell it like it is",
+  "right": "Learn the backstory"
+ },
+ {
+  "id": "l3b_066",
+  "who": "Industry portal",
+  "text": "An industry portal sends your interview for approval. The journalist “lightly edited” your answers — you now sound like a symbolist poet. Edit it?",
+  "left": "Rewrite it all back",
+  "right": "Keep it, sounds lovely"
+ },
+ {
+  "id": "l3b_067",
+  "who": "Photographer",
+  "text": "At a press event, the photographer asks you to “smile in a businesslike way and gaze into the future.” You don’t know where it is. How many more takes can you stand?",
+  "left": "Until the perfect shot",
+  "right": "Leave after the third"
+ },
+ {
+  "id": "l3b_068",
+  "who": "Journalist",
+  "text": "A journalist you went to university with asks for an exclusive on the merger. The deal isn’t closed yet. Friendship versus protocol.",
+  "left": "Refuse, as a friend",
+  "right": "Hint without details"
+ },
+ {
+  "id": "l3b_069",
+  "who": "Communications director",
+  "text": "The communications director thinks you need media training: “You say ‘like’ way too often.” Sessions at 7 a.m., three weeks straight. Sign up?",
+  "left": "Do the media training",
+  "right": "Like, decline"
+ },
+ {
+  "id": "l3b_070",
+  "who": "Investigative reporter",
+  "text": "An investigative reporter wants comment on procurement documents from five years ago, when your predecessor ran the company. Comment?",
+  "left": "Comment honestly",
+  "right": "“No comment”"
+ },
+ {
+  "id": "l3b_071",
+  "who": "Press conference",
+  "text": "At a press conference, a journalist asks a question that lasts four minutes and never ends in a question mark. Everyone awaits your reaction.",
+  "left": "Answer everything at once",
+  "right": "“And the question is?”"
+ },
+ {
+  "id": "l3b_072",
+  "who": "Press office",
+  "text": "The press office wants approval for a rebuttal to an article only 200 people have read. After the rebuttal, thousands will read it. Publish?",
+  "left": "Publish the rebuttal",
+  "right": "Don’t fan the flames"
+ },
+ {
+  "id": "l3b_073",
+  "who": "TV host",
+  "text": "A talk show host invites you to debate your rival’s CEO in the studio. Last time, the rival brought charts on poster board. Go?",
+  "left": "Go to the debate",
+  "right": "Send your deputy"
+ },
+ {
+  "id": "l3b_074",
+  "who": "Editor-in-chief",
+  "text": "Over lunch, the editor-in-chief of a major outlet mentions that “the story about your layoffs” may or may not run. A hint about buying ads?",
+  "left": "Play dumb",
+  "right": "Discuss the ad budget"
+ },
+ {
+  "id": "l3b_075",
+  "who": "PR intern",
+  "text": "A PR intern accidentally emailed every outlet a draft release with the note “need to fudge the numbers here.” The phone won’t stop ringing. How do you react?",
+  "left": "Admit it and laugh",
+  "right": "Fire the intern publicly"
+ },
+ {
+  "id": "l3b_076",
+  "who": "Journalist",
+  "text": "A journalist suggests chatting “off the record” about rumors of your departure. Experience says “off the record” lasts until the article comes out. Talk?",
+  "left": "On the record only",
+  "right": "Chat informally"
+ },
+ {
+  "id": "l3b_077",
+  "who": "Interview",
+  "text": "Mid-interview recording, your phone rings. It’s the board. The camera is rolling, the journalist watches with interest. Answer?",
+  "left": "Answer on camera",
+  "right": "Decline the call"
+ },
+ {
+  "id": "l3b_078",
+  "who": "Press secretary",
+  "text": "The press secretary learns you gave an unapproved interview after just “getting chatty in the elevator.” It’s already aired. She’s furious. Apologize?",
+  "left": "Apologize to the press team",
+  "right": "Remind her who’s in charge"
+ },
+ {
+  "id": "l3b_079",
+  "who": "Media group",
+  "text": "A media group wants to make a documentary about the company. The film crew would live in the office for two weeks. Staff are already nervous.",
+  "left": "Agree to the film",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_080",
+  "who": "Fact-checker",
+  "text": "A fact-checker reviewing your interview finds that “300% growth” was actually 30%. You misspoke. The outlet asks how to correct it.",
+  "left": "Correct it to 30%",
+  "right": "“That was in one region”"
+ },
+ {
+  "id": "l3b_081",
+  "who": "Newspaper column",
+  "text": "A columnist calls your new office an “aquarium of vanity.” Employees printed the column and pinned it by the water cooler. Take it down?",
+  "left": "Take it down",
+  "right": "Sign it “Agreed”"
+ },
+ {
+  "id": "l3b_082",
+  "who": "Journalist",
+  "text": "A journalist asks to see the factory. The floor manager whispers that today’s a bad day: line three is in a state of “temporary creative chaos.” Let the press in?",
+  "left": "Show it as is",
+  "right": "Reschedule the tour"
+ },
+ {
+  "id": "l3b_083",
+  "who": "Media analyst",
+  "text": "The media analyst reports: press mentions are up 40%. Though 38% of them are about the outage. How do you pitch this to the board?",
+  "left": "“Brand awareness is up”",
+  "right": "Show the honest breakdown"
+ },
+ {
+  "id": "l3b_084",
+  "who": "Agency",
+  "text": "A PR agency offers, for a hefty sum, a “guaranteed spot in the top business news.” Their methods are secret. Sign?",
+  "left": "Sign the contract",
+  "right": "Do it in-house"
+ },
+ {
+  "id": "l3b_085",
+  "who": "Press office",
+  "text": "The press office compiled an “enemies folder”: journalists who wrote badly about you. Forty names. They suggest never inviting them to events again.",
+  "left": "Invite everyone",
+  "right": "Approve the blacklist"
+ },
+ {
+  "id": "l3b_086",
+  "who": "Interviewer",
+  "text": "The interviewer asks you to name the three biggest mistakes of your career. The first two come easily; the third is too recent and involves the board.",
+  "left": "Name the fresh one honestly",
+  "right": "Stick to old ones"
+ },
+ {
+  "id": "l3b_087",
+  "who": "Reporter",
+  "text": "A reporter mixed things up and came to interview you instead of your namesake — the chef at the restaurant downstairs. The questions are about pizza dough. Answer?",
+  "left": "Talk about dough",
+  "right": "Send him to the chef"
+ },
+ {
+  "id": "l3b_088",
+  "who": "Evening broadcast",
+  "text": "On live evening TV, the host reads out an angry letter from a former employee of yours. You have to respond live.",
+  "left": "Acknowledge the problem",
+  "right": "Mention the NDA"
+ },
+ {
+  "id": "l3b_089",
+  "who": "Journalist",
+  "text": "10 p.m. A journalist writes: “The story runs tomorrow, you have an hour to comment.” The story is unknown, the gist undisclosed. Respond?",
+  "left": "Send a generic comment",
+  "right": "Call the lawyer tonight"
+ },
+ {
+  "id": "l3b_090",
+  "who": "Podcast",
+  "text": "You’re invited onto the evening podcast “Business, Honestly.” Format: three hours, no script, hosted by former stand-up comics. Go?",
+  "left": "Go and crack jokes",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3b_091",
+  "who": "Press secretary",
+  "text": "At 11 p.m. the press secretary sends edits to tomorrow’s statement. 120 of them, including changing “esteemed” to “dear.” Review them now?",
+  "left": "Check all 120",
+  "right": "Trust the press secretary"
+ },
+ {
+  "id": "l3b_092",
+  "who": "Journalist",
+  "text": "A journalist sends the piece for approval: all accurate, but your portrait is shot from the least flattering angle imaginable. Ask for a swap?",
+  "left": "Ask for another photo",
+  "right": "Let it go"
+ },
+ {
+  "id": "l3b_093",
+  "who": "Daughter",
+  "text": "Your daughter shows you a viral video: you, at a conference, expressively scratching your nose during someone else’s talk. Her classmates have already made stickers of it.",
+  "left": "Ask for a sticker yourself",
+  "right": "Demand it be taken down"
+ },
+ {
+  "id": "l3b_094",
+  "who": "Newspaper",
+  "text": "The evening paper runs the headline “CEO Admits Failure.” In the interview you said: “I admit failure would have been possible.” Complain?",
+  "left": "Complain to the editors",
+  "right": "Laugh it off online"
+ },
+ {
+  "id": "l3b_095",
+  "who": "Former journalist",
+  "text": "Your PR adviser, a former journalist, suggests leaking competitor news to distract from your scandal. Tempting.",
+  "left": "Leak the news",
+  "right": "Ride out the scandal honestly"
+ },
+ {
+  "id": "l3b_096",
+  "who": "Show host",
+  "text": "An entertainment show host invites you to a celebrity-CEO cooking contest. Airs Saturday night. You can’t fry an egg.",
+  "left": "Learn to fry",
+  "right": "Decline the show"
+ },
+ {
+  "id": "l3b_097",
+  "who": "News digest",
+  "text": "The overnight media digest: a glowing article about you, but it mentions “your modesty” thirty times. Staff are already being ironic. How do you react?",
+  "left": "Modestly stay silent",
+  "right": "Thank the journalist"
+ },
+ {
+  "id": "l3b_098",
+  "who": "Press tour",
+  "text": "The press tour is dragging on: at 8 p.m. the journalists want to “continue informally” at the company’s expense. There’s no budget for this.",
+  "left": "Keep going with them",
+  "right": "Wrap up the tour"
+ },
+ {
+  "id": "l3b_099",
+  "who": "Journalist",
+  "text": "Before publishing, a journalist asks for “literally five more clarifications.” This is the fifth round and the fifth “literally.” Your patience is running out.",
+  "left": "Answer a fifth time",
+  "right": "Refer her to the press office"
+ },
+ {
+  "id": "l3b_100",
+  "who": "Press office",
+  "text": "The press office is thrilled: you’re invited onto the cover of a style magazine. The shoot is at 9 p.m. in an unusual suit in “warm terracotta.” Agree?",
+  "left": "Wear the terracotta",
+  "right": "Offer your own suit"
+ },
+ {
+  "id": "l3b_101",
+  "who": "Secretary",
+  "text": "Late in the evening, your secretary reports five journalists staking out the main entrance. There’s a service exit through the parking garage. Which way out?",
+  "left": "Face the press",
+  "right": "Slip out via the garage"
+ },
+ {
+  "id": "l3b_102",
+  "who": "Forum organizer",
+  "text": "8:10 a.m. The forum organizer calls: your talk moved from 3 p.m. to 9 a.m. because “the guest of honor is running late.” Your slides aren’t ready. Go on anyway?",
+  "left": "Speak without slides",
+  "right": "Ask for another slot"
+ },
+ {
+  "id": "l3b_103",
+  "who": "Speechwriter",
+  "text": "The speechwriter sent your conference opening speech. It says “synergy” 14 times and quotes a philosopher you’ve never read. Edit it?",
+  "left": "Edit till the last minute",
+  "right": "Read it as written"
+ },
+ {
+  "id": "l3b_104",
+  "who": "Sound engineer",
+  "text": "At sound check, the engineer asks you to say something into the mic. You say “testing, testing,” and the whole hall — already full of guests — hears it. Carry on?",
+  "left": "Crack a joke into the mic",
+  "right": "Hide backstage"
+ },
+ {
+  "id": "l3b_105",
+  "who": "Conference host",
+  "text": "The host introduces you as “the person who led the company out of crisis.” You actually led it into one — just last month. Correct him?",
+  "left": "Correct him in public",
+  "right": "Smile and begin"
+ },
+ {
+  "id": "l3b_106",
+  "who": "Teleprompter",
+  "text": "The teleprompter freezes two minutes into your speech. 800 people in the hall. The last line on screen: “And that is why we.”",
+  "left": "Improvise",
+  "right": "Ask for a reboot"
+ },
+ {
+  "id": "l3b_107",
+  "who": "Moderator",
+  "text": "The panel moderator asks everyone to “describe the industry’s future in one word.” Your neighbors already said “digital,” “people,” and “sustainability.”",
+  "left": "Say “unpredictability”",
+  "right": "Repeat “people”"
+ },
+ {
+  "id": "l3b_108",
+  "who": "Wardrobe",
+  "text": "Right before going on stage, you discover a dry-cleaning tag dangling from your jacket. No time to rip it off — they’re announcing you. Go out like that?",
+  "left": "Go out with the tag",
+  "right": "Hold up for a minute"
+ },
+ {
+  "id": "l3b_109",
+  "who": "Speech coach",
+  "text": "Your public speaking coach advises you to “shout loudly in an empty room” before going on. There are no empty rooms, just a bathroom with an echo.",
+  "left": "Shout in the bathroom",
+  "right": "Skip the ritual"
+ },
+ {
+  "id": "l3b_110",
+  "who": "Conference",
+  "text": "At the morning session, the speaker before you shows slides suspiciously similar to your upcoming presentation. He’s on your own team.",
+  "left": "Rework your talk on the fly",
+  "right": "Debrief him later"
+ },
+ {
+  "id": "l3b_111",
+  "who": "Assistant",
+  "text": "Your assistant reminds you that today you’re speaking at three conferences in three corners of the city. The taxi is already stuck in traffic on the first leg.",
+  "left": "Cancel one conference",
+  "right": "Take the subway to all three"
+ },
+ {
+  "id": "l3b_112",
+  "who": "Industry award",
+  "text": "A morning email: you’ve been nominated for “Leader of the Year.” To compete, you must record a video “about your values” by noon.",
+  "left": "Shoot a quick video",
+  "right": "Skip it"
+ },
+ {
+  "id": "l3b_113",
+  "who": "Organizer",
+  "text": "A conference organizer asks you to speak for free — “but the audience will be great.” The audience: eight students and a coffee break.",
+  "left": "Speak for the students",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_114",
+  "who": "Interpreter",
+  "text": "The simultaneous interpreter asks for your speech in advance: yesterday you joked on stage and he translated the joke as “a threat.” Send it?",
+  "left": "Send it with notes",
+  "right": "Skip the jokes"
+ },
+ {
+  "id": "l3b_115",
+  "who": "Press office",
+  "text": "The press office wants you to announce the new strategy at the conference. The board approves the strategy on Thursday. The conference is Wednesday.",
+  "left": "Announce it early",
+  "right": "Speak in generalities"
+ },
+ {
+  "id": "l3b_116",
+  "who": "Alarm clock",
+  "text": "Your alarm didn’t go off, and you’re opening the industry congress at 9:00. The venue is 40 minutes away; it’s 8:45. Call your deputy?",
+  "left": "Let the deputy open",
+  "right": "Open via video from the taxi"
+ },
+ {
+  "id": "l3b_117",
+  "who": "Show director",
+  "text": "The corporate event director wants you to ride on stage on an electric unicycle — “to show drive.” You’ve never ridden one.",
+  "left": "Learn the unicycle",
+  "right": "Walk out on foot"
+ },
+ {
+  "id": "l3b_118",
+  "who": "Audience",
+  "text": "After your talk, a hand goes up: “How do you sleep at night after the layoffs?” The cameras swing toward you.",
+  "left": "Answer honestly",
+  "right": "Pivot to the numbers"
+ },
+ {
+  "id": "l3b_119",
+  "who": "Moderator",
+  "text": "The moderator keeps interrupting and handing the floor to your competitor. You’ve started “Allow me to add” three times. Insist?",
+  "left": "Seize the mic",
+  "right": "Stay quiet till the end"
+ },
+ {
+  "id": "l3b_120",
+  "who": "Attendee",
+  "text": "After your talk, an attendee comes up and says your slide 12 is an exact copy of his article from five years ago. He’s right.",
+  "left": "Admit it and apologize",
+  "right": "Deny any resemblance"
+ },
+ {
+  "id": "l3b_121",
+  "who": "Stage",
+  "text": "Mid-talk, a notification from your personal messenger pops up on the big screen: “Buy bread and don’t forget the cat.” The hall laughs.",
+  "left": "Play it up on stage",
+  "right": "Pretend you didn’t see it"
+ },
+ {
+  "id": "l3b_122",
+  "who": "Coffee break",
+  "text": "At the coffee break, five startup founders surround you with pitches. Each needs “literally a minute.” Your coffee’s going cold; the next session is in ten minutes.",
+  "left": "Hear them all out",
+  "right": "Escape to your coffee"
+ },
+ {
+  "id": "l3b_123",
+  "who": "Industry congress",
+  "text": "The organizers offer you a seat on the main stage next to the head of a major holding. In exchange: a sponsorship fee from the marketing budget.",
+  "left": "Buy the stage seat",
+  "right": "Sit in the audience"
+ },
+ {
+  "id": "l3b_124",
+  "who": "Debate",
+  "text": "At a public debate, your opponent shows a chart of your company plunging. You notice the chart’s axis is upside down. Point it out?",
+  "left": "Point out the error",
+  "right": "Don’t nitpick"
+ },
+ {
+  "id": "l3b_125",
+  "who": "Microphone",
+  "text": "Your lapel mic came unstuck and slid down your collar. You keep talking, but now you sound like you’re in a barrel. Stop and fix it?",
+  "left": "Fix it on stage",
+  "right": "Keep talking from the barrel"
+ },
+ {
+  "id": "l3b_126",
+  "who": "Organizers",
+  "text": "The organizers ask you to cut your talk from 30 minutes to 7: “The main sponsor is late, we need to free up time.” How do you cut it?",
+  "left": "Only the conclusions",
+  "right": "Speed-talk all 30"
+ },
+ {
+  "id": "l3b_127",
+  "who": "Conference abroad",
+  "text": "You’re invited to speak at an international conference. In English — which you last spoke at a student summer job.",
+  "left": "Prep every night",
+  "right": "Hire an interpreter"
+ },
+ {
+  "id": "l3b_128",
+  "who": "Students",
+  "text": "After a university lecture, a student asks how much you earn. The hall freezes. The professor pretends to be busy with a laptop.",
+  "left": "Give the honest number",
+  "right": "“Enough to keep working”"
+ },
+ {
+  "id": "l3b_129",
+  "who": "Panel discussion",
+  "text": "On a panel, your own marketing director publicly disagrees with you. The moderator perks up: “Now this is interesting!”",
+  "left": "Argue it out on stage",
+  "right": "Praise the boldness"
+ },
+ {
+  "id": "l3b_130",
+  "who": "Expert council",
+  "text": "You’re invited to chair a startup competition jury. 40 pitches in a day, three minutes each, scores on the spot. Accept the honor?",
+  "left": "Accept and sit all day",
+  "right": "Send a young deputy"
+ },
+ {
+  "id": "l3b_131",
+  "who": "Clicker",
+  "text": "The slide clicker dies. An assistant in the hall advances slides when you say “next” — but always skips two ahead.",
+  "left": "Talk without slides",
+  "right": "Shout “back!” at the hall"
+ },
+ {
+  "id": "l3b_132",
+  "who": "Webinar",
+  "text": "You’re hosting a client webinar, but the stream accidentally shows your assistant’s screen instead of yours — with a chat reading “he’s driving me crazy.”",
+  "left": "Joke and carry on",
+  "right": "Stop the webinar"
+ },
+ {
+  "id": "l3b_133",
+  "who": "Trade show",
+  "text": "At the trade show, your booth is right next to the restrooms. Foot traffic is huge, but the marketing value is questionable. Ask to be moved?",
+  "left": "Kick up a fuss",
+  "right": "Put up a joke sign"
+ },
+ {
+  "id": "l3b_134",
+  "who": "Slide designer",
+  "text": "The designer sent the final deck: beautiful, but every number “flies in” over a second and a half. There are 200 numbers.",
+  "left": "Kill all animation",
+  "right": "Present as is"
+ },
+ {
+  "id": "l3b_135",
+  "who": "Business lunch",
+  "text": "At the post-conference lunch, you’re seated next to an investor who walked out on you a year ago, slamming the door. He waves his fork at you.",
+  "left": "Make peace over soup",
+  "right": "Move to your own people"
+ },
+ {
+  "id": "l3b_136",
+  "who": "Gala dinner",
+  "text": "The post-conference gala dinner. You’re asked to give a toast “on behalf of the industry.” It must be witty, short, and offend none of the 300 guests.",
+  "left": "Give the toast",
+  "right": "Pass to your neighbor"
+ },
+ {
+  "id": "l3b_137",
+  "who": "Conference video",
+  "text": "The organizers posted your talk online. First comment: “Never actually answered the question.” Second: “But what a tie.” Staff are already watching.",
+  "left": "Read every comment",
+  "right": "Close the tab"
+ },
+ {
+  "id": "l3b_138",
+  "who": "Conference party",
+  "text": "The industry forum afterparty: all the industry’s top brass are heading to karaoke. Rumor has it that’s where all the big deals get made.",
+  "left": "Sing with everyone",
+  "right": "Go back to the hotel"
+ },
+ {
+  "id": "l3b_139",
+  "who": "Hotel",
+  "text": "After the conference, it turns out the hotel gave your room to another attendee. All that’s left is a suite on the company dime or a cot in a colleague’s room.",
+  "left": "Take the suite",
+  "right": "Share with a colleague"
+ },
+ {
+  "id": "l3b_140",
+  "who": "Family",
+  "text": "At home, your family is asked to hear a rehearsal of tomorrow’s speech. After two minutes the cat leaves; after five, so does your partner.",
+  "left": "Rehearse to the mirror",
+  "right": "Go to bed unrehearsed"
+ },
+ {
+  "id": "l3b_141",
+  "who": "Organizers",
+  "text": "Late at night the organizers write: “Can you replace a sick speaker tomorrow at 8 a.m.? Topic: quantum computing.” Your topic is dairy products.",
+  "left": "Talk quantum",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3b_142",
+  "who": "Speaker ranking",
+  "text": "The evening brings the forum’s speaker ranking: you’re 23rd out of 25. Below you: a broken mic and a talk with a typo in its title.",
+  "left": "Demand a scoring review",
+  "right": "Laugh and forget it"
+ },
+ {
+  "id": "l3b_143",
+  "who": "Your deputy",
+  "text": "Your deputy spoke at the evening session in your place and got a standing ovation. The board is already congratulating him in the group chat.",
+  "left": "Praise him publicly",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l3b_144",
+  "who": "Return flight",
+  "text": "After the conference, you’re stuck at the airport with a delayed flight. You can spend the night working in the lounge or at a hotel near the airport.",
+  "left": "Work in the lounge",
+  "right": "Sleep at the hotel"
+ },
+ {
+  "id": "l3b_145",
+  "who": "Note",
+  "text": "In your jacket pocket you find a note someone slipped you after your talk: “Your speech changed my life. Please hire me.” Reply?",
+  "left": "Invite them to interview",
+  "right": "Pass it to HR"
+ },
+ {
+  "id": "l3b_146",
+  "who": "Executive club",
+  "text": "An industry executive club invites you to join. The fee is hefty, meetings are monthly evenings, and the club blazer is mandatory.",
+  "left": "Join the club",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_147",
+  "who": "Intern graduation",
+  "text": "The interns ask you to speak at their graduation. You prepared an inspiring speech; they expect you to sing the company anthem with them.",
+  "left": "Sing the anthem",
+  "right": "Just give the speech"
+ },
+ {
+  "id": "l3b_148",
+  "who": "Talk feedback",
+  "text": "In the feedback forms, 90% rate your talk “excellent,” but one person wrote “boring as a tax report.” All evening, that one is all you can think about.",
+  "left": "Find them and talk",
+  "right": "Reread the 90%"
+ },
+ {
+  "id": "l3b_149",
+  "who": "Podcast studio",
+  "text": "In the evening you record a podcast for the internal portal. Take six: you say “like” again. The sound engineer sighs wearily.",
+  "left": "Record take seven",
+  "right": "Keep the “like”"
+ },
+ {
+  "id": "l3b_150",
+  "who": "Company socials",
+  "text": "7:20 a.m. Overnight the official company account posted a Monday meme with “Monday” misspelled. It already has 3,000 comments. Delete it?",
+  "left": "Delete it quietly",
+  "right": "Keep it and laugh"
+ },
+ {
+  "id": "l3b_151",
+  "who": "SMM manager",
+  "text": "The social media manager confesses he accidentally liked a competitor’s post “Why We’re the Best” from the company account yesterday. People noticed. What do we say?",
+  "left": "“Fair enough, they’re good”",
+  "right": "Blame the algorithm"
+ },
+ {
+  "id": "l3b_152",
+  "who": "Employee video",
+  "text": "An employee made a clip, “A Day in Our Office,” showing the coffee machine spitting and the printer on fire. It hit a million views. Punish him?",
+  "left": "Praise the creativity",
+  "right": "Ask him to delete it"
+ },
+ {
+  "id": "l3b_153",
+  "who": "Hashtag",
+  "text": "Since morning, a hashtag with your company’s name and the word “boycott” is trending. Even the press office doesn’t know why yet. What do you do?",
+  "left": "Wait till they find out",
+  "right": "Crisis meeting at 8 a.m."
+ },
+ {
+  "id": "l3b_154",
+  "who": "Old post",
+  "text": "Someone dug up your ten-year-old post calling your future industry “boring, for losers.” It’s spreading fast.",
+  "left": "Apologize with humor",
+  "right": "Explain the context"
+ },
+ {
+  "id": "l3b_155",
+  "who": "Community manager",
+  "text": "The community manager answered angry comments all night and, judging by screenshots, by 3 a.m. was seriously arguing with customers. What do you do?",
+  "left": "Defend her",
+  "right": "Take her off the account"
+ },
+ {
+  "id": "l3b_156",
+  "who": "Story",
+  "text": "Your deputy posted a story with a photo from a meeting. In the background: a whiteboard reading “Layoff plan, do not show.” It’s been up for 7 hours.",
+  "left": "Explain publicly",
+  "right": "Delete and stay silent"
+ },
+ {
+  "id": "l3b_157",
+  "who": "Mega-blogger",
+  "text": "A blogger with a million followers posted a review of your product titled “Never Buy This.” The reason: the wrong button on the packaging. Call him?",
+  "left": "Call and negotiate",
+  "right": "Ignore it"
+ },
+ {
+  "id": "l3b_158",
+  "who": "Corporate account",
+  "text": "The press office suggests starting a personal account for you to post motivational quotes. An intern will write the quotes.",
+  "left": "Run it yourself",
+  "right": "Leave it to the intern"
+ },
+ {
+  "id": "l3b_159",
+  "who": "Morning feed",
+  "text": "Your morning feed shows an employee in company uniform dancing on the hood of a company car. The video is taking off; customers love it.",
+  "left": "Make him the brand’s face",
+  "right": "Issue a reprimand"
+ },
+ {
+  "id": "l3b_160",
+  "who": "Social monitoring",
+  "text": "The monitoring system wakes you: “Sharp spike in negativity.” Turns out people are just confusing your company with a pizzeria of the same name.",
+  "left": "Explain the difference",
+  "right": "Order pizza for everyone"
+ },
+ {
+  "id": "l3b_161",
+  "who": "PR agency",
+  "text": "A PR agency offers to “drown out the negativity” with a stream of positive reviews from “real users” they’ll find themselves. The price is reasonable.",
+  "left": "Hire the “users”",
+  "right": "Refuse, answer honestly"
+ },
+ {
+  "id": "l3b_162",
+  "who": "Ex’s review",
+  "text": "Your former sales director published a long post, “Why I Left.” No names, but everyone knows. It’s getting shared widely.",
+  "left": "Reply with your own post",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l3b_163",
+  "who": "Ad targeter",
+  "text": "The ad specialist launched a campaign overnight, and it’s showing under news of your own outage: “Our service never lets you down!” Stop the campaign?",
+  "left": "Stop the campaign",
+  "right": "Joke about the irony"
+ },
+ {
+  "id": "l3b_164",
+  "who": "Meme",
+  "text": "A meme is going around with your face from yesterday’s interview captioned “When they tell you on Friday you’re working Saturday.” Staff are making it their wallpaper.",
+  "left": "Make it your wallpaper too",
+  "right": "Ask for it to be removed"
+ },
+ {
+  "id": "l3b_165",
+  "who": "Messenger",
+  "text": "The sales team’s internal chat leaked: customers are referred to as “guinea pigs.” Screenshots are everywhere. Who gets fired?",
+  "left": "Fire whoever wrote it",
+  "right": "Apologize for everyone"
+ },
+ {
+  "id": "l3b_166",
+  "who": "Video blogger",
+  "text": "A video blogger shows up at your office unannounced to film a “company inspection,” asking security “who’s in charge here.”",
+  "left": "Go out to the blogger",
+  "right": "Call security"
+ },
+ {
+  "id": "l3b_167",
+  "who": "SMM team",
+  "text": "The social team wants to launch a “Dance with the CEO” challenge. You’d need to film 15 seconds of dancing in the lobby. They promise massive reach.",
+  "left": "Dance for the reach",
+  "right": "Skip the challenge"
+ },
+ {
+  "id": "l3b_168",
+  "who": "Brand account",
+  "text": "People online note that everyone in the company’s ads is a stock-photo model, while real employees are “hiding.” Your response?",
+  "left": "Shoot your real staff",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l3b_169",
+  "who": "Marketing",
+  "text": "Marketing wants to answer a competitor’s criticism with a cheeky “At least we don’t...” post. It’s funny, but the lawyers wince. Publish?",
+  "left": "Post it, cheekily",
+  "right": "Send it to legal"
+ },
+ {
+  "id": "l3b_170",
+  "who": "Customer chat",
+  "text": "Customers on social media demand that “the CEO answer personally.” There are 2,000 complaints. Answer them?",
+  "left": "Answer personally all day",
+  "right": "Record one general video"
+ },
+ {
+  "id": "l3b_171",
+  "who": "Screenshot",
+  "text": "Someone screenshots your message from the private execs’ chat: “Well, let them quit then.” It’s out of context but sounds awful.",
+  "left": "Explain the context",
+  "right": "Find the leaker"
+ },
+ {
+  "id": "l3b_172",
+  "who": "Employee blogger",
+  "text": "An employee runs a popular blog about work and trashes management, though without names. Many recognize you as “the big boss.” Talk to him?",
+  "left": "Invite him for coffee",
+  "right": "Have HR check his contract"
+ },
+ {
+  "id": "l3b_173",
+  "who": "Comments",
+  "text": "A bot shows up in the comments under your new post, replying to everything with “so when are you raising salaries?” The bot seems suspiciously human.",
+  "left": "Answer about salaries",
+  "right": "Block it"
+ },
+ {
+  "id": "l3b_174",
+  "who": "Influencer",
+  "text": "An influencer with a dodgy reputation wants to be your brand’s “ambassador” for free. He’s already posted a photo with your product captioned “my sponsor.”",
+  "left": "Ask him to remove it",
+  "right": "See what happens"
+ },
+ {
+  "id": "l3b_175",
+  "who": "Ad campaign",
+  "text": "The new ad campaign is divisive: half think the slogan is genius, half think it’s baffling. The board is split too.",
+  "left": "Keep the campaign",
+  "right": "Pause it for review"
+ },
+ {
+  "id": "l3b_176",
+  "who": "Poll",
+  "text": "The company ran a social media poll to name a new product. The trolls’ entry won: “Producty McProductface.” Accept it?",
+  "left": "Accept the people’s will",
+  "right": "Void the poll"
+ },
+ {
+  "id": "l3b_177",
+  "who": "PR agency",
+  "text": "The agency proposes deleting negative comments under the company’s posts. There’s less negativity now, but those who noticed are writing even more about censorship.",
+  "left": "Stop deleting",
+  "right": "Keep cleaning up"
+ },
+ {
+  "id": "l3b_178",
+  "who": "Leaked deck",
+  "text": "Slides from your internal “Strategy 2030” presentation are now public. Most popular: the slide with a kitten you used to fill an empty spot.",
+  "left": "Lean into the kitten",
+  "right": "Launch an investigation"
+ },
+ {
+  "id": "l3b_179",
+  "who": "Fake account",
+  "text": "Someone made a fake account in your name and replies to everyone with “I’ll handle it personally.” The fake has more followers than you.",
+  "left": "Get it blocked",
+  "right": "Play along with the fake"
+ },
+ {
+  "id": "l3b_180",
+  "who": "Corporate channel",
+  "text": "The press office asks you to personally answer questions in the corporate channel on Fridays. First Friday’s question: “Why is your car worth more than my apartment?”",
+  "left": "Answer honestly",
+  "right": "Pivot to strategy"
+ },
+ {
+  "id": "l3b_181",
+  "who": "Marketing director",
+  "text": "The marketing director suggests publicly admitting a product flopped: “We got it wrong, and here’s why.” The board fears it’ll hit the stock price.",
+  "left": "Admit the mistake publicly",
+  "right": "Quietly pull the product"
+ },
+ {
+  "id": "l3b_182",
+  "who": "Video",
+  "text": "The company’s anniversary video is shot in “we’re one big family” style. In the comments, ex-employees recall how the “family” didn’t pay overtime.",
+  "left": "Respond to the criticism",
+  "right": "Turn off comments"
+ },
+ {
+  "id": "l3b_183",
+  "who": "Livestream",
+  "text": "During the annual meeting livestream, pranksters invade the chat and every word you say gets a clown emoji. There’s no moderator.",
+  "left": "Stop the stream",
+  "right": "Carry on, ignore the clowns"
+ },
+ {
+  "id": "l3b_184",
+  "who": "Employee post",
+  "text": "In the evening an employee posts “My CEO is the best” with a photo of you asleep on the meeting room couch after an all-nighter. It goes viral.",
+  "left": "Thank them for the post",
+  "right": "Ask them to delete it"
+ },
+ {
+  "id": "l3b_185",
+  "who": "Night feed",
+  "text": "11 p.m. An old photo surfaces in your feed: you in a pirate costume at a company party in front of the logo. Caption: “This is who decides the fate of 3,000 people.”",
+  "left": "Reply with humor",
+  "right": "Don’t react"
+ },
+ {
+  "id": "l3b_186",
+  "who": "SMM manager",
+  "text": "The social media manager sent the week’s post plan. Friday’s has an emoji that teens now use to mean something indecent. Remove it?",
+  "left": "Remove the emoji",
+  "right": "Trust the SMM team"
+ },
+ {
+  "id": "l3b_187",
+  "who": "Teenager at home",
+  "text": "Your teenager says they saw people online calling your company “boring.” They offer to “level up” its social media themselves.",
+  "left": "Trust the teenager",
+  "right": "Thank them and decline"
+ },
+ {
+  "id": "l3b_188",
+  "who": "Telegram channel",
+  "text": "An anonymous channel, “Industry Insiders,” claims you’re about to leave. You weren’t, but by evening three headhunters have called.",
+  "left": "Deny the rumor",
+  "right": "Chat with the headhunters"
+ },
+ {
+  "id": "l3b_189",
+  "who": "Online review",
+  "text": "In the evening you see a review on an employer-rating site: “The CEO is nice but never listens.” 300 likes.",
+  "left": "Start listening tomorrow",
+  "right": "Have HR find the author"
+ },
+ {
+  "id": "l3b_190",
+  "who": "Corporate post",
+  "text": "You accidentally posted a photo of your dinner on the corporate account instead of the quarterly results. Noticed an hour later.",
+  "left": "Keep it, add a caption",
+  "right": "Delete and pretend"
+ },
+ {
+  "id": "l3b_191",
+  "who": "Social media",
+  "text": "Overnight an online debate erupts: your logo supposedly resembles that of some obscure band. The logo designer is on standby.",
+  "left": "Order a check",
+  "right": "Stay jokingly silent"
+ },
+ {
+  "id": "l3b_192",
+  "who": "Video address",
+  "text": "The board wants a video apology for the ad scandal. Take fifteen, and your voice still sounds “insincere.”",
+  "left": "Record take sixteen",
+  "right": "Go with the best one"
+ },
+ {
+  "id": "l3b_193",
+  "who": "PR adviser",
+  "text": "Your PR adviser asks you not to leave the house unless necessary: your face has been in memes for a week. But you have a parent-teacher meeting.",
+  "left": "Go to the meeting",
+  "right": "Send your partner"
+ },
+ {
+  "id": "l3b_194",
+  "who": "Corporate channel",
+  "text": "The corporate channel posts your message at 11:30 p.m.: “Have a great weekend, everyone.” Staff respond with the “sleeping face” reaction.",
+  "left": "Schedule posts by day",
+  "right": "Demand reactions"
+ },
+ {
+  "id": "l3b_195",
+  "who": "Evening call",
+  "text": "The PR lead calls: the influencer you turned down for an ad deal filmed a video, “How the CEO Humiliated Me.” It goes up tomorrow morning.",
+  "left": "Call the influencer back",
+  "right": "Prepare a response now"
+ },
+ {
+  "id": "l3b_196",
+  "who": "Inner voice",
+  "text": "Your inner voice suggests deleting all your social media tonight so you’ll never land in a scandal again. Your finger is hovering over the button.",
+  "left": "Delete the accounts",
+  "right": "Keep them, sleep on it"
+ },
+ {
+  "id": "l3b_197",
+  "who": "Front desk security",
+  "text": "8 a.m. Security reports three inspectors with folders in the lobby — a surprise inspection. You’re stuck in traffic, your office is a mess, and your deputy is on vacation. What now?",
+  "left": "Greet them by video",
+  "right": "Ditch the car, run there"
+ },
+ {
+  "id": "l3b_198",
+  "who": "Fire inspector",
+  "text": "The fire inspector starts with your office and immediately finds an extension cord plugged into an extension cord plugged into another extension cord.",
+  "left": "Admit it and fix it",
+  "right": "Blame the previous CEO"
+ },
+ {
+  "id": "l3b_199",
+  "who": "Health inspection",
+  "text": "Health inspectors arrive at the plant at 7 a.m. The shift supervisor asks you to hold them at the gate for 15 minutes, “literally just to tidy up.” Stall them?",
+  "left": "Let them in right away",
+  "right": "Stall them with tea"
+ },
+ {
+  "id": "l3b_200",
+  "who": "Chief accountant",
+  "text": "First thing in the morning, the chief accountant reports that the tax office wants five years of documents within ten days. Year three’s archive is in the basement — which flooded.",
+  "left": "Whole team reconstructs it",
+  "right": "Report the flood honestly"
+ },
+ {
+  "id": "l3b_201",
+  "who": "Regulator",
+  "text": "The regulator sends new reporting requirements: 140 pages, effective in a month. The CFO is panicking. Hire consultants?",
+  "left": "Hire consultants",
+  "right": "Figure it out in-house"
+ },
+ {
+  "id": "l3b_202",
+  "who": "Inspector",
+  "text": "The inspector asks for a private office for three weeks. The only free one is your favorite meeting room with a park view.",
+  "left": "Give up the meeting room",
+  "right": "Put him in the archive"
+ },
+ {
+  "id": "l3b_203",
+  "who": "Secretary",
+  "text": "Your secretary whispers that “some serious man from the oversight agency” is here and already photographing the fire extinguishers in the hall. Go out yourself?",
+  "left": "Go out in person",
+  "right": "Send the lawyer"
+ },
+ {
+  "id": "l3b_204",
+  "who": "Quality director",
+  "text": "The quality director asks to postpone the certification audit: “We’re 80% ready.” Postponing costs money; failing costs more.",
+  "left": "Do the audit now",
+  "right": "Postpone the audit"
+ },
+ {
+  "id": "l3b_205",
+  "who": "Labor inspector",
+  "text": "The labor inspector wants to talk to rank-and-file staff with no managers present. You know the installers have a pile of grievances.",
+  "left": "Allow it, no strings",
+  "right": "Suggest HR sit in"
+ },
+ {
+  "id": "l3b_206",
+  "who": "Environmental agency",
+  "text": "Inspectors notice suspiciously colorful smoke coming from the boiler house chimney. The boiler house chief insists it’s “just morning mist.”",
+  "left": "Shut down the boiler house",
+  "right": "Believe the chief"
+ },
+ {
+  "id": "l3b_207",
+  "who": "Lab",
+  "text": "The regulator’s lab took product samples. Results in a week. The production head suggests holding the batch until then. Your call.",
+  "left": "Halt shipments",
+  "right": "Ship as usual"
+ },
+ {
+  "id": "l3b_208",
+  "who": "Commission",
+  "text": "The inspection commission demands every order from the past three years by 10 a.m., on paper and bound. You went paperless two years ago.",
+  "left": "Print it all overnight",
+  "right": "Offer digital copies"
+ },
+ {
+  "id": "l3b_209",
+  "who": "Document review",
+  "text": "The inspector finds your signature on an order you definitely never signed. It looks very much like yours. Someone clearly made an effort.",
+  "left": "Open an internal probe",
+  "right": "Admit you may have forgotten"
+ },
+ {
+  "id": "l3b_210",
+  "who": "Auditor",
+  "text": "The external auditor arrives at 8 a.m. and asks for a “plain human explanation of revenue.” The CFO has been explaining it inhumanly for three days.",
+  "left": "Explain it yourself",
+  "right": "Leave it to the CFO"
+ },
+ {
+  "id": "l3b_211",
+  "who": "Licensing authority",
+  "text": "Your core business license expires in a week. The renewal papers went in, but the company name has a typo — one letter. Refile?",
+  "left": "Refile",
+  "right": "Hope nobody notices"
+ },
+ {
+  "id": "l3b_212",
+  "who": "State inspector",
+  "text": "A building inspector demands you demolish an annex built ten years ago as a smoking area. It’s now the board’s meeting room.",
+  "left": "Defend the annex",
+  "right": "Demolish and move"
+ },
+ {
+  "id": "l3b_213",
+  "who": "Inspector",
+  "text": "The inspector asks to see the safety briefing log. It exists, but for six months it’s been signed by someone named “Smith-Test.”",
+  "left": "Admit the violation",
+  "right": "Hold a briefing right now"
+ },
+ {
+  "id": "l3b_214",
+  "who": "Oversight agency",
+  "text": "The agency fined you for the wrong font on a label. The amount is small, but an appeal takes a month and is winnable. Pay?",
+  "left": "Pay and forget it",
+  "right": "Appeal on principle"
+ },
+ {
+  "id": "l3b_215",
+  "who": "Inspection",
+  "text": "During the inspection, the inspector asks why there’s no soap in the staff restroom. There is soap — in the facilities manager’s office, “just in case.”",
+  "left": "Scold facilities",
+  "right": "Bring soap yourself"
+ },
+ {
+  "id": "l3b_216",
+  "who": "CFO",
+  "text": "The CFO suggests hiring tax consultants who “know people at the tax office.” You don’t like the word “know.”",
+  "left": "Pass on them",
+  "right": "Hire the consultants"
+ },
+ {
+  "id": "l3b_217",
+  "who": "Workplace safety",
+  "text": "The inspector wants to climb onto the factory roof to check the railings. The roof key is lost. A mechanic offers a ladder that itself needs inspecting.",
+  "left": "Break the lock",
+  "right": "Reschedule the check"
+ },
+ {
+  "id": "l3b_218",
+  "who": "Antitrust agency",
+  "text": "The antitrust agency is curious about your joint project with a competitor. The project: a joint company soccer tournament. Explain?",
+  "left": "Explain in detail",
+  "right": "Send the lawyer"
+ },
+ {
+  "id": "l3b_219",
+  "who": "Oversight body",
+  "text": "The inspector found that the fire extinguisher in your reception is being used as a doorstop. The secretary swears it still works.",
+  "left": "Take the blame yourself",
+  "right": "Reprimand the secretary"
+ },
+ {
+  "id": "l3b_220",
+  "who": "Audit",
+  "text": "Auditors found that procurement bought 400 office chairs for a department of 40. The chairs are sitting in a hangar. Explain to the board?",
+  "left": "Admit procurement goofed",
+  "right": "Find a use for the chairs"
+ },
+ {
+  "id": "l3b_221",
+  "who": "Agency",
+  "text": "A government agency wants a form filled out. Mandatory field: “hours worked by the third-floor cleaner in 2021.” Where would you even get that?",
+  "left": "Dig up the real data",
+  "right": "Fill in a rough guess"
+ },
+ {
+  "id": "l3b_222",
+  "who": "Tax office",
+  "text": "The tax inspector summons you personally for a chat. Legal says say nothing, accounting says explain everything. The board demands you “just sort it out.”",
+  "left": "Listen to legal",
+  "right": "Explain it all in accountant-speak"
+ },
+ {
+  "id": "l3b_223",
+  "who": "Inspection",
+  "text": "The inspection drags on: for three weeks the inspectors have eaten free in your cafeteria, and the cook has started making them a special menu. Stop it?",
+  "left": "Put them on the regular menu",
+  "right": "Let the cook show off"
+ },
+ {
+  "id": "l3b_224",
+  "who": "Compliance order",
+  "text": "You’ve been ordered to build a wheelchair ramp at the service entrance within a month. The contractor says he needs two. Hire a second one?",
+  "left": "Hire a second contractor",
+  "right": "Ask for an extension"
+ },
+ {
+  "id": "l3b_225",
+  "who": "Industry regulator",
+  "text": "At an industry meeting, the regulator asks your experts to help draft new rules. An honor — but it’s five people for six months.",
+  "left": "Assign the people",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3b_226",
+  "who": "Lawyer",
+  "text": "Legal brings an inspection-prep plan: 30 points, including “teach everyone to say ‘that’s not my area.’” Approve it?",
+  "left": "Approve the plan",
+  "right": "Say: we tell the truth"
+ },
+ {
+  "id": "l3b_227",
+  "who": "Metrologist",
+  "text": "During an inspection, the metrologist finds all the warehouse scales are off by 50 grams — in the customers’ favor. You’ve been losing money for three years.",
+  "left": "Recalibrate them now",
+  "right": "Brag about your honesty"
+ },
+ {
+  "id": "l3b_228",
+  "who": "Certification board",
+  "text": "The certification board wants the product tested at minus 40. The nearest freezer belongs to the meatpacking plant next door.",
+  "left": "Strike a deal with the meat plant",
+  "right": "Book a pricey lab"
+ },
+ {
+  "id": "l3b_229",
+  "who": "Inspector",
+  "text": "Evening. The inspector lingers and hints that “the inspection could wrap up faster if...” He doesn’t finish the sentence and looks at you expectantly.",
+  "left": "Play dumb",
+  "right": "Call the lawyer in"
+ },
+ {
+  "id": "l3b_230",
+  "who": "Inspection report",
+  "text": "At 7:30 p.m. you’re handed a 70-page inspection report. It must be signed by morning; objections within three days. Read it tonight?",
+  "left": "Read late into the night",
+  "right": "Sign “with objections”"
+ },
+ {
+  "id": "l3b_231",
+  "who": "Board of directors",
+  "text": "The board chair calls in the evening: “Heard you have an inspection. I trust we won’t have to blush at the shareholder meeting?” Give details?",
+  "left": "Report in detail",
+  "right": "Say “all under control”"
+ },
+ {
+  "id": "l3b_232",
+  "who": "Employee",
+  "text": "In the evening, an employee comes to confess: for two years he’s been signing the safety logs for everyone because “it’s faster.” The inspection is tomorrow.",
+  "left": "Thank him for honesty",
+  "right": "Suspend him"
+ },
+ {
+  "id": "l3b_233",
+  "who": "Accounting",
+  "text": "Accounting is working late on the tax request. The chief accountant asks you to order them food and “sit with us for moral support.”",
+  "left": "Stay with accounting",
+  "right": "Order food and leave"
+ },
+ {
+  "id": "l3b_234",
+  "who": "Regulator report",
+  "text": "In the evening you discover the quarterly regulator report was sent with an empty table. Deadline: midnight. It’s 11:40 p.m.",
+  "left": "Resend it now",
+  "right": "Send it in the morning with a note"
+ },
+ {
+  "id": "l3b_235",
+  "who": "Partner",
+  "text": "At home, a candlelit anniversary dinner awaits. In your inbox: a letter from the regulator marked “response required today.”",
+  "left": "Answer the regulator",
+  "right": "Spend the evening at home"
+ },
+ {
+  "id": "l3b_236",
+  "who": "Internal audit",
+  "text": "Internal audit brings an evening report: the company has 47 different rules for running meetings, and they contradict each other. Cut it to one?",
+  "left": "Cut it to one",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3b_237",
+  "who": "Night watchman",
+  "text": "The night watchman calls: the inspector left a folder marked “Preliminary findings” in the meeting room. It’s lying open. Take a peek?",
+  "left": "Don’t look",
+  "right": "Just one little peek"
+ },
+ {
+  "id": "l3b_238",
+  "who": "Notification",
+  "text": "Late evening notification: the company is on next year’s scheduled inspection plan. All twelve months. Tell the team?",
+  "left": "Tell them right away",
+  "right": "Tell them after the holidays"
+ },
+ {
+  "id": "l3b_239",
+  "who": "Legal department",
+  "text": "The lawyers stay late preparing objections to the report. One asks you to personally check the word “willful” — it has to be contested by midnight.",
+  "left": "Sit with the lawyers",
+  "right": "Trust the lawyers"
+ },
+ {
+  "id": "l3b_240",
+  "who": "Board chair",
+  "text": "The board chair wants a plan by morning on “how to never get inspected again.” No such plan exists in nature.",
+  "left": "Write an honest memo",
+  "right": "Write a pretty plan"
+ },
+ {
+  "id": "l3b_241",
+  "who": "Courier",
+  "text": "8:30 a.m. A courier hands you, personally, a lawsuit from a former partner for an amount equal to annual revenue. You have to sign for it right there in the elevator.",
+  "left": "Sign and call legal",
+  "right": "Send him to the lawyers"
+ },
+ {
+  "id": "l3b_242",
+  "who": "General counsel",
+  "text": "General counsel reports the company won the case. But the win is $1 in symbolic damages, and legal fees hit $100,000. Celebrate?",
+  "left": "Celebrate the win",
+  "right": "Review the costs"
+ },
+ {
+  "id": "l3b_243",
+  "who": "Lawyer",
+  "text": "Legal advises you not to take calls from the former director who sued you. He calls every morning just to ask how you’re doing.",
+  "left": "Don’t pick up",
+  "right": "Talk like a human"
+ },
+ {
+  "id": "l3b_244",
+  "who": "Summons",
+  "text": "In your mailbox: a court summons in your name. The hearing is today at 10:00. The letter apparently took three weeks to arrive. Go?",
+  "left": "Go to court",
+  "right": "Send a lawyer with proxy"
+ },
+ {
+  "id": "l3b_245",
+  "who": "Law firm",
+  "text": "Your outside law firm sent its monthly bill. The line item “Reflections on strategy” is billed at 60 hours. Dispute it?",
+  "left": "Dispute the bill",
+  "right": "Pay it silently"
+ },
+ {
+  "id": "l3b_246",
+  "who": "Patent attorney",
+  "text": "A patent attorney warns your new product may infringe a competitor’s patent. Launch is in a week. Postpone?",
+  "left": "Postpone the launch",
+  "right": "Launch on schedule"
+ },
+ {
+  "id": "l3b_247",
+  "who": "Lawsuit",
+  "text": "A customer sues: your product’s manual “doesn’t warn against using it in a swimming pool.” The product is an office chair.",
+  "left": "Settle quietly",
+  "right": "Fight it to the end"
+ },
+ {
+  "id": "l3b_248",
+  "who": "Legal department",
+  "text": "Legal wants to rewrite all client contracts within a month to “plug the holes.” Sales is wailing that clients will flee.",
+  "left": "Rewrite the contracts",
+  "right": "Leave them as is"
+ },
+ {
+  "id": "l3b_249",
+  "who": "Commercial court",
+  "text": "You’re asked to testify in a former supplier’s case. The hearing is at 9 a.m. — the same day as the board meeting.",
+  "left": "Go to court",
+  "right": "Cite the board meeting"
+ },
+ {
+  "id": "l3b_250",
+  "who": "Legal assistant",
+  "text": "A legal assistant accidentally sent the opposing side internal emails labeled “our weak points.” What now?",
+  "left": "Admit the mistake openly",
+  "right": "Demand they delete it"
+ },
+ {
+  "id": "l3b_251",
+  "who": "Former employee",
+  "text": "A former employee sues to be reinstated. By now his position has been eliminated and his desk given to a printer.",
+  "left": "Settle amicably",
+  "right": "Defend in court"
+ },
+ {
+  "id": "l3b_252",
+  "who": "Lawyer",
+  "text": "Legal asks you to approve a “delay strategy”: five motions to postpone so the plaintiff gets tired. Legal, but it sounds ugly.",
+  "left": "Approve the stalling",
+  "right": "Argue on the merits"
+ },
+ {
+  "id": "l3b_253",
+  "who": "Competitor",
+  "text": "A competitor sued, claiming your slogan “Simply Better” is misleading. The lawyers suggest changing it to “Simply Good.”",
+  "left": "Change the slogan",
+  "right": "Defend “Better”"
+ },
+ {
+  "id": "l3b_254",
+  "who": "Mediator",
+  "text": "A mediator offers to settle your dispute with a supplier. Condition: you personally call their CEO and apologize. Their CEO is your old classmate.",
+  "left": "Call your classmate",
+  "right": "Wait for the ruling"
+ },
+ {
+  "id": "l3b_255",
+  "who": "Court",
+  "text": "In court, the judge rebukes you over your phone. A minute later it rings again: the board. For the third time.",
+  "left": "Step out and answer",
+  "right": "Turn the phone off"
+ },
+ {
+  "id": "l3b_256",
+  "who": "Law firm partner",
+  "text": "A law firm partner suggests filing a countersuit “for balance.” Odds of winning are slim, but the other side will get nervous.",
+  "left": "File the countersuit",
+  "right": "Don’t breed lawsuits"
+ },
+ {
+  "id": "l3b_257",
+  "who": "Settlement",
+  "text": "The other side offers a settlement on good terms but demands a public statement that “you were wrong.”",
+  "left": "Sign with the statement",
+  "right": "Keep fighting"
+ },
+ {
+  "id": "l3b_258",
+  "who": "Lawyer",
+  "text": "Legal says the defense needs all correspondence from the past three years. Including the “Friday Memes” chat where you joked about a competitor.",
+  "left": "Hand over everything",
+  "right": "Clean up the chats"
+ },
+ {
+  "id": "l3b_259",
+  "who": "Witness",
+  "text": "Your key witness — a manager — quit the day before the hearing and joined a competitor. He writes politely: “Good luck in court!”",
+  "left": "Subpoena him",
+  "right": "Find another witness"
+ },
+ {
+  "id": "l3b_260",
+  "who": "Union",
+  "text": "The union threatens a class action over the new remote work rules. The board thinks the rules are fair.",
+  "left": "Revise the rules",
+  "right": "Prepare for court"
+ },
+ {
+  "id": "l3b_261",
+  "who": "Contract",
+  "text": "Legal discovered that a key supplier contract ran for ten years without your side’s signature. Both sides honored it. Is that a problem?",
+  "left": "Backdate a signature",
+  "right": "Re-sign it properly"
+ },
+ {
+  "id": "l3b_262",
+  "who": "Expert review",
+  "text": "A court-appointed expert wants two days of access to the plant. Technically, production can’t be stopped. What now?",
+  "left": "Let the expert in",
+  "right": "Demand a postponement"
+ },
+ {
+  "id": "l3b_263",
+  "who": "Complaint",
+  "text": "A client sent a 47-page complaint. Legal says it boils down to one demand; the rest is emotion and drawings. Read it yourself?",
+  "left": "Read all 47 pages",
+  "right": "Ask for a summary"
+ },
+ {
+  "id": "l3b_264",
+  "who": "Legal department",
+  "text": "Legal wants a rule: every email to partners gets a legal review. Sales estimates replies will take three days.",
+  "left": "Introduce the rule",
+  "right": "Only for big deals"
+ },
+ {
+  "id": "l3b_265",
+  "who": "Opposing counsel",
+  "text": "During a recess, the opposing lawyer buys you coffee and asks “how your board is feeling.” Keep chatting?",
+  "left": "Chat about the weather",
+  "right": "Walk off in silence"
+ },
+ {
+  "id": "l3b_266",
+  "who": "Bailiff",
+  "text": "A bailiff has come to seize assets over an old case you thought was closed. He’s already putting a sticker on your coffee machine.",
+  "left": "Defend the coffee machine",
+  "right": "Call legal and wait"
+ },
+ {
+  "id": "l3b_267",
+  "who": "Lawyers",
+  "text": "The lawyers suggest moving some assets into a subsidiary “just in case.” Legal, but the board may ask what we’re hiding from.",
+  "left": "Move the assets",
+  "right": "Touch nothing"
+ },
+ {
+  "id": "l3b_268",
+  "who": "Class action",
+  "text": "Customers are preparing a class action because a “Family Pack” of cookies contains eight, and their family has nine people.",
+  "left": "Add a ninth cookie",
+  "right": "Defend in court"
+ },
+ {
+  "id": "l3b_269",
+  "who": "General counsel",
+  "text": "General counsel calls at 9 p.m.: “Good news and bad news.” Good: the trial’s postponed. Bad: by a month, and you’ll have to prep all over again.",
+  "left": "Prep all month",
+  "right": "Rest a couple of days"
+ },
+ {
+  "id": "l3b_270",
+  "who": "Lawyer",
+  "text": "Legal suggests “quickly” proofreading a 500-page contract with a new investor tonight. Signing is tomorrow at 10 a.m.",
+  "left": "Read till dawn",
+  "right": "Trust the lawyer"
+ },
+ {
+  "id": "l3b_271",
+  "who": "Ex-partner",
+  "text": "Your former business partner, whom you’re suing, invites you to dinner to “talk without lawyers.” The lawyers are dead against it.",
+  "left": "Go to dinner",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_272",
+  "who": "Family",
+  "text": "At dinner, your kid asks why the TV said your company “got sued.” You didn’t know it was already on the news.",
+  "left": "Explain calmly",
+  "right": "Call the lawyer, fast"
+ },
+ {
+  "id": "l3b_273",
+  "who": "Court ruling",
+  "text": "The verdict arrives in the evening: you lost. The lawyers are sure you’ll win on appeal, but the board must be told today. Call?",
+  "left": "Call the board now",
+  "right": "Report tomorrow with a plan"
+ },
+ {
+  "id": "l3b_274",
+  "who": "Law firm",
+  "text": "Your law firm invites you to an evening client reception. Your legal bill this year is so big you probably paid for this party.",
+  "left": "Go and eat your money’s worth",
+  "right": "Stay and work"
+ },
+ {
+  "id": "l3b_275",
+  "who": "Employee lawsuit",
+  "text": "An employee who lost to you at ping-pong at the company party yesterday is now threatening to sue for “psychological pressure.”",
+  "left": "Offer a rematch",
+  "right": "Hand it to legal"
+ },
+ {
+  "id": "l3b_276",
+  "who": "On-duty lawyer",
+  "text": "The on-duty lawyer wants to answer a supplier’s claim with his trademark sarcasm. The reply is already written and very witty.",
+  "left": "Allow the sarcasm",
+  "right": "Demand a dry reply"
+ },
+ {
+  "id": "l3b_277",
+  "who": "Contract",
+  "text": "Signing a contract in the evening, you notice legal misspelled the company name: “Alpa” instead of “Alpha.” The counterparty is waiting until 8 p.m.",
+  "left": "Sign now, fix later",
+  "right": "Redo it immediately"
+ },
+ {
+  "id": "l3b_278",
+  "who": "Attorney",
+  "text": "The attorney calls in the evening and asks you to “keep a stone face no matter what” in court. Tomorrow the other side will read out your old joking emails.",
+  "left": "Practice in the mirror",
+  "right": "Admit the jokes were funny"
+ },
+ {
+  "id": "l3b_279",
+  "who": "Reputation director",
+  "text": "The reputation director brings a study: 62% of people don’t know what your company does, and 18% are sure you make furniture. You make yogurt.",
+  "left": "Launch an awareness campaign",
+  "right": "Get into furniture"
+ },
+ {
+  "id": "l3b_280",
+  "who": "Employer ranking",
+  "text": "The company dropped off the best-employers list. HR proposes fixing it with “immediate changes” — like free fruit on Fridays.",
+  "left": "Bring in the fruit",
+  "right": "Find the real causes"
+ },
+ {
+  "id": "l3b_281",
+  "who": "PR director",
+  "text": "The PR director wants to rename the company to “escape old negativity.” The new name was invented over the weekend: “Neo-Synergetics.”",
+  "left": "Rename the company",
+  "right": "Keep the old name"
+ },
+ {
+  "id": "l3b_282",
+  "who": "Morning news",
+  "text": "The morning news praises your company for a charity drive you know nothing about. Turns out logistics organized it on their own. Take the credit?",
+  "left": "Credit logistics",
+  "right": "Say “we as a company”"
+ },
+ {
+  "id": "l3b_283",
+  "who": "Agency",
+  "text": "An agency brings a brand book for your personal brand. It specifies your “signature gesture,” “tone of voice,” and “favorite book.” You haven’t read the book.",
+  "left": "Adopt the brand book",
+  "right": "Stay yourself"
+ },
+ {
+  "id": "l3b_284",
+  "who": "Product recall",
+  "text": "Production reports glass fragments found in a batch of children’s juice. The batch is already in 40 stores. Recall everything or just the suspicious boxes?",
+  "left": "Recall the whole batch",
+  "right": "Just the suspicious ones"
+ },
+ {
+  "id": "l3b_285",
+  "who": "Retailer call",
+  "text": "A retail chain calls at 7:45 a.m.: a shopper found the wrong product in your packaging — shoe polish instead of toothpaste. The video’s already online.",
+  "left": "Apologize to her personally",
+  "right": "Send a template reply"
+ },
+ {
+  "id": "l3b_286",
+  "who": "Procurement director",
+  "text": "The procurement director reports: due to a storm, the ship with raw materials is going around the continent. Six weeks’ delay. Buy from a pricey local supplier?",
+  "left": "Buy at a premium",
+  "right": "Wait for the ship"
+ },
+ {
+  "id": "l3b_287",
+  "who": "Leak",
+  "text": "This morning it turns out the cloud storage with job applicants’ résumés was open to everyone all summer. A journalist has already found it.",
+  "left": "Confess first",
+  "right": "Lock it and stay quiet"
+ },
+ {
+  "id": "l3b_288",
+  "who": "Email",
+  "text": "An employee accidentally sent the whole office’s salary list to the all-staff mailing list. 300 people read it in 4 minutes. Recall it?",
+  "left": "Explain the pay gaps",
+  "right": "Recall it and stay quiet"
+ },
+ {
+  "id": "l3b_289",
+  "who": "PR agency",
+  "text": "The agency offers to buy you an entry in the encyclopedia “Outstanding Leaders of Our Era.” Price: a used car. Print run unknown.",
+  "left": "Buy the entry",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_290",
+  "who": "Call center",
+  "text": "The call center reports that after the recall, customers are demanding the recalled product back because “it was tasty.” What do we say?",
+  "left": "Give it back",
+  "right": "Offer a replacement"
+ },
+ {
+  "id": "l3b_291",
+  "who": "Supplier",
+  "text": "The sole supplier of a unique part is shutting down. You could buy their entire stock — ten years’ worth. The warehouse would be packed to the ceiling.",
+  "left": "Buy the entire stock",
+  "right": "Find a new part"
+ },
+ {
+  "id": "l3b_292",
+  "who": "Quality control",
+  "text": "Quality wants the press release to say “Defect rate under 0.01%.” You know they only counted one shift out of three. Send it?",
+  "left": "Send it as is",
+  "right": "Recount honestly"
+ },
+ {
+  "id": "l3b_293",
+  "who": "Coffee chain",
+  "text": "A partner coffee chain refuses to sell your product until you “sort out your reputation.” That’s 15% of revenue. Go negotiate?",
+  "left": "Go in person tomorrow",
+  "right": "Find another chain"
+ },
+ {
+  "id": "l3b_294",
+  "who": "Press secretary",
+  "text": "The press secretary proposes declaring a “year of openness”: every month you meet journalists and answer any question.",
+  "left": "Declare the year",
+  "right": "Stay closed"
+ },
+ {
+  "id": "l3b_295",
+  "who": "Shareholder",
+  "text": "At 7 a.m., a major shareholder sends a link to the “Most Hated Brands of the Year” list with one word: “Explain.” You’re 11th.",
+  "left": "Prepare an explanation",
+  "right": "Reply: “11 isn’t 1”"
+ },
+ {
+  "id": "l3b_296",
+  "who": "General contractor",
+  "text": "The contractor admits the factory in your commercial wasn’t yours but someone else’s — “it was prettier.” Their logo is visible in the shot.",
+  "left": "Reshoot the commercial",
+  "right": "Crop out the logo"
+ },
+ {
+  "id": "l3b_297",
+  "who": "Marketing",
+  "text": "Marketing wants to relaunch a product recalled a year ago under a new name. “Nobody will remember,” they promise.",
+  "left": "Relaunch with a new name",
+  "right": "Forbid it"
+ },
+ {
+  "id": "l3b_298",
+  "who": "Reputation agency",
+  "text": "An agency shows you a word cloud of what the internet says about the company. The biggest word: “meh.” They pitch a six-month plan.",
+  "left": "Take the six-month plan",
+  "right": "Make a better product"
+ },
+ {
+  "id": "l3b_299",
+  "who": "Product manager",
+  "text": "A product manager finds 30,000 mugs in the warehouse with the company name misspelled on the logo. They’re already paid for.",
+  "left": "Give them out as swag",
+  "right": "Quietly scrap them"
+ },
+ {
+  "id": "l3b_300",
+  "who": "Production",
+  "text": "Production asks to ship a batch in last year’s packaging because the new design is stuck at customs. Will anyone notice?",
+  "left": "Ship in the old packaging",
+  "right": "Wait for the new one"
+ },
+ {
+  "id": "l3b_301",
+  "who": "Logistics",
+  "text": "The warehouse reports a system glitch sent 2,000 orders to one town where exactly one customer lives. He’s delighted, if a bit puzzled.",
+  "left": "Call the lucky guy",
+  "right": "Turn the trucks around"
+ },
+ {
+  "id": "l3b_302",
+  "who": "Sales",
+  "text": "Sales wants to use the line “The stars choose us” in ads. There’s one star — the sales director’s distant relative, a karaoke singer.",
+  "left": "Allow the line",
+  "right": "Forbid it"
+ },
+ {
+  "id": "l3b_303",
+  "who": "Business breakfast",
+  "text": "At a business breakfast, you’re introduced as “the person who nearly sank the company last year.” The host thinks it’s a compliment.",
+  "left": "Joke it off",
+  "right": "Grimly clarify"
+ },
+ {
+  "id": "l3b_304",
+  "who": "PR director",
+  "text": "The PR director wants approval to sponsor a kids’ soccer team. The team loses every match 0–10. Your logo would be on their backs.",
+  "left": "Sponsor them with love",
+  "right": "Find a stronger team"
+ },
+ {
+  "id": "l3b_305",
+  "who": "Quality control",
+  "text": "Quality control found that your “all-natural” product contains artificial colors. You’re only finding out now too. Tell customers?",
+  "left": "Tell them honestly",
+  "right": "Quietly change the label"
+ },
+ {
+  "id": "l3b_306",
+  "who": "Logistics",
+  "text": "The packaging supplier raised prices 40% overnight. The alternative: paper packaging that survives three days of humidity.",
+  "left": "Pay more",
+  "right": "Switch to paper"
+ },
+ {
+  "id": "l3b_307",
+  "who": "Advertising",
+  "text": "The ad team wants the slogan recorded in your voice. After five takes, the sound engineer gently asks whether you have a “warmer” voice.",
+  "left": "Keep trying",
+  "right": "Give it to an actor"
+ },
+ {
+  "id": "l3b_308",
+  "who": "Data breach",
+  "text": "The investigation shows customer data leaked through a lunch-ordering app employees installed themselves. Ban it?",
+  "left": "Ban unapproved apps",
+  "right": "Train the staff"
+ },
+ {
+  "id": "l3b_309",
+  "who": "Consumer group",
+  "text": "A consumer protection group invites you to an open meeting with unhappy customers. About 200 people and one camera.",
+  "left": "Go in person",
+  "right": "Send a representative"
+ },
+ {
+  "id": "l3b_310",
+  "who": "Board of directors",
+  "text": "The board wants you to “urgently improve the company’s reputation” before the shareholder meeting. It’s in a week. No budget allocated.",
+  "left": "Write posts yourself",
+  "right": "Explain it’s unrealistic"
+ },
+ {
+  "id": "l3b_311",
+  "who": "Quality control",
+  "text": "Quality control wants to stop the line for a day over a suspected defect. The suspicion is based on a machine making a “weird noise.”",
+  "left": "Stop it over the noise",
+  "right": "Keep running"
+ },
+ {
+  "id": "l3b_312",
+  "who": "Deputy",
+  "text": "Your deputy wants to start a personal blog, “Diary of a Deputy Director.” The first post is ready: “What’s really going on at our company.”",
+  "left": "Allow the blog",
+  "right": "Forbid it"
+ },
+ {
+  "id": "l3b_313",
+  "who": "Customs",
+  "text": "A container of parts is held at customs: the declaration says “bananas.” The broker insists it’s a “system typo.”",
+  "left": "Go sort it out",
+  "right": "Change brokers"
+ },
+ {
+  "id": "l3b_314",
+  "who": "PR agency",
+  "text": "The PR agency wants weekend photos of you in “ordinary life”: on the subway, at the market, with your dog. You don’t have a dog.",
+  "left": "Rent a dog",
+  "right": "Stay in your own life"
+ },
+ {
+  "id": "l3b_315",
+  "who": "Evening news",
+  "text": "On the evening news, the story about your product recall runs right after a story about a heroic firefighter. The contrast doesn’t flatter you.",
+  "left": "Record a statement",
+  "right": "Turn off the TV"
+ },
+ {
+  "id": "l3b_316",
+  "who": "Quality director",
+  "text": "The quality director is staying late and asks you to sign off on destroying a batch worth $2 million. Disposal starts in the morning.",
+  "left": "Sign the order",
+  "right": "Hold off till it’s checked"
+ },
+ {
+  "id": "l3b_317",
+  "who": "Board of directors",
+  "text": "A board member suggests solving the reputation problem “like grown-ups”: donate to charity and pose with a giant check.",
+  "left": "Pose with the check",
+  "right": "Propose real changes"
+ },
+ {
+  "id": "l3b_318",
+  "who": "Former colleague",
+  "text": "A former colleague texts in the evening: “Saw you on the news. Hang in there, it’ll blow over in a week.” A minute later: “Well, maybe two.”",
+  "left": "Laugh together",
+  "right": "Reread the news again"
+ },
+ {
+  "id": "l3b_319",
+  "who": "Customer support",
+  "text": "Support asks permission to close the reviews section on the website tonight until the wave of anger over the recall dies down.",
+  "left": "Close the reviews",
+  "right": "Reply all night"
+ },
+ {
+  "id": "l3b_320",
+  "who": "Logistics manager",
+  "text": "10 p.m. Logistics calls: the shipment is stuck on a mountain pass in a snowstorm, and the driver is writing poems in the chat and says hi.",
+  "left": "Cheer the driver on",
+  "right": "Look for a helicopter"
+ },
+ {
+  "id": "l3b_321",
+  "who": "Assistant",
+  "text": "Your assistant asks you to sign anniversary cards for partners tonight. There are 400, and each signature must be “handwritten” and different.",
+  "left": "Sign all 400",
+  "right": "Use a stamp"
+ },
+ {
+  "id": "l3b_322",
+  "who": "PR director",
+  "text": "In response to the bad press, the PR director suggests publishing a memoir, “How I Saved the Company.” A specially hired “literary assistant” would write it.",
+  "left": "Publish the memoir",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_323",
+  "who": "Inner voice",
+  "text": "Your inner voice asks whether it’s time to reread every quote you gave the press this year to figure out where exactly it all went wrong.",
+  "left": "Reread every quote",
+  "right": "Watch a TV series"
+ },
+ {
+  "id": "l3b_324",
+  "who": "Shareholders",
+  "text": "On an evening call, minority shareholders demand the marketing director be fired over a failed ad. The ad was your idea.",
+  "left": "Take the blame",
+  "right": "Sacrifice the marketer"
+ },
+ {
+  "id": "l3b_325",
+  "who": "Product recall",
+  "text": "The recalled batch of cookies is selling online as a “collector’s item” at triple the price. Meanwhile the company is taking losses.",
+  "left": "Use it in advertising",
+  "right": "Demand they stop selling"
+ },
+ {
+  "id": "l3b_326",
+  "who": "Security service",
+  "text": "Security reports late at night: the customer data leak seems to be the work of a fired sysadmin. He left a note in the code: “Hi to the CEO.”",
+  "left": "File a police report",
+  "right": "Close the holes first"
+ },
+ {
+  "id": "l3b_327",
+  "who": "Supplier",
+  "text": "At 9 p.m. a supplier offers to fix the delay if you sign a two-year contract at an inflated price. Answer needed by midnight.",
+  "left": "Sign before midnight",
+  "right": "Risk the disruption"
+ },
+ {
+  "id": "l3b_328",
+  "who": "Childhood friend",
+  "text": "A childhood friend writes: “Saw your product got recalled. I’m still eating it, is that okay?” She wants an honest answer.",
+  "left": "Answer honestly",
+  "right": "Say “it’s totally fine”"
+ },
+ {
+  "id": "l3b_329",
+  "who": "Shift foreman",
+  "text": "6:50 a.m. The shift foreman calls: overnight, the packing robot sealed 5,000 empty boxes. They’ve already gone out to distributors. Call them before opening?",
+  "left": "Call everyone by 9 a.m.",
+  "right": "Wait to see who notices"
+ },
+ {
+  "id": "l3b_330",
+  "who": "IT director",
+  "text": "The IT director proposes a “drill”: deliberately shutting down the main server during work hours to test the backup. The board is nervous.",
+  "left": "Run the drill",
+  "right": "Postpone the drill"
+ },
+ {
+  "id": "l3b_331",
+  "who": "Online store",
+  "text": "A pricing glitch has the company’s online store selling refrigerators for $1 since morning. 800 orders already. Honor them?",
+  "left": "Honor the orders",
+  "right": "Cancel with apologies"
+ },
+ {
+  "id": "l3b_332",
+  "who": "Board of directors",
+  "text": "The board chair wants a “short crisis summary” every morning at 7:00. Short means “one page, but with charts.”",
+  "left": "Write it yourself",
+  "right": "Assign an analyst"
+ },
+ {
+  "id": "l3b_333",
+  "who": "Service desk",
+  "text": "The service desk is swamped: employees can’t log into email after the password reset. Most common question: “What was my old password?”",
+  "left": "Temporarily roll back",
+  "right": "Weather the calls"
+ },
+ {
+  "id": "l3b_334",
+  "who": "Warehouse",
+  "text": "The warehouse reports that after moving to a new system, nobody knows where anything is. Shipments have stopped. Rehire the “old” storekeeper?",
+  "left": "Bring the storekeeper back",
+  "right": "Master the system"
+ },
+ {
+  "id": "l3b_335",
+  "who": "Chief technologist",
+  "text": "The chief technologist suggests replacing an expensive ingredient with a cheap substitute “nobody can tell apart.” Quality control could tell from the first spoonful.",
+  "left": "Keep the old recipe",
+  "right": "Switch ingredients"
+ },
+ {
+  "id": "l3b_336",
+  "who": "Security",
+  "text": "After the leak, security wants fingerprint scanners at the entrance. Staff have already nicknamed it “the police station.”",
+  "left": "Bring in fingerprints",
+  "right": "Stick to badges"
+ },
+ {
+  "id": "l3b_337",
+  "who": "Security",
+  "text": "Security reports a picket of five people outside with signs saying “Bring back the old flavor!” They’re polite and brought a thermos.",
+  "left": "Go out and talk",
+  "right": "Wait for them to leave"
+ },
+ {
+  "id": "l3b_338",
+  "who": "Forum moderator",
+  "text": "An industry forum moderator offers you a morning session: “How We Survived the Crisis.” The crisis isn’t over.",
+  "left": "Speak honestly",
+  "right": "Decline for now"
+ },
+ {
+  "id": "l3b_339",
+  "who": "Press office",
+  "text": "By 9 a.m. the press office needs you to choose between two statements: “We regret the inconvenience” and “This is our fault.” Lawyers love the first; people love the second.",
+  "left": "“This is our fault”",
+  "right": "“We regret the inconvenience”"
+ },
+ {
+  "id": "l3b_340",
+  "who": "Client",
+  "text": "A corporate client writes at 7:30 a.m.: “We want to cancel over the data leak. But if your CEO comes in person, we might reconsider.”",
+  "left": "Go in person",
+  "right": "Send the sales director"
+ },
+ {
+  "id": "l3b_341",
+  "who": "Partner factory",
+  "text": "A partner factory abroad has closed for a “national holiday” nobody knew about. It lasts nine days. The line is stopping.",
+  "left": "Find a temporary factory",
+  "right": "Send everyone on leave"
+ },
+ {
+  "id": "l3b_342",
+  "who": "Analyst",
+  "text": "An analyst shows that every hour of downtime costs the company an analyst’s annual salary. He gives you a meaningful look.",
+  "left": "Give him a raise",
+  "right": "Play dumb"
+ },
+ {
+  "id": "l3b_343",
+  "who": "Board of directors",
+  "text": "The board recommends hiring a crisis consultant who bills hourly and loves to say “let’s start with values.”",
+  "left": "Hire the consultant",
+  "right": "Manage on your own"
+ },
+ {
+  "id": "l3b_344",
+  "who": "Subway",
+  "text": "On the subway, you overhear two passengers discussing your scandal. One says: “I hear the CEO is decent, though.” The other disagrees.",
+  "left": "Join the conversation",
+  "right": "Listen till your stop"
+ },
+ {
+  "id": "l3b_345",
+  "who": "HR director",
+  "text": "The HR director reports that 30 candidates canceled interviews over the scandal. One wrote: “I’ll wait until things settle down.”",
+  "left": "Write to candidates yourself",
+  "right": "Raise posted salaries"
+ },
+ {
+  "id": "l3b_346",
+  "who": "Power company",
+  "text": "The power company warns that at 10 a.m. the whole district loses power for four hours. The diesel generator hasn’t been tested in three years.",
+  "left": "Test the generator now",
+  "right": "Send everyone remote"
+ },
+ {
+  "id": "l3b_347",
+  "who": "Chief engineer",
+  "text": "The chief engineer wants money for a monitoring system that warns of outages an hour in advance. There hasn’t been an outage in six months. The board thinks it’s unnecessary.",
+  "left": "Fight for the budget",
+  "right": "Agree with the board"
+ },
+ {
+  "id": "l3b_348",
+  "who": "Packaging maker",
+  "text": "The new packaging supplier made the boxes a centimeter too small. The product doesn’t fit. A reprint takes two weeks.",
+  "left": "Wait for the reprint",
+  "right": "Squeeze them in"
+ },
+ {
+  "id": "l3b_349",
+  "who": "Logistics manager",
+  "text": "A logistics partner offers drone delivery — “it’s marketing and speed in one.” So far the drone has delivered one box and crashed into a pond.",
+  "left": "Gamble on drones",
+  "right": "Stick with trucks"
+ },
+ {
+  "id": "l3b_350",
+  "who": "Service partner",
+  "text": "The cloud provider holding all your data announces it’s leaving the market in 30 days. Migration usually takes six months.",
+  "left": "Emergency migration",
+  "right": "Find a buyer for the provider"
+ },
+ {
+  "id": "l3b_351",
+  "who": "Quality control",
+  "text": "Quality found that besides the defective batch, there are two more “suspicious” ones. Recalling all three triples the reputational hit.",
+  "left": "Recall all three",
+  "right": "Re-check first"
+ },
+ {
+  "id": "l3b_352",
+  "who": "IT department",
+  "text": "IT proposes shutting off all external access to every system for a week while they hunt for the vulnerability. Remote workers are outraged.",
+  "left": "Cut off access",
+  "right": "Hunt without shutdown"
+ },
+ {
+  "id": "l3b_353",
+  "who": "Bank",
+  "text": "The bank froze the company’s accounts “pending clarification” over a suspiciously large refund to customers after the recall.",
+  "left": "Go to the bank yourself",
+  "right": "Send the CFO"
+ },
+ {
+  "id": "l3b_354",
+  "who": "Data protection lawyer",
+  "text": "The data protection lawyer finds that customers gave consent via a pre-checked box. The consequences are unpleasant.",
+  "left": "Re-ask everyone’s consent",
+  "right": "Quietly uncheck the box"
+ },
+ {
+  "id": "l3b_355",
+  "who": "Internal newsletter",
+  "text": "In the newsletter thread, staff ask whether there’ll be layoffs because of the crisis. You don’t know yet. The board asks you to “hold off.”",
+  "left": "Honestly say “I don’t know”",
+  "right": "Hold off"
+ },
+ {
+  "id": "l3b_356",
+  "who": "Plant manager",
+  "text": "The plant manager proposes stripping down the whole line over the weekend to find the defect’s source. Staff would get double pay.",
+  "left": "Launch the weekend push",
+  "right": "Wait for Monday"
+ },
+ {
+  "id": "l3b_357",
+  "who": "Procurement",
+  "text": "Procurement wants a six-month stockpile of raw materials “for the next crisis.” The warehouse will be packed, cash frozen.",
+  "left": "Build the stockpile",
+  "right": "Buy as needed"
+ },
+ {
+  "id": "l3b_358",
+  "who": "Emergency team",
+  "text": "The emergency team asks who’ll talk to customers: “We need someone people trust.” Everyone looks at you.",
+  "left": "Take the call yourself",
+  "right": "Assign the PR director"
+ },
+ {
+  "id": "l3b_359",
+  "who": "Delivery partner",
+  "text": "A courier service lost 300 parcels. Its director offers a month of free deliveries as compensation. The parcels were never found.",
+  "left": "Accept the compensation",
+  "right": "Demand they find them"
+ },
+ {
+  "id": "l3b_360",
+  "who": "Security auditor",
+  "text": "The security auditor shows that the accounting system password is “Accounting1.” Accounting is offended it was revealed publicly.",
+  "left": "Apologize to accounting",
+  "right": "Chew everyone out"
+ },
+ {
+  "id": "l3b_361",
+  "who": "Night duty officer",
+  "text": "The night duty officer sends a video: the warehouse roof is leaking right over a pallet of sugar. He’s already catching drips with buckets. Go?",
+  "left": "Drive to the warehouse",
+  "right": "Direct by phone"
+ },
+ {
+  "id": "l3b_362",
+  "who": "Chief engineer",
+  "text": "The chief engineer can fix the system by morning but needs the website off all night. Nights bring 20% of your sales.",
+  "left": "Take it down overnight",
+  "right": "Fix it without downtime"
+ },
+ {
+  "id": "l3b_363",
+  "who": "CFO",
+  "text": "The CFO brings an evening estimate: compensating affected customers will eat the year’s company party budget. Staff don’t know about the party yet.",
+  "left": "Cancel the party",
+  "right": "Find money elsewhere"
+ },
+ {
+  "id": "l3b_364",
+  "who": "Fellow CEO",
+  "text": "The CEO of another company that had a similar crisis offers to meet tonight and tell you “what definitely not to do.”",
+  "left": "Meet for dinner",
+  "right": "Decline, too tired"
+ },
+ {
+  "id": "l3b_365",
+  "who": "Sister",
+  "text": "Your sister calls in the evening: “I’m at the store, and your recalled product is still on the shelf. Want me to take a photo?” It’s a big chain.",
+  "left": "Call the chain now",
+  "right": "Deal with it tomorrow"
+ },
+ {
+  "id": "l3b_366",
+  "who": "Sysadmin on duty",
+  "text": "The on-duty admin reports the servers are under attack, but he’s “sort of handling it.” He’s been up for three days straight.",
+  "left": "Find him a replacement",
+  "right": "Ask him to hang on"
+ },
+ {
+  "id": "l3b_367",
+  "who": "Crisis team",
+  "text": "At 11 p.m. the crisis team suggests a final call “to sync up.” Everyone is already synced and dreaming of sleep.",
+  "left": "Cancel the call",
+  "right": "Hold the call"
+ },
+ {
+  "id": "l3b_368",
+  "who": "Supplier",
+  "text": "At midnight a supplier writes that they did find a truck for the urgent delivery. They need your signature on the request or the truck goes elsewhere.",
+  "left": "Sign from your phone",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l3b_369",
+  "who": "Kids’ recital",
+  "text": "Your child’s school recital is tonight, and half an hour in, there’s a board call about the leak. The recital lasts 45 minutes.",
+  "left": "Go to the recital",
+  "right": "Join the board call"
+ },
+ {
+  "id": "l3b_370",
+  "who": "Guard",
+  "text": "The warehouse guard reports a competitor’s car came at night and photographed your trucks. He says it’s the third time.",
+  "left": "File a report",
+  "right": "Shrug it off"
+ },
+ {
+  "id": "l3b_371",
+  "who": "Inner voice",
+  "text": "At 11 p.m. your inner voice suggests rereading all of today’s customer complaints “to feel their pain.” There are 4,000.",
+  "left": "Read the first hundred",
+  "right": "Go to sleep"
+ },
+ {
+  "id": "l3b_372",
+  "who": "Tech support",
+  "text": "Tech support says the system is restored, but every user’s password has been reset. Customers will get an email at 3 a.m.",
+  "left": "Hold emails till morning",
+  "right": "Send right away"
+ },
+ {
+  "id": "l3b_373",
+  "who": "Board chair",
+  "text": "The board chair calls late to say investors are asking whether it’s time to “change captains.” The question is sort of rhetorical.",
+  "left": "Offer a rescue plan",
+  "right": "Ask him directly"
+ },
+ {
+  "id": "l3b_374",
+  "who": "General contractor",
+  "text": "The contractor building your new warehouse says the schedule slips by a year because they “found dinosaur bones.” It’s true.",
+  "left": "Celebrate the dinosaur",
+  "right": "Demand penalties"
+ },
+ {
+  "id": "l3b_375",
+  "who": "Partner",
+  "text": "Your partner is tired of watching you refresh the news about your crisis till midnight and hides your phone in the freezer.",
+  "left": "Get the phone out",
+  "right": "Leave it in the freezer"
+ },
+ {
+  "id": "l3b_376",
+  "who": "Press secretary",
+  "text": "10:15 p.m. The press secretary sends a list of 40 questions you may get at tomorrow’s briefing. Question 38: “Do you actually use your own product?”",
+  "left": "Rehearse all 40",
+  "right": "Sleep without rehearsing"
+ },
+ {
+  "id": "l3b_377",
+  "who": "Journalist",
+  "text": "A journalist who wrote hit pieces about you all year asks for help with a comment for his thesis. Help him?",
+  "left": "Help him graciously",
+  "right": "Refuse curtly"
+ },
+ {
+  "id": "l3b_378",
+  "who": "Board of directors",
+  "text": "A board member calls at 11 p.m. and spends half an hour describing how he handled journalists back in the nineties. Priceless advice, but you’re nodding off.",
+  "left": "Listen to the end",
+  "right": "Blame the kids"
+ },
+ {
+  "id": "l3b_379",
+  "who": "Cat",
+  "text": "The cat knocked your printed conference speech off the desk and sat on it. The other copy is at the office. The home printer is out of ink.",
+  "left": "Memorize the speech",
+  "right": "Improvise tomorrow"
+ },
+ {
+  "id": "l3b_380",
+  "who": "Crisis HQ",
+  "text": "The crisis team proposes staying at the office all night “in case of new stories.” Everyone wants to stay — but only if you do.",
+  "left": "Stay the night",
+  "right": "Send everyone home"
+ },
+ {
+  "id": "l3b_381",
+  "who": "Journalist",
+  "text": "A journalist calls in the evening: “I know you’re announcing the recall tomorrow. Give me an exclusive?” The announcement is strictly confidential.",
+  "left": "Deny everything",
+  "right": "Give the exclusive"
+ },
+ {
+  "id": "l3b_382",
+  "who": "Assistant",
+  "text": "Your assistant sends tomorrow’s schedule: 6 interviews, 2 broadcasts, 1 court hearing, and “lunch with an investor on the go.” Move anything?",
+  "left": "Move the court date",
+  "right": "Do it all"
+ },
+ {
+  "id": "l3b_383",
+  "who": "Podcast host",
+  "text": "The podcast host sends the edit before release. Your line “We’re not afraid of mistakes” is followed immediately by the sound of breaking glass.",
+  "left": "Ask for a re-edit",
+  "right": "Laugh and approve it"
+ },
+ {
+  "id": "l3b_384",
+  "who": "Supplier",
+  "text": "A supplier sends an evening photo: your cargo is neatly packed — on a dock in the wrong country. The ship sailed the other way.",
+  "left": "Reroute the cargo",
+  "right": "Wait for the return trip"
+ },
+ {
+  "id": "l3b_385",
+  "who": "Employee",
+  "text": "After hours an employee drops by to say he warned about this exact problem a year ago. And he has the email to prove it.",
+  "left": "Credit him publicly",
+  "right": "Thank him privately"
+ },
+ {
+  "id": "l3b_386",
+  "who": "Marketing director",
+  "text": "Marketing sends an evening idea: sell the recalled product as a “limited edition of mistakes.” Legal is against it; sales is for it.",
+  "left": "Back sales",
+  "right": "Back legal"
+ },
+ {
+  "id": "l3b_387",
+  "who": "Banquet",
+  "text": "At an industry association banquet, someone asks if it’s true a competitor is buying your company. The rumors have been going for a week.",
+  "left": "Joke it off",
+  "right": "Firmly deny it"
+ },
+ {
+  "id": "l3b_388",
+  "who": "Inner voice",
+  "text": "At night, your inner voice comes up with the perfect answer to a tricky question a journalist asked you three days ago. Write it down?",
+  "left": "Write it down and learn it",
+  "right": "Let it go"
+ },
+ {
+  "id": "l3b_389",
+  "who": "Parking attendant",
+  "text": "The parking attendant says a photographer has been standing by your car all evening. Yours is the last car in the lot.",
+  "left": "Leave by another door",
+  "right": "Go out and say hello"
+ },
+ {
+  "id": "l3b_390",
+  "who": "Television",
+  "text": "A TV channel invites you to a late-night show at 11 p.m.: “CEOs Answer.” Small audience, but very lively.",
+  "left": "Do the late show",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_391",
+  "who": "Auditor",
+  "text": "The auditors are working late and ask where they can dine on the company’s tab. It’s the second time they’ve hinted at a pricey restaurant.",
+  "left": "Invite them to the cafeteria",
+  "right": "Book the restaurant"
+ },
+ {
+  "id": "l3b_392",
+  "who": "Board chair",
+  "text": "The board chair wants a list by morning of everyone “responsible for the crisis.” The list is essentially the whole team, plus you.",
+  "left": "Put only yourself",
+  "right": "Spread the responsibility"
+ },
+ {
+  "id": "l3b_393",
+  "who": "Team members",
+  "text": "After a tough day, the leadership team suggests going to a sauna together “for team bonding.” You have court in the morning.",
+  "left": "Go for an hour",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_394",
+  "who": "Lawyer",
+  "text": "In the evening, your lawyer sends a one-word message: “Found it.” An hour later — silence. Calls don’t go through.",
+  "left": "Drive to the lawyer",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l3b_395",
+  "who": "Neighbor",
+  "text": "A neighbor recognized you from TV and comes by in the evening with a complaint about your product, holding a three-year-old receipt.",
+  "left": "Handle it yourself",
+  "right": "Refer him to support"
+ },
+ {
+  "id": "l3b_396",
+  "who": "Video conference",
+  "text": "During an evening video call with foreign shareholders, the interpreter drops out. All that’s left is your English and their patience.",
+  "left": "Speak English",
+  "right": "Reschedule"
+ },
+ {
+  "id": "l3b_397",
+  "who": "Masterclass",
+  "text": "A business school invites you to teach an evening masterclass: “Crisis Management.” Your crisis is still ongoing. Students will ask about it.",
+  "left": "Teach the masterclass",
+  "right": "Postpone a year"
+ },
+ {
+  "id": "l3b_398",
+  "who": "Board of directors",
+  "text": "After the evening board meeting, a director asks for a ride home. It’s your chance for a heart-to-heart — or to hear criticism.",
+  "left": "Drive and talk",
+  "right": "Plead other plans"
+ },
+ {
+  "id": "l3b_399",
+  "who": "PR director",
+  "text": "In the evening, the PR director admits to thinking about quitting: “Too many crises for one year.” The crises aren’t your fault, but...",
+  "left": "Persuade her to stay",
+  "right": "Let her go in peace"
+ },
+ {
+  "id": "l3b_400",
+  "who": "Company newsletter",
+  "text": "The company newsletter with your letter to staff goes out in the evening. A minute later you spot a typo in the greeting: “Dear colleages.”",
+  "left": "Send a correction",
+  "right": "Leave it, they’ll get it"
+ },
+ {
+  "id": "l3b_401",
+  "who": "Former employee",
+  "text": "A former employee writes in the evening that journalists are offering him money for “inside info.” He asks how much you’ll offer to keep him quiet.",
+  "left": "Don’t bargain",
+  "right": "Call the lawyer"
+ },
+ {
+  "id": "l3b_402",
+  "who": "Son",
+  "text": "Your college-age son says his university is studying your company as a case called “How Not to Do It.” He got an A for his presentation.",
+  "left": "Be proud of him",
+  "right": "Ask to read the paper"
+ },
+ {
+  "id": "l3b_403",
+  "who": "Diplomacy",
+  "text": "The CEO of a major client invites you to dinner at his country house to “discuss your crisis in a relaxed setting.” It’s a two-hour drive.",
+  "left": "Go to dinner",
+  "right": "Suggest a call"
+ },
+ {
+  "id": "l3b_404",
+  "who": "Courier",
+  "text": "10 p.m. A courier delivers a huge bouquet from a competitor with a card: “Hang in there, colleagues. We’re with you.” Very big and suspiciously sincere.",
+  "left": "Put it in the lobby",
+  "right": "Return to sender"
+ },
+ {
+  "id": "l3b_405",
+  "who": "Employees",
+  "text": "Call center staff organized a “support wall” of notes to customers on their own. One note reads: “We’re shocked too.”",
+  "left": "Keep the wall",
+  "right": "Remove the iffy note"
+ },
+ {
+  "id": "l3b_406",
+  "who": "Communications director",
+  "text": "7:30 a.m. The communications director suggests starting every day with a “press warm-up”: five minutes answering imaginary awkward questions. Start?",
+  "left": "Start the warm-up",
+  "right": "No games"
+ },
+ {
+  "id": "l3b_407",
+  "who": "Trade show organizer",
+  "text": "The trade show organizer says your booth was mistakenly placed next to the company you’re suing. Opening is in an hour.",
+  "left": "Demand to be moved",
+  "right": "Say hi to the neighbors"
+ },
+ {
+  "id": "l3b_408",
+  "who": "Investors",
+  "text": "Investors want a morning call before the market opens to “calm the market.” You haven’t calmed down yourself yet.",
+  "left": "Hold the call",
+  "right": "Send the CFO"
+ },
+ {
+  "id": "l3b_409",
+  "who": "HR",
+  "text": "HR proposes sending everyone a guide, “How Not to Talk to Journalists.” It’s 12 pages and reads like a spy manual.",
+  "left": "Send the guide",
+  "right": "Cut it to one sentence"
+ },
+ {
+  "id": "l3b_410",
+  "who": "Press office",
+  "text": "The press office wants your website photo changed: in the current one you “smile too much for a crisis.” The photographer arrives in an hour.",
+  "left": "Pose seriously",
+  "right": "Keep the smile"
+ },
+ {
+  "id": "l3b_411",
+  "who": "Morning call",
+  "text": "On the morning call with the regions, a branch director asks why he learned about the problem from the news. Silence falls.",
+  "left": "Admit the comms failure",
+  "right": "Move to the agenda"
+ },
+ {
+  "id": "l3b_412",
+  "who": "Assistant",
+  "text": "First thing, your assistant brings printouts of all overnight news about the company. The stack is thicker than the morning paper. Read it before the meeting?",
+  "left": "Read the whole stack",
+  "right": "Ask for the top three"
+ },
+ {
+  "id": "l3b_413",
+  "who": "Risk director",
+  "text": "The risk director brings the annual risk map. The biggest risk is labeled “The Unexpected.” He proposes a separate budget for the unexpected.",
+  "left": "Approve the budget",
+  "right": "Ask for specifics"
+ },
+ {
+  "id": "l3b_414",
+  "who": "Lab head",
+  "text": "The lab needs a decision this morning: publish test results that came out worse than expected? Competitors don’t publish their bad results.",
+  "left": "Publish honestly",
+  "right": "Bury them in a drawer"
+ },
+ {
+  "id": "l3b_415",
+  "who": "Courier service",
+  "text": "Your courier service is on strike. Orders are piling up. Office staff offer to deliver the most urgent ones in their own cars.",
+  "left": "Let them deliver",
+  "right": "Wait out the strike"
+ },
+ {
+  "id": "l3b_416",
+  "who": "Sales director",
+  "text": "The sales director calls from the airport: the best client canceled the meeting after the leak news. Should he still fly?",
+  "left": "Let him fly and fight",
+  "right": "Bring him back to the office"
+ },
+ {
+  "id": "l3b_417",
+  "who": "Forum moderator",
+  "text": "A forum moderator asks you to record a morning video greeting for attendees. You record it in the car at a red light, and people start honking behind you.",
+  "left": "Send it as is",
+  "right": "Re-record at the office"
+ },
+ {
+  "id": "l3b_418",
+  "who": "Reception",
+  "text": "Reception reports two film crews, a courier with flowers, and an inspector are here to see you. All at once, all for “literally a minute.”",
+  "left": "Start with the inspector",
+  "right": "Start with the flowers"
+ },
+ {
+  "id": "l3b_419",
+  "who": "Board of directors",
+  "text": "The board demands daily reputation reports with a “mood index” in percent. No such index exists.",
+  "left": "Invent a methodology",
+  "right": "Explain it doesn’t exist"
+ },
+ {
+  "id": "l3b_420",
+  "who": "IT security",
+  "text": "IT security found that staff forward work files to personal email “to work from home.” 12,000 such emails in a month.",
+  "left": "Ban it",
+  "right": "Give proper remote access"
+ },
+ {
+  "id": "l3b_421",
+  "who": "Business partner",
+  "text": "A longtime partner calls in the morning and carefully says he’s pausing the joint project “for a while”: “I don’t want to end up in your headlines.”",
+  "left": "Persuade him to stay",
+  "right": "Understand and let go"
+ },
+ {
+  "id": "l3b_422",
+  "who": "Employees",
+  "text": "Staff showed up this morning in “We Stand With the Company!” T-shirts to support the brand. The shirts have a crooked logo.",
+  "left": "Take a photo with everyone",
+  "right": "Thank them by email"
+ },
+ {
+  "id": "l3b_423",
+  "who": "Press attaché",
+  "text": "The press attaché suggests “warming up” journalists in the morning: you personally make them coffee at the office. That’s 15 journalists and one temperamental coffee machine.",
+  "left": "Make coffee yourself",
+  "right": "Order from a café"
+ },
+ {
+  "id": "l3b_424",
+  "who": "Compliance",
+  "text": "The compliance officer announces that your conference speech last year violates company policy. The policy was written after the speech.",
+  "left": "Fix the policy",
+  "right": "Apologize for the speech"
+ },
+ {
+  "id": "l3b_425",
+  "who": "International partner",
+  "text": "An international partner sends a six-page letter demanding “transparency” after the scandal. The reply must be in English by evening.",
+  "left": "Reply yourself",
+  "right": "Hand it to a translator"
+ },
+ {
+  "id": "l3b_426",
+  "who": "Conference",
+  "text": "At a conference, it turns out you and your main competitor have identical “Our Values” slides. Yours is shown second.",
+  "left": "Play up the coincidence",
+  "right": "Skip the slide"
+ },
+ {
+  "id": "l3b_427",
+  "who": "Media trainer",
+  "text": "The media trainer films you, then shows you adjusting your glasses 47 times during the interview. He wants three more sessions.",
+  "left": "Book three more",
+  "right": "Switch to contacts"
+ },
+ {
+  "id": "l3b_428",
+  "who": "Lunch with a journalist",
+  "text": "Business lunch with an editor-in-chief. He orders the most expensive dish and says: “So, tell me what’s really going on.”",
+  "left": "Tell it like it is",
+  "right": "Stick to the official line"
+ },
+ {
+  "id": "l3b_429",
+  "who": "Communications",
+  "text": "Communications wants to launch an internal podcast where you answer staff questions weekly. First question: “Are we getting a raise?”",
+  "left": "Answer on the podcast",
+  "right": "Cancel the podcast"
+ },
+ {
+  "id": "l3b_430",
+  "who": "Regulator",
+  "text": "The regulator invites you to a meeting on new data protection rules. You’ll speak in front of every competitor — and after the leak, they’ll ask you first.",
+  "left": "Go and speak",
+  "right": "Send the lawyer"
+ },
+ {
+  "id": "l3b_431",
+  "who": "Plant director",
+  "text": "The plant director asks permission to keep journalists out of the factory “until the crisis ends.” Journalists are already writing that you’re hiding something.",
+  "left": "Let them in",
+  "right": "Hold the line"
+ },
+ {
+  "id": "l3b_432",
+  "who": "Industry association",
+  "text": "The industry association invites you to be its chair. An honor, but it means meetings every Wednesday and forever being the “voice of the industry” in the press.",
+  "left": "Become chair",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_433",
+  "who": "Lawyer",
+  "text": "Legal warns: anything you say publicly could become evidence in court. You’re speaking at a conference in an hour.",
+  "left": "Speak without saying much",
+  "right": "Speak as usual"
+ },
+ {
+  "id": "l3b_434",
+  "who": "Brand manager",
+  "text": "The brand manager shows the new post-rebrand logo. It looks suspiciously like the old one, rotated 3 degrees. It cost as much as an apartment.",
+  "left": "Approve the rotation",
+  "right": "Send it back to the agency"
+ },
+ {
+  "id": "l3b_435",
+  "who": "Employee",
+  "text": "A saleswoman accidentally ended up in a news segment talking about the company. Everyone’s praising her, and her boss is sulking he wasn’t asked.",
+  "left": "Make her a spokesperson",
+  "right": "Scold her for freelancing"
+ },
+ {
+  "id": "l3b_436",
+  "who": "Support team",
+  "text": "Support asks permission to talk to customers “like humans” instead of following the script. Legal approved the script; nobody approved humanity.",
+  "left": "Allow humanity",
+  "right": "Keep the script"
+ },
+ {
+  "id": "l3b_437",
+  "who": "Strategy director",
+  "text": "The strategy director proposes a “public roadmap of fixes,” updated weekly. If we miss a deadline, everyone will see.",
+  "left": "Publish the roadmap",
+  "right": "Work quietly"
+ },
+ {
+  "id": "l3b_438",
+  "who": "Journalist",
+  "text": "A journalist offers you a monthly column in his publication. The fee is symbolic, the readers are the whole market, the deadline is always yesterday.",
+  "left": "Write the column",
+  "right": "Decline"
+ },
+ {
+  "id": "l3b_439",
+  "who": "Logistics",
+  "text": "Logistics reports the trucks carrying the recalled batch accidentally delivered it back to the stores instead of the warehouse.",
+  "left": "Call the chains yourself",
+  "right": "Have logistics fix it"
+ },
+ {
+  "id": "l3b_440",
+  "who": "Security officer",
+  "text": "A security officer offers to find out which employees talked to journalists. His methods are “perfectly legal, but unpleasant.”",
+  "left": "Allow the probe",
+  "right": "Forbid it"
+ },
+ {
+  "id": "l3b_441",
+  "who": "Industry forum",
+  "text": "Live on air, the forum host asks you and your rival’s CEO to shake hands “as a sign of industry peace.” You’re suing him.",
+  "left": "Shake hands",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3b_442",
+  "who": "Lunch",
+  "text": "Over lunch, the CFO says the crisis has already cost the company the price of a new office. He asks you to sign a 15% spending cut.",
+  "left": "Sign the cut",
+  "right": "Find another way"
+ },
+ {
+  "id": "l3b_443",
+  "who": "Meeting",
+  "text": "In a meeting, the marketing director suggests “blending in” and keeping heads down until the storm passes. The product director wants to “go on the attack.”",
+  "left": "Back marketing",
+  "right": "Back product"
+ },
+ {
+  "id": "l3b_444",
+  "who": "Secretary",
+  "text": "Your secretary says a journalist called asking if it’s true your office is bigger than a school gym and has its own fountain.",
+  "left": "Invite him to see it",
+  "right": "Don’t call back"
+ },
+ {
+  "id": "l3b_445",
+  "who": "Board chair",
+  "text": "In the evening, the board chair praises how you handled the press conference and suggests “building on the success” with three more broadcasts this week.",
+  "left": "Agree to the broadcasts",
+  "right": "Take a break"
+ },
+ {
+  "id": "l3b_446",
+  "who": "Company party",
+  "text": "At the evening company party, the host announces a contest: “Who does the best CEO-at-a-press-conference impression?” Staff are already lining up.",
+  "left": "Sit on the jury",
+  "right": "Tactfully slip away"
+ },
+ {
+  "id": "l3b_447",
+  "who": "Lawyer",
+  "text": "Legal reminds you in the evening: the appeal deadline is tomorrow. The text is 90% done but needs your signature and “a couple of paragraphs from the heart.”",
+  "left": "Write from the heart",
+  "right": "Sign it as is"
+ },
+ {
+  "id": "l3b_448",
+  "who": "IT director",
+  "text": "At 9 p.m. the IT director proposes updating all systems “while nobody’s working.” Last time, exactly that kind of update caused the outage.",
+  "left": "Allow the update",
+  "right": "Not till the weekend"
+ },
+ {
+  "id": "l3b_449",
+  "who": "Blogger",
+  "text": "A blogger who slammed you all week posts a video apology in the evening: “I was wrong, they’re okay.” Commenters now want an apology from you.",
+  "left": "Record a reply video",
+  "right": "Thank him in a comment"
+ },
+ {
+  "id": "l3b_450",
+  "who": "Navigator",
+  "text": "Your navigation app routes you to the morning regulator meeting through a courtyard where a TV crew is filming complaints about your company. The detour adds twenty minutes.",
+  "left": "Drive through the courtyard",
+  "right": "Detour and be late"
+ },
+ {
+  "id": "l3b_451",
+  "who": "Speech coach",
+  "text": "Before an important speech, your coach advises eating a banana and “talking to the hall while it’s empty.” The cleaner eyes you with concern.",
+  "left": "Talk to the empty hall",
+  "right": "Just eat the banana"
+ },
+ {
+  "id": "l3b_452",
+  "who": "Press office",
+  "text": "The press office wakes you with a call: overnight, a draft report was accidentally published on the website with “NOT FOR PUBLICATION” in every paragraph.",
+  "left": "Admit it, post the final",
+  "right": "Delete and deny everything"
+ },
+ {
+  "id": "l3b_453",
+  "who": "Videographer",
+  "text": "The corporate video cameraman arrived at 7 a.m. to film “a leader’s morning.” He wants shots of you jogging in the park. You don’t jog.",
+  "left": "Run one lap",
+  "right": "Film over coffee"
+ },
+ {
+  "id": "l3b_454",
+  "who": "Trucking company",
+  "text": "The trucking company says drivers refuse to come to your warehouse: the access road was washed out by rain. Today’s shipments are at risk.",
+  "left": "Pay to fix the road",
+  "right": "Carry boxes to the highway"
+ },
+ {
+  "id": "l3b_455",
+  "who": "Board member",
+  "text": "A board member sends a morning link to “10 Mistakes Leaders Make in a Crisis” and writes: “Find at least three in yourself.”",
+  "left": "Honestly find three",
+  "right": "Reply with an emoji"
+ },
+ {
+  "id": "l3b_456",
+  "who": "PR staffer",
+  "text": "At 7:40 a.m. a PR staffer whispers that journalists dug up your school report card overnight. You got a C in spelling. Tomorrow: an article on your literacy.",
+  "left": "Publish it first",
+  "right": "Prepare a response"
+ },
+ {
+  "id": "l3b_457",
+  "who": "Plant manager",
+  "text": "The plant manager asks you to approve a “silence plan”: no smoke breaks by the fence where journalists are camped. The smokers protest.",
+  "left": "Approve the plan",
+  "right": "Let them chat"
+ },
+ {
+  "id": "l3b_458",
+  "who": "CTO",
+  "text": "The CTO wants to publish a detailed outage post-mortem with code and diagrams. Engineers praise the openness; security is tearing its hair out.",
+  "left": "Publish the full analysis",
+  "right": "Publish a short summary"
+ },
+ {
+  "id": "l3b_459",
+  "who": "Moderator",
+  "text": "The morning panel moderator asks each participant to describe a failure that taught them a lot. Your latest failure is still in the news.",
+  "left": "Talk about the fresh one",
+  "right": "Recall an old one"
+ },
+ {
+  "id": "l3b_460",
+  "who": "Consumer association",
+  "text": "A consumer association published a packaging ranking this morning. Yours won “Hardest-to-Open Box of the Year.”",
+  "left": "Order a new design",
+  "right": "Proudly accept the award"
+ },
+ {
+  "id": "l3b_461",
+  "who": "Distributor",
+  "text": "A distributor calls at 8 a.m.: his warehouse flooded and all your products are floating. He suggests “discussing who’s to blame.”",
+  "left": "Discuss the blame",
+  "right": "Save the goods first"
+ },
+ {
+  "id": "l3b_462",
+  "who": "Press secretary",
+  "text": "The press secretary asks you not to wear the red tie on air: “In a crisis, red looks aggressive.” Your other ties are at the dry cleaner.",
+  "left": "Go without a tie",
+  "right": "Buy a new one, fast"
+ },
+ {
+  "id": "l3b_463",
+  "who": "Procurement",
+  "text": "Procurement reports the plastic supplier is discontinuing your bottles due to new regulations. Switching to glass doubles truck weight.",
+  "left": "Switch to glass",
+  "right": "Find other plastic"
+ },
+ {
+  "id": "l3b_464",
+  "who": "IT director",
+  "text": "The IT director shows you: 40,000 hacking attempts overnight, all failed. He wants a bonus for the team “for nothing happening.”",
+  "left": "Give the bonus",
+  "right": "Praise them verbally"
+ },
+ {
+  "id": "l3b_465",
+  "who": "Morning press",
+  "text": "The morning paper calls you “the industry’s most silent CEO.” The press office thinks it’s time to speak. You think silence is a tactic.",
+  "left": "Give an interview today",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l3b_466",
+  "who": "Recruitment agency",
+  "text": "A recruitment agency offers to “refresh” your team after the crisis by replacing two directors with “more media-friendly faces.” The candidates’ portfolios are all TV appearances.",
+  "left": "Hire the media faces",
+  "right": "Keep your team"
+ },
+ {
+  "id": "l3b_467",
+  "who": "Morning show",
+  "text": "The morning show host asks: “Would you buy your own product?” You genuinely think about it, and the live-air pause lasts four seconds.",
+  "left": "“I buy it every day”",
+  "right": "“Now yes, before no”"
+ },
+ {
+  "id": "l3b_468",
+  "who": "Regulator",
+  "text": "The regulator invites you to volunteer as a “pilot company” for the new rules. Honor, attention, and endless inspections in one package.",
+  "left": "Become the pilot",
+  "right": "Politely sidestep"
+ },
+ {
+  "id": "l3b_469",
+  "who": "Conference host",
+  "text": "At a conference, the host asks all panelists for a group selfie. You end up between two people you’re suing.",
+  "left": "Smile for the selfie",
+  "right": "Step aside"
+ },
+ {
+  "id": "l3b_470",
+  "who": "Advertising lawyer",
+  "text": "The advertising lawyer bans the words “best,” “most,” and “delicious” from the new commercial. That leaves “decent.” Marketing is sobbing.",
+  "left": "Accept “decent”",
+  "right": "Risk “delicious”"
+ },
+ {
+  "id": "l3b_471",
+  "who": "Consultant",
+  "text": "A crisis comms consultant suggests changing your message tone daily: Monday — empathy, Tuesday — resolve, Wednesday — humor.",
+  "left": "Approve the tone schedule",
+  "right": "Go by the situation"
+ },
+ {
+  "id": "l3b_472",
+  "who": "Trade journal",
+  "text": "A trade journal wants to interview you together with your long-retired mentor. He loves telling stories about your rookie mistakes.",
+  "left": "Agree to the duo",
+  "right": "Do it solo"
+ },
+ {
+  "id": "l3b_473",
+  "who": "Board of directors",
+  "text": "The board asks you to explain to shareholders why the PR budget tripled while reputation halved.",
+  "left": "Present the numbers",
+  "right": "Send the PR director"
+ },
+ {
+  "id": "l3b_474",
+  "who": "Packing plant",
+  "text": "The packing floor reports the new batch’s label says “Madewithlove” with no spaces. The batch is 200,000 units.",
+  "left": "Reprint the labels",
+  "right": "Ship as is"
+ },
+ {
+  "id": "l3b_475",
+  "who": "Regulator",
+  "text": "At a meeting, a regulator casually praises your competitor for “exemplary disclosure.” Everyone looks at you.",
+  "left": "Promise the same",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l3b_476",
+  "who": "Stock photo",
+  "text": "The press office used a stock photo in a release — and it turned out to be your own former employee, who’s suing the company.",
+  "left": "Replace it and apologize",
+  "right": "Play it with humor"
+ },
+ {
+  "id": "l3b_477",
+  "who": "Shareholder meeting",
+  "text": "At the shareholder meeting, an elderly shareholder spends half an hour describing how your product “tasted better thirty years ago.” The hall applauds.",
+  "left": "Promise the old recipe",
+  "right": "Politely move to the report"
+ },
+ {
+  "id": "l3b_478",
+  "who": "Training",
+  "text": "Training proposes a “Crisis Communications” course for all managers. It’s taught by the person who consulted on your crisis last year.",
+  "left": "Send everyone",
+  "right": "Cancel the course"
+ },
+ {
+  "id": "l3b_479",
+  "who": "Employee",
+  "text": "An employee offers to write a song supporting the company and post it online. Turns out he has 200,000 followers.",
+  "left": "Bless the song",
+  "right": "Gently decline"
+ },
+ {
+  "id": "l3b_480",
+  "who": "External auditor",
+  "text": "The external auditor finds your “eco-friendly” warehouse is heated by a diesel generator nobody has turned off since last winter.",
+  "left": "Admit it and fix it",
+  "right": "Quietly switch it off"
+ },
+ {
+  "id": "l3b_481",
+  "who": "Conference",
+  "text": "At a conference, your own five-year-old forecast slide is shown as an example of “the industry’s boldest failed predictions.”",
+  "left": "Laugh along with the hall",
+  "right": "Leave the hall"
+ },
+ {
+  "id": "l3b_482",
+  "who": "Board chair",
+  "text": "The board chair invites you fishing to “talk about the future.” The trip starts at 4 a.m. You’ve never held a fishing rod.",
+  "left": "Go fishing",
+  "right": "Suggest dinner in town"
+ },
+ {
+  "id": "l3b_483",
+  "who": "News desk",
+  "text": "At 10:40 p.m., a news site’s night editor asks you to confirm you’re leaving the company. You’re sitting in your office, going nowhere.",
+  "left": "Reply “I’m right here”",
+  "right": "Ignore the rumors"
+ },
+ {
+  "id": "l3b_484",
+  "who": "Partner’s spouse",
+  "text": "At an evening reception, your partner’s wife loudly asks if it’s true you “fired someone over a social media post.” Conversations around you go quiet.",
+  "left": "Explain in detail",
+  "right": "Change the subject"
+ },
+ {
+  "id": "l3b_485",
+  "who": "Inner voice",
+  "text": "Your inner voice notes it’s the fifth night in a row you’ve promised yourself to leave early. It’s 9:30 p.m., with 40 unread emails.",
+  "left": "Close the laptop",
+  "right": "Clear the inbox"
+ },
+ {
+  "id": "l3b_486",
+  "who": "Video call",
+  "text": "On an evening video call with the board, your kid walks behind you in pajamas and waves. The chair waves back.",
+  "left": "Introduce your kid",
+  "right": "Act like it’s planned"
+ },
+ {
+  "id": "l3b_487",
+  "who": "Supplier",
+  "text": "At 8 p.m. a supplier proposes settling the quality dispute simply: “Let’s each admit half the blame.” The lawyers have gone home.",
+  "left": "Agree to half",
+  "right": "Wait for the lawyers"
+ },
+ {
+  "id": "l3b_488",
+  "who": "Corporate lawyer",
+  "text": "The corporate lawyer admits he missed the deadline to respond to a claim and suggests “changing the date on the envelope.” Pretend you didn’t hear?",
+  "left": "Forbid it and deal with it",
+  "right": "Let him do his thing"
+ },
+ {
+  "id": "l3b_489",
+  "who": "Show host",
+  "text": "An evening comedy show host parodies you on air. It’s a good parody: staff are laughing, and the board demands you “take action.”",
+  "left": "Laugh publicly",
+  "right": "Complain to the channel"
+ },
+ {
+  "id": "l3b_490",
+  "who": "Marketing director",
+  "text": "In the evening, the marketing director suggests an emergency switch of ad agencies. The current one came up with the slogan everyone’s parodying.",
+  "left": "Switch agencies",
+  "right": "Give them a chance"
+ },
+ {
+  "id": "l3b_491",
+  "who": "Security",
+  "text": "Security reports staff showed up at the office at 9 p.m. with a cake: “Happy company birthday!” You forgot it’s the anniversary.",
+  "left": "Go out and cut the cake",
+  "right": "Ask to postpone"
+ },
+ {
+  "id": "l3b_492",
+  "who": "Secretary",
+  "text": "Before leaving, your secretary asks whether to answer a journalist’s email sent “yesterday at 11:59 p.m.” demanding a response “by midnight.”",
+  "left": "Reply with apologies",
+  "right": "Reply with humor"
+ },
+ {
+  "id": "l3b_493",
+  "who": "Support team",
+  "text": "The head of support asks you to come in for the morning shift and work the phones “for morale.” The shift starts at 6 a.m.",
+  "left": "Show up at 6 a.m.",
+  "right": "Record a team video"
+ },
+ {
+  "id": "l3b_494",
+  "who": "Lawyer friend",
+  "text": "Over evening tea, a lawyer friend looks over the suit against you for free and says: “In their shoes, I’d have sued too.” The tea goes cold.",
+  "left": "Hire your friend",
+  "right": "Listen to your lawyers"
+ },
+ {
+  "id": "l3b_495",
+  "who": "Employee",
+  "text": "In the evening an employee confesses he’s the one who accidentally posted the typo that started the scandal. He’s ready to resign.",
+  "left": "Keep him on",
+  "right": "Accept the resignation"
+ },
+ {
+  "id": "l3b_496",
+  "who": "PR director",
+  "text": "The PR director sends an evening report: a thousand stories about the company this month, seven of them positive. He suggests celebrating “seven victories.”",
+  "left": "Celebrate the wins",
+  "right": "Demand a plan"
+ },
+ {
+  "id": "l3b_497",
+  "who": "Airport",
+  "text": "You’re at the airport in the evening; your conference flight is delayed. A journalist you’ve been dodging for a month sits down next to you. He recognizes you.",
+  "left": "Chat kindly",
+  "right": "Move to another terminal"
+ },
+ {
+  "id": "l3b_498",
+  "who": "Board chair",
+  "text": "Late in the evening the board chair writes: “Great work on this crisis. By the way, we have another one.” And attaches a link.",
+  "left": "Open the link now",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l3b_499",
+  "who": "Family",
+  "text": "At dinner, the family sets a rule: no talk of work, journalists, or courts. Three minutes later you’re talking about the court case.",
+  "left": "Follow the rule",
+  "right": "Finish the story"
+ },
+ {
+  "id": "l3b_500",
+  "who": "Inner voice",
+  "text": "Friday evening. Your inner voice suggests a weekly recap: two broadcasts, one inspection, an outage, a lawsuit, and three memes. You survived. How will you celebrate?",
+  "left": "Phone off till Monday",
+  "right": "Check email “just in case”"
+ }
+]

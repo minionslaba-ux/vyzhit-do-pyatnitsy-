@@ -1,0 +1,3502 @@
+[
+  {
+    "id": "l1c_001",
+    "who": "Party organizer",
+    "text": "Morning news: at the New Year party, every department has to perform a number. Your team voted unanimously that the newest hire will do it. That’s you.",
+    "left": "Flat-out refuse",
+    "right": "Start rehearsing"
+  },
+  {
+    "id": "l1c_002",
+    "who": "Party chat",
+    "text": "The party chat is voting on a theme. “The ’90s” is winning, “Pajama Party” is right behind. Yours is the deciding vote, and you don’t own decent pajamas.",
+    "left": "Vote for the ’90s",
+    "right": "Abstain and stay quiet"
+  },
+  {
+    "id": "l1c_003",
+    "who": "Host",
+    "text": "The party is in full swing. The host with the mic is looking for a volunteer for “Who Can Put On Five Sweaters Fastest.” His eyes land on you.",
+    "left": "Hide behind a pillar",
+    "right": "Put on five sweaters"
+  },
+  {
+    "id": "l1c_004",
+    "who": "Lidia from Accounting",
+    "text": "At the party, Lidia from Accounting has spent the whole evening telling you about her summer-house renovation. Forty minutes in, she’s only reached the foundation.",
+    "left": "Escape to the dance floor",
+    "right": "Hear it out to the roof"
+  },
+  {
+    "id": "l1c_005",
+    "who": "Morning after",
+    "text": "The morning after the party. Photos are already in the group chat, and in one of them you’re hugging a ficus and singing into it like a mic. It’s racking up reactions.",
+    "left": "Ask them to delete it",
+    "right": "React with a fire emoji"
+  },
+  {
+    "id": "l1c_006",
+    "who": "HR",
+    "text": "HR wants everyone to fill in a two-page form: “My Expectations for the Office Party.” Question five: “Describe the ideal party game in verse.”",
+    "left": "Write “No expectations”",
+    "right": "Write a poem"
+  },
+  {
+    "id": "l1c_007",
+    "who": "Marina, coworker",
+    "text": "Marina whispers that there’ll be a raffle at the party, but only for people who hand in their report by Friday. Your report is half done.",
+    "left": "Finish the report by Friday",
+    "right": "Skip the raffle"
+  },
+  {
+    "id": "l1c_008",
+    "who": "Taxi",
+    "text": "The party ended at midnight. Coworkers from a nearby area suggest splitting one taxi four ways. You’d be dropped off last.",
+    "left": "Ride with everyone",
+    "right": "Call your own car"
+  },
+  {
+    "id": "l1c_009",
+    "who": "Gosha, birthday boy",
+    "text": "It’s Gosha from Logistics’ birthday. You barely know him, but the card has made its way around to you. There’s room for exactly one word.",
+    "left": "Write “Hooray!”",
+    "right": "Tape in an extra note"
+  },
+  {
+    "id": "l1c_010",
+    "who": "Cake",
+    "text": "The birthday girl brought cake for the whole team. The last slice has been sitting on the plate for an hour. Everyone eyes it, nobody dares.",
+    "left": "Eat the last slice",
+    "right": "Cut it into tiny pieces"
+  },
+  {
+    "id": "l1c_011",
+    "who": "Song",
+    "text": "The team decided to serenade the birthday boy with a guitar. Everyone’s singing, nobody knows the words. Someone hands you the lyrics and nudges you to center stage.",
+    "left": "Lead the singing loudly",
+    "right": "Hum along from the back"
+  },
+  {
+    "id": "l1c_012",
+    "who": "Birthday calendar",
+    "text": "The office manager asks you to keep the team’s birthday calendar. Simple job: don’t forget anyone. Price of a mistake: eternal resentment.",
+    "left": "Take on the calendar",
+    "right": "Say you’re too busy"
+  },
+  {
+    "id": "l1c_013",
+    "who": "Your birthday",
+    "text": "It’s your birthday. Office tradition says the birthday person feeds everyone. Your budget covers either pizza for all or a decent lunch for a week.",
+    "left": "Order pizza for everyone",
+    "right": "Quietly keep it secret"
+  },
+  {
+    "id": "l1c_014",
+    "who": "Coworkers",
+    "text": "Coworkers want to keep celebrating your birthday at a cafe tonight. The birthday person pays, naturally. Stand-up is at nine tomorrow.",
+    "left": "Go to the cafe",
+    "right": "Postpone to the weekend"
+  },
+  {
+    "id": "l1c_015",
+    "who": "Manager",
+    "text": "The boss forgot a colleague’s birthday and, last minute, tells you to “organize something.” The celebration is in twenty minutes.",
+    "left": "Run out for flowers",
+    "right": "Suggest doing it tomorrow"
+  },
+  {
+    "id": "l1c_016",
+    "who": "Balloons",
+    "text": "You arrive to find your desk buried in balloons. Lovely, but you can’t reach your laptop, and a client call starts in ten minutes.",
+    "left": "Pop the balloons",
+    "right": "Work among the balloons"
+  },
+  {
+    "id": "l1c_017",
+    "who": "Karaoke",
+    "text": "After the party, everyone heads to karaoke. You draw a duet with the boss: a song about heartbreak. He’s already holding the second mic.",
+    "left": "Sing your heart out",
+    "right": "Pass the mic to a coworker"
+  },
+  {
+    "id": "l1c_018",
+    "who": "Dress code",
+    "text": "The party theme is “Hollywood.” Coworkers ordered costumes; all you have is your fancy reindeer sweater. Two days to go.",
+    "left": "Show up in the sweater",
+    "right": "Sew a costume all night"
+  },
+  {
+    "id": "l1c_019",
+    "who": "Party photographer",
+    "text": "You’ve been named party photographer. The camera isn’t yours, the manual is in Japanese, and the boss wants it “magazine-cover quality.”",
+    "left": "Shoot on your phone",
+    "right": "Study the camera all morning"
+  },
+  {
+    "id": "l1c_020",
+    "who": "Seating chart",
+    "text": "The organizer shows you the seating chart. You’re between the CEO and his mother-in-law, who came along “for company.”",
+    "left": "Ask to be moved",
+    "right": "Make small talk all night"
+  },
+  {
+    "id": "l1c_021",
+    "who": "Toast",
+    "text": "Toasts are going around the table. Three people until your turn. Everyone’s talking about “team spirit,” and fresh ideas ran out two toasts ago.",
+    "left": "Keep it short and funny",
+    "right": "Give a speech on the mission"
+  },
+  {
+    "id": "l1c_022",
+    "who": "Your gift",
+    "text": "Coworkers ask what you’d like for your birthday. You want headphones, but that’s a lot for everyone to chip in. Be honest?",
+    "left": "Ask for headphones",
+    "right": "Say “Nothing, really”"
+  },
+  {
+    "id": "l1c_023",
+    "who": "Introvert birthday",
+    "text": "Oleg the sysadmin asked for no birthday fuss. The team’s planning a surprise anyway, and they want you to distract him in the server room.",
+    "left": "Distract Oleg",
+    "right": "Secretly warn him"
+  },
+  {
+    "id": "l1c_024",
+    "who": "Friday buffet",
+    "text": "At the Friday buffet for the company anniversary, the snacks vanished in five minutes. The CEO hasn’t even arrived. Buy pizza with your own money?",
+    "left": "Run for pizza",
+    "right": "Act like it’s on purpose"
+  },
+  {
+    "id": "l1c_025",
+    "who": "Party prep",
+    "text": "The team is rehearsing a flash mob for the party. Every morning at eight, before work. The choreographer is a very strict sales manager.",
+    "left": "Go to rehearsals",
+    "right": "Claim you have two left feet"
+  },
+  {
+    "id": "l1c_026",
+    "who": "Greeting contest",
+    "text": "There’s a contest for the best greeting for the company anniversary. Prize: an extra day off. You’d have to write it on company time.",
+    "left": "Write it properly",
+    "right": "Work, not write"
+  },
+  {
+    "id": "l1c_027",
+    "who": "Raffle",
+    "text": "At the party you win the raffle’s grand prize: a giant teddy bear as tall as a person. You’re taking the subway home.",
+    "left": "Take the bear",
+    "right": "Gift it to Accounting"
+  },
+  {
+    "id": "l1c_028",
+    "who": "Facilities manager",
+    "text": "The facilities manager asks you to help hang garlands for the party. The stepladder wobbles and the garland is tangled like earbuds in a pocket.",
+    "left": "Climb the ladder",
+    "right": "Plead a deadline"
+  },
+  {
+    "id": "l1c_029",
+    "who": "Surprise",
+    "text": "The team is planning a birthday surprise for the boss. Someone has to come in at 7 a.m. to decorate her office. Everyone looks at the youngest.",
+    "left": "Come in at seven",
+    "right": "Suggest drawing lots"
+  },
+  {
+    "id": "l1c_030",
+    "who": "Online party",
+    "text": "This year’s party is online: video-chat games until 10 p.m. Cameras must stay on — turning yours off is “disrespecting the team.”",
+    "left": "Stay till the end",
+    "right": "Blame bad Wi-Fi"
+  },
+  {
+    "id": "l1c_031",
+    "who": "Sveta’s birthday",
+    "text": "Sveta hints that “last year everyone forgot her.” Her birthday is next week, and somehow you’re now in charge of it.",
+    "left": "Throw a big party",
+    "right": "Just get a card"
+  },
+  {
+    "id": "l1c_032",
+    "who": "Hangover Monday",
+    "text": "Monday after the party. Half the team is “working from home.” The boss asks you to run stand-up for him.",
+    "left": "Run the stand-up",
+    "right": "Go remote too"
+  },
+  {
+    "id": "l1c_033",
+    "who": "Decor",
+    "text": "The office manager needs you to pick napkin colors for the party: “turquoise” or “mint.” This decision has been pending all morning.",
+    "left": "Pick at random",
+    "right": "Run a poll in the chat"
+  },
+  {
+    "id": "l1c_034",
+    "who": "Dancing",
+    "text": "The party. A slow song starts, and a coworker from the next department stands before you, hand outstretched. Everyone’s watching.",
+    "left": "Dance",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1c_035",
+    "who": "Invitation",
+    "text": "You’re invited to the CFO’s milestone birthday. You’ve seen him twice, both times in the elevator. Attendance is “highly encouraged.”",
+    "left": "Go to the party",
+    "right": "Cite family plans"
+  },
+  {
+    "id": "l1c_036",
+    "who": "Video greeting",
+    "text": "The team is recording a farewell video for a colleague who moved away. They want you to say something touching. Camera’s rolling, take five.",
+    "left": "Speak from the heart",
+    "right": "Just wave silently"
+  },
+  {
+    "id": "l1c_037",
+    "who": "Leftover cake",
+    "text": "Evening. Half a birthday cake sits in the fridge. The cleaner empties the fridge at eight tomorrow. Take it home?",
+    "left": "Take the cake home",
+    "right": "Leave it for the morning"
+  },
+  {
+    "id": "l1c_038",
+    "who": "Party budget",
+    "text": "The union gave the team $50 for a celebration. You’re supposed to spend it so “everyone’s happy.” There are fifteen people.",
+    "left": "Buy fruit and tea",
+    "right": "Chip in and order sushi"
+  },
+  {
+    "id": "l1c_039",
+    "who": "Department head",
+    "text": "The boss announces the party is moving to Saturday “so we don’t get distracted from work.” You bought tickets for Saturday ages ago.",
+    "left": "Return the tickets",
+    "right": "Skip the party"
+  },
+  {
+    "id": "l1c_040",
+    "who": "Coat check",
+    "text": "Party at a restaurant. On the way out, your jacket is gone, and there’s a similar one left on the rack. You lost your ticket long ago.",
+    "left": "Wait for it to get sorted",
+    "right": "Leave in the other jacket"
+  },
+  {
+    "id": "l1c_041",
+    "who": "Party report",
+    "text": "The boss wants a party report for the CEO: “What worked, what to improve.” Be honest about the sweater game?",
+    "left": "Tell the whole truth",
+    "right": "Write “All was great”"
+  },
+  {
+    "id": "l1c_042",
+    "who": "Mini party",
+    "text": "Coworkers are celebrating a birthday right in the middle of your urgent task. It smells like pizza, everyone’s calling you over. Deadline in two hours.",
+    "left": "Join the table",
+    "right": "Work with headphones on"
+  },
+  {
+    "id": "l1c_043",
+    "who": "Late guest",
+    "text": "The party’s winding down. The CEO just arrived and wants to “hang out with the young folks.” The young folks are you and the intern.",
+    "left": "Stay with the CEO",
+    "right": "Leave with the intern"
+  },
+  {
+    "id": "l1c_044",
+    "who": "Card from management",
+    "text": "You get a birthday card from the company. It’s signed to “Dear Employee.” They didn’t even fill in your name. Coworkers giggle.",
+    "left": "Laugh along",
+    "right": "Complain to HR"
+  },
+  {
+    "id": "l1c_045",
+    "who": "HR rep",
+    "text": "HR invites you to join the “Celebrations Committee.” They promise it’s “fun and prestigious.” It meets during lunch break.",
+    "left": "Join the committee",
+    "right": "Find an excuse"
+  },
+  {
+    "id": "l1c_046",
+    "who": "Team-building coach",
+    "text": "Team building starts at 9:00 in the woods. The coach hands out blindfolds: “You’ll fall backward and your colleagues will catch you.” The catchers are from Accounting.",
+    "left": "Fall with trust",
+    "right": "Volunteer to catch"
+  },
+  {
+    "id": "l1c_047",
+    "who": "Escape room",
+    "text": "Team escape room: get out in an hour. You found the key in five minutes, but the captain asks you to “slow down and let everyone take part.”",
+    "left": "Give the key to the captain",
+    "right": "Open the door now"
+  },
+  {
+    "id": "l1c_048",
+    "who": "Campfire",
+    "text": "Team retreat. Around the fire, everyone shares “their biggest fear.” It’s your turn, and the guitar has gone quiet.",
+    "left": "Answer honestly",
+    "right": "Joke about Mondays"
+  },
+  {
+    "id": "l1c_049",
+    "who": "Retreat bus",
+    "text": "The team-building bus leaves at 7:30. The only window seat left is next to a coworker who spends every trip polling people on their five-year goals.",
+    "left": "Sit next to him",
+    "right": "Stand in the aisle"
+  },
+  {
+    "id": "l1c_050",
+    "who": "Rope course",
+    "text": "Rope course, twenty feet up. The boss already finished and is waving from below. Your turn, and your legs won’t cooperate.",
+    "left": "Do the course",
+    "right": "Stay down with a thermos"
+  },
+  {
+    "id": "l1c_051",
+    "who": "Brainstorm",
+    "text": "Team game: come up with a team name. Options: “Sales Dragons” and “Reporting Tigers.” You’ve got a funnier one, but it’s riskier.",
+    "left": "Pitch your name",
+    "right": "Vote for the dragons"
+  },
+  {
+    "id": "l1c_052",
+    "who": "Sauna",
+    "text": "Evening at the retreat. Groups take turns in the sauna, and both groups invite you along for “a serious talk about the project.”",
+    "left": "Go for the talk",
+    "right": "Turn in early"
+  },
+  {
+    "id": "l1c_053",
+    "who": "Morning workout",
+    "text": "Day two of the retreat. The boss is personally leading 7 a.m. exercises in a dewy meadow. Half the team is hiding in their cabins.",
+    "left": "Join the workout",
+    "right": "Pretend to be asleep"
+  },
+  {
+    "id": "l1c_054",
+    "who": "Tug-of-war",
+    "text": "Tug-of-war: your department vs. IT. The sysadmins pull silently and mightily. The boss yells “Not one step back!” Your palms are on fire.",
+    "left": "Pull to the end",
+    "right": "Let go first"
+  },
+  {
+    "id": "l1c_055",
+    "who": "Team drawing",
+    "text": "The psychologist asks everyone to draw “the team as an animal.” Coworkers draw lions and eagles. You honestly drew a sloth.",
+    "left": "Show the sloth",
+    "right": "Quickly add a mane"
+  },
+  {
+    "id": "l1c_056",
+    "who": "Retreat disco",
+    "text": "The retreat disco runs till 2 a.m. Rafting is scheduled for 8:00. Coworkers drag you to dance “just one song.”",
+    "left": "Dance till you drop",
+    "right": "Bed at ten"
+  },
+  {
+    "id": "l1c_057",
+    "who": "Post-retreat survey",
+    "text": "HR sends a survey: “Rate the team building from 1 to 10.” It’s anonymous, yet the link somehow contains your name.",
+    "left": "Give it a ten",
+    "right": "Give an honest four"
+  },
+  {
+    "id": "l1c_058",
+    "who": "Team cooking",
+    "text": "Cooking team building: the department makes pasta under a chef’s eye. You’re on sauce. The sauce is burnt, and the chef is coming to taste it.",
+    "left": "Confess right away",
+    "right": "Blame the stove"
+  },
+  {
+    "id": "l1c_059",
+    "who": "Role-play",
+    "text": "Role-play: “Negotiating with Aliens.” You got the alien, so you have to speak a made-up language in front of the whole department.",
+    "left": "Get into character",
+    "right": "Play it half-heartedly"
+  },
+  {
+    "id": "l1c_060",
+    "who": "Bus home",
+    "text": "The bus heads back from the retreat. Coworkers start a sing-along, and it’s going to be a long one. Three hours to the city; your headphones are dead.",
+    "left": "Sing along",
+    "right": "Pretend to be asleep"
+  },
+  {
+    "id": "l1c_061",
+    "who": "Kayaking",
+    "text": "Kayaking trip. You’re paired with the boss. He sits in the back, gives orders, and doesn’t paddle. The kayak is slowly drifting into the bushes.",
+    "left": "Paddle for two",
+    "right": "Suggest paddling together"
+  },
+  {
+    "id": "l1c_062",
+    "who": "Trust game",
+    "text": "Game: “Pay a coworker a compliment.” You drew the one you’ve argued with all week. He’s waiting, arms crossed.",
+    "left": "Say something sincere",
+    "right": "Compliment his mug"
+  },
+  {
+    "id": "l1c_063",
+    "who": "Sports day",
+    "text": "Company sports day. Your team is one player short for soccer. You last saw a ball in school, but they only need you to “just stand in goal.”",
+    "left": "Stand in goal",
+    "right": "Cheer from the stands"
+  },
+  {
+    "id": "l1c_064",
+    "who": "Night orienteering",
+    "text": "Night orienteering with flashlights. Your team is lost, the accountant has the compass, and he’s sure north is wherever the Wi-Fi is.",
+    "left": "Take the compass",
+    "right": "Retrace your steps"
+  },
+  {
+    "id": "l1c_065",
+    "who": "Weekend team building",
+    "text": "Announcement: team building on Saturday, “attendance voluntary but noted.” On Saturday you have a hike with friends planned a month ago.",
+    "left": "Go to team building",
+    "right": "Go with your friends"
+  },
+  {
+    "id": "l1c_066",
+    "who": "Bridge challenge",
+    "text": "Task: build a bridge from pasta and tape that holds a mug. The team has argued over the blueprint for half an hour, and you have an idea.",
+    "left": "Quietly build it",
+    "right": "Persuade the team"
+  },
+  {
+    "id": "l1c_067",
+    "who": "Awards",
+    "text": "Team-building results are in. Your team came last and gets the “Will to Win” prize: a box of rubber ducks.",
+    "left": "Accept it laughing",
+    "right": "Dispute the scoring"
+  },
+  {
+    "id": "l1c_068",
+    "who": "Circle chant",
+    "text": "The facilitator gets everyone in a circle holding hands to shout a motto. You have to come up with the motto while everyone waits.",
+    "left": "Shout something peppy",
+    "right": "Hand it to the intern"
+  },
+  {
+    "id": "l1c_069",
+    "who": "Secret friend",
+    "text": "The retreat game is “Secret Friend”: secretly do something nice for someone. You drew the boss. What’s a nice secret thing for a boss?",
+    "left": "Leave a chocolate bar",
+    "right": "Secretly do his report"
+  },
+  {
+    "id": "l1c_070",
+    "who": "Barbecue",
+    "text": "Barbecue at the retreat. You’re on the grill because “young people have sharper eyes.” Half the meat is already charcoal, and people are hungry.",
+    "left": "Grill a second batch",
+    "right": "Call for help"
+  },
+  {
+    "id": "l1c_071",
+    "who": "Team photo",
+    "text": "Group photo time. The photographer lines everyone up and puts you in the center. Problem: you just fell in a puddle during the relay race.",
+    "left": "Stand center, as is",
+    "right": "Hide behind others"
+  },
+  {
+    "id": "l1c_072",
+    "who": "Trip prep",
+    "text": "You’re tasked with buying everything for team building from a 40-item list. You’ll be reimbursed “after approval.” The total is half your salary.",
+    "left": "Pay out of pocket",
+    "right": "Ask Accounting for an advance"
+  },
+  {
+    "id": "l1c_073",
+    "who": "Tents",
+    "text": "Tent night. You’re bunking with a coworker who reportedly snores like a tractor. The only other free spot is in the boss’s car.",
+    "left": "Endure the snoring",
+    "right": "Sleep in the car"
+  },
+  {
+    "id": "l1c_074",
+    "who": "Quiz",
+    "text": "Company trivia night. Your team is second, with one soccer question left. Only you know the answer, but the captain is already writing his.",
+    "left": "Grab the answer sheet",
+    "right": "Trust the captain"
+  },
+  {
+    "id": "l1c_075",
+    "who": "Day two",
+    "text": "Day two of the retreat. The boss announces a three-hour “efficiency masterclass,” while outside there’s sunshine and a lake.",
+    "left": "Sit through it",
+    "right": "Head to the lake"
+  },
+  {
+    "id": "l1c_076",
+    "who": "Relay race",
+    "text": "Egg-and-spoon race. Your team is winning, but you just passed the boss, and he’s visibly upset. Twenty yards to the finish.",
+    "left": "Overtake and finish",
+    "right": "Trip on purpose"
+  },
+  {
+    "id": "l1c_077",
+    "who": "End of day",
+    "text": "The coach asks everyone to rate coworkers’ contributions in writing. The boss will see the lists. Petya spent the whole day on his phone.",
+    "left": "Be honest about Petya",
+    "right": "Give everyone “excellent”"
+  },
+  {
+    "id": "l1c_078",
+    "who": "Team-building coach",
+    "text": "The team-building coach calls at 8 a.m. and wants “your personal motto” by lunch. No motto, no retreat, apparently.",
+    "left": "Write a motto",
+    "right": "Ignore it and sleep in"
+  },
+  {
+    "id": "l1c_079",
+    "who": "Laser tag",
+    "text": "Interdepartmental laser tag. You’re in an ambush spot, and walking right past is the head of the next department — the one who decides your bonus.",
+    "left": "Shoot",
+    "right": "Let him pass"
+  },
+  {
+    "id": "l1c_080",
+    "who": "Campfire songs",
+    "text": "At the campfire, a sales guy is on his twelfth self-written song. Everyone is sneaking yawns. He asks: “One more?”",
+    "left": "Ask for another",
+    "right": "Suggest calling it a night"
+  },
+  {
+    "id": "l1c_081",
+    "who": "Creative team building",
+    "text": "Painting team building: each department creates one oil painting together. You got the sky. The sky came out green, and coworkers are already adding clouds.",
+    "left": "Leave it green",
+    "right": "Repaint the whole sky"
+  },
+  {
+    "id": "l1c_082",
+    "who": "Psych game",
+    "text": "The coach asks for “one trait that holds you back at work.” The boss is carefully writing the answers in a notebook.",
+    "left": "Say perfectionism",
+    "right": "Admit procrastination"
+  },
+  {
+    "id": "l1c_083",
+    "who": "Back home",
+    "text": "The retreat ended Sunday at 10 p.m. The boss reminds everyone Monday stand-up is at eight “as usual.”",
+    "left": "Be there at eight",
+    "right": "Come in half an hour late"
+  },
+  {
+    "id": "l1c_084",
+    "who": "Drum workshop",
+    "text": "An African drumming workshop for “team cohesion.” You got the biggest drum. Five minutes in, your head is pounding.",
+    "left": "Drum with gusto",
+    "right": "Tap it gently with a finger"
+  },
+  {
+    "id": "l1c_085",
+    "who": "Pre-trip poll",
+    "text": "Chat poll: team building at a spa or an obstacle course? The boss voted obstacle course. It’s a tie so far.",
+    "left": "Vote for the spa",
+    "right": "Back the boss"
+  },
+  {
+    "id": "l1c_086",
+    "who": "Ride home",
+    "text": "After team building, three coworkers need a ride, and you have a car. They live in three different corners of the city, and you live in a fourth.",
+    "left": "Drive everyone home",
+    "right": "Drop them at the subway"
+  },
+  {
+    "id": "l1c_087",
+    "who": "Team lunch",
+    "text": "Lunch at the retreat: the boss orders “for everyone.” He picked aspic and cold beet soup. You eat neither.",
+    "left": "Eat it to be polite",
+    "right": "Order your own"
+  },
+  {
+    "id": "l1c_088",
+    "who": "Morning meditation",
+    "text": "Yoga team building: the instructor asks you to “release all work thoughts.” Right then your phone buzzes: a client message.",
+    "left": "Reply to the client",
+    "right": "Release your thoughts"
+  },
+  {
+    "id": "l1c_089",
+    "who": "Video review",
+    "text": "After the retreat, HR wants everyone to record a video review “with emotion” for the company website. Film at home, due by morning.",
+    "left": "Record it with feeling",
+    "right": "Send a photo and caption"
+  },
+  {
+    "id": "l1c_090",
+    "who": "Team crossword",
+    "text": "The team is racing through a giant crossword. You know the capital of Burkina Faso, but a coworker already wrote in a different word.",
+    "left": "Correct the coworker",
+    "right": "Say nothing"
+  },
+  {
+    "id": "l1c_091",
+    "who": "Nina, collector",
+    "text": "Nina from Accounting is going around with an envelope: “$10 each for the facilities manager’s gift.” You don’t know who that is, but the envelope is in front of you.",
+    "left": "Put in $10",
+    "right": "Ask who that is"
+  },
+  {
+    "id": "l1c_092",
+    "who": "Gifts chat",
+    "text": "New collection in the Gifts chat: a wedding gift for a manager from another office. It’s the third collection this month, and payday is two weeks away.",
+    "left": "Chip in the minimum",
+    "right": "Skip this one"
+  },
+  {
+    "id": "l1c_093",
+    "who": "Gift treasurer",
+    "text": "You’re collecting money for the boss’s gift. It’s evening, the envelope is $40 short, and nobody wrote down who didn’t pay.",
+    "left": "Cover it yourself",
+    "right": "Do a roll call in the chat"
+  },
+  {
+    "id": "l1c_094",
+    "who": "Gift choice",
+    "text": "The team can’t pick a farewell gift for a departing colleague: a blanket or a spa voucher. The debate started at 9 a.m. You get the final say.",
+    "left": "Pick the blanket",
+    "right": "Suggest asking her"
+  },
+  {
+    "id": "l1c_095",
+    "who": "Gift mishap",
+    "text": "The team chipped in for a coffee machine for the boss. That evening you learn she ordered the exact same model for herself yesterday.",
+    "left": "Return it, buy another",
+    "right": "Give it anyway"
+  },
+  {
+    "id": "l1c_096",
+    "who": "Card signature",
+    "text": "A card for the CEO is going around. Above you: “Sincerely yours,” “Best regards,” and “Hugs.” What should a newbie write?",
+    "left": "Write “Best regards”",
+    "right": "Write a real wish"
+  },
+  {
+    "id": "l1c_097",
+    "who": "Gift courier",
+    "text": "The team’s gift is late: the courier is stuck in traffic, and the presentation is at nine tomorrow. He offers to bring it to your place at 11 p.m.",
+    "left": "Wait at home",
+    "right": "Reschedule the presentation"
+  },
+  {
+    "id": "l1c_098",
+    "who": "Anonymous donor",
+    "text": "Someone put a button in the gift envelope instead of money. Everyone’s a suspect. The envelope was kept on your desk.",
+    "left": "Cover it yourself",
+    "right": "Raise it in the chat"
+  },
+  {
+    "id": "l1c_099",
+    "who": "Gift shop",
+    "text": "After work you’re told to buy “something classy” for $100. The store closes in forty minutes, and you have zero ideas.",
+    "left": "Buy an engraved planner",
+    "right": "Run through three stores"
+  },
+  {
+    "id": "l1c_100",
+    "who": "Eternal collection",
+    "text": "The office has been collecting “for a kettle” for a year. The money was raised long ago, there’s no kettle, and the collector just smiles at every question.",
+    "left": "Ask about the kettle",
+    "right": "Buy your own kettle"
+  },
+  {
+    "id": "l1c_101",
+    "who": "Gift wrap",
+    "text": "The gift is bought; wrapping is your job. Floral paper, the tape is running out, and the box is round. The presentation is in the morning.",
+    "left": "Wrap it however",
+    "right": "Fuss over a bow till midnight"
+  },
+  {
+    "id": "l1c_102",
+    "who": "Intern farewell",
+    "text": "The intern is leaving after three months. Nobody suggests getting him anything. You’re the only one he ever helped with spreadsheets.",
+    "left": "Organize a collection",
+    "right": "Give him chocolate yourself"
+  },
+  {
+    "id": "l1c_103",
+    "who": "Client gift",
+    "text": "The boss asks you to pick a holiday gift for a key client. The budget is modest, and the client collects expensive tea.",
+    "left": "Grab supermarket gift sets",
+    "right": "Hunt through tea shops"
+  },
+  {
+    "id": "l1c_104",
+    "who": "Card",
+    "text": "Evening. Nobody signed the card for tomorrow’s milestone birthday, and it’s on your desk. Sign for everyone in different handwriting?",
+    "left": "Sign for everyone",
+    "right": "Leave it as is"
+  },
+  {
+    "id": "l1c_105",
+    "who": "Gift amount",
+    "text": "Coworkers are debating whether to chip in $10 or $20 for a gift. You earn the least, but you’d rather not admit it.",
+    "left": "Chip in $20",
+    "right": "Suggest $10"
+  },
+  {
+    "id": "l1c_106",
+    "who": "Double gift",
+    "text": "At his birthday, a coworker got identical barbecue sets from two departments. He looks at you — you bought one of them.",
+    "left": "Offer to exchange it",
+    "right": "Joke about double barbecue"
+  },
+  {
+    "id": "l1c_107",
+    "who": "Debtors list",
+    "text": "You were asked to track who paid for gifts. A month later, it’s a list of chronic debtors, including the boss.",
+    "left": "Remind the boss",
+    "right": "Quietly cover his share"
+  },
+  {
+    "id": "l1c_108",
+    "who": "Secret Santa",
+    "text": "Office Secret Santa. You drew the chief accountant, who terrifies you. The limit is $10, and gifts are due tomorrow morning.",
+    "left": "Buy socks with cats",
+    "right": "Find a thoughtful gift"
+  },
+  {
+    "id": "l1c_109",
+    "who": "Santa’s gift",
+    "text": "Your Secret Santa gave you a book: “How to Stop Being Late.” The whole office watched you open it.",
+    "left": "Laugh at yourself",
+    "right": "Take offense out loud"
+  },
+  {
+    "id": "l1c_110",
+    "who": "Flowers collection",
+    "text": "Friday night, new chat message: “Urgent! Chip in for flowers, Galina Petrovna is in the hospital.” Nobody knows who Galina Petrovna is.",
+    "left": "Chip in, no questions",
+    "right": "Ask who she is"
+  },
+  {
+    "id": "l1c_111",
+    "who": "Gift flop",
+    "text": "The boss opened the team’s gift — an embroidery kit — and said a polite “Mmm.” You picked the gift.",
+    "left": "Offer an exchange",
+    "right": "Act like it’s all great"
+  },
+  {
+    "id": "l1c_112",
+    "who": "Cash only",
+    "text": "The gift collection is cash only: “transfers are hard to count.” You haven’t carried cash in three years, and the nearest ATM is two blocks away.",
+    "left": "Run to the ATM",
+    "right": "Transfer it and apologize"
+  },
+  {
+    "id": "l1c_113",
+    "who": "Gift card text",
+    "text": "You’re writing the card text for the boss’s gift from everyone. Coworkers in the chat have already pitched eight contradictory wishes.",
+    "left": "Combine all the wishes",
+    "right": "Write something short"
+  },
+  {
+    "id": "l1c_114",
+    "who": "Wish list",
+    "text": "A coworker with a birthday brought in his own gift wish list, with prices and links. Everything costs triple the usual.",
+    "left": "Pick the cheapest item",
+    "right": "Chip in for the big one"
+  },
+  {
+    "id": "l1c_115",
+    "who": "Forgotten gift",
+    "text": "The night before the presentation, it turns out the team’s gift is with a coworker who just left on a week’s vacation. Stores are still open.",
+    "left": "Buy a new gift",
+    "right": "Give a card and a promise"
+  },
+  {
+    "id": "l1c_116",
+    "who": "Cleaner’s gift",
+    "text": "Auntie Valya the cleaner has worked here twenty years, and it’s her milestone birthday. Nobody announced a collection; you found out by chance.",
+    "left": "Start a collection",
+    "right": "Quietly congratulate her"
+  },
+  {
+    "id": "l1c_117",
+    "who": "Vacation souvenirs",
+    "text": "Coworkers always bring souvenirs from vacation for everyone. Your vacation is over, and you forgot to buy anything.",
+    "left": "Buy candy near home",
+    "right": "Honestly confess"
+  },
+  {
+    "id": "l1c_118",
+    "who": "Boss’s gift",
+    "text": "The boss hands out holiday gifts. You got an ice-fishing kit with an auger. He clearly mixed up the boxes.",
+    "left": "Swap with a coworker",
+    "right": "Say thanks and take it"
+  },
+  {
+    "id": "l1c_119",
+    "who": "Unpaid debt",
+    "text": "A coworker still hasn’t paid you back for covering his share of a gift a month ago. It’s a small sum, but it stings.",
+    "left": "Remind him out loud",
+    "right": "Quietly let it go"
+  },
+  {
+    "id": "l1c_120",
+    "who": "Team album",
+    "text": "The team is giving the departing boss a “memory album.” Everyone needs to send a photo. You’ve worked here three weeks.",
+    "left": "Send a water-cooler pic",
+    "right": "Make a collage page"
+  },
+  {
+    "id": "l1c_121",
+    "who": "Flowers after work",
+    "text": "You’re supposed to buy flowers for a morning celebration. The florist near home is closed, and the subway stall only sells carnations.",
+    "left": "Get carnations",
+    "right": "Head downtown for roses"
+  },
+  {
+    "id": "l1c_122",
+    "who": "Opting out",
+    "text": "A new coworker loudly declares she never chips in for gifts on principle. Everyone turns to you — you’re new here too.",
+    "left": "Back her up",
+    "right": "Pointedly chip in"
+  },
+  {
+    "id": "l1c_123",
+    "who": "Baby gift",
+    "text": "A coworker just became a mom. The team is collecting, and you’re picking the gift. The baby store has eight kinds of stroller rattles.",
+    "left": "Grab the first one",
+    "right": "Read the reviews"
+  },
+  {
+    "id": "l1c_124",
+    "who": "Collection from the top",
+    "text": "The boss announces: “Chipping in for the CEO’s gift, $40 each.” He forgot to chip in himself, and you’ll have to remind him.",
+    "left": "Remind the boss",
+    "right": "Cover for him"
+  },
+  {
+    "id": "l1c_125",
+    "who": "Gift hit",
+    "text": "The gift you picked for a coworker was a smash hit. Now the team wants you to pick every gift for everyone, forever.",
+    "left": "Agree",
+    "right": "Modestly decline"
+  },
+  {
+    "id": "l1c_126",
+    "who": "Joint gift",
+    "text": "Two coworkers ask to be “added” to your gift for a mutual acquaintance. They’ll pay you later. Their “later” usually never comes.",
+    "left": "Add them",
+    "right": "Politely refuse"
+  },
+  {
+    "id": "l1c_127",
+    "who": "Late delivery",
+    "text": "The coworker’s gift was ordered online. At 9 p.m.: “Order canceled, out of stock.” The celebration is tomorrow at ten.",
+    "left": "Go to a store now",
+    "right": "Give cash in an envelope"
+  },
+  {
+    "id": "l1c_128",
+    "who": "Boss’s gift to team",
+    "text": "For the holiday, the boss gave the team a huge painting of himself. It has to go somewhere. The only free wall is above your desk.",
+    "left": "Hang it above your desk",
+    "right": "Suggest the meeting room"
+  },
+  {
+    "id": "l1c_129",
+    "who": "Wish list",
+    "text": "A coworker jokingly asks what to get you for your housewarming. You dream of a vacuum cleaner, but that’s a bit awkward.",
+    "left": "Say “a vacuum”",
+    "right": "Say “Nothing”"
+  },
+  {
+    "id": "l1c_130",
+    "who": "IOU",
+    "text": "Someone put a note in the birthday envelope: “Owe you, will pay.” The handwriting looks a lot like the boss’s.",
+    "left": "Ask him about it",
+    "right": "Add the amount yourself"
+  },
+  {
+    "id": "l1c_131",
+    "who": "Gift card",
+    "text": "The team gave you a gift card to a store that closed last week. They’re waiting for delight; you just found out.",
+    "left": "Tell the truth",
+    "right": "Fake delight"
+  },
+  {
+    "id": "l1c_132",
+    "who": "Late collection",
+    "text": "The boss’s gift collection has dragged on for a week. That evening you learn the occasion was yesterday. The team waits for someone to tell the boss.",
+    "left": "Go tell the boss",
+    "right": "Suggest “belated wishes”"
+  },
+  {
+    "id": "l1c_133",
+    "who": "Chocolate gift",
+    "text": "The team chipped in for a giant chocolate cake for the boss. The boss is on a diet. The cake was delivered to your place, and you have to bring it in.",
+    "left": "Haul it to the office",
+    "right": "Eat it with the neighbors"
+  },
+  {
+    "id": "l1c_134",
+    "who": "Awkward gift",
+    "text": "You got perfume for your birthday that you can’t stand. The giver asks every day whether you like it.",
+    "left": "Confess",
+    "right": "Wear just a drop"
+  },
+  {
+    "id": "l1c_135",
+    "who": "Giant card",
+    "text": "A giant poster-card for the director. You’re assigned to draw it because “your profile pic is pretty.”",
+    "left": "Draw from the heart",
+    "right": "Print out a picture"
+  },
+  {
+    "id": "l1c_136",
+    "who": "Smoking area",
+    "text": "Whispers in the smoking area: Andrey the manager and Katya the designer have gone to lunch together three days running and come back with matching coffees.",
+    "left": "Fuel the gossip",
+    "right": "Change the subject"
+  },
+  {
+    "id": "l1c_137",
+    "who": "Ira, coworker",
+    "text": "Ira tells you, in strictest confidence, that someone in Sales has a secret crush on you. No name: “Three guesses.”",
+    "left": "Pry for the name",
+    "right": "Wave it off"
+  },
+  {
+    "id": "l1c_138",
+    "who": "Elevator",
+    "text": "In the elevator one evening, you walk in on two coworkers who were clearly holding hands and jumped apart. Next morning they act like strangers.",
+    "left": "Keep the secret",
+    "right": "Wink at them tomorrow"
+  },
+  {
+    "id": "l1c_139",
+    "who": "Valentines",
+    "text": "For Valentine’s Day, the office set up a box for anonymous valentines. You got four, all in the accountant’s handwriting.",
+    "left": "Thank the accountant",
+    "right": "Pretend not to notice"
+  },
+  {
+    "id": "l1c_140",
+    "who": "After the party",
+    "text": "After the party, a rumor spreads that you went home with someone from IT. Really, they just gave you a ride to the subway.",
+    "left": "Deny it in the chat",
+    "right": "Stay mysteriously silent"
+  },
+  {
+    "id": "l1c_141",
+    "who": "Boss and assistant",
+    "text": "Everyone’s sure the boss is having an affair with his assistant. They send you to “casually pop into” his office to check. It’s awkward to refuse.",
+    "left": "Go in with papers",
+    "right": "Refuse to spy"
+  },
+  {
+    "id": "l1c_142",
+    "who": "Flowers on the desk",
+    "text": "A courier delivers a huge bouquet addressed to you. No note. The whole office freezes and stares, awaiting an explanation.",
+    "left": "Share all you know",
+    "right": "Take them away silently"
+  },
+  {
+    "id": "l1c_143",
+    "who": "Chat slip",
+    "text": "A coworker accidentally posts in the group chat a message clearly not meant for everyone: “Miss you, kitten.” Deleted a second later. You saw it.",
+    "left": "Pretend you didn’t see",
+    "right": "Reply with an emoji"
+  },
+  {
+    "id": "l1c_144",
+    "who": "Secret admirer",
+    "text": "Someone leaves a chocolate bar on your desk every morning. It’s been two weeks. Coworkers are placing bets on who it is.",
+    "left": "Set up an ambush",
+    "right": "Just eat the chocolate"
+  },
+  {
+    "id": "l1c_145",
+    "who": "Walk you home",
+    "text": "A coworker from the next department offers to walk you to the subway “since it’s on the way.” It’s honestly not on his way at all.",
+    "left": "Accept",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1c_146",
+    "who": "Zoya the gossip",
+    "text": "Zoya the gossip asks if it’s true you had lunch with the new marketer. You did. With the sysadmin as well.",
+    "left": "Tell her everything",
+    "right": "Say “No comment”"
+  },
+  {
+    "id": "l1c_147",
+    "who": "Jealousy",
+    "text": "Tanya is jealous of her husband, who works in the next department, and the new intern. She asks you to “keep an eye” on them.",
+    "left": "Agree to keep watch",
+    "right": "Refuse to spy"
+  },
+  {
+    "id": "l1c_148",
+    "who": "Date",
+    "text": "At a cafe one evening, you spot the boss clearly on a date. He sees you too. You both freeze, menus in hand.",
+    "left": "Go say hi",
+    "right": "Leave for another cafe"
+  },
+  {
+    "id": "l1c_149",
+    "who": "Office wedding",
+    "text": "Two coworkers whose romance the whole office whispered about announce their wedding. You’re the only one who never noticed.",
+    "left": "Admit it honestly",
+    "right": "Say “It was obvious”"
+  },
+  {
+    "id": "l1c_150",
+    "who": "Note",
+    "text": "You find an unsigned love letter in the printer. It’s been there an hour, and the department’s print queue is about to kick in.",
+    "left": "Take it to HR",
+    "right": "Put it in an envelope"
+  },
+  {
+    "id": "l1c_151",
+    "who": "Movie after work",
+    "text": "A coworker you’ve had a crush on for a month invites you to the movies after work. At 8 a.m. you have a big presentation for the boss.",
+    "left": "Go to the movies",
+    "right": "Postpone to the weekend"
+  },
+  {
+    "id": "l1c_152",
+    "who": "Cafeteria talk",
+    "text": "At lunch, coworkers are discussing two colleagues’ office romance so loudly — and the two of them are at the very next table.",
+    "left": "Kick them under the table",
+    "right": "Join the discussion"
+  },
+  {
+    "id": "l1c_153",
+    "who": "Suspiciously often",
+    "text": "The new manager keeps coming to your desk “to ask about the spreadsheet.” It’s a simple spreadsheet. Coworkers exchange looks and smile.",
+    "left": "Explain it again",
+    "right": "Send him instructions"
+  },
+  {
+    "id": "l1c_154",
+    "who": "Ride",
+    "text": "Evening, rain. A coworker who reportedly likes you offers you a ride. Half the department is smoking by the entrance.",
+    "left": "Get in the car",
+    "right": "Run through the rain"
+  },
+  {
+    "id": "l1c_155",
+    "who": "Rumor about you",
+    "text": "Word reaches you that you’re dating the courier, since he always delivers your packages first. The packages are toner cartridges.",
+    "left": "Joke in the group chat",
+    "right": "Explain to each person"
+  },
+  {
+    "id": "l1c_156",
+    "who": "Coworkers",
+    "text": "Coworkers want you to sign a card “from the whole team” for the woman the boss is rumored to be seeing. They want the boss to sign first.",
+    "left": "Take him the card",
+    "right": "Sign it without him"
+  },
+  {
+    "id": "l1c_157",
+    "who": "Gossip chat",
+    "text": "You’ve been added to a secret “Team Gossip” chat. The very first message speculates about your direct manager’s love life.",
+    "left": "Leave the chat",
+    "right": "Stay and read"
+  },
+  {
+    "id": "l1c_158",
+    "who": "Exes in a meeting",
+    "text": "Two coworkers who recently broke up are arguing over every point in the meeting. It’s been two hours. They want you to “moderate.”",
+    "left": "Reconcile them",
+    "right": "Suggest a break"
+  },
+  {
+    "id": "l1c_159",
+    "who": "Your admirer",
+    "text": "An anonymous admirer declares their feelings for you on the company intranet. Everyone can see the post, including the CEO.",
+    "left": "Reply with humor",
+    "right": "Ask a moderator to delete it"
+  },
+  {
+    "id": "l1c_160",
+    "who": "Party confession",
+    "text": "At the team party, a coworker who had too much “special lemonade” loudly confesses he’s “had feelings” for someone on the team. Everyone looks at you.",
+    "left": "Put him in a taxi",
+    "right": "Leave before anyone else"
+  },
+  {
+    "id": "l1c_161",
+    "who": "Confidential",
+    "text": "A coworker tells you she’s dating the head of the next department and asks you to keep quiet. An hour later, everyone knows — except you.",
+    "left": "Explain yourself to her",
+    "right": "Shrug it off"
+  },
+  {
+    "id": "l1c_162",
+    "who": "Shared office",
+    "text": "Your officemates started dating and now whisper for hours. Work is impossible, and your desk sits exactly between them.",
+    "left": "Ask to move desks",
+    "right": "Put on headphones"
+  },
+  {
+    "id": "l1c_163",
+    "who": "Blind date",
+    "text": "A coworker wants to set you up on a blind date with her cousin. Saying no means offending her for the rest of your career.",
+    "left": "Go on one date",
+    "right": "Gently decline"
+  },
+  {
+    "id": "l1c_164",
+    "who": "Romance and project",
+    "text": "Two coworkers in love are running your joint project. They had a fight, and now each one asks you to pass messages to the other.",
+    "left": "Play mail carrier",
+    "right": "Put them in one room"
+  },
+  {
+    "id": "l1c_165",
+    "who": "Inside info",
+    "text": "The office manager knows everyone’s private life. Today she offers to tell you why the person who had your job before you left.",
+    "left": "Listen",
+    "right": "Skip the details"
+  },
+  {
+    "id": "l1c_166",
+    "who": "Coworker at a bar",
+    "text": "Friday night at a bar, you spot a married coworker with a stranger. He waves and introduces her: “My sister.”",
+    "left": "Join them",
+    "right": "Wave and leave"
+  },
+  {
+    "id": "l1c_167",
+    "who": "Bonus rumor",
+    "text": "There’s a rumor you got a bonus because the boss “likes” you. You got it for a report that took you a week.",
+    "left": "Show everyone the report",
+    "right": "Don’t react"
+  },
+  {
+    "id": "l1c_168",
+    "who": "Water cooler",
+    "text": "At the cooler you catch the end of a sentence: “...and then she tells him: not at work!” Coworkers fall silent and look at you.",
+    "left": "Ask “Who’s she?”",
+    "right": "Pour water and leave"
+  },
+  {
+    "id": "l1c_169",
+    "who": "Cupid coworker",
+    "text": "A coworker wants to set up two single colleagues and asks you to help: invite both to a “casual” dinner for three, then slip away.",
+    "left": "Help with dinner",
+    "right": "Stay out of it"
+  },
+  {
+    "id": "l1c_170",
+    "who": "Jealous call",
+    "text": "A stranger calls your work phone demanding to know who his wife, your coworker, is having lunch with. She’s standing right next to you.",
+    "left": "Hand her the phone",
+    "right": "Hang up"
+  },
+  {
+    "id": "l1c_171",
+    "who": "Boss’s attention",
+    "text": "The boss has started praising you in front of everyone suspiciously often. Coworkers whisper. You just do good work.",
+    "left": "Ask him to tone it down",
+    "right": "Accept the praise"
+  },
+  {
+    "id": "l1c_172",
+    "who": "Too close",
+    "text": "In a company photo, you ended up next to a coworker, and it looks like you’re holding hands. The photo is already on the bulletin board.",
+    "left": "Ask to take it down",
+    "right": "Laugh it off"
+  },
+  {
+    "id": "l1c_173",
+    "who": "Missing pair",
+    "text": "Two coworkers went on “sick leave” at the same time for three days and came back with matching tans. Their work was on you the whole time.",
+    "left": "Tell them off",
+    "right": "Keep quiet"
+  },
+  {
+    "id": "l1c_174",
+    "who": "Intern’s secret",
+    "text": "The intern confesses he’s in love with someone in Accounting and asks how to invite her for coffee. It’s 7 p.m.",
+    "left": "Give long advice",
+    "right": "Say “just ask her”"
+  },
+  {
+    "id": "l1c_175",
+    "who": "Calendar secret",
+    "text": "In the shared calendar, you spot the boss’s meeting with an employee: “Dinner. Just us.” The whole team can see it.",
+    "left": "Warn the boss",
+    "right": "Close it and forget"
+  },
+  {
+    "id": "l1c_176",
+    "who": "Exes",
+    "text": "On a new project, you’ll be working with a former classmate you once dated. Coworkers already know.",
+    "left": "Ask for another project",
+    "right": "Act like nothing happened"
+  },
+  {
+    "id": "l1c_177",
+    "who": "Company car",
+    "text": "Rumor says the company driver chauffeurs not just management but also his sweetheart from Sales. You’ve seen it yourself.",
+    "left": "Tell coworkers",
+    "right": "Keep it to yourself"
+  },
+  {
+    "id": "l1c_178",
+    "who": "Romance survey",
+    "text": "HR sent out a survey on workplace relationships: “Are you aware of coworkers’ romances?” It isn’t anonymous.",
+    "left": "Answer “No”",
+    "right": "List known rumors"
+  },
+  {
+    "id": "l1c_179",
+    "who": "Chat confession",
+    "text": "In the evening, a coworker sends you a long message confessing feelings. Tomorrow you’re presenting together to the boss.",
+    "left": "Answer honestly now",
+    "right": "Postpone the talk"
+  },
+  {
+    "id": "l1c_180",
+    "who": "Fortune-telling",
+    "text": "A coworker reads cards for the team about “office love.” You get “the king of diamonds from IT.” The sysadmin blushes.",
+    "left": "Laugh",
+    "right": "Ask her to put them away"
+  },
+  {
+    "id": "l1c_181",
+    "who": "AC",
+    "text": "Morning. It’s 62°F in the office because the AC was set by a coworker who’s always hot. She took the remote with her to a meeting.",
+    "left": "Work in your jacket",
+    "right": "Find the remote in her desk"
+  },
+  {
+    "id": "l1c_182",
+    "who": "AC",
+    "text": "July, 84°F in the office. The coworker by the window forbids the AC: “I’ll catch a chill.” The other nine people quietly melt.",
+    "left": "Turn on the AC",
+    "right": "Buy yourself a fan"
+  },
+  {
+    "id": "l1c_183",
+    "who": "Window",
+    "text": "The morning starts with the window war. One coworker opens it “for air,” another closes it “for the draft.” Your desk is right in between.",
+    "left": "Side with fresh air",
+    "right": "Propose an airing schedule"
+  },
+  {
+    "id": "l1c_184",
+    "who": "Remote",
+    "text": "You stumble on the AC remote everyone’s been hunting for a week. It was in the printer paper drawer.",
+    "left": "Secretly keep it",
+    "right": "Ceremonially return it"
+  },
+  {
+    "id": "l1c_185",
+    "who": "AC",
+    "text": "The AC blows right on your neck. Facilities says only the desk can be moved, and that takes a three-page request.",
+    "left": "Fill out the request",
+    "right": "Tape cardboard to the vent"
+  },
+  {
+    "id": "l1c_186",
+    "who": "Thermometer",
+    "text": "Coworkers hung a thermometer to “settle the debate objectively.” Now they argue about where the thermometer should hang.",
+    "left": "Move it by your desk",
+    "right": "Hang a second one"
+  },
+  {
+    "id": "l1c_187",
+    "who": "Ficus",
+    "text": "A former employee’s ficus sits in the corner, wilting. Nobody wants to water it. The office manager looks at you: “You’re the newest.”",
+    "left": "Adopt the ficus",
+    "right": "Claim an allergy"
+  },
+  {
+    "id": "l1c_188",
+    "who": "Cactus",
+    "text": "There’s a cactus on your desk from the previous occupant. It’s prickly, in the way, and rumored to bring bad luck. Tossing it feels wrong.",
+    "left": "Give it to Accounting",
+    "right": "Keep it and trim it"
+  },
+  {
+    "id": "l1c_189",
+    "who": "Watering",
+    "text": "You were away two days, and a coworker watered your plants. With tea. With sugar. The plants seem happy; the ants even more so.",
+    "left": "Say thanks",
+    "right": "Explain about water"
+  },
+  {
+    "id": "l1c_190",
+    "who": "Boss’s plant",
+    "text": "The boss left his palm in your care while on a business trip. It’s shedding leaves before your eyes. He’s back Friday.",
+    "left": "Buy an identical one",
+    "right": "Treat it with fertilizer"
+  },
+  {
+    "id": "l1c_191",
+    "who": "Orchid",
+    "text": "A coworker brought an orchid and demands nobody breathe near it. It sits on the shared printer.",
+    "left": "Move the orchid",
+    "right": "Print holding your breath"
+  },
+  {
+    "id": "l1c_192",
+    "who": "Space heater",
+    "text": "A coworker brought a space heater from home. Every time she turns it on, the whole wing blows a fuse.",
+    "left": "Complain to Facilities",
+    "right": "Secretly give her a blanket"
+  },
+  {
+    "id": "l1c_193",
+    "who": "Cooler gossip",
+    "text": "Morning. At the cooler you learn that your desk neighbor will “soon be fired.” Your neighbor is right there, pouring water.",
+    "left": "Change the subject",
+    "right": "Hear the details"
+  },
+  {
+    "id": "l1c_194",
+    "who": "Layoff rumor",
+    "text": "The office is buzzing: there’ll be cuts, and new hires go first. The only new hire on your team is you.",
+    "left": "Ask the boss directly",
+    "right": "Work twice as hard"
+  },
+  {
+    "id": "l1c_195",
+    "who": "Gossip",
+    "text": "Zoya brings a new rumor every day. Today’s is about you: supposedly you’re related to the CEO. You’re secretly a bit pleased.",
+    "left": "Deny the rumor",
+    "right": "Smile mysteriously"
+  },
+  {
+    "id": "l1c_196",
+    "who": "Overheard call",
+    "text": "Through a thin wall, you overhear the boss discussing upcoming bonuses on the phone. Coworkers ask what you heard.",
+    "left": "Tell them everything",
+    "right": "Say you heard nothing"
+  },
+  {
+    "id": "l1c_197",
+    "who": "Anonymous email",
+    "text": "The shared inbox got an anonymous complaint about “whoever eats other people’s food.” Everyone suspects you, since you’re new.",
+    "left": "Defend yourself in chat",
+    "right": "Bring cake for everyone"
+  },
+  {
+    "id": "l1c_198",
+    "who": "Leak",
+    "text": "Someone told another department about your report mistake. Only three people knew. One of them is your best work buddy.",
+    "left": "Talk to him",
+    "right": "Pretend you don’t know"
+  },
+  {
+    "id": "l1c_199",
+    "who": "Broken telephone",
+    "text": "You told a coworker you were tired. An hour later, HR asks if it’s true you’re job hunting. The rumor went through five people.",
+    "left": "Explain to HR",
+    "right": "Find the source"
+  },
+  {
+    "id": "l1c_200",
+    "who": "Restroom talk",
+    "text": "In the restroom one morning, you hear two coworkers discussing your new haircut. Opinions are split. Time to leave the stall.",
+    "left": "Walk out smiling",
+    "right": "Wait till they leave"
+  },
+  {
+    "id": "l1c_201",
+    "who": "Relocation rumor",
+    "text": "Rumor: the office is moving to the other end of town. Half the team is already job hunting. You just rented an apartment nearby.",
+    "left": "Ask management",
+    "right": "Wait for the official email"
+  },
+  {
+    "id": "l1c_202",
+    "who": "New hire",
+    "text": "A new coworker joined the team. By noon, coworkers had invented three nicknames for her. They want you to vote for “the best one.”",
+    "left": "Suggest your own",
+    "right": "Refuse to play"
+  },
+  {
+    "id": "l1c_203",
+    "who": "Boss’s secret",
+    "text": "The assistant whispers that the boss is going through “a rough patch” and you’d better not go in today. You need his signature.",
+    "left": "Go in anyway",
+    "right": "Wait till tomorrow"
+  },
+  {
+    "id": "l1c_204",
+    "who": "Salary talk",
+    "text": "In the smoking area, people are comparing salaries. Turns out you earn the least, even less than the intern. Everyone looks at you.",
+    "left": "Say your number",
+    "right": "Dodge the question"
+  },
+  {
+    "id": "l1c_205",
+    "who": "Intern rumor",
+    "text": "There’s a rumor the intern only got in through connections. He’s sitting next to you and hears it all. You know it’s not true.",
+    "left": "Defend him out loud",
+    "right": "Encourage him later"
+  },
+  {
+    "id": "l1c_206",
+    "who": "Smoking area",
+    "text": "Rumor: you’re getting a new “very strict” boss. Coworkers are panicking. You met him at your interview — he’s actually nice.",
+    "left": "Calm everyone down",
+    "right": "Stay out of it"
+  },
+  {
+    "id": "l1c_207",
+    "who": "Someone’s photos",
+    "text": "A coworker shows everyone another coworker’s vacation photos from social media, loudly commenting. She walks in mid-roast.",
+    "left": "Quickly change the subject",
+    "right": "Calmly keep working"
+  },
+  {
+    "id": "l1c_208",
+    "who": "Morning chat",
+    "text": "Someone accidentally posts a screenshot of a private chat about you in the group chat. It’s deleted a minute later. You read it.",
+    "left": "Ask the author privately",
+    "right": "Pretend you didn’t see"
+  },
+  {
+    "id": "l1c_209",
+    "who": "Who ate the yogurt",
+    "text": "Your yogurt disappeared from the shared fridge. Third time this week. There’s a suspect, but no hard evidence.",
+    "left": "Post a note",
+    "right": "Label it with a marker"
+  },
+  {
+    "id": "l1c_210",
+    "who": "Spy plant",
+    "text": "A coworker is convinced the boss is eavesdropping through the new “smart” flowerpot. She asks you to check it.",
+    "left": "Inspect the pot",
+    "right": "Laugh at the theory"
+  },
+  {
+    "id": "l1c_211",
+    "who": "After-work gossip",
+    "text": "Coworkers invite you to a cafe after work. The only item on the agenda: the new deputy boss. You get along well with him.",
+    "left": "Go and listen",
+    "right": "Say you’re busy"
+  },
+  {
+    "id": "l1c_212",
+    "who": "Radiator",
+    "text": "The heating came on in October, and the radiator by your desk is scorching. The knob is broken, and the plumber will come “within a month.”",
+    "left": "Open the window",
+    "right": "Wrap it in a towel"
+  },
+  {
+    "id": "l1c_213",
+    "who": "Fan",
+    "text": "A coworker cranked his fan to max, and your papers flew all over the room. He didn’t notice — headphones.",
+    "left": "Turn off the fan",
+    "right": "Weigh them down with a stapler"
+  },
+  {
+    "id": "l1c_214",
+    "who": "Vacation plants",
+    "text": "A coworker going on vacation hands you care instructions for twelve plants. With watering, feeding, and “talking to them” schedules.",
+    "left": "Agree to everything",
+    "right": "Take just three pots"
+  },
+  {
+    "id": "l1c_215",
+    "who": "Blinds battle",
+    "text": "Sun glares on your monitor, so you lower the blinds. The coworker opposite raises them: “I need vitamin D.” All morning long.",
+    "left": "Turn your back to the window",
+    "right": "Lower and tape them down"
+  },
+  {
+    "id": "l1c_216",
+    "who": "Smell",
+    "text": "A coworker reheats fish in the shared microwave every day. The whole floor smells like the ocean. The office manager asks you to “drop a gentle hint.”",
+    "left": "Drop a gentle hint",
+    "right": "Decline the mission"
+  },
+  {
+    "id": "l1c_217",
+    "who": "Palm in the aisle",
+    "text": "A huge palm stands in the aisle, and every time you pass, a frond slaps your face. It’s the CEO’s favorite.",
+    "left": "Move the palm",
+    "right": "Tie up the fronds"
+  },
+  {
+    "id": "l1c_218",
+    "who": "Fertilizer",
+    "text": "Someone fed the office plants coffee grounds “using an internet recipe.” Now the office has gnats. Everyone suspects you.",
+    "left": "Say it wasn’t you",
+    "right": "Buy gnat traps"
+  },
+  {
+    "id": "l1c_219",
+    "who": "New AC",
+    "text": "The new AC has an app, and you’re its admin. Now everyone DMs you “make it warmer” and “make it colder.”",
+    "left": "Set a strict mode",
+    "right": "Please everyone"
+  },
+  {
+    "id": "l1c_220",
+    "who": "Dried flowers",
+    "text": "A coworker insists the dead flowers in the vase are “a style.” You saw her forget to water them a month ago.",
+    "left": "Toss the vase",
+    "right": "Buy fresh flowers"
+  },
+  {
+    "id": "l1c_221",
+    "who": "Missing plant",
+    "text": "Your favorite succulent vanished from your desk. A week later, you spot it on a desk in the next department, in a new pot.",
+    "left": "Take it back",
+    "right": "Let him keep it"
+  },
+  {
+    "id": "l1c_222",
+    "who": "Draft",
+    "text": "A coworker complains about the draft from your open window and pointedly puts on a scarf. Without fresh air, you fall asleep.",
+    "left": "Close the window",
+    "right": "Bring her warm socks"
+  },
+  {
+    "id": "l1c_223",
+    "who": "Wish tree",
+    "text": "The office manager set up a “wish tree”: everyone hangs a note with a dream. The boss reads all the notes.",
+    "left": "Write “Promotion”",
+    "right": "Write “Vacation in May”"
+  },
+  {
+    "id": "l1c_224",
+    "who": "Mood plants",
+    "text": "The office bought plants “to boost morale.” Yours needs watering every three hours or it dies.",
+    "left": "Set an alarm",
+    "right": "Secretly swap for a cactus"
+  },
+  {
+    "id": "l1c_225",
+    "who": "Promotion rumor",
+    "text": "Office rumor: the senior specialist role is going not to you, but to a coworker who started a month after you. She acts like she knows nothing.",
+    "left": "Ask the boss directly",
+    "right": "Congratulate her early"
+  },
+  {
+    "id": "l1c_226",
+    "who": "Vacation schedule",
+    "text": "HR sends out the annual vacation schedule. The veterans took the best weeks. You’re left with November or March.",
+    "left": "Take November",
+    "right": "Ask a coworker to swap"
+  },
+  {
+    "id": "l1c_227",
+    "who": "Before vacation",
+    "text": "Last evening before vacation. The boss asks you to finish “just one tiny thing.” It looks like three hours of work.",
+    "left": "Do the tiny thing",
+    "right": "Hand it to a coworker"
+  },
+  {
+    "id": "l1c_228",
+    "who": "Suitcase",
+    "text": "Night before vacation, flight at 6 a.m. The suitcase isn’t packed, and a coworker urgently asks in chat where the report file is.",
+    "left": "Explain in detail",
+    "right": "Reply from the airport"
+  },
+  {
+    "id": "l1c_229",
+    "who": "Handover",
+    "text": "Before vacation, you have to hand your work to a coworker. He’s half-listening and scrolling his phone. Next week he’ll be calling you on the beach.",
+    "left": "Write detailed instructions",
+    "right": "Just explain verbally"
+  },
+  {
+    "id": "l1c_230",
+    "who": "Beach",
+    "text": "Morning, beach, vacation. Your phone buzzes: the boss tagged you in the work chat: “Where’s the file?” It’s in the shared folder.",
+    "left": "Reply right away",
+    "right": "Reply in the evening"
+  },
+  {
+    "id": "l1c_231",
+    "who": "Coming back",
+    "text": "Sunday night, first day back tomorrow. 437 unread work emails. You could start sorting them now.",
+    "left": "Sort them now",
+    "right": "Wait for morning"
+  },
+  {
+    "id": "l1c_232",
+    "who": "Coworkers",
+    "text": "First morning after vacation. Coworkers want to see photos. You have two hundred, all of the sea.",
+    "left": "Show all two hundred",
+    "right": "Show the best three"
+  },
+  {
+    "id": "l1c_233",
+    "who": "Souvenirs",
+    "text": "You brought fridge magnets for everyone. They’re all the same, yet coworkers are already fighting over the one “without a defect.”",
+    "left": "Give up your good one",
+    "right": "Let them draw lots"
+  },
+  {
+    "id": "l1c_234",
+    "who": "Peak season",
+    "text": "You got vacation in peak season. Tickets cost triple. A coworker offers a swap: his November for your July.",
+    "left": "Swap",
+    "right": "Refuse and pay up"
+  },
+  {
+    "id": "l1c_235",
+    "who": "Vacation canceled",
+    "text": "Morning. The boss says your vacation “needs to shift by two weeks.” Tickets and hotel are paid and non-refundable.",
+    "left": "Shift your vacation",
+    "right": "Defend your dates"
+  },
+  {
+    "id": "l1c_236",
+    "who": "Vacation pay",
+    "text": "Accounting says your vacation pay will arrive “after the vacation, for technical reasons.” You leave in three days with no money for the trip.",
+    "left": "Have it out with Accounting",
+    "right": "Borrow from friends"
+  },
+  {
+    "id": "l1c_237",
+    "who": "Staycation",
+    "text": "You decided to spend your vacation at home. A coworker calls in the evening: “Since you’re in town, pop into the office for an hour.”",
+    "left": "Pop in for an hour",
+    "right": "Say you’re away"
+  },
+  {
+    "id": "l1c_238",
+    "who": "Out-of-office",
+    "text": "You need to set an auto-reply before vacation. The company template reads like a farewell note: “I am no longer reachable and not responsible for the consequences.”",
+    "left": "Write your own",
+    "right": "Keep the template"
+  },
+  {
+    "id": "l1c_239",
+    "who": "Work laptop",
+    "text": "The boss wants you to take the work laptop on vacation “just in case.” It weighs seven pounds, and you’re traveling with a backpack.",
+    "left": "Take the laptop",
+    "right": "Say it won’t fit"
+  },
+  {
+    "id": "l1c_240",
+    "who": "Flight",
+    "text": "Your flight is delayed six hours. You’re stuck at the airport with your work laptop. You could work or watch a series.",
+    "left": "Get some work done",
+    "right": "Watch a series"
+  },
+  {
+    "id": "l1c_241",
+    "who": "Seaside morning",
+    "text": "Morning by the sea. A coworker sends a screenshot of a spreadsheet: “Where’s the error?” There’s no error; he just doesn’t get the formula.",
+    "left": "Explain step by step",
+    "right": "Ask him to wait a week"
+  },
+  {
+    "id": "l1c_242",
+    "who": "New Year holidays",
+    "text": "The team is deciding who’s on duty over the New Year holidays. Everyone else has a family, and you don’t. So it’s “logical” for you.",
+    "left": "Agree to be on duty",
+    "right": "Suggest drawing lots"
+  },
+  {
+    "id": "l1c_243",
+    "who": "Country house",
+    "text": "Friday evening. Coworkers invite you to their country house all weekend to “help in the garden and grill some kebabs.” You dreamed of two days on the couch.",
+    "left": "Go to the country",
+    "right": "Stay on the couch"
+  },
+  {
+    "id": "l1c_244",
+    "who": "Long weekend",
+    "text": "Morning before a long weekend. The boss announces that “by tradition” the team works Saturday to make up hours. The tradition is three years old.",
+    "left": "Work Saturday",
+    "right": "Take a day off"
+  },
+  {
+    "id": "l1c_245",
+    "who": "Vacation denied",
+    "text": "Your vacation request came back for the third time marked “Bad dates.” Nobody says which dates are good.",
+    "left": "Ask directly",
+    "right": "Keep resubmitting"
+  },
+  {
+    "id": "l1c_246",
+    "who": "Last day",
+    "text": "Last workday before vacation. Coworkers planned a farewell cake, but at 6 p.m. the boss calls a meeting.",
+    "left": "Go to the meeting",
+    "right": "Stay for cake"
+  },
+  {
+    "id": "l1c_247",
+    "who": "Overlapping leave",
+    "text": "You and a coworker are off at the same time, with nobody to cover. The boss asks you to sort it “as friends.” The coworker’s trip: Turkey, with kids.",
+    "left": "Move yours",
+    "right": "Keep it as is"
+  },
+  {
+    "id": "l1c_248",
+    "who": "Hiking",
+    "text": "You’re back from an off-grid hike. Turns out in one week the project changed three leads and two deadlines.",
+    "left": "Dive in immediately",
+    "right": "Take a day to catch up"
+  },
+  {
+    "id": "l1c_249",
+    "who": "Last week",
+    "text": "A week until vacation. Tasks pour in: everyone wants it done “before you leave.”",
+    "left": "Take on everything",
+    "right": "Say “After vacation”"
+  },
+  {
+    "id": "l1c_250",
+    "who": "Trip, not vacation",
+    "text": "Instead of vacation, the boss suggests a business trip to the seaside: “You’ll get some rest anyway.” Ten-hour workdays, though.",
+    "left": "Agree",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_251",
+    "who": "Vacation in pieces",
+    "text": "HR suggests splitting your vacation into six two-day chunks. It’s “more convenient for the team.” You can’t rest in two days.",
+    "left": "Split it up",
+    "right": "Insist on two weeks"
+  },
+  {
+    "id": "l1c_252",
+    "who": "Call from work",
+    "text": "Evening, vacation, you’re at a concert. The boss calls. Twice. Three times. The music is blasting; all you can hear is your name.",
+    "left": "Step out and call back",
+    "right": "Enjoy the concert"
+  },
+  {
+    "id": "l1c_253",
+    "who": "Coworker on the beach",
+    "text": "On vacation, you run into a coworker from another department. He suggests “briefly discussing the project” over breakfast. Every day.",
+    "left": "Discuss the project",
+    "right": "Eat at another cafe"
+  },
+  {
+    "id": "l1c_254",
+    "who": "Back from vacation",
+    "text": "You’re back from vacation. A new intern is at your desk, holding your mug. Nobody told you.",
+    "left": "Politely ask for your spot",
+    "right": "Take it up with the boss"
+  },
+  {
+    "id": "l1c_255",
+    "who": "Postponed vacation",
+    "text": "Unused vacation days expire in December. The boss says “now’s not the time.” Now is always.",
+    "left": "Go on vacation right now",
+    "right": "Postpone again"
+  },
+  {
+    "id": "l1c_256",
+    "who": "Vacation brain",
+    "text": "Monday morning after vacation. Your brain is still on the beach. The boss wants a summary by 10:00, and you can’t remember your password.",
+    "left": "Call IT support",
+    "right": "Ask for more time"
+  },
+  {
+    "id": "l1c_257",
+    "who": "Coworker’s vacation",
+    "text": "A coworker went on vacation and left you her project without a single note. The client calls demanding a report you’ve never heard of.",
+    "left": "Message her on vacation",
+    "right": "Figure it out alone"
+  },
+  {
+    "id": "l1c_258",
+    "who": "Suitcase mood",
+    "text": "Friday night, vacation tomorrow. A coworker asks you to cover his Monday shift: “You’re not leaving till noon anyway.”",
+    "left": "Cover for him",
+    "right": "Say no"
+  },
+  {
+    "id": "l1c_259",
+    "who": "Laptop in the mountains",
+    "text": "Morning in the mountains. You have your laptop, but there’s signal only at the summit. The boss expects an email by noon.",
+    "left": "Climb to the summit",
+    "right": "Send it late tonight"
+  },
+  {
+    "id": "l1c_260",
+    "who": "Vacation pics",
+    "text": "You posted vacation photos. The boss liked them and commented: “Resting? What about the report?”",
+    "left": "Reply with an emoji",
+    "right": "Do the report on vacation"
+  },
+  {
+    "id": "l1c_261",
+    "who": "Last vacation night",
+    "text": "Last night of vacation. Your work calendar already has an 8:30 meeting tomorrow. You could reschedule it.",
+    "left": "Reschedule it",
+    "right": "Go to bed early"
+  },
+  {
+    "id": "l1c_262",
+    "who": "After the holidays",
+    "text": "First morning after the New Year holidays. The office is empty: everyone took a day off. The boss calls asking where the team is.",
+    "left": "Cover for coworkers",
+    "right": "Admit nobody’s here"
+  },
+  {
+    "id": "l1c_263",
+    "who": "Boss on vacation",
+    "text": "The boss is leaving on vacation and makes you “acting head” for two weeks. No raise, but you get the keys to his office.",
+    "left": "Take the keys",
+    "right": "Suggest someone senior"
+  },
+  {
+    "id": "l1c_264",
+    "who": "Vacation advice",
+    "text": "You’re booking your vacation in the evening. A coworker messages that “the best hotels are in another country” and sends a tour three times pricier.",
+    "left": "Take the advice",
+    "right": "Book your own"
+  },
+  {
+    "id": "l1c_265",
+    "who": "Day off",
+    "text": "You took one day off. In the morning, a coworker texts: “Are you coming in? We can’t manage without you.”",
+    "left": "Come in for half a day",
+    "right": "Don’t reply till evening"
+  },
+  {
+    "id": "l1c_266",
+    "who": "Vacation plans",
+    "text": "At lunch, coworkers share vacation plans: Maldives, Bali, the Alps. They ask about yours. You’re visiting your grandma in the village.",
+    "left": "Tell them about the village",
+    "right": "Say “Still deciding”"
+  },
+  {
+    "id": "l1c_267",
+    "who": "Way home",
+    "text": "You return from vacation late at night. There’s a review meeting in the morning, and you haven’t looked at a single document.",
+    "left": "Read in the taxi",
+    "right": "Confess at the meeting"
+  },
+  {
+    "id": "l1c_268",
+    "who": "Empty office",
+    "text": "August. Everyone’s on vacation; only you and the boss are in. He’s glad of the company and drops by every half hour to chat about life.",
+    "left": "Chat with him",
+    "right": "Put on headphones"
+  },
+  {
+    "id": "l1c_269",
+    "who": "No vacation",
+    "text": "You’ve worked a year without vacation. HR reminds you that “by law you must take time off.” The boss asks you to hold off.",
+    "left": "Listen to HR",
+    "right": "Listen to the boss"
+  },
+  {
+    "id": "l1c_270",
+    "who": "Resort and report",
+    "text": "Evening by the sea. Email: “Report needed by nine tomorrow.” You did it, but handed it to a coworker before leaving. He’s silent.",
+    "left": "Do the report yourself",
+    "right": "Remind the coworker"
+  },
+  {
+    "id": "l1c_271",
+    "who": "Runny nose",
+    "text": "Morning, you’ve got a runny nose and a slight fever. Today’s an important meeting you’ve been invited to for the first time. Stay home?",
+    "left": "Go to the meeting",
+    "right": "Take sick leave"
+  },
+  {
+    "id": "l1c_272",
+    "who": "Sneezing coworker",
+    "text": "Your desk neighbor came in with a horrible cold: “I’m not contagious, it’s just allergies.” He sneezes every two minutes.",
+    "left": "Send him home",
+    "right": "Mask up and endure"
+  },
+  {
+    "id": "l1c_273",
+    "who": "Sick leave",
+    "text": "Evening, you’re on sick leave. The boss writes: “How are you feeling? By the way, could you check one spreadsheet?”",
+    "left": "Check the spreadsheet",
+    "right": "Reply tomorrow"
+  },
+  {
+    "id": "l1c_274",
+    "who": "Doctor’s note",
+    "text": "Morning after sick leave. HR wants a doctor’s note, but the clinic misspelled your last name. HR won’t budge.",
+    "left": "Go get it redone",
+    "right": "Try to persuade HR"
+  },
+  {
+    "id": "l1c_275",
+    "who": "Remote with a fever",
+    "text": "You’re on sick leave, but a coworker can’t open an important file without you. Only you know the password.",
+    "left": "Log in remotely",
+    "right": "Dictate the password"
+  },
+  {
+    "id": "l1c_276",
+    "who": "First-aid kit",
+    "text": "The office first-aid kit has only bandages and pills that expired three years ago. Your head hurts, and stand-up is in ten minutes.",
+    "left": "Run to the pharmacy",
+    "right": "Survive the stand-up"
+  },
+  {
+    "id": "l1c_277",
+    "who": "Sick at home",
+    "text": "You’re sick but working from home. A coworker messages every half hour: “Where are you? Why aren’t you answering?” You were asleep.",
+    "left": "Explain the situation",
+    "right": "Mute notifications"
+  },
+  {
+    "id": "l1c_278",
+    "who": "Tea and honey",
+    "text": "A coworker heard you have a cold and brought over honey and a pot of broth. She didn’t come in, but she’ll be hurt if you don’t invite her.",
+    "left": "Invite her for tea",
+    "right": "Thank her by text"
+  },
+  {
+    "id": "l1c_279",
+    "who": "Office flu",
+    "text": "Half the team is on sick leave. You’re healthy, so three of their projects landed on you. The boss promises to “thank you later.”",
+    "left": "Run all three",
+    "right": "Take just one"
+  },
+  {
+    "id": "l1c_280",
+    "who": "Checkup",
+    "text": "Company medical checkup during work hours: a line of a hundred people for one doctor. Work’s on hold, and the boss is nervous.",
+    "left": "Wait in line",
+    "right": "Come early tomorrow"
+  },
+  {
+    "id": "l1c_281",
+    "who": "Grandma’s remedy",
+    "text": "A coworker’s cold remedy: “garlic in your socks.” The whole team is watching to see if you’ll do it.",
+    "left": "Try the garlic",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1c_282",
+    "who": "Flu shot",
+    "text": "Free flu shots in the office. Sign-ups are now, but the line won’t get shorter for an hour.",
+    "left": "Sign up now",
+    "right": "Sign up later"
+  },
+  {
+    "id": "l1c_283",
+    "who": "Boss calls",
+    "text": "Evening, you’re under a blanket with a fever. The boss calls personally: “Can you come in tomorrow? Even half a day?”",
+    "left": "Come in for half a day",
+    "right": "Honestly say “No”"
+  },
+  {
+    "id": "l1c_284",
+    "who": "Coworker’s sick leave",
+    "text": "A coworker went on sick leave and asked you to submit her report. It’s in such shape that it needs a full rewrite.",
+    "left": "Rewrite the report",
+    "right": "Submit it as is"
+  },
+  {
+    "id": "l1c_285",
+    "who": "Healthy eating",
+    "text": "HR launched a “Healthy Habits” challenge: whoever skips the most fast-food lunches wins a certificate. Today the cafeteria has pizza.",
+    "left": "Get the pizza",
+    "right": "Salad and certificate"
+  },
+  {
+    "id": "l1c_286",
+    "who": "Coughing",
+    "text": "You cough in a meeting, and everyone subtly scoots away. The boss suggests you “sit in the next meeting room on camera.”",
+    "left": "Sit in the other room",
+    "right": "Go home"
+  },
+  {
+    "id": "l1c_287",
+    "who": "Allergy",
+    "text": "Poplar fluff season. Your eyes are watering, and coworkers think you’re crying over a reprimand. The boss asks if you’re okay.",
+    "left": "Explain about the pollen",
+    "right": "Play along, take a day off"
+  },
+  {
+    "id": "l1c_288",
+    "who": "Doctor’s note",
+    "text": "Evening. Sick leave requires a note from a private clinic, which costs half your paycheck. The boss is willing to “just trust you.”",
+    "left": "Get the note",
+    "right": "Rely on his word"
+  },
+  {
+    "id": "l1c_289",
+    "who": "Office thermometer",
+    "text": "The office manager takes everyone’s temperature in the morning. Yours is 99°F because you ran from the subway. You’re sent home.",
+    "left": "Go home",
+    "right": "Insist you’re fine"
+  },
+  {
+    "id": "l1c_290",
+    "who": "Looking after a coworker",
+    "text": "A coworker felt sick at work. The boss asks you to take her home in a taxi. Your report is due in an hour.",
+    "left": "Take her home",
+    "right": "Call her a taxi"
+  },
+  {
+    "id": "l1c_291",
+    "who": "Sick evening",
+    "text": "You’re on sick leave. The group chat is buzzing: the team is tackling your task, clearly in the wrong direction.",
+    "left": "Jump into the discussion",
+    "right": "Mute the chat"
+  },
+  {
+    "id": "l1c_292",
+    "who": "Lost voice",
+    "text": "Morning. You’ve lost your voice, and today’s your first call with a major client. A coworker offers to call instead, but he’ll take all the credit.",
+    "left": "Call in a whisper",
+    "right": "Give him the call"
+  },
+  {
+    "id": "l1c_293",
+    "who": "Vitamins",
+    "text": "A coworker hands out vitamins to the whole team from a giant jar. Refusing is awkward, but the pills are the size of walnuts.",
+    "left": "Take one",
+    "right": "Politely decline"
+  },
+  {
+    "id": "l1c_294",
+    "who": "Sick kid brother",
+    "text": "Evening. Your little brother, whom you’re babysitting, has a fever. You promised the boss you’d be in at eight.",
+    "left": "Stay with your brother",
+    "right": "Find a neighbor to sit"
+  },
+  {
+    "id": "l1c_295",
+    "who": "Sole",
+    "text": "On the way to work, the sole comes off your shoe. Two blocks to the office, stand-up in twenty minutes.",
+    "left": "Limp to work",
+    "right": "Go home and change"
+  },
+  {
+    "id": "l1c_296",
+    "who": "Office exercise",
+    "text": "The boss introduced workplace exercises at 11:00. Everyone stands and waves their arms to upbeat music. You’re mid-way through an important email.",
+    "left": "Wave your arms",
+    "right": "Finish the email"
+  },
+  {
+    "id": "l1c_297",
+    "who": "Visiting a sick coworker",
+    "text": "A coworker has been on sick leave for three weeks. The team plans to visit him tonight with oranges. You’re buying the oranges.",
+    "left": "Go visit",
+    "right": "Send oranges by courier"
+  },
+  {
+    "id": "l1c_298",
+    "who": "Headache pill",
+    "text": "Splitting headache since morning. A coworker offers a “magic pill” you’ve never heard of.",
+    "left": "Refuse and endure",
+    "right": "Go to the pharmacy"
+  },
+  {
+    "id": "l1c_299",
+    "who": "Back pain",
+    "text": "Eight hours in an awful chair, and your back hurts. A new chair is promised “next quarter.” There’s a spare one in the boss’s office.",
+    "left": "Borrow the chair",
+    "right": "Use a cushion"
+  },
+  {
+    "id": "l1c_300",
+    "who": "Doctor’s slot",
+    "text": "The only doctor’s slot is tomorrow at 10 a.m. The boss asks you to reschedule: “You’re not dying.”",
+    "left": "Reschedule",
+    "right": "Go to the doctor"
+  },
+  {
+    "id": "l1c_301",
+    "who": "Health advice",
+    "text": "A coworker lectures you all morning on the evils of coffee and offers dandelion-root tea instead. She’s already poured you a mug.",
+    "left": "Drink the tea",
+    "right": "Stick with coffee"
+  },
+  {
+    "id": "l1c_302",
+    "who": "Sick note",
+    "text": "The e-sick-leave system “lost” your note. HR says your sick days will be marked as unexcused absence.",
+    "left": "Call the clinic",
+    "right": "Ask HR to sort it out"
+  },
+  {
+    "id": "l1c_303",
+    "who": "Working while sick",
+    "text": "You’re on sick leave, but in the evening a task arrives marked “very urgent.” From the boss. Signed “No offense.”",
+    "left": "Do the task",
+    "right": "Reply with an auto-reply"
+  },
+  {
+    "id": "l1c_304",
+    "who": "Morning cough",
+    "text": "You’re almost better but still coughing a little. People in the elevator turn away in fear. You could walk up to the ninth floor.",
+    "left": "Take the stairs",
+    "right": "Take the elevator"
+  },
+  {
+    "id": "l1c_305",
+    "who": "Missed stand-up",
+    "text": "You were at the doctor and missed stand-up. Meanwhile, you got a new task, and a coworker promised on your behalf it’d be done by Wednesday.",
+    "left": "Take on the task",
+    "right": "Discuss timing with the boss"
+  },
+  {
+    "id": "l1c_306",
+    "who": "Fever night",
+    "text": "Evening, 99.5°F. Tomorrow is the company fun run you signed up for a month ago. Coworkers are counting on you for the relay.",
+    "left": "Run anyway",
+    "right": "Drop out"
+  },
+  {
+    "id": "l1c_307",
+    "who": "Quarantine",
+    "text": "The team is in quarantine, everyone working from home. An hour later, the boss asks you specifically to come in for some documents.",
+    "left": "Go to the office",
+    "right": "Ask for a courier"
+  },
+  {
+    "id": "l1c_308",
+    "who": "Illness and report",
+    "text": "A coworker came back from sick leave to find you’d submitted his report. The boss praised you. The coworker is gloomy.",
+    "left": "Credit his work",
+    "right": "Say nothing"
+  },
+  {
+    "id": "l1c_309",
+    "who": "Cold and bowling",
+    "text": "Evening, you’ve got a cold, and coworkers invite you to a birthday at the bowling alley. You promised a week ago.",
+    "left": "Go bowling",
+    "right": "Stay home"
+  },
+  {
+    "id": "l1c_310",
+    "who": "Sick new hire",
+    "text": "The new hire you’re training got sick on day one. The boss thinks it’s your fault.",
+    "left": "Explain to the boss",
+    "right": "Take the blame"
+  },
+  {
+    "id": "l1c_311",
+    "who": "Check-up call",
+    "text": "HR calls your home to verify you’re really sick. Your mom answers and tells them all about your “weak immune system” since childhood.",
+    "left": "Grab the phone",
+    "right": "Let Mom finish"
+  },
+  {
+    "id": "l1c_312",
+    "who": "Sick and bored",
+    "text": "A week on sick leave. You’re bored, so one evening you write in the work chat: “Anything I can do?” Coworkers are already replying.",
+    "left": "Take a task",
+    "right": "Delete the message"
+  },
+  {
+    "id": "l1c_313",
+    "who": "Payday",
+    "text": "Payday morning. Everyone in the team chat writes “It’s in!” — but yours isn’t. Accounting opens in an hour.",
+    "left": "Message Accounting",
+    "right": "Wait calmly"
+  },
+  {
+    "id": "l1c_314",
+    "who": "Accounting",
+    "text": "Your paycheck is $20 short. Accounting explains it’s a “deduction for a broken mug.” You didn’t break it.",
+    "left": "Fight to the end",
+    "right": "Let it go"
+  },
+  {
+    "id": "l1c_315",
+    "who": "Payday evening",
+    "text": "Payday evening. Coworkers want to celebrate at a bar. You can afford either the bar or your internet bill.",
+    "left": "Go to the bar",
+    "right": "Pay the internet bill"
+  },
+  {
+    "id": "l1c_316",
+    "who": "Before payday",
+    "text": "Three days to payday, $5 in your wallet. A coworker invites you to lunch at a new cafe where the lunch special is $12.",
+    "left": "Go and borrow",
+    "right": "Eat your sandwich"
+  },
+  {
+    "id": "l1c_317",
+    "who": "Loan to a coworker",
+    "text": "A coworker wants to borrow $100 till payday. Last time he paid you back after six months, $2 at a time.",
+    "left": "Lend it",
+    "right": "Refuse"
+  },
+  {
+    "id": "l1c_318",
+    "who": "Bills",
+    "text": "Evening. Rent and internet bills on the table. Your salary barely covers them. A coworker texts: “Concert on Saturday?”",
+    "left": "Go to the concert",
+    "right": "Say you’re busy"
+  },
+  {
+    "id": "l1c_319",
+    "who": "Pay adjustment",
+    "text": "Morning email: “Salary indexation this year: 0%.” Below it: “But we have new coffee pods!”",
+    "left": "Ask at the meeting",
+    "right": "Silently drink the pods"
+  },
+  {
+    "id": "l1c_320",
+    "who": "Raise talk",
+    "text": "You’ve decided to ask the boss for a raise. He’s in a good mood, but leaves for a meeting in ten minutes.",
+    "left": "Ask now",
+    "right": "Book a slot for tomorrow"
+  },
+  {
+    "id": "l1c_321",
+    "who": "Bonus",
+    "text": "A bonus arrived in the evening. Small but nice. Coworkers who didn’t get one are moping in the group chat.",
+    "left": "Brag in the chat",
+    "right": "Quietly enjoy it"
+  },
+  {
+    "id": "l1c_322",
+    "who": "Cashback",
+    "text": "A coworker spends the day explaining his cashback system: five cards, twelve categories, a three-page spreadsheet. He offers to teach you.",
+    "left": "Learn the system",
+    "right": "Politely dodge"
+  },
+  {
+    "id": "l1c_323",
+    "who": "Lunch special",
+    "text": "You’ve decided to save money and bring lunch from home. At lunchtime, the whole team heads to a cafe and invites you along.",
+    "left": "Go with your container",
+    "right": "Stay in the office"
+  },
+  {
+    "id": "l1c_324",
+    "who": "Piggy bank",
+    "text": "Evening budget check: you spent more on takeout coffee this month than on utilities. The office machine only makes sludge.",
+    "left": "Switch to sludge",
+    "right": "Keep buying"
+  },
+  {
+    "id": "l1c_325",
+    "who": "Late paycheck",
+    "text": "Morning. Salaries are delayed a week “for technical reasons.” The boss asks everyone to “be understanding and not make noise.”",
+    "left": "Stay quiet",
+    "right": "Post in the group chat"
+  },
+  {
+    "id": "l1c_326",
+    "who": "Corporate discount",
+    "text": "The company offers employees a gym discount. The gym is across town, and the discount is just five percent.",
+    "left": "Buy a membership",
+    "right": "Pass"
+  },
+  {
+    "id": "l1c_327",
+    "who": "Pizza split",
+    "text": "Evening, the team is staying late. Pizza is ordered “split evenly.” You eat the least but pay the same.",
+    "left": "Split evenly",
+    "right": "Suggest paying per slice"
+  },
+  {
+    "id": "l1c_328",
+    "who": "Pay stub",
+    "text": "You read your pay stub carefully for the first time. There are mystery lines: “Hazard bonus” and “Joy deduction.”",
+    "left": "Ask the accountant",
+    "right": "Pretend it’s all clear"
+  },
+  {
+    "id": "l1c_329",
+    "who": "Investing",
+    "text": "A coworker swears you can “double your salary in a month” with some investment course. The course costs half your salary.",
+    "left": "Refuse",
+    "right": "Hear more"
+  },
+  {
+    "id": "l1c_330",
+    "who": "Sale",
+    "text": "Evening, an online store is having a sale. You’re eyeing a home coffee machine that would pay for itself in six months. Payday was today.",
+    "left": "Buy the machine",
+    "right": "Save the money"
+  },
+  {
+    "id": "l1c_331",
+    "who": "Fare money",
+    "text": "In the morning, your transit card is empty and can only be topped up with cash. No cash. A coworker lives nearby and drives.",
+    "left": "Ask for a ride",
+    "right": "Walk"
+  },
+  {
+    "id": "l1c_332",
+    "who": "Tax refund",
+    "text": "A coworker discovered tax refunds and now helps everyone file. He caught you at lunch: “It’s only half an hour!”",
+    "left": "File with him",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_333",
+    "who": "Treat yourself",
+    "text": "Payday evening. You want to buy expensive headphones. Your conscience says save for vacation.",
+    "left": "Buy the headphones",
+    "right": "Save for vacation"
+  },
+  {
+    "id": "l1c_334",
+    "who": "Cash raffle",
+    "text": "Morning, the team’s “Win a Day’s Pay” raffle. A ticket costs $2. Someone from Accounting always wins.",
+    "left": "Buy a ticket",
+    "right": "Skip it"
+  },
+  {
+    "id": "l1c_335",
+    "who": "Debt",
+    "text": "A coworker you lent money to is showing off his new phone. He seems to have forgotten the debt.",
+    "left": "Remind him",
+    "right": "Say nothing"
+  },
+  {
+    "id": "l1c_336",
+    "who": "Shared bill",
+    "text": "Evening at a cafe with coworkers. The bill is split “evenly,” but you only had soup. They ordered steaks.",
+    "left": "Split evenly",
+    "right": "Pay for your soup"
+  },
+  {
+    "id": "l1c_337",
+    "who": "Lunch savings",
+    "text": "Morning. You plan to save money and bring lunch. Coworkers joke that “a lunchbox is an admission of poverty.” Lunch is already packed.",
+    "left": "Take the container",
+    "right": "Leave it at home"
+  },
+  {
+    "id": "l1c_338",
+    "who": "Payroll bank",
+    "text": "The company is switching banks. You have to get a card at a branch during work hours. The line takes half a day.",
+    "left": "Go to the branch",
+    "right": "Order it by courier"
+  },
+  {
+    "id": "l1c_339",
+    "who": "Tips",
+    "text": "Evening at a cafe with coworkers. Everyone leaves a different tip. You feel like they expect the most from you.",
+    "left": "Tip generously",
+    "right": "Tip as usual"
+  },
+  {
+    "id": "l1c_340",
+    "who": "New salary",
+    "text": "The boss announced raises for everyone except you: “You’re still on probation.” Probation ended a month ago.",
+    "left": "Remind him",
+    "right": "Wait another month"
+  },
+  {
+    "id": "l1c_341",
+    "who": "Boss’s loan",
+    "text": "The boss borrowed $20 from you “till tonight.” That night was a week ago, but asking is awkward.",
+    "left": "Remind the boss",
+    "right": "Forgive the debt"
+  },
+  {
+    "id": "l1c_342",
+    "who": "Utilities",
+    "text": "The electric bill arrived, double the usual. You remember heating the apartment with a space heater all winter.",
+    "left": "Unplug the heater",
+    "right": "Get a side gig"
+  },
+  {
+    "id": "l1c_343",
+    "who": "Financial literacy",
+    "text": "Morning financial-literacy seminar. The speaker recommends saving half your salary. Coworkers laugh out loud.",
+    "left": "Laugh with everyone",
+    "right": "Take notes"
+  },
+  {
+    "id": "l1c_344",
+    "who": "Someone’s salary",
+    "text": "In the shared folder, you stumble on a file with the whole team’s salaries. A coworker your age earns one and a half times more.",
+    "left": "Ask the boss",
+    "right": "Close it and forget"
+  },
+  {
+    "id": "l1c_345",
+    "who": "Savings",
+    "text": "Evening. Your banking app says you’ve saved exactly half for vacation. Coworkers invite you to the movies.",
+    "left": "Go to the movies",
+    "right": "Stay home"
+  },
+  {
+    "id": "l1c_346",
+    "who": "Breaking a bill",
+    "text": "A coworker asks you to break a $100 bill. You only have coins. He shuffles off, offended, to the next desk.",
+    "left": "Run to the cashier",
+    "right": "Apologize"
+  },
+  {
+    "id": "l1c_347",
+    "who": "Salary gripe",
+    "text": "In the cafeteria, a coworker loudly complains about low pay. The boss is at the next table. The coworker asks you to back him up.",
+    "left": "Back him up",
+    "right": "Change the subject"
+  },
+  {
+    "id": "l1c_348",
+    "who": "Receipt",
+    "text": "In your pocket you find a receipt: you paid for the whole team at a cafe a week ago. Nobody paid you back.",
+    "left": "Send a reminder",
+    "right": "Write it off as a gift"
+  },
+  {
+    "id": "l1c_349",
+    "who": "Coupons",
+    "text": "A stack of cafeteria discount coupons arrived at the office. You got there first, and the stack is yours. Coworkers want some too.",
+    "left": "Hand them out",
+    "right": "Keep them"
+  },
+  {
+    "id": "l1c_350",
+    "who": "Idea bonus",
+    "text": "The boss promises a bonus for the best cost-saving idea. You know one: cancel pointless meetings. His meetings.",
+    "left": "Pitch your idea",
+    "right": "Suggest saving paper"
+  },
+  {
+    "id": "l1c_351",
+    "who": "Weekend gig",
+    "text": "Friday evening. A friend offers you weekend work as a courier. Good money, but no weekend.",
+    "left": "Take the gig",
+    "right": "Rest this weekend"
+  },
+  {
+    "id": "l1c_352",
+    "who": "Morning transfer",
+    "text": "In the morning, you get a transfer from a stranger labeled “Thanks for the help.” A minute later a coworker calls: “Wrong number, please send it back.”",
+    "left": "Return it at once",
+    "right": "Ask him to wait"
+  },
+  {
+    "id": "l1c_353",
+    "who": "Subscription",
+    "text": "The company will pay for one subscription per employee: a streaming service or an Excel course. The boss is watching who picks what.",
+    "left": "Pick Excel",
+    "right": "Pick streaming"
+  },
+  {
+    "id": "l1c_354",
+    "who": "Budget control",
+    "text": "You decided to track your budget in a spreadsheet. An hour later, it’s done, and it turns out “little things” eat a third of your salary.",
+    "left": "Cut the little things",
+    "right": "Close the spreadsheet"
+  },
+  {
+    "id": "l1c_355",
+    "who": "Coffee fund",
+    "text": "A coworker suggests a “coffee fund”: everyone chips in for good coffee. The treasurer, naturally, will be you.",
+    "left": "Be the treasurer",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_356",
+    "who": "Lunch prices",
+    "text": "The cafeteria raised prices. Coworkers are boycotting it for a week by eating at the cafe across the street. The cafe is pricier.",
+    "left": "Boycott with everyone",
+    "right": "Stay in the cafeteria"
+  },
+  {
+    "id": "l1c_357",
+    "who": "Evening spree",
+    "text": "Evening, you decided to treat yourself “a little” online. Half an hour later, your cart equals your salary. The cursor hovers over “Pay.”",
+    "left": "Pay",
+    "right": "Delete half"
+  },
+  {
+    "id": "l1c_358",
+    "who": "Side gig",
+    "text": "On the subway, you’re finishing a freelance job: a bakery logo. The client wants “a croissant, but serious.” Due by lunch.",
+    "left": "Draw at work",
+    "right": "Ask for an extension"
+  },
+  {
+    "id": "l1c_359",
+    "who": "Freelance",
+    "text": "Evening. The freelance client asks for revisions a fifth time: “Like the first version, only different.” You have an early start.",
+    "left": "Revise overnight",
+    "right": "Put it off to the weekend"
+  },
+  {
+    "id": "l1c_360",
+    "who": "Your little shop",
+    "text": "You sell knitted hats online. A coworker found your shop and wants a hat with a “friends discount.”",
+    "left": "Give a discount",
+    "right": "Charge full price"
+  },
+  {
+    "id": "l1c_361",
+    "who": "Night shift",
+    "text": "Your side job at a night cafe pays well. Tonight’s shift runs till 2 a.m., and there’s an important stand-up in the morning.",
+    "left": "Work the shift",
+    "right": "Skip the shift"
+  },
+  {
+    "id": "l1c_362",
+    "who": "Courier",
+    "text": "You deliver orders by bike before work. Today’s route goes right past the boss’s windows.",
+    "left": "Ride past the windows",
+    "right": "Take a detour"
+  },
+  {
+    "id": "l1c_363",
+    "who": "Blog",
+    "text": "Your houseplant blog hit a thousand followers. Coworkers found out and now want you to save their ficuses at lunch.",
+    "left": "Rescue the ficuses",
+    "right": "Send them a link"
+  },
+  {
+    "id": "l1c_364",
+    "who": "Tutoring",
+    "text": "You tutor a ninth-grader in English in the evenings. His mom wants two more sessions a week “at the old rate.”",
+    "left": "Agree",
+    "right": "Raise your rate"
+  },
+  {
+    "id": "l1c_365",
+    "who": "Cabbie coworker",
+    "text": "You learn that a coworker drives a taxi on weekends. He drove you on Saturday, and you didn’t notice.",
+    "left": "Joke about it",
+    "right": "Ask for a discount"
+  },
+  {
+    "id": "l1c_366",
+    "who": "Client",
+    "text": "A freelance client calls during work hours demanding a file right now. The boss is walking past your desk.",
+    "left": "Answer in a whisper",
+    "right": "Decline the call"
+  },
+  {
+    "id": "l1c_367",
+    "who": "Handmade",
+    "text": "You make candles to sell in the evenings. The apartment smells of vanilla, and tomorrow’s report isn’t even started.",
+    "left": "Finish the candles",
+    "right": "Start the report"
+  },
+  {
+    "id": "l1c_368",
+    "who": "Second job",
+    "text": "HR asks if you have a side job: “It’s just for the form, no big deal.” She clearly knows something.",
+    "left": "Admit it",
+    "right": "Say “No”"
+  },
+  {
+    "id": "l1c_369",
+    "who": "Reselling",
+    "text": "A coworker suggests reselling sneakers together: “We each put in $100, in a month we get $400.” He’s already buried in boxes.",
+    "left": "Invest",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_370",
+    "who": "Weekend market",
+    "text": "Friday evening. You and a friend run a stall at the weekend market. Coworkers found out and promised to come “show support,” i.e., gawk.",
+    "left": "Invite everyone",
+    "right": "Hide the address"
+  },
+  {
+    "id": "l1c_371",
+    "who": "Freelance at dawn",
+    "text": "You got up at 5 a.m. to finish an order. It’s done, but you’re nodding off over your notebook at stand-up.",
+    "left": "Perk up with coffee",
+    "right": "Admit you’re tired"
+  },
+  {
+    "id": "l1c_372",
+    "who": "Reviews",
+    "text": "A side-gig client left you a nasty, unfair review. Coworkers saw it and offer to “bury it in good reviews.”",
+    "left": "Accept their help",
+    "right": "Calmly reply to the client"
+  },
+  {
+    "id": "l1c_373",
+    "who": "Two jobs",
+    "text": "Evening. You tally it up: sixty hours this week across two jobs. Friends invite you to a birthday party.",
+    "left": "Go to the party",
+    "right": "Bed at nine"
+  },
+  {
+    "id": "l1c_374",
+    "who": "Printer for the gig",
+    "text": "Your home printer broke, and you need to print twenty pages for an order. The office printer is free.",
+    "left": "Print at the office",
+    "right": "Find a copy shop"
+  },
+  {
+    "id": "l1c_375",
+    "who": "Coworker client",
+    "text": "A coworker learned you build websites and wants one for his mother-in-law. For free, “as a friend.”",
+    "left": "Do it as a friend",
+    "right": "Name your price"
+  },
+  {
+    "id": "l1c_376",
+    "who": "Weekend classes",
+    "text": "You teach an online drawing class to fifteen students in the evening. The boss calls an unscheduled meeting.",
+    "left": "Cancel the class",
+    "right": "Skip the call"
+  },
+  {
+    "id": "l1c_377",
+    "who": "Morning gig",
+    "text": "Morning. A client wants you to give a presentation to his company at 11:00. You have a meeting with the boss then.",
+    "left": "Ask the boss for time off",
+    "right": "Turn down the client"
+  },
+  {
+    "id": "l1c_378",
+    "who": "Copycat",
+    "text": "A coworker, inspired by your shop, opened an identical one — same hats, lower price. He’s proudly showing it to everyone.",
+    "left": "Talk to him",
+    "right": "Act like you don’t care"
+  },
+  {
+    "id": "l1c_379",
+    "who": "Night copywriting",
+    "text": "Evening. You’re writing cheap copy for clients. The boss sends a work question right as your copy deadline hits.",
+    "left": "Answer the boss",
+    "right": "Finish the copy"
+  },
+  {
+    "id": "l1c_380",
+    "who": "Gig exposed",
+    "text": "In the morning, the boss shows you your own freelance profile. “When do you find the time?” he asks with a smile.",
+    "left": "Promise it won’t interfere",
+    "right": "Joke about the nights"
+  },
+  {
+    "id": "l1c_381",
+    "who": "Lunch on the run",
+    "text": "You spend lunch breaks shipping side-gig parcels. Coworkers think you’re avoiding them.",
+    "left": "Have lunch with them",
+    "right": "Run to the post office"
+  },
+  {
+    "id": "l1c_382",
+    "who": "Custom cakes",
+    "text": "You bake custom cakes on weekends. On Friday evening, a coworker orders one for tomorrow — “for three hundred people.”",
+    "left": "Take the order",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_383",
+    "who": "Guitar lessons",
+    "text": "You teach a guitar lesson by video before work. The student is twenty minutes late, and now you might be late too.",
+    "left": "Wait for the student",
+    "right": "Cancel the lesson"
+  },
+  {
+    "id": "l1c_384",
+    "who": "Weekend shift",
+    "text": "You’re asked to work your side job on Saturday, the day of the office team building. The gig pays double.",
+    "left": "Work the gig",
+    "right": "Go to team building"
+  },
+  {
+    "id": "l1c_385",
+    "who": "Midnight call",
+    "text": "Evening. An overseas client wants a call at midnight your time. He offers extra pay for the inconvenience.",
+    "left": "Agree",
+    "right": "Suggest the morning"
+  },
+  {
+    "id": "l1c_386",
+    "who": "Boss’s hat",
+    "text": "In the morning, the boss is wearing a hat you knitted and sold online. He’s praising it to the whole team.",
+    "left": "Say it’s yours",
+    "right": "Keep quiet"
+  },
+  {
+    "id": "l1c_387",
+    "who": "Teaching a coworker",
+    "text": "A coworker wants to start freelancing and asks you to show him the ropes. “Half an hour at lunch, tops.” It’s been two hours.",
+    "left": "Keep explaining",
+    "right": "Suggest continuing tomorrow"
+  },
+  {
+    "id": "l1c_388",
+    "who": "Dream gig",
+    "text": "In the evening, you’re offered a steady half-day side job with good pay. You’d have to leave your main job at 3 p.m.",
+    "left": "Negotiate with the boss",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_389",
+    "who": "Coworker courier",
+    "text": "The courier delivering office lunches turns out to be your coworker from Accounting. He begs you not to tell anyone.",
+    "left": "Keep the secret",
+    "right": "Joke about it publicly"
+  },
+  {
+    "id": "l1c_390",
+    "who": "Your website",
+    "text": "You built a website for your side gig. A coworker noticed you used photos of the office in the “About Us” section.",
+    "left": "Remove the photos",
+    "right": "Explain they look nice"
+  },
+  {
+    "id": "l1c_391",
+    "who": "Marketplace night",
+    "text": "Evening. Forty orders for your keychains came in on the marketplace. Each has to be packed by morning.",
+    "left": "Pack till late",
+    "right": "Ask coworkers to help"
+  },
+  {
+    "id": "l1c_392",
+    "who": "Morning call",
+    "text": "Morning. A side-gig client calls during stand-up. Five times. Everyone stares at your phone.",
+    "left": "Step out to answer",
+    "right": "Mute it"
+  },
+  {
+    "id": "l1c_393",
+    "who": "Corporate ethics",
+    "text": "HR sent a memo banning side jobs “that harm your main job.” You’re reading it with a gig open on your second monitor.",
+    "left": "Close the gig",
+    "right": "Finish reading, keep going"
+  },
+  {
+    "id": "l1c_394",
+    "who": "Student",
+    "text": "Evening. Your math student aced his test. His parents want to give you a cake. Your diet starts tomorrow.",
+    "left": "Accept the cake",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_395",
+    "who": "Income tax",
+    "text": "In the morning, you remember you didn’t pay tax on your side income. It’s due today, and the tax site barely loads.",
+    "left": "Pay from work",
+    "right": "Go to the tax office at lunch"
+  },
+  {
+    "id": "l1c_396",
+    "who": "Rival coworker",
+    "text": "Your coworker also freelances and stole a client from you by halving the price. Today he’s sitting opposite, smiling sweetly.",
+    "left": "Talk frankly",
+    "right": "Smile back"
+  },
+  {
+    "id": "l1c_397",
+    "who": "Evening webinar",
+    "text": "You’re hosting a webinar for your blog followers. Two hundred people joined, including your boss under the handle “Observer.”",
+    "left": "Carry on as usual",
+    "right": "Cut it short"
+  },
+  {
+    "id": "l1c_398",
+    "who": "Backpack",
+    "text": "You arrive at the office with a huge courier backpack. Coworkers joke you’re “off on a hike.” Security eyes it suspiciously.",
+    "left": "Joke back",
+    "right": "Hide the backpack"
+  },
+  {
+    "id": "l1c_399",
+    "who": "Boss as client",
+    "text": "Not knowing who you are on the freelance site, the boss ordered business-card designs from you. The meeting with “the designer” is tomorrow.",
+    "left": "Confess right away",
+    "right": "Stay anonymous"
+  },
+  {
+    "id": "l1c_400",
+    "who": "Helping friends",
+    "text": "Evening. Friends are opening a coffee shop and want you as a weekend barista. Pay: coffee and gratitude.",
+    "left": "Help your friends",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_401",
+    "who": "Morning after the gig",
+    "text": "After a night gig, you arrive at the office with dark circles. The boss asks “how you slept.”",
+    "left": "Tell the truth",
+    "right": "Blame the neighbors"
+  },
+  {
+    "id": "l1c_402",
+    "who": "Coworker’s side hustle",
+    "text": "A coworker sells cosmetics right in the office all day. Today she offers to make you her “distributor.”",
+    "left": "Politely decline",
+    "right": "Buy one cream"
+  },
+  {
+    "id": "l1c_403",
+    "who": "Two Fridays",
+    "text": "Friday evening. Your main job is celebrating the end of the quarter, and your side gig has an urgent order on fire.",
+    "left": "Stay at the party",
+    "right": "Do the order at home"
+  },
+  {
+    "id": "l1c_404",
+    "who": "Morning rush",
+    "text": "In the morning, both your main job and your gig have tasks on fire. Both are “urgent and important.”",
+    "left": "Main job first",
+    "right": "Side gig first"
+  },
+  {
+    "id": "l1c_405",
+    "who": "Office art sale",
+    "text": "You bring your paintings to the office to sell to coworkers. The boss picks one and asks for a “management discount.”",
+    "left": "Give a discount",
+    "right": "Name full price"
+  },
+  {
+    "id": "l1c_406",
+    "who": "Friday choice",
+    "text": "Friday evening. A client will pay triple for weekend work. Your friends already bought tickets for a trip out of town.",
+    "left": "Take the job",
+    "right": "Go with friends"
+  },
+  {
+    "id": "l1c_407",
+    "who": "Online course",
+    "text": "The company paid for your online course “Effective Communication.” Every morning at 7:30: a forty-minute lesson and a quiz.",
+    "left": "Do it every morning",
+    "right": "Click “Next” through it"
+  },
+  {
+    "id": "l1c_408",
+    "who": "Webinar",
+    "text": "A mandatory evening webinar on the new accounting system. The speaker has been reading slides aloud for three hours. Cameras on.",
+    "left": "Listen and take notes",
+    "right": "Put up a photo of yourself"
+  },
+  {
+    "id": "l1c_409",
+    "who": "Certificate",
+    "text": "The boss wants everyone safety-certified by month’s end. A hundred-question test, passing score ninety.",
+    "left": "Study seriously",
+    "right": "Ask coworkers for answers"
+  },
+  {
+    "id": "l1c_410",
+    "who": "Sales training",
+    "text": "Morning sales training. The coach calls you up to “sell me this pen” in front of the team. The pen doesn’t write.",
+    "left": "Sell it with flair",
+    "right": "Admit the pen is dead"
+  },
+  {
+    "id": "l1c_411",
+    "who": "English classes",
+    "text": "The company-paid English classes run three evenings a week till nine. It’s Friday, and friends invite you to the movies.",
+    "left": "Go to class",
+    "right": "Go to the movies"
+  },
+  {
+    "id": "l1c_412",
+    "who": "Training newbies",
+    "text": "You’re asked to train three interns, though you’ve only been here a month yourself. You have lunch hour to prepare.",
+    "left": "Do it properly",
+    "right": "Send them a manual"
+  },
+  {
+    "id": "l1c_413",
+    "who": "Excel course",
+    "text": "You finished an Excel course and now know pivot tables. Coworkers found out and lined up with their files first thing.",
+    "left": "Help everyone",
+    "right": "Post office hours"
+  },
+  {
+    "id": "l1c_414",
+    "who": "Exam",
+    "text": "Tomorrow morning is the certification exam your raise depends on. Coworkers invite you to a birthday dinner at a restaurant.",
+    "left": "Go for a little while",
+    "right": "Stay and study"
+  },
+  {
+    "id": "l1c_415",
+    "who": "Expert lecture",
+    "text": "The office brought in a time-management expert. The lecture runs three hours and wrecked everyone’s deadlines for the day.",
+    "left": "Listen to the end",
+    "right": "Leave to work"
+  },
+  {
+    "id": "l1c_416",
+    "who": "Motivational book",
+    "text": "The boss hands out “How to Become Indispensable” and will ask Friday what you took from it. It’s four hundred pages.",
+    "left": "Read it every morning",
+    "right": "Read a summary"
+  },
+  {
+    "id": "l1c_417",
+    "who": "Professional training",
+    "text": "You’re offered six months of evening training courses. A promotion is promised afterward. Possibly.",
+    "left": "Sign up",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_418",
+    "who": "Ranking",
+    "text": "The team takes a product-knowledge test. You score 54 out of 100. The boss posts the rankings on the wall.",
+    "left": "Ask for a retake",
+    "right": "Laugh at the ranking"
+  },
+  {
+    "id": "l1c_419",
+    "who": "E-course",
+    "text": "In the morning, you find the corporate ethics course was due yesterday. The system sent a reminder to your boss.",
+    "left": "Do it right now",
+    "right": "Explain to the boss"
+  },
+  {
+    "id": "l1c_420",
+    "who": "Self-study",
+    "text": "You decided to learn programming tonight. Two hours later, “Hello, world!” is on the screen, and you’re incredibly proud.",
+    "left": "Keep going till late",
+    "right": "Go to bed on time"
+  },
+  {
+    "id": "l1c_421",
+    "who": "Mentor",
+    "text": "You’ve been assigned a mentor. He teaches you “the right way to work,” but following his advice means redoing every report.",
+    "left": "Follow his advice",
+    "right": "Do it your way"
+  },
+  {
+    "id": "l1c_422",
+    "who": "Public speaking class",
+    "text": "At your public-speaking class, you’re asked to speak on “the most boring object.” You chose a stapler.",
+    "left": "Deliver it with flair",
+    "right": "Mumble through fast"
+  },
+  {
+    "id": "l1c_423",
+    "who": "Course credit",
+    "text": "Evening. You passed your course, and the instructor asks you to post about it on social media with the company tag.",
+    "left": "Write a glowing post",
+    "right": "Just hit like"
+  },
+  {
+    "id": "l1c_424",
+    "who": "Training film",
+    "text": "The team is watching a fire-safety training film from 1987. The boss is noting who falls asleep.",
+    "left": "Pretend to take notes",
+    "right": "Whisper with a coworker"
+  },
+  {
+    "id": "l1c_425",
+    "who": "Certificate wall",
+    "text": "In the morning, a coworker hangs her fifth certificate above her desk. You have none. The boss nods approvingly.",
+    "left": "Sign up for a course",
+    "right": "Hang your school diploma"
+  },
+  {
+    "id": "l1c_426",
+    "who": "Distance learning",
+    "text": "Evening, mandatory course. The videos can’t be skipped, and every block ends with a quiz. There are twelve blocks.",
+    "left": "Watch it all",
+    "right": "Play it and go eat dinner"
+  },
+  {
+    "id": "l1c_427",
+    "who": "Workshop",
+    "text": "A company-paid “mindfulness” workshop at lunch. The boss is already there, waving at you.",
+    "left": "Go to the workshop",
+    "right": "Lunch with coworkers"
+  },
+  {
+    "id": "l1c_428",
+    "who": "Weekend course",
+    "text": "The company offers a free analytics course on Saturdays from 9 a.m. The certificate is “highly valued for promotions.”",
+    "left": "Sign up",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_429",
+    "who": "Textbook",
+    "text": "Evening. You’re reading an accounting textbook to understand your work better. A coworker texts: “Are you transferring to Accounting?”",
+    "left": "Answer seriously",
+    "right": "Make a joke"
+  },
+  {
+    "id": "l1c_430",
+    "who": "Performance review",
+    "text": "In a week there’s the review that decides whether you stay after probation. Questions are secret, but a coworker offers last year’s.",
+    "left": "Take the questions",
+    "right": "Prepare honestly"
+  },
+  {
+    "id": "l1c_431",
+    "who": "Morning webinar",
+    "text": "A webinar starts at 8 a.m., and you join from home in pajamas. Suddenly the host asks everyone to turn on cameras.",
+    "left": "Turn on the camera",
+    "right": "Claim it’s broken"
+  },
+  {
+    "id": "l1c_432",
+    "who": "Leadership course",
+    "text": "Evening leadership course. The coach splits everyone into groups and makes you leader. Your boss is in your group.",
+    "left": "Lead your boss",
+    "right": "Let him lead"
+  },
+  {
+    "id": "l1c_433",
+    "who": "Time management",
+    "text": "After a time-management course, you built the perfect schedule. An hour later, the boss dropped three urgent tasks outside it.",
+    "left": "Redo the schedule",
+    "right": "Ditch the schedule"
+  },
+  {
+    "id": "l1c_434",
+    "who": "Morning yoga",
+    "text": "Your online yoga class overlaps with stand-up. The instructor is horrified by your pose; the boss, by your background.",
+    "left": "Turn off the yoga",
+    "right": "Blame bad connection"
+  },
+  {
+    "id": "l1c_435",
+    "who": "Term paper",
+    "text": "Evening. You’re writing a term paper for your part-time degree. The topic is suspiciously close to your work project. You could use work materials.",
+    "left": "Use the materials",
+    "right": "Write from scratch"
+  },
+  {
+    "id": "l1c_436",
+    "who": "Conference",
+    "text": "You’re being sent to a conference in another city to give a twenty-minute talk, though you’ve only been here three months.",
+    "left": "Agree",
+    "right": "Ask them to send someone else"
+  },
+  {
+    "id": "l1c_437",
+    "who": "Test at 9:00",
+    "text": "The boss announces a test on the new procedures at 9:00. The procedures were emailed at 8:45. Thirty pages.",
+    "left": "Speed-read",
+    "right": "Show up and improvise"
+  },
+  {
+    "id": "l1c_438",
+    "who": "Art classes",
+    "text": "Evening art classes are your outlet. Today the boss asks you to stay for a “quick” meeting at 6:30.",
+    "left": "Stay for the meeting",
+    "right": "Leave for class"
+  },
+  {
+    "id": "l1c_439",
+    "who": "Knowledge sharing",
+    "text": "The company launches “Friday Lectures”: once a month, everyone teaches coworkers something useful. Your turn is tomorrow.",
+    "left": "Prepare a lecture",
+    "right": "Show a YouTube video"
+  },
+  {
+    "id": "l1c_440",
+    "who": "Certificate in email",
+    "text": "Your course certificate arrives by email. Your last name is misspelled and the date is wrong. The boss wants it printed.",
+    "left": "Print it as is",
+    "right": "Request a correction"
+  },
+  {
+    "id": "l1c_441",
+    "who": "Training video",
+    "text": "You’re asked to record a training video for the interns. Camera: your phone. Lighting: a desk lamp. Take: nine.",
+    "left": "Reshoot till perfect",
+    "right": "Send take nine"
+  },
+  {
+    "id": "l1c_442",
+    "who": "Negotiation course",
+    "text": "After the negotiation course, coworkers notice you say “Let’s explore your interests” even about the microwave line.",
+    "left": "Keep practicing",
+    "right": "Talk normally again"
+  },
+  {
+    "id": "l1c_443",
+    "who": "Study leave",
+    "text": "HR reminds you of study leave for exams. The boss asks you to “somehow juggle both.”",
+    "left": "Take study leave",
+    "right": "Juggle with work"
+  },
+  {
+    "id": "l1c_444",
+    "who": "Evening exam",
+    "text": "Evening exam session at your part-time university. The professor is an hour late, and you’re due at work at eight.",
+    "left": "Wait for the professor",
+    "right": "Leave and retake later"
+  },
+  {
+    "id": "l1c_445",
+    "who": "Boss",
+    "text": "You found a great design course, but the company won’t pay for it. It costs a month’s salary.",
+    "left": "Pay for it yourself",
+    "right": "Wait for a free one"
+  },
+  {
+    "id": "l1c_446",
+    "who": "Practice",
+    "text": "Your mentor wants you to practice on a real client. It’s the most difficult client in the company.",
+    "left": "Take the client",
+    "right": "Ask for an easier one"
+  },
+  {
+    "id": "l1c_447",
+    "who": "Course homework",
+    "text": "Evening, course homework. A coworker offers his answers; he took the course last year.",
+    "left": "Copy his work",
+    "right": "Do it yourself"
+  },
+  {
+    "id": "l1c_448",
+    "who": "Team certification",
+    "text": "The boss wants the whole team certified. Those who passed must “coach” those who didn’t. You passed.",
+    "left": "Coach the stragglers",
+    "right": "Refuse"
+  },
+  {
+    "id": "l1c_449",
+    "who": "Boring course",
+    "text": "You’re watching a mandatory video course on “company culture.” It shows the office you’re sitting in, ten years ago.",
+    "left": "Watch to the end",
+    "right": "Play it at 2x"
+  },
+  {
+    "id": "l1c_450",
+    "who": "Online diploma",
+    "text": "Evening, you got an online “Project Manager” diploma. Coworkers in the chat ask if “it’s even real.”",
+    "left": "Defend the diploma",
+    "right": "Joke about courses"
+  },
+  {
+    "id": "l1c_451",
+    "who": "New Year party",
+    "text": "New Year party night. The CEO hands out “Employee of the Year” certificates. Your last name is mispronounced, and the room laughs.",
+    "left": "Correct him from the stage",
+    "right": "Smile and walk up"
+  },
+  {
+    "id": "l1c_452",
+    "who": "Party cleanup",
+    "text": "The party’s over, and the venue must be cleared by eleven. The organizer asks the young folks to help with garlands and chairs.",
+    "left": "Help till the end",
+    "right": "Slip off to a taxi"
+  },
+  {
+    "id": "l1c_453",
+    "who": "Plus-one",
+    "text": "HR announces you can bring a “plus-one” to the party. The chat instantly starts guessing who everyone will bring.",
+    "left": "Come solo",
+    "right": "Bring a friend along"
+  },
+  {
+    "id": "l1c_454",
+    "who": "Pirate dress code",
+    "text": "Night before the “Pirates” theme party. No costume, stores are closing. In the closet: striped pajamas and Grandma’s shawl.",
+    "left": "Make a pajama costume",
+    "right": "Come in work clothes"
+  },
+  {
+    "id": "l1c_455",
+    "who": "After team building",
+    "text": "Monday after the retreat. The coworker who caught you in the “trust fall” jokes all morning about your “unique center of gravity.”",
+    "left": "Laugh along",
+    "right": "Ask him to stop"
+  },
+  {
+    "id": "l1c_456",
+    "who": "Team chat",
+    "text": "Evening. The collection for the boss’s milestone birthday closes tomorrow. It’s $200 short. Coworkers hint that “whoever has no mortgage can cover it.”",
+    "left": "Cover the difference",
+    "right": "Announce a second round"
+  },
+  {
+    "id": "l1c_457",
+    "who": "Layoff gossip",
+    "text": "Cafeteria whispers: Sales will merge with your department, and someone will have to go. People ask if you know anything.",
+    "left": "Say you know nothing",
+    "right": "Speculate out loud"
+  },
+  {
+    "id": "l1c_458",
+    "who": "Overnight AC",
+    "text": "Leaving in the evening, you notice the AC set to 61°F. Tomorrow, the coworker who set it will show up in a fur coat and complain again.",
+    "left": "Turn off the AC",
+    "right": "Leave it alone"
+  },
+  {
+    "id": "l1c_459",
+    "who": "Back from vacation",
+    "text": "Morning after vacation. Your tasks were given to others, and you’re left with “sorting the archive” — five years of it.",
+    "left": "Sort the archive",
+    "right": "Ask for your tasks back"
+  },
+  {
+    "id": "l1c_460",
+    "who": "Sick boss",
+    "text": "Evening. The boss is sick and calls from home: he wants you to run tomorrow’s meeting with partners for him.",
+    "left": "Run the meeting",
+    "right": "Suggest rescheduling"
+  },
+  {
+    "id": "l1c_461",
+    "who": "Salary rumor",
+    "text": "Smoking-area talk: new hires get a raise starting this month. Nobody told you anything. Coworkers advise you to “fight for yours.”",
+    "left": "Go to the boss",
+    "right": "Wait for official word"
+  },
+  {
+    "id": "l1c_462",
+    "who": "Gig in the chat",
+    "text": "In the evening, you accidentally posted a message to your freelance client in the work chat: “Mockup almost done, discount still on.” The boss already read it.",
+    "left": "Explain honestly",
+    "right": "Say it was a joke"
+  },
+  {
+    "id": "l1c_463",
+    "who": "Morning English",
+    "text": "You rush to your English class before work. The teacher runs half an hour over, and stand-up is at 9:00.",
+    "left": "Leave mid-lesson",
+    "right": "Be late for stand-up"
+  },
+  {
+    "id": "l1c_464",
+    "who": "Bogus certificate",
+    "text": "Evening email: “Congratulations! You’ve earned a Leadership Certificate.” You never took the course. Seems like a mailing error.",
+    "left": "Hang it on the wall",
+    "right": "Report the error"
+  },
+  {
+    "id": "l1c_465",
+    "who": "Birthday lunch",
+    "text": "The birthday boy invited the team to lunch at a restaurant. In the end, the bill is split evenly, including him.",
+    "left": "Pay his share too",
+    "right": "Pay just for yourself"
+  },
+  {
+    "id": "l1c_466",
+    "who": "After karaoke",
+    "text": "Evening after karaoke with coworkers. Your voice is shot, and tomorrow morning is your first client presentation.",
+    "left": "Take the morning off",
+    "right": "Whisper into the mic"
+  },
+  {
+    "id": "l1c_467",
+    "who": "Plant conflict",
+    "text": "Two coworkers are fighting over whose plant gets the best spot on the windowsill. The windowsill is by your desk.",
+    "left": "Give it to the first one",
+    "right": "Buy a second shelf"
+  },
+  {
+    "id": "l1c_468",
+    "who": "Evening chocolate",
+    "text": "The secret admirer left another chocolate bar. Today with a note: “Meet me at the cooler at 6 p.m.” It’s 5:55.",
+    "left": "Go to the cooler",
+    "right": "Go home"
+  },
+  {
+    "id": "l1c_469",
+    "who": "Covering email",
+    "text": "A coworker going on vacation asks you to “just check the inbox.” Day one: two hundred client emails.",
+    "left": "Answer them all",
+    "right": "Only answer urgent ones"
+  },
+  {
+    "id": "l1c_470",
+    "who": "Late HR",
+    "text": "Evening message from HR: “You didn’t sign consent to attend the team building.” It was yesterday. You were there.",
+    "left": "Sign tomorrow",
+    "right": "Reply with humor"
+  },
+  {
+    "id": "l1c_471",
+    "who": "Wedding collection",
+    "text": "A collection for a coworker’s wedding is announced: $60 each. A week to payday, $100 on your card.",
+    "left": "Chip in $60",
+    "right": "Give $20 and apologize"
+  },
+  {
+    "id": "l1c_472",
+    "who": "Ficus and vacation",
+    "text": "Night before your vacation. Nobody will take the ficus you’ve been caring for. Coworkers decline one by one.",
+    "left": "Take it home",
+    "right": "Leave it with a note"
+  },
+  {
+    "id": "l1c_473",
+    "who": "Stress course",
+    "text": "The company paid for a stress-management course. The session is scheduled exactly at your deadline.",
+    "left": "Go to the session",
+    "right": "Hit your deadline"
+  },
+  {
+    "id": "l1c_474",
+    "who": "Overnight order",
+    "text": "Evening. A side-gig client will pay double if the website is ready by morning. You have your performance review in the morning.",
+    "left": "Build it overnight",
+    "right": "Turn the client down"
+  },
+  {
+    "id": "l1c_475",
+    "who": "Delivery at the front desk",
+    "text": "In the morning, the security guard hands you a huge box: “For you, from an admirer.” Inside, a giant stuffed elephant. Coworkers gather at your desk.",
+    "left": "Display it on your desk",
+    "right": "Stash it in a closet"
+  },
+  {
+    "id": "l1c_476",
+    "who": "Money talk",
+    "text": "Evening. A close friend asks to borrow a big sum till spring. It’s exactly the vacation money you’ve saved for six months.",
+    "left": "Lend your savings",
+    "right": "Gently refuse"
+  },
+  {
+    "id": "l1c_477",
+    "who": "Coworkers",
+    "text": "The department head is leaving. Coworkers want to give him “something funny.” Your idea is a hit, but it’s all on you to execute.",
+    "left": "Do it all yourself",
+    "right": "Hand out tasks"
+  },
+  {
+    "id": "l1c_478",
+    "who": "Friday bar",
+    "text": "Friday night, bar with coworkers. At the end, someone suggests “paying with your bonus.” You’re the one who got a bonus, it seems.",
+    "left": "Pay the bill",
+    "right": "Pretend you didn’t hear"
+  },
+  {
+    "id": "l1c_479",
+    "who": "Boss",
+    "text": "Morning after two coworkers’ wedding. The newlyweds are back at work, sharing a desk. The boss asks you to “make sure they work.”",
+    "left": "Keep an eye on them",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_480",
+    "who": "English classes",
+    "text": "At your evening English class, you spot the coworker who told everyone he’s “perfectly fluent.” He’s in the beginners’ group.",
+    "left": "Wink at him",
+    "right": "Pretend not to see him"
+  },
+  {
+    "id": "l1c_481",
+    "who": "AC lockdown",
+    "text": "Facilities password-locked the AC. Rumor says only your boss knows the code. It’s 86°F in the office.",
+    "left": "Ask the boss",
+    "right": "Buy fans for everyone"
+  },
+  {
+    "id": "l1c_482",
+    "who": "Last bus",
+    "text": "Evening, you stayed late. The last bus leaves in ten minutes. A coworker asks you to “quickly celebrate” his promotion.",
+    "left": "Stay and celebrate",
+    "right": "Run for the bus"
+  },
+  {
+    "id": "l1c_483",
+    "who": "Morning after the party",
+    "text": "Morning after an office birthday. There’s a salad in the fridge that nobody can remember the origin of.",
+    "left": "Toss the salad",
+    "right": "Poll for its owner"
+  },
+  {
+    "id": "l1c_484",
+    "who": "Evening deposit",
+    "text": "Your paycheck arrives in the evening. A minute later, a bank text: “Charge for a course subscription you forgot to cancel.”",
+    "left": "Call the bank",
+    "right": "Let it go"
+  },
+  {
+    "id": "l1c_485",
+    "who": "Course request",
+    "text": "You want the company to pay for a design course. The boss says you need a five-page justification first.",
+    "left": "Write it",
+    "right": "Pay for it yourself"
+  },
+  {
+    "id": "l1c_486",
+    "who": "Evening gossip",
+    "text": "A coworker sends you a long DM about who fell out with whom on the team. You haven’t had dinner yet.",
+    "left": "Read and reply",
+    "right": "Reply “Tell me tomorrow”"
+  },
+  {
+    "id": "l1c_487",
+    "who": "Morning recount",
+    "text": "In the morning, it turns out someone “borrowed till tonight” the money from the gift envelope. You were keeping it.",
+    "left": "Tell everyone",
+    "right": "Cover it yourself"
+  },
+  {
+    "id": "l1c_488",
+    "who": "On duty",
+    "text": "December 31, evening. You’ve been asked to stay on duty at the office till ten. The boss promises a day off “sometime later.”",
+    "left": "Stay on duty",
+    "right": "Refuse"
+  },
+  {
+    "id": "l1c_489",
+    "who": "Health insurance",
+    "text": "HR asks if you want premium health insurance at half price. Half price is a quarter of your salary.",
+    "left": "Sign up",
+    "right": "Decline"
+  },
+  {
+    "id": "l1c_490",
+    "who": "Friday guitar",
+    "text": "Friday evening. A coworker brought a guitar and suggests staying to sing. Security locks the building at eight.",
+    "left": "Stay and sing",
+    "right": "Go home"
+  },
+  {
+    "id": "l1c_491",
+    "who": "Vacation Monday",
+    "text": "Monday morning, you’re on vacation. A coworker calls: “Oh, aren’t you at work?” — and immediately asks for some advice.",
+    "left": "Give advice",
+    "right": "Don’t pick up"
+  },
+  {
+    "id": "l1c_492",
+    "who": "Intern’s thanks",
+    "text": "In the evening, the intern gives you a card: “Thanks for teaching me!” You barely explained anything, but it’s touching.",
+    "left": "Offer him real help",
+    "right": "Just say thanks"
+  },
+  {
+    "id": "l1c_493",
+    "who": "AC and client",
+    "text": "An important client has arrived, and the meeting room is 54°F thanks to the AC. The remote has been missing a month.",
+    "left": "Unplug the AC",
+    "right": "Give the client a blanket"
+  },
+  {
+    "id": "l1c_494",
+    "who": "Gym evening",
+    "text": "At the gym with the corporate discount, you run into the boss. He suggests “working out together.” Every evening.",
+    "left": "Train together",
+    "right": "Change your gym hours"
+  },
+  {
+    "id": "l1c_495",
+    "who": "Early course",
+    "text": "You learn your course certificate must be picked up in person at the training center. It’s only open till 10 a.m.",
+    "left": "Go to the center",
+    "right": "Ask them to mail it"
+  },
+  {
+    "id": "l1c_496",
+    "who": "Gossip on the stoop",
+    "text": "In the evening, you meet a neighbor who works at your company. She shares gossip about your department you’ve never heard.",
+    "left": "Hear her out",
+    "right": "Say goodbye and go"
+  },
+  {
+    "id": "l1c_497",
+    "who": "Choosing a day off",
+    "text": "You’ve earned a day off for being on duty. Coworkers ask you to take Friday so Saturday’s trip isn’t ruined. You wanted Monday.",
+    "left": "Take Friday",
+    "right": "Take Monday"
+  },
+  {
+    "id": "l1c_498",
+    "who": "Late wishes",
+    "text": "Evening. You remember today is the boss’s birthday, and you didn’t wish him well. Forty minutes to midnight.",
+    "left": "Write something heartfelt",
+    "right": "Congratulate tomorrow"
+  },
+  {
+    "id": "l1c_499",
+    "who": "Morning certificate",
+    "text": "The boss ceremoniously hands you a course certificate. Coworkers who didn’t pass exchange sour looks.",
+    "left": "Accept it proudly",
+    "right": "Joke about luck"
+  },
+  {
+    "id": "l1c_500",
+    "who": "Week survived",
+    "text": "Friday evening. The team proposes a ritual: everyone says aloud what they’re grateful to coworkers for this week. It’s your turn.",
+    "left": "Say something warm",
+    "right": "Joke and leave"
+  }
+]
