@@ -1964,3 +1964,54 @@ html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
 /* Посыл «игра от выгорания» на входе и в меню */
 .burnout-lead { margin: 6px auto 0; max-width: 420px; padding: 6px 12px; border-radius: 14px; text-align: center; font-size: 13.5px; font-weight: 800; line-height: 1.35;
   color: var(--text); background: linear-gradient(135deg, rgba(90,220,150,.14), rgba(var(--c-rgb),.1)); border: 1px solid rgba(90,220,150,.35); }
+
+/* ---------- js/session.js: темп, цель сессии, мини-события ---------- */
+.g-day small.ses-goal { display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin-top: 2px; font-family: var(--f-mono); font-weight: 700; font-size: 10px; line-height: 12px; color: var(--up); letter-spacing: 0; text-transform: none; }
+.ses-goal[hidden] { display: none !important; }
+.ses-goal-t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ses-goal-bar { flex: 0 0 26px; height: 4px; border-radius: 2px; background: rgba(var(--w-rgb),.14); overflow: hidden; display: block; }
+.ses-goal-bar > i { display: block; height: 100%; background: var(--up); box-shadow: 0 0 6px var(--up); transition: width .4s; }
+.btn-main.ses-hot { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; box-shadow: 0 0 36px rgba(var(--m-rgb),.9), 0 0 0 2px var(--up); animation: ses-pulse 1.2s ease-in-out infinite; }
+.btn-main.ses-cool { animation: none; }
+.ses-ring { position: relative; flex: 0 0 30px; width: 30px; height: 30px; display: grid; place-items: center; }
+.ses-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.ses-ring circle { fill: none; stroke-width: 3.5; }
+.ses-ring-bg { stroke: rgba(0,0,0,.22); }
+.ses-ring-fg { stroke: var(--bg); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--p, 1) * 100); transition: stroke-dashoffset .2s linear; }
+.ses-ring b { position: relative; font-family: var(--f-mono); font-size: 13px; line-height: 1; }
+.ses-tempo { margin: -2px 0 2px; text-align: center; font-family: var(--f-mono); font-size: 13px; font-weight: 700; color: var(--up); text-shadow: 0 0 8px rgba(212,255,58,.5); }
+.ses-tempo.off { color: var(--text-2); text-shadow: none; font-weight: 500; }
+@keyframes ses-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+.ses-chest { text-align: center; align-items: center; }
+.ses-chest-ico { font-size: 52px; animation: ses-pop .6s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes ses-pop { from { transform: scale(.3) rotate(-15deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.ses-loot { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; }
+.ses-loot > div { padding: 10px 6px; border-radius: 12px; background: rgba(var(--w-rgb),.06); display: flex; flex-direction: column; gap: 2px; }
+.ses-loot b { font-family: var(--f-display); font-size: 18px; color: var(--up); }
+.ses-loot span { font-size: 12px; color: var(--text-2); }
+.modal-box p.ses-next { color: var(--cyan-l); font-weight: 700; }
+.ses-mini { gap: 10px; }
+.ses-mini-head { display: flex; align-items: center; gap: 8px; }
+.ses-mini-ico { font-size: 28px; line-height: 1; }
+.ses-mini-kick { flex: 1; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--up); }
+.ses-mini-time { min-width: 36px; padding: 4px 8px; border-radius: 999px; text-align: center; font-family: var(--f-mono); font-weight: 700; font-size: 14px; background: rgba(var(--w-rgb),.1); }
+.ses-mini-time.warn { background: var(--down); color: #fff; }
+.ses-mini-bar { display: block; height: 4px; border-radius: 2px; background: rgba(var(--w-rgb),.12); overflow: hidden; }
+.ses-mini-bar > i { display: block; height: 100%; width: 100%; background: var(--magenta); transition: width .2s linear; }
+.ses-mini-text { margin: 0; font-size: 17px; line-height: 1.35; }
+.ses-mini-opts { display: flex; flex-direction: column; gap: 8px; }
+.ses-mini-opt { padding: 12px 14px; font-size: 14px; text-align: center; }
+.ses-mini-res { display: flex; flex-direction: column; gap: 10px; }
+.ses-mini-res p { font-size: 14px; color: var(--text); }
+.ses-mini-eff { display: flex; flex-wrap: wrap; gap: 6px; }
+.ses-mini-eff span { padding: 3px 8px; border-radius: 999px; font-family: var(--f-mono); font-size: 12px; background: rgba(var(--w-rgb),.08); }
+.ses-mini-eff .up { color: var(--up); } .ses-mini-eff .dn { color: var(--down); }
+@media (max-width: 380px) { .ses-mini-text { font-size: 15px; } .btn-main.ses-hot { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) {
+  .btn-main.ses-hot, .ses-chest-ico { animation: none; }
+  .ses-ring-fg, .ses-goal-bar > i, .ses-mini-bar > i { transition: none; }
+}
+.ses-fab { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 25; width: min(92vw, 400px); display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; }
+.ses-fab[hidden], body:has(#modal:not([hidden])) .ses-fab, .ses-fab.ses-off { display: none; }
+.ses-fab .btn-main { pointer-events: auto; }
+.ses-fab small { padding: 2px 10px; border-radius: 999px; background: rgba(var(--bg-rgb),.85); font-family: var(--f-mono); font-size: 12px; font-weight: 700; color: var(--up); }
