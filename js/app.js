@@ -88,7 +88,7 @@ const standalone = matchMedia('(display-mode: standalone)').matches || navigator
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid = /android/i.test(navigator.userAgent), isMobile = isIOS || isAndroid;
 // tgGo — куда перейти из быстрого меню Telegram-группы; ?brk=N — разминка дня из личного напоминания бота
-let installEvt = null, tgGo = (location.search.match(/[?&]brk=(\d{1,2})/) || [, ''])[1] ? 'brk' + location.search.match(/[?&]brk=(\d{1,2})/)[1] : '';
+let installEvt = null, tgGo = (location.search.match(/[?&]brk=(\d{1,2})/) || [, ''])[1] ? 'brk' + location.search.match(/[?&]brk=(\d{1,2})/)[1] : /[?&]psy=1/.test(location.search) ? 'psy' : '';  // ?psy=1 — кабинет Миры (совет из группы)
 // Установить можно: браузер дал событие установки, или это телефон (покажем, как добавить вручную); не в Telegram, не в каталогах
 const canInstall = () => !standalone && !TG && !window.VDP_PLATFORM && !window.POOL_JSON && (installEvt || isMobile);
 function installUi() {
@@ -141,7 +141,7 @@ if (TG) {
     if (join) prefs.pendingJoin = join[1].toUpperCase();
     const bonus = sp.match(/bonus-(\d{8})/); if (bonus) prefs.pendingBonus = bonus[1];  // ссылка из рассылки бота: +15 у.е.
     // быстрое меню из закреплённого сообщения в группе: t.me/Survivefridaybot?startapp=go-daily (daily, breaks, shop, feed, top)
-    const go = sp.match(/go-(daily|breaks|shop|feed|top)/); if (go) tgGo = go[1];
+    const go = sp.match(/go-(daily|breaks|shop|feed|top|psy)/); if (go) tgGo = go[1];
     const brk = sp.match(/brk-(\d{1,2})/); if (brk) tgGo = 'brk' + brk[1];  // «Разминка дня» из поста бота
     const ch = sp.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
     if (ch) rememberChallenge(ch[1], '', ref?.[1]);
@@ -160,7 +160,7 @@ bus.on('menu', () => {
   setTimeout(() => { try {
     if (g.startsWith('brk') && +g.slice(3)) playBreak(+g.slice(3)); else
     if (g === 'daily') startDaily(); else if (g === 'breaks') openBreaks(); else if (g === 'shop') openStore();
-    else if (g === 'feed') showFeed(); else if (g === 'top') openBoard('menu', 'rating');
+    else if (g === 'feed') showFeed(); else if (g === 'psy') openPsy('link'); else if (g === 'top') openBoard('menu', 'rating');
   } catch {} }, 600);
 });
 

@@ -1,12 +1,40 @@
-// Кабинет психолога Миры — персонаж игры с практическими советами против выгорания (data/tips.json).
-// Что есть: совет дня (одинаковый у всех в этот день), «ещё совет», самопроверка из трёх вопросов → совет по ответам,
-// минута дыхания (мини-игра № 51), после недели, проваленной из-за Кукухи или Энергии, — Мира приходит сама (раз в день).
+// Кабинет психолога Миры — персонаж игры с практическими советами против выгорания.
+// Контент: data/tips.json (основа: приветствия, 180 советов, короткий опрос) + data/psy/tips_1…6.json (≈3000 советов по темам)
+// и data/psy/tests_1…5.json (≈1500 тестов самопроверки: 3 вопроса → итог с советом). Пачки грузятся по одной случайной — так легче.
+// Мира встроена в игру: после увольнения и проваленной недели, когда шкала почти на нуле, при серии неудач,
+// поздно ночью, после долгой игры, в понедельник и после удачной недели (js/psy.js, раздел «Ситуации»).
 // Без медицинских обещаний: внизу всегда «советы игры не заменяют специалиста». Бесплатно — забота о себе не за деньги.
-let PSY = null;
-const psyLoad = () => PSY ? Promise.resolve(PSY) : fetch('data/tips.json').then(r => r.ok ? r.json() : null).then(d => (PSY = d)).catch(() => null);
+const PSY_TIP_CHUNKS = 6, PSY_TEST_CHUNKS = 5;
+let PSY = null, PSY_TESTS = null, psyCtx = '';
+const psyChunk = (kind, n) => fetch(`data/psy/${kind}_${1 + Math.floor(Math.random() * n)}.json`).then(r => r.ok ? r.json() : []).catch(() => []);
+const psyLoad = () => PSY ? Promise.resolve(PSY) : Promise.all([fetch('data/tips.json').then(r => r.ok ? r.json() : null).catch(() => null), psyChunk('tips', PSY_TIP_CHUNKS)])
+  .then(([d, more]) => { if (!d) return null; if (Array.isArray(more)) d.tips = d.tips.concat(more); return (PSY = d); });
 const psyT = x => (EN ? x.en : x.ru) || x.ru || '';
 const psyDayTip = () => { const t = PSY.tips.filter(x => x.cat !== 'keep'); return t[Math.floor(seeded(`psy-${today()}`)() * t.length)]; };
 const psyRnd = list => list[Math.floor(Math.random() * list.length)];
+// Совет по ситуации: сначала её категория, потом близкие темы, потом любой
+const PSY_NEAR = { fired: ['fired', 'selfkind', 'mind'], tired: ['tired', 'rest', 'breaks', 'sleep'], stress: ['stress', 'mind', 'breaks'], streak: ['streak', 'selfkind', 'mind'],
+  boss: ['boss', 'boundaries', 'workload'], team: ['team', 'social'], late: ['late', 'sleep'], session: ['session', 'breaks', 'digital'], win: ['win', 'keep', 'rest'],
+  monday: ['monday', 'workload', 'focus'], friday: ['friday', 'rest'], high: ['boundaries', 'workload', 'stress'] };
+function psyTip(cat) {
+  for (const c of PSY_NEAR[cat] || [cat]) { const l = PSY.tips.filter(t => t.cat === c); if (l.length) return psyRnd(l); }
+  return psyRnd(PSY.tips.filter(t => t.cat !== 'keep'));
+}
+// Что говорит Мира в каждой ситуации (первая фраза в кабинете и на экране итогов)
+const PSY_SAY = {
+  fired: [L('Уволили — это про одну работу, а не про вашу ценность. Давайте сначала выдохнем.', 'Getting fired is about one job, not about your worth. Let’s breathe out first.'), 'sad'],
+  stress: [L('Кукуха на нуле — знакомо. Давайте вернём её на место маленькими шагами.', 'Sanity at zero — I know the feeling. Let’s bring it back in small steps.'), 'sad'],
+  tired: [L('Энергия кончилась — значит, вы много отдали. Пора немного вернуть себе.', 'Out of energy means you gave a lot. Time to take a little back.'), 'sad'],
+  boss: [L('С начальством не сложилось. Бывает. Поговорим про границы?', 'Things went wrong with the boss. It happens. Shall we talk about boundaries?'), 'neutral'],
+  team: [L('С коллегами разладилось. Отношения можно чинить — по одному разговору.', 'Things broke down with coworkers. Relationships can be mended, one talk at a time.'), 'neutral'],
+  high: [L('Перестарались: когда всё на максимуме, тоже перегреваешься. Поговорим о мере?', 'You overdid it: maxing everything out overheats you too. Shall we talk about balance?'), 'neutral'],
+  streak: [L('Несколько недель подряд не везёт. Это не приговор — давайте сделаем паузу и разберёмся.', 'A few bad weeks in a row. It’s not a verdict — let’s pause and sort it out.'), 'sad'],
+  late: [L('Уже поздно. Неделя подождёт до утра, а сон — нет.', 'It’s late. The week can wait till morning; sleep can’t.'), 'neutral'],
+  session: [L('Вы давно в игре. Отличный момент встать и размяться.', 'You’ve been playing a while. A great moment to stand up and stretch.'), 'happy'],
+  win: [L('Вы дожили до пятницы! Давайте закрепим то, что помогло.', 'You made it to Friday! Let’s keep what helped.'), 'joy'],
+  edge: [L('Пятница ваша, но шкалы почти на нуле. Выжили — теперь восстановимся.', 'Friday is yours, but the meters are nearly empty. You survived — now let’s recover.'), 'sad'],
+  monday: [L('Понедельник. Начнём неделю бережно — без подвигов с утра.', 'Monday. Let’s start the week gently — no heroics first thing.'), 'happy'],
+};
 const PSY_NOTE = () => L('🤖 Мира — персонаж игры. Её советы — про бережные привычки и не заменяют специалиста. Если плохо долго — поговорите с врачом или психологом.', '🤖 Mira is a game character. Her tips are about kinder habits and don’t replace a professional. If you feel bad for a long time, talk to a doctor or a psychologist.');
 
 // ---------- Мира: портрет и анимированный кабинет ----------
@@ -62,7 +90,7 @@ function psyModal(inner, mood = 'happy', opts) {
       const a = b.dataset.psy;
       if (a === 'close') { psyBye(); return; }
       if (a === 'more') { psyModal(psyTipHtml(psyRnd(PSY.tips.filter(x => x.cat !== 'keep')), L('Ещё один совет', 'One more tip'))); track('psy', { detail: 'more' }); }
-      if (a === 'quiz') psyQuiz(0, []);
+      if (a === 'quiz') psyCheck(psyCtx);
       if (a === 'breath') { m.hidden = true; m.innerHTML = ''; track('psy', { detail: 'breath' }); playBreak(51); }
     });
   }
@@ -81,13 +109,54 @@ function psyBye() {
 }
 const psyTipHtml = (t, head) => `<small class="psy-kick">${head}</small><p class="psy-tip">${esc(psyT(t))}</p>`;
 
-async function openPsy(source = 'menu') {
+// cat — ситуация, из которой пришли (fired, tired, …): Мира начинает с неё и самопроверку подбирает по теме
+async function openPsy(source = 'menu', cat = '') {
   if (!(await psyLoad())) { toast(L('Кабинет Миры сейчас не открывается — проверьте интернет', 'Mira’s office won’t open — check your connection')); return; }
-  track('psy', { detail: source });
-  psyModal(`<p class="psy-greet">${esc(psyT(psyRnd(PSY.greet)))}</p>${psyTipHtml(psyDayTip(), L('Совет дня', 'Tip of the day'))}`);
+  track('psy', { detail: cat ? `${source}:${cat}` : source });
+  if (!cat && prefs.psyCall?.d === today()) cat = prefs.psyCall.cat;  // Мира звала — разговор о том же
+  if (prefs.psyCall) { delete prefs.psyCall; store.set(KEY.prefs, prefs); renderPsyBtn(); }
+  psyCtx = cat;
+  const say = PSY_SAY[cat];
+  if (say) psyModal(`<p class="psy-greet">${esc(say[0])}</p>${psyTipHtml(psyTip(cat), L('Совет для этой ситуации', 'A tip for this moment'))}`, say[1]);
+  else psyModal(`<p class="psy-greet">${esc(psyT(psyRnd(PSY.greet)))}</p>${psyTipHtml(psyDayTip(), L('Совет дня', 'Tip of the day'))}`);
 }
 
-// Самопроверка: три вопроса → совет по самому «проблемному» ответу (или похвала, если всё хорошо)
+// ---------- Самопроверка: тест из 3 вопросов (≈1500 тестов), итог по сумме ответов ----------
+const PSY_SITUATION_TEST = { high: 'boundaries', edge: 'tired' };
+const psyDone = () => store.get('vdp-psy-tests', []);
+async function psyCheck(cat = '') {
+  if (!PSY_TESTS) { const t = await psyChunk('tests', PSY_TEST_CHUNKS); PSY_TESTS = Array.isArray(t) ? t : []; }
+  if (!PSY_TESTS.length) return psyQuiz(0, []);  // пачка не загрузилась — короткий опрос из основы
+  const done = new Set(psyDone()), fresh = PSY_TESTS.filter(t => !done.has(t.id));
+  const pool = fresh.length ? fresh : PSY_TESTS, c = PSY_SITUATION_TEST[cat] || cat;
+  let list = [];
+  for (const k of PSY_NEAR[c] || [c]) { list = pool.filter(t => t.cat === k); if (list.length) break; }
+  const test = psyRnd(list.length ? list : pool);
+  psyTest(test, 0, 0);
+}
+function psyTest(test, i, sum) {
+  const q = test.q[i];
+  if (!q) {
+    const band = sum <= 2 ? 0 : sum <= 4 ? 1 : 2, r = test.r[band];
+    const done = psyDone(); if (!done.includes(test.id)) { done.push(test.id); store.set('vdp-psy-tests', done.slice(-2000)); }
+    prefs.psyTests = (prefs.psyTests || 0) + 1; store.set(KEY.prefs, prefs);
+    track('psy', { detail: `test:${test.id}:${sum}` });
+    const head = [L('Похоже, у вас всё неплохо', 'Looks like you’re doing fine'), L('Есть звоночки', 'Some warning signs'), L('Похоже, вы на пределе', 'Looks like you’re at your limit')][band];
+    psyModal(`<small class="psy-kick">${esc(psyT(test))} · ${L('итог', 'result')}</small>
+      <div class="psy-meter b${band}" aria-hidden="true"><i style="width:${Math.round(100 * sum / 6)}%"></i></div>
+      <p class="psy-q">${head}</p><p class="psy-tip">${esc(psyT(r))}</p>
+      <p class="psy-count">${L(`Пройдено тестов: ${prefs.psyTests}`, `Self-checks done: ${prefs.psyTests}`)} · <button class="psy-link" type="button" data-psy-next>${L('Другой тест →', 'Another test →')}</button></p>`,
+      ['joy', 'happy', 'sad'][band]);
+    $('modal').querySelector('[data-psy-next]').onclick = () => psyCheck('');
+    return;
+  }
+  const order = shuffle([0, 1, 2]);
+  psyModal(`<small class="psy-kick">${esc(psyT(test))} · ${L(`вопрос ${i + 1} из 3`, `question ${i + 1} of 3`)}</small><p class="psy-q">${esc(psyT(q))}</p>
+    <div class="psy-ans">${order.map(j => `<button class="btn-ghost" type="button" data-a="${j}">${esc(psyT(q.a[j]))}</button>`).join('')}</div>
+    ${i === 0 ? `<p class="psy-count">${L('Самопроверка, а не диагноз: отвечайте про последние дни.', 'A self-check, not a diagnosis: answer about the last few days.')}</p>` : ''}`, 'neutral', { think: true });
+  $('modal').querySelectorAll('[data-a]').forEach(b => b.onclick = () => psyTest(test, i + 1, sum + (+q.a[+b.dataset.a].s || 0)));
+}
+// Запасной короткий опрос из data/tips.json
 function psyQuiz(i, picks) {
   const q = PSY.quiz[i];
   if (!q) {
@@ -101,25 +170,87 @@ function psyQuiz(i, picks) {
   $('modal').querySelectorAll('[data-a]').forEach(b => b.onclick = () => psyQuiz(i + 1, [...picks, q.a[+b.dataset.a].cat]));
 }
 
-// Кнопка в главном меню — под строкой «Разминки дня»
+// ---------- Кнопка в главном меню (под «Разминкой дня»); если Мира звала — бейдж и причина ----------
 function renderPsyBtn() {
   const after = $('pzRow') || $('brkDay'); if (!after) return;
   let b = $('psyOpen');
   if (!b) { b = Object.assign(document.createElement('button'), { type: 'button', id: 'psyOpen', className: 'psy-open' }); b.onclick = () => openPsy('menu'); }
   if (after.nextElementSibling !== b) after.after(b);
-  b.innerHTML = `<span class="face psy-mini" aria-hidden="true">${faceSvg(MIRA_FACE)}</span><span><b>${L('Кабинет психолога', 'Psychologist’s office')}</b><small>${L('Мира: совет дня и самопроверка против выгорания', 'Mira: tip of the day and a burnout self-check')}</small></span><i aria-hidden="true">›</i>`;
-  b.querySelector('.expr').innerHTML = exprSvg('happy');
+  const call = prefs.psyCall?.d === today() ? PSY_SAY[prefs.psyCall.cat] : null;
+  b.classList.toggle('calls', !!call);
+  b.innerHTML = `<span class="face psy-mini" aria-hidden="true">${faceSvg(MIRA_FACE)}</span><span><b>${L('Кабинет психолога', 'Psychologist’s office')}${call ? ' <em class="psy-dot">1</em>' : ''}</b><small>${call ? `${L('Мира зовёт', 'Mira asks')}: ${esc(call[0])}` : L('Мира: совет дня и самопроверка против выгорания', 'Mira: tip of the day and a burnout self-check')}</small></span><i aria-hidden="true">›</i>`;
+  b.querySelector('.expr').innerHTML = exprSvg(call ? 'neutral' : 'happy');
 }
 bus.on('menu', () => setTimeout(renderPsyBtn, 0));
 setTimeout(renderPsyBtn, 0);
 
-// После недели, проваленной из-за Кукухи или Энергии на нуле, — Мира приходит сама (не чаще раза в день)
+// ---------- Ситуации: когда Мира советует зайти к ней ----------
+const psySessionStart = Date.now();
+let psySessionNudged = false;
+const psyCall = cat => { prefs.psyCall = { cat, d: today() }; store.set(KEY.prefs, prefs); };
+const psyFreeScreen = () => !busy && !splashOn && $('modal').hidden && !window.vdpPaused && !($('quiz') && !$('quiz').hidden);
+// Короткая реплика Миры поверх игры: не мешает, исчезает сама
+function psyWhisper(cat, delay = 900) {
+  setTimeout(async () => {
+    if (!(await psyLoad()) || views.game.hidden) return;
+    let tries = 0;
+    const go = () => { if (psyFreeScreen()) toast(`🛋️ ${L('Мира', 'Mira')}: ${psyT(psyTip(cat))}`); else if (++tries < 20) setTimeout(go, 700); };
+    go();
+  }, delay);
+}
+
+// 1) Во время недели: шкала почти на нуле — один совет за неделю
+const PSY_LOW = { psyche: 'stress', energy: 'tired', boss: 'boss', colleagues: 'team' };
+bus.on('answer', () => {
+  if (!S?.res || S.psyNudged || S.mode === 'quick' || prefs.psyQuiet) return;
+  const k = Object.keys(PSY_LOW).find(k => S.res[k] > 0 && S.res[k] <= (k === 'psyche' || k === 'energy' ? 20 : 15));
+  if (!k) return;
+  S.psyNudged = true;
+  track('psy', { detail: `low:${k}` });
+  psyWhisper(PSY_LOW[k]);
+});
+// 2) Начало недели: поздняя ночь или утро понедельника — раз в день
+bus.on('deck', S2 => {
+  if (prefs.psyQuiet || S2.mode === 'quick') return;
+  const h = new Date().getHours(), day = new Date().getDay(), last = store.get('vdp-psy-deck', '');
+  const cat = h >= 23 || h < 5 ? 'late' : day === 1 && h >= 5 && h < 13 ? 'monday' : '';
+  if (!cat || last === today() + cat) return;
+  store.set('vdp-psy-deck', today() + cat);
+  track('psy', { detail: `deck:${cat}` });
+  psyWhisper(cat, 5200);
+});
+// 3) Итоги недели: приглашение в кабинет на экране итогов (+ в тяжёлых случаях Мира приходит сама, раз в день)
 bus.on('weekEnd', x => {
-  if (x.won || x.high || !['psyche', 'energy'].includes(x.stat) || store.get('vdp-psy-day', '') === today()) return;
+  prefs.psyLoss = x.won ? 0 : (prefs.psyLoss || 0) + 1; store.set(KEY.prefs, prefs);
+  const fired = !x.won && x.mode === 'career';
+  const edge = x.won && x.res && Math.min(x.res.psyche, x.res.energy) <= 20;
+  const long = !psySessionNudged && Date.now() - psySessionStart > 45 * 60e3;
+  let cat = '';
+  if (!x.won) cat = prefs.psyLoss >= 3 ? 'streak' : x.high ? 'high' : x.stat === 'psyche' ? 'stress' : x.stat === 'energy' ? 'tired' : fired ? 'fired' : PSY_LOW[x.stat] || 'stress';
+  else if (edge) cat = 'edge';
+  else if (Math.random() < 0.35) cat = 'win';
+  if (long) { cat = 'session'; psySessionNudged = true; }
+  if (!cat) return;
+  if (fired && !['streak', 'session'].includes(cat) && Math.random() < 0.5) cat = 'fired';  // уволили — Мира часто начинает с этого
+  const say = PSY_SAY[cat] || PSY_SAY.stress;
+  if (!x.won) psyCall(cat);
+  const sheet = views.end.querySelector('.end-sheet'), at = sheet?.querySelector('.stack');
+  at?.insertAdjacentHTML('beforebegin', `<button class="psy-invite" type="button" id="psyInvite"><span class="face psy-mini" aria-hidden="true">${faceSvg(MIRA_FACE)}</span>
+    <span><b>🛋️ ${L('Мира, психолог офиса', 'Mira, office psychologist')}</b><small>${esc(say[0])}</small><em>${L('Зайти в кабинет →', 'Visit her office →')}</em></span></button>`);
+  const inv = $('psyInvite');
+  if (inv) { inv.querySelector('.expr').innerHTML = exprSvg(say[1]); inv.onclick = () => openPsy('end', cat); }
+  // Тяжёлое — Мира приходит сама, не чаще раза в день
+  const heavy = ['stress', 'tired', 'fired', 'streak'].includes(cat);
+  if (!heavy || prefs.psyQuiet || store.get('vdp-psy-day', '') === today()) return;
   setTimeout(async () => {
     if (!(await psyLoad()) || views.end.hidden || !$('modal').hidden) return;
     store.set('vdp-psy-day', today());
-    track('psy', { detail: `after:${x.stat}` });
-    psyModal(`<p class="psy-greet">${esc(psyT(psyRnd(PSY.after_bad_week)))}</p>${psyTipHtml(psyRnd(PSY.tips.filter(t => ['rest', 'breaks', 'mind', 'sleep'].includes(t.cat))), L('Маленький шаг на сегодня', 'A small step for today'))}`, 'sad');
+    track('psy', { detail: `after:${cat}` });
+    psyCtx = cat;
+    const line = cat === 'fired' || cat === 'streak' ? PSY_SAY[cat][0] : psyT(psyRnd(PSY.after_bad_week));
+    psyModal(`<p class="psy-greet">${esc(line)}</p>${psyTipHtml(psyTip(cat), L('Маленький шаг на сегодня', 'A small step for today'))}`, 'sad');
   }, 2600);
 });
+// Переключатель в профиле: «Подсказки Миры во время игры» (по умолчанию включён; кабинет и приглашение на экране итогов остаются)
+(() => { const cb = $('psyHints'); if (!cb) return; const sync = () => { cb.checked = !prefs.psyQuiet; }; sync(); bus.on('menu', sync);
+  cb.onchange = () => { prefs.psyQuiet = !cb.checked; store.set(KEY.prefs, prefs); toast(cb.checked ? L('Мира снова будет подсказывать во время игры', 'Mira will give tips during the game again') : L('Хорошо, Мира не будет отвлекать. Кабинет — в главном меню', 'Okay, Mira won’t interrupt. Her office is in the main menu')); }; })();

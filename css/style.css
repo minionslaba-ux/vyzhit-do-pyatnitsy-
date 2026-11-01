@@ -2382,3 +2382,22 @@ html.light .psy-scene .ps-steam path { stroke: rgba(90,86,112,.5); }
 @keyframes psIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes psyNod { 50% { transform: rotate(-6deg); } }
 @media (prefers-reduced-motion: reduce) { .psy-scene *, .psy-body.psy-in > *, .psy-open .psy-mini svg { animation: none !important; } }
+
+/* Мира в игре: приглашение на экране итогов, бейдж в меню, итог теста */
+.psy-invite { width: 100%; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; text-align: left; margin: 10px 0 4px; padding: 12px 14px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(45,226,138,.16), rgba(178,107,255,.12)); border: 1px solid rgba(45,226,138,.45); color: var(--text); cursor: pointer; animation: psIn .5s .4s ease both; }
+.psy-invite .psy-mini { width: 48px; height: 48px; }
+.psy-invite b { display: block; font-size: 14.5px; } .psy-invite small { display: block; font-size: 13.5px; line-height: 1.35; color: var(--text-2); margin-top: 2px; }
+.psy-invite em { display: inline-block; margin-top: 6px; font-style: normal; font-weight: 800; font-size: 13.5px; color: #2de28a; }
+html.light .psy-invite em { color: #0b7a45; }
+.psy-invite:active { transform: scale(.98); }
+.psy-open.calls { border-color: rgba(255,138,59,.7); animation: psCall 2.4s ease-in-out infinite; }
+.psy-dot { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 6px; padding: 0 5px; border-radius: 9px; background: #ff3b6b; color: #fff; font-style: normal; font-size: 11px; vertical-align: 2px; }
+@keyframes psCall { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,138,59,0); } 50% { box-shadow: 0 0 0 4px rgba(255,138,59,.25); } }
+.psy-meter { height: 8px; border-radius: 4px; background: rgba(var(--w-rgb),.1); overflow: hidden; }
+.psy-meter i { display: block; height: 100%; border-radius: 4px; background: #2de28a; min-width: 6%; }
+.psy-meter.b1 i { background: #ffd23a; } .psy-meter.b2 i { background: #ff8a3b; }
+.psy-count { margin: 0; font-size: 12.5px; color: var(--text-2); }
+.psy-link { background: none; border: 0; padding: 0; color: #2de28a; font: inherit; font-weight: 800; cursor: pointer; text-decoration: underline; }
+html.light .psy-link { color: #0b7a45; }
+@media (prefers-reduced-motion: reduce) { .psy-invite, .psy-open.calls { animation: none; } }
