@@ -4,11 +4,13 @@
 // В личке: /start — кнопка, открывающая игру. Разработчикам (dev_admins): /stats — сегодня, /yesterday — вчера, /week — 7 дней,
 // /export — файл Excel со списком игроков (имя, почта, вход, логин Telegram, VK, откуда пришли, игры).
 // Подключение вебхука (один раз): GET …/functions/v1/tg-bot?setup=1. Чужой вебхук не перезаписывается без &force=1.
+// Игра «Крот в офисе» (mafia.ts): /mafia, /mafia_stop в группе, кнопки maf:…, таймер …/tg-bot?mafia_tick=1 (ключ cron_key).
 // Запросы от Telegram проверяются секретом, который выводится из токена бота (TELEGRAM_BOT_TOKEN в секретах функций).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, todayTitle, weekTitle, yesterdayTitle } from './report.ts';
 import * as XLSX from 'npm:xlsx@0.18.5';
 import { adminCallback, adminCommand, ADMIN_COMMANDS } from './admin.ts';
+import { MAFIA_COMMANDS, mafiaCallback, mafiaCommand, mafiaDm, mafiaJoin, mafiaTick } from './mafia.ts';
 
 const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
 const SELF = `${Deno.env.get('SUPABASE_URL')}/functions/v1/tg-bot`;
@@ -92,7 +94,10 @@ async function onMessage(msg: any) {
     return;
   }
   const m = String(msg.text || '').match(/^\/(\w+)(?:@(\w+))?\s*(\w*)/);
-  if (!m) return;
+  if (!m) {
+    if (!group && msg.text) await mafiaDm({ db, api }, msg);  // переписка кротов через бота
+    return;
+  }
   me ||= (await api('getMe')).result;
   if (m[2] && me && m[2].toLowerCase() !== me.username.toLowerCase()) return;  // команда другому боту
   const cmd = m[1].toLowerCase(), arg = m[3].toLowerCase(), rest = String(msg.text || '').replace(/^\/\w+(@\w+)?\s*/, '');
@@ -112,6 +117,7 @@ async function onMessage(msg: any) {
       if (admin) await adminCommand({ db, api, token }, cmd, rest, chat.id, msg.from.id);
       return;
     }
+    if (arg.startsWith('maf_')) return mafiaJoin({ db, api }, msg, arg);  // кнопка «Присоединиться» к игре «Крот в офисе»
     const l = langOf(msg.from?.language_code);
     await api('sendMessage', { chat_id: chat.id, text: T[l].start, reply_markup: { inline_keyboard: [[{ text: T[l].btn, web_app: { url: SITE + (l === 'en' ? 'en.html' : '') } }]] } });
     return;
@@ -130,6 +136,7 @@ async function onMessage(msg: any) {
     return reply(T[l].off);
   }
   if (cmd === 'play' || cmd === 'start') return reply(T[l].play, groupBtn(l));
+  if (cmd === 'mafia' || cmd === 'mafia_stop') return mafiaCommand({ db, api }, msg, cmd, l, () => isAdmin(msg));
 }
 
 async function onMember(u: any) {
@@ -150,19 +157,29 @@ Deno.serve(async req => {
     if (info.url && info.url !== SELF && !url.searchParams.get('force')) return json({ ok: false, reason: 'другой вебхук уже подключён', current: info.url });
     const set = await api('setWebhook', { url: SELF, secret_token: await secret(), allowed_updates: ['message', 'my_chat_member', 'callback_query'], drop_pending_updates: true });
     const scope = { type: 'all_group_chats' };
-    await api('setMyCommands', { scope, commands: [{ command: 'remind', description: 'Напоминать о неделе дня каждый день' }, { command: 'stop', description: 'Выключить напоминания' }, { command: 'play', description: 'Играть' }] });
-    await api('setMyCommands', { scope, language_code: 'en', commands: [{ command: 'remind', description: 'Daily Week reminder every day' }, { command: 'stop', description: 'Turn reminders off' }, { command: 'play', description: 'Play' }] });
+    await api('setMyCommands', { scope, commands: [{ command: 'remind', description: 'Напоминать о неделе дня каждый день' }, { command: 'stop', description: 'Выключить напоминания' }, { command: 'play', description: 'Играть' }, ...MAFIA_COMMANDS.ru] });
+    await api('setMyCommands', { scope, language_code: 'en', commands: [{ command: 'remind', description: 'Daily Week reminder every day' }, { command: 'stop', description: 'Turn reminders off' }, { command: 'play', description: 'Play' }, ...MAFIA_COMMANDS.en] });
     // меню команд отчёта — только в личке у разработчиков
     const { data: admins } = await db.from('dev_admins').select('tg_id');
     for (const ad of admins || []) await api('setMyCommands', { scope: { type: 'chat', chat_id: ad.tg_id }, commands: [...ADMIN_COMMANDS, { command: 'start', description: 'Играть' }] });
     return json({ ok: !!set.ok, description: set.description });
+  }
+  if (url.searchParams.get('mafia_tick')) {  // таймер игры «Крот в офисе» (pg_cron раз в минуту)
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
+    const key = req.headers.get('x-cron-key') || body?.key;
+    const { data: k } = await db.from('push_keys').select('cron_key').eq('id', 1).maybeSingle();
+    if (!k?.cron_key || key !== k.cron_key) return json({ error: 'forbidden' }, 403);
+    try { return json(await mafiaTick({ db, api })); } catch (e) { console.error(e); return json({ ok: false, error: String(e) }, 500); }
   }
   if (req.method !== 'POST' || req.headers.get('x-telegram-bot-api-secret-token') !== await secret()) return json({ error: 'forbidden' }, 403);
   try {
     const u = await req.json();
     if (u.message) await onMessage(u.message);
     else if (u.my_chat_member) await onMember(u.my_chat_member);
-    else if (u.callback_query) await adminCallback({ db, api, token }, u.callback_query);
+    else if (u.callback_query) {
+      if (String(u.callback_query.data || '').startsWith('maf:')) await mafiaCallback({ db, api }, u.callback_query);
+      else await adminCallback({ db, api, token }, u.callback_query);
+    }
   } catch (e) { console.error(e); }
   return json({ ok: true });  // Telegram ждёт 200, иначе будет повторять
 });
