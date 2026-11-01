@@ -19,6 +19,7 @@ export const ADMIN_COMMANDS = [
   { command: 'rpush', description: 'Случайный мотивирующий пуш (1000 вариантов)' },
   { command: 'news', description: 'Новость в группы и чат игры: /news текст' },
   { command: 'event', description: 'Случайная ситуация — опрос в группы' },
+  { command: 'psy', description: 'Случайный совет психолога Миры в группы' },
   { command: 'broadcast', description: 'Сообщение подписчикам бота: /broadcast текст' },
   { command: 'bonus', description: 'Бонус +15 у.е. в группы' },
   { command: 'pin', description: 'Обновить закреплённое меню групп' },
@@ -41,6 +42,7 @@ const HELP = `🛠 <b>Команды разработчика</b>
 /rpush — случайный мотивирующий пуш из 1000 готовых (русский + английский), можно перебрать «🎲 Другой»
 /news текст — новость в Telegram-группы и/или в общий чат игры
 /event — случайная офисная ситуация из игры как опрос в группы
+/psy — случайный совет психолога Миры в группы (русский + английский). Можно с темой: /psy fired · tired · stress · sleep · boss · team · friday …
 /broadcast текст — личное сообщение всем, кто включил напоминания в боте
 /bonus — кнопка «Играть и получить 15 у.е.» в группы (бонус на сегодня)
 /pin — обновить закреплённое быстрое меню в группах
@@ -65,6 +67,16 @@ async function randomCard() {
   const list = await fetch(`${SITE}data/${f}.json`).then(r => r.json()).catch(() => []);
   return list.length ? list[Math.floor(Math.random() * list.length)] : null;
 }
+// Советы Миры: data/psy/tips_1…6.json (≈3000), если их ещё нет — data/tips.json (180)
+const PSY_CHUNKS = 6;
+async function psyTips(): Promise<any[]> {
+  const n = 1 + Math.floor(Math.random() * PSY_CHUNKS);
+  const a = await fetch(`${SITE}data/psy/tips_${n}.json`).then(r => r.ok ? r.json() : []).catch(() => []);
+  if (Array.isArray(a) && a.length) return a;
+  const b = await fetch(`${SITE}data/tips.json`).then(r => r.json()).catch(() => null);
+  return b?.tips || [];
+}
+const psyPost = (t: any) => `🛋️ <b>Совет Миры, психолога офиса</b>\n\n${esc(t.ru)}\n\n🇬🇧 <i>${esc(t.en)}</i>\n\n<i>🤖 Мира — персонаж игры. Её советы не заменяют специалиста.</i>`;
 async function groups(ctx: Ctx) { return ((await ctx.db.from('tg_groups').select('chat_id').eq('enabled', true).limit(500)).data || []) as { chat_id: number }[]; }
 const pause = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -132,6 +144,17 @@ export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: 
       await say(`🎲 <b>Случайная ситуация</b>\n\n${esc(q.question)}\n\n◀ ${esc(q.a)}\n▶ ${esc(q.b)}`, { reply_markup: kb([[['📊 Опрос в группы', `adm:${id}:poll`], ['🔄 Другая', `adm:${id}:again`]], [['✖ Отмена', `adm:${id}:no`]]]) });
       return true;
     }
+    case 'psy': {
+      const want = rest.trim().toLowerCase().replace(/[^a-z]/g, '');
+      const all = (await psyTips()).filter((t: any) => t.cat !== 'keep');
+      const list = want ? all.filter((t: any) => t.cat === want) : all;
+      if (!list.length) { await say(all.length ? `Темы «${esc(want)}» нет в этой пачке советов — попробуйте ещё раз или без темы. Темы: ${[...new Set(all.map((t: any) => t.cat))].join(', ')}` : 'Не удалось загрузить советы с сайта.'); return true; }
+      const t = list[Math.floor(Math.random() * list.length)];
+      const id = await draft(ctx, tg, 'psy', { ru: t.ru, en: t.en, cat: t.cat, want });
+      const n = (await groups(ctx)).length;
+      await say(`🛋️ <b>Превью совета</b> · тема: ${esc(t.cat)}\n\n${psyPost(t)}`, { reply_markup: kb([[[`📢 В группы (${n})`, `adm:${id}:groups`], ['🎲 Другой', `adm:${id}:again`]], [['✖ Отмена', `adm:${id}:no`]]]) });
+      return true;
+    }
     case 'broadcast': {
       if (!rest.trim()) { await say('Формат: <code>/broadcast текст</code> — уйдёт всем, кто включил напоминания в боте.'); return true; }
       const { count } = await db.from('tg_subs').select('tg_id', { count: 'exact', head: true }).eq('enabled', true);
@@ -182,6 +205,7 @@ export async function adminCallback(ctx: Ctx, cq: any) {
   const act = m[2];
   await api('answerCallbackQuery', { callback_query_id: cq.id, text: act === 'no' ? 'Отменено' : 'Отправляю…' });
   if (act === 'again' && d.kind === 'push') { await db.from('admin_drafts').delete().eq('id', d.id); await api('editMessageReplyMarkup', { chat_id: chatId, message_id: cq.message.message_id, reply_markup: { inline_keyboard: [] } }); return adminCommand(ctx, 'rpush', '', chatId, tg); }
+  if (act === 'again' && d.kind === 'psy') { await db.from('admin_drafts').delete().eq('id', d.id); await api('editMessageReplyMarkup', { chat_id: chatId, message_id: cq.message.message_id, reply_markup: { inline_keyboard: [] } }); return adminCommand(ctx, 'psy', d.payload?.want || '', chatId, tg); }
   if (act === 'again' && d.kind === 'event') { await db.from('admin_drafts').delete().eq('id', d.id); await done('🔄 Ищу другую…'); return adminCommand(ctx, 'event', '', chatId, tg); }
   await db.from('admin_drafts').delete().eq('id', d.id);  // один черновик — одна отправка
   if (act === 'no') return done('✖ Отменено.');
@@ -211,6 +235,14 @@ export async function adminCallback(ctx: Ctx, cq: any) {
       if (r.ok) g++; await pause(1100);
     }
     return done(`✅ Опрос отправлен в групп: ${g}.`);
+  }
+  if (d.kind === 'psy' && act === 'groups') {
+    let g = 0;
+    for (const x of await groups(ctx)) {
+      const r = await api('sendMessage', { chat_id: x.chat_id, text: psyPost(p), parse_mode: 'HTML', reply_markup: { inline_keyboard: [[{ text: '🛋️ Кабинет Миры · Mira’s office', url: `${APP}=go-psy` }]] } });
+      if (r.ok) g++; await pause(1100);
+    }
+    return done(`✅ Совет Миры отправлен в групп: ${g}.`);
   }
   if (d.kind === 'broadcast') {
     const { data: subs } = await db.from('tg_subs').select('tg_id, player_id').eq('enabled', true).limit(5000);
