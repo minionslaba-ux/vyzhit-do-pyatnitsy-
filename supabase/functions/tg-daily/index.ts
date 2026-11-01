@@ -116,6 +116,15 @@ async function announceEn(db: any, token: string, code: string) {
   return new Response(JSON.stringify({ announced: n }), { headers: { 'Content-Type': 'application/json' } });
 }
 
+// «Разминка дня» — та же, что в меню игры (js/break.js: brkOfDay — seeded по дате, список коротких разминок)
+const BRK_QUICK: [number, string, string, string][] = [[5, '🗂️', 'Пятнашки «Разобрать стол»', 'Sliding desk'], [6, '🍪', 'Последняя печенька', 'The last cookie'], [22, '☕', 'Поймай кофе', 'Catch the coffee'],
+  [24, '📧', 'Отбей спам', 'Spam swatter'], [28, '🗑️', 'Баскетбол в мусорку', 'Bin basketball'], [30, '⏱️', 'Ровно в 18:00', 'Exactly 6 PM'], [34, '🔀', 'Анаграммы профессий', 'Job anagrams'],
+  [39, '🪪', 'Мемори «Визитки»', 'Business card memory'], [41, '🖥️', 'Запомни стол', 'Remember the desk'], [43, '🎨', 'Цветная путаница', 'Colour clash'], [44, '🧮', 'Бухгалтерия в уме', 'Mental accounting'],
+  [45, '🙃', 'Кто лишний', 'Odd one out'], [49, '🫧', 'Пупырка', 'Bubble wrap']];
+const seeded = (str: string) => { let h = 1779033703 ^ str.length; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = h << 13 | h >>> 19;
+  let a = h >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+const brkOfDay = (mskDate: string) => BRK_QUICK[Math.floor(seeded(`brk-day-${mskDate}`)() * BRK_QUICK.length)];
+
 Deno.serve(async req => {
   const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
   if (!token) return new Response('not configured', { status: 503 });
@@ -130,6 +139,9 @@ Deno.serve(async req => {
   const msk = new Date(Date.now() + 3 * 3600e3), dow = msk.getUTCDay();
   const bonus = [1, 3, 5].includes(dow) ? msk.toISOString().slice(0, 10).replace(/-/g, '') : '';  // код бонуса — дата по Москве
   const bonusLine = (en: boolean) => bonus ? '\n\n' + (en ? '🎁 Play today with the button below — +$15 to your balance.' : '🎁 Сыграйте сегодня по кнопке ниже — +15 у.е. на счёт.') : '';
+  const brk = brkOfDay(msk.toISOString().slice(0, 10));
+  const brkLine = (en: boolean) => '\n\n' + (en ? `☕ Break of the day: ${brk[1]} ${brk[3]} — one minute to switch off.` : `☕ Разминка дня: ${brk[1]} ${brk[2]} — минута, чтобы переключиться.`);
+  const brkBtn = (en: boolean, both = false) => ({ text: both ? `☕ Разминка дня · Break` : en ? '☕ Break of the day' : '☕ Разминка дня', url: `https://t.me/Survivefridaybot?startapp=brk-${brk[0]}` });
   const playText = (en: boolean) => bonus ? (en ? '🎁 Play and get $15' : '🎁 Играть и получить 15 у.е.') : (en ? '▶ Play' : '▶ Играть');
 
   // личные напоминания
@@ -138,8 +150,9 @@ Deno.serve(async req => {
   let sent = 0, groups = 0;
   for (const s of data || []) {
     const en = s.lang === 'en', list = en ? TEXT.en : TEXT.ru;
-    const r = await send({ chat_id: s.tg_id, text: list[day % list.length] + bonusLine(en),
-      reply_markup: { inline_keyboard: [[{ text: playText(en), web_app: { url: `https://survivefriday.com/${en ? 'en.html' : ''}${bonus ? '?bonus=' + bonus : ''}` } }]] } });
+    const r = await send({ chat_id: s.tg_id, text: list[day % list.length] + bonusLine(en) + brkLine(en),
+      reply_markup: { inline_keyboard: [[{ text: playText(en), web_app: { url: `https://survivefriday.com/${en ? 'en.html' : ''}${bonus ? '?bonus=' + bonus : ''}` } }],
+        [{ text: brkBtn(en).text, web_app: { url: `https://survivefriday.com/${en ? 'en.html' : ''}?brk=${brk[0]}` } }]] } });
     if (r.ok) { sent++; await db.from('tg_subs').update({ last_sent: today }).eq('player_id', s.player_id); }
     else if (r.status === 403) await db.from('tg_subs').update({ enabled: false }).eq('player_id', s.player_id);
     await pause();
@@ -168,8 +181,8 @@ Deno.serve(async req => {
       const play = withBonus ? { text: en ? playText(true) : `${playText(false)} · Play`, url: `https://t.me/Survivefridaybot?startapp=bonus-${bonus}` } : { text: en ? '▶ Play' : '▶ Играть · Play', url: 'https://t.me/Survivefridaybot?startapp' };
       // в русских группах есть иностранцы — под русским текстом тот же пост по-английски
       const one = (e: boolean) => groupText(ru, e, recruit, dow, day, week) + (recruit ? '' : recap(e)) + (withBonus ? bonusLine(e) : '');
-      const text = en ? one(true) : `${one(false)}\n\n🇬🇧 ${one(true)}`;
-      const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться · Share', url: shareUrl(en) }], [play]] : [[play]];
+      const text = en ? one(true) + brkLine(true) : `${one(false)}${brkLine(false)}\n\n🇬🇧 ${one(true)}${brkLine(true)}`;
+      const keyboard = recruit ? [[{ text: en ? '📣 Share the game' : '📣 Поделиться · Share', url: shareUrl(en) }], [play], [brkBtn(en, !en)]] : [[play], [brkBtn(en, !en)]];
       const r = await send({ chat_id: g.chat_id, text, reply_markup: { inline_keyboard: keyboard } });
       const j = await r.json().catch(() => ({}));
       if (r.ok) { groups++; await db.from('tg_groups').update({ last_sent: today }).eq('chat_id', g.chat_id); }

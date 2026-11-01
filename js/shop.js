@@ -57,7 +57,8 @@ const MONTHS = L(['Январь', 'Февраль', 'Март', 'Апрель', 
   ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
 const seasonItem = id => {
   const mo = +String(id).slice(-2) - 1 || 0;
-  return { id: 'season_' + id, ico: '🏆', mood: 25, toon: 'wear', t: L(`Куртка сезона «${MONTHS[mo]}»`, `“${MONTHS[mo]}” season jacket`), wear: { jacket: SEASON_COLORS[mo], tie: '', dress: false, short: false } };
+  const th = typeof retThemeOf === 'function' ? retThemeOf(mo) : null;  // тема месяца (js/retention.js): своё название вещи сезона
+  return { id: 'season_' + id, ico: th?.ico || '🏆', mood: 25, toon: 'wear', t: th ? L(th.item_ru, th.item_en) : L(`Куртка сезона «${MONTHS[mo]}»`, `“${MONTHS[mo]}” season jacket`), wear: { jacket: SEASON_COLORS[mo], tie: '', dress: false, short: false } };
 };
 const rareItemById = id => RARE_ITEMS.find(x => x.id === id) || (String(id).startsWith('season_') ? seasonItem(String(id).slice(7)) : null);
 
@@ -261,6 +262,7 @@ function openSeason(back) {
     m.innerHTML = `<div class="modal-box glass cert-box shp-season-box" role="dialog" aria-modal="true" aria-labelledby="shpSnT">
       <span class="lvl-ico" aria-hidden="true">🏆</span>
       <h2 id="shpSnT">${L(`Сезон: ${seasonName(st.id)}`, `Season: ${seasonName(st.id)}`)}</h2>
+      ${typeof retThemeBadge === 'function' ? retThemeBadge(st.id, true) : ''}
       <p>${L(`Каждая законченная неделя карьеры — +1 уровень. Уровень ${lv}/${SEASON_LEVELS} · до конца сезона ${pl(seasonDaysLeft(), 'день', 'дня', 'дней', 'day', 'days')}.`, `Every finished career week is +1 level. Level ${lv}/${SEASON_LEVELS} · ${pl(seasonDaysLeft(), '', '', '', 'day', 'days')} left in the season.`)}</p>
       <div class="shp-sc-bar"><i style="width:${lv / SEASON_LEVELS * 100}%"></i></div>
       <div class="shp-sc-grid"><b>${L('Ур.', 'Lv')}</b><b>${L('Бесплатно', 'Free')}</b><b>⭐ ${L('Премиум', 'Premium')}</b>
@@ -297,7 +299,7 @@ function seasonCard() {
   const st = seasonState(), lv = seasonLevel(st), n = seasonClaimable(st);
   box.hidden = false;
   box.innerHTML = `<button type="button" class="shp-sc-card" id="seasonOpen"><span class="shp-sc-ico" aria-hidden="true">🏆</span>
-    <span class="shp-sc-txt"><b>${L(`Сезон: ${seasonName(st.id)}`, `Season: ${seasonName(st.id)}`)}${st.prem ? ' ⭐' : ''}</b><small>${L(`уровень ${lv}/${SEASON_LEVELS} · ещё ${pl(seasonDaysLeft(), 'день', 'дня', 'дней', 'day', 'days')}`, `level ${lv}/${SEASON_LEVELS} · ${pl(seasonDaysLeft(), '', '', '', 'day', 'days')} left`)}</small>
+    <span class="shp-sc-txt"><b>${L(`Сезон: ${seasonName(st.id)}`, `Season: ${seasonName(st.id)}`)}${st.prem ? ' ⭐' : ''}</b>${typeof retThemeBadge === 'function' ? retThemeBadge(st.id) : ''}<small>${L(`уровень ${lv}/${SEASON_LEVELS} · ещё ${pl(seasonDaysLeft(), 'день', 'дня', 'дней', 'day', 'days')}`, `level ${lv}/${SEASON_LEVELS} · ${pl(seasonDaysLeft(), '', '', '', 'day', 'days')} left`)}</small>
       <span class="shp-sc-bar"><i style="width:${lv / SEASON_LEVELS * 100}%"></i></span></span>
     ${n ? `<em class="shp-sc-n">${L(`Забрать: ${n}`, `Claim: ${n}`)}</em>` : '<em class="shp-sc-go">›</em>'}</button>`;
   $('seasonOpen').onclick = () => openSeason();

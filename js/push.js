@@ -88,6 +88,7 @@ function pushStateNow() {
     pet: pet?.name || '', petHungry: !!hungry, kid: kidW?.k.name || kids[0]?.name || '', kidWant: kidW ? lc(kidW.w.t) : '',
     week: Math.min(C2.week, YEAR), company: C2.stage === 'work' ? C2.company : '', bank: C2.bank, certReady: typeof certCan === 'function' && certCan(C2),
     streak: Math.max(typeof dayStreakNow === 'function' ? dayStreakNow() : 0, typeof streakNow === 'function' ? streakNow() : 0),  // серия входов (js/streak.js) или недели дня
+    lastPlay: new Date(typeof retSessionAt !== 'undefined' ? retSessionAt : Date.now()).toISOString(),  // когда игрок последний раз открыл игру (js/retention.js): push-send чаще пишет «скучает», если его нет сутки и больше
   };
 }
 let pushStateLast = '';

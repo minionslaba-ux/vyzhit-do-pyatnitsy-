@@ -125,6 +125,8 @@ let CAST_CARDS = [];
 // чтобы сохранённая неделя с карточкой эпизода не считалась «старой колодой»
 let STORIES = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
+// Карточки темы месяца (data/season_cards.json, формат как у pool.json; id mthММ_NN — месяц в id): в карьеру их подмешивает js/retention.js
+let MONTH_CARDS = [];
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   // Английский: data/en/<имя>.json — только тексты, по id поверх русских. Карточки без перевода в английскую игру не попадают
@@ -132,6 +134,8 @@ const dataReady = (async () => {
   try {
     let [p, p2, p3, q, ch, iv, cast, st] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
       get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => []), get('stories', 'STORIES_JSON').catch(() => [])]);
+    let mc = await get('season_cards', 'SEASON_CARDS_JSON').catch(() => []);
+    if (EN) mc = enCards(mc, await en('season_cards'));
     if (EN) {
       const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'pool3', 'quiz', 'chains', 'interview', 'cast'].map(en));
       p = enCards(p, ep); p2 = enCards(p2, ep2); p3 = enCards(p3, ep3); cast = enCards(cast, ecast);
@@ -147,6 +151,7 @@ const dataReady = (async () => {
     POOL = p.map(c => ({ ...boost(norm(c)), lvl: 1 })).concat(p2.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })), p3.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })), lvlCards); QUIZ = q;
     const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
+    MONTH_CARDS = (Array.isArray(mc) ? mc : []).map(c => ({ ...boost(norm(c)), month: +String(c.id).slice(3, 5) || 0 })); for (const c of MONTH_CARDS) byId[c.id] = c;
     POOL_CHAINS = ch.map(x => ({ ...x, card: boost(norm(x.card)) }));
     for (const c of POOL) byId[c.id] = c;
     for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };

@@ -16,6 +16,7 @@ export const ADMIN_COMMANDS = [
   { command: 'sales', description: 'Покупки и деньги' },
   { command: 'find', description: 'Найти игрока: /find Имя' },
   { command: 'push', description: 'Пуш всем: /push Заголовок | Текст' },
+  { command: 'rpush', description: 'Случайный мотивирующий пуш (1000 вариантов)' },
   { command: 'news', description: 'Новость в группы и чат игры: /news текст' },
   { command: 'event', description: 'Случайная ситуация — опрос в группы' },
   { command: 'broadcast', description: 'Сообщение подписчикам бота: /broadcast текст' },
@@ -28,13 +29,14 @@ const HELP = `🛠 <b>Команды разработчика</b>
 📊 <b>Статистика</b>
 /stats — сегодня · /yesterday — вчера · /week — 7 дней
 /online — кто сейчас в игре
-/top — рейтинг недели дня сегодня
+/top — лучшие игроки недели дня
 /sales — покупки (сегодня и 7 дней)
 /find Имя — найти игрока
 /export — все игроки в Excel
 
 📣 <b>Рассылки</b> (сначала превью, потом кнопка «Отправить»)
 /push Заголовок | Текст — пуш-уведомление всем подписчикам (или только себе для проверки)
+/rpush — случайный мотивирующий пуш из 1000 готовых (русский + английский), можно перебрать «🎲 Другой»
 /news текст — новость в Telegram-группы и/или в общий чат игры
 /event — случайная офисная ситуация из игры как опрос в группы
 /broadcast текст — личное сообщение всем, кто включил напоминания в боте
@@ -94,6 +96,17 @@ export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: 
       await say(`🔔 <b>Превью пуша</b>\n\n<b>${esc(p.t)}</b>\n${esc(p.b)}\n\nПодписчиков: ${count ?? 0}`, { reply_markup: kb([[[`✅ Отправить всем (${count ?? 0})`, `adm:${id}:all`]], [['🧪 Только мне', `adm:${id}:me`], ['✖ Отмена', `adm:${id}:no`]]]) });
       return true;
     }
+    case 'rpush': {
+      const list = await fetch(`${SITE}data/bot/push.json`).then(r => r.json()).catch(() => []);
+      if (!list.length) { await say('Не удалось загрузить тексты пушей.'); return true; }
+      const i = Math.floor(Math.random() * list.length), x = list[i];
+      const p = { t: x.t, b: x.b, en: { t: x.et, b: x.eb }, rnd: true };
+      const { count } = await db.from('push_subs').select('endpoint', { count: 'exact', head: true });
+      const id = await draft(ctx, tg, 'push', p);
+      await say(`🎲 <b>Случайный пуш</b> № ${i + 1} из ${list.length}\n\n<b>${esc(p.t)}</b>\n${esc(p.b)}\n\n🇬🇧 <b>${esc(p.en.t)}</b>\n${esc(p.en.b)}\n\nПодписчиков: ${count ?? 0}`,
+        { reply_markup: kb([[[`✅ Отправить всем (${count ?? 0})`, `adm:${id}:all`]], [['🎲 Другой', `adm:${id}:again`], ['🧪 Только мне', `adm:${id}:me`]], [['✖ Отмена', `adm:${id}:no`]]]) });
+      return true;
+    }
     case 'news': {
       if (!rest.trim()) { await say('Формат: <code>/news текст новости</code>'); return true; }
       const id = await draft(ctx, tg, 'news', { text: rest.trim().slice(0, 3500) });
@@ -143,6 +156,7 @@ export async function adminCallback(ctx: Ctx, cq: any) {
   if (!d) return api('answerCallbackQuery', { callback_query_id: cq.id, text: 'Черновик уже отправлен или устарел' });
   const act = m[2];
   await api('answerCallbackQuery', { callback_query_id: cq.id, text: act === 'no' ? 'Отменено' : 'Отправляю…' });
+  if (act === 'again' && d.kind === 'push') { await db.from('admin_drafts').delete().eq('id', d.id); await api('editMessageReplyMarkup', { chat_id: chatId, message_id: cq.message.message_id, reply_markup: { inline_keyboard: [] } }); return adminCommand(ctx, 'rpush', '', chatId, tg); }
   if (act === 'again' && d.kind === 'event') { await db.from('admin_drafts').delete().eq('id', d.id); await done('🔄 Ищу другую…'); return adminCommand(ctx, 'event', '', chatId, tg); }
   await db.from('admin_drafts').delete().eq('id', d.id);  // один черновик — одна отправка
   if (act === 'no') return done('✖ Отменено.');
@@ -151,7 +165,7 @@ export async function adminCallback(ctx: Ctx, cq: any) {
     const { data: k } = await db.from('push_keys').select('cron_key').eq('id', 1).maybeSingle();
     let only: string[] | undefined;
     if (act === 'me') { only = ((await db.from('tg_accounts').select('user_id').eq('tg_id', tg)).data || []).map((x: any) => x.user_id); if (!only.length) return done('Ваш Telegram не привязан к аккаунту игры — войдите в игру через Telegram и включите уведомления.'); }
-    const r = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/push-send`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: k?.cron_key, custom: { t: p.t, b: p.b }, only_players: only }) }).then(x => x.json()).catch(e => ({ error: String(e) }));
+    const r = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/push-send`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: k?.cron_key, custom: { t: p.t, b: p.b, ...(p.en ? { en: p.en } : {}), ...(p.rnd ? { url: '/?utm_source=push&utm_medium=web&utm_campaign=rpush' } : {}) }, only_players: only }) }).then(x => x.json()).catch(e => ({ error: String(e) }));
     return done(r.error ? `❌ ${esc(r.error)}` : `✅ Пуш отправлен: ${r.sent} из ${r.total}${r.gone ? `, удалено устаревших подписок: ${r.gone}` : ''}.`);
   }
   if (d.kind === 'news') {
