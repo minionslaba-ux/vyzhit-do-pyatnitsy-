@@ -129,6 +129,20 @@ function renderAcctBox() {
   box.innerHTML = btns.join(''); box.hidden = !btns.length;
   box.onclick = e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a === 'pass') passModal(); if (a === 'tg') tgLogin(); if (a === 'vk') vkLogin(); };
 }
+// Проверка по базе утёкших паролей HaveIBeenPwned (бесплатно, k-anonymity): уходят только первые 5 символов SHA-1,
+// сам пароль и его полный хеш никуда не отправляются. Нет связи — не мешаем сохранить пароль.
+async function pwLeaked(pw) {
+  try {
+    const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(pw));
+    const hex = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 4000);
+    const r = await fetch(`https://api.pwnedpasswords.com/range/${hex.slice(0, 5)}`, { headers: { 'Add-Padding': 'true' }, signal: ctl.signal });
+    clearTimeout(t);
+    if (!r.ok) return false;
+    const tail = hex.slice(5);
+    return (await r.text()).split('\n').some(l => { const [h, n] = l.trim().split(':'); return h === tail && +n > 0; });
+  } catch { return false; }
+}
 function passModal() {
   const m = $('modal');
   m.innerHTML = `<form class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="pwTitle" id="pwForm"><span class="lvl-ico" aria-hidden="true">🔑</span>
@@ -144,6 +158,7 @@ function passModal() {
     e.preventDefault();
     const pw = $('pwNew').value;
     if (pw.length < 6) { $('pwErr').textContent = L('Нужно хотя бы 6 символов.', 'Use at least 6 characters.'); return; }
+    if (await pwLeaked(pw)) { $('pwErr').textContent = L('Этот пароль уже встречался в утечках данных в интернете — придумайте другой.', 'This password has appeared in data breaches — please choose another one.'); return; }
     try { await board.setPassword(pw); prefs.hasPass = true; store.set(KEY.prefs, prefs); m.hidden = true; toast(L('🔑 Пароль сохранён', '🔑 Password saved')); renderAcctBox(); }
     catch (err) { $('pwErr').textContent = L(`Не получилось: ${err.message}`, `Didn’t work: ${err.message}`); }
   };
