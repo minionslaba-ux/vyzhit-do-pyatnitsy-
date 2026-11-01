@@ -333,7 +333,7 @@ function startLevel(lvl) {
   store.del(KEY.save); saveCareer();
   track('level_start', { detail: String(lvl) });
   toast(L(`${LEVELS[lvl].ico} Уровень ${lvl}: «${LEVELS[lvl].name}» — новые карточки!`, `${LEVELS[lvl].ico} Level ${lvl}: “${LEVELS[lvl].name}” — new cards!`));
-  startWeek();
+  loadLevel(lvl).then(() => startWeek());  // уровень 4+: сначала подгрузить его карточки
 }
 function continueCareer() {
   C = store.get(KEY.career, null);
@@ -350,7 +350,16 @@ function continueCareer() {
 }
 // Показанные карточки копятся между карьерами; когда в фазе дня почти не остаётся новых, круг начинается заново
 // Карточки уровня; если у уровня мало карточек (английская версия: перевод ещё не готов) — весь пул
-const levelPool = lvl => { if (!lvl) return POOL; const a = POOL.filter(c => c.lvl === lvl); return a.length >= 150 ? a : POOL; };
+// Карточки уровня. С 4-го уровня (по 1000 своих) подмешиваем примерно треть карточек прошлого уровня — меньше повторов за 52 недели
+const lvlHash = id => { let h = 0; for (const ch of String(id)) h = (h * 31 + ch.charCodeAt(0)) | 0; return Math.abs(h); };
+const levelPool = lvl => {
+  if (!lvl) return POOL;
+  const a = POOL.filter(c => c.lvl === lvl);
+  if (a.length < 150) return POOL;
+  if (lvl < LEVEL_LAZY) return a;
+  const prev = POOL.filter(c => c.lvl === lvl - 1), k = Math.max(1, Math.round(prev.length / 400));  // ~400 старых на 1000 своих
+  return a.concat(prev.filter(c => lvlHash(c.id) % k === 0));
+};
 function seenSet(lvl = 0) {
   const seen = new Set(store.get(KEY.seen, [])), LP = levelPool(lvl);
   for (const ph of PHASES) {

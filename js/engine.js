@@ -109,8 +109,20 @@ const LEVELS = [null,
   { name: L('Офисный планктон', 'Office plankton'), ico: '🐟', neg: .75, cap: -15, save: true,    desc: L('Первый год: дедлайны, кулер и «есть минутка?»', 'Year one: deadlines, the water cooler and “got a minute?”') },
   { name: L('Средний менеджмент', 'Middle management'), ico: '📊', neg: 1.06, desc: L('Второй год: новые люди, новые интриги, новые ситуации', 'Year two: new people, new intrigue, new situations') },
   { name: L('Топ-менеджмент', 'Top management'), ico: '👑', neg: 1.12, desc: L('Третий год: самые сложные решения и самые высокие ставки', 'Year three: the hardest calls and the highest stakes') },
+  // уровни 4–13: по 1000 своих карточек (data/pool_lN.json), грузятся только когда игрок до них дошёл (loadLevel ниже)
+  { name: L('Свой стартап', 'Startup founder'), ico: '🚀', neg: 1.13, desc: L('Свой продукт, инвесторы и команда из пяти человек', 'Your own product, investors and a team of five') },
+  { name: L('Удалённый офис', 'Remote office'), ico: '🏠', neg: 1.14, desc: L('Созвоны, часовые пояса и кот на клавиатуре', 'Video calls, time zones and a cat on the keyboard') },
+  { name: L('Офис за границей', 'Office abroad'), ico: '🌍', neg: 1.15, desc: L('Новая страна, новый язык и новые правила игры', 'A new country, a new language, new rules') },
+  { name: L('Большая корпорация', 'Mega-corporation'), ico: '🏛️', neg: 1.16, desc: L('Сорок тысяч сотрудников и двенадцать согласований', 'Forty thousand people and twelve sign-offs') },
+  { name: L('Креативное агентство', 'Creative agency'), ico: '🎨', neg: 1.17, desc: L('Клиенты, правки и «сделайте логотип побольше»', 'Clients, revisions and “make the logo bigger”') },
+  { name: L('Слияние компаний', 'The merger'), ico: '🤝', neg: 1.18, desc: L('Две культуры, две кофемашины, одна команда', 'Two cultures, two coffee machines, one team') },
+  { name: L('Антикризисный менеджер', 'Crisis manager'), ico: '🧯', neg: 1.19, desc: L('Спасти компанию и не сгореть самому', 'Save the company without burning out') },
+  { name: L('Генеральный директор', 'CEO'), ico: '🏢', neg: 1.2, desc: L('Вы на самом верху. Календарь расписан по минутам', 'You’re at the very top. Your calendar is booked to the minute') },
+  { name: L('Свой холдинг', 'Your own holding'), ico: '🏰', neg: 1.21, desc: L('Пекарни, футбольный клуб и авиакомпания — всё ваше', 'Bakeries, a football club and an airline — all yours') },
+  { name: L('Легенда офиса', 'Office legend'), ico: '🌟', neg: 1.22, desc: L('Наставник, автор книги и человек, который умеет отдыхать', 'Mentor, author and someone who knows how to rest') },
 ];
-const LEVEL_MAX = 3;
+const LEVEL_MAX = 13;
+const LEVEL_LAZY = 4;  // с этого уровня карточки подгружаются по требованию: data/pool_l4.json … pool_l13.json
 const LEVEL_FILES = [['pool_l1a', 1], ['pool_l1b', 1], ['pool_l1c', 1], ['pool_l1d', 1], ['pool_l2a', 2], ['pool_l3a', 3], ['pool_l3b', 3], ['pool_l3c', 3]];
 const levelOf = c => Math.min(LEVEL_MAX, Math.max(1, (c && c.level) || 1));
 const diffStage = (c, r = typeof rankIdx === 'function' ? rankIdx() : 0) => c && c.week <= 3 && r <= 1 ? 0 : r <= 1 ? 1 : r <= 4 ? 2 : 3;
@@ -158,8 +170,24 @@ const dataReady = (async () => {
     TOTAL_CARDS = TOTAL_BASE + POOL.length;
     STORIES = st || []; window.stoRegister?.();
   } catch {}
+  // продолжение карьеры на уровне 4+: его карточки нужны до восстановления сохранённой недели
+  try { const lv = (store.get(KEY.career, null) || {}).level || 1; if (lv >= LEVEL_LAZY) await loadLevel(lv); } catch {}
   dataLoaded = true;
 })();
+// Карточки уровня 4+ (по 1000 на уровень): загрузить один раз, перед первой неделей этого уровня
+const levelLoaded = {};
+function loadLevel(lvl) {
+  if (lvl < LEVEL_LAZY || lvl > LEVEL_MAX) return Promise.resolve();
+  return levelLoaded[lvl] ||= (async () => {
+    const f = `pool_l${lvl}`;
+    let cards = window[`POOL_L${lvl}_JSON`] || await fetch(`data/${f}.json`).then(r => r.ok ? r.json() : []).catch(() => []);
+    if (EN) { const tr = window[`EN_POOL_L${lvl}_JSON`] || await fetch(`data/en/${f}.json`).then(r => r.ok ? r.json() : []).catch(() => []); cards = enCards(cards, tr); }
+    if (!cards.length) { delete levelLoaded[lvl]; return; }
+    const list = cards.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl }));
+    POOL = POOL.concat(list); for (const c of list) byId[c.id] = c;
+    TOTAL_CARDS = TOTAL_BASE + POOL.length;
+  })();
+}
 // Перед стартом недели ждём данные; кнопка показывает, что идёт загрузка
 async function whenReady(btn) {
   if (dataLoaded) return;
