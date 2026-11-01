@@ -2151,3 +2151,18 @@ html.docscroll:has(#game[hidden]), html.docscroll:has(#game[hidden]) body { heig
 html.docscroll:has(#game[hidden]) body { overflow-x: hidden; overflow-y: visible; }
 html.docscroll:has(#game[hidden]) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
 html.docscroll:has(#game[hidden]) .view.menu, html.docscroll:has(#game[hidden]) .view.join, html.docscroll:has(#game[hidden]) .view.end { flex: none; overflow: visible; }
+
+/* Мобильные браузеры (Яндекс Браузер, Chrome на Android): не раздувать шрифты самостоятельно — иначе блоки вылезают за экран */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* Ничего не шире экрана: лишнее обрезается, прокрутки вбок нет */
+html.docscroll { overflow-x: hidden; }
+html.docscroll body { overflow-x: hidden; overflow-x: clip; }
+.view, .app, .panel { min-width: 0; }
+.view.menu > *, .view.join > *, .view.end > * { max-width: 100%; }
+/* Длинные надписи на кнопках переносятся, а не растягивают блок */
+.hero-info { min-width: 0; }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 6px; max-width: 100%; }
+.hero-btns .btn-chip, .hero-info .btn-chip { white-space: normal; max-width: 100%; text-align: left; line-height: 1.2; }
+.play2 .btn-main { min-width: 0; overflow-wrap: anywhere; }
+.play2 .btn-main small { white-space: normal; text-align: center; }
+.me-badge { max-width: calc(100vw - 40px); }
