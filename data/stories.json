@@ -1,0 +1,3256 @@
+[
+ {
+  "id": "romance",
+  "icon": "💘",
+  "title": [
+   "Роман в бухгалтерии",
+   "Romance in Accounting"
+  ],
+  "teaser": [
+   "В бухгалтерии кто-то вздыхает чаще, чем звонит телефон",
+   "Someone in Accounting sighs more often than the phone rings"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Света из бухгалтерии",
+      "Sveta from Accounting"
+     ],
+     "text": [
+      "Света из бухгалтерии в третий раз за утро «случайно» проходит мимо стола Игоря из логистики. И шепчет вам: «Узнайте, какой кофе он пьёт. Очень надо».",
+      "Sveta from Accounting \"accidentally\" walks past Igor from Logistics for the third time this morning. She whispers to you: \"Find out what coffee he drinks. It's important.\""
+     ],
+     "hook": [
+      "В бухгалтерии кто-то вздыхает чаще, чем звонит телефон",
+      "Someone in Accounting sighs more often than the phone rings"
+     ],
+     "left": {
+      "label": [
+       "Не моё дело",
+       "Not my business"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       -5
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Разведаю!",
+       "I'll find out!"
+      ],
+      "fx": [
+       0,
+       -5,
+       0,
+       10
+      ],
+      "flag": "cupid"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Игорь из логистики",
+      "Igor from Logistics"
+     ],
+     "text": [
+      "Игорь пьёт капучино на овсяном и, как выяснилось, тоже поглядывает на бухгалтерию. Он просит передать Свете записку. «Только не читайте!» Записка не заклеена.",
+      "Igor drinks oat cappuccino and, it turns out, keeps glancing at Accounting too. He asks you to pass Sveta a note. \"Don't read it!\" The note isn't sealed."
+     ],
+     "hook": [
+      "Игорь пишет записку. От руки. Кажется, это серьёзно",
+      "Igor is writing a note. By hand. This looks serious"
+     ],
+     "left": {
+      "label": [
+       "Прочитать. Чуть-чуть",
+       "Read it. Just a peek"
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       -10
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Передать нетронутой",
+       "Deliver it untouched"
+      ],
+      "fx": [
+       5,
+       -5,
+       0,
+       10
+      ],
+      "flag": "cupid"
+     },
+     "if": "cupid"
+    },
+    {
+     "who": [
+      "Света из бухгалтерии",
+      "Sveta from Accounting"
+     ],
+     "text": [
+      "Света решила действовать сама: подложила Игорю шоколадку с подписью «От тайного поклонника». Только Игорь почему-то уверен, что шоколадка от вас.",
+      "Sveta took matters into her own hands: she left Igor a chocolate bar signed \"From a secret admirer\". Except Igor is somehow sure it was from you."
+     ],
+     "hook": [
+      "Кто-то подложил шоколадку. Подозревают вас",
+      "Someone left a chocolate bar. You are the suspect"
+     ],
+     "left": {
+      "label": [
+       "Пусть думает — мне приятно",
+       "Let him think so — it's flattering"
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       -10
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Объяснить, что это Света",
+       "Explain it was Sveta"
+      ],
+      "fx": [
+       0,
+       0,
+       0,
+       10
+      ],
+      "flag": "cupid"
+     },
+     "if": "spoiler"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Общий чат",
+      "Team chat"
+     ],
+     "text": [
+      "Весь отдел заметил, что Света и Игорь обедают вместе. В общем чате открыли тотализатор «Поженятся до Нового года?». Ставки принимает стажёр.",
+      "The whole department noticed Sveta and Igor having lunch together. The team chat opened a betting pool: \"Married by New Year?\" The intern is taking bets."
+     ],
+     "hook": [
+      "Обеды вдвоём не остались незамеченными",
+      "Lunches for two did not go unnoticed"
+     ],
+     "left": {
+      "label": [
+       "Поставить на «да»",
+       "Bet on \"yes\""
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       5
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Закрыть тотализатор",
+       "Shut the pool down"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       -5
+      ],
+      "flag": "cupid"
+     },
+     "if": "cupid"
+    },
+    {
+     "who": [
+      "Игорь из логистики",
+      "Igor from Logistics"
+     ],
+     "text": [
+      "Игорь подходит смущённый: «Слушайте, шоколадка была от вас? Может, сходим на кофе?» Где-то за стеллажом с папками громко роняют степлер.",
+      "Igor comes over, blushing: \"So, was the chocolate from you? Maybe we could grab a coffee?\" Somewhere behind the filing cabinets, a stapler hits the floor."
+     ],
+     "hook": [
+      "Игорь собирается что-то спросить. Вас",
+      "Igor is about to ask you something"
+     ],
+     "left": {
+      "label": [
+       "Кофе так кофе",
+       "Coffee it is"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       -15
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Рассказать правду про Свету",
+       "Tell him the truth about Sveta"
+      ],
+      "fx": [
+       -5,
+       0,
+       0,
+       10
+      ],
+      "flag": "cupid"
+     },
+     "if": "spoiler"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Света из бухгалтерии",
+      "Sveta from Accounting"
+     ],
+     "text": [
+      "Игорь позвал Свету на свидание в субботу, а у Светы годовая сверка. «Возьмите её на себя, умоляю! Я испеку торт».",
+      "Igor asked Sveta out for Saturday, but she has the annual reconciliation. \"Please take it over for me! I'll bake you a cake.\""
+     ],
+     "hook": [
+      "У Светы свидание и годовая сверка в один день",
+      "Sveta has a date and the annual audit on the same day"
+     ],
+     "left": {
+      "label": [
+       "У меня свой отчёт",
+       "I have my own report"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       -10
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Беги на свидание!",
+       "Go on that date!"
+      ],
+      "fx": [
+       0,
+       -15,
+       5,
+       15
+      ],
+      "flag": "cupid"
+     },
+     "if": "cupid"
+    },
+    {
+     "who": [
+      "Офис-менеджер",
+      "Office manager"
+     ],
+     "text": [
+      "Света и Игорь перестали разговаривать, а совещания логистики с бухгалтерией превратились в холодную войну. Офис-менеджер просит вас «как-то это разрулить».",
+      "Sveta and Igor stopped talking, and Logistics–Accounting meetings turned into a cold war. The office manager asks you to \"sort it out somehow\"."
+     ],
+     "hook": [
+      "Бухгалтерия и логистика больше не здороваются",
+      "Accounting and Logistics no longer say hello"
+     ],
+     "left": {
+      "label": [
+       "Сами разберутся",
+       "They'll figure it out"
+      ],
+      "fx": [
+       5,
+       0,
+       -5,
+       -5
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Устроить им общий кофе-брейк",
+       "Set up a joint coffee break"
+      ],
+      "fx": [
+       0,
+       -5,
+       5,
+       10
+      ],
+      "flag": "cupid"
+     },
+     "if": "spoiler"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Света и Игорь",
+      "Sveta and Igor"
+     ],
+     "text": [
+      "Света и Игорь стоят у вашего стола, держась за руки. «У нас помолвка. И нам нужен свидетель. Других кандидатов нет».",
+      "Sveta and Igor stand at your desk holding hands. \"We're engaged. And we need a witness. There are no other candidates.\""
+     ],
+     "hook": [
+      "Света и Игорь хотят сказать вам что-то важное",
+      "Sveta and Igor have something important to tell you"
+     ],
+     "left": {
+      "label": [
+       "Ой, я стесняюсь",
+       "Oh, I'm too shy"
+      ],
+      "fx": [
+       0,
+       5,
+       0,
+       -5
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Почту за честь!",
+       "It'd be an honor!"
+      ],
+      "fx": [
+       15,
+       -10,
+       0,
+       15
+      ],
+      "flag": "cupid"
+     },
+     "if": "cupid"
+    },
+    {
+     "who": [
+      "Света из бухгалтерии",
+      "Sveta from Accounting"
+     ],
+     "text": [
+      "Света приносит вам кофе: «Знаете, Игорь — не мой человек. А вот сальса по четвергам — моё. Пойдёте со мной? Там весь отдел продаж».",
+      "Sveta brings you a coffee: \"You know, Igor isn't the one for me. But Thursday salsa class is. Will you come? The whole sales team goes.\""
+     ],
+     "hook": [
+      "Света приняла какое-то решение. Наверное, важное",
+      "Sveta has made some kind of decision. An important one"
+     ],
+     "left": {
+      "label": [
+       "Только если без танцев",
+       "Only if there is no dancing"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       0
+      ],
+      "flag": "spoiler"
+     },
+     "right": {
+      "label": [
+       "Учите меня сальсе!",
+       "Teach me salsa!"
+      ],
+      "fx": [
+       15,
+       -10,
+       0,
+       10
+      ],
+      "flag": "cupid"
+     },
+     "if": "spoiler"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "wedding",
+    "title": [
+     "Свидетель на свадьбе",
+     "Witness at the wedding"
+    ],
+    "text": [
+     "Через полгода вы произносите тост на свадьбе Светы и Игоря. Плачет весь отдел. Бухгалтерия впервые сдала отчёт с сердечками на полях.",
+     "Six months later you give a toast at Sveta and Igor's wedding. The whole department cries. Accounting files its first report with hearts in the margins."
+    ],
+    "reward": {
+     "bank": 15,
+     "badge": {
+      "ico": "💍",
+      "name": [
+       "Купидон бухгалтерии",
+       "Cupid of Accounting"
+      ]
+     }
+    },
+    "if": "cupid",
+    "min": 4
+   },
+   {
+    "id": "friends",
+    "title": [
+     "Хорошие друзья",
+     "Good friends"
+    ],
+    "text": [
+     "Большой любви не случилось, зато со Светой и Игорем вы теперь лучшие соседи по обеду. Вас зовут на все дни рождения.",
+     "No great romance, but you, Sveta and Igor are now the best lunch buddies. You get invited to every birthday."
+    ],
+    "reward": {
+     "mood": 15,
+     "bank": 5
+    },
+    "if": "cupid",
+    "min": 2
+   },
+   {
+    "id": "gossip",
+    "title": [
+     "Главный сюжет офиса",
+     "The office soap opera"
+    ],
+    "text": [
+     "Тотализатор, шоколадки, кофе не с тем человеком… Эту историю офис будет пересказывать годами — и вас в ней тоже.",
+     "Betting pools, chocolate, coffee with the wrong person… The office will retell this story for years — with you in it."
+    ],
+    "reward": {
+     "hint": 1,
+     "bank": 5
+    }
+   }
+  ]
+ },
+ {
+  "id": "newboss",
+  "icon": "🕶️",
+  "title": [
+   "Новый босс",
+   "The New Boss"
+  ],
+  "teaser": [
+   "У нового босса тёмные очки и какая-то тайна",
+   "The new boss wears dark glasses and hides a secret"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Ника Андреевна, новый босс",
+      "Nika, the new boss"
+     ],
+     "text": [
+      "Новый босс Ника Андреевна носит тёмные очки даже в переговорной и уходит ровно в 17:00. Откуда она — никто не знает. Коллеги предлагают вам поискать её в соцсетях.",
+      "The new boss, Nika, wears dark glasses even in meetings and leaves at 5:00 sharp. Nobody knows where she came from. Coworkers suggest you look her up online."
+     ],
+     "hook": [
+      "У нового босса тёмные очки и какая-то тайна",
+      "The new boss wears dark glasses and hides a secret"
+     ],
+     "left": {
+      "label": [
+       "Поискать, конечно",
+       "Look her up, obviously"
+      ],
+      "fx": [
+       5,
+       0,
+       -5,
+       10
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "У человека есть право на тайну",
+       "Everyone deserves a secret"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -5
+      ],
+      "flag": "trust"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Ника Андреевна, новый босс",
+      "Nika, the new boss"
+     ],
+     "text": [
+      "Ника Андреевна оценила, что вы не сплетничаете, и даёт секретное поручение: каждый день в 17:01 присылать ей «отчёт о настроении отдела». Одним смайликом.",
+      "Nika appreciates that you don't gossip and gives you a secret task: every day at 5:01, send her a \"team mood report\". As a single emoji."
+     ],
+     "hook": [
+      "Новый босс доверил вам секретное поручение. Одним смайликом",
+      "The new boss has a secret task for you. One emoji long"
+     ],
+     "left": {
+      "label": [
+       "Как-то это странно",
+       "This is kind of weird"
+      ],
+      "fx": [
+       5,
+       0,
+       -5,
+       0
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "🙂 — принято",
+       "🙂 — got it"
+      ],
+      "fx": [
+       0,
+       -5,
+       15,
+       -5
+      ],
+      "flag": "trust"
+     },
+     "if": "trust"
+    },
+    {
+     "who": [
+      "Принтер",
+      "Printer"
+     ],
+     "text": [
+      "В соцсетях у Ники Андреевны только фото кактуса. Зато в принтере вы находите её забытый листок: стихи. Про дедлайны. Очень хорошие стихи.",
+      "Online, Nika has nothing but a photo of a cactus. But in the printer you find a page she forgot: poems. About deadlines. Really good ones."
+     ],
+     "hook": [
+      "В принтере лежит листок, который вам видеть не полагалось",
+      "There is a page in the printer you were not supposed to see"
+     ],
+     "left": {
+      "label": [
+       "Показать отделу",
+       "Show the team"
+      ],
+      "fx": [
+       10,
+       0,
+       -15,
+       15
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "Вернуть молча",
+       "Return it quietly"
+      ],
+      "fx": [
+       0,
+       0,
+       5,
+       0
+      ],
+      "flag": "trust"
+     },
+     "if": "dig"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Анонимный канал",
+      "Anonymous channel"
+     ],
+     "text": [
+      "Каждый раз после вашего смайлика популярный анонимный канал «Офисный планктон» выкладывает мем ровно про ваш отдел. Совпадение?",
+      "Every time you send your emoji, the popular anonymous channel \"Office Plankton\" posts a meme about your exact department. Coincidence?"
+     ],
+     "hook": [
+      "Анонимный канал знает о вашем отделе подозрительно много",
+      "An anonymous channel knows suspiciously much about your team"
+     ],
+     "left": {
+      "label": [
+       "Начать расследование",
+       "Start investigating"
+      ],
+      "fx": [
+       5,
+       -10,
+       0,
+       5
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "Спросить у неё напрямую",
+       "Ask her directly"
+      ],
+      "fx": [
+       -5,
+       0,
+       5,
+       0
+      ],
+      "flag": "trust"
+     },
+     "if": "trust"
+    },
+    {
+     "who": [
+      "Ника Андреевна, новый босс",
+      "Nika, the new boss"
+     ],
+     "text": [
+      "Стихи про дедлайны разошлись по офису. Ника Андреевна вызывает вас: «Я знаю, кто это сделал. Мне не обидно. Мне интересно: понравилось?»",
+      "The deadline poems went around the office. Nika calls you in: \"I know who did it. I'm not upset. I'm curious: did you like them?\""
+     ],
+     "hook": [
+      "Ника Андреевна вызывает вас «поговорить о поэзии»",
+      "Nika wants to see you \"to talk about poetry\""
+     ],
+     "left": {
+      "label": [
+       "Это не я!",
+       "It wasn't me!"
+      ],
+      "fx": [
+       -5,
+       0,
+       -10,
+       5
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "Честно? Очень",
+       "Honestly? A lot"
+      ],
+      "fx": [
+       5,
+       0,
+       10,
+       0
+      ],
+      "flag": "trust"
+     },
+     "if": "dig"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Ника Андреевна, новый босс",
+      "Nika, the new boss"
+     ],
+     "text": [
+      "Ника Андреевна снимает очки: «Да, канал веду я. Десять лет назад меня уволили отсюда стажёром — за мемы. Теперь я вернулась боссом. Поможете с главным мемом года?»",
+      "Nika takes off her glasses: \"Yes, the channel is mine. Ten years ago they fired me here as an intern — for memes. Now I'm back as the boss. Help me with the meme of the year?\""
+     ],
+     "hook": [
+      "Тёмные очки скоро снимут. Вместе с тайной",
+      "The dark glasses are about to come off. Along with the secret"
+     ],
+     "left": {
+      "label": [
+       "Это слишком опасно",
+       "Too risky"
+      ],
+      "fx": [
+       5,
+       5,
+       -5,
+       0
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "Я в деле",
+       "I'm in"
+      ],
+      "fx": [
+       10,
+       -10,
+       10,
+       5
+      ],
+      "flag": "trust"
+     },
+     "if": "trust"
+    },
+    {
+     "who": [
+      "Отдел",
+      "The team"
+     ],
+     "text": [
+      "Вы всё вычислили: Ника Андреевна — автор анонимного канала с мемами про ваш отдел. Коллеги требуют разоблачения на общем собрании.",
+      "You figured it out: Nika runs the anonymous channel full of memes about your team. Coworkers demand an exposé at the all-hands."
+     ],
+     "hook": [
+      "Отдел жаждет разоблачения. Ключи — у вас",
+      "The team wants an exposé. You hold the keys"
+     ],
+     "left": {
+      "label": [
+       "Разоблачить!",
+       "Expose her!"
+      ],
+      "fx": [
+       10,
+       -5,
+       -20,
+       20
+      ],
+      "flag": "dig"
+     },
+     "right": {
+      "label": [
+       "Сохранить тайну",
+       "Keep the secret"
+      ],
+      "fx": [
+       -5,
+       0,
+       10,
+       -10
+      ],
+      "flag": "trust"
+     },
+     "if": "dig"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "right_hand",
+    "title": [
+     "Правая рука",
+     "Right hand"
+    ],
+    "text": [
+     "Мем года стал легендой, а Ника Андреевна назначила вас заместителем по юмору. Должность неофициальная, премия — вполне настоящая.",
+     "The meme of the year became a legend, and Nika made you her deputy for humor. The title is unofficial; the bonus is very real."
+    ],
+    "reward": {
+     "bank": 20,
+     "badge": {
+      "ico": "🕶️",
+      "name": [
+       "Хранитель тайны",
+       "Keeper of Secrets"
+      ]
+     }
+    },
+    "if": "trust",
+    "min": 3
+   },
+   {
+    "id": "respect",
+    "title": [
+     "Взаимное уважение",
+     "Mutual respect"
+    ],
+    "text": [
+     "Тайна осталась тайной. Ника Андреевна иногда подмигивает вам на планёрках и подписывает отгулы без вопросов.",
+     "The secret stayed a secret. Nika sometimes winks at you in meetings and signs your days off without questions."
+    ],
+    "reward": {
+     "mood": 10,
+     "hint": 1
+    },
+    "if": "trust",
+    "min": 2
+   },
+   {
+    "id": "exposer",
+    "title": [
+     "Разоблачитель",
+     "The whistleblower"
+    ],
+    "text": [
+     "Канал закрылся, Ника Андреевна стала просто строгим боссом, а отдел целую неделю носил вас на руках. Целую неделю.",
+     "The channel shut down, Nika became just a strict boss, and the team carried you on their shoulders for a whole week. A whole week."
+    ],
+    "reward": {
+     "bank": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "startup",
+  "icon": "🚀",
+  "title": [
+   "Стартап коллеги",
+   "A Coworker's Startup"
+  ],
+  "teaser": [
+   "Тимур что-то кодит под столом. Явно не рабочее",
+   "Timur is coding something under his desk. Definitely not work"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Тимур из IT показывает приложение «Обедоматч»: оно подбирает коллегам пару на обед по любимому супу. «Нужен тестировщик. Платить пока нечем, но будут акции!»",
+      "Timur from IT shows you his app \"LunchMatch\": it pairs coworkers for lunch by favorite soup. \"I need a tester. Can't pay yet, but there'll be shares!\""
+     ],
+     "hook": [
+      "Тимур что-то кодит под столом. Явно не рабочее",
+      "Timur is coding something under his desk. Definitely not work"
+     ],
+     "left": {
+      "label": [
+       "Я не ем суп",
+       "I don't do soup"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       -5
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Тестирую!",
+       "I'll test it!"
+      ],
+      "fx": [
+       0,
+       -10,
+       0,
+       10
+      ],
+      "flag": "invest"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "«Обедоматч» свёл бухгалтерию с продажами — впервые за пять лет они обедали вместе. Тимур зовёт вас в сооснователи: «По вечерам, полчасика. Ну час. Ну два».",
+      "\"LunchMatch\" got Accounting and Sales to eat together for the first time in five years. Timur asks you to be a co-founder: \"Evenings, half an hour. Okay, an hour. Two, tops.\""
+     ],
+     "hook": [
+      "Тимур хочет сделать вам предложение. Деловое",
+      "Timur wants to make you an offer. A business one"
+     ],
+     "left": {
+      "label": [
+       "Только по выходным",
+       "Weekends only"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       0
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Сооснователь — звучит!",
+       "Co-founder — sounds great!"
+      ],
+      "fx": [
+       5,
+       -15,
+       0,
+       10
+      ],
+      "flag": "invest"
+     },
+     "if": "invest"
+    },
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Тимур нашёл другого тестировщика, и «Обедоматч» стал хитом офиса. Все обедают парами, а вы — с ноутбуком. Тимур машет: «Последний шанс запрыгнуть!»",
+      "Timur found another tester and \"LunchMatch\" became an office hit. Everyone lunches in pairs; you lunch with your laptop. Timur waves: \"Last chance to jump in!\""
+     ],
+     "hook": [
+      "Весь офис обедает по приложению. Кроме вас",
+      "The whole office lunches by app. Except you"
+     ],
+     "left": {
+      "label": [
+       "Мне и так хорошо",
+       "I'm fine as I am"
+      ],
+      "fx": [
+       0,
+       5,
+       0,
+       -10
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Ладно, подбери мне суп",
+       "Fine, find me a soup"
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       10
+      ],
+      "flag": "invest"
+     },
+     "if": "skeptic"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Приложение упало прямо в обед: двести человек отправлены в одну столовую за одним борщом. Тимур в панике, а у вас через час отчёт боссу.",
+      "The app crashed at lunchtime: two hundred people were sent to one canteen for one borscht. Timur is panicking, and your report to the boss is due in an hour."
+     ],
+     "hook": [
+      "В обед может случиться что-то страшное. С борщом",
+      "Something terrible may happen at lunch. Involving soup"
+     ],
+     "left": {
+      "label": [
+       "Отчёт важнее",
+       "The report comes first"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -10
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Чиним вместе!",
+       "Let's fix it together!"
+      ],
+      "fx": [
+       -5,
+       -15,
+       -10,
+       15
+      ],
+      "flag": "invest"
+     },
+     "if": "invest"
+    },
+    {
+     "who": [
+      "Босс",
+      "Boss"
+     ],
+     "text": [
+      "Босс узнал, что Тимур пишет стартап в рабочее время, и спрашивает вас как соседа: «Вы что-нибудь об этом знаете?»",
+      "The boss learned Timur builds his startup on company time and asks you, as his neighbor: \"Do you know anything about this?\""
+     ],
+     "hook": [
+      "Босс задаёт вопросы про «Обедоматч». Неудобные",
+      "The boss is asking awkward questions about \"LunchMatch\""
+     ],
+     "left": {
+      "label": [
+       "Знаю, всё расскажу",
+       "I do, I'll tell you everything"
+      ],
+      "fx": [
+       0,
+       0,
+       15,
+       -20
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Прикрыть Тимура",
+       "Cover for Timur"
+      ],
+      "fx": [
+       -5,
+       0,
+       -10,
+       15
+      ],
+      "flag": "invest"
+     },
+     "if": "skeptic"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Инвестор",
+      "Investor"
+     ],
+     "text": [
+      "На питч приходит инвестор в кроссовках стоимостью в полугодовую зарплату. «Мне нравится. Но вложусь, только если основатели уйдут в стартап целиком».",
+      "An investor shows up to the pitch in sneakers worth half a year's salary. \"I like it. But I'll invest only if the founders go full-time.\""
+     ],
+     "hook": [
+      "Едет инвестор. В очень дорогих кроссовках",
+      "An investor is coming. In very expensive sneakers"
+     ],
+     "left": {
+      "label": [
+       "Пусть уходит Тимур",
+       "Timur can go full-time"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       0
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Тимур, я с тобой — по вечерам",
+       "Timur, I'm with you — evenings"
+      ],
+      "fx": [
+       10,
+       -10,
+       0,
+       10
+      ],
+      "flag": "invest"
+     },
+     "if": "invest"
+    },
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Тимур грустит: стартап буксует, и он думает всё бросить. «Может, вы правы и это всё глупости?»",
+      "Timur is down: the startup is stalling and he's thinking of quitting it. \"Maybe you're right and it's all nonsense?\""
+     ],
+     "hook": [
+      "Тимур близок к тому, чтобы всё бросить",
+      "Timur is close to giving up"
+     ],
+     "left": {
+      "label": [
+       "Брось, есть же работа",
+       "Drop it, you have a job"
+      ],
+      "fx": [
+       0,
+       5,
+       5,
+       -10
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Не сдавайся! Вот идея…",
+       "Don't give up! Here's an idea…"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       15
+      ],
+      "flag": "invest"
+     },
+     "if": "skeptic"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Тимур получил инвестиции! «Обедоматч» запускают в трёх бизнес-центрах. Он кладёт перед вами бумагу: «Твоя доля. Или деньги сразу — если не веришь в нас».",
+      "Timur got funded! \"LunchMatch\" launches in three business centers. He puts a paper in front of you: \"Your share. Or cash now — if you don't believe in us.\""
+     ],
+     "hook": [
+      "Тимур принёс какую-то бумагу. С печатью",
+      "Timur brought some paper. With a stamp"
+     ],
+     "left": {
+      "label": [
+       "Деньги сразу",
+       "Cash now"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       0
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Верю! Беру долю",
+       "I believe! Give me the share"
+      ],
+      "fx": [
+       15,
+       0,
+       0,
+       10
+      ],
+      "flag": "invest"
+     },
+     "if": "invest"
+    },
+    {
+     "who": [
+      "Тимур из IT",
+      "Timur from IT"
+     ],
+     "text": [
+      "Тимур уходит из компании — в свой стартап. На прощание спрашивает: «Хочешь тестировать новую версию? Там теперь и пара на кофе»",
+      "Timur is leaving the company — for his startup. As a goodbye he asks: \"Want to test the new version? It matches coffee buddies now too.\""
+     ],
+     "hook": [
+      "У Тимура новости. Похоже, большие",
+      "Timur has news. Big news, it seems"
+     ],
+     "left": {
+      "label": [
+       "Удачи, Тимур",
+       "Good luck, Timur"
+      ],
+      "fx": [
+       0,
+       0,
+       0,
+       5
+      ],
+      "flag": "skeptic"
+     },
+     "right": {
+      "label": [
+       "Давай, тестирую",
+       "Sure, I'll test it"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       10
+      ],
+      "flag": "invest"
+     },
+     "if": "skeptic"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "cofounder",
+    "title": [
+     "Сооснователь",
+     "Co-founder"
+    ],
+    "text": [
+     "«Обедоматч» купила сеть столовых. Ваша доля превратилась в приятную сумму и пожизненный бесплатный суп.",
+     "A canteen chain bought \"LunchMatch\". Your share turned into a nice sum and free soup for life."
+    ],
+    "reward": {
+     "bank": 25,
+     "badge": {
+      "ico": "🚀",
+      "name": [
+       "Акционер «Обедоматча»",
+       "LunchMatch shareholder"
+      ]
+     }
+    },
+    "if": "invest",
+    "min": 4
+   },
+   {
+    "id": "beta",
+    "title": [
+     "Первый бета-тестер",
+     "First beta tester"
+    ],
+    "text": [
+     "Вы в титрах приложения как «тот, кто поверил первым». Тимур присылает промокоды на суп и полезные советы.",
+     "You're in the app credits as \"the first one who believed\". Timur sends you soup promo codes and handy tips."
+    ],
+    "reward": {
+     "hint": 2,
+     "mood": 5
+    },
+    "if": "invest",
+    "min": 2
+   },
+   {
+    "id": "skeptic",
+    "title": [
+     "Здоровый скепсис",
+     "Healthy skepticism"
+    ],
+    "text": [
+     "Вы сохранили вечера, нервы и деньги. Тимур не обиделся — и даже прислал открытку из своего нового офиса.",
+     "You kept your evenings, nerves and money. Timur wasn't offended — he even sent a postcard from his new office."
+    ],
+    "reward": {
+     "bank": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "stapler",
+  "icon": "🔎",
+  "title": [
+   "Пропавший степлер",
+   "The Missing Stapler"
+  ],
+  "teaser": [
+   "Из офиса пропала реликвия. Красная",
+   "A relic has vanished from the office. A red one"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Вера Николаевна, офис-менеджер",
+      "Vera, the office manager"
+     ],
+     "text": [
+      "Пропал Красный Степлер — легендарный: им скрепили первый договор компании двадцать лет назад. Вера Николаевна в слезах: «Найдите его. Вы же наблюдательный человек».",
+      "The Red Stapler is gone — the legendary one that stapled the company's first contract twenty years ago. Vera is in tears: \"Find it. You notice things.\""
+     ],
+     "hook": [
+      "Из офиса пропала реликвия. Красная",
+      "A relic has vanished from the office. A red one"
+     ],
+     "left": {
+      "label": [
+       "Объявить розыск по громкой связи",
+       "Announce a manhunt over the PA"
+      ],
+      "fx": [
+       10,
+       -5,
+       -5,
+       5
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Тихо осмотреть место",
+       "Quietly inspect the scene"
+      ],
+      "fx": [
+       0,
+       -5,
+       0,
+       5
+      ],
+      "flag": "quiet"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Улики",
+      "Evidence"
+     ],
+     "text": [
+      "Под столом Веры Николаевны — крошки печенья с корицей и длинный зелёный волос. Корицу едят в отделе продаж, зелёные волосы — только у дизайнера Зои.",
+      "Under Vera's desk: cinnamon cookie crumbs and one long green hair. Only Sales eats cinnamon cookies; only Zoya the designer has green hair."
+     ],
+     "hook": [
+      "Найдены улики: крошки и зелёный волос",
+      "Evidence found: crumbs and a green hair"
+     ],
+     "left": {
+      "label": [
+       "Обвинить Зою при всех",
+       "Accuse Zoya in public"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       -15
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Понаблюдать за обоими",
+       "Watch both suspects"
+      ],
+      "fx": [
+       0,
+       -10,
+       0,
+       5
+      ],
+      "flag": "quiet"
+     },
+     "if": "quiet"
+    },
+    {
+     "who": [
+      "Весь офис",
+      "The whole office"
+     ],
+     "text": [
+      "После объявления офис охватила паранойя: все прячут степлеры в сейфы, а бухгалтерия скрепляет документы скотчем. Босс недоволен.",
+      "After the announcement, paranoia grips the office: everyone locks their staplers in safes and Accounting tapes documents together. The boss is not pleased."
+     ],
+     "hook": [
+      "Офис охватила степлерная паранойя",
+      "Stapler paranoia grips the office"
+     ],
+     "left": {
+      "label": [
+       "Объявить награду за находку",
+       "Offer a reward"
+      ],
+      "fx": [
+       5,
+       0,
+       -10,
+       10
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Извиниться и искать тихо",
+       "Apologize and search quietly"
+      ],
+      "fx": [
+       -5,
+       0,
+       5,
+       5
+      ],
+      "flag": "quiet"
+     },
+     "if": "loud"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Отдел продаж",
+      "Sales department"
+     ],
+     "text": [
+      "Зоя оказалась ни при чём: ночью она просто печатала открытки. Зато из отдела продаж доносится ритмичное «щёлк-щёлк». Кто-то там очень увлечённо скрепляет.",
+      "Zoya is innocent: she was just printing postcards late at night. But a rhythmic \"click-click\" comes from Sales. Someone is stapling with great passion."
+     ],
+     "hook": [
+      "Из отдела продаж доносится подозрительное «щёлк-щёлк»",
+      "A suspicious \"click-click\" is coming from Sales"
+     ],
+     "left": {
+      "label": [
+       "Ворваться в продажи",
+       "Storm into Sales"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       -10
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Заглянуть осторожно",
+       "Take a careful peek"
+      ],
+      "fx": [
+       0,
+       -5,
+       0,
+       10
+      ],
+      "flag": "quiet"
+     },
+     "if": "quiet"
+    },
+    {
+     "who": [
+      "Анонимка",
+      "Anonymous note"
+     ],
+     "text": [
+      "Вам подбрасывают записку из вырезанных букв: «СТЕПЛЕР У ТОГО, КТО ВСЕГДА ОПАЗДЫВАЕТ». Опаздывает весь офис. Особенно босс.",
+      "Someone slips you a note made of cut-out letters: \"THE STAPLER IS WITH THE ONE WHO IS ALWAYS LATE\". The whole office is always late. Especially the boss."
+     ],
+     "hook": [
+      "Пришла анонимка из вырезанных букв",
+      "A cut-out-letter note has arrived"
+     ],
+     "left": {
+      "label": [
+       "Обыскать стол босса",
+       "Search the boss's desk"
+      ],
+      "fx": [
+       15,
+       0,
+       -20,
+       15
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Это ловушка. Думать",
+       "It's a trap. Think"
+      ],
+      "fx": [
+       0,
+       -5,
+       5,
+       0
+      ],
+      "flag": "quiet"
+     },
+     "if": "loud"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Стажёр Кирилл",
+      "Kirill the intern"
+     ],
+     "text": [
+      "Разгадка: стажёр Кирилл взял степлер, чтобы собрать к юбилею компании портрет основателя из десяти тысяч скрепок. Он умоляет не выдавать его до праздника.",
+      "Solved: Kirill the intern took the stapler to build a portrait of the founder from ten thousand staples for the company anniversary. He begs you not to tell until the party."
+     ],
+     "hook": [
+      "Разгадка близко. Подозреваемый удивит всех",
+      "The answer is near. The culprit will surprise everyone"
+     ],
+     "left": {
+      "label": [
+       "Правила есть правила — сдать",
+       "Rules are rules — report him"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -10
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Помочь доделать портрет",
+       "Help finish the portrait"
+      ],
+      "fx": [
+       10,
+       -15,
+       5,
+       15
+      ],
+      "flag": "quiet"
+     },
+     "if": "quiet"
+    },
+    {
+     "who": [
+      "Вера Николаевна, офис-менеджер",
+      "Vera, the office manager"
+     ],
+     "text": [
+      "Степлер нашёлся… в ящике самой Веры Николаевны, под пачкой бланков. Она красная, как степлер: «Ой. Только никому, пожалуйста».",
+      "The stapler turns up… in Vera's own drawer, under a stack of forms. She turns as red as the stapler: \"Oh. Please don't tell anyone.\""
+     ],
+     "hook": [
+      "Степлер ближе, чем все думают",
+      "The stapler is closer than anyone thinks"
+     ],
+     "left": {
+      "label": [
+       "Дело раскрыто — объявить всем",
+       "Case closed — tell everyone"
+      ],
+      "fx": [
+       10,
+       0,
+       -5,
+       -10
+      ],
+      "flag": "loud"
+     },
+     "right": {
+      "label": [
+       "Унести тайну с собой",
+       "Take the secret to the grave"
+      ],
+      "fx": [
+       5,
+       0,
+       0,
+       15
+      ],
+      "flag": "quiet"
+     },
+     "if": "loud"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "detective",
+    "title": [
+     "Великий сыщик",
+     "Master detective"
+    ],
+    "text": [
+     "Портрет из скрепок стал гвоздём юбилея, Кирилла взяли в штат, а Красный Степлер вручили вам на вечное хранение.",
+     "The staple portrait stole the anniversary show, Kirill got hired, and the Red Stapler was entrusted to you forever."
+    ],
+    "reward": {
+     "bank": 10,
+     "badge": {
+      "ico": "🔴",
+      "name": [
+       "Хранитель Красного Степлера",
+       "Keeper of the Red Stapler"
+      ]
+     }
+    },
+    "if": "quiet",
+    "min": 3
+   },
+   {
+    "id": "quiet",
+    "title": [
+     "Тихий детектив",
+     "The quiet detective"
+    ],
+    "text": [
+     "Дело закрыто без пострадавших. Вера Николаевна теперь печёт вам печенье. Без корицы.",
+     "Case closed with no casualties. Vera now bakes you cookies. No cinnamon."
+    ],
+    "reward": {
+     "mood": 10,
+     "hint": 1
+    },
+    "if": "quiet",
+    "min": 2
+   },
+   {
+    "id": "loud",
+    "title": [
+     "Громкое дело",
+     "A high-profile case"
+    ],
+    "text": [
+     "Об этом расследовании будут рассказывать новичкам. Степлер на месте, нервы офиса — не совсем.",
+     "Newcomers will hear about this investigation for years. The stapler is back; the office's nerves, not quite."
+    ],
+    "reward": {
+     "bank": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "party",
+  "icon": "🎉",
+  "title": [
+   "Корпоратив века",
+   "The Party of the Century"
+  ],
+  "teaser": [
+   "HR ищет организатора праздника. Смотрит на вас",
+   "HR is looking for a party organizer. Looking at you"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "HR",
+      "HR"
+     ],
+     "text": [
+      "HR торжественно поручает вам организацию новогоднего корпоратива. Бюджет — как на три пиццы. Ожидания — как на свадьбу миллионера.",
+      "HR solemnly puts you in charge of the holiday party. The budget could buy three pizzas. The expectations: a billionaire's wedding."
+     ],
+     "hook": [
+      "HR ищет организатора праздника. Смотрит на вас",
+      "HR is looking for a party organizer. Looking at you"
+     ],
+     "left": {
+      "label": [
+       "Тихий ужин в офисе",
+       "A quiet dinner at the office"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       -5
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Сделаем легенду!",
+       "Let's make it legendary!"
+      ],
+      "fx": [
+       0,
+       -10,
+       5,
+       10
+      ],
+      "flag": "bold"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Голосование",
+      "The vote"
+     ],
+     "text": [
+      "Голосование за тему праздника: «Космос», «Девяностые» или «Пижамная вечеринка». Пижамы уверенно лидируют. Босс просит «что-нибудь солидное».",
+      "The party theme vote: \"Space\", \"The Nineties\" or \"Pajama Party\". Pajamas lead by a mile. The boss asks for \"something respectable\"."
+     ],
+     "hook": [
+      "Голосование за тему праздника. Лидируют пижамы",
+      "The party theme vote. Pajamas are winning"
+     ],
+     "left": {
+      "label": [
+       "Солидный космос",
+       "Respectable space"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -5
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Пижамы — воля народа",
+       "Pajamas — the people have spoken"
+      ],
+      "fx": [
+       10,
+       0,
+       -10,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "bold"
+    },
+    {
+     "who": [
+      "Коллеги",
+      "Coworkers"
+     ],
+     "text": [
+      "Узнав про «тихий ужин в офисе», коллеги собрали подпольный оргкомитет. Вас туда не позвали, но держат в курсе. Возглавите мятеж?",
+      "Hearing about \"a quiet dinner at the office\", coworkers formed an underground party committee. You weren't invited, but they keep you posted. Lead the rebellion?"
+     ],
+     "hook": [
+      "В офисе зреет праздничный мятеж",
+      "A party rebellion is brewing"
+     ],
+     "left": {
+      "label": [
+       "Нет, ужин так ужин",
+       "No, dinner it is"
+      ],
+      "fx": [
+       5,
+       5,
+       5,
+       -15
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Возглавлю!",
+       "I'll lead it!"
+      ],
+      "fx": [
+       10,
+       -10,
+       -5,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "safe"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Ведущий",
+      "The host"
+     ],
+     "text": [
+      "Профессиональный ведущий запросил гонорар в пять бюджетов. Зато бухгалтер Нина показывает фокусы, а айтишники играют в группе «Ошибка 404».",
+      "A professional host wants five budgets' worth of fees. But Nina from Accounting does magic tricks, and IT has a band called \"Error 404\"."
+     ],
+     "hook": [
+      "Ведущий хочет денег. Очень много денег",
+      "The host wants money. A lot of money"
+     ],
+     "left": {
+      "label": [
+       "Выбить деньги на ведущего",
+       "Get money for the host"
+      ],
+      "fx": [
+       -5,
+       -5,
+       -10,
+       0
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Свои таланты!",
+       "Homegrown talent!"
+      ],
+      "fx": [
+       10,
+       -10,
+       0,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "bold"
+    },
+    {
+     "who": [
+      "Ресторан",
+      "The restaurant"
+     ],
+     "text": [
+      "Ресторан для ужина внезапно закрылся на санобработку. До праздника неделя. Остался вариант: крыша офиса, гирлянды и много пледов.",
+      "The dinner restaurant suddenly closed for fumigation. The party is a week away. One option left: the office roof, string lights and lots of blankets."
+     ],
+     "hook": [
+      "Ресторан неожиданно закрылся. До праздника — неделя",
+      "The restaurant suddenly closed. One week to go"
+     ],
+     "left": {
+      "label": [
+       "Перенести на январь",
+       "Postpone to January"
+      ],
+      "fx": [
+       5,
+       5,
+       -5,
+       -10
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Крыша так крыша!",
+       "The roof it is!"
+      ],
+      "fx": [
+       5,
+       -15,
+       0,
+       10
+      ],
+      "flag": "bold"
+     },
+     "if": "safe"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Босс",
+      "Boss"
+     ],
+     "text": [
+      "Босс узнал, что праздник будет в пижамах и с группой «Ошибка 404», и хмурится: «А я в чём приду?»",
+      "The boss learned the party is pajamas plus the \"Error 404\" band, and frowns: \"And what am I supposed to wear?\""
+     ],
+     "hook": [
+      "Босс задал главный вопрос: «А я в чём приду?»",
+      "The boss asks the big question: \"What do I wear?\""
+     ],
+     "left": {
+      "label": [
+       "Вам — смокинг, вы же босс",
+       "A tuxedo — you're the boss"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -5
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Подарить пижаму с единорогами",
+       "Gift unicorn pajamas"
+      ],
+      "fx": [
+       15,
+       -5,
+       -5,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "bold"
+    },
+    {
+     "who": [
+      "Кондитерская",
+      "The bakery"
+     ],
+     "text": [
+      "За день до праздника выясняется: заказанный торт — свадебный, пятиярусный, с надписью «Любовь навсегда». Перепутали заказы.",
+      "The day before the party: the cake you ordered is a five-tier wedding cake that says \"Love Forever\". Orders got mixed up."
+     ],
+     "hook": [
+      "С тортом вышла накладка. Пятиярусная",
+      "There is a five-tier problem with the cake"
+     ],
+     "left": {
+      "label": [
+       "Срочно заказать новый",
+       "Order a new one, fast"
+      ],
+      "fx": [
+       -5,
+       -10,
+       5,
+       0
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Отлично! Любовь к работе навсегда",
+       "Perfect! Love for work, forever"
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "safe"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Корпоратив",
+      "The party"
+     ],
+     "text": [
+      "Вечер праздника. Группа «Ошибка 404» зовёт вас на сцену спеть хит про квартальный отчёт. Весь офис скандирует ваше имя.",
+      "Party night. The \"Error 404\" band calls you on stage to sing their hit about the quarterly report. The whole office chants your name."
+     ],
+     "hook": [
+      "Вечер праздника. Сцена ждёт",
+      "Party night. The stage awaits"
+     ],
+     "left": {
+      "label": [
+       "Я лучше за кулисами",
+       "I'll stay backstage"
+      ],
+      "fx": [
+       0,
+       5,
+       0,
+       -5
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Микрофон мне!",
+       "Give me the mic!"
+      ],
+      "fx": [
+       20,
+       -15,
+       5,
+       20
+      ],
+      "flag": "bold"
+     },
+     "if": "bold"
+    },
+    {
+     "who": [
+      "Корпоратив",
+      "The party"
+     ],
+     "text": [
+      "Праздник идёт тихо и мило: пледы, чай, гирлянды. Вдруг кто-то включает музыку погромче и зовёт всех танцевать.",
+      "The party is quiet and cozy: blankets, tea, string lights. Suddenly someone turns the music up and calls everyone to dance."
+     ],
+     "hook": [
+      "Праздник уже скоро. Будет тихо… или нет?",
+      "The party is near. Quiet… or not?"
+     ],
+     "left": {
+      "label": [
+       "Сделать потише",
+       "Turn it down"
+      ],
+      "fx": [
+       5,
+       5,
+       5,
+       -10
+      ],
+      "flag": "safe"
+     },
+     "right": {
+      "label": [
+       "Танцуют все!",
+       "Everybody dance!"
+      ],
+      "fx": [
+       15,
+       -10,
+       0,
+       15
+      ],
+      "flag": "bold"
+     },
+     "if": "safe"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "legend",
+    "title": [
+     "Легенда корпоративов",
+     "Party legend"
+    ],
+    "text": [
+     "Видео с вашим выступлением пересматривают до марта. HR уже записал вас организатором на следующий год. И на следующий.",
+     "People rewatch the video of your performance until March. HR has already signed you up to organize next year. And the year after."
+    ],
+    "reward": {
+     "bank": 15,
+     "badge": {
+      "ico": "🎤",
+      "name": [
+       "Звезда корпоратива",
+       "Party star"
+      ]
+     }
+    },
+    "if": "bold",
+    "min": 4
+   },
+   {
+    "id": "cozy",
+    "title": [
+     "Уютный праздник",
+     "A cozy celebration"
+    ],
+    "text": [
+     "Все разошлись довольными, с гирляндами в карманах и тёплыми воспоминаниями. Коллеги до сих пор благодарят вас в лифте.",
+     "Everyone left happy, with string lights in their pockets and warm memories. Coworkers still thank you in the elevator."
+    ],
+    "reward": {
+     "mood": 15,
+     "bank": 5
+    },
+    "if": "bold",
+    "min": 2
+   },
+   {
+    "id": "calm",
+    "title": [
+     "Без происшествий",
+     "No incidents"
+    ],
+    "text": [
+     "Никто не потерял телефон и не уснул в такси. Босс назвал это «образцовым мероприятием». Коллеги — «ну, нормально».",
+     "Nobody lost a phone or fell asleep in a taxi. The boss called it \"an exemplary event\". Coworkers called it \"fine, I guess\"."
+    ],
+    "reward": {
+     "hint": 1,
+     "bank": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "merger",
+  "icon": "🤝",
+  "title": [
+   "Слияние",
+   "The Merger"
+  ],
+  "teaser": [
+   "У кулера шепчутся о слиянии",
+   "Merger whispers at the water cooler"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Слухи у кулера",
+      "Water-cooler rumors"
+     ],
+     "text": [
+      "У кулера шепчутся: компанию сливают с конкурентом — фирмой «Скрепка Плюс». Говорят, сократят каждого третьего. Коллеги обновляют резюме прямо на рабочих местах.",
+      "Whispers at the cooler: the company is merging with its rival, Clip Plus. They say every third person will be cut. Coworkers are updating résumés right at their desks."
+     ],
+     "hook": [
+      "У кулера шепчутся о слиянии",
+      "Merger whispers at the water cooler"
+     ],
+     "left": {
+      "label": [
+       "Тоже обновить резюме",
+       "Update my résumé too"
+      ],
+      "fx": [
+       5,
+       -5,
+       -5,
+       0
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Успокоить всех",
+       "Calm everyone down"
+      ],
+      "fx": [
+       -5,
+       -5,
+       5,
+       15
+      ],
+      "flag": "open"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Стас из «Скрепки Плюс»",
+      "Stas from Clip Plus"
+     ],
+     "text": [
+      "В офис приходит делегация «Скрепки Плюс». Их сотрудник Стас робко спрашивает, где тут кофемашина, и признаётся: у них тоже все боятся сокращений.",
+      "A Clip Plus delegation arrives. One of them, Stas, shyly asks where the coffee machine is and admits everyone at his company fears layoffs too."
+     ],
+     "hook": [
+      "В офис идут «они». Те самые, из «Скрепки Плюс»",
+      "Here come \"them\". The Clip Plus people"
+     ],
+     "left": {
+      "label": [
+       "Показать на сломанную кофемашину",
+       "Point him to the broken machine"
+      ],
+      "fx": [
+       10,
+       0,
+       0,
+       -10
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Угостить кофе и поболтать",
+       "Buy him a coffee and chat"
+      ],
+      "fx": [
+       5,
+       -5,
+       0,
+       15
+      ],
+      "flag": "open"
+     },
+     "if": "open"
+    },
+    {
+     "who": [
+      "HR",
+      "HR"
+     ],
+     "text": [
+      "Ваше резюме случайно ушло на общий принтер, и теперь HR держит его в руках: «Собираетесь уходить? Или это такая стратегия на время слияния?»",
+      "Your résumé accidentally went to the shared printer, and now HR is holding it: \"Planning to leave? Or is this your merger strategy?\""
+     ],
+     "hook": [
+      "Резюме ушло не туда. Совсем не туда",
+      "Your résumé went to the wrong place. Very wrong"
+     ],
+     "left": {
+      "label": [
+       "Да, ищу запасной вариант",
+       "Yes, I'm keeping my options open"
+      ],
+      "fx": [
+       0,
+       0,
+       -15,
+       5
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Это шутка для отдела",
+       "It's a joke for the team"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       0
+      ],
+      "flag": "open"
+     },
+     "if": "scheme"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Стас из «Скрепки Плюс»",
+      "Stas from Clip Plus"
+     ],
+     "text": [
+      "Стас по секрету показывает план: сокращать никого не будут, но отделы объединят, и нужен человек, который подружит две команды. «Я предложу вас».",
+      "Stas secretly shows you the plan: no layoffs, but departments will merge and someone has to make the two teams friends. \"I'll suggest you.\""
+     ],
+     "hook": [
+      "Стас знает что-то важное про слияние",
+      "Stas knows something important about the merger"
+     ],
+     "left": {
+      "label": [
+       "Не надо, я в тени",
+       "Please don't, I like the shadows"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       -5
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Давай попробуем",
+       "Let's try it"
+      ],
+      "fx": [
+       0,
+       -10,
+       10,
+       15
+      ],
+      "flag": "open"
+     },
+     "if": "open"
+    },
+    {
+     "who": [
+      "Босс",
+      "Boss"
+     ],
+     "text": [
+      "Босс собирает «своих людей» в переговорной: «При слиянии надо показать, что наш отдел лучше. Как утереть нос «Скрепке Плюс»?»",
+      "The boss gathers \"trusted people\" in a meeting room: \"We must prove our team is better in this merger. How do we beat Clip Plus?\""
+     ],
+     "hook": [
+      "Босс собирает тайное совещание",
+      "The boss calls a secret meeting"
+     ],
+     "left": {
+      "label": [
+       "Собрать их промахи для начальства",
+       "Collect their blunders for management"
+      ],
+      "fx": [
+       5,
+       0,
+       15,
+       -20
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Лучше с ними подружиться",
+       "Better to make friends"
+      ],
+      "fx": [
+       0,
+       -5,
+       -5,
+       15
+      ],
+      "flag": "open"
+     },
+     "if": "scheme"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Общее собрание",
+      "All-hands meeting"
+     ],
+     "text": [
+      "Слияние объявлено. Новый директор спрашивает: «Кто готов стать связующим звеном между командами?» Стас кивает в вашу сторону.",
+      "The merger is official. The new director asks: \"Who will be the bridge between the teams?\" Stas nods in your direction."
+     ],
+     "hook": [
+      "Общее собрание. Объявят итоги слияния",
+      "All-hands. Merger results incoming"
+     ],
+     "left": {
+      "label": [
+       "Пусть будет кто-то другой",
+       "Let someone else do it"
+      ],
+      "fx": [
+       5,
+       5,
+       -5,
+       -5
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Поднять руку",
+       "Raise a hand"
+      ],
+      "fx": [
+       0,
+       -10,
+       15,
+       15
+      ],
+      "flag": "open"
+     },
+     "if": "open"
+    },
+    {
+     "who": [
+      "Общее собрание",
+      "All-hands meeting"
+     ],
+     "text": [
+      "На собрании выясняется: сокращений не будет, а ваши интриги давно все заметили. Новый директор смотрит с интересом: «Расскажете, что это было?»",
+      "At the all-hands it turns out there will be no layoffs — and everyone noticed your scheming long ago. The new director looks curious: \"Care to explain?\""
+     ],
+     "hook": [
+      "На собрании всплывёт всё. Вообще всё",
+      "Everything will come out at the all-hands. Everything"
+     ],
+     "left": {
+      "label": [
+       "Это была стратегия",
+       "It was a strategy"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       -10
+      ],
+      "flag": "scheme"
+     },
+     "right": {
+      "label": [
+       "Честно извиниться",
+       "Apologize sincerely"
+      ],
+      "fx": [
+       -5,
+       0,
+       5,
+       15
+      ],
+      "flag": "open"
+     },
+     "if": "scheme"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "bridge",
+    "title": [
+     "Мост между офисами",
+     "The bridge between offices"
+    ],
+    "text": [
+     "Две команды обедают вместе, Стас — ваш лучший друг по ту сторону коридора, а новый директор выписал премию «за дипломатию».",
+     "Two teams lunch together, Stas is your best friend across the hall, and the new director gave you a bonus \"for diplomacy\"."
+    ],
+    "reward": {
+     "bank": 20,
+     "badge": {
+      "ico": "🤝",
+      "name": [
+       "Посол слияния",
+       "Merger ambassador"
+      ]
+     }
+    },
+    "if": "open",
+    "min": 3
+   },
+   {
+    "id": "harbor",
+    "title": [
+     "Тихая гавань",
+     "Safe harbor"
+    ],
+    "text": [
+     "Слияние прошло, вы остались на месте, а нервы — почти целы. И у вас появился знакомый в «Скрепке Плюс».",
+     "The merger went through, you kept your seat, and your nerves are mostly intact. Plus you have a friend at Clip Plus now."
+    ],
+    "reward": {
+     "mood": 10,
+     "hint": 1
+    },
+    "if": "open",
+    "min": 2
+   },
+   {
+    "id": "cardinal",
+    "title": [
+     "Серый кардинал",
+     "The schemer"
+    ],
+    "text": [
+     "Интриги повышения не принесли, зато многому научили. Например, не печатать резюме на общем принтере.",
+     "The scheming didn't earn a promotion, but it taught you a lot. Like never printing a résumé on the shared printer."
+    ],
+    "reward": {
+     "bank": 10,
+     "hint": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "cat",
+  "icon": "🐈",
+  "title": [
+   "Кот в офисе",
+   "The Office Cat"
+  ],
+  "teaser": [
+   "У входа кто-то ждёт. Рыжий и усатый",
+   "Someone is waiting at the door. Ginger and whiskered"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Рыжий кот",
+      "The ginger cat"
+     ],
+     "text": [
+      "У входа в офис сидит рыжий кот и смотрит на вас так, будто это вы опоздали. Охранник разводит руками: «Он тут с семи утра. Кажется, ждёт именно вас».",
+      "A ginger cat sits at the office door and looks at you as if you're the one who's late. The guard shrugs: \"He's been here since seven. Seems he's waiting for you.\""
+     ],
+     "hook": [
+      "У входа кто-то ждёт. Рыжий и усатый",
+      "Someone is waiting at the door. Ginger and whiskered"
+     ],
+     "left": {
+      "label": [
+       "Кыш, у нас офис",
+       "Shoo, this is an office"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       -5
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Заходи, рыжий",
+       "Come on in, Ginger"
+      ],
+      "fx": [
+       10,
+       0,
+       -5,
+       10
+      ],
+      "flag": "care"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Рыжий кот",
+      "The ginger cat"
+     ],
+     "text": [
+      "Кот обжил ваш стол: спит на клавиатуре, а в чат отдела уходит «ффффффффф». Коллеги в восторге и уже придумали имя — Дедлайн.",
+      "The cat has claimed your desk: he naps on the keyboard and sends \"fffffffff\" to the team chat. Coworkers adore him and already named him Deadline."
+     ],
+     "hook": [
+      "Рыжий гость обживается. Кажется, надолго",
+      "The ginger guest is settling in. For good, it seems"
+     ],
+     "left": {
+      "label": [
+       "Отвезти в приют",
+       "Take him to a shelter"
+      ],
+      "fx": [
+       -5,
+       0,
+       5,
+       -10
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Дедлайн так Дедлайн!",
+       "Deadline it is!"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "care"
+    },
+    {
+     "who": [
+      "Рыжий кот",
+      "The ginger cat"
+     ],
+     "text": [
+      "Кот не ушёл. Он пробрался через окно и уснул в лотке входящих документов босса. Босс ещё не пришёл. Но скоро придёт.",
+      "The cat didn't leave. He sneaked in through a window and fell asleep in the boss's inbox tray. The boss isn't in yet. But soon will be."
+     ],
+     "hook": [
+      "Кот вернулся. И выбрал очень неудачное место",
+      "The cat is back. In a very bad spot"
+     ],
+     "left": {
+      "label": [
+       "Выдворить, пока не поздно",
+       "Evict him before it is too late"
+      ],
+      "fx": [
+       0,
+       -5,
+       5,
+       -5
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Пусть босс сам решит",
+       "Let the boss decide"
+      ],
+      "fx": [
+       10,
+       0,
+       -10,
+       10
+      ],
+      "flag": "care"
+     },
+     "if": "rules"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Босс",
+      "Boss"
+     ],
+     "text": [
+      "Босс находит Дедлайна в своём кресле. Пауза. Потом: «Кто за него отвечает? Если остаётся — ему нужны пропуск, прививки и должность».",
+      "The boss finds Deadline in the boss chair. A pause. Then: \"Who's responsible for him? If he stays, he needs a badge, vaccinations and a job title.\""
+     ],
+     "hook": [
+      "Босс увидел кота. В кресле босса",
+      "The boss saw the cat. In the boss chair"
+     ],
+     "left": {
+      "label": [
+       "Это не мой кот",
+       "Not my cat"
+      ],
+      "fx": [
+       0,
+       0,
+       5,
+       -15
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Я за него отвечаю",
+       "He's my responsibility"
+      ],
+      "fx": [
+       5,
+       -10,
+       5,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "care"
+    },
+    {
+     "who": [
+      "Коллеги",
+      "Coworkers"
+     ],
+     "text": [
+      "Коллеги тайком кормят кота котлетами из столовой и прячут его в переговорной. Вас зовут вступить в «Тайный кото-клуб».",
+      "Coworkers secretly feed the cat canteen meatballs and hide him in a meeting room. They invite you to join the \"Secret Cat Club\"."
+     ],
+     "hook": [
+      "В офисе действует тайное общество",
+      "A secret society operates in the office"
+     ],
+     "left": {
+      "label": [
+       "Сообщить офис-менеджеру",
+       "Report to the office manager"
+      ],
+      "fx": [
+       0,
+       0,
+       10,
+       -15
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Вступить в клуб",
+       "Join the club"
+      ],
+      "fx": [
+       10,
+       0,
+       -5,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "rules"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Ветеринар",
+      "The vet"
+     ],
+     "text": [
+      "Ветеринар говорит, что Дедлайн здоров, но заметно круглеет: «Кто кормит его котлетами?!» Весь офис смотрит в пол. Нужен график кормления.",
+      "The vet says Deadline is healthy but getting round: \"Who's feeding him meatballs?!\" The whole office stares at the floor. A feeding schedule is needed."
+     ],
+     "hook": [
+      "У кота проблема: слишком много котлет",
+      "The cat has a problem: too many meatballs"
+     ],
+     "left": {
+      "label": [
+       "Пусть каждый сам",
+       "Everyone for themselves"
+      ],
+      "fx": [
+       5,
+       5,
+       0,
+       -5
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Составить график",
+       "Make a schedule"
+      ],
+      "fx": [
+       0,
+       -10,
+       5,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "care"
+    },
+    {
+     "who": [
+      "Рыжий кот",
+      "The ginger cat"
+     ],
+     "text": [
+      "Кот приболел и не ест даже котлеты. Он лежит у вашего стола и тихо мяукает. Ветклиника — это полдня и ваши деньги.",
+      "The cat is sick and won't even eat meatballs. He lies by your desk, meowing softly. The vet means half a day and your money."
+     ],
+     "hook": [
+      "Коту плохо. Он пришёл именно к вам",
+      "The cat is unwell. He came to you"
+     ],
+     "left": {
+      "label": [
+       "Позвонить в службу отлова",
+       "Call animal control"
+      ],
+      "fx": [
+       -15,
+       5,
+       0,
+       -15
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Везу к ветеринару",
+       "Off to the vet"
+      ],
+      "fx": [
+       5,
+       -15,
+       -5,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "rules"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Дедлайн",
+      "Deadline"
+     ],
+     "text": [
+      "Дедлайну выдали пропуск и должность «Директор по уюту». Но соседний офис предлагает забрать его к себе — у них сад на крыше.",
+      "Deadline got a badge and the title \"Director of Coziness\". But the office next door offers to take him — they have a rooftop garden."
+     ],
+     "hook": [
+      "Кота хотят переманить. У них сад на крыше",
+      "Someone wants to poach the cat. They have a roof garden"
+     ],
+     "left": {
+      "label": [
+       "Пусть ему будет лучше",
+       "Let him have the better life"
+      ],
+      "fx": [
+       -5,
+       0,
+       0,
+       5
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Дедлайн остаётся с нами!",
+       "Deadline stays with us!"
+      ],
+      "fx": [
+       15,
+       0,
+       5,
+       15
+      ],
+      "flag": "care"
+     },
+     "if": "care"
+    },
+    {
+     "who": [
+      "Рыжий кот",
+      "The ginger cat"
+     ],
+     "text": [
+      "Кот поправился. Но жить в офисе ему нельзя — правила. Он сидит у вашей двери и смотрит. Опять так, будто это вы опоздали.",
+      "The cat recovered. But rules say he can't live in the office. He sits at your door and stares. Again, as if you're the one who's late."
+     ],
+     "hook": [
+      "Кот поправился. Решается его судьба",
+      "The cat is better. His fate is being decided"
+     ],
+     "left": {
+      "label": [
+       "Найти ему хозяев",
+       "Find him a home"
+      ],
+      "fx": [
+       5,
+       -5,
+       5,
+       5
+      ],
+      "flag": "rules"
+     },
+     "right": {
+      "label": [
+       "Забрать домой",
+       "Take him home"
+      ],
+      "fx": [
+       15,
+       -5,
+       0,
+       10
+      ],
+      "flag": "care"
+     },
+     "if": "rules"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "director",
+    "title": [
+     "Директор по уюту",
+     "Director of Coziness"
+    ],
+    "text": [
+     "Дедлайн живёт в офисе, на стене висит его портрет, а в отчётах появилась строка «Кото-настроение: отличное». Вы — его официальный человек.",
+     "Deadline lives at the office, his portrait hangs on the wall, and reports now include \"Cat mood: excellent\". You are his official human."
+    ],
+    "reward": {
+     "mood": 20,
+     "bank": 5,
+     "badge": {
+      "ico": "🐈",
+      "name": [
+       "Человек Дедлайна",
+       "Deadline's human"
+      ]
+     }
+    },
+    "if": "care",
+    "min": 4
+   },
+   {
+    "id": "home",
+    "title": [
+     "Кот в хороших руках",
+     "In good hands"
+    ],
+    "text": [
+     "Кот нашёл дом, а вы — повод улыбаться по утрам: вам каждый день присылают его фото.",
+     "The cat found a home, and you found a reason to smile every morning: someone sends you his photo daily."
+    ],
+    "reward": {
+     "mood": 10,
+     "hint": 1
+    },
+    "if": "care",
+    "min": 2
+   },
+   {
+    "id": "order",
+    "title": [
+     "Порядок прежде всего",
+     "Order above all"
+    ],
+    "text": [
+     "В офисе снова ни шерстинки. Иногда вы скучаете по «фффффф» в общем чате.",
+     "Not a single hair in the office again. Sometimes you miss the \"ffffff\" in the team chat."
+    ],
+    "reward": {
+     "bank": 10
+    }
+   }
+  ]
+ },
+ {
+  "id": "contest",
+  "icon": "💡",
+  "title": [
+   "Конкурс инноваций",
+   "The Innovation Contest"
+  ],
+  "teaser": [
+   "Объявлен конкурс идей. Приз — обед с генеральным",
+   "An ideas contest is on. The prize: lunch with the CEO"
+  ],
+  "eps": [
+   [
+    {
+     "who": [
+      "Отдел развития",
+      "Development team"
+     ],
+     "text": [
+      "Объявлен конкурс инноваций: лучшей идее — премия и обед с генеральным. Команды по три человека. К себе зовут стажёр Лиза и вечно сонный Аркадий.",
+      "An innovation contest is announced: the best idea wins a bonus and lunch with the CEO. Teams of three. Liza the intern and ever-sleepy Arkady invite you to join."
+     ],
+     "hook": [
+      "Объявлен конкурс идей. Приз — обед с генеральным",
+      "An ideas contest is on. The prize: lunch with the CEO"
+     ],
+     "left": {
+      "label": [
+       "Участвовать в одиночку",
+       "Go solo"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       -10
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Команда мечты!",
+       "Dream team!"
+      ],
+      "fx": [
+       0,
+       -5,
+       0,
+       10
+      ],
+      "flag": "team"
+     }
+    }
+   ],
+   [
+    {
+     "who": [
+      "Стажёр Лиза",
+      "Liza the intern"
+     ],
+     "text": [
+      "Мозговой штурм: Лиза предлагает «умный кулер, который напоминает пить воду», Аркадий — «кровати в переговорных». Обе идеи… смелые.",
+      "Brainstorm: Liza pitches \"a smart water cooler that reminds you to drink\", Arkady pitches \"beds in meeting rooms\". Both ideas are… bold."
+     ],
+     "hook": [
+      "Команда устраивает мозговой штурм",
+      "The team is brainstorming"
+     ],
+     "left": {
+      "label": [
+       "Продавить свою идею",
+       "Push my own idea"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       -10
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Кулер с кроватью!",
+       "A cooler with a bed!"
+      ],
+      "fx": [
+       10,
+       -5,
+       0,
+       10
+      ],
+      "flag": "team"
+     },
+     "if": "team"
+    },
+    {
+     "who": [
+      "Аркадий",
+      "Arkady"
+     ],
+     "text": [
+      "Вы работаете над идеей по вечерам. Аркадий сонно заглядывает через плечо: «Слушай, а тут ошибка в расчётах. Помочь?»",
+      "You work on your idea in the evenings. Arkady sleepily peeks over your shoulder: \"Hey, there's a mistake in your math. Want help?\""
+     ],
+     "hook": [
+      "Вечерняя работа над идеей. Кто-то заглядывает через плечо",
+      "Evening work on the idea. Someone peeks over your shoulder"
+     ],
+     "left": {
+      "label": [
+       "Справлюсь без помощи",
+       "I'll manage alone"
+      ],
+      "fx": [
+       0,
+       -15,
+       0,
+       -5
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Помоги, спасибо",
+       "Yes please, thanks"
+      ],
+      "fx": [
+       5,
+       -5,
+       0,
+       10
+      ],
+      "flag": "team"
+     },
+     "if": "solo"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Соперники",
+      "Rivals"
+     ],
+     "text": [
+      "Команда бухгалтерии будто случайно подслушала вашу идею и подаёт похожую — «кулер-напоминалку». До питча два дня.",
+      "The Accounting team \"accidentally\" overheard your idea and submits a similar one — a \"reminder cooler\". Two days to the pitch."
+     ],
+     "hook": [
+      "У вашей идеи появился двойник",
+      "Your idea has a twin"
+     ],
+     "left": {
+      "label": [
+       "Пожаловаться жюри",
+       "Complain to the jury"
+      ],
+      "fx": [
+       0,
+       0,
+       5,
+       -10
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Придумать круче за ночь",
+       "Out-think them overnight"
+      ],
+      "fx": [
+       5,
+       -20,
+       0,
+       15
+      ],
+      "flag": "team"
+     },
+     "if": "team"
+    },
+    {
+     "who": [
+      "Жюри",
+      "The jury"
+     ],
+     "text": [
+      "Жюри просит прислать презентацию к утру. Слайдов пока два: название и «спасибо за внимание». Лиза из соседней команды предлагает объединиться.",
+      "The jury wants your deck by morning. You have two slides: the title and \"Thank you for your attention\". Liza from another team offers to join forces."
+     ],
+     "hook": [
+      "До презентации — одна ночь и два слайда",
+      "One night and two slides until the pitch"
+     ],
+     "left": {
+      "label": [
+       "Дорисовать в одиночку",
+       "Finish it alone"
+      ],
+      "fx": [
+       -10,
+       -15,
+       5,
+       0
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Объединяемся!",
+       "Let's team up!"
+      ],
+      "fx": [
+       5,
+       -5,
+       0,
+       15
+      ],
+      "flag": "team"
+     },
+     "if": "solo"
+    }
+   ],
+   [
+    {
+     "who": [
+      "Финал конкурса",
+      "Contest final"
+     ],
+     "text": [
+      "Финал. Ваша команда на сцене. Генеральный спрашивает: «Кто автор идеи?» Лиза и Аркадий смотрят на вас.",
+      "The final. Your team is on stage. The CEO asks: \"Whose idea is this?\" Liza and Arkady look at you."
+     ],
+     "hook": [
+      "Финал конкурса. Главный вопрос — от генерального",
+      "The final. The CEO has the big question"
+     ],
+     "left": {
+      "label": [
+       "Назвать себя",
+       "Take the credit"
+      ],
+      "fx": [
+       10,
+       0,
+       10,
+       -15
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Мы все вместе",
+       "All of us together"
+      ],
+      "fx": [
+       5,
+       0,
+       5,
+       20
+      ],
+      "flag": "team"
+     },
+     "if": "team"
+    },
+    {
+     "who": [
+      "Финал конкурса",
+      "Contest final"
+     ],
+     "text": [
+      "Финал. Ваш питч — последний. Проектор зависает на слайде «спасибо за внимание», а жюри уже смотрит на часы.",
+      "The final. Your pitch is last. The projector freezes on \"Thank you for your attention\", and the jury is checking the time."
+     ],
+     "hook": [
+      "Финал конкурса. Проектор что-то задумал",
+      "The final. The projector is up to something"
+     ],
+     "left": {
+      "label": [
+       "Импровизировать",
+       "Improvise"
+      ],
+      "fx": [
+       10,
+       -10,
+       10,
+       0
+      ],
+      "flag": "solo"
+     },
+     "right": {
+      "label": [
+       "Позвать зал на помощь",
+       "Ask the audience for help"
+      ],
+      "fx": [
+       5,
+       -5,
+       0,
+       15
+      ],
+      "flag": "team"
+     },
+     "if": "solo"
+    }
+   ]
+  ],
+  "endings": [
+   {
+    "id": "winners",
+    "title": [
+     "Команда-победитель",
+     "Winning team"
+    ],
+    "text": [
+     "Ваша идея победила! Обед с генеральным прошёл весело: Аркадий задремал, Лиза получила оффер, а вы — премию.",
+     "Your idea won! Lunch with the CEO was fun: Arkady dozed off, Liza got a job offer, and you got the bonus."
+    ],
+    "reward": {
+     "bank": 20,
+     "badge": {
+      "ico": "🏆",
+      "name": [
+       "Изобретатель года",
+       "Inventor of the Year"
+      ]
+     }
+    },
+    "if": "team",
+    "min": 3
+   },
+   {
+    "id": "audience",
+    "title": [
+     "Приз зрительских симпатий",
+     "Audience award"
+    ],
+    "text": [
+     "Главный приз ушёл другим, но зал аплодировал вам дольше всех. Лиза и Аркадий уже придумывают идею на следующий год.",
+     "The main prize went elsewhere, but the audience clapped longest for you. Liza and Arkady are already planning next year's idea."
+    ],
+    "reward": {
+     "mood": 10,
+     "hint": 1,
+     "bank": 5
+    },
+    "if": "team",
+    "min": 2
+   },
+   {
+    "id": "lone",
+    "title": [
+     "Одинокий гений",
+     "Lone genius"
+    ],
+    "text": [
+     "Идею оценили, но премия ушла другим. Зато ваш «кулер-напоминалку» тайком внедрили в бухгалтерии.",
+     "They liked the idea, but the bonus went elsewhere. Still, Accounting quietly installed your \"reminder cooler\"."
+    ],
+    "reward": {
+     "hint": 2,
+     "bank": 5
+    }
+   }
+  ]
+ }
+]

@@ -328,7 +328,7 @@ function startLevel(lvl) {
   const keep = C, first = rnd(VACANCIES.filter(v => v.level === Math.min(lvl, 3)));
   C = { prof: keep.prof, trait: keep.trait, week: 1, stage: 'work', company: first.name, companies: [first.name], res: null, level: lvl,
     worked: 0, firings: 0, passed: 0, failed: 0, newJob: false, bank: keep.bank || 0, earned: 0, cert: keep.cert, payV: keep.payV, vacation: 0, vacUsed: 0,
-    hero: keep.hero, levelsDone: Math.max(keep.levelsDone || 0, levelOf(keep)) };
+    hero: keep.hero, story: keep.story, levelsDone: Math.max(keep.levelsDone || 0, levelOf(keep)) };
   C.salary = salaryFor(first); C.res = freshRes(first.perk);
   store.del(KEY.save); saveCareer();
   track('level_start', { detail: String(lvl) });
@@ -491,11 +491,12 @@ const headerLine = () => S.mode === 'career' && C ? (levelOf(C) > 1 ? L(`Ур. $
 function renderCard() {
   const slot = S.deck[S.step], c = byId[slot.id], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const card = $('card');
-  const tag = c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
+  const tag = c.story ? stoTag(c) : c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
     : c.random ? `<span class="rnd-tag">${L('! СЛУЧАЙНОЕ СОБЫТИЕ', '! RANDOM EVENT')}</span>` : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
   const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="${L('Отношение', 'Relationship')}: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
   // в карьере внизу карточки — кнопки «Подсказка» и «Магазин»; там же появляется предложение подсказки
   const tools = S.mode === 'career' && C ? '<div class="card-tools" id="ctools"></div>' : '';
+  card.classList.toggle('sto-card', !!c.story);  // эпизод сюжета (js/stories.js) — особая рамка
   card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div>${tools}<div class="stamp" aria-hidden="true"></div>`;
   if (tools) cardTools();
   sfx.flick?.();
@@ -695,9 +696,9 @@ function choose(side) {
     if (c.id === 'rnd_cake' && side === 'right') S.flags.cake = true;
     // цепочка: решение вернётся в другой день недели
     const ch = CHAINS.find(x => x.from === c.id && x.side === side), at = ch && slotOf(ch.at.day, ch.at.phase);
-    if (ch && at > S.step) S.deck[at] = { id: ch.card.id, time: slotTime(at), fixed: true, origin: ch.origin };
+    if (ch && at > S.step && !S.deck[at].story) S.deck[at] = { id: ch.card.id, time: slotTime(at), fixed: true, origin: ch.origin };
     const pc = POOL_CHAINS.find(x => x.from === c.id && x.side === side), pat = pc && Math.min(WEEK_LEN - 1, S.step + Math.round(pc.after * PER_DAY / 3));
-    if (pc && pat > S.step && !S.deck[pat].origin) S.deck[pat] = { id: pc.card.id, time: slotTime(pat), fixed: true, origin: pc.origin };
+    if (pc && pat > S.step && !S.deck[pat].origin && !S.deck[pat].story) S.deck[pat] = { id: pc.card.id, time: slotTime(pat), fixed: true, origin: pc.origin };
     clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side); bus.emit('answer', { card: c, side, eff });
     let deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     // первые недели карьеры: раз в неделю бесплатный «кофе» — шкала останавливается на 5% (95%), вопрос и реклама остаются на потом

@@ -121,14 +121,17 @@ const boost = (c, down = 1) => ({ ...c, answers: Object.fromEntries(['left', 'ri
 // Вопросы собеседования: базовые из cards.js и 300 из data/interview.json (prof — только для своей профессии, last — финальный)
 // Истории постоянных коллег (data/cast.json): stage 1…8 по порядку, payoff — когда отношение ±2
 let CAST_CARDS = [];
+// Сюжеты с продолжением (data/stories.json, движок — js/stories.js): грузятся вместе с остальными данными,
+// чтобы сохранённая неделя с карточкой эпизода не считалась «старой колодой»
+let STORIES = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   // Английский: data/en/<имя>.json — только тексты, по id поверх русских. Карточки без перевода в английскую игру не попадают
   const en = async name => EN ? (window[`EN_${name.toUpperCase()}_JSON`] || (await fetch(`data/en/${name}.json`).then(r => r.ok ? r.json() : []).catch(() => []))) : null;
   try {
-    let [p, p2, p3, q, ch, iv, cast] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
-      get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => [])]);
+    let [p, p2, p3, q, ch, iv, cast, st] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
+      get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => []), get('stories', 'STORIES_JSON').catch(() => [])]);
     if (EN) {
       const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'pool3', 'quiz', 'chains', 'interview', 'cast'].map(en));
       p = enCards(p, ep); p2 = enCards(p2, ep2); p3 = enCards(p3, ep3); cast = enCards(cast, ecast);
@@ -148,6 +151,7 @@ const dataReady = (async () => {
     for (const c of POOL) byId[c.id] = c;
     for (const x of POOL_CHAINS) byId[x.card.id] = { ...x.card, chain: x.origin };
     TOTAL_CARDS = TOTAL_BASE + POOL.length;
+    STORIES = st || []; window.stoRegister?.();
   } catch {}
   dataLoaded = true;
 })();

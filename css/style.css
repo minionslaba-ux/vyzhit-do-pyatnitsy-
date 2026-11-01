@@ -1990,3 +1990,28 @@ html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
 .br-word { position: relative; font-family: var(--f-display); font-size: 24px; font-weight: 800; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
 .br-sec { position: absolute; bottom: -30px; font-size: 18px; font-weight: 800; color: var(--text-2); }
 .br-round { margin: 18px 0 0; color: var(--text-2); font-size: 14px; }
+/* Сюжеты с продолжением (js/stories.js): карточка эпизода, «Продолжение следует», финал, плашка в меню */
+.card.sto-card { border: 2px solid #ffb84d; box-shadow: 0 0 0 1px rgba(255,184,77,.25), 0 0 26px rgba(255,184,77,.28), inset 0 0 40px rgba(255,184,77,.06);
+  background-image: linear-gradient(160deg, rgba(255,184,77,.12), transparent 45%); }
+.rnd-tag.sto-tag { color: #2a1700; background: linear-gradient(135deg, #ffd08a, #ffb84d); text-shadow: none; white-space: nowrap; padding: 3px 9px; border-radius: 999px; font-weight: 700; box-shadow: 0 0 12px rgba(255,184,77,.5); }
+.sto-teaser { display: flex; gap: 10px; align-items: center; text-align: left; padding: 10px 12px; border-radius: 16px; font-size: 13.5px; line-height: 1.4; color: var(--text);
+  background: linear-gradient(135deg, rgba(255,184,77,.16), rgba(var(--p-rgb),.1)); border: 1px dashed rgba(255,184,77,.6); font-family: inherit; width: 100%; }
+.sto-teaser > span { display: flex; flex-direction: column; gap: 2px; } .sto-teaser b { color: #ffd08a; }
+.sto-teaser small { color: var(--text-2); font-size: 11.5px; }
+.sto-ico { font-style: normal; font-size: 24px; flex: none; }
+.sto-teaser.sto-done { cursor: pointer; border-style: solid; animation: stoGlow 2.2s ease-in-out infinite; }
+.sto-teaser.sto-new { border-color: rgba(var(--c-rgb),.5); background: rgba(var(--c-rgb),.08); } .sto-teaser.sto-new b { color: var(--cyan-l); }
+@keyframes stoGlow { 50% { box-shadow: 0 0 18px rgba(255,184,77,.45); } }
+.sto-fin { text-align: center; align-items: center; border: 2px solid #ffb84d; }
+.sto-kicker { font-family: var(--f-mono); font-size: 12px; color: #ffd08a; letter-spacing: .02em; }
+.sto-fin h2 { margin: 0; }
+.sto-rew { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.sto-rew span { padding: 5px 10px; border-radius: 999px; font-size: 13px; font-weight: 800; background: rgba(255,184,77,.14); border: 1px solid rgba(255,184,77,.45); }
+.sto-rew .sto-badge { background: rgba(var(--p-rgb),.18); border-color: rgba(var(--p-rgb),.6); }
+.modal-box p.sto-soon { color: var(--cyan-l); font-weight: 800; }
+.sto-chip, .sto-badges { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 14px; font-size: 13px; line-height: 1.35;
+  background: linear-gradient(135deg, rgba(255,184,77,.14), rgba(var(--p-rgb),.08)); border: 1px solid rgba(255,184,77,.45); }
+.sto-chip > span { display: flex; flex-direction: column; min-width: 0; } .sto-chip b { color: #ffd08a; } .sto-chip small { color: var(--text-2); font-size: 11.5px; }
+.sto-chip.sto-wait { border-style: dashed; }
+.sto-badges { font-size: 20px; gap: 6px; flex-wrap: wrap; background: rgba(var(--p-rgb),.08); border-color: rgba(var(--p-rgb),.35); }
+.sto-badges small { font-size: 11.5px; color: var(--text-2); margin-left: auto; }
