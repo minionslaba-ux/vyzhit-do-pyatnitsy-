@@ -172,6 +172,7 @@ finishLogin().then(reloading => {
   const tgUtm = (TG?.initDataUnsafe?.start_param || '').match(/utm_([\w-]+)/)?.[1];
   const utm = (new URLSearchParams(location.search).get('utm_source') || tgUtm || window.VDP_PLATFORM?.name || '').replace(/[^\w-]/g, '').slice(0, 20);
   track('open', { detail: (TG ? 'telegram' : standalone ? 'app' : 'web') + (utm ? ':' + utm : '') });
+  if (!sessionStorage.vdpBr) { try { sessionStorage.vdpBr = 1; } catch {} track('browser', { detail: `${window.BROWSER}:${isIOS ? 'ios' : isAndroid ? 'android' : 'desktop'}:${window.APP_VER}` }); }
   const scr = new URLSearchParams(location.search).get('screen');
   if (scr && board.online) return openScreen(scr);
   if (prefs.loggedOut) renderWelcome();  // вышли из аккаунта — сначала вход
@@ -185,3 +186,15 @@ finishLogin().then(reloading => {
   flushOutbox();
   pollSocial();
 });
+
+// Ошибки скриптов (собирает js/i18n.js) — в статистику и в Яндекс Метрику, с браузером и версией игры
+window.__errFlush = () => {
+  const list = (window.__errs || []).splice(0);
+  for (const m of list) {
+    const d = `${window.BROWSER}:${window.APP_VER} ${m}`.slice(0, 200);
+    try { window.ym?.(113961628, 'reachGoal', 'js_error', { detail: d }); } catch {}
+    // в базу — даже до ввода имени (track() без имени молчит); detail там до 60 символов
+    try { if (board.online && prefs.playerId) board.rpc('log_event', { p_id: prefs.playerId, p_kind: 'js_error', p_mode: window.BROWSER, p_card: window.APP_VER, p_won: null, p_step: null, p_detail: m.slice(0, 60) }).catch(() => {}); } catch {}
+  }
+};
+window.__errFlush();

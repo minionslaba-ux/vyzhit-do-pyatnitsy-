@@ -71,13 +71,25 @@ function showIntro(done) {
 // Видеозаставка: открывается по нажатию (не грузится вместе с игрой). На узком экране — вертикальная, иначе — горизонтальная
 const VIDEO_BASE = /^https?:/.test(location.href) && !window.POOL_JSON ? '' : 'https://survivefriday.com/';
 function showVideo() {
+  const ya = window.BROWSER === 'yandex';  // Яндекс Браузер: без автозапуска — он перехватывает видео в свой плеер
   const tall = innerHeight > innerWidth, f = tall ? '9x16' : '16x9', m = $('modal');
   m.innerHTML = `<div class="modal-box glass video-box${tall ? ' tall' : ''}" role="dialog" aria-modal="true" aria-label="${L('Видео об игре', 'Game video')}">
-    <video src="${VIDEO_BASE}promo/video/zastavka-${f}.mp4" poster="${VIDEO_BASE}promo/video/poster-${f}.jpg" controls autoplay playsinline preload="auto"></video>
+    <video src="${VIDEO_BASE}promo/video/zastavka-${f}.mp4" poster="${VIDEO_BASE}promo/video/poster-${f}.jpg" controls ${ya ? '' : 'autoplay'} playsinline webkit-playsinline x5-playsinline disablepictureinpicture disableremoteplayback controlslist="nodownload noremoteplayback noplaybackrate" preload="${ya ? 'metadata' : 'auto'}"></video>
     <div class="video-nav"><button class="btn-ghost" type="button" id="vidHow">${L('Как играть', 'How to play')}</button><button class="btn-main" type="button" id="vidClose">${L('Понятно, играть', 'Got it, let’s play')}</button></div></div>`;
   m.hidden = false;
-  const v = m.querySelector('video'), close = () => { v.pause(); m.hidden = true; m.innerHTML = ''; };
-  v.play?.().catch(() => {});  // если браузер запретил автозапуск со звуком — останется кнопка ▶
+  // Закрыть надёжно: Яндекс Браузер и часть Android-браузеров уводят видео в свой плеер / «окно поверх» —
+  // выходим из полноэкранного режима и картинки-в-картинке, выгружаем видео, чтобы ничего не перехватывало нажатия
+  const v = m.querySelector('video'), close = () => {
+    try { v.pause(); } catch {}
+    try { if (document.pictureInPictureElement) document.exitPictureInPicture().catch(() => {}); } catch {}
+    try { const fs = document.fullscreenElement || document.webkitFullscreenElement; if (fs) (document.exitFullscreen || document.webkitExitFullscreen)?.call(document); } catch {}
+    try { v.webkitExitFullscreen?.(); } catch {}
+    try { v.removeAttribute('src'); v.load(); } catch {}
+    m.hidden = true; m.innerHTML = '';
+  };
+  try { v.disablePictureInPicture = true; v.disableRemotePlayback = true; } catch {}
+  if (!ya) v.play?.().catch(() => {});  // если браузер запретил автозапуск со звуком — останется кнопка ▶
+  v.addEventListener('ended', () => { try { v.webkitExitFullscreen?.(); if (document.fullscreenElement) document.exitFullscreen?.(); } catch {} $('vidClose')?.focus(); });
   $('vidClose').onclick = close;
   $('vidHow').onclick = () => { close(); showIntro(); };
   m.onclick = e => { if (e.target === m) close(); };
