@@ -290,6 +290,7 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
   voiceUnlock();  // мультик запускается по нажатию «Купить» — разрешаем речь сейчас, реплика прозвучит в кульминации (iOS)
   const m = $('modal'), C2 = careerNow();
   dropView();
+  if (need && !list.length) list = [{ id: need.id, ico: need.ico, price: need.price }];  // потребность в мультиках «корзины», «вечера», «салона» — как один предмет
   const x = list[0], who = kid || h, fem = kid ? kid.g === 'f' : heroFem(h), nm = esc(who.name);
   const dur = RM.matches ? 3500 : TOON_LEN[kind](list.length);
   const title = need ? needText(need, h, 't') : x ? goodText(x, h) : '';
@@ -336,7 +337,8 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
   // голос: в кульминации — реплика к ситуации (поехали / красота / мечта сбылась / спасибо, люблю, рад), в конце — «спасибо»
   const voice = kid ? kidVoice(kid) : heroVoice(h);
   const gift = cat?.id === 'flowers' || x?.id === 'flowers' ? 'flowers' : cat?.id === 'sweets' || kind === 'delivery' ? 'gift' : null;  // цветы / сладкое — «Цветы? Мне? Ну ты даёшь!»
-  const peak = lineFor(kid ? 'kid_thanks' : gift || { ride: 'ride', fish: 'ride', salon: 'beauty', need: 'big' }[kind] || rnd(['thanks', 'love', 'joy']), fem);
+  const peak = need?.say?.done?.length && !kid ? genderLine(rnd(need.say.done), fem)  // своя реплика у потребности (js/voice-more.js)
+    : lineFor(kid ? 'kid_thanks' : gift || { ride: 'ride', fish: 'ride', salon: 'beauty', need: 'big' }[kind] || rnd(['thanks', 'love', 'joy']), fem);
   const bye = lineFor(kid ? 'kid_thanks' : rnd(['thanks', 'love']), fem);
   let spoke = false;
   const sayPeak = () => { if (spoke) return; spoke = true; const b = stage.querySelector('.tn-say'); b.textContent = `«${peak}»`; b.hidden = false; say(peak, voice); };

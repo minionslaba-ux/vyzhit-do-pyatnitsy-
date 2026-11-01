@@ -40,7 +40,8 @@ const NEEDS = [
 ];
 const needText = (n, h, k) => typeof n[k] === 'function' ? n[k](h) : n[k];
 // Мультик к большой покупке: машина — уезжает на ней, отпуск у моря — катается на лодке, остальное — праздник
-const needToon = n => ({ car: { kind: 'ride', prop: 'car' }, trip: { kind: 'ride', prop: 'boat' } })[n.id] || { kind: 'need' };
+// у новых потребностей (js/voice-more.js) мультик задан в n.toon: доставка, вечер вне дома, салон, приставка, поездка, рыбалка…
+const needToon = n => n.toon || ({ car: { kind: 'ride', prop: 'car' }, trip: { kind: 'ride', prop: 'boat' } })[n.id] || { kind: 'need' };
 const XP_COURSE = { price: 20, xp: 60 };
 const LOAN_CAP = 150;
 
@@ -213,13 +214,14 @@ function heroAsk() {
   const C2 = careerNow(), h = C2?.hero; if (!h?.pending) return;
   const n = NEEDS.find(x => x.id === h.pending); if (!n) { h.pending = null; careerSave(C2); return; }
   h.seenWeek = C2.week; careerSave(C2);
-  const plead = lineFor('plead', heroFem(h));
-  setTimeout(() => say(`${needText(n, h, 'ask')} ${plead}`, heroVoice(h)), 350);
+  // у потребности могут быть свои реплики-просьбы (js/voice-more.js), иначе — общие «ну пожалуйста»
+  const plead = n.say?.ask?.length ? genderLine(rnd(n.say.ask), heroFem(h)) : lineFor('plead', heroFem(h));
+  setTimeout(() => say(`${genderLine(needText(n, h, 'ask'), heroFem(h))} ${plead}`, heroVoice(h)), 350);
   const p = heroLook(h), can = C2.bank >= n.price, loanOk = (C2.loan || 0) + loanCost(n) <= LOAN_CAP;
   const { m, close } = heroModal(`
     <div class="hero-ask">
       <canvas class="hero-cv" data-framing="full"></canvas>
-      <div class="hero-bubble"><b id="heroTitle">${n.ico} ${esc(needText(n, h, 't'))}</b><p>«${esc(needText(n, h, 'ask'))}»</p><p class="say">«${esc(plead)}»</p><span>— ${esc(h.name)}</span></div>
+      <div class="hero-bubble"><b id="heroTitle">${n.ico} ${esc(needText(n, h, 't'))}</b><p>«${esc(genderLine(needText(n, h, 'ask'), heroFem(h)))}»</p><p class="say">«${esc(plead)}»</p><span>— ${esc(h.name)}</span></div>
     </div>
     <div class="money"><div><b>${money(n.price)}</b><span>${L('стоит', 'costs')}</span></div><div><b>${money(C2.bank)}</b><span>${L('на счёте', 'balance')}</span></div></div>
     <div class="hero-acts">

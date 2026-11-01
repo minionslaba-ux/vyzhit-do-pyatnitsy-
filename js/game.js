@@ -796,11 +796,14 @@ function dzConfirm(side) {
     <div class="row2"><button class="btn-ghost" type="button" id="dzNo">${L('Нет, подумаю', 'No, let me think')}</button><button class="btn-main" type="button" id="dzYes">${L('Да, отвечаю', 'Yes, go')}</button></div>
     <label class="dz-skip"><input type="checkbox" id="dzSkip"> ${L('Больше не спрашивать', 'Don’t ask again')}</label></div>`;
   m.hidden = false; $('dzNo').focus();
-  const close = () => { if ($('dzSkip')?.checked) { prefs.dzNoAsk = true; store.set(KEY.prefs, prefs); toast(L('Хорошо, больше не спрашиваем. Метка ⚠ на ответах останется.', 'Okay, no more questions. The ⚠ badge stays on answers.')); } m.hidden = true; m.innerHTML = ''; };
+  const close = () => { if ($('dzSkip')?.checked) { prefs.dzNoAsk = true; store.set(KEY.prefs, prefs); toast(L('Хорошо, больше не спрашиваем. Вернуть — в профиле: «Спрашивать перед опасным ответом».', 'Okay, no more questions. Turn it back on in your profile.')); if ($('dzAsk')) $('dzAsk').checked = false; } m.hidden = true; m.innerHTML = ''; };
   $('dzYes').onclick = () => { close(); track('dz_confirm', { detail: bad.map(r => r.k).join(',') }); choose(side, true); };
   $('dzNo').onclick = () => { close(); back(); track('dz_cancel', { detail: bad.map(r => r.k).join(',') }); };
   m.onclick = e => { if (e.target === m) { close(); back(); } };
 }
+// Переключатель в профиле: «Спрашивать перед опасным ответом» (по умолчанию включён)
+(() => { const cb = $('dzAsk'); if (!cb) return; const sync = () => { cb.checked = !prefs.dzNoAsk; }; sync(); bus.on('menu', sync);
+  cb.onchange = () => { prefs.dzNoAsk = !cb.checked; store.set(KEY.prefs, prefs); toast(cb.checked ? L('Будем спрашивать перед опасным ответом', 'We’ll ask before a risky answer') : L('Больше не спрашиваем — метка ⚠ на ответах останется', 'No more questions — the ⚠ badge stays on answers')); }; })();
 function dzFirstTip() { if (prefs.dzTip) return; prefs.dzTip = 1; store.set(KEY.prefs, prefs); setTimeout(() => toast(dzText()), 700); }
 // Полоска задачи над карточкой: что сделать, сколько осталось, до когда и какой ответ на этой карточке засчитается
 function renderDeadlineChip() {
