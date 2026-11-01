@@ -2213,3 +2213,11 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 .card.gold-card { --glow: #ffd23a; --glow-soft: rgba(255,210,58,.55); border-color: #ffd23a; box-shadow: 0 0 46px rgba(255,210,58,.5), inset 0 0 30px rgba(255,210,58,.12); }
 .rnd-tag.gold { background: linear-gradient(90deg, #ffd23a, #ffaa28); color: #2a1a00; border-color: #ffd23a; }
 @media (prefers-reduced-motion: reduce) { .nm-pulse { animation: none; } }
+
+/* VK — фирменный синий во всех темах (светлая тема перекрашивала кнопки цитаты в белый, и белый текст «VK» пропадал) */
+.qt-btn.qt-vk, html.light .qt-btn.qt-vk, .share-grid .sh-vk, html.light .share-grid .sh-vk, .brk-share .sh-vk, html.light .brk-share .sh-vk {
+  background: #0077ff; border-color: #0077ff; color: #fff; }
+.brk-share button[data-sh="tg"], html.light .brk-share button[data-sh="tg"] { background: #2aabee; border-color: #2aabee; color: #fff; }
+/* Цитата дня в светлой теме: читаемые подпись и кнопка «Поделиться» */
+html.light .qt-kick { color: #8a5a00; }
+html.light .qt-btn.qt-share { color: #b0127a; border-color: rgba(176,18,122,.45); }
