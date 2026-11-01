@@ -2144,3 +2144,10 @@ html.light .rnd-tag.ret-mtag { color: #8a5a00; }
 .brk-share button[data-sh="tg"] { background: #2aabee; border-color: #2aabee; color: #fff; }
 .brk-share .sh-vk { background: #0077ff; border-color: #0077ff; color: #fff; }
 .brk-share button:active { transform: scale(.96); }
+
+/* Прокрутка всей страницей в обычном браузере (класс docscroll ставит js/i18n.js) — для всех экранов, кроме недели игры.
+   Неделя игры остаётся «один экран без прокрутки», как раньше. */
+html.docscroll:has(#game[hidden]), html.docscroll:has(#game[hidden]) body { height: auto; min-height: var(--app-h, 100dvh); }
+html.docscroll:has(#game[hidden]) body { overflow-x: hidden; overflow-y: visible; }
+html.docscroll:has(#game[hidden]) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
+html.docscroll:has(#game[hidden]) .view.menu, html.docscroll:has(#game[hidden]) .view.join, html.docscroll:has(#game[hidden]) .view.end { flex: none; overflow: visible; }

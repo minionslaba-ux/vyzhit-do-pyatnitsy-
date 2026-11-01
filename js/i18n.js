@@ -1,4 +1,4 @@
-window.APP_VER = 'v123';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v124';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');
@@ -12,6 +12,10 @@ addEventListener('unhandledrejection', e => { const m = String(e.reason?.message
   // приложение на экране «Домой» (iOS/Android): высоту задаёт CSS (body fixed на весь экран) — в нём visualViewport на iPhone врёт
   const app = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   if (app) { document.documentElement.classList.add('pwa'); return; }
+  // Обычный браузер (не Telegram, не приложение с главного экрана): экраны, кроме самой игры, прокручиваются всей страницей.
+  // Вложенная прокрутка внутри неподвижной страницы не работает в части мобильных браузеров (Яндекс Браузер)
+  const inTg = /tgWebApp/.test(location.hash) || window.TelegramWebviewProxy || /Telegram/i.test(navigator.userAgent) || window.Telegram?.WebApp?.initData;
+  if (!inTg) document.documentElement.classList.add('docscroll');
   const set = () => {
     const tg = window.Telegram?.WebApp, vv = window.visualViewport;
     const h = (tg?.initData && tg.viewportStableHeight) || window.innerHeight || vv?.height;
