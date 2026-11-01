@@ -2163,7 +2163,7 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 .hero-info { min-width: 0; }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 6px; max-width: 100%; }
 .hero-btns .btn-chip, .hero-info .btn-chip { white-space: normal; max-width: 100%; text-align: left; line-height: 1.2; }
-.play2 .btn-main { min-width: 0; overflow-wrap: anywhere; }
+.play2 .btn-main { min-width: 0; overflow-wrap: normal; word-break: normal; hyphens: manual; }
 .play2 .btn-main small { white-space: normal; text-align: center; }
 .me-badge { max-width: calc(100vw - 40px); }
 
@@ -2221,3 +2221,5 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 /* Цитата дня в светлой теме: читаемые подпись и кнопка «Поделиться» */
 html.light .qt-kick { color: #8a5a00; }
 html.light .qt-btn.qt-share { color: #b0127a; border-color: rgba(176,18,122,.45); }
+/* Кнопки «Продолжить неделю» / «Неделя дня»: слова целиком, на узких экранах шрифт чуть меньше */
+@media (max-width: 460px) { .play2 .btn-main { font-size: clamp(13px, 4vw, 19px); padding-left: 8px; padding-right: 8px; } .play2 .btn-main small { white-space: nowrap; font-size: clamp(9.5px, 2.85vw, 11px); } }
