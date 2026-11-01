@@ -125,6 +125,7 @@ async function playBreak(n, opts = {}) {
         reward = L(`+1 у.е.${now ? '' : ' (придут в карьеру)'} · бодрость +${BREAK_BUFF} на следующую неделю`, `+$1${now ? '' : ' (goes to your career)'} · +${BREAK_BUFF} boost for next week`);
       }
       track('break_end', { detail: `${n}:${won ? 1 : 0}:${score ?? ''}` });
+      bus.emit('breakEnd', { n, won, rewarded: !!reward, rec, mid: !!opts.mid });  // серия пауз, коллекция, пауза посреди недели — js/pause.js
       if (rec && had) track('break_record', { detail: `${n}:${score}` });  // побит прежний рекорд — в «Ленту»
       // После каждой партии — обязательный рекламный ролик (без награды), потом итог. Кроме покупавших у.е. картой.
       const show = () => {
@@ -221,7 +222,7 @@ function renderBreakDay() {
       <span class="bd-ico" aria-hidden="true">${b[2]}</span>
       <span class="bd-txt"><small class="bd-kick">☕ ${L('Разминка дня', 'Break of the day')}${cat ? ` · ${esc(cat[2])}` : ''}</small><b>${esc(b[3])}</b><span class="bd-desc">${esc(b[4])}</span></span>
       ${badge}<span class="bd-play" aria-hidden="true">▶</span></button>
-    <button type="button" class="btn-link bd-all" id="openBreaks">${L('Все 50 разминок →', 'All 50 breaks →')}</button>`;
+    <button type="button" class="btn-link bd-all" id="openBreaks">${L(`Все ${BREAKS.length} разминок →`, `All ${BREAKS.length} breaks →`)}</button>`;
   $('brkDayGo').onclick = () => { track('break_day', { detail: String(n) }); playBreak(n); };
   $('openBreaks').onclick = openBreaks;
 }
