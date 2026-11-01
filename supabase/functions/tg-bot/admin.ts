@@ -12,7 +12,7 @@ export const ADMIN_COMMANDS = [
   { command: 'yesterday', description: 'Отчёт за вчера' },
   { command: 'week', description: 'Отчёт за 7 дней' },
   { command: 'online', description: 'Кто сейчас в игре' },
-  { command: 'top', description: 'Рейтинг недели дня сегодня' },
+  { command: 'top', description: 'Лучшие игроки недели' },
   { command: 'sales', description: 'Покупки и деньги' },
   { command: 'find', description: 'Найти игрока: /find Имя' },
   { command: 'push', description: 'Пуш всем: /push Заголовок | Текст' },
