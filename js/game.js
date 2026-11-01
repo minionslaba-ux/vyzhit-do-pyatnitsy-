@@ -414,7 +414,17 @@ const hearts = v => v > 0 ? '♥'.repeat(v) : v < 0 ? '💢'.repeat(-v) : '·';
 // Неделя дня: после ответа — сколько игроков ответили так же (только сводные числа)
 function livePick(c, side) {
   const el = $('pickStat'); el.hidden = true;
-  if (S.mode !== 'daily' || !board.online) return;
+  if (!board.online) return;
+  if (S.mode !== 'daily') {  // карьера, быстрая смена и др.: общий счётчик по карточке (card_vote), показываем, когда ответов уже 5+
+    const id = c.id;
+    board.rpc('card_vote', { p_id: prefs.playerId, p_card: String(id).slice(0, 40), p_side: side }).then(r => {
+      const x = Array.isArray(r) ? r[0] : r, n = (x?.l || 0) + (x?.r || 0);
+      if (!x || n < 5 || !S || S.mode === 'daily') return;
+      const pct = Math.round(100 * (side === 'left' ? x.l : x.r) / n);
+      el.textContent = L(`Так же ответили ${pct}% игроков`, `${pct}% of players chose the same`); el.hidden = false; FX.pulse(el, 'on', 4000);
+    }).catch(() => {});
+    return;
+  }
   const step = S.step;
   board.rpc('pick_daily', { p_id: prefs.playerId, p_day: S.day, p_step: step, p_card: c.id, p_side: side }).then(r => {
     const x = Array.isArray(r) ? r[0] : r;
@@ -486,18 +496,20 @@ function renderBars() {
   $('inv').innerHTML = S.items.map(id => `<span class="item${S.used.includes(id) ? ' used' : ''}" title="${ITEMS[id].text}">${ITEMS[id].name}</span>`).join('');
 }
 const headerLine = () => S.mode === 'career' && C ? (levelOf(C) > 1 ? L(`Ур. ${levelOf(C)} · `, `Lv ${levelOf(C)} · `) : '') + L(`Неделя ${C.week}/${YEAR} · ${C.company}`, `Week ${C.week}/${YEAR} · ${C.company}`) : S.mode === 'daily' ? `${L('Неделя дня', 'Daily Week')} ${dayLabel(S.day)}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}`
-  : S.mode === 'tour' ? `${L('Турнир', 'Tournament')} · ${S.tourTeam}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}` : PACK?.company || '';
+  : S.mode === 'tour' ? `${L('Турнир', 'Tournament')} · ${S.tourTeam}${S.ranked ? '' : L(' · не в зачёт', ' · unranked')}` : S.mode === 'quick' ? L('⚡ Быстрая смена · четверг и пятница', '⚡ Quick shift · Thursday & Friday') : PACK?.company || '';
 
 function renderCard() {
   const slot = S.deck[S.step], c = byId[slot.id], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const card = $('card');
-  const tag = c.story ? stoTag(c) : c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
+  const gold = S.goldAt === S.step && !S.goldDone;  // золотая карточка (js/hooks.js)
+  const tag = gold ? `<span class="rnd-tag gold">✨ ${L('ЗОЛОТАЯ КАРТОЧКА · сюрприз за любой ответ', 'GOLDEN CARD · a surprise for any answer')}</span>` : c.story ? stoTag(c) : c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
     : c.month && typeof retCardTag === 'function' ? retCardTag(c)
     : c.random ? `<span class="rnd-tag">${L('! СЛУЧАЙНОЕ СОБЫТИЕ', '! RANDOM EVENT')}</span>` : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
   const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="${L('Отношение', 'Relationship')}: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
   // в карьере внизу карточки — кнопки «Подсказка» и «Магазин»; там же появляется предложение подсказки
   const tools = S.mode === 'career' && C ? '<div class="card-tools" id="ctools"></div>' : '';
-  card.classList.toggle('sto-card', !!c.story);  // эпизод сюжета (js/stories.js) — особая рамка
+  card.classList.toggle('sto-card', !!c.story);
+  card.classList.toggle('gold-card', gold);  // эпизод сюжета (js/stories.js) — особая рамка
   card.innerHTML = `<div class="card-head">${portraitHtml(c.who)}<span class="who">${esc(c.who)}</span>${relTag}${tag}</div><div class="text" aria-live="polite"><span class="sr">${esc(c.who)}: </span>${esc(c.text)}</div>${tools}<div class="stamp" aria-hidden="true"></div>`;
   if (tools) cardTools();
   sfx.flick?.();
@@ -693,6 +705,7 @@ function choose(side, sure) {
     const { eff, blocked } = effectsOf(side);
     for (const b of blocked) { S.used.push(b.item); toast(L(`${ITEMS[b.item].name}: удар по шкале «${resName(b.stat)}» отменён`, `${ITEMS[b.item].name}: hit to ${resName(b.stat)} blocked`)); sfx.item(); FX.shield(ITEMS[b.item].name, b.stat); }
     for (const [k, v] of Object.entries(eff)) S.res[k] = clamp(S.res[k] + v);
+    if (S.training) for (const r of RES) S.res[r.k] = Math.max(10, Math.min(90, S.res[r.k]));  // учебная неделя (js/hooks.js): шкалы не доходят до края
     if (Object.values(eff).some(v => v <= -15)) sfx.sigh();
     if (RES.some(r => S.res[r.k] <= 15 || S.res[r.k] >= 85)) buzz('danger');
     if (c.id === 'rnd_cake' && side === 'right') S.flags.cake = true;
@@ -1188,7 +1201,7 @@ function lose(k, high) {
   </div>`;
   show('end'); bindCommon();
   $('share').onclick = () => share(false, k);
-  $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : S.mode === 'tour' ? openScreen(S.tourCode) : startPack();
+  $('next').onclick = () => career ? (C.week > YEAR ? yearEnd() : jobSearch()) : S.mode === 'daily' ? startDaily() : S.mode === 'tour' ? openScreen(S.tourCode) : S.mode === 'quick' ? startQuick() : startPack();
   record(false, k, high);
   bus.emit('weekEnd', { won: false, mode: S.mode, step: S.step, res: { ...S.res }, stat: k, high });
   track('week_end', { mode: S.mode, won: false, step: S.step, card: S.deck[S.step]?.id, detail: `${k}${high ? ':100' : ':0'}` });
@@ -1210,7 +1223,7 @@ function win() {
   }
   if (last || !career) confetti();
   const kicker = career ? L(`Неделя ${week} из ${YEAR} · ${esc(C.company)} · пятница, 18:00`, `Week ${week} of ${YEAR} · ${esc(C.company)} · Friday, 6:00 PM`) : S.mode === 'daily' ? L(`Неделя дня ${dayLabel(S.day)} · пятница, 18:00`, `Daily Week ${dayLabel(S.day)} · Friday, 6:00 PM`)
-    : S.mode === 'tour' ? L(`Турнир офиса «${esc(S.tourTeam)}» · пятница, 18:00`, `Office Tournament “${esc(S.tourTeam)}” · Friday, 6:00 PM`) : `${esc(PACK.title)} · ${L('пятница, 18:00', 'Friday, 6:00 PM')}`;
+    : S.mode === 'tour' ? L(`Турнир офиса «${esc(S.tourTeam)}» · пятница, 18:00`, `Office Tournament “${esc(S.tourTeam)}” · Friday, 6:00 PM`) : S.mode === 'quick' ? L('⚡ Быстрая смена · пятница, 18:00', '⚡ Quick shift · Friday, 6:00 PM') : `${esc(PACK?.title || '')} · ${L('пятница, 18:00', 'Friday, 6:00 PM')}`;
   views.end.innerHTML = `<div class="end-sheet glass">
     <span class="kicker">${kicker}</span>
     <h1>${last ? L('Год позади!', 'Year’s done!') : L('Неделя закрыта!', 'Week survived!')}</h1>
@@ -1448,6 +1461,7 @@ async function record(won, death, high) {
   }
   const el = () => $('place');
   if (S.mode === 'tour') { const t = store.get('vdp-tours', {}); if (!t[S.tourId]) { t[S.tourId] = { won, total }; store.set('vdp-tours', t); } }
+  if (S.mode === 'quick') { if (el()) el().textContent = L('Быстрая смена в рейтинг не идёт — это разминка перед настоящей неделей.', 'Quick shifts don’t count toward the leaderboard.'); return; }
   if (S.mode === 'pack' || (S.mode === 'daily' && !S.ranked) || (S.mode === 'tour' && !S.ranked)) {
     if (el()) el().textContent = S.mode === 'pack' ? L('Брендированная неделя в общий рейтинг не идёт.', 'Branded weeks don’t count toward the main leaderboard.') : L('Повторная попытка: в зачёт идёт только первая.', 'Replay: only your first attempt counts.'); return; }
   const entry = { player_id: prefs.playerId, name: (S.name || prefs.name || '').trim().slice(0, 24) || L('Сотрудник', 'Employee'),  // пустое имя база не примет — результат не попал бы в рейтинг dept: (S.dept || '').slice(0, 24), prof: S.prof, won,

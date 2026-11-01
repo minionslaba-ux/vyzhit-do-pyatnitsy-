@@ -2195,3 +2195,21 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 .ps-switch input:checked { background: var(--magenta); }
 .ps-switch input:checked::after { transform: translateX(18px); }
 .ps-switch input:focus-visible { outline: 2px solid var(--cyan-l); outline-offset: 2px; }
+
+/* «Ещё разок» (js/hooks.js) */
+.btn-quick { width: 100%; margin-top: 8px; font-size: 15px; border-color: rgba(255,170,40,.7); color: #ffd28a; }
+.nm-box { margin: 6px 0 10px; padding: 12px 14px; border-radius: 16px; background: rgba(255,170,40,.1); border: 1.5px solid rgba(255,170,40,.55); display: grid; gap: 6px; text-align: center; }
+.nm-box.hot { background: rgba(255,59,107,.12); border-color: rgba(255,59,107,.7); box-shadow: 0 0 22px rgba(255,59,107,.25); }
+.nm-box.win { background: rgba(45,226,138,.1); border-color: rgba(45,226,138,.6); }
+.nm-box b { font-size: 17px; line-height: 1.25; }
+.nm-box small { font-size: 13px; color: var(--text-2); }
+.nm-bar { position: relative; height: 10px; border-radius: 99px; background: rgba(var(--w-rgb),.12); margin: 2px 18px 0 0; }
+.nm-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: linear-gradient(90deg, #ffaa28, #ff3bd4); }
+.nm-bar span { position: absolute; right: -20px; top: -6px; font-size: 16px; }
+.nm-pulse { animation: nmPulse 1.6s ease-in-out infinite; }
+@keyframes nmPulse { 50% { transform: scale(1.04); box-shadow: 0 0 34px rgba(var(--m-rgb),.75); } }
+.nm-tease { margin: 6px 0; font-size: 13px; color: var(--text-2); text-align: center; }
+/* золотая карточка */
+.card.gold-card { --glow: #ffd23a; --glow-soft: rgba(255,210,58,.55); border-color: #ffd23a; box-shadow: 0 0 46px rgba(255,210,58,.5), inset 0 0 30px rgba(255,210,58,.12); }
+.rnd-tag.gold { background: linear-gradient(90deg, #ffd23a, #ffaa28); color: #2a1a00; border-color: #ffd23a; }
+@media (prefers-reduced-motion: reduce) { .nm-pulse { animation: none; } }
