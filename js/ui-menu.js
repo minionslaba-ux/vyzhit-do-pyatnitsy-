@@ -886,7 +886,10 @@ function vkShare(url, title, what = '') {
     if (q.has('ch') && prefs.name) q.set('by', prefs.name.slice(0, 24));
     q.set('utm_source', 'vk'); url = `${typeof gameUrl === 'function' ? gameUrl() : 'https://survivefriday.com/'}?${q}`;
   }
-  const u = 'https://vk.com/share.php?' + new URLSearchParams({ url, title: String(title || '').slice(0, 250), image: 'https://survivefriday.com/icons/og-1200x630.jpg' });
+  // Только url: длинные title/image ломают вход в VK у тех, кто не залогинен («bad redirect»). Заголовок и картинку VK берёт из og-тегов сайта,
+  // а наш текст кладём в буфер обмена — его можно вставить в запись
+  const u = 'https://vk.com/share.php?url=' + encodeURIComponent(url);
+  if (title && navigator.clipboard?.writeText) navigator.clipboard.writeText(`${title} ${url}`).then(() => toast(L('Текст скопирован — вставьте его в запись ВКонтакте', 'Text copied — paste it into your VK post')), () => {});
   track('share', { detail: 'vk' + (what ? ':' + what : '') });
   if (TG?.openLink) TG.openLink(u); else window.open(u, '_blank', 'noopener');
 }
@@ -903,7 +906,7 @@ async function openShare(kind) {
     <p class="share-text" id="shText">${esc(full)}</p>
     <div class="share-big">
       <a class="btn-main btn-tg" data-via="tg" href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">${L('Отправить в Telegram', 'Send on Telegram')}${prefs.shared?.tg ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
-      <a class="btn-main btn-vk" data-via="vk" href="https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}" target="_blank" rel="noopener">${L('Рассказать в VK', 'Post on VK')}${prefs.shared?.vk ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
+      <a class="btn-main btn-vk" data-via="vk" href="https://vk.com/share.php?url=${enc(url)}" target="_blank" rel="noopener">${L('Рассказать в VK', 'Post on VK')}${prefs.shared?.vk ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
     </div>
     <div class="share-grid">
       ${!TG && navigator.share ? `<button id="shNative" data-via="native">${L('Отправить…', 'Share…')}</button>` : ''}

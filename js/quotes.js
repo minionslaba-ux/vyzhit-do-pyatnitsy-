@@ -76,7 +76,7 @@ function qtShare(x) {
 // ВКонтакте: окно «Поделиться» VK с цитатой и ссылкой на игру (в Telegram — через openLink, иначе новая вкладка)
 function qtVk(x) {
   const title = `${qtOpen}${qtText(x)}${qtClose} — ${qtWho(x)}`.slice(0, 250);
-  if (typeof vkShare === 'function') vkShare(QT_SITE + '/?utm_source=vk&utm_medium=share&utm_campaign=quote', title, 'quote');
+  if (typeof vkShare === 'function') vkShare(QT_SITE + '/?utm_source=vk', title, 'quote');
 }
 function qtCopyOld(s) {
   try {

@@ -168,7 +168,7 @@ async function brkShare(n, score, rec, via) {
   track('share', { detail: `break:${n}:${via}` });
   const enc = encodeURIComponent;
   if (via === 'tg') { const u = `https://t.me/share/url?url=${enc(tgLink || site)}&text=${enc(text)}`; TG?.openTelegramLink ? TG.openTelegramLink(u) : window.open(u, '_blank', 'noopener'); }
-  else if (via === 'vk') vkShare(site + '&utm_source=vk', text, 'break');
+  else if (via === 'vk') vkShare(site, text, 'break');
   else if (navigator.share && !TG) navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url: site }).catch(() => {});
   else navigator.clipboard?.writeText(`${text} ${tgLink || site}`).then(() => toast(L('Ссылка скопирована — вставьте её в чат', 'Link copied — paste it into a chat')), () => toast(`${text} ${site}`));
 }
