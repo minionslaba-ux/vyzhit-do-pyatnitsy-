@@ -201,7 +201,7 @@ $('sndVol')?.addEventListener('input', e => {
 $('sndVol')?.addEventListener('change', () => { store.set(KEY.prefs, prefs); sfx.click?.(); });
 
 let toastT;
-function toast(text) { const t = $('toastBar'); t.textContent = text; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
+function toast(text) { const t = $('toastBar'); t.textContent = text; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), Math.min(7000, Math.max(2600, String(text).length * 55))); }  // длинный текст держим дольше
 
 // ---------- концовки-ачивки ----------
 const endingsGot = () => store.get(KEY.endings, {});
@@ -762,9 +762,22 @@ function answerWarn() {
     b.classList.toggle('dz', bad.length > 0);
     if (!bad.length) continue;
     const why = bad.map(r => `${r.name} ${S.res[r.k] <= 20 ? L('ближе к 0%', 'closer to 0%') : L('ближе к 100%', 'closer to 100%')}`).join(', ');
-    b.insertAdjacentHTML('beforeend', `<span class="dz-badge" title="${esc(why)}"><span aria-hidden="true">⚠ </span>${bad.length > 1 ? L(`${bad.length} шкалы`, `${bad.length} meters`) : bad[0].name}<span class="sr">: ${esc(why)}</span></span>`);
+    // понятная метка: какая шкала и куда её толкает ответ — «⚠ Коллеги ▼ к 0%»
+    const one = bad[0], low = S.res[one.k] <= 20;
+    const label = bad.length > 1 ? L(`${bad.length} шкалы к краю`, `${bad.length} meters near the edge`) : `${one.name} ${low ? L('▼ к 0%', '▼ to 0%') : L('▲ к 100%', '▲ to 100%')}`;
+    b.insertAdjacentHTML('beforeend', `<span class="dz-badge" role="button" tabindex="-1" title="${esc(why)}"><span aria-hidden="true">⚠ </span>${label}<span class="sr">: ${esc(why)}</span></span>`);
+    // нажатие на метку — объяснение, а не выбор ответа
+    const badge = b.querySelector('.dz-badge');
+    const stop = e => { e.stopPropagation(); e.preventDefault(); };
+    badge.addEventListener('pointerdown', e => e.stopPropagation());
+    badge.addEventListener('click', e => { stop(e); dzExplain(why); });
+    dzFirstTip();
   }
 }
+const dzText = () => L('⚠ на ответе: эта шкала уже у края, а ответ толкает её ещё ближе. 0% или 100% — конец недели.', '⚠ on an answer: this meter is already near the edge and the answer pushes it further. 0% or 100% ends the week.');
+function dzExplain(why) { toast(`${dzText()}${why ? ` (${why})` : ''}`); }
+// один раз за всё время — короткое объяснение при первой такой метке
+function dzFirstTip() { if (prefs.dzTip) return; prefs.dzTip = 1; store.set(KEY.prefs, prefs); setTimeout(() => toast(dzText()), 700); }
 // Полоска задачи над карточкой: что сделать, сколько осталось, до когда и какой ответ на этой карточке засчитается
 function renderDeadlineChip() {
   const el = $('dlBar'), d = S?.mode === 'career' && S.deadline;

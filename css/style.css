@@ -2174,3 +2174,6 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 .ad-count.ready { border-color: #2de28a; background: rgba(8, 40, 24, .95); animation: adReady .6s ease-out; }
 @keyframes adReady { 0% { transform: translateX(-50%) scale(.9); } 60% { transform: translateX(-50%) scale(1.08); } 100% { transform: translateX(-50%) scale(1); } }
 @media (prefers-reduced-motion: reduce) { .ad-count.ready { animation: none; } }
+
+/* Метка «⚠ Коллеги ▼ к 0%» на ответе: нажимается (объяснение), не шире кнопки */
+.dz-badge { pointer-events: auto; cursor: help; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; top: -10px; bottom: auto; z-index: 2; }
