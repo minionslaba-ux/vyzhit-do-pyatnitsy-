@@ -2,7 +2,7 @@
 // Свои файлы — «сначала сеть»: есть интернет — всегда свежая версия (браузер сам переспрашивает сервер по ETag, это дёшево);
 // нет сети или сервер не ответил за 4 секунды — из кэша. Шрифты Google — из кэша, обновляются в фоне.
 // Supabase, Telegram и прочие внешние запросы — только из сети.
-const CACHE = 'vdp-v124';
+const CACHE = 'vdp-v125';
 const SHELL = ['./', 'index.html', 'en.html', 'css/style.css', 'js/i18n.js', 'js/config.js', 'js/cards.js', 'js/content.js', 'js/engine.js', 'js/board.js', 'js/audio.js', 'js/fx.js', 'js/faces.js', 'js/intro.js', 'js/game.js', 'js/stories.js', 'data/stories.json', 'data/season_cards.json', 'js/ui-menu.js', 'js/npc.js', 'js/social.js', 'js/retention.js', 'js/meta.js', 'js/hero3d.js', 'js/pets3d.js', 'js/hero.js', 'js/anketa.js', 'js/wish.js', 'js/timer.js', 'js/voice.js', 'js/cert.js', 'js/guest.js', 'js/pets.js', 'js/ads.js', 'js/push.js', 'js/streak.js', 'js/session.js', 'js/break.js', 'js/pause.js', 'js/quotes.js', 'data/quotes.json', 'js/break/b1.js', 'js/break/b2.js', 'js/break/b3.js', 'js/break/b4.js', 'js/break/b5.js', 'js/shop.js', 'js/topup.js', 'js/login.js', 'js/app.js',
   'data/pool.json', 'data/pool2.json', 'data/pool3.json', 'data/events.json', 'data/quiz.json', 'data/chains.json', 'data/interview.json', 'data/cast.json', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/apple-touch-icon.png', 'icons/badge-96.png'];
 
@@ -31,7 +31,8 @@ self.addEventListener('fetch', e => {
   // своя страница: ключ кэша — путь без ?ref=… / ?join=… («/» — это index.html)
   const key = req.mode === 'navigate' ? new URL(url.pathname.endsWith('/') ? url.pathname + 'index.html' : url.pathname, location.href).href : req;
   e.respondWith(caches.open(CACHE).then(async cache => {
-    const net = fetch(req).then(res => { if (res.ok) cache.put(key, res.clone()); return res; });
+    // cache: 'no-cache' — всегда сверяемся с сервером (ETag): иначе браузер до 10 минут отдаёт старую версию из своего HTTP-кэша
+    const net = fetch(url.href, { cache: 'no-cache', credentials: 'same-origin' }).then(res => { if (res.ok) cache.put(key, res.clone()); return res; });
     const timeout = new Promise(r => setTimeout(r, 4000, null));
     try {
       const res = await Promise.race([net, timeout]);
