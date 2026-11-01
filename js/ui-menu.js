@@ -877,6 +877,19 @@ function shareReward(via) {
 }
 function dropShareBadge(via) { const b = document.querySelector(`.share-big [data-via="${via}"] b`); if (b) b.remove(); }
 function bindShare(root) { root.querySelectorAll('[data-share]').forEach(b => b.onclick = () => { snoozeViral(7); openShare(b.dataset.share); }); }
+// Поделиться ВКонтакте — одна функция для всех мест (результат недели, цитата, приглашение)
+function vkShare(url, title, what = '') {
+  // в VK многие без Telegram: ссылку на мини-приложение превращаем в ссылку на сайт с тем же приглашением/вызовом
+  if (/^https:\/\/t\.me\//.test(url)) {
+    const sp = new URL(url).searchParams.get('startapp') || '', q = new URLSearchParams();
+    for (const [k, v] of sp.split('_').map(x => x.split(/-(.+)/))) if (['ref', 'join', 'ch'].includes(k) && v) q.set(k, v);
+    if (q.has('ch') && prefs.name) q.set('by', prefs.name.slice(0, 24));
+    q.set('utm_source', 'vk'); url = `${typeof gameUrl === 'function' ? gameUrl() : 'https://survivefriday.com/'}?${q}`;
+  }
+  const u = 'https://vk.com/share.php?' + new URLSearchParams({ url, title: String(title || '').slice(0, 250), image: 'https://survivefriday.com/icons/og-1200x630.jpg' });
+  track('share', { detail: 'vk' + (what ? ':' + what : '') });
+  if (TG?.openLink) TG.openLink(u); else window.open(u, '_blank', 'noopener');
+}
 async function openShare(kind) {
   track('share', { detail: kind });
   $('viralPop').hidden = true;  // плашка «Вместе веселее» не должна перекрывать окно
@@ -910,7 +923,7 @@ async function openShare(kind) {
   $('shCopy').onclick = () => copy(full, L('Приглашение скопировано — вставьте его в чат', 'Invite copied — paste it into a chat'));
   if ($('shNative')) $('shNative').onclick = () => navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url }).then(() => shareReward('native')).catch(() => {});
   if (TG) m.querySelector('.btn-tg').onclick = e => { e.preventDefault(); TG.openTelegramLink(`https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`); setTimeout(() => shareReward('tg'), 600); };
-  if (TG) m.querySelector('.btn-vk').onclick = e => { e.preventDefault(); TG.openLink(`https://vk.com/share.php?url=${enc(url)}&title=${enc(text)}`); setTimeout(() => shareReward('vk'), 600); };
+  m.querySelector('.btn-vk').onclick = e => { e.preventDefault(); vkShare(url, text, 'invite'); setTimeout(() => shareReward('vk'), 600); };
   if (board.online) board.rpc('referral_count', { p_id: prefs.playerId }).then(n => { if ($('shCount')) $('shCount').textContent = L(`По вашим ссылкам пришло: ${n || 0}`, `Joined via your links: ${n || 0}`); }).catch(() => {});
 }
 // Плашка в меню: после первой сыгранной недели, не чаще раза в двое суток после закрытия

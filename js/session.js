@@ -333,7 +333,7 @@ bus.on('answer', () => {
   const at = S.miniAt; let tries = 0;
   const wait = () => {
     if (!S || S.miniDone || S.step > at || views.game.hidden) return;
-    if (S.step === at && !busy && !splashOn && $('modal').hidden && !window.vdpPaused && !document.hidden) return sesMiniShow();
+    if (S.step === at && !busy && !splashOn && $('modal').hidden && !($('quiz') && !$('quiz').hidden) && !window.vdpPaused && !document.hidden) return sesMiniShow();
     if (++tries < 120) setTimeout(wait, 400);
   };
   setTimeout(wait, 700);

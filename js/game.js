@@ -947,9 +947,11 @@ function cardTools() {
   $('ctHint').onclick = () => hintBar();
   $('ctShop').onclick = openShop;
 }
-function hintBar() {
+function hintBar(auto) {
   const el = $('ctools');
   if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
+  // само предложение (шкала у края) гостю не показываем: окно «для зарегистрированных» — только по нажатию на «Подсказку»
+  if (auto && !(window.VDP_PLATFORM || !board.online || registered())) return;
   if (!needReg('hint')) return;
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
   const can = hintFree() || C.bank >= hintPriceNow();
@@ -978,7 +980,7 @@ function hintOffer() {
   const day = dayOf(S.step);
   if (S.hintDay === day || !RES.some(r => S.res[r.k] <= 20 || S.res[r.k] >= 80)) return;
   S.hintDay = day;
-  setTimeout(() => { if (S && !busy) hintBar(); }, 700);
+  setTimeout(() => { if (S && !busy) hintBar(true); }, 700);
 }
 
 // ---------- второй шанс: вопрос на эрудицию ----------
@@ -1558,6 +1560,7 @@ async function share(won, k) {
     ${navigator.canShare ? `<button class="btn-main" id="shareImg">${L('Отправить картинку и ссылку', 'Send image & link')}</button>` : ''}
     <div class="share-grid">
       <a href="https://t.me/share/url?url=${enc(link)}&text=${enc(text)}" target="_blank" rel="noopener" id="shTgLink">Telegram</a>
+      <button type="button" id="shVk" class="sh-vk">${L('ВКонтакте', 'VK')}</button>
       <a href="https://wa.me/?text=${enc(full)}" target="_blank" rel="noopener">WhatsApp</a>
       <a href="${url}" download="vyzhit-do-pyatnitsy.png" id="dlImg">${L('Скачать картинку', 'Download image')}</a>
       <button id="copyTxt">${L('Скопировать текст', 'Copy text')}</button>
@@ -1567,6 +1570,7 @@ async function share(won, k) {
     <button class="btn-ghost" id="closeM">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;
   if (TG) $('shTgLink').onclick = e => { e.preventDefault(); TG.openTelegramLink(`https://t.me/share/url?url=${enc(link)}&text=${enc(text)}`); };
+  $('shVk').onclick = () => vkShare(link, text, daily ? 'challenge' : 'result');
   $('closeM').onclick = () => { m.hidden = true; $('share')?.focus(); };
   m.onclick = e => { if (e.target === m) m.hidden = true; };
   if ($('shareImg')) $('shareImg').onclick = async () => {

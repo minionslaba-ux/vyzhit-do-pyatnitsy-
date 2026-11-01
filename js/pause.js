@@ -92,7 +92,8 @@ bus.on('answer', () => {
   const low = RES.find(r => (r.k === 'energy' || r.k === 'psyche') && S.res[r.k] > 0 && S.res[r.k] < PAUSE_MID);
   if (!low || S.step < 3) return;
   setTimeout(() => {
-    if (!S || S.pzAsked || views.game.hidden || !$('modal').hidden || RES.some(r => S.res[r.k] <= 0 || S.res[r.k] >= 100)) return;  // окно занято — спросим на следующей карточке
+    const quizOn = $('quiz') && !$('quiz').hidden;  // «Второй шанс», аттестация — не перебиваем
+    if (!S || S.pzAsked || busy || splashOn || quizOn || views.game.hidden || !views.end.hidden || !$('modal').hidden || RES.some(r => S.res[r.k] <= 0 || S.res[r.k] >= 100)) return;  // окно занято — спросим на следующей карточке
     S.pzAsked = true;
     const n = brkPick(), m = $('modal');
     m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="pzTitle"><span class="lvl-ico" aria-hidden="true">😮‍💨</span>

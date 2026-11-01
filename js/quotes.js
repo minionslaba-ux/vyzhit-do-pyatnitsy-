@@ -34,6 +34,7 @@ function qtCardHtml(x, isDay) {
       <figcaption class="qt-who"><span>${esc(qtWho(x))}</span>${src}</figcaption>
       <div class="qt-acts">
         <button type="button" class="qt-btn qt-more" id="qtMore" aria-label="${L('Другая цитата', 'Another quote')}" title="${L('Другая цитата', 'Another quote')}">↻</button>
+        <button type="button" class="qt-btn qt-vk" id="qtVk" aria-label="${L('Поделиться ВКонтакте', 'Share on VK')}">VK</button>
         <button type="button" class="qt-btn qt-share" id="qtShare">${L('Поделиться', 'Share')}</button>
       </div>
     </figure>`;
@@ -54,6 +55,7 @@ async function renderQuoteDay(anim) {
     if (typeof track === 'function') track('quote_more');
   };
   $('qtShare').onclick = () => qtShare(x);
+  $('qtVk').onclick = () => qtVk(x);
 }
 bus.on('menu', () => renderQuoteDay());
 if (!views.menu.hidden) renderQuoteDay();
@@ -70,6 +72,11 @@ function qtShare(x) {
   if (typeof track === 'function') track('quote_share');
   if (navigator.share) navigator.share({ title: L('Выжить до пятницы', 'Survive till Friday'), text, url: QT_SITE }).catch(e => { if (e?.name !== 'AbortError') copy(); });
   else copy();
+}
+// ВКонтакте: окно «Поделиться» VK с цитатой и ссылкой на игру (в Telegram — через openLink, иначе новая вкладка)
+function qtVk(x) {
+  const title = `${qtOpen}${qtText(x)}${qtClose} — ${qtWho(x)}`.slice(0, 250);
+  if (typeof vkShare === 'function') vkShare(QT_SITE + '/?utm_source=vk&utm_medium=share&utm_campaign=quote', title, 'quote');
 }
 function qtCopyOld(s) {
   try {
