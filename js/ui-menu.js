@@ -552,8 +552,10 @@ async function showOffice() {
       <form class="inline-form" id="mkForm"><input id="mkName" maxlength="32" placeholder="${L('Название офиса, например «Отдел продаж»', 'Office name, e.g. “Sales Team”')}" aria-label="${L('Название офиса', 'Office name')}"><button class="btn-main" type="submit">${L('Создать', 'Create')}</button></form>
       <form class="inline-form" id="jnForm"><input id="jnCode" maxlength="6" placeholder="${L('Код офиса', 'Office code')}" aria-label="${L('Код офиса', 'Office code')}" autocapitalize="characters"><button class="btn-ghost" type="submit">${L('Вступить', 'Join')}</button></form>
       <p class="join-err" id="ofErr" role="alert"></p>
+      <div class="oc-box" id="ocBox" hidden></div>
       <div class="stack"><button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div></div>`;
     $('toMenu').onclick = renderMenu;
+    if (typeof ocRenderBox === 'function') ocRenderBox(null);
     $('mkForm').onsubmit = async e => { e.preventDefault(); const n = $('mkName').value.trim();
       if (n.length < 2) { $('ofErr').textContent = L('Название — хотя бы 2 символа.', 'The name needs at least 2 characters.'); return; }
       try { await board.rpc('create_team', { p_id: prefs.playerId, p_name: n }); showOffice(); } catch (err) { $('ofErr').textContent = err.message; } };
@@ -565,6 +567,7 @@ async function showOffice() {
   views.end.innerHTML = `<div class="end-sheet glass">
     <span class="kicker">${L('Мой офис', 'My Office')} · ${pl(members.length, 'участник', 'участника', 'участников', 'member', 'members')}</span>
     <h1>${esc(team.name)}</h1>
+    <div class="oc-box" id="ocBox" hidden></div>
     <div class="office-code"><span class="kicker">${L('Код офиса', 'Office code')}</span><b>${team.code}</b><small>${esc(inviteLink(team.code))}</small>
       <button class="btn-ghost" id="cpLink">${L('Скопировать ссылку-приглашение', 'Copy invite link')}</button></div>
     <form class="inline-form" id="invForm"><input id="invId" maxlength="6" placeholder="${L('ID игрока, например 3FA9C1', 'Player ID, e.g. 3FA9C1')}" aria-label="${L('ID игрока', 'Player ID')}" autocapitalize="characters"><button class="btn-main" type="submit">${L('Позвать', 'Invite')}</button></form>
@@ -577,6 +580,7 @@ async function showOffice() {
     <div class="stack"><button class="btn-main" id="toChat">${L('Чат офиса', 'Office chat')}</button><button class="btn-ghost" id="leave">${L('Покинуть офис', 'Leave office')}</button><button class="btn-ghost" id="toMenu">${L('В главное меню', 'Main menu')}</button></div></div>`;
   $('toMenu').onclick = renderMenu; $('toChat').onclick = () => showChat('team');
   renderTourBox(team);
+  if (typeof ocRenderBox === 'function') ocRenderBox(team, members);  // «Дело недели» (js/officecase.js)
   $('cpLink').onclick = () => copy(L(`Заходи в наш офис «${team.name}» в игре «Выжить до пятницы»: ${inviteLink(team.code)}`, `Join our “${team.name}” office in Survive till Friday: ${inviteLink(team.code)}`), L('Ссылка скопирована — отправьте её в рабочий чат', 'Link copied — drop it in your work chat'));
   $('invForm').onsubmit = async e => { e.preventDefault();
     try { const n = await board.rpc('invite_player', { p_id: prefs.playerId, p_short: $('invId').value }); $('invId').value = ''; $('ofErr').textContent = ''; toast(L(`Приглашение отправлено: ${n}`, `Invite sent: ${n}`)); }
