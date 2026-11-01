@@ -23,6 +23,8 @@ export const ADMIN_COMMANDS = [
   { command: 'bonus', description: 'Бонус +15 у.е. в группы' },
   { command: 'pin', description: 'Обновить закреплённое меню групп' },
   { command: 'export', description: 'Игроки в Excel' },
+  { command: 'idea', description: 'Что поправить в игре: /idea текст' },
+  { command: 'ideas', description: 'Список идей и что с ними сделано' },
 ];
 const HELP = `🛠 <b>Команды разработчика</b>
 
@@ -41,7 +43,11 @@ const HELP = `🛠 <b>Команды разработчика</b>
 /event — случайная офисная ситуация из игры как опрос в группы
 /broadcast текст — личное сообщение всем, кто включил напоминания в боте
 /bonus — кнопка «Играть и получить 15 у.е.» в группы (бонус на сегодня)
-/pin — обновить закреплённое быстрое меню в группах`;
+/pin — обновить закреплённое быстрое меню в группах
+
+🛠 <b>Правки игры</b>
+/idea текст — что поправить или добавить в игре. Каждый день в 03:17 МСК Claude разбирает новые идеи, правит игру и присылает сюда отчёт
+/ideas — последние идеи и что с ними сделано`;
 
 type Ctx = { db: any; api: (m: string, b?: Record<string, unknown>) => Promise<any>; token: string };
 
@@ -58,6 +64,8 @@ async function randomCard() {
 }
 async function groups(ctx: Ctx) { return ((await ctx.db.from('tg_groups').select('chat_id').eq('enabled', true).limit(500)).data || []) as { chat_id: number }[]; }
 const pause = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+const IDEA_ST: Record<string, string> = { new: '🆕 ждёт', in_progress: '⏳ в работе', done: '✅ сделано', skipped: '⏭ не взято', question: '❓ нужен ответ' };
 
 // Команда в личке. true — команда разработчика обработана
 export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: number, tg: number): Promise<boolean> {
@@ -132,6 +140,20 @@ export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: 
       const id = await draft(ctx, tg, 'bonus', { day: mskDate().replace(/-/g, '') });
       await say('🎁 Отправить в группы кнопку «Играть и получить 15 у.е.»? Бонус действует сегодня, каждый игрок получит его один раз.', { reply_markup: kb([[['✅ Отправить', `adm:${id}:send`], ['✖ Отмена', `adm:${id}:no`]]]) });
       return true;
+    }
+    case 'idea': {
+      const t = rest.trim();
+      if (t.length < 3) { await say('Напишите, что поправить: <code>/idea на главной слишком мелкий шрифт у цитаты</code>\nЧем конкретнее (где, что не так, как должно быть), тем точнее правка.'); return true; }
+      const { data, error } = await db.from('dev_ideas').insert({ tg_id: tg, text: t.slice(0, 3000) }).select('id').single();
+      if (error) { await say(`Не сохранилось: ${esc(error.message)}`); return true; }
+      const { count } = await db.from('dev_ideas').select('id', { count: 'exact', head: true }).eq('status', 'new');
+      await say(`📝 Идея №${data.id} записана. В очереди: ${count ?? 1}.\nClaude разберёт её сегодня ночью (03:17 МСК) и пришлёт отчёт сюда. Срочно — напишите в сессию Claude «посмотри идеи из бота».`);
+      return true;
+    }
+    case 'ideas': {
+      const { data } = await db.from('dev_ideas').select('id, text, status, reply, created_at').order('id', { ascending: false }).limit(15);
+      const rows = (data || []).map((x: any) => `№${x.id} ${IDEA_ST[x.status] || x.status} — ${esc(x.text.slice(0, 120))}${x.reply ? `\n   ↳ ${esc(x.reply.slice(0, 200))}` : ''}`);
+      await say(rows.length ? `🛠 <b>Идеи</b>\n${rows.join('\n')}` : 'Идей пока нет. Напишите /idea текст.'); return true;
     }
     case 'pin': {
       const code = crypto.randomUUID().replace(/-/g, '');
