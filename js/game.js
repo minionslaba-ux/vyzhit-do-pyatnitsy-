@@ -492,6 +492,7 @@ function renderCard() {
   const slot = S.deck[S.step], c = byId[slot.id], d = dayOf(S.step), ph = PHASES[slotPh(S.step)];
   const card = $('card');
   const tag = c.rare ? `<span class="rnd-tag rare">✨ ${L('РЕДКОЕ СОБЫТИЕ', 'RARE EVENT')}</span>` : slot.origin ? `<span class="rnd-tag chain">← ${esc(slot.origin)}</span>` : c.author ? `<span class="rnd-tag">${L('ОТ КОЛЛЕГИ', 'FROM A COLLEAGUE')} · ${esc(c.author)}</span>`
+    : c.month && typeof retCardTag === 'function' ? retCardTag(c)
     : c.random ? `<span class="rnd-tag">${L('! СЛУЧАЙНОЕ СОБЫТИЕ', '! RANDOM EVENT')}</span>` : c.profCard ? `<span class="rnd-tag prof">${PROF[S.prof].name.toUpperCase()}</span>` : '';
   const ck = c.cast || castOf(c.who), relTag = ck ? `<span class="rel-tag" title="${L('Отношение', 'Relationship')}: ${relStore()[ck] || 0}">${hearts(relStore()[ck] || 0)}</span>` : '';
   // в карьере внизу карточки — кнопки «Подсказка» и «Магазин»; там же появляется предложение подсказки

@@ -29,7 +29,9 @@ Deno.serve(async req => {
       const s = (v: unknown, n = 40) => typeof v === 'string' ? v.slice(0, n) : '';
       const clean = { hero: s(state.hero, 16), g: state.g === 'f' ? 'f' : 'm', need: s(state.need), mood: state.mood == null ? 100 : Number(state.mood) || 0, breaks: Number(state.breaks) || 0,
         pet: s(state.pet, 14), petHungry: !!state.petHungry, kid: s(state.kid, 14), kidWant: s(state.kidWant), week: Number(state.week) || 0,
-        company: s(state.company, 40), bank: Number(state.bank) || 0, certReady: !!state.certReady, streak: Number(state.streak) || 0 };
+        company: s(state.company, 40), bank: Number(state.bank) || 0, certReady: !!state.certReady, streak: Number(state.streak) || 0,
+        // когда игрок последний раз открывал игру (ISO); из будущего не принимаем
+        lastPlay: typeof state.lastPlay === 'string' && Number.isFinite(Date.parse(state.lastPlay)) ? new Date(Math.min(Date.parse(state.lastPlay), Date.now())).toISOString() : null };
       await db.from('push_subs').update({ state: clean, state_at: new Date().toISOString() }).eq('endpoint', endpoint);
       return json({ ok: true });
     }

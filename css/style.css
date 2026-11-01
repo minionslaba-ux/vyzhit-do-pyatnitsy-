@@ -1964,3 +1964,64 @@ html.light .qt-toast { box-shadow: 0 10px 26px rgba(var(--p-rgb),.22); }
 /* Посыл «игра от выгорания» на входе и в меню */
 .burnout-lead { margin: 6px auto 0; max-width: 420px; padding: 6px 12px; border-radius: 14px; text-align: center; font-size: 13.5px; font-weight: 800; line-height: 1.35;
   color: var(--text); background: linear-gradient(135deg, rgba(90,220,150,.14), rgba(var(--c-rgb),.1)); border: 1px solid rgba(90,220,150,.35); }
+/* ===== Возвращаемость (js/retention.js): персонаж скучает, турнир отделов, тема месяца, коллекции ===== */
+.ret-miss { text-align: center; }
+.ret-miss-ico { font-size: 64px; line-height: 1; animation: retBob 2.4s ease-in-out infinite; }
+@keyframes retBob { 50% { transform: translateY(-4px) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .ret-miss-ico { animation: none; } }
+.ret-mood { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 14px; background: rgba(var(--w-rgb),.06); font-size: 14px; }
+.ret-mood em { font-style: normal; color: var(--magenta-l); }
+.ret-say { margin: 0; padding: 10px 12px; border-radius: 14px; background: linear-gradient(135deg, rgba(255,120,170,.16), rgba(var(--c-rgb),.10)); font-weight: 800; font-style: italic; }
+.ret-miss .btn-main small { display: block; font-size: 11px; opacity: .8; }
+.ret-tour { margin-top: 8px; }
+.ret-tour-card { width: 100%; display: grid; gap: 6px; padding: 10px 12px; border-radius: 16px; border: 1.5px solid rgba(var(--c-rgb),.5); background: linear-gradient(135deg, rgba(var(--c-rgb),.10), rgba(var(--m-rgb),.08)); color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.ret-tour-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ret-tour-h small, .ret-left-big small { color: var(--text-2); font-size: 12px; white-space: nowrap; }
+.ret-tour-me { font-size: 13px; }
+.ret-tour-empty, .ret-tour-more { font-size: 12px; color: var(--text-2); }
+.ret-top { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.ret-row { display: grid; grid-template-columns: 26px 1fr auto auto; gap: 6px; align-items: center; padding: 4px 8px; border-radius: 10px; background: rgba(var(--w-rgb),.04); font-size: 13px; }
+.ret-row b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ret-row small { color: var(--text-2); font-size: 11px; }
+.ret-row em { font-style: normal; font-weight: 900; min-width: 36px; text-align: right; }
+.ret-row.me { background: rgba(var(--m-rgb),.18); outline: 1px solid rgba(var(--m-rgb),.5); }
+.ret-row.nq { opacity: .6; }
+.ret-pl { text-align: center; }
+.ret-tour-box { text-align: left; }
+.ret-tour-box h2, .ret-tour-box .lvl-ico { text-align: center; }
+.ret-left-big { margin: 0; font-size: 14px; }
+.ret-rules { font-size: 12px; color: var(--text-2); }
+.ret-mbadge { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; vertical-align: middle; color: var(--text); background: rgba(255,207,61,.16); border: 1px solid rgba(255,207,61,.45); white-space: nowrap; }
+.ret-mbadge.big { display: table; margin: -4px auto 0; font-size: 13px; padding: 3px 12px; }
+.ret-gbadge { display: block; font-size: 10px; font-weight: 800; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46vw; }
+.rnd-tag.ret-mtag { background: rgba(255,207,61,.18); color: #ffcf3d; border-color: rgba(255,207,61,.5); }
+html.light .rnd-tag.ret-mtag { color: #8a5a00; }
+.ret-col-btn { width: 100%; margin-top: 8px; }
+.ret-col-btn small { opacity: .7; font-weight: 700; }
+.ret-col-box { text-align: left; max-width: 460px; }
+.ret-col-box h2, .ret-col-box .lvl-ico { text-align: center; }
+.ret-col { display: grid; gap: 6px; padding: 10px; border-radius: 14px; border: 1px solid rgba(var(--w-rgb),.1); background: rgba(var(--w-rgb),.03); }
+.ret-col-h { display: grid; grid-template-columns: 28px 1fr auto; gap: 6px; align-items: center; }
+.ret-col-ico { font-size: 22px; text-align: center; }
+.ret-col-h small { color: var(--text-2); font-weight: 800; font-size: 12px; }
+.ret-bar { position: relative; height: 8px; border-radius: 99px; background: rgba(var(--w-rgb),.12); overflow: hidden; }
+.ret-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan, #2de2e6), var(--magenta)); }
+.ret-bar u { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(var(--bg-rgb),.7); text-decoration: none; }
+.ret-rw { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.ret-rw-i { display: grid; justify-items: center; gap: 2px; padding: 5px 2px; border-radius: 10px; background: rgba(var(--w-rgb),.04); font-size: 13px; text-align: center; }
+.ret-rw-i small { font-size: 10px; font-weight: 900; color: var(--text-2); }
+.ret-rw-i em { font-style: normal; font-size: 10px; color: var(--text-2); line-height: 1.2; }
+.ret-rw-i.can { background: rgba(var(--m-rgb),.16); }
+.ret-rw-i.got { opacity: .65; }
+.ret-rw-i .btn-chip { padding: 3px 8px; font-size: 11px; }
+.ret-how { margin: 0; font-size: 12px; color: var(--text-2); }
+.ret-items summary { cursor: pointer; font-size: 12px; color: var(--text-2); }
+.ret-grid { list-style: none; margin: 8px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
+.ret-it { display: grid; justify-items: center; gap: 2px; padding: 6px 4px; border-radius: 12px; background: rgba(var(--w-rgb),.05); text-align: center; min-width: 0; }
+.ret-it img { width: 48px; height: 48px; object-fit: contain; }
+.ret-it-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-size: 22px; background: var(--c, rgba(var(--w-rgb),.08)); }
+.ret-it small { font-size: 10px; line-height: 1.15; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; hyphens: auto; }
+.ret-it em { font-style: normal; font-size: 10px; color: #ffcf3d; }
+.ret-sil img, .ret-sil .ret-it-ico { filter: brightness(0) opacity(.35); }
+.ret-sil small { color: var(--text-2); font-weight: 900; letter-spacing: .1em; }
+@media (max-width: 380px) { .ret-grid { grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); } .ret-row small { display: none; } .ret-row { grid-template-columns: 24px 1fr auto; } }
