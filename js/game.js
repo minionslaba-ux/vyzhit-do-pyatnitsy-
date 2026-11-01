@@ -119,6 +119,7 @@ function renderThemePicker() {
     }).join('') + foot;
 }
 function themeBuy(i) {
+  if (!needReg('theme')) return;
   if ((prefs.themeCoupons || 0) > 0 && typeof useThemeCoupon === 'function' && useThemeCoupon(i)) {  // купон из стартового набора / сезона
     prefs.theme = i; store.set(KEY.prefs, prefs); themePreview = null; applyTheme();
     try { renderMenu(); } catch { renderThemePicker(); }
@@ -613,7 +614,8 @@ function effectsOf(side) {
     let v = raw[r.k] || 0;
     if (r.k === 'boss' && rules.bossMul) v = Math.round(v * rules.bossMul / 5) * 5;
     if (r.k === 'psyche' && v < 0 && rules.psycheNegMul) v = Math.round(v * rules.psycheNegMul / 5) * 5;
-    if (D && v < 0) v = Math.max(D.cap, Math.round(v * D.neg * (LEVELS[S.lvl || 1]?.neg || 1)));  // стадия карьеры: новичкам мягче, руководителям жёстче
+    // 1-й уровень заметно мягче: минусы ×0,75 и не больше −15 за карточку (жалобы «увольняют слишком быстро»)
+    if (D && v < 0) { const LV = LEVELS[S.lvl || 1] || {}; v = Math.max(Math.max(D.cap, LV.cap ?? -30), Math.round(v * D.neg * (LV.neg || 1))); }  // стадия карьеры: новичкам мягче, руководителям жёстче
     const item = v <= -10 && free.find(i => ITEMS[i].stat === r.k && !blocked.some(b => b.item === i));
     if (item) blocked.push({ item, stat: r.k, v });
     eff[r.k] = item ? 0 : v;
@@ -699,7 +701,7 @@ function choose(side) {
     clearPreview(); renderBars(); react(c, eff, side); FX.stats(eff); castAfter(c, side, eff); livePick(c, side); deadlineWork(c, side); bus.emit('answer', { card: c, side, eff });
     let deadLow = RES.find(r => S.res[r.k] <= 0), deadHigh = RES.find(r => S.res[r.k] >= 100), dead = deadLow || deadHigh;
     // первые недели карьеры: раз в неделю бесплатный «кофе» — шкала останавливается на 5% (95%), вопрос и реклама остаются на потом
-    if (dead && S.mode === 'career' && DIFF[S.diff]?.save && !S.coffeeUsed) {
+    if (dead && S.mode === 'career' && (DIFF[S.diff]?.save || LEVELS[S.lvl || 1]?.save) && !S.coffeeUsed) {  // кофе-спасение: новичкам и всю 1-ю ступень карьеры
       S.coffeeUsed = true; S.res[dead.k] = deadLow ? 5 : 95; renderBars(); sfx.item();
       toast(L(`☕ Вас спас кофе — ещё шанс. «${dead.name}» держится на ${S.res[dead.k]}%`, `☕ Coffee saved you — one more chance. ${dead.name} holds at ${S.res[dead.k]}%`));
       deadLow = deadHigh = dead = null;
@@ -857,6 +859,7 @@ function advance() {
 const SHOP = { coffee: 6, headphones: 6, cookies: 6, sicknote: 9 };
 const powerPrice = () => 12 * 2 ** (S.powerBuys || 0);
 function openShop() {
+  if (!needReg('shop')) return;
   if (!(S?.mode === 'career' && C) || busy || splashOn) return;
   const m = $('modal');
   const render = () => {
@@ -945,6 +948,7 @@ function cardTools() {
 function hintBar() {
   const el = $('ctools');
   if (!el || !(S?.mode === 'career' && C) || busy || splashOn || S.hintStep === S.step) return;
+  if (!needReg('hint')) return;
   // то же место, что у кнопок: «Получить» и «Отказаться», без сдвига карточки; почему — видно по шкале «на грани»
   const can = hintFree() || C.bank >= hintPriceNow();
   el.className = 'card-tools ask';

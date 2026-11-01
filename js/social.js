@@ -175,6 +175,7 @@ document.addEventListener('click', e => {
 
 // ---------- окно подарка ----------
 function socGiftPicker(o) {
+  if (!needReg('gift')) return;
   const m = $('modal'); let pick = o.pick || 'rose';
   const close = () => { m.hidden = true; o.back?.(); };
   const render = () => {
@@ -454,6 +455,7 @@ function stPicker(anchor, send) {
   };
 }
 function stBuy(then) {
+  if (!needReg('stickers')) return;
   const C3 = careerNow();
   if (!C3 || (C3.bank || 0) < ST_PRICE) return openTopup({ need: ST_PRICE - Math.max(0, C3?.bank || 0), why: L(`Премиум-стикеры — ${ST_PRICE} у.е.`, `Premium stickers — ${money(ST_PRICE)}`), then });
   C3.bank -= ST_PRICE; C3.spent = (C3.spent || 0) + ST_PRICE; careerSave(C3);

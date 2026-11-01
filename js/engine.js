@@ -106,7 +106,7 @@ const DIFF = [
 // DIFF:end
 // Три уровня карьеры по 52 недели: свои карточки (lvl) и чуть жёстче минусы на каждом следующем
 const LEVELS = [null,
-  { name: L('Офисный планктон', 'Office plankton'), ico: '🐟', neg: 1,    desc: L('Первый год: дедлайны, кулер и «есть минутка?»', 'Year one: deadlines, the water cooler and “got a minute?”') },
+  { name: L('Офисный планктон', 'Office plankton'), ico: '🐟', neg: .75, cap: -15, save: true,    desc: L('Первый год: дедлайны, кулер и «есть минутка?»', 'Year one: deadlines, the water cooler and “got a minute?”') },
   { name: L('Средний менеджмент', 'Middle management'), ico: '📊', neg: 1.06, desc: L('Второй год: новые люди, новые интриги, новые ситуации', 'Year two: new people, new intrigue, new situations') },
   { name: L('Топ-менеджмент', 'Top management'), ico: '👑', neg: 1.12, desc: L('Третий год: самые сложные решения и самые высокие ставки', 'Year three: the hardest calls and the highest stakes') },
 ];

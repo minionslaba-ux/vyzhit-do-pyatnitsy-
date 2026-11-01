@@ -262,6 +262,7 @@ function goodsPicker(catId, after) {
 }
 
 function buyGoods(cat, list, price, mood, after) {
+  if (!needReg('wish')) return;
   voiceUnlock();
   const C2 = careerNow(), h = C2.hero;
   if (C2.bank < price) return;

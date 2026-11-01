@@ -97,6 +97,7 @@ function petAdopt(after) {
     m.querySelectorAll('[data-kind]').forEach(b => b.onclick = () => { kind = b.dataset.kind; breed = PET_BREEDS.find(x => x.kind === kind); name = ''; render(); });
     m.querySelectorAll('[data-breed]').forEach(b => b.onclick = () => { breed = petBreed(b.dataset.breed); m.querySelectorAll('[data-breed]').forEach(x => x.classList.toggle('on', x === b)); view?.setSpec(breed); view?.setAction('happy'); });
     if ($('paGo')) $('paGo').onclick = () => {
+      if (!needReg('pet')) return;
       const nm = ($('paName').value || rnd(k.names)).trim().slice(0, 14) || rnd(k.names);
       C2.bank -= k.price; C2.spent = (C2.spent || 0) + k.price;
       const p = { id: 'p' + Date.now().toString(36), kind, breed: breed.id, name: nm, mood: 80, have: [], last: { p_food: C2.week } };

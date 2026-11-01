@@ -94,6 +94,7 @@ function heroModal(html, preset, emotion) {
 // Создание аватара: 10 персонажей, имя, профессия
 // change — сменить персонажа в идущей карьере: внешность и имя новые, настроение, покупки, дети и деньги остаются
 function heroCreate(done, change = false) {
+  if (change && !needReg('hero')) return;
   const old = change ? careerNow()?.hero : null;
   let pick = old ? heroPreset(old) : HERO_PRESETS[0], nameTouched = false;
   const profOpts = Object.entries(PROF).map(([k, p]) => `<option value="${k}" ${k === (prefs.prof || 'marketer') ? 'selected' : ''}>${p.icon} ${esc(p.name)}</option>`).join('');

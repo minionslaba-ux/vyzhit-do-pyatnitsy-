@@ -31,3 +31,28 @@ for (const name of ['startWeek', 'startDaily', 'startPack', 'startTournament']) 
   const orig = window[name]; if (typeof orig !== 'function') continue;
   window[name] = function (...a) { return guestGate(() => orig.apply(this, a)); };
 }
+
+// ---------- функции только для зарегистрированных ----------
+// Подсказки, магазин и покупки (у.е.), смена персонажа, питомцы, подарки, премиум-стикеры, темы оформления.
+// Гость играет недели и разминки как раньше; при попытке воспользоваться такой функцией — предложение бесплатной регистрации.
+// В Telegram вход автоматический; на игровых платформах и без сети не ограничиваем.
+const REG_WHAT = {
+  hint: L('Подсказки', 'Hints'), shop: L('Магазин и покупки', 'The shop and purchases'), hero: L('Смена персонажа', 'Changing your character'),
+  pet: L('Питомцы', 'Pets'), gift: L('Подарки коллегам', 'Gifts for coworkers'), stickers: L('Премиум-стикеры', 'Premium stickers'),
+  theme: L('Темы оформления', 'Colour themes'), wish: L('Покупки для персонажа', 'Gifts for your character'),
+};
+function needReg(feature) {
+  if (window.VDP_PLATFORM || !board.online || registered()) return true;
+  track('reg_gate', { detail: feature });
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="rgTitle"><span class="lvl-ico" aria-hidden="true">🔐</span>
+    <h2 id="rgTitle">${esc(REG_WHAT[feature] || L('Эта функция', 'This feature'))} — ${L('для зарегистрированных', 'for registered players')}</h2>
+    <p>${L('Регистрация бесплатная и занимает 10 секунд: через Telegram, VK или почту. Ваши у.е., персонаж и прогресс сохранятся.', 'Signing up is free and takes 10 seconds — via Telegram, VK or email. Your $, character and progress stay with you.')}</p>
+    <ul class="lw-list"><li>💡 ${L('подсказки и магазин', 'hints and the shop')}</li><li>🧍 ${L('смена персонажа, питомцы, покупки', 'switch characters, pets, purchases')}</li><li>🎁 ${L('подарки, стикеры, темы', 'gifts, stickers, themes')}</li><li>☁️ ${L('прогресс на телефоне и компьютере', 'progress on phone and computer')}</li></ul>
+    <button class="btn-main" type="button" id="rgGo">✅ ${L('Зарегистрироваться бесплатно', 'Sign up for free')}</button>
+    <button class="btn-link" type="button" id="rgLater">${L('Не сейчас', 'Not now')}</button></div>`;
+  m.hidden = false;
+  $('rgGo').onclick = () => { m.hidden = true; track('reg_gate_go', { detail: feature }); if (!views.game.hidden && typeof leaveWeek === 'function') leaveWeek(); renderJoin('register', L('Регистрация бесплатна. После неё откроются подсказки, магазин и всё остальное.', 'Signing up is free. Hints, the shop and everything else unlock right after.')); };
+  $('rgLater').onclick = () => { m.hidden = true; };
+  return false;
+}

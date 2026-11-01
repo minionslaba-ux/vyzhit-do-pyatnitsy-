@@ -67,6 +67,7 @@ const shpHero = () => shpCareer()?.hero;
 const shpInGame = () => typeof S !== 'undefined' && S?.mode === 'career' && !views.game.hidden;
 // Списать у.е. со счёта карьеры; не хватает — окно пополнения (потом снова магазин)
 function shpSpend(price, id, what, back, C2 = shpCareer()) {  // C2 — тот же объект карьеры, что потом сохраняет вызывающий
+  if (!needReg('shop')) return false;
   if (!C2) { toast(L('Покупки за у.е. — в карьере. Начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')); return false; }
   if ((C2.bank || 0) < price) {
     openTopup({ need: lackOf(price), why: L(`${what} — ${money(price)} · на счёте ${money(C2.bank || 0)}`, `${what} — ${money(price)} · you have ${money(C2.bank || 0)}`), then: back });
