@@ -8,6 +8,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, todayTitle, weekTitle, yesterdayTitle } from './report.ts';
 import * as XLSX from 'npm:xlsx@0.18.5';
+import { adminCallback, adminCommand, ADMIN_COMMANDS } from './admin.ts';
 
 const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
 const SELF = `${Deno.env.get('SUPABASE_URL')}/functions/v1/tg-bot`;
@@ -94,7 +95,7 @@ async function onMessage(msg: any) {
   if (!m) return;
   me ||= (await api('getMe')).result;
   if (m[2] && me && m[2].toLowerCase() !== me.username.toLowerCase()) return;  // команда другому боту
-  const cmd = m[1].toLowerCase(), arg = m[3].toLowerCase();
+  const cmd = m[1].toLowerCase(), arg = m[3].toLowerCase(), rest = String(msg.text || '').replace(/^\/\w+(@\w+)?\s*/, '');
   if (!group) {
     if (cmd === 'stats' || cmd === 'today' || cmd === 'yesterday' || cmd === 'week' || cmd === 'export') {
       const { data: admin } = await db.from('dev_admins').select('tg_id').eq('tg_id', msg.from?.id).maybeSingle();
@@ -106,7 +107,11 @@ async function onMessage(msg: any) {
       await api('sendMessage', { chat_id: chat.id, text, parse_mode: 'HTML', reply_markup: reportMarkup });
       return;
     }
-    if (cmd !== 'start') return;
+    if (cmd !== 'start') {  // команды разработчика (/help, /push, /news, /event…) — только dev_admins
+      const { data: admin } = await db.from('dev_admins').select('tg_id').eq('tg_id', msg.from?.id).maybeSingle();
+      if (admin) await adminCommand({ db, api, token }, cmd, rest, chat.id, msg.from.id);
+      return;
+    }
     const l = langOf(msg.from?.language_code);
     await api('sendMessage', { chat_id: chat.id, text: T[l].start, reply_markup: { inline_keyboard: [[{ text: T[l].btn, web_app: { url: SITE + (l === 'en' ? 'en.html' : '') } }]] } });
     return;
@@ -143,14 +148,13 @@ Deno.serve(async req => {
   if (req.method === 'GET' && url.searchParams.get('setup')) {
     const info = (await api('getWebhookInfo')).result || {};
     if (info.url && info.url !== SELF && !url.searchParams.get('force')) return json({ ok: false, reason: 'другой вебхук уже подключён', current: info.url });
-    const set = await api('setWebhook', { url: SELF, secret_token: await secret(), allowed_updates: ['message', 'my_chat_member'], drop_pending_updates: true });
+    const set = await api('setWebhook', { url: SELF, secret_token: await secret(), allowed_updates: ['message', 'my_chat_member', 'callback_query'], drop_pending_updates: true });
     const scope = { type: 'all_group_chats' };
     await api('setMyCommands', { scope, commands: [{ command: 'remind', description: 'Напоминать о неделе дня каждый день' }, { command: 'stop', description: 'Выключить напоминания' }, { command: 'play', description: 'Играть' }] });
     await api('setMyCommands', { scope, language_code: 'en', commands: [{ command: 'remind', description: 'Daily Week reminder every day' }, { command: 'stop', description: 'Turn reminders off' }, { command: 'play', description: 'Play' }] });
     // меню команд отчёта — только в личке у разработчиков
     const { data: admins } = await db.from('dev_admins').select('tg_id');
-    for (const ad of admins || []) await api('setMyCommands', { scope: { type: 'chat', chat_id: ad.tg_id }, commands: [{ command: 'stats', description: 'Отчёт за сегодня' },
-      { command: 'yesterday', description: 'Отчёт за вчера' }, { command: 'week', description: 'Отчёт за 7 дней' }, { command: 'export', description: 'Игроки в Excel' }, { command: 'start', description: 'Играть' }] });
+    for (const ad of admins || []) await api('setMyCommands', { scope: { type: 'chat', chat_id: ad.tg_id }, commands: [...ADMIN_COMMANDS, { command: 'start', description: 'Играть' }] });
     return json({ ok: !!set.ok, description: set.description });
   }
   if (req.method !== 'POST' || req.headers.get('x-telegram-bot-api-secret-token') !== await secret()) return json({ error: 'forbidden' }, 403);
@@ -158,6 +162,7 @@ Deno.serve(async req => {
     const u = await req.json();
     if (u.message) await onMessage(u.message);
     else if (u.my_chat_member) await onMember(u.my_chat_member);
+    else if (u.callback_query) await adminCallback({ db, api, token }, u.callback_query);
   } catch (e) { console.error(e); }
   return json({ ok: true });  // Telegram ждёт 200, иначе будет повторять
 });

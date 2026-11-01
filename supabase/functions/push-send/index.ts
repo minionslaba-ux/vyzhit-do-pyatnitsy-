@@ -21,10 +21,27 @@ const h32 = (s: string) => { let h = 2166136261; for (let i = 0; i < s.length; i
 Deno.serve(async req => {
   try {
     const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false, autoRefreshToken: false } });
-    const { key, slot: forced, test } = await req.json().catch(() => ({}));
+    const { key, slot: forced, test, custom, only_players } = await req.json().catch(() => ({}));
     const { data: k } = await db.from('push_keys').select('pub, priv, cron_key').eq('id', 1).maybeSingle();
     if (!k || key !== k.cron_key) return new Response('forbidden', { status: 403 });
     webpush.setVapidDetails('mailto:support@survivefriday.com', k.pub, k.priv);
+
+    // Ручная рассылка из бота (/push, /pushtest): свой текст всем подписчикам или только указанным игрокам, без расписания
+    if (custom && typeof custom.t === 'string' && typeof custom.b === 'string') {
+      let q = db.from('push_subs').select('endpoint, p256dh, auth, sent').limit(20000);
+      if (Array.isArray(only_players)) q = q.in('player_id', only_players.slice(0, 50));
+      const { data: list } = await q;
+      let sent = 0, gone = 0;
+      const payload = JSON.stringify({ t: custom.t.slice(0, 80), b: custom.b.slice(0, 200), url: typeof custom.url === 'string' && custom.url.startsWith('/') ? custom.url : '/?utm_source=push&utm_medium=web&utm_campaign=manual' });
+      for (let i = 0; i < (list || []).length; i += 25) {
+        await Promise.all(list!.slice(i, i + 25).map(async s => {
+          try { await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, payload, { TTL: 12 * 3600, urgency: 'normal' }); sent++;
+            await db.from('push_subs').update({ last_sent: new Date().toISOString(), sent: (s.sent || 0) + 1 }).eq('endpoint', s.endpoint);
+          } catch (e) { const code = (e as { statusCode?: number }).statusCode; if (code === 404 || code === 410) { gone++; await db.from('push_subs').delete().eq('endpoint', s.endpoint); } }
+        }));
+      }
+      return new Response(JSON.stringify({ custom: true, total: list?.length || 0, sent, gone }), { headers: { 'Content-Type': 'application/json' } });
+    }
 
     const msk = new Date(Date.now() + 3 * 3600e3), hour = msk.getUTCHours(), dow = msk.getUTCDay(), date = msk.toISOString().slice(0, 10);
     const slot = typeof forced === 'number' ? forced : hour < 12 ? 0 : hour < 17 ? 1 : 2;
