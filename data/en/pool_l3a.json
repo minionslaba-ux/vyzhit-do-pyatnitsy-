@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l3a_001",
+  "who": "Board secretary",
+  "text": "8:10 a.m. The board secretary reminds you the meeting materials were supposed to go out yesterday. The deck is two-thirds done. What now?",
+  "left": "Send it as is",
+  "right": "Have the team finish by lunch"
+ },
+ {
+  "id": "l3a_002",
+  "who": "Board chair",
+  "text": "The board chair calls before the meeting: “No surprises, please. What are you planning to say today?” You do have exactly one surprise. Reveal it now?",
+  "left": "Tell him everything now",
+  "right": "“You’ll hear at the meeting”"
+ },
+ {
+  "id": "l3a_003",
+  "who": "CFO",
+  "text": "The CFO whispers by the elevator: “There’s a typo on the revenue slide — an extra zero. It’s already gone upstairs.” The meeting is in an hour. Fix it?",
+  "left": "Send a correction to all",
+  "right": "Correct it verbally"
+ },
+ {
+  "id": "l3a_004",
+  "who": "Independent director",
+  "text": "An independent director sent 46 questions on the report before the meeting. He wants written answers, “ideally before coffee.” What do you do?",
+  "left": "Answer them all in writing",
+  "right": "Offer to discuss in person"
+ },
+ {
+  "id": "l3a_005",
+  "who": "Assistant",
+  "text": "Your assistant reports: the projector in the boardroom is dead, and the directors are already on their way up. The backup room is taken by a sales stand-up.",
+  "left": "Kick Sales out",
+  "right": "Hand out printouts"
+ },
+ {
+  "id": "l3a_006",
+  "who": "Blazer",
+  "text": "Board meeting morning. Your only decent jacket is at the dry cleaner’s until noon. All that’s left is a reindeer sweater from your in-laws. Your call?",
+  "left": "Sweater and confidence",
+  "right": "Buy a jacket on the way"
+ },
+ {
+  "id": "l3a_007",
+  "who": "Minutes",
+  "text": "In the morning you read the minutes from the last board meeting. They say you “promised to double the margin.” You said “we’ll try to improve it.” Dispute it?",
+  "left": "Demand a correction",
+  "right": "Quietly start doubling"
+ },
+ {
+  "id": "l3a_008",
+  "who": "Board chair",
+  "text": "The board chair wants to “warm up” before the meeting and invites everyone for a morning jog around the business park. In suits. Run?",
+  "left": "Run alongside him",
+  "right": "Wait at the finish with coffee"
+ },
+ {
+  "id": "l3a_009",
+  "who": "Board of directors",
+  "text": "At the board meeting one director is dozing, another is on his phone, a third is arguing with himself. You’re on slide thirty of forty. Cut it short?",
+  "left": "Skip to conclusions",
+  "right": "Read all forty"
+ },
+ {
+  "id": "l3a_010",
+  "who": "Board of directors",
+  "text": "The board asks why sales fell. “The market” was already the answer last meeting. The honest answer: “We got the pricing wrong.” What do you say?",
+  "left": "Admit the mistake",
+  "right": "Blame the market again"
+ },
+ {
+  "id": "l3a_011",
+  "who": "Independent director",
+  "text": "An independent director takes the floor and spends half an hour on how things worked at his company in the nineties. The schedule is on fire. Interrupt?",
+  "left": "Steer back to the agenda",
+  "right": "Listen and nod"
+ },
+ {
+  "id": "l3a_012",
+  "who": "Board of directors",
+  "text": "The board wants to approve your new strategy “in five minutes, it’s a formality.” The document is ninety pages and you’ve never seen it. Vote?",
+  "left": "Ask to postpone",
+  "right": "Approve without reading"
+ },
+ {
+  "id": "l3a_013",
+  "who": "Board secretary",
+  "text": "Mid-meeting the board secretary whispers: no quorum. One director “stepped out for a minute” forty minutes ago. What now?",
+  "left": "Call a recess",
+  "right": "Search every floor for him"
+ },
+ {
+  "id": "l3a_014",
+  "who": "Board of directors",
+  "text": "The board wants the head of sales at the meeting “to hear it firsthand.” He’s on vacation at his cabin with no signal. What do you do?",
+  "left": "Report for him yourself",
+  "right": "Move it a month"
+ },
+ {
+  "id": "l3a_015",
+  "who": "Board chair",
+  "text": "The board chair wants “one number that explains everything.” Your dashboard has a hundred and twenty metrics. Which one?",
+  "left": "Revenue, come what may",
+  "right": "Ask for a minute to calculate"
+ },
+ {
+  "id": "l3a_016",
+  "who": "Board of directors",
+  "text": "Board members are fighting over a slide with the logo: some like blue, some like green. The annual budget is still waiting its turn. Step in?",
+  "left": "Propose both colors",
+  "right": "Move on to the budget"
+ },
+ {
+  "id": "l3a_017",
+  "who": "CFO",
+  "text": "At the board meeting your CFO unexpectedly disagrees with you — out loud. The directors perk up and reach for their pens. How do you react?",
+  "left": "Welcome the debate",
+  "right": "Take it offline"
+ },
+ {
+  "id": "l3a_018",
+  "who": "Board of directors",
+  "text": "The board asks you to “briefly comment” on an article about the company in a trade magazine. You haven’t read it, and the headline sounds alarming.",
+  "left": "Honestly: “I’ll get back to you”",
+  "right": "Improvise confidently"
+ },
+ {
+  "id": "l3a_019",
+  "who": "Video call",
+  "text": "Half the board joined by video. One director’s picture froze with his mouth open, and he seems to be against. How do you count his vote?",
+  "left": "Postpone the vote",
+  "right": "Count it as abstaining"
+ },
+ {
+  "id": "l3a_020",
+  "who": "Board of directors",
+  "text": "The board wants a “what if everything goes wrong” scenario. Your team believes such scenarios attract bad luck. Who’s writing it?",
+  "left": "Write it yourself overnight",
+  "right": "Assign it to the team"
+ },
+ {
+  "id": "l3a_021",
+  "who": "Independent director",
+  "text": "An independent director asks why the report has no “sustainability” section. There isn’t one because nobody wrote it. Your answer?",
+  "left": "Promise it for next meeting",
+  "right": "Say it’s not a priority"
+ },
+ {
+  "id": "l3a_022",
+  "who": "Board of directors",
+  "text": "The meeting is in its fifth hour. The directors are demanding lunch, but there are three items left, all about money. Break?",
+  "left": "Lunch, then continue",
+  "right": "Push through"
+ },
+ {
+  "id": "l3a_023",
+  "who": "Corporate lawyer",
+  "text": "The lawyer whispers: the vote on the deal should have been by written ballot, not in person, or it can be challenged. Everyone already raised their hands.",
+  "left": "Re-vote by the rules",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3a_024",
+  "who": "Board of directors",
+  "text": "The board proposes a KPI for you: “board satisfaction.” They’ll measure it themselves, by feel. Agree?",
+  "left": "Accept with a smile",
+  "right": "Propose measurable KPIs"
+ },
+ {
+  "id": "l3a_025",
+  "who": "Board chair",
+  "text": "In front of everyone, the board chair calls your strategy “bold.” You’re not sure if that’s a compliment or a verdict. Ask?",
+  "left": "Thank him and continue",
+  "right": "Ask what he meant"
+ },
+ {
+  "id": "l3a_026",
+  "who": "Board of directors",
+  "text": "A board member pitches: “Let’s do what the competitors do, only cheaper.” The others nod. Your head of operations goes pale.",
+  "left": "Take it for review",
+  "right": "Explain why it won’t work"
+ },
+ {
+  "id": "l3a_027",
+  "who": "Slide",
+  "text": "You click to the next slide at the board meeting — and there’s a leftover team joke about “Plan B: move to a tropical island.” Silence. How do you save it?",
+  "left": "Joke back",
+  "right": "Apologize and carry on sternly"
+ },
+ {
+  "id": "l3a_028",
+  "who": "Board of directors",
+  "text": "The board demands that every decision over $1 million be pre-approved by them. That’s roughly all of your decisions. Your reply?",
+  "left": "Agree and build a process",
+  "right": "Haggle for a higher threshold"
+ },
+ {
+  "id": "l3a_029",
+  "who": "Independent director",
+  "text": "After your presentation an independent director asks for your personal number “to talk without formalities.” Usually that means weekend calls.",
+  "left": "Give your number",
+  "right": "Give your assistant’s"
+ },
+ {
+  "id": "l3a_030",
+  "who": "Board of directors",
+  "text": "The board discovered your policies haven’t been updated since the company was founded. One still mentions a fax. Admit it?",
+  "left": "Promise a policy audit",
+  "right": "Say the fax is a style choice"
+ },
+ {
+  "id": "l3a_031",
+  "who": "Corporate secretary",
+  "text": "The corporate secretary shows you the draft board resolution. Your name appears eight times under “responsible person.” Protest?",
+  "left": "Reassign to your deputies",
+  "right": "Accept all eight"
+ },
+ {
+  "id": "l3a_032",
+  "who": "Board of directors",
+  "text": "The board suddenly wants to “see the team” and asks for every department head to join the meeting. In fifteen minutes. Call them in?",
+  "left": "Gather everyone, fast",
+  "right": "Propose a separate meeting"
+ },
+ {
+  "id": "l3a_033",
+  "who": "Board chair",
+  "text": "During the break the board chair asks if you’re thinking about leaving. He says it’s “just out of curiosity.” How do you answer?",
+  "left": "“I’m here for the long haul”",
+  "right": "“That depends on the board”"
+ },
+ {
+  "id": "l3a_034",
+  "who": "Board of directors",
+  "text": "The board approved your plan with one amendment: “Do the same thing, but six months faster.” The team looks at you hopefully. What now?",
+  "left": "Accept the deadline",
+  "right": "Defend a realistic one"
+ },
+ {
+  "id": "l3a_035",
+  "who": "Video call",
+  "text": "A director joined the board meeting by video from his car. His audio keeps cutting out, then blasting. He seems to be demanding cuts to your budget. Ask him to repeat?",
+  "left": "Ask him twice",
+  "right": "Pretend the line dropped"
+ },
+ {
+  "id": "l3a_036",
+  "who": "Minutes",
+  "text": "Evening after the board meeting. The secretary sent minutes recording your “we need to think about it” as “management commits to delivering.” Fix it?",
+  "left": "Send edits today",
+  "right": "Leave it and hope"
+ },
+ {
+  "id": "l3a_037",
+  "who": "Board chair",
+  "text": "8:30 p.m. The board chair calls “for five minutes” to discuss the results. You’re at your child’s parent-teacher meeting. Answer?",
+  "left": "Step into the hallway",
+  "right": "Call back in the morning"
+ },
+ {
+  "id": "l3a_038",
+  "who": "Independent director",
+  "text": "In the evening an independent director emails that he has “reconsidered” his vote and wants to withdraw it. The resolution is already signed.",
+  "left": "Call and talk him out of it",
+  "right": "Reply formally tomorrow"
+ },
+ {
+  "id": "l3a_039",
+  "who": "Team",
+  "text": "After the board meeting your team is waiting in the meeting room to hear if their projects were approved. One out of five was. Tell them now?",
+  "left": "Tell them honestly now",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l3a_040",
+  "who": "Board of directors",
+  "text": "After the meeting, the board invites you to dinner at a restaurant. Informal, but “everyone will be there.” At home, a cold dinner and a sulking family await. Go?",
+  "left": "Go to dinner",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3a_041",
+  "who": "Dinner with the board",
+  "text": "Over dinner a relaxed board member mentions that candidates for your job were already discussed last year. Your next toast?",
+  "left": "Toast to continuity",
+  "right": "Silently pour some water"
+ },
+ {
+  "id": "l3a_042",
+  "who": "CFO",
+  "text": "The CFO writes in the evening: “You didn’t back me at the board today. That hurt.” Even though he’s the one who didn’t back you. Reply?",
+  "left": "Call and make peace",
+  "right": "Reply with an emoji"
+ },
+ {
+  "id": "l3a_043",
+  "who": "Inbox",
+  "text": "Right before bed, an email arrives: “Board questions, URGENT.” Inside: one question and lots of exclamation marks. Answer before morning?",
+  "left": "Reply at midnight",
+  "right": "Open it in the morning"
+ },
+ {
+  "id": "l3a_044",
+  "who": "Inner voice",
+  "text": "Your inner voice sums up the board meeting: “Not fired — so it’s a win.” You could celebrate with the team or go to bed. Your call?",
+  "left": "Pizza with the team",
+  "right": "Home and sleep"
+ },
+ {
+  "id": "l3a_045",
+  "who": "Board secretary",
+  "text": "The board secretary needs forty pages of resolutions signed by morning, each on a separate page. Your pen is already skipping. Sign?",
+  "left": "Sign late into the night",
+  "right": "Sign at the office tomorrow"
+ },
+ {
+  "id": "l3a_046",
+  "who": "Board chair",
+  "text": "The board chair writes in the evening: “I want to drop by your office unannounced. I mean, consider yourself warned.” It’s tomorrow. Prepare?",
+  "left": "Pull an evening scramble",
+  "right": "Change nothing"
+ },
+ {
+  "id": "l3a_047",
+  "who": "Family",
+  "text": "At home they ask how the board meeting went. You honestly try to explain, but after three minutes your kid wanders off to play. Continue with the cat?",
+  "left": "Explain it to the cat",
+  "right": "Edit your notes for the minutes"
+ },
+ {
+  "id": "l3a_048",
+  "who": "Independent director",
+  "text": "Late at night an independent director liked a competitor’s post about “the right strategy.” You noticed. Ask him about it?",
+  "left": "Message him directly",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l3a_049",
+  "who": "Corporate lawyer",
+  "text": "In the evening the lawyer suggests checking every board resolution from the past year for formal errors, “just in case.” About four hours of work. Do it?",
+  "left": "Sit down and check",
+  "right": "Leave it for year-end"
+ },
+ {
+  "id": "l3a_050",
+  "who": "Deputy",
+  "text": "In the evening your deputy asks what was said at the board meeting “uncensored.” Half the discussion was about his department. Tell him?",
+  "left": "Tell him everything",
+  "right": "Stick to the official line"
+ },
+ {
+  "id": "l3a_051",
+  "who": "Owner",
+  "text": "7:05 a.m. The company owner sends a nine-minute voice message, recorded, by the sound of it, on a treadmill. The point is somewhere in the middle. Listen now?",
+  "left": "Listen at 2x speed",
+  "right": "Ask for it in text"
+ },
+ {
+  "id": "l3a_052",
+  "who": "Owner",
+  "text": "The owner decides to come in at eight “to see who arrives when.” It’s 7:40 and nobody’s here yet. Warn the team?",
+  "left": "Call every manager",
+  "right": "Greet him alone"
+ },
+ {
+  "id": "l3a_053",
+  "who": "Shareholder",
+  "text": "A minority shareholder calls at 8:15: he read online that the company is being sold. It isn’t. How do you calm him down?",
+  "left": "Explain at length",
+  "right": "Send an official denial"
+ },
+ {
+  "id": "l3a_054",
+  "who": "Owner",
+  "text": "The owner sends a morning photo of someone else’s office captioned “This is how it’s done.” Beanbags and a slide instead of stairs. Reply?",
+  "left": "“We’ll study their approach”",
+  "right": "“Will you fund the slide?”"
+ },
+ {
+  "id": "l3a_055",
+  "who": "Owner’s assistant",
+  "text": "The owner’s assistant warns you: the boss is “in a mood to change everything” today. You’re just about to bring him the quarterly plan to sign. Go?",
+  "left": "Postpone till tomorrow",
+  "right": "Go, with a backup plan"
+ },
+ {
+  "id": "l3a_056",
+  "who": "Owner",
+  "text": "Over breakfast the owner shares an idea: open a branch in the city where he spent his vacation. His one argument: “Gorgeous waterfront.” Back it?",
+  "left": "Promise a market study",
+  "right": "Gently talk him out of it"
+ },
+ {
+  "id": "l3a_057",
+  "who": "Shareholders",
+  "text": "Annual shareholders’ meeting morning. Seventy shareholders and one dog showed up for a room with forty seats. Not enough chairs. What now?",
+  "left": "Bring chairs from the office",
+  "right": "Start standing, keep it fast"
+ },
+ {
+  "id": "l3a_058",
+  "who": "Shareholder",
+  "text": "An elderly shareholder arrives an hour early and wants to personally “talk about dividends” with you. You’re rehearsing your speech. Give him time?",
+  "left": "Talk to him",
+  "right": "Hand him to the CFO"
+ },
+ {
+  "id": "l3a_059",
+  "who": "Owner",
+  "text": "The owner writes: “I’m bringing my son to the meeting today, let him see how business works.” The son is nineteen and has opinions. Ready?",
+  "left": "Give him the floor",
+  "right": "Give him a warehouse tour"
+ },
+ {
+  "id": "l3a_060",
+  "who": "Family council",
+  "text": "The owner warns his wife will attend stand-up “just to listen.” Last time she “just listened” and shut down a project. How do you prepare?",
+  "left": "Drop the touchy topics",
+  "right": "Act as usual"
+ },
+ {
+  "id": "l3a_061",
+  "who": "Owner",
+  "text": "The owner is stuck in traffic and runs the meeting on speakerphone from his car. His GPS interrupts every two minutes. Carry on?",
+  "left": "Patiently run the meeting",
+  "right": "Suggest rescheduling"
+ },
+ {
+  "id": "l3a_062",
+  "who": "Shareholder",
+  "text": "A major shareholder sent a list of ten “awkward questions” he’ll ask at the meeting. Number seven is about your company car. Prepare answers?",
+  "left": "Prep answers with the team",
+  "right": "Switch to a modest car"
+ },
+ {
+  "id": "l3a_063",
+  "who": "Owner",
+  "text": "The owner decrees that from Monday, every morning starts with group exercises to the company anthem. The company has no anthem. Who’s writing it?",
+  "left": "Commission an anthem",
+  "right": "Convince him to skip it"
+ },
+ {
+  "id": "l3a_064",
+  "who": "Owner",
+  "text": "The owner called at 7:30 and spent half an hour describing a book he read on “teal organizations.” Now he wants the company “teal” by Friday. What now?",
+  "left": "Draft a “teal” plan",
+  "right": "Propose a one-team pilot"
+ },
+ {
+  "id": "l3a_065",
+  "who": "Shareholders",
+  "text": "A journalist who bought a single share just to ask a question showed up at the shareholders’ meeting. His question is ready, and it contains the word “scandal.” Let him in?",
+  "left": "Let him in, it’s the law",
+  "right": "Have PR meet him"
+ },
+ {
+  "id": "l3a_066",
+  "who": "Owner",
+  "text": "The owner says he changed the password to the company bank account this morning and wrote the new one down “somewhere.” Payments are stuck. What now?",
+  "left": "Drive to his house for it",
+  "right": "Wait for him to remember"
+ },
+ {
+  "id": "l3a_067",
+  "who": "Shareholder",
+  "text": "The founding shareholder emails in the morning: he doesn’t understand why the company can’t “just go back to how things were in 2015.” Reply in detail?",
+  "left": "Write a polite reply",
+  "right": "Invite him for coffee"
+ },
+ {
+  "id": "l3a_068",
+  "who": "Owner",
+  "text": "The owner wants to be added to the all-staff chat “to be closer to the people.” The chat will instantly go silent forever. Add him?",
+  "left": "Add him to the chat",
+  "right": "Start an Ask-the-Owner channel"
+ },
+ {
+  "id": "l3a_069",
+  "who": "Owner",
+  "text": "At a meeting the owner proposes cutting everyone’s bonuses “to perk them up.” He just got back from his yacht. Object?",
+  "left": "Object with numbers",
+  "right": "Suggest cutting only yours"
+ },
+ {
+  "id": "l3a_070",
+  "who": "Shareholders",
+  "text": "Vote at the shareholders’ meeting: one shareholder demands a manual recount. There are two hundred thousand votes, and your staff would be counting. Agree?",
+  "left": "Recount by hand",
+  "right": "Cite the bylaws"
+ },
+ {
+  "id": "l3a_071",
+  "who": "Owner",
+  "text": "The owner wants to personally interview your future deputy. The candidate is excellent, but supports a rival football team. What do you do?",
+  "left": "Warn the candidate",
+  "right": "Meet without the owner"
+ },
+ {
+  "id": "l3a_072",
+  "who": "Shareholder",
+  "text": "At the meeting a shareholder asks: “Why is the office coffee so expensive?” The other shareholders perk up: it’s the first question they understand.",
+  "left": "Explain the coffee in detail",
+  "right": "Promise a new supplier"
+ },
+ {
+  "id": "l3a_073",
+  "who": "Owner",
+  "text": "The owner asks you to hire his nephew: “He’s very talented.” The nephew has already quit three other companies. Take him?",
+  "left": "Put him in your department",
+  "right": "Offer an internship"
+ },
+ {
+  "id": "l3a_074",
+  "who": "Shareholders",
+  "text": "The shareholders demand bigger dividends. The CFO whispers that then there won’t be enough for December payroll. Your answer?",
+  "left": "Defend the current payout",
+  "right": "Find the money somewhere"
+ },
+ {
+  "id": "l3a_075",
+  "who": "Owner",
+  "text": "The owner took you to lunch and talked about his dog for an hour and a half. At dessert: “By the way, you’re fired. Kidding.” How do you react?",
+  "left": "Laugh",
+  "right": "Ask what he meant"
+ },
+ {
+  "id": "l3a_076",
+  "who": "Owner",
+  "text": "The owner says the font in the report looks “kind of sad” and wants every company document redone in something more “life-affirming.” Comply?",
+  "left": "Change it company-wide",
+  "right": "Agree for one report"
+ },
+ {
+  "id": "l3a_077",
+  "who": "Shareholder",
+  "text": "An investor-shareholder in Singapore joins a video call at 2 a.m. his time and is annoyed by everything. Especially you. How do you play it?",
+  "left": "Short and to the point",
+  "right": "Patient and detailed"
+ },
+ {
+  "id": "l3a_078",
+  "who": "Owner",
+  "text": "The owner wants to rename the company because the old name “doesn’t pop.” His son came up with the new one. It pops — just not in any known language.",
+  "left": "Start the rebrand",
+  "right": "Suggest a customer poll"
+ },
+ {
+  "id": "l3a_079",
+  "who": "Shareholders",
+  "text": "At the shareholders’ meeting two major shareholders get into a fight, and each demands you back him. Your move?",
+  "left": "Back the bigger one",
+  "right": "Stay neutral"
+ },
+ {
+  "id": "l3a_080",
+  "who": "Owner",
+  "text": "9 p.m. The owner calls from his country house: “Been thinking — let’s fire everyone who doesn’t smile.” By morning he usually forgets his evening ideas. Write it down?",
+  "left": "Promise to think it over",
+  "right": "Argue right now"
+ },
+ {
+  "id": "l3a_081",
+  "who": "Shareholder",
+  "text": "In the evening a shareholder messages you directly, bypassing the board: he wants to “unofficially” hear the profit forecast. That’s insider information. Reply?",
+  "left": "Politely decline",
+  "right": "Hint at general trends"
+ },
+ {
+  "id": "l3a_082",
+  "who": "Owner",
+  "text": "The owner invited you to his wife’s birthday. The gift must be “not too expensive, but not cheap either.” Your pick?",
+  "left": "Flowers and a card",
+  "right": "Order something special"
+ },
+ {
+  "id": "l3a_083",
+  "who": "Owner",
+  "text": "The owner writes at 11:40 p.m.: “You asleep? I’m not.” That’s it. A minute later “typing…” appears and disappears. Reply?",
+  "left": "Reply “No, I’m listening”",
+  "right": "Ask in the morning"
+ },
+ {
+  "id": "l3a_084",
+  "who": "Shareholders",
+  "text": "After the shareholders’ meeting, a pile of written complaints awaits you. One is about the room being stuffy. Answer them all today?",
+  "left": "Answer them all tonight",
+  "right": "Give Legal a week"
+ },
+ {
+  "id": "l3a_085",
+  "who": "Owner",
+  "text": "The owner invites you to his sauna in the evening “to discuss strategy.” You discuss strategy in the meeting room. Go?",
+  "left": "Go to the sauna",
+  "right": "Suggest dinner next week"
+ },
+ {
+  "id": "l3a_086",
+  "who": "Family",
+  "text": "Your kid asks who’s more important: you or the company owner. In front of guests. How do you answer honestly?",
+  "left": "“The owner, of course”",
+  "right": "“We’re a team”"
+ },
+ {
+  "id": "l3a_087",
+  "who": "Owner",
+  "text": "In the evening the owner sends a link to a course, “Become a Billionaire in 30 Days,” with the note “Have a look, it’ll help you.” The course is paid. Watch it?",
+  "left": "Watch lesson one",
+  "right": "Reply “Absolutely!” and forget"
+ },
+ {
+  "id": "l3a_088",
+  "who": "Shareholder",
+  "text": "The founding shareholder calls late at night to reminisce about how he opened the first warehouse “back in the day.” You’re in hour two.",
+  "left": "Listen to the end",
+  "right": "Cite an early meeting"
+ },
+ {
+  "id": "l3a_089",
+  "who": "Inner voice",
+  "text": "Your inner voice wonders whom you actually serve: the owner, the shareholders or common sense. Today it was hard to do all three. Reflect on it?",
+  "left": "Write it in a journal",
+  "right": "Go to bed, no soul-searching"
+ },
+ {
+  "id": "l3a_090",
+  "who": "Owner",
+  "text": "Late at night the owner demands a report on the “team’s moral climate” by morning. There’s no data, but you can feel the climate. What do you write?",
+  "left": "Run a survey overnight",
+  "right": "Write honestly from gut feel"
+ },
+ {
+  "id": "l3a_091",
+  "who": "Owner",
+  "text": "The owner went on vacation and asked not to be disturbed about anything. Tonight a big order came in that needs his signature. Call him?",
+  "left": "Call the owner",
+  "right": "Sign it at your own risk"
+ },
+ {
+  "id": "l3a_092",
+  "who": "Owner’s assistant",
+  "text": "The owner’s assistant writes in the evening: “The boss saw a photo of you in a restaurant. He’s asking why you’re not at work.” In the photo you’re with a client. Explain?",
+  "left": "Send a detailed report",
+  "right": "Reply: “That was work”"
+ },
+ {
+  "id": "l3a_093",
+  "who": "Shareholders",
+  "text": "In the shareholders’ chat tonight, people are saying the office is “too luxurious.” The office is twelve years old and the roof leaks. Join in?",
+  "left": "Post a photo of the leak",
+  "right": "Stay quiet"
+ },
+ {
+  "id": "l3a_094",
+  "who": "Owner",
+  "text": "The owner decided to personally inspect product quality and is standing in the workshop at 8 a.m. with a magnifying glass. The shift supervisor calls you in a panic. Go?",
+  "left": "Rush to the workshop",
+  "right": "Send the head of production"
+ },
+ {
+  "id": "l3a_095",
+  "who": "Shareholders",
+  "text": "In the morning you learn the shareholder meeting pack went out with an old password, and half the shareholders couldn’t open it. What now?",
+  "left": "Call everyone personally",
+  "right": "Resend and wait"
+ },
+ {
+  "id": "l3a_096",
+  "who": "Owner",
+  "text": "The owner wants “all of last year’s contracts, on paper” brought to him this morning. There are four thousand, in an archive on the edge of town. Bring them?",
+  "left": "Haul the boxes",
+  "right": "Offer a digital registry"
+ },
+ {
+  "id": "l3a_097",
+  "who": "Shareholder",
+  "text": "A shareholder sends you an article, “Ten Signs of a Bad CEO,” with four items checked off. No comment. React?",
+  "left": "Rebut each point",
+  "right": "Reply “Interesting, thanks”"
+ },
+ {
+  "id": "l3a_098",
+  "who": "Owner",
+  "text": "At stand-up the owner announces that the company is now “like a family.” The staff exchange glances: last time, that was followed by canceled bonuses. How do you follow up?",
+  "left": "Expand on the family idea",
+  "right": "Clarify what will change"
+ },
+ {
+  "id": "l3a_099",
+  "who": "Investor",
+  "text": "7:30 a.m. An investor wants to move the pitch from lunch to 8:00 “because I have a flight after.” Your deck is on your laptop, and the laptop is at the office. Can you make it?",
+  "left": "Taxi to the office",
+  "right": "Pitch without slides"
+ },
+ {
+  "id": "l3a_100",
+  "who": "Investment banker",
+  "text": "The investment banker sends the “final” investor deck in the morning. It’s final number nine, and your old photo is back in it.",
+  "left": "Approve as is",
+  "right": "Start on edit ten"
+ },
+ {
+  "id": "l3a_101",
+  "who": "CFO",
+  "text": "The CFO reports: there’s enough cash for four months if you stop paying rent. Investors promise a decision “soon.” Your plan?",
+  "left": "Cut costs now",
+  "right": "Wait for the investors"
+ },
+ {
+  "id": "l3a_102",
+  "who": "Investor",
+  "text": "The investor scheduled a call for 8:00 and has spent fifteen minutes trying to turn on his camera. His dog, in frame, now knows your pitch by heart.",
+  "left": "Carry on without video",
+  "right": "Reschedule the call"
+ },
+ {
+  "id": "l3a_103",
+  "who": "Investment banker",
+  "text": "The banker calls in the morning: a fund is ready to invest but wants “your team on stage” today at lunch. Half the team is traveling. What do you do?",
+  "left": "Gather everyone by video",
+  "right": "Go with just the CFO"
+ },
+ {
+  "id": "l3a_104",
+  "who": "Investor",
+  "text": "Morning email from an investor: “Why don’t the numbers in your deck match the ones on your website?” The website’s numbers are three years old. Your reply?",
+  "left": "Update the site, fast",
+  "right": "Explain by email"
+ },
+ {
+  "id": "l3a_105",
+  "who": "Fund analyst",
+  "text": "A fund analyst, age twenty-four, asks at 8:15 for a “quick” ten-year cash flow model. Send what you’ve got?",
+  "left": "Send the draft",
+  "right": "Rebuild it with the team"
+ },
+ {
+  "id": "l3a_106",
+  "who": "Investor",
+  "text": "An investor invites you to a morning meeting at the gym: “Let’s talk on the treadmills.” The last time you ran was after a bus. Go?",
+  "left": "Run and pitch",
+  "right": "Suggest coffee afterward"
+ },
+ {
+  "id": "l3a_107",
+  "who": "Data room",
+  "text": "In the morning you discover photos from the New Year’s party were accidentally uploaded to the virtual data room. Investors already have access.",
+  "left": "Delete and explain, fast",
+  "right": "Keep them: it’s our culture"
+ },
+ {
+  "id": "l3a_108",
+  "who": "CFO",
+  "text": "The CFO wants to call the loss an “investment in the future” in the investor deck. Sounds nice, but the auditors are laughing.",
+  "left": "Keep the wording",
+  "right": "Call a loss a loss"
+ },
+ {
+  "id": "l3a_109",
+  "who": "Investor",
+  "text": "The round’s lead investor writes at 7:50 a.m.: “We’re still in, but let’s discuss valuation.” That means they want it lower. Call?",
+  "left": "Call immediately",
+  "right": "Wait until lunch"
+ },
+ {
+  "id": "l3a_110",
+  "who": "Team",
+  "text": "In the morning staff ask if it’s true the company is “raising money,” and whether that means everyone gets a raise. What do you say?",
+  "left": "Promise a review after the round",
+  "right": "Explain where the money goes"
+ },
+ {
+  "id": "l3a_111",
+  "who": "Investor",
+  "text": "At the pitch an investor asks a question you can’t answer: “What if a big corporation enters the market tomorrow?” The other investors wait.",
+  "left": "Honestly admit the risk",
+  "right": "Say you have a plan"
+ },
+ {
+  "id": "l3a_112",
+  "who": "Investor",
+  "text": "The investor wants a board seat and veto power over executive hires. In return — money you badly need. Accept?",
+  "left": "Accept the terms",
+  "right": "Negotiate the veto"
+ },
+ {
+  "id": "l3a_113",
+  "who": "Investment banker",
+  "text": "The banker advises raising the growth forecast in the deck from 30% to 70%: “Everyone does it, investors divide by two anyway.” What do you do?",
+  "left": "Draw the 70%",
+  "right": "Keep the real 30%"
+ },
+ {
+  "id": "l3a_114",
+  "who": "Investor",
+  "text": "At the meeting an investor spends twenty minutes on his past successes and never once asks about your company. Ten minutes left. Cut in?",
+  "left": "Take over the conversation",
+  "right": "Listen and admire"
+ },
+ {
+  "id": "l3a_115",
+  "who": "Fund",
+  "text": "The fund sends a term sheet: all good, but the fine print says you can’t resign for three years. Sign?",
+  "left": "Sign it",
+  "right": "Strike the clause"
+ },
+ {
+  "id": "l3a_116",
+  "who": "Investor",
+  "text": "The investor wants an office tour. A programmer is asleep in the meeting room after an all-night release, and the kitchen has a mountain of dirty mugs. Show it?",
+  "left": "Show it as it is",
+  "right": "Reroute the tour"
+ },
+ {
+  "id": "l3a_117",
+  "who": "Investors",
+  "text": "At an investor meeting your CTO unexpectedly says the product is “still a bit raw.” Everyone writes it down. How do you save it?",
+  "left": "Turn it into a joke",
+  "right": "Back his honesty"
+ },
+ {
+  "id": "l3a_118",
+  "who": "Investor",
+  "text": "The investor offers money on condition that you move into his business center. Rent is twice as high, and it’s forty minutes from the subway. Your reaction?",
+  "left": "Agree to the move",
+  "right": "Refuse that condition"
+ },
+ {
+  "id": "l3a_119",
+  "who": "Fund",
+  "text": "The fund wants due diligence and asks for access to all correspondence for the past three years. Your lawyer is clutching his head. Give it?",
+  "left": "Share selectively",
+  "right": "Open everything"
+ },
+ {
+  "id": "l3a_120",
+  "who": "Investor",
+  "text": "Over lunch an investor asks about your personal “stop-loss”: when will you admit the idea isn’t working? Everyone goes quiet and looks at you.",
+  "left": "Name a specific number",
+  "right": "Say you don’t do quitting"
+ },
+ {
+  "id": "l3a_121",
+  "who": "Investment banker",
+  "text": "For a fee, the banker offers to “introduce you to the right people.” The fee equals a month of payroll. Agree?",
+  "left": "Pay the fee",
+  "right": "Find investors yourselves"
+ },
+ {
+  "id": "l3a_122",
+  "who": "Investor",
+  "text": "The investor wants to see an “unpolished” version of the financials “to feel the honesty.” The unpolished version is a spreadsheet with accountants’ comments like “what nonsense.”",
+  "left": "Show it as is",
+  "right": "Clean it up, fast"
+ },
+ {
+  "id": "l3a_123",
+  "who": "Investor",
+  "text": "At demo day you get three minutes on stage. The timer is huge and already running, though the host is still talking. What do you do?",
+  "left": "Start right away",
+  "right": "Ask for a timer reset"
+ },
+ {
+  "id": "l3a_124",
+  "who": "Investor",
+  "text": "9:30 p.m. An investor writes: “Ready to sign tomorrow if you send an updated model tonight.” The model was built by an analyst who’s already asleep.",
+  "left": "Wake the analyst",
+  "right": "Build it yourself"
+ },
+ {
+  "id": "l3a_125",
+  "who": "Investor",
+  "text": "The investor calls in the evening: he has “slightly revised” the amount — downward. The whole round depends on him. Your answer?",
+  "left": "Accept less",
+  "right": "Offer him a smaller stake"
+ },
+ {
+  "id": "l3a_126",
+  "who": "Fund",
+  "text": "In the evening the fund says the decision is “in final partner approval.” That could take anywhere from a day to eternity. How do you wait?",
+  "left": "Refresh email every 10 min",
+  "right": "Phone off till morning"
+ },
+ {
+  "id": "l3a_127",
+  "who": "Investment banker",
+  "text": "The banker invites you to a private investor party tonight. Dress code: black tie. You’ve never owned a tuxedo. Go?",
+  "left": "Rent a tuxedo",
+  "right": "Go in a suit"
+ },
+ {
+  "id": "l3a_128",
+  "who": "Team",
+  "text": "The round is closed! The team wants to celebrate tonight. The investors haven’t wired the money yet, and it could still fall through. Celebrate?",
+  "left": "Celebrate modestly",
+  "right": "Wait for the money"
+ },
+ {
+  "id": "l3a_129",
+  "who": "Family",
+  "text": "At home your partner asks why, three nights in a row, you’ve been saying “pre-money valuation” in your sleep. Explain?",
+  "left": "Tell them about the round",
+  "right": "Say it’s about the renovation"
+ },
+ {
+  "id": "l3a_130",
+  "who": "Investor",
+  "text": "An investor writes late at night: “Don’t sell the company to anyone but me.” Nobody’s selling the company, but the offer is intriguing.",
+  "left": "Ask what he’s offering",
+  "right": "Thank him, leave it there"
+ },
+ {
+  "id": "l3a_131",
+  "who": "CFO",
+  "text": "The CFO calls at 10 p.m.: “If the investors don’t come through, we can’t make payroll next month.” How are you supposed to sleep after that?",
+  "left": "Build Plan B all night",
+  "right": "Trust the morning"
+ },
+ {
+  "id": "l3a_132",
+  "who": "Fund",
+  "text": "In the evening the fund said no. The email reads: “We loved it, but not right now.” The team is waiting for news. Tell them?",
+  "left": "Tell them honestly",
+  "right": "Wait for another fund"
+ },
+ {
+  "id": "l3a_133",
+  "who": "Investor",
+  "text": "The investor sent the signed contract at 11:58 p.m. with a champagne emoji. You’re not sure he signed the right version. Check now?",
+  "left": "Check tonight",
+  "right": "Check in the morning"
+ },
+ {
+  "id": "l3a_134",
+  "who": "Inner voice",
+  "text": "Your inner voice whispers: “Wouldn’t a bank loan have been easier?” You haven’t slept properly in two weeks because of investors. Answer it?",
+  "left": "Run loan numbers tonight",
+  "right": "Make tea and unwind"
+ },
+ {
+  "id": "l3a_135",
+  "who": "Investor",
+  "text": "A new investor sends a “partner questionnaire” for the morning: favorite color, favorite book and “three words that describe you.” Take it seriously?",
+  "left": "Fill it in seriously",
+  "right": "Fill it in with humor"
+ },
+ {
+  "id": "l3a_136",
+  "who": "CFO",
+  "text": "Morning. The CFO suggests borrowing from one of the investors, with the office furniture as collateral. The furniture is worth laughably little. Sign?",
+  "left": "Take the loan",
+  "right": "Look for other options"
+ },
+ {
+  "id": "l3a_137",
+  "who": "Fund",
+  "text": "The fund wants a video about company culture. The team must look “genuinely happy” on camera. Take eight; the happiness is fading. Keep going?",
+  "left": "One more take",
+  "right": "Use the best of eight"
+ },
+ {
+  "id": "l3a_138",
+  "who": "Investor",
+  "text": "At a meeting an investor suggests you put your personal money into the company “to show you believe.” Your savings would buy a modest car. Invest?",
+  "left": "Put in your savings",
+  "right": "Say belief shows in the work"
+ },
+ {
+  "id": "l3a_139",
+  "who": "Banker",
+  "text": "The banker wants “one slide on synergies” tonight. You don’t understand synergies, and neither does he. But the slide is due by morning.",
+  "left": "Draw it with the team",
+  "right": "Do it from a template"
+ },
+ {
+  "id": "l3a_140",
+  "who": "Investor",
+  "text": "The investor forwards you a startup meme and waits for a reaction. The meme seems to be about your company. Reply?",
+  "left": "Reply with a meme",
+  "right": "Thank him, politely"
+ },
+ {
+  "id": "l3a_141",
+  "who": "Investor",
+  "text": "Late at night the investor proposes replacing your CFO with “his own guy.” Your CFO has worked with you for ten years. Your answer?",
+  "left": "Defend your CFO",
+  "right": "Promise to think it over"
+ },
+ {
+  "id": "l3a_142",
+  "who": "Accelerator",
+  "text": "An accelerator invites you to give a morning talk to aspiring entrepreneurs: “Tell us about your failures.” There are many. Go?",
+  "left": "Tell them about all of them",
+  "right": "Decline with an excuse"
+ },
+ {
+  "id": "l3a_143",
+  "who": "Investor",
+  "text": "At the signing, the investor asks for a pen and takes your favorite — a gift from your first team. Now he’s writing in his notebook with it. Ask for it back?",
+  "left": "Ask for it back",
+  "right": "Let him keep it"
+ },
+ {
+  "id": "l3a_144",
+  "who": "Strategy offsite",
+  "text": "9:00, strategy offsite out of town. The facilitator hands out sticky notes and asks you to draw the company “as an animal.” Your deputy is already drawing a sloth.",
+  "left": "Draw an eagle",
+  "right": "Back the sloth"
+ },
+ {
+  "id": "l3a_145",
+  "who": "Strategy director",
+  "text": "The strategy director brings in the “Vision 2035” document. It’s beautiful, but there’s not a single number in it. The board expects it by Friday. Send it?",
+  "left": "Add numbers overnight",
+  "right": "Send it as inspiration"
+ },
+ {
+  "id": "l3a_146",
+  "who": "Consultants",
+  "text": "Very expensive consultants present a strategy in the morning. It’s almost word for word your memo from a year ago. Tell them?",
+  "left": "Point out the resemblance",
+  "right": "Say nothing and pay"
+ },
+ {
+  "id": "l3a_147",
+  "who": "Company mission",
+  "text": "The morning starts with a debate about the new company mission. There are seventeen versions, and every one contains the word “future.” Vote?",
+  "left": "Pick the shortest",
+  "right": "Rewrite from scratch"
+ },
+ {
+  "id": "l3a_148",
+  "who": "CMO",
+  "text": "The CMO bursts in at 8:30: “We must urgently enter a new segment — gamer retirees.” No research, but plenty of enthusiasm.",
+  "left": "Fund a pilot",
+  "right": "Ask for research"
+ },
+ {
+  "id": "l3a_149",
+  "who": "Strategy offsite",
+  "text": "Day two of the offsite. Morning team-building: build a model of the company five years from now out of pasta. Yours collapsed first. Symbolic?",
+  "left": "Call it a bold move",
+  "right": "Rebuild it with a straight face"
+ },
+ {
+  "id": "l3a_150",
+  "who": "Strategy director",
+  "text": "The strategy director proposes switching to OKRs. You switched to OKRs three years ago and abandoned them two years ago. Again?",
+  "left": "Try once more",
+  "right": "Stick with what you have"
+ },
+ {
+  "id": "l3a_151",
+  "who": "Analyst",
+  "text": "The analyst brings a market study: in five years your core product may be useless to everyone. It’s forty pages. Read it?",
+  "left": "Read it by lunch",
+  "right": "Ask for a summary"
+ },
+ {
+  "id": "l3a_152",
+  "who": "Strategy",
+  "text": "In the morning it turns out nobody in the company has read the three-year strategy approved in January. Including the people who wrote it. What now?",
+  "left": "Present it to everyone",
+  "right": "Rewrite it as one page"
+ },
+ {
+  "id": "l3a_153",
+  "who": "Strategy offsite",
+  "text": "At the offsite the facilitator asks each leader to name “the main threat.” Three of them name each other. Step in?",
+  "left": "Defuse it with a joke",
+  "right": "Address each grievance"
+ },
+ {
+  "id": "l3a_154",
+  "who": "Sales director",
+  "text": "The sales director thinks the “focus on big clients” strategy will kill his plan. He came with a two-hundred-row spreadsheet.",
+  "left": "Listen and revise",
+  "right": "Insist on the strategy"
+ },
+ {
+  "id": "l3a_155",
+  "who": "Board of directors",
+  "text": "The board wants a “digital transformation.” You ask what exactly to transform. Answer: “Well, everything.” Where do you start?",
+  "left": "Hire a chief digital officer",
+  "right": "Start with one process"
+ },
+ {
+  "id": "l3a_156",
+  "who": "Strategy",
+  "text": "The product team proposes pivoting the company “toward subscriptions.” Your customers are used to buying once every ten years. Green light?",
+  "left": "Launch a pilot",
+  "right": "Postpone a year"
+ },
+ {
+  "id": "l3a_157",
+  "who": "Strategy director",
+  "text": "The strategy director draws a two-by-two matrix on the whiteboard. Your flagship product landed in the “dogs” quadrant. The owner loves that product. What now?",
+  "left": "Redraw the matrix",
+  "right": "Show the owner as is"
+ },
+ {
+  "id": "l3a_158",
+  "who": "Consultants",
+  "text": "The consultants propose cutting the product line in half. On the cut list: the product you built your career on.",
+  "left": "Cut it too",
+  "right": "Defend your product"
+ },
+ {
+  "id": "l3a_159",
+  "who": "Strategy",
+  "text": "In an anonymous survey employees write that they “don’t understand the company strategy.” One honestly writes: “There isn’t one.” How do you react?",
+  "left": "Hold an all-hands",
+  "right": "Have HR explain it"
+ },
+ {
+  "id": "l3a_160",
+  "who": "CMO",
+  "text": "The CMO wants to reposition from “reliable” to “bold.” Your clients are pension funds. Try it?",
+  "left": "Test on a small audience",
+  "right": "Drop the idea"
+ },
+ {
+  "id": "l3a_161",
+  "who": "Board of directors",
+  "text": "The board wonders why the strategy changed four times this year. The honest answer: “Because the board kept changing it.” How do you phrase it?",
+  "left": "Tell the truth, diplomatically",
+  "right": "Take the blame yourself"
+ },
+ {
+  "id": "l3a_162",
+  "who": "Strategy offsite",
+  "text": "At the offsite everyone agreed with every point. Suspiciously fast. You suspect they all just want lunch. Test it?",
+  "left": "Run a second round",
+  "right": "Release them for lunch"
+ },
+ {
+  "id": "l3a_163",
+  "who": "Head of IT",
+  "text": "The head of IT says the new strategy needs a new platform. Launching it takes two years; the strategy covers eighteen months.",
+  "left": "Shift the strategy timeline",
+  "right": "Demand it faster"
+ },
+ {
+  "id": "l3a_164",
+  "who": "Strategy",
+  "text": "The new strategy director made a company map on a two-meter sheet. It’s hanging in the hallway, and now nobody can get to the coffee.",
+  "left": "Move the map",
+  "right": "Keep it: strategy beats coffee"
+ },
+ {
+  "id": "l3a_165",
+  "who": "Consultants",
+  "text": "The consultants want three more months and twice the money to “complete the diagnostic.” The diagnostic has run for six months. Extend?",
+  "left": "Extend the contract",
+  "right": "Terminate it"
+ },
+ {
+  "id": "l3a_166",
+  "who": "Strategy director",
+  "text": "9 p.m. The strategy director sends a fresh idea: “What if we became a completely different company?” He reached this conclusion while you were driving home.",
+  "left": "Discuss by phone",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l3a_167",
+  "who": "Strategy offsite",
+  "text": "Evening at the offsite. Dinner and campfire mingling. The CFO has grabbed a guitar and is singing about the budget. Sing along?",
+  "left": "Sing your heart out",
+  "right": "Go to bed early"
+ },
+ {
+  "id": "l3a_168",
+  "who": "Strategy offsite",
+  "text": "After dinner the sales director admits all the numbers in his strategy were “pulled out of thin air.” He’s a bit relaxed. Remember that?",
+  "left": "Raise it officially tomorrow",
+  "right": "Pretend you didn’t hear"
+ },
+ {
+  "id": "l3a_169",
+  "who": "Inner voice",
+  "text": "Your inner voice suggests writing the strategy yourself tonight — no consultants, no offsites. There’s a notebook by your bed. Start?",
+  "left": "Write until dawn",
+  "right": "Save it for the weekend"
+ },
+ {
+  "id": "l3a_170",
+  "who": "Family",
+  "text": "At dinner you accidentally call the family vacation a “strategic initiative” and suggest “decomposing the itinerary.” Everyone looks worried.",
+  "left": "Switch to human language",
+  "right": "Sketch a plan on a napkin"
+ },
+ {
+  "id": "l3a_171",
+  "who": "Strategy",
+  "text": "Rereading the strategy in the evening, you notice it has the goal “become the market leader” and the goal “be a niche player.” Simultaneously. Fix it?",
+  "left": "Rewrite it tonight",
+  "right": "Leave it for the offsite"
+ },
+ {
+  "id": "l3a_172",
+  "who": "CMO",
+  "text": "In the evening the CMO sends a video explaining the strategy with a cat. It’s cute. He wants to send it to all employees.",
+  "left": "Allow it",
+  "right": "Ask for something more serious"
+ },
+ {
+  "id": "l3a_173",
+  "who": "Board of directors",
+  "text": "A board member writes that he read a book on blue oceans and now wants you to “find your ocean” before the next meeting. Look for it?",
+  "left": "Present a sea of opportunity",
+  "right": "Reply “On it!” and get back to work"
+ },
+ {
+  "id": "l3a_174",
+  "who": "Strategy",
+  "text": "At the morning meeting it emerges that every leader understands the word “priority” differently. Sales has twelve of them. What now?",
+  "left": "Three for everyone",
+  "right": "Let each decide"
+ },
+ {
+  "id": "l3a_175",
+  "who": "Chief product officer",
+  "text": "First thing in the morning the CPO proposes a “pivot.” It’s the third pivot this year. The team is dizzy from turning. What do you do?",
+  "left": "Refuse the pivot",
+  "right": "Listen and draw conclusions"
+ },
+ {
+  "id": "l3a_176",
+  "who": "Strategy",
+  "text": "At 8:40 you’re handed “Strategy 2027” to sign. You don’t remember approving it. Turns out it’s last year’s, with the date changed.",
+  "left": "Sign it as a formality",
+  "right": "Hold a post-mortem"
+ },
+ {
+  "id": "l3a_177",
+  "who": "Strategy director",
+  "text": "The strategy director wants “Strategy Mondays”: every Monday, leaders spend two hours thinking about the future. Approve?",
+  "left": "Approve",
+  "right": "Make it monthly"
+ },
+ {
+  "id": "l3a_178",
+  "who": "Strategy",
+  "text": "Walking past the board with the new strategy, a procurement employee asks out loud: “Why do we even need this?” Everyone turns to you.",
+  "left": "Explain it to him personally",
+  "right": "Promise a memo"
+ },
+ {
+  "id": "l3a_179",
+  "who": "Strategy offsite",
+  "text": "The facilitator proposes a “Company Funeral” exercise: everyone writes an obituary explaining why it died. Half the leaders write the same thing.",
+  "left": "Discuss the overlaps",
+  "right": "Tear up the obituaries"
+ },
+ {
+  "id": "l3a_180",
+  "who": "Sales director",
+  "text": "The sales director threatens in the evening to quit if the strategy doesn’t change. It’s his fourth threat this year. What now?",
+  "left": "Have a heart-to-heart",
+  "right": "Reply: “Your call”"
+ },
+ {
+  "id": "l3a_181",
+  "who": "Strategy",
+  "text": "You dream the strategy was finally delivered and nobody noticed. In the morning you have a strategy meeting. How do you get in the zone?",
+  "left": "Tell the team your dream",
+  "right": "Keep the dream to yourself"
+ },
+ {
+  "id": "l3a_182",
+  "who": "Board of directors",
+  "text": "The board sends a link to a competitor’s strategy: “Why do they have one and we don’t?” Theirs just has nicer design.",
+  "left": "Order nicer design",
+  "right": "Explain substance matters more"
+ },
+ {
+  "id": "l3a_183",
+  "who": "Strategy",
+  "text": "HR proposes tying strategy to bonuses. Now every bonus must be justified by a strategic objective. Accounting is in shock.",
+  "left": "Roll it out",
+  "right": "Postpone"
+ },
+ {
+  "id": "l3a_184",
+  "who": "CFO",
+  "text": "In the morning the CFO says the new strategy costs three times what you thought. He recalculated last night “just out of curiosity.”",
+  "left": "Revise the strategy",
+  "right": "Ask the board for money"
+ },
+ {
+  "id": "l3a_185",
+  "who": "Company newsletter",
+  "text": "The company newsletter wants to interview you about the company strategy. The reporter is an intern, and her first question is: “What is a strategy?” Answer?",
+  "left": "Answer with humor",
+  "right": "Give the stock answer"
+ },
+ {
+  "id": "l3a_186",
+  "who": "Consultants",
+  "text": "The consultants propose a new org structure. In it, your strategy department reports to procurement. Sign off?",
+  "left": "Sign off",
+  "right": "Send it back"
+ },
+ {
+  "id": "l3a_187",
+  "who": "Strategy director",
+  "text": "The strategy director emails in the evening with the subject “Bedtime thoughts.” Thirty ideas, zero execution. Reply?",
+  "left": "Pick one and reply",
+  "right": "Leave it till morning"
+ },
+ {
+  "id": "l3a_188",
+  "who": "Analyst",
+  "text": "The analyst reports that every forecast in the strategy is based on a faulty spreadsheet with two-year-old exchange rates. The board approved it yesterday.",
+  "left": "Tell the board now",
+  "right": "Quietly recalculate"
+ },
+ {
+  "id": "l3a_189",
+  "who": "Board of directors",
+  "text": "The board demands an “artificial intelligence” section in the strategy. Never mind that you sell construction mortar. Write it?",
+  "left": "Write about smart bags",
+  "right": "Decline and explain"
+ },
+ {
+  "id": "l3a_190",
+  "who": "Strategy offsite",
+  "text": "After the offsite every leader posts “Thanks, so inspiring!” in the chat and goes back to their old tasks. Pretend you didn’t notice?",
+  "left": "Set checkpoints",
+  "right": "Give them until Monday"
+ },
+ {
+  "id": "l3a_191",
+  "who": "Strategy",
+  "text": "In the morning marketing sends a “strategy in pictures” built around a mountain-climbing photo. The summit is labeled “40% profitability.” Approve?",
+  "left": "Approve with edits",
+  "right": "Send it back"
+ },
+ {
+  "id": "l3a_192",
+  "who": "Chief product officer",
+  "text": "The CPO proposes dropping your most profitable product in order to “focus.” The CFO is already sketching losses on a napkin.",
+  "left": "Back the focus",
+  "right": "Keep the product"
+ },
+ {
+  "id": "l3a_193",
+  "who": "Inner voice",
+  "text": "In the middle of the night your inner voice asks: “Is strategy even a real thing, or just a fancy word?” You lie in the dark, thinking.",
+  "left": "Write down an answer",
+  "right": "Put on a TV show"
+ },
+ {
+  "id": "l3a_194",
+  "who": "CFO",
+  "text": "8:00 a.m. The CFO brings the draft annual budget. The “Other expenses” line is bigger than payroll. What’s “other”?",
+  "left": "Go line by line",
+  "right": "Sign and trust"
+ },
+ {
+  "id": "l3a_195",
+  "who": "Budget committee",
+  "text": "Budget committee morning. Every leader brought a request 30% higher than last year. The money is the same as last year. Where do you start?",
+  "left": "Cut everyone equally",
+  "right": "Hear each out for an hour"
+ },
+ {
+  "id": "l3a_196",
+  "who": "CMO",
+  "text": "The CMO catches you at the coffee machine: “I need double the ad budget, or I’m not responsible for sales.” No numbers, plenty of drama.",
+  "left": "Ask for an impact estimate",
+  "right": "Promise to think about it"
+ },
+ {
+  "id": "l3a_197",
+  "who": "Budget",
+  "text": "In the morning you discover next year’s budget uses an exchange rate from two years ago. The whole spreadsheet is now fiction. Recalculate?",
+  "left": "Redo it with the team",
+  "right": "Redo just the key lines"
+ },
+ {
+  "id": "l3a_198",
+  "who": "CFO",
+  "text": "The CFO prepares “optimistic,” “realistic” and “pessimistic” budgets. The board wants to see one. Which do you show?",
+  "left": "Optimistic",
+  "right": "Realistic"
+ },
+ {
+  "id": "l3a_199",
+  "who": "Budget",
+  "text": "The budget spreadsheet won’t open this morning: forty tabs, two hundred formulas and one circular reference somewhere deep inside. It’s due tomorrow.",
+  "left": "Call in the analysts",
+  "right": "Hunt the error yourself"
+ },
+ {
+  "id": "l3a_200",
+  "who": "CIO",
+  "text": "The CIO submits a budget request with the line “cloud migration — ∞.” He explains it’s “a placeholder,” but the board likes specifics.",
+  "left": "Ask for an exact figure",
+  "right": "Budget with a buffer"
+ },
+ {
+  "id": "l3a_201",
+  "who": "Budget committee",
+  "text": "At the morning budget committee, the HR director asks for money for an “employee happiness program.” The CFO looks at you as if happiness just got pricier.",
+  "left": "Allocate a small budget",
+  "right": "Defer to next year"
+ },
+ {
+  "id": "l3a_202",
+  "who": "Budget",
+  "text": "Accounting reports this morning that last year’s unspent budget “expires” on Friday. Department heads are rushing to buy chairs.",
+  "left": "Let them spend it",
+  "right": "Freeze the leftovers"
+ },
+ {
+  "id": "l3a_203",
+  "who": "Owner",
+  "text": "The owner looks at the draft budget and asks: “Why isn’t it 20% lower?” No explanation, but lots of emphasis. Your answer?",
+  "left": "Cut 20% across the board",
+  "right": "Justify every line"
+ },
+ {
+  "id": "l3a_204",
+  "who": "CFO",
+  "text": "The CFO wants a “contingency reserve” in the budget. The board considers reserves a sign of bad planning. Include it?",
+  "left": "Quietly include it",
+  "right": "Go without a reserve"
+ },
+ {
+  "id": "l3a_205",
+  "who": "Budget",
+  "text": "Every morning this week starts with a “budget stand-up.” It’s day ten, and you’ve started speaking in spreadsheets. Cancel it?",
+  "left": "Cancel for the week",
+  "right": "Keep going"
+ },
+ {
+  "id": "l3a_206",
+  "who": "Sales director",
+  "text": "The sales director brings his annual plan: sales will fall, but his department’s budget should rise. He promises to explain the logic “in plain terms.”",
+  "left": "Hear him out",
+  "right": "Send it back"
+ },
+ {
+  "id": "l3a_207",
+  "who": "Budget committee",
+  "text": "At the budget committee two directors are after the same money. Each says without it “everything will collapse.” The meeting is in its third hour.",
+  "left": "Split it in half",
+  "right": "Dig into the details"
+ },
+ {
+  "id": "l3a_208",
+  "who": "Board of directors",
+  "text": "The board wants the budget “on one page.” Yours fits on a hundred and twenty. The font would have to be indecently small.",
+  "left": "Make a summary page",
+  "right": "Tiny font, free magnifier"
+ },
+ {
+  "id": "l3a_209",
+  "who": "CFO",
+  "text": "The CFO proposes cutting the training budget to zero — “nobody studies anyway.” Two employees just signed up for courses.",
+  "left": "Keep training",
+  "right": "Cut it to zero"
+ },
+ {
+  "id": "l3a_210",
+  "who": "Budget",
+  "text": "Mid-approval, news arrives: office rent is going up 40% in January. The landlord apologizes with an emoji. Recalculate?",
+  "left": "Recalculate the budget",
+  "right": "Haggle with the landlord"
+ },
+ {
+  "id": "l3a_211",
+  "who": "Budget committee",
+  "text": "At the budget committee the logistics director is crying. Real tears. His budget was cut by a third, and he runs four warehouses. What now?",
+  "left": "Restore part of it",
+  "right": "Stand firm"
+ },
+ {
+  "id": "l3a_212",
+  "who": "Accounting",
+  "text": "The chief accountant reminds you that half of next year’s budget must be approved by Friday or procurement can’t start. The board meets in two weeks.",
+  "left": "Call an emergency meeting",
+  "right": "Approve it on your signature"
+ },
+ {
+  "id": "l3a_213",
+  "who": "Budget",
+  "text": "An analyst finds that last year you spent 103% of budget, yet 40% of line items were underused. Money leaked somewhere. Investigate?",
+  "left": "Launch an investigation",
+  "right": "Note it for the future"
+ },
+ {
+  "id": "l3a_214",
+  "who": "CMO",
+  "text": "The CMO wants budget for a “viral campaign.” His last viral campaign only infected his own department’s chat.",
+  "left": "Give a small amount",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_215",
+  "who": "Budget committee",
+  "text": "At the committee it turns out every director padded their budget with “a little buffer.” Together the buffers add up to a whole other department’s budget.",
+  "left": "Strip all the buffers",
+  "right": "Pretend you didn’t notice"
+ },
+ {
+  "id": "l3a_216",
+  "who": "Budget",
+  "text": "The CFO proposes zero-based budgeting: every line justified from scratch. Department heads are already filing vacation requests.",
+  "left": "Adopt it this year",
+  "right": "Apply it to three lines"
+ },
+ {
+  "id": "l3a_217",
+  "who": "Budget",
+  "text": "10 p.m. The final budget has gone to the board. Five minutes later you notice one line was counted twice. Recall it?",
+  "left": "Recall and fix",
+  "right": "Wait for board questions"
+ },
+ {
+  "id": "l3a_218",
+  "who": "CFO",
+  "text": "The CFO writes in the evening: “If we cut the holiday party, the budget balances.” The party is the one thing employees look forward to all year.",
+  "left": "Cut the party",
+  "right": "Find money elsewhere"
+ },
+ {
+  "id": "l3a_219",
+  "who": "Budget",
+  "text": "Rereading the budget in the evening, you notice your own “entertainment expenses” line is bigger than the training budget. Awkward?",
+  "left": "Cut your own",
+  "right": "Keep it, it’s necessary"
+ },
+ {
+  "id": "l3a_220",
+  "who": "Sales director",
+  "text": "The sales director calls at 9 p.m.: he “forgot” to include an incentive trip for his top salespeople. He promised it to them back in spring.",
+  "left": "Find money for the trip",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_221",
+  "who": "Family",
+  "text": "At home you’re asked to draw up next year’s family budget. Reflexively, you ask for a justification for every line and a “cost-cutting scenario.”",
+  "left": "Budget with the family",
+  "right": "Suggest living spontaneously"
+ },
+ {
+  "id": "l3a_222",
+  "who": "Budget",
+  "text": "Five people opened the budget file at once this evening, and now there are five versions of the same tab. Which one’s right?",
+  "left": "Untangle it tonight",
+  "right": "Gather everyone tomorrow"
+ },
+ {
+  "id": "l3a_223",
+  "who": "Board of directors",
+  "text": "The board returns the budget in the evening: “Too conservative. Where’s the growth?” A month ago they told you to be conservative.",
+  "left": "Rewrite for growth",
+  "right": "Remind them of their orders"
+ },
+ {
+  "id": "l3a_224",
+  "who": "Inner voice",
+  "text": "Your inner voice counts how many budgets you’ve approved in your career. Twelve. Not one hit the numbers exactly. What do you tell it?",
+  "left": "“Thirteen will be the best”",
+  "right": "“A budget is a hypothesis”"
+ },
+ {
+  "id": "l3a_225",
+  "who": "Budget",
+  "text": "At 11 p.m. someone in the budget chat writes: “Guys, did we include sales tax?” Dead silence follows. Check now?",
+  "left": "Check now",
+  "right": "Tomorrow, with a fresh head"
+ },
+ {
+  "id": "l3a_226",
+  "who": "Accounting",
+  "text": "The chief accountant warns in the evening: if the budget isn’t approved tomorrow, he’s going on vacation and nobody will process payments.",
+  "left": "Approve it in a rush",
+  "right": "Persuade him to wait"
+ },
+ {
+  "id": "l3a_227",
+  "who": "CFO",
+  "text": "The CFO suggests celebrating the budget approval at a bar. He’s the only one still standing after a month of reconciliations.",
+  "left": "Go, just the two of you",
+  "right": "Send him home"
+ },
+ {
+  "id": "l3a_228",
+  "who": "Budget",
+  "text": "The morning after the budget is approved. The first department head is already asking to reallocate money within his line. The year hasn’t even started.",
+  "left": "Allow it",
+  "right": "Not until April"
+ },
+ {
+  "id": "l3a_229",
+  "who": "CIO",
+  "text": "The CIO reports this morning: licenses for software accounting can’t work without have tripled in price. The budget is already approved.",
+  "left": "Find replacement software",
+  "right": "Ask the board for more"
+ },
+ {
+  "id": "l3a_230",
+  "who": "Budget",
+  "text": "A procurement employee suggests saving paper by printing reports in a small font. He prepared an eight-page justification in a large font.",
+  "left": "Accept the proposal",
+  "right": "Praise him and decline"
+ },
+ {
+  "id": "l3a_231",
+  "who": "CFO",
+  "text": "The CFO and the sales director argue over whose revenue forecast is right. They differ by a factor of three. Which goes in the budget?",
+  "left": "The CFO’s",
+  "right": "Split the difference"
+ },
+ {
+  "id": "l3a_232",
+  "who": "Budget",
+  "text": "In the evening you accidentally send the budget to the all-staff chat instead of the board. Now everyone knows what your company car costs.",
+  "left": "Delete and forget",
+  "right": "Own it and explain"
+ },
+ {
+  "id": "l3a_233",
+  "who": "HR director",
+  "text": "The HR director wants a 10% salary indexation in the budget. The CFO says 5% max. The board says zero.",
+  "left": "Fight for 10%",
+  "right": "Settle for 5%"
+ },
+ {
+  "id": "l3a_234",
+  "who": "Board of directors",
+  "text": "A board member wants the budget to include sponsoring a golf tournament. He plays golf. The business has nothing to do with golf.",
+  "left": "Include the sponsorship",
+  "right": "Suggest discussing it separately"
+ },
+ {
+  "id": "l3a_235",
+  "who": "Budget",
+  "text": "Late at night the CFO proposes a budget with “a little trick”: push some expenses into next year. Technically legal, but the auditors will raise eyebrows.",
+  "left": "Go with the trick",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_236",
+  "who": "Budget",
+  "text": "In the morning you learn last year’s entire events budget went on one party featuring a magician. This year starts from zero.",
+  "left": "Find who’s to blame",
+  "right": "Start with a clean slate"
+ },
+ {
+  "id": "l3a_237",
+  "who": "Head of production",
+  "text": "Defending the budget, the head of production says the machine he’s requesting money for “will run another ten years.” He said the same thing three years ago.",
+  "left": "Buy a new machine",
+  "right": "Repair the old one"
+ },
+ {
+  "id": "l3a_238",
+  "who": "CMO",
+  "text": "The CMO sends a “revised” request in the evening. It’s 50% higher and includes a line for a “life-size company mascot.”",
+  "left": "Approve the mascot",
+  "right": "Strike the mascot"
+ },
+ {
+  "id": "l3a_239",
+  "who": "Budget",
+  "text": "One department submitted its budget request as a four-minute voice message. The numbers are mentioned in passing, mixed in with the weather.",
+  "left": "Listen and transcribe",
+  "right": "Send it back as a spreadsheet"
+ },
+ {
+  "id": "l3a_240",
+  "who": "Budget",
+  "text": "In the middle of your budget defense, the power goes out. Your deck is on a laptop at 3% battery. What now?",
+  "left": "Present from memory",
+  "right": "Move it to tomorrow"
+ },
+ {
+  "id": "l3a_241",
+  "who": "Budget",
+  "text": "In the evening a department head whose budget you cut calls to ask if he can at least keep the coffee machine. It costs as much as a used car.",
+  "left": "Keep the coffee machine",
+  "right": "Offer a kettle"
+ },
+ {
+  "id": "l3a_242",
+  "who": "Owner",
+  "text": "The owner sends his version of the budget, hand-drawn on a restaurant napkin. The numbers don’t add up, but the handwriting is confident.",
+  "left": "Copy it into the spreadsheet",
+  "right": "Discuss the differences"
+ },
+ {
+  "id": "l3a_243",
+  "who": "Budget committee",
+  "text": "At the committee the head of security asks for money to put cameras in the meeting rooms. The other directors are suddenly opposed — even those who were silent all day.",
+  "left": "Approve the cameras",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_244",
+  "who": "HR director",
+  "text": "The HR director brings you numbers in the evening: if the hiring budget is cut, you’ll be without two key people. Offers have already gone out to them.",
+  "left": "Keep the hiring",
+  "right": "Withdraw the offers"
+ },
+ {
+  "id": "l3a_245",
+  "who": "Budget",
+  "text": "Morning. Analytics proposes a new budget template with dropdowns, color zones and macros. Everyone knows the old template by heart.",
+  "left": "Adopt the new template",
+  "right": "Keep the old one"
+ },
+ {
+  "id": "l3a_246",
+  "who": "Budget",
+  "text": "Late at night you realize the budget only balances if every client pays on time. That has never once happened.",
+  "left": "Budget for late payments",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3a_247",
+  "who": "Assistant",
+  "text": "Your assistant brings budget version five, labeled “final_really_final_v5.” Version six is expected by lunch.",
+  "left": "Ban new versions",
+  "right": "Wait for six"
+ },
+ {
+  "id": "l3a_248",
+  "who": "Budget",
+  "text": "Tomorrow’s calendar reads “Budget. Final. Discussion 2.0.” You don’t remember what happened in 1.0. Prepare?",
+  "left": "Prep until midnight",
+  "right": "Improvise tomorrow"
+ },
+ {
+  "id": "l3a_249",
+  "who": "CFO",
+  "text": "8:20 a.m. The CFO drops a list of “savings ideas” on your desk. Item one: turn off the air conditioning. It’s July. Approve?",
+  "left": "Every other day",
+  "right": "Strike the item"
+ },
+ {
+  "id": "l3a_250",
+  "who": "Board of directors",
+  "text": "The board demands a 15% cost cut “without loss of quality.” How exactly is left to your creative discretion.",
+  "left": "Cut every department",
+  "right": "Look for targeted savings"
+ },
+ {
+  "id": "l3a_251",
+  "who": "Office manager",
+  "text": "The office manager reports: as a cost-saving measure, the kitchen cookies have been replaced with dry crackers. Staff have begun a quiet resistance, bringing cookies from home.",
+  "left": "Bring back the cookies",
+  "right": "Stay the cracker course"
+ },
+ {
+  "id": "l3a_252",
+  "who": "Cost cutting",
+  "text": "A new rule since this morning: color printing only with director approval. There’s a line of eight people with charts outside your door.",
+  "left": "Sign for everyone",
+  "right": "Scrap the rule"
+ },
+ {
+  "id": "l3a_253",
+  "who": "Procurement director",
+  "text": "The procurement director proposes switching paper suppliers. The new paper is 30% cheaper, but the printers cough on it. Switch?",
+  "left": "Go cheap",
+  "right": "Stick with the old one"
+ },
+ {
+  "id": "l3a_254",
+  "who": "Cost cutting",
+  "text": "A sign in the elevator: “To save costs, the elevator operates from 10:00.” You’re on the eighth floor, meeting at 9:00. Who came up with this?",
+  "left": "Find out and cancel it",
+  "right": "Take the stairs as an example"
+ },
+ {
+  "id": "l3a_255",
+  "who": "CFO",
+  "text": "The CFO proposes ending company-paid taxis after 10 p.m. The people working late are mostly the ones doing your urgent tasks.",
+  "left": "Keep the taxis",
+  "right": "Cancel the taxis"
+ },
+ {
+  "id": "l3a_256",
+  "who": "Business travel",
+  "text": "New rule this morning: economy class only, with layovers. Your sales director is flying to negotiations via three cities.",
+  "left": "Make an exception",
+  "right": "Hold the line"
+ },
+ {
+  "id": "l3a_257",
+  "who": "Cost cutting",
+  "text": "To save money, office heating now comes on an hour later. Staff arrived in scarves; accounting came in blankets. Work is crawling.",
+  "left": "Restore the heating",
+  "right": "Hand out hot tea"
+ },
+ {
+  "id": "l3a_258",
+  "who": "Company car",
+  "text": "In the morning the company driver tells you the car was sold to cut costs. You learn this standing outside your building in a suit.",
+  "left": "Take the subway",
+  "right": "Call a cab and investigate"
+ },
+ {
+  "id": "l3a_259",
+  "who": "Cost consultant",
+  "text": "The cost-optimization consultant suggests starting with the big one — your office. He proposes you move into the open space with the staff.",
+  "left": "Move to the open space",
+  "right": "Keep the office"
+ },
+ {
+  "id": "l3a_260",
+  "who": "Cost cutting",
+  "text": "A company-wide email this morning: subscriptions to professional journals are canceled. You were the only one who read them.",
+  "left": "Pay for them yourself",
+  "right": "Cancel and move on"
+ },
+ {
+  "id": "l3a_261",
+  "who": "CFO",
+  "text": "The CFO thinks you could save money by canceling New Year’s gifts for clients. Key clients have been getting them for ten years.",
+  "left": "Cancel the gifts",
+  "right": "Make them modest"
+ },
+ {
+  "id": "l3a_262",
+  "who": "Cost cutting",
+  "text": "Employees drop their own cost-saving idea in the anonymous box: cut management’s pay. Forty people signed it.",
+  "left": "Cut your own bonus",
+  "right": "Thank them for the idea"
+ },
+ {
+  "id": "l3a_263",
+  "who": "Office",
+  "text": "A move to a smaller office is on the table. It’s half the price, but has just one meeting room and one restroom per floor.",
+  "left": "Move",
+  "right": "Find savings elsewhere"
+ },
+ {
+  "id": "l3a_264",
+  "who": "Cost cutting",
+  "text": "The CIO proposes saving on licenses: “Half the staff use the software once a month.” Everyone else will wait in line.",
+  "left": "Cut licenses",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3a_265",
+  "who": "Layoffs",
+  "text": "The board demands a 10% headcount reduction. You must propose a list. It will inevitably include people you personally hired.",
+  "left": "Draw up the list yourself",
+  "right": "Have department heads do it"
+ },
+ {
+  "id": "l3a_266",
+  "who": "Cost cutting",
+  "text": "The CMO learns his budget has been halved. He proposes making do with “guerrilla marketing” and has already bought a costume.",
+  "left": "Back the idea",
+  "right": "Confiscate the costume"
+ },
+ {
+  "id": "l3a_267",
+  "who": "Cost cutting",
+  "text": "The board wants to save on outsourced cleaning. Staff are asked to clean up after themselves on a rota. The rota is already posted.",
+  "left": "Back the rota",
+  "right": "Keep the cleaners"
+ },
+ {
+  "id": "l3a_268",
+  "who": "Layoffs",
+  "text": "A department head brings a layoff list with only one name — his own. He says it’s “the most honest solution.” What now?",
+  "left": "Talk him out of it",
+  "right": "Accept his resignation"
+ },
+ {
+  "id": "l3a_269",
+  "who": "Cost cutting",
+  "text": "The CFO wants to cancel the corporate cloud storage subscription. The whole thing is five years of office party photos.",
+  "left": "Download and cancel",
+  "right": "Keep it for history"
+ },
+ {
+  "id": "l3a_270",
+  "who": "Board of directors",
+  "text": "The board wants a cost-reduction report every two weeks. The report itself takes three analysts to produce.",
+  "left": "Assign the analysts",
+  "right": "Report monthly"
+ },
+ {
+  "id": "l3a_271",
+  "who": "Cost cutting",
+  "text": "The HR director proposes canceling the annual party and holding it online. Last year’s online party ended after twenty minutes.",
+  "left": "Do it online",
+  "right": "Do a modest one in person"
+ },
+ {
+  "id": "l3a_272",
+  "who": "Cost consultant",
+  "text": "The cost-optimization consultant has found that the biggest item of unnecessary spending is cost-optimization consultants. He suggests extending his contract.",
+  "left": "Extend the contract",
+  "right": "Terminate it"
+ },
+ {
+  "id": "l3a_273",
+  "who": "Layoffs",
+  "text": "Evening. The layoff list is approved. Tomorrow you have to tell people in person. One of them invited you to his wedding today.",
+  "left": "Tell him today",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l3a_274",
+  "who": "Cost cutting",
+  "text": "9 p.m. You’re the last to leave and every light in the building is on. Just yesterday the board talked about saving electricity. Turn them off?",
+  "left": "Walk every floor",
+  "right": "Set a rule tomorrow"
+ },
+ {
+  "id": "l3a_275",
+  "who": "CFO",
+  "text": "In the evening the CFO sends a spreadsheet: cutting office coffee would save, over a year, the equivalent of one quarterly bonus. Your call.",
+  "left": "Cut the coffee",
+  "right": "Keep the coffee"
+ },
+ {
+  "id": "l3a_276",
+  "who": "Employees",
+  "text": "In the staff chat someone writes: “Meanwhile the CEO got a new office.” Your office hasn’t changed in ten years. Respond?",
+  "left": "Post a denial",
+  "right": "Invite everyone to see it"
+ },
+ {
+  "id": "l3a_277",
+  "who": "Layoffs",
+  "text": "In the evening a department head begs you to keep an intern. The intern brings homemade pies and knows every password.",
+  "left": "Keep the intern",
+  "right": "Stick to the list"
+ },
+ {
+  "id": "l3a_278",
+  "who": "Cost cutting",
+  "text": "In the evening you discover that, thanks to cost cutting, the office is out of toilet paper. Investors arrive in the morning. Go to the store?",
+  "left": "Go yourself",
+  "right": "Call the office manager"
+ },
+ {
+  "id": "l3a_279",
+  "who": "Board of directors",
+  "text": "A board member calls in the evening to ask why you haven’t cut “the department that does nothing.” That department is accounting. Explain?",
+  "left": "Explain what accounting does",
+  "right": "Promise to look into it"
+ },
+ {
+  "id": "l3a_280",
+  "who": "Family",
+  "text": "At home you absentmindedly turn off the light in a room full of people and suggest “optimizing” dinner down to one course. The family tenses up.",
+  "left": "Apologize, lights back on",
+  "right": "Explain cost savings"
+ },
+ {
+  "id": "l3a_281",
+  "who": "Inner voice",
+  "text": "Your inner voice asks what you yourself are willing to cut back on. No answer. You look at your collection of expensive pens.",
+  "left": "Sell the pen collection",
+  "right": "Buy another one"
+ },
+ {
+  "id": "l3a_282",
+  "who": "Cost cutting",
+  "text": "An employee emails an idea: sell the old office furniture and buy cheaper new furniture. The furniture is antique; the founder bought it.",
+  "left": "Sell the furniture",
+  "right": "Keep the furniture"
+ },
+ {
+  "id": "l3a_283",
+  "who": "Layoffs",
+  "text": "After a hard day of layoffs, your deputy asks for vacation. He says he’s “burned out like a match.” Let him go?",
+  "left": "Give him a week",
+  "right": "Ask him to hang on"
+ },
+ {
+  "id": "l3a_284",
+  "who": "Cost cutting",
+  "text": "8:40 a.m. Cost cutting has reached the water coolers: they’re gone. Staff carry plastic bottles and pointedly set them on your desk.",
+  "left": "Bring back the coolers",
+  "right": "Issue a thrift memo"
+ },
+ {
+  "id": "l3a_285",
+  "who": "CFO",
+  "text": "First thing in the morning the CFO proposes paying suppliers a month late “so the money can work for us.” Suppliers threaten to halt deliveries.",
+  "left": "Agree to the delay",
+  "right": "Pay on time"
+ },
+ {
+  "id": "l3a_286",
+  "who": "Cost cutting",
+  "text": "To save costs, you’re asked to hold meetings standing instead of in a meeting room, “to keep them short.” The forty-minute meeting lasted forty minutes, standing.",
+  "left": "Keep standing meetings",
+  "right": "Bring back chairs"
+ },
+ {
+  "id": "l3a_287",
+  "who": "Layoffs",
+  "text": "The HR director proposes announcing layoffs on Friday evening “so people have time to digest it.” You know rumors are already flying.",
+  "left": "Announce today",
+  "right": "Wait for Friday"
+ },
+ {
+  "id": "l3a_288",
+  "who": "Cost cutting",
+  "text": "To save money, the server room heating was turned off tonight. The servers will be fine by morning; the sysadmin who sleeps there — unclear.",
+  "left": "Turn the heating on",
+  "right": "Buy him a blanket"
+ },
+ {
+  "id": "l3a_289",
+  "who": "Cost cutting",
+  "text": "The company switches from paid to free video calls. The first meeting with a key client cuts off after forty minutes: “Time’s up.”",
+  "left": "Go back to paid",
+  "right": "Continue on a new link"
+ },
+ {
+  "id": "l3a_290",
+  "who": "Layoffs",
+  "text": "Instead of layoffs, the board proposes a four-day week for everyone with a pay cut. Employees say they like the day off more than the money.",
+  "left": "Switch to four days",
+  "right": "Prefer layoffs"
+ },
+ {
+  "id": "l3a_291",
+  "who": "CFO",
+  "text": "The CFO admits in the evening that the money saved on coffee went to a fine for a late report. The savings never happened.",
+  "left": "End the coffee cutback",
+  "right": "Stay the course"
+ },
+ {
+  "id": "l3a_292",
+  "who": "Cost cutting",
+  "text": "A sign in the kitchen: “Starting Monday, sugar is rationed by coupon.” Someone from accounting posted it, but signed it with your name.",
+  "left": "Deny it",
+  "right": "Introduce coupons"
+ },
+ {
+  "id": "l3a_293",
+  "who": "Cost cutting",
+  "text": "The sales director proposes saving on client meetings by holding them in the cafeteria instead of restaurants. A key client is already on his second fruit punch.",
+  "left": "Keep the cafeteria",
+  "right": "Back to restaurants"
+ },
+ {
+  "id": "l3a_294",
+  "who": "Cost cutting",
+  "text": "An employee sends results in the evening: stationery savings for the quarter came to $15. Counting it took 80 hours of his time.",
+  "left": "Praise the effort",
+  "right": "Stop the counting"
+ },
+ {
+  "id": "l3a_295",
+  "who": "Cost cutting",
+  "text": "A guard at the entrance checks that employees aren’t taking office pens home. A decision by the previous CFO that everyone forgot about.",
+  "left": "Retire the pen guard",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l3a_296",
+  "who": "Cost cutting",
+  "text": "The board proposes canceling corporate health insurance. Employees find out on social media before the official email.",
+  "left": "Keep the insurance",
+  "right": "Cancel and explain"
+ },
+ {
+  "id": "l3a_297",
+  "who": "Cost cutting",
+  "text": "Evening. You tally the quarter’s savings. A lot was saved, but three key employees left for competitors. The net result is unclear.",
+  "left": "Report honestly to the board",
+  "right": "Show only the savings"
+ },
+ {
+  "id": "l3a_298",
+  "who": "Layoffs",
+  "text": "A laid-off employee sent a warm thank-you email for his years here. You’re reading it for the third time. Reply?",
+  "left": "Reply personally and warmly",
+  "right": "Forward it to HR"
+ },
+ {
+  "id": "l3a_299",
+  "who": "Major client",
+  "text": "7:45 a.m. The CEO of your biggest client calls personally: a three-year contract is ready, but the price must drop 25% “today.”",
+  "left": "Offer 15% and haggle",
+  "right": "Refuse and wait"
+ },
+ {
+  "id": "l3a_300",
+  "who": "Tender team",
+  "text": "The tender team reports: the bid for the year’s biggest tender is due by noon. Three signatures are missing, plus a stamp locked in a safe at someone’s country house.",
+  "left": "Drive out for the stamp",
+  "right": "Submit without it and pray"
+ },
+ {
+  "id": "l3a_301",
+  "who": "Lawyer",
+  "text": "At 8:30 the lawyer finds a clause in a major supply contract: a daily late penalty equal to your annual profit. Signing is at ten.",
+  "left": "Postpone signing",
+  "right": "Sign and never be late"
+ },
+ {
+  "id": "l3a_302",
+  "who": "Sales director",
+  "text": "The sales director is overjoyed this morning: he’s “nearly closed” the deal of the year. Nearly means the client said “interesting.” The board has already been told.",
+  "left": "Cool his expectations",
+  "right": "Prep the celebration"
+ },
+ {
+  "id": "l3a_303",
+  "who": "Major client",
+  "text": "A key client sends a revised contract in the morning. Changes are highlighted in yellow. Everything is yellow except the parties’ names.",
+  "left": "Read it with Legal all day",
+  "right": "Send back the old version"
+ },
+ {
+  "id": "l3a_304",
+  "who": "Negotiations",
+  "text": "Negotiations with a supplier start at 8 a.m. in his office. You’re served tea in glasses with metal holders, and nobody speaks. Is this a tactic?",
+  "left": "Stay silent too",
+  "right": "Open with numbers"
+ },
+ {
+  "id": "l3a_305",
+  "who": "CFO",
+  "text": "The CFO warns you first thing: if the big contract falls through, the quarter will be a loss. No pressure, just so you know.",
+  "left": "Lead the talks yourself",
+  "right": "Trust the sales team"
+ },
+ {
+  "id": "l3a_306",
+  "who": "Partner",
+  "text": "Your joint-venture partner writes that he wants to “revisit the shares.” The project is profitable for the first time in two years. Coincidence?",
+  "left": "Call and argue",
+  "right": "Pause and get lawyers"
+ },
+ {
+  "id": "l3a_307",
+  "who": "Contract",
+  "text": "In the morning you learn a major supply contract was signed with wrong bank details. The money went to someone who just shares the client’s name.",
+  "left": "Call the bank right now",
+  "right": "Hand it to finance"
+ },
+ {
+  "id": "l3a_308",
+  "who": "Negotiations",
+  "text": "In negotiations on a big deal, the client’s rep steps out “to make a call” every ten minutes. You suspect he’s consulting someone higher up.",
+  "left": "Ask for the boss at the table",
+  "right": "Wait patiently"
+ },
+ {
+  "id": "l3a_309",
+  "who": "Major client",
+  "text": "The client is ready to sign a dream contract, but wants a clause: your CEO — that is, you — personally oversees the project. Weekly, on Saturdays.",
+  "left": "Agree to Saturdays",
+  "right": "Offer your deputy"
+ },
+ {
+  "id": "l3a_310",
+  "who": "Tender",
+  "text": "You won the tender! The price is so low the company will break even at best. But the board wanted a “high-profile contract.” Sign?",
+  "left": "Sign for the name",
+  "right": "Walk away from the win"
+ },
+ {
+  "id": "l3a_311",
+  "who": "Lawyer",
+  "text": "The client’s lawyer sent a “small edit”: you’re liable for any outage anywhere in the world. Even the weather.",
+  "left": "Remove it at any cost",
+  "right": "Sign: weather looks good"
+ },
+ {
+  "id": "l3a_312",
+  "who": "Negotiations",
+  "text": "Talks are deadlocked. The client proposes settling it over pool: if he wins, you give 10% off. You haven’t played since college.",
+  "left": "Play",
+  "right": "Back to the numbers"
+ },
+ {
+  "id": "l3a_313",
+  "who": "Sales director",
+  "text": "The sales director promised the client delivery in a week. Production says a month minimum. The client is happily signing.",
+  "left": "Warn the client",
+  "right": "Squeeze production"
+ },
+ {
+  "id": "l3a_314",
+  "who": "Big deal",
+  "text": "Your deal partner proposes “sealing the agreement” with a hunting trip. You don’t hunt — you feel sorry for mosquitoes. Go?",
+  "left": "Go and miss on purpose",
+  "right": "Suggest fishing"
+ },
+ {
+  "id": "l3a_315",
+  "who": "Contract",
+  "text": "A major client proposes paying in installments over two years instead of upfront. The CFO is already sketching cash gaps on a napkin.",
+  "left": "Accept installments",
+  "right": "Offer six months"
+ },
+ {
+  "id": "l3a_316",
+  "who": "Negotiations",
+  "text": "In talks with a major client, your CTO starts arguing with their CTO. The client is enjoying the show.",
+  "left": "Stop the argument",
+  "right": "Let them finish"
+ },
+ {
+  "id": "l3a_317",
+  "who": "Major client",
+  "text": "The client wants exclusivity: you can’t work with his competitors for five years. His competitors are the other half of your revenue.",
+  "left": "Agree to two years",
+  "right": "Refuse exclusivity"
+ },
+ {
+  "id": "l3a_318",
+  "who": "Government client",
+  "text": "A government client requires forty-three documents to enter a tender. One is a certificate confirming all the certificates are genuine.",
+  "left": "Collect all forty-three",
+  "right": "Skip this tender"
+ },
+ {
+  "id": "l3a_319",
+  "who": "Big deal",
+  "text": "The deal is almost closed, but the client wants a “symbolic gift”: another one percent off. The CFO says that’s his annual bonus.",
+  "left": "Give the percent",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_320",
+  "who": "Negotiations",
+  "text": "11 p.m. Contract talks are in their fourteenth hour. The client ordered pizza and looks ready to stay till dawn. Your team is nodding off.",
+  "left": "Send the team home",
+  "right": "Keep everyone till signing"
+ },
+ {
+  "id": "l3a_321",
+  "who": "Major client",
+  "text": "The client writes in the evening: “We’ll sign, but only if your CEO comes to our party.” The party is tomorrow. The theme: pirates.",
+  "left": "Show up in a tricorn hat",
+  "right": "Send your deputy"
+ },
+ {
+  "id": "l3a_322",
+  "who": "Contract",
+  "text": "Evening: the contract is signed. You send the client the signed copy and notice thousands and millions got mixed up. In your favor.",
+  "left": "Tell the client",
+  "right": "See if they notice"
+ },
+ {
+  "id": "l3a_323",
+  "who": "Tender team",
+  "text": "In the evening the tender team wants you to personally sign four hundred pages of a bid. Each one. An e-signature is “not compliant with procedure.”",
+  "left": "Sign late into the night",
+  "right": "Challenge the procedure"
+ },
+ {
+  "id": "l3a_324",
+  "who": "Partner",
+  "text": "Your deal partner calls at 10:30 p.m.: “We’ve changed our minds. But not completely.” He wants to meet at 7 a.m. to “change them back.”",
+  "left": "Agree to 7 a.m.",
+  "right": "Suggest lunch"
+ },
+ {
+  "id": "l3a_325",
+  "who": "Lawyer",
+  "text": "In the evening the lawyer admits the contract signed today isn’t the agreed version. One word differs: “may” instead of “shall.”",
+  "left": "Re-sign with apologies",
+  "right": "Keep it, nice word"
+ },
+ {
+  "id": "l3a_326",
+  "who": "Sales director",
+  "text": "In the evening the sales director wants to celebrate a big deal at a restaurant. The client hasn’t paid yet, and he wants to bill it to the company.",
+  "left": "Celebrate modestly",
+  "right": "Wait for payment"
+ },
+ {
+  "id": "l3a_327",
+  "who": "Family",
+  "text": "At home they ask why you’ve been smiling at your phone all evening. You just received a signed three-year contract. Dinner is getting cold.",
+  "left": "Tell them over dinner",
+  "right": "Answer the client’s emails"
+ },
+ {
+  "id": "l3a_328",
+  "who": "Inner voice",
+  "text": "Your inner voice tallies: this month you ran twenty negotiations and won one. But what a one! Keep up the same pace?",
+  "left": "Slow down",
+  "right": "Twenty more negotiations"
+ },
+ {
+  "id": "l3a_329",
+  "who": "Contract",
+  "text": "Morning. You get a notification that the contract with a key supplier expires at midnight tonight. Nobody started renewal talks.",
+  "left": "Call the supplier now",
+  "right": "Find who’s to blame"
+ },
+ {
+  "id": "l3a_330",
+  "who": "Major client",
+  "text": "The client sends a “quick question” with twenty items. Each one begins with “Could you just…”",
+  "left": "Answer them all yourself",
+  "right": "Route them to departments"
+ },
+ {
+  "id": "l3a_331",
+  "who": "Tender",
+  "text": "Tender lost: your price was one cent higher than the winner’s. The tender team wants a “one-cent buffer” built into all future bids.",
+  "left": "Add the buffer",
+  "right": "Chalk it up to bad luck"
+ },
+ {
+  "id": "l3a_332",
+  "who": "Contract",
+  "text": "A major client sends the contract as photos from his phone. Several pages were shot at an angle, and one includes his cat.",
+  "left": "Print and sign",
+  "right": "Ask for a proper file"
+ },
+ {
+  "id": "l3a_333",
+  "who": "Big deal",
+  "text": "In the evening the CEO of a company whose deal fell through calls you. He suggests “starting over,” but for half the amount.",
+  "left": "Start over",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3a_334",
+  "who": "Contracts department",
+  "text": "The head of the contracts department demands that every contract go through twelve signatures. A client deal has been waiting since Monday.",
+  "left": "Cut it to three signatures",
+  "right": "Follow the procedure"
+ },
+ {
+  "id": "l3a_335",
+  "who": "Negotiations",
+  "text": "The client is playing good cop, bad cop. The bad cop is his accountant, and he’s very convincing.",
+  "left": "Deal with the good cop",
+  "right": "Work on the accountant"
+ },
+ {
+  "id": "l3a_336",
+  "who": "Major client",
+  "text": "In the evening the client posted a thumbs-up emoji in the project chat and nothing else. The signing was scheduled for today. Is that a yes?",
+  "left": "Call and confirm",
+  "right": "Take it as a yes"
+ },
+ {
+  "id": "l3a_337",
+  "who": "Logistics",
+  "text": "The head of logistics reports: a shipment under a major contract is stuck in customs. The client expects it by lunch today.",
+  "left": "Call the client yourself",
+  "right": "Leave it to logistics"
+ },
+ {
+  "id": "l3a_338",
+  "who": "Contract",
+  "text": "A key client offers a ten-year contract, but with annual price indexation of just 1%. Your inflation is higher.",
+  "left": "Sign for ten years",
+  "right": "Propose five years"
+ },
+ {
+  "id": "l3a_339",
+  "who": "Contract",
+  "text": "Late in the evening the print shop calls: the gold-embossed commemorative copies of the contract were printed with the client’s name misspelled.",
+  "left": "Reprint by morning",
+  "right": "Gift them unembossed"
+ },
+ {
+  "id": "l3a_340",
+  "who": "Sales director",
+  "text": "The sales director admits he promised the client five years of free maintenance. Out loud. Nothing in writing.",
+  "left": "Honor the promise",
+  "right": "Walk it back with apologies"
+ },
+ {
+  "id": "l3a_341",
+  "who": "Major client",
+  "text": "The client invited you to his office for the signing. The pen you’re offered doesn’t write. The client considers this a bad omen.",
+  "left": "Sign with your own pen",
+  "right": "Postpone the signing"
+ },
+ {
+  "id": "l3a_342",
+  "who": "Partner",
+  "text": "In the evening your deal partner suggests “celebrating” at his place. His wife already cooked dinner for twelve, and your family is waiting for you.",
+  "left": "Go to the partner’s",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3a_343",
+  "who": "Negotiations",
+  "text": "Negotiation morning. The client proposes holding the talks in French, though everyone at the table speaks English. It’s “more distinguished.” Agree?",
+  "left": "Speak French",
+  "right": "Suggest English"
+ },
+ {
+  "id": "l3a_344",
+  "who": "Inner voice",
+  "text": "Your inner voice reminds you that you never read Appendix 7 of the contract you signed today. Now you can’t sleep.",
+  "left": "Read it now",
+  "right": "Read it in the morning"
+ },
+ {
+  "id": "l3a_345",
+  "who": "Tender",
+  "text": "The tender winner backed out, and the contract is offered to you at your price. Except it’s due in a week, not a month like in your bid.",
+  "left": "Accept",
+  "right": "Decline"
+ },
+ {
+  "id": "l3a_346",
+  "who": "Lawyer",
+  "text": "Morning. The lawyer reports your biggest contract can be terminated with a single letter if the client “loses interest.” The client was yawning at the last meeting.",
+  "left": "Strengthen the relationship",
+  "right": "Rewrite the contract"
+ },
+ {
+  "id": "l3a_347",
+  "who": "Big deal",
+  "text": "The client offers to double the deal if you agree to his terms right now, without the board. Your authority only covers half.",
+  "left": "Agree at your own risk",
+  "right": "Call the board chair"
+ },
+ {
+  "id": "l3a_348",
+  "who": "Contract",
+  "text": "An e-contract arrives for signature, due by midnight. The link leads to a page that won’t open in your browser.",
+  "left": "Find another computer",
+  "right": "Ask for an extension"
+ },
+ {
+  "id": "l3a_349",
+  "who": "Investment bank",
+  "text": "7:20 a.m. The investment bank reports a big corporation wants to buy your company. It must stay secret, even from your own deputies. Can you manage?",
+  "left": "Keep it from everyone",
+  "right": "Bring in one deputy"
+ },
+ {
+  "id": "l3a_350",
+  "who": "Merger",
+  "text": "First morning after the merger. The lobby has two reception desks, two logos and two security guards who won’t let in staff from the “other” company.",
+  "left": "Take down one logo",
+  "right": "Keep both for now"
+ },
+ {
+  "id": "l3a_351",
+  "who": "Acquisition",
+  "text": "The board proposes buying a small competitor. Great team, but their office is in a basement and they owe the landlord.",
+  "left": "Start talks",
+  "right": "Check the debts first"
+ },
+ {
+  "id": "l3a_352",
+  "who": "Due diligence",
+  "text": "Due diligence begins on the company you’re buying. Their CFO brought the documents in shoeboxes labeled in marker.",
+  "left": "Go through the boxes",
+  "right": "Demand digital copies"
+ },
+ {
+  "id": "l3a_353",
+  "who": "Merger",
+  "text": "First joint meeting of the merged teams. One side arrives at 9:00, the other at 10:00. Each thinks their schedule is the right one.",
+  "left": "Make it 9:00",
+  "right": "Allow a flexible start"
+ },
+ {
+  "id": "l3a_354",
+  "who": "Competitor",
+  "text": "A competitor proposes a merger “of equals.” His revenue is a third of yours, but he believes he’s three times smarter. Meet?",
+  "left": "Meet for coffee",
+  "right": "Decline right away"
+ },
+ {
+  "id": "l3a_355",
+  "who": "Merger",
+  "text": "The morning after the merger announcement, staff bombard you: “Will we be laid off?” You don’t know the answer yourself yet.",
+  "left": "Promise to keep everyone",
+  "right": "Honestly: “I don’t know”"
+ },
+ {
+  "id": "l3a_356",
+  "who": "Acquisition",
+  "text": "The acquired company sends a list of “sacred traditions”: pizza Fridays, an office dog and a post-lunch nap.",
+  "left": "Keep all the traditions",
+  "right": "Keep just the pizza"
+ },
+ {
+  "id": "l3a_357",
+  "who": "Acquirer’s CEO",
+  "text": "The acquiring company’s CEO drops by your office “just to look around” and immediately asks for the seating plan. Is that a bad sign?",
+  "left": "Hand it over, no questions",
+  "right": "Ask about his plans"
+ },
+ {
+  "id": "l3a_358",
+  "who": "Lawyer",
+  "text": "The lawyer reports the target company has an ongoing lawsuit its owners “forgot” to mention. Signing is today.",
+  "left": "Postpone the deal",
+  "right": "Sign with a caveat"
+ },
+ {
+  "id": "l3a_359",
+  "who": "Merger",
+  "text": "Morning. The merged company must pick one of two accounting systems. Each team considers theirs the pinnacle of creation.",
+  "left": "Go with yours",
+  "right": "Hold a system shoot-out"
+ },
+ {
+  "id": "l3a_360",
+  "who": "Merger",
+  "text": "At the first joint stand-up after the merger, the two companies’ managers sit strictly on opposite sides of the table. They even use different coffee machines.",
+  "left": "Mix up the seating",
+  "right": "Leave it until spring"
+ },
+ {
+  "id": "l3a_361",
+  "who": "Acquisition",
+  "text": "In negotiations the target company’s owner wants “emotional value” included in the price. He values it at half the deal.",
+  "left": "Honor the emotions",
+  "right": "Decline, businesslike"
+ },
+ {
+  "id": "l3a_362",
+  "who": "Due diligence",
+  "text": "The auditors find a “ghost warehouse” in the target’s books: it exists on paper, but on site it’s a vacant lot full of daisies.",
+  "left": "Knock down the price",
+  "right": "Walk away from the deal"
+ },
+ {
+  "id": "l3a_363",
+  "who": "Merger",
+  "text": "The merged company needs a name. Options: yours, theirs, or a new one from an AI. The AI suggests “Synergium.”",
+  "left": "Keep your name",
+  "right": "Go with “Synergium”"
+ },
+ {
+  "id": "l3a_364",
+  "who": "Merger",
+  "text": "After the merger it turns out you now have two CFOs, two sales directors and two CMOs. Who stays?",
+  "left": "Decide within a week",
+  "right": "Try “co-leadership”"
+ },
+ {
+  "id": "l3a_365",
+  "who": "Buyer",
+  "text": "At a meeting the buyer’s rep asks which of your employees are “irreplaceable.” He writes every name in his notebook.",
+  "left": "Name everyone",
+  "right": "Name three key people"
+ },
+ {
+  "id": "l3a_366",
+  "who": "Acquisition",
+  "text": "The startup you’re buying demands its founder stay CEO of his division with veto power over everything. Even your lunch.",
+  "left": "Accept the condition",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_367",
+  "who": "Merger",
+  "text": "After the merger, staff from both companies argue over which party to keep: the New Year’s party or the summer picnic. Your call.",
+  "left": "Both parties",
+  "right": "One new one"
+ },
+ {
+  "id": "l3a_368",
+  "who": "Antitrust",
+  "text": "The antitrust authority requested deal documents and gave you three days. There are six thousand, and half are in a warehouse.",
+  "left": "All hands on deck",
+  "right": "Ask for an extension"
+ },
+ {
+  "id": "l3a_369",
+  "who": "Merger",
+  "text": "9 p.m. The merged company holds its first joint evening call. Half the participants turned off their cameras out of habit; the other half muted their mics.",
+  "left": "Ask everyone to turn on",
+  "right": "Send everyone home"
+ },
+ {
+  "id": "l3a_370",
+  "who": "Acquisition",
+  "text": "In the evening the acquired company’s owner calls to complain that your people greet his people “wrong.” Too formal, he says.",
+  "left": "Run greeting training",
+  "right": "Ask him to bear with it"
+ },
+ {
+  "id": "l3a_371",
+  "who": "Merger",
+  "text": "Late at night you realize the merger left you with two Wi-Fi passwords, two anthems and two nearly identical logos. Unify?",
+  "left": "Unify it all by Monday",
+  "right": "Go step by step"
+ },
+ {
+  "id": "l3a_372",
+  "who": "Investment bank",
+  "text": "The banker calls at 10:15 p.m.: the buyer “has some questions,” and they need answers by morning. There are sixty-two.",
+  "left": "Answer all night",
+  "right": "Answer the main ones tomorrow"
+ },
+ {
+  "id": "l3a_373",
+  "who": "Merger",
+  "text": "In the evening a team lead complains that the other team “doesn’t get our jokes.” He proposes a dedicated humor training.",
+  "left": "Organize the training",
+  "right": "Say they’ll adjust"
+ },
+ {
+  "id": "l3a_374",
+  "who": "Acquisition",
+  "text": "The acquired company sent its final report. Their “key client” turns out to be the owner’s brother. The contract with him is verbal.",
+  "left": "Renegotiate the price",
+  "right": "Admit the mistake to the board"
+ },
+ {
+  "id": "l3a_375",
+  "who": "Family",
+  "text": "At dinner you announce the family is “acquiring” the neighbor’s cat that keeps visiting. The announcement meets with little enthusiasm.",
+  "left": "Proceed with the merger",
+  "right": "Leave the cat to the neighbors"
+ },
+ {
+  "id": "l3a_376",
+  "who": "Inner voice",
+  "text": "Your inner voice warns that you’re buying a company in an industry you know nothing about. The board calls it “diversification.”",
+  "left": "Study the industry tonight",
+  "right": "Delegate to your deputy"
+ },
+ {
+  "id": "l3a_377",
+  "who": "Merger",
+  "text": "An employee of the acquired company writes you a personal email in the evening: he’s afraid of being “diluted.” He’s been there since day one.",
+  "left": "Reply personally",
+  "right": "Forward to HR"
+ },
+ {
+  "id": "l3a_378",
+  "who": "Buyer",
+  "text": "In the evening the buyer cuts the price by 20%, citing “changing market conditions.” The market didn’t change today. Accept?",
+  "left": "Accept the new price",
+  "right": "Halt the deal"
+ },
+ {
+  "id": "l3a_379",
+  "who": "Merger",
+  "text": "Evening. The merged company’s newsletter has an error: the signature shows your name with the title of the competitor you acquired.",
+  "left": "Fix it right away",
+  "right": "Laugh and leave it"
+ },
+ {
+  "id": "l3a_380",
+  "who": "Acquisition",
+  "text": "The newly acquired team holds a “meet and greet” with yours. Their first question: “Is it true you’re going to lay us off?”",
+  "left": "Deny the rumors",
+  "right": "Promise transparency"
+ },
+ {
+  "id": "l3a_381",
+  "who": "Merger",
+  "text": "The merged sales team can’t decide who owns which clients. Three key clients now have two account managers each, and they all call at once.",
+  "left": "Split them yourself",
+  "right": "Let them work it out"
+ },
+ {
+  "id": "l3a_382",
+  "who": "Due diligence",
+  "text": "The buyer’s lawyers review your documents and find a lease signed in 2009 with a glitter pen. Is it valid?",
+  "left": "Re-sign the lease",
+  "right": "Explain glitter is legal"
+ },
+ {
+  "id": "l3a_383",
+  "who": "Merger",
+  "text": "The new shared cafeteria. One company eats at noon, the other at 2 p.m. The cook makes everything twice and demands extra pay.",
+  "left": "Give the cook a raise",
+  "right": "Set one lunch time"
+ },
+ {
+  "id": "l3a_384",
+  "who": "Acquisition",
+  "text": "In the evening the founder of the acquired company calls: he misses his company and wants to buy it back. It’s been a week.",
+  "left": "Discuss a buyback",
+  "right": "Support him as a human"
+ },
+ {
+  "id": "l3a_385",
+  "who": "Board of directors",
+  "text": "The board proposes buying a company that makes the same thing you do, only worse and pricier. The argument: “They have a nice sign.”",
+  "left": "Study the sign",
+  "right": "Argue against it"
+ },
+ {
+  "id": "l3a_386",
+  "who": "Merger",
+  "text": "The merged company holds its first joint party. Your people are dancing; theirs are standing by the walls. Your people picked the music.",
+  "left": "Change the playlist",
+  "right": "Let them get used to it"
+ },
+ {
+  "id": "l3a_387",
+  "who": "Merger",
+  "text": "Late at night you discover the merged company has two websites with different prices for identical products. Customers noticed too.",
+  "left": "Align prices, fast",
+  "right": "Gather marketing tomorrow"
+ },
+ {
+  "id": "l3a_388",
+  "who": "Investment bank",
+  "text": "The banker says the buyer wants to meet on “neutral ground.” Neutral ground is his country house.",
+  "left": "Go to the country house",
+  "right": "Suggest a restaurant in town"
+ },
+ {
+  "id": "l3a_389",
+  "who": "Acquisition",
+  "text": "The acquired company is rolling out its “code of conduct” at yours. Item twelve: a mandatory personal “good morning” to every employee.",
+  "left": "Adopt the code",
+  "right": "Reject item twelve"
+ },
+ {
+  "id": "l3a_390",
+  "who": "Merger",
+  "text": "In the evening both companies’ executives gather for an informal dinner. Your CFO and their CFO seem to be getting along. A little too well.",
+  "left": "Seat them apart",
+  "right": "Let them be friends"
+ },
+ {
+  "id": "l3a_391",
+  "who": "Inner voice",
+  "text": "Your inner voice wonders: if the company merges, who will you be? No answer — just insomnia and cold tea.",
+  "left": "Talk to the board",
+  "right": "Sleep and don’t think"
+ },
+ {
+  "id": "l3a_392",
+  "who": "Merger",
+  "text": "Morning. A new employee from the merged company can’t find his desk. Under the new seating plan, his desk is your desk. Share it?",
+  "left": "Give up your desk",
+  "right": "Fix the plan"
+ },
+ {
+  "id": "l3a_393",
+  "who": "Due diligence",
+  "text": "Late at night the auditor sends his report: the company you’re buying is worth half what was claimed. Signing is tomorrow.",
+  "left": "Cancel the signing",
+  "right": "Sign at a discount"
+ },
+ {
+  "id": "l3a_394",
+  "who": "Competitor",
+  "text": "At a trade show, the competitor you almost merged with is telling everyone he turned you down. Actually, you were the one who killed the deal.",
+  "left": "Refute it publicly",
+  "right": "Stay dignified and silent"
+ },
+ {
+  "id": "l3a_395",
+  "who": "Merger",
+  "text": "Morning. The two accounting teams now share one room. Within an hour there’s a dispute over how documents should be fastened: paper clip or stapler.",
+  "left": "Mandate the stapler",
+  "right": "Allow both"
+ },
+ {
+  "id": "l3a_396",
+  "who": "Acquisition",
+  "text": "In the evening the acquired company sends a photo of its party captioned “Celebrating freedom.” The deal closed this morning.",
+  "left": "Call and ask",
+  "right": "Send congratulations"
+ },
+ {
+  "id": "l3a_397",
+  "who": "CMO",
+  "text": "7:50 a.m. The CMO sends a photo: a competitor put up a billboard right across from your office. The slogan: “We’re never late.” Your move?",
+  "left": "Put up a reply billboard",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l3a_398",
+  "who": "Competitor",
+  "text": "A competitor cut prices 30% across the board this morning. Sales is calling in a panic; clients are already asking about discounts. What now?",
+  "left": "Cut prices too",
+  "right": "Hold price, stress value"
+ },
+ {
+  "id": "l3a_399",
+  "who": "Analyst",
+  "text": "The analyst brings a report: a competitor launched the product you debated for six months and never approved. Even the name is similar.",
+  "left": "Speed up your launch",
+  "right": "Find another niche"
+ },
+ {
+  "id": "l3a_400",
+  "who": "HR director",
+  "text": "The HR director reports a competitor is poaching your lead developer with double the pay. Today is his last day to “think it over.”",
+  "left": "Make a counteroffer",
+  "right": "Let him go with best wishes"
+ },
+ {
+  "id": "l3a_401",
+  "who": "Competitor",
+  "text": "A competitor’s CEO calls at 8:00 and offers to agree on prices “as neighbors.” That’s illegal, and you both know it.",
+  "left": "Politely hang up",
+  "right": "Tell your lawyer"
+ },
+ {
+  "id": "l3a_402",
+  "who": "Industry news",
+  "text": "This morning’s industry newsletter headline: “Market Leader: Your Competitor.” The board has already forwarded it to you, no comment.",
+  "left": "Reply with analysis",
+  "right": "Ignore it"
+ },
+ {
+  "id": "l3a_403",
+  "who": "Sales director",
+  "text": "The sales director suggests “having a little fun” with online reviews of competitors. Anonymously, of course. It’s a bad idea.",
+  "left": "Forbid it",
+  "right": "Explain the risks to the team"
+ },
+ {
+  "id": "l3a_404",
+  "who": "Competitor",
+  "text": "You learn a competitor hired your former CFO. He knows all your numbers for the past five years.",
+  "left": "Update the strategy",
+  "right": "Call and congratulate him"
+ },
+ {
+  "id": "l3a_405",
+  "who": "Espionage",
+  "text": "At a morning conference you notice a competitor’s employee writing down your every word. You were just about to talk about plans.",
+  "left": "Stick to generalities",
+  "right": "Joke about his notebook"
+ },
+ {
+  "id": "l3a_406",
+  "who": "CMO",
+  "text": "Marketing brings a comparison table: “Us vs. the competitor.” We’re better at everything except price, quality and delivery times. Publish?",
+  "left": "Publish with pride",
+  "right": "Redo it honestly"
+ },
+ {
+  "id": "l3a_407",
+  "who": "Competitor",
+  "text": "A competitor opened an office in your building, one floor up. This morning you’re in the elevator with their CEO. He’s smiling.",
+  "left": "Smile back",
+  "right": "Talk weather and markets"
+ },
+ {
+  "id": "l3a_408",
+  "who": "Analyst",
+  "text": "The analyst says a competitor spends three times more than you on advertising. The board asks why you’re being so modest.",
+  "left": "Ask the board for budget",
+  "right": "Bet on word of mouth"
+ },
+ {
+  "id": "l3a_409",
+  "who": "Trade show",
+  "text": "At the trade show the competitor’s booth is twice as big as yours and has a live orchestra. Your booth is a table with flyers and a bowl of candy.",
+  "left": "Lure guests with candy",
+  "right": "Upgrade the booth by tomorrow"
+ },
+ {
+  "id": "l3a_410",
+  "who": "Competitor",
+  "text": "A competitor is suing you for “copying their packaging color.” Your packaging is green. So is theirs. So is half the market’s.",
+  "left": "Fight it to the end",
+  "right": "Repaint the packaging"
+ },
+ {
+  "id": "l3a_411",
+  "who": "Sales director",
+  "text": "A key client tells the sales director a competitor offered him “a free trial year.” The client asks what you’ll offer.",
+  "left": "Offer a discount",
+  "right": "Emphasize service"
+ },
+ {
+  "id": "l3a_412",
+  "who": "Competitor",
+  "text": "At a conference a competitor publicly challenges you to a “friendly debate.” Topic: “Whose product is better.” The audience applauds. Accept?",
+  "left": "Accept the challenge",
+  "right": "Decline with a smile"
+ },
+ {
+  "id": "l3a_413",
+  "who": "Espionage",
+  "text": "Your new manager brings a competitor’s presentation he “accidentally” took from his last job. It has their strategy for the year.",
+  "left": "Return it unopened",
+  "right": "Take a quick peek"
+ },
+ {
+  "id": "l3a_414",
+  "who": "Competitor",
+  "text": "A competitor proposes teaming up against a new market entrant. The alliance makes sense, but this competitor is known for betraying allies.",
+  "left": "Form the alliance",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l3a_415",
+  "who": "CMO",
+  "text": "Marketing wants to run a “We’re not like them” campaign full of hints at the competitor. The lawyer is clutching his heart in advance.",
+  "left": "Run a soft version",
+  "right": "Drop the campaign"
+ },
+ {
+  "id": "l3a_416",
+  "who": "Competitor",
+  "text": "A competitor opened a café right next to your office and hands your employees free coffee. With an HR business card attached.",
+  "left": "Open your own café",
+  "right": "Act like all is well"
+ },
+ {
+  "id": "l3a_417",
+  "who": "Sales director",
+  "text": "The sales director proposes poaching the competitor’s top account manager. He’s willing, but wants the same salary as you.",
+  "left": "Meet his terms",
+  "right": "Pass"
+ },
+ {
+  "id": "l3a_418",
+  "who": "Competitor",
+  "text": "9 p.m. The competitor’s CEO posts a photo from a meeting with your key client. Captioned “New horizons!”",
+  "left": "Call the client now",
+  "right": "Meet calmly tomorrow"
+ },
+ {
+  "id": "l3a_419",
+  "who": "Competitor",
+  "text": "In the evening a competitor reports 40% revenue growth. The board forwards the link: “And how are we doing?” We’re at 7%.",
+  "left": "Explain the model difference",
+  "right": "Promise to catch up"
+ },
+ {
+  "id": "l3a_420",
+  "who": "HR director",
+  "text": "The HR director reports half the sales team interviewed with a competitor. They all came back — with offers in their pockets.",
+  "left": "Raise salaries",
+  "right": "Talk to each one"
+ },
+ {
+  "id": "l3a_421",
+  "who": "Competitor",
+  "text": "A competitor invites you to his company’s anniversary. On the program: he presents himself with a “Market Leadership” award.",
+  "left": "Go and applaud",
+  "right": "Send flowers"
+ },
+ {
+  "id": "l3a_422",
+  "who": "Inner voice",
+  "text": "Your inner voice suggests you stop stalking competitors every evening. You’ve spent three hours studying their job postings. Close the tab?",
+  "left": "Close it and rest",
+  "right": "Write a report on their jobs"
+ },
+ {
+  "id": "l3a_423",
+  "who": "Family",
+  "text": "Your kid says the competitor CEO’s son is in his class. They’re friends and trade stickers.",
+  "left": "Invite him to the birthday",
+  "right": "Change nothing"
+ },
+ {
+  "id": "l3a_424",
+  "who": "Espionage",
+  "text": "At a restaurant in the evening, the competitor’s team is at the next table, loudly discussing their plans. You can hear every word.",
+  "left": "Move further away",
+  "right": "Listen and memorize"
+ },
+ {
+  "id": "l3a_425",
+  "who": "Competitor",
+  "text": "Late at night a former employee who went to a competitor writes: “Can I come back?” He left in a scandal six months ago.",
+  "left": "Invite him to talk",
+  "right": "Refuse"
+ },
+ {
+  "id": "l3a_426",
+  "who": "Sales director",
+  "text": "Evening message from the sales director: “The competitor promised our client a rocket, and we’ve only got a bicycle.” He wants a rocket by Monday.",
+  "left": "Rally the team this weekend",
+  "right": "Sell the bicycle’s merits"
+ },
+ {
+  "id": "l3a_427",
+  "who": "Competitor",
+  "text": "In the evening a competitor emails you a message meant for his own board. It contains his strategy. Wrong recipient.",
+  "left": "Delete it unread",
+  "right": "Forward it to Legal"
+ },
+ {
+  "id": "l3a_428",
+  "who": "Industry award",
+  "text": "Industry awards night. You lost “Company of the Year” to a competitor. He gives thanks from the stage while looking right at you.",
+  "left": "Give a standing ovation",
+  "right": "Leave before it ends"
+ },
+ {
+  "id": "l3a_429",
+  "who": "Competitor",
+  "text": "A competitor issued a press release comparing itself to you. It gets your prices, products and even your name wrong.",
+  "left": "Refute it publicly",
+  "right": "Laugh about it online"
+ },
+ {
+  "id": "l3a_430",
+  "who": "Competitor",
+  "text": "Your former deputy, now a director at a competitor, invites you to lunch, “just to talk about old times.” He orders on your tab.",
+  "left": "Go and listen",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3a_431",
+  "who": "Competitor",
+  "text": "In the evening you learn the competitor has a new CEO: your old classmate who copied off you during exams. Call to congratulate him?",
+  "left": "Call and congratulate",
+  "right": "Prep a board briefing"
+ },
+ {
+  "id": "l3a_432",
+  "who": "Sales director",
+  "text": "First thing in the morning the sales director wants to hire a “scout” to attend competitor events posing as a client.",
+  "left": "Refuse the spying",
+  "right": "Send him to a public webinar"
+ },
+ {
+  "id": "l3a_433",
+  "who": "Inner voice",
+  "text": "Your inner voice suggests your main competitor is yesterday’s you. Sounds lovely, but the board wants numbers, not quotes.",
+  "left": "Save it for a speech",
+  "right": "Get to the numbers"
+ },
+ {
+  "id": "l3a_434",
+  "who": "Competitor",
+  "text": "In the evening a competitor emails your clients: “We miss you.” Half of them have never worked with him.",
+  "left": "Send your own email",
+  "right": "Don’t react"
+ },
+ {
+  "id": "l3a_435",
+  "who": "Industry association",
+  "text": "The industry association proposes that you and a competitor co-chair the standards committee. Meetings are on Saturdays.",
+  "left": "Agree",
+  "right": "Decline"
+ },
+ {
+  "id": "l3a_436",
+  "who": "Competitor",
+  "text": "At a meeting a major client compares you out loud to a competitor and calls you “like them, but pricier.” His deputy nods.",
+  "left": "Explain the difference",
+  "right": "Offer a discounted pilot"
+ },
+ {
+  "id": "l3a_437",
+  "who": "Board chair",
+  "text": "8:00 a.m. The board chair calls to discuss your “leadership style.” He heard you’re too soft a leader. He won’t say from whom.",
+  "left": "Promise to toughen up",
+  "right": "Ask for specifics"
+ },
+ {
+  "id": "l3a_438",
+  "who": "Owner",
+  "text": "The owner says he’s decided to sell the company, but doesn’t know to whom. He wants it “ready for sale” within a month. Secretly.",
+  "left": "Prepare it secretly",
+  "right": "Persuade him to tell the team"
+ },
+ {
+  "id": "l3a_439",
+  "who": "Leadership meeting",
+  "text": "Morning leadership meeting. Each of the nine directors reports for ten minutes, and each one starts with “Quickly.”",
+  "left": "Set a three-minute limit",
+  "right": "Hear everyone out"
+ },
+ {
+  "id": "l3a_440",
+  "who": "Assistant",
+  "text": "Your assistant brings today’s schedule: eighteen meetings and one line that says “lunch,” squeezed between two board sessions. Optimize?",
+  "left": "Cancel five meetings",
+  "right": "Power through it"
+ },
+ {
+  "id": "l3a_441",
+  "who": "Deputy",
+  "text": "Your first deputy announces he wants to be CEO. Not here, just in general. But here would work too. How do you react?",
+  "left": "Discuss a succession plan",
+  "right": "Pretend you didn’t hear"
+ },
+ {
+  "id": "l3a_442",
+  "who": "Press office",
+  "text": "The press office wants a video address to staff about the quarter’s results. The results are bad, but the address must “inspire.”",
+  "left": "Speak honestly",
+  "right": "Speak inspiringly"
+ },
+ {
+  "id": "l3a_443",
+  "who": "Board of directors",
+  "text": "The board wants a weekly one-page “company pulse.” The company’s pulse is jittery, but the page must look calm.",
+  "left": "Do it weekly",
+  "right": "Propose monthly"
+ },
+ {
+  "id": "l3a_444",
+  "who": "CFO",
+  "text": "The CFO shows you the cash flow chart. It looks like a cardiogram. The board hates charts like that. Redraw it?",
+  "left": "Smooth the line",
+  "right": "Show it as is"
+ },
+ {
+  "id": "l3a_445",
+  "who": "Security",
+  "text": "Security won’t let you into the office: your badge was blocked after the access system was replaced. A line of employees is forming behind you.",
+  "left": "Wait for the unblock",
+  "right": "Call the head of security"
+ },
+ {
+  "id": "l3a_446",
+  "who": "Auditors",
+  "text": "The external auditors ask you to “just confirm” a hundred and forty figures in the annual report. Each with your signature. By lunch.",
+  "left": "Sign after checking",
+  "right": "Sign right away"
+ },
+ {
+  "id": "l3a_447",
+  "who": "CEO",
+  "text": "You’re late to your own morning meeting: stuck in the elevator with a board member. He uses the time to discuss your bonus.",
+  "left": "Discuss the bonus",
+  "right": "Steer to the weather"
+ },
+ {
+  "id": "l3a_448",
+  "who": "Corporate lawyer",
+  "text": "The corporate lawyer asks you to sign a power of attorney in his name, “just in case.” It gives him the right to sell the building.",
+  "left": "Sign it",
+  "right": "Rewrite it"
+ },
+ {
+  "id": "l3a_449",
+  "who": "Board of directors",
+  "text": "The board decides you need an “executive coach.” At the first session the coach asks you to draw your inner world. Do you?",
+  "left": "Draw from the heart",
+  "right": "Draw a revenue chart"
+ },
+ {
+  "id": "l3a_450",
+  "who": "Leadership meeting",
+  "text": "At the meeting directors argue over whose turn it is to take the blame for the quarter. Each points at his neighbor. The neighbor points at the weather.",
+  "left": "Take it on yourself",
+  "right": "Order an investigation"
+ },
+ {
+  "id": "l3a_451",
+  "who": "Owner",
+  "text": "The owner wants by tonight a list of three employees to promote and three to let go. No explanations, “by gut feeling.”",
+  "left": "Draw up the lists",
+  "right": "Propose a results-based review"
+ },
+ {
+  "id": "l3a_452",
+  "who": "Corporate lawyer",
+  "text": "The lawyer reports an employee has sued for unpaid overtime. The documents confirm it: he worked late nights on your instructions.",
+  "left": "Settle amicably",
+  "right": "Fight it in court"
+ },
+ {
+  "id": "l3a_453",
+  "who": "Crisis",
+  "text": "Midday, the website that brings in 70% of sales goes down. The CTO is on a plane and his deputy is on vacation. Your move?",
+  "left": "Mobilize everyone yourself",
+  "right": "Wait for the CTO"
+ },
+ {
+  "id": "l3a_454",
+  "who": "Press office",
+  "text": "A business newspaper reporter wants an interview about “the company’s difficulties.” There are difficulties, but the interview could double them. Agree?",
+  "left": "Give the interview",
+  "right": "Decline"
+ },
+ {
+  "id": "l3a_455",
+  "who": "Owner",
+  "text": "The owner decided every decision over $100,000 must be approved by him personally. His phone is available Tuesdays from 11 to 12.",
+  "left": "Agree and endure",
+  "right": "Ask for more authority"
+ },
+ {
+  "id": "l3a_456",
+  "who": "Board of directors",
+  "text": "The board wants you to personally address the all-staff meeting and explain why there will be no bonuses. The mic is ready.",
+  "left": "Speak honestly",
+  "right": "Have the CFO do it"
+ },
+ {
+  "id": "l3a_457",
+  "who": "Board of directors",
+  "text": "In the evening you’re told that the next board meeting will discuss a “CEO performance review.” Without you present.",
+  "left": "Prepare a self-report",
+  "right": "Ask for the floor"
+ },
+ {
+  "id": "l3a_458",
+  "who": "Family",
+  "text": "At home you learn the August vacation clashes with a board meeting. The tickets are bought and nonrefundable.",
+  "left": "Go on vacation",
+  "right": "Come back early"
+ },
+ {
+  "id": "l3a_459",
+  "who": "Owner",
+  "text": "The owner writes at 10 p.m.: “Why aren’t you at the office? I’m at the office.” He stopped by for forgotten keys and decided to check who’s working.",
+  "left": "Drive to the office",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l3a_460",
+  "who": "Inner voice",
+  "text": "Your inner voice asks if you remember why you became a leader. All you remember is that you once wanted to “make an impact.” Make an impact on your sleep?",
+  "left": "Go to bed early",
+  "right": "Clear your inbox"
+ },
+ {
+  "id": "l3a_461",
+  "who": "Deputy",
+  "text": "Your deputy leaves at 6 p.m. every day and doesn’t answer messages after that. The board thinks you spoil him.",
+  "left": "Demand evening replies",
+  "right": "Defend his boundaries"
+ },
+ {
+  "id": "l3a_462",
+  "who": "Leadership meeting",
+  "text": "The evening directors’ meeting drags on: the CFO and the sales director are competing over who’s louder. It’s been ninety minutes.",
+  "left": "End the meeting",
+  "right": "Push to a decision"
+ },
+ {
+  "id": "l3a_463",
+  "who": "CEO",
+  "text": "In the evening you’re invited to speak at a leadership forum. Topic: “Finding Work-Life Balance.” You have no balance.",
+  "left": "Speak honestly",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l3a_464",
+  "who": "Corporate lawyer",
+  "text": "In the evening the lawyer writes that an order you signed contradicts another order — also yours — from last month. Which one goes?",
+  "left": "Revoke the old one",
+  "right": "Sort it out tomorrow"
+ },
+ {
+  "id": "l3a_465",
+  "who": "Employees",
+  "text": "For your birthday, staff gave you a mug reading “Best CEO.” In fine print beneath: “according to those who want a bonus.”",
+  "left": "Display it proudly",
+  "right": "Put it in a drawer"
+ },
+ {
+  "id": "l3a_466",
+  "who": "Board of directors",
+  "text": "In the evening the board chair advises you to “rest more.” Five minutes later he sends four tasks for the weekend.",
+  "left": "Do the tasks",
+  "right": "Do one and rest"
+ },
+ {
+  "id": "l3a_467",
+  "who": "Owner",
+  "text": "The owner asks you to accompany him to an evening charity auction and “help him choose.” He’s already eyeing a painting worth your annual bonus.",
+  "left": "Talk him out of it",
+  "right": "Back the purchase"
+ },
+ {
+  "id": "l3a_468",
+  "who": "CEO",
+  "text": "At 11 p.m. you realize you forgot to congratulate the CFO on the company anniversary. He congratulated everyone but you. Oops.",
+  "left": "Call him now",
+  "right": "Congratulate him tomorrow"
+ },
+ {
+  "id": "l3a_469",
+  "who": "Assistant",
+  "text": "In the evening your assistant says she’s going on maternity leave in a week — and only she knows where the key contracts are and how your calendar works.",
+  "left": "Write it all down this week",
+  "right": "Find a temp replacement"
+ },
+ {
+  "id": "l3a_470",
+  "who": "Press office",
+  "text": "The press office wants approval for a social post: a photo of you “at work.” In it you’re eating a sandwich over your keyboard.",
+  "left": "Approve the honest photo",
+  "right": "Take a new photo"
+ },
+ {
+  "id": "l3a_471",
+  "who": "Inner voice",
+  "text": "Your inner voice suggests turning off your phone this weekend. The board, the owner and the investors suggest otherwise. Who wins?",
+  "left": "Turn off the phone",
+  "right": "Switch to silent"
+ },
+ {
+  "id": "l3a_472",
+  "who": "CEO",
+  "text": "After a hard day you find a note from the cleaner in your office: “Don’t worry, it’ll all work out.” She knows more about the company than the board.",
+  "left": "Thank her in person tomorrow",
+  "right": "Keep the note"
+ },
+ {
+  "id": "l3a_473",
+  "who": "Fund",
+  "text": "8:10 a.m. A fund that turned you down a year ago writes: “We’ve been following you and would like to reopen the conversation.” Your valuation has doubled.",
+  "left": "Meet today",
+  "right": "Make them wait a week"
+ },
+ {
+  "id": "l3a_474",
+  "who": "Cost cutting",
+  "text": "In the morning you learn the video conferencing subscription was canceled to save money. The board joins in fifteen minutes.",
+  "left": "Pay with your own card",
+  "right": "Switch to phone"
+ },
+ {
+  "id": "l3a_475",
+  "who": "Major client",
+  "text": "A key client says his new procurement manager is “reviewing all suppliers.” The procurement manager is twenty-three and very serious.",
+  "left": "Visit him in person",
+  "right": "Send an account manager"
+ },
+ {
+  "id": "l3a_476",
+  "who": "Merger",
+  "text": "The morning after the merger. Staff from the two companies use different messengers and can’t see each other’s messages. The meeting falls apart.",
+  "left": "Pick one messenger",
+  "right": "Keep both for now"
+ },
+ {
+  "id": "l3a_477",
+  "who": "Shareholder",
+  "text": "A shareholder sends a question: “Why did you buy a new printer?” The printer costs less than his ticket to the shareholders’ meeting.",
+  "left": "Answer in detail",
+  "right": "Answer with humor"
+ },
+ {
+  "id": "l3a_478",
+  "who": "Competitor",
+  "text": "You learn a competitor patented an idea your R&D department shelved “for better times.” Better times arrived — for the competitor.",
+  "left": "Review it with R&D",
+  "right": "Support the team"
+ },
+ {
+  "id": "l3a_479",
+  "who": "Strategy",
+  "text": "Morning. You discover the company website still shows a ten-year-old mission: “To become the leader in the pager market.”",
+  "left": "Update the site, fast",
+  "right": "Keep it as a relic"
+ },
+ {
+  "id": "l3a_480",
+  "who": "Budget",
+  "text": "The CFO reports that the Q3 budget was used up in Q1. The reason: “unforeseen foreseeable expenses.”",
+  "left": "Freeze spending",
+  "right": "Ask the board for capital"
+ },
+ {
+  "id": "l3a_481",
+  "who": "Investor",
+  "text": "An investor asks you to speak at his conference about “the secrets of success.” So far, the slide with your secrets just says “luck.”",
+  "left": "Tell it honestly",
+  "right": "Prep a polished version"
+ },
+ {
+  "id": "l3a_482",
+  "who": "Board of directors",
+  "text": "The board approved an acquisition on condition that your deputy runs it. You’ll “oversee.” Is that a promotion or a demotion?",
+  "left": "Accept the condition",
+  "right": "Insist on taking part"
+ },
+ {
+  "id": "l3a_483",
+  "who": "Cost cutting",
+  "text": "The board wants to cut rent and proposes moving half the office to remote work. Staff are for it, but the owner likes seeing people.",
+  "left": "Go remote",
+  "right": "Keep everyone in the office"
+ },
+ {
+  "id": "l3a_484",
+  "who": "Partner",
+  "text": "A foreign partner offers a big contract, but negotiates only through an interpreter who clearly abridges everything.",
+  "left": "Hire your own interpreter",
+  "right": "Trust their interpreter"
+ },
+ {
+  "id": "l3a_485",
+  "who": "Competitor",
+  "text": "Your salesperson brings news: a competitor launched a product with your exact name, but a different last letter. Customers are confused.",
+  "left": "Sue over the name",
+  "right": "Use it as free publicity"
+ },
+ {
+  "id": "l3a_486",
+  "who": "Budget committee",
+  "text": "At the budget committee the CIO finally admits “cloud migration — ∞” meant “I have no idea how much.” The committee falls silent.",
+  "left": "Give him a month to cost it",
+  "right": "Cut the line to the minimum"
+ },
+ {
+  "id": "l3a_487",
+  "who": "Merger",
+  "text": "The merged dev team is arguing about whether curly braces go on the same line or the next. The dispute has reached you.",
+  "left": "Settle it with a coin toss",
+  "right": "Form a committee"
+ },
+ {
+  "id": "l3a_488",
+  "who": "Investor",
+  "text": "In the evening an investor congratulates you on a good quarter and immediately asks why it wasn’t twice as good. Reply?",
+  "left": "Reply with a growth plan",
+  "right": "Just say thanks"
+ },
+ {
+  "id": "l3a_489",
+  "who": "Shareholders",
+  "text": "A poll appears in the shareholders’ group: “Do you trust the CEO?” Voting is public. Watch the results?",
+  "left": "Refresh every 5 minutes",
+  "right": "Mute notifications"
+ },
+ {
+  "id": "l3a_490",
+  "who": "Owner",
+  "text": "The owner sends a voice message from a restaurant: “Let’s buy this restaurant.” He liked it. The company makes pipes.",
+  "left": "Look into the restaurant",
+  "right": "Gently talk him out of it"
+ },
+ {
+  "id": "l3a_491",
+  "who": "Cost cutting",
+  "text": "In the evening the company shuttle driver says the last run was canceled to save money. Twenty employees are still in the office after 9 p.m.",
+  "left": "Pay for everyone’s taxi",
+  "right": "Let people leave earlier"
+ },
+ {
+  "id": "l3a_492",
+  "who": "Big deal",
+  "text": "Late at night a client emails: “We’re ready, but our board wants to review everything once more.” His board meets once a quarter.",
+  "left": "Offer your help",
+  "right": "Wait a quarter"
+ },
+ {
+  "id": "l3a_493",
+  "who": "Family",
+  "text": "At home your kid is playing “CEO” and holding a meeting with his toys. He tells them in your voice: “This is not up for discussion.” Time to reflect?",
+  "left": "Play vacation with him",
+  "right": "Correct him"
+ },
+ {
+  "id": "l3a_494",
+  "who": "Board of directors",
+  "text": "In the evening a board member calls to ask advice about his own private business. It’s a two-hour question unrelated to your company.",
+  "left": "Help wholeheartedly",
+  "right": "Plead lack of time"
+ },
+ {
+  "id": "l3a_495",
+  "who": "Competitor",
+  "text": "In the evening a recruiter offers you the CEO job at a competitor, 40% more pay. Respond?",
+  "left": "Go for a conversation",
+  "right": "Delete the email"
+ },
+ {
+  "id": "l3a_496",
+  "who": "Inner voice",
+  "text": "Your inner voice sums up the week: three board meetings, two investors, one merger and zero hours of sleep. Time to change something?",
+  "left": "Take Monday off",
+  "right": "Work the weekend"
+ },
+ {
+  "id": "l3a_497",
+  "who": "CFO",
+  "text": "In the evening the CFO sends a vacation photo: he made it to the beach after all. In the photo: a laptop on a sun lounger and the quarterly report.",
+  "left": "Forbid him to work",
+  "right": "Ask him to send the report"
+ },
+ {
+  "id": "l3a_498",
+  "who": "CEO",
+  "text": "Late at night you realize you didn’t complete a single task from your list today, but attended eleven meetings.",
+  "left": "Cancel tomorrow’s meetings",
+  "right": "Make a list tonight"
+ },
+ {
+  "id": "l3a_499",
+  "who": "Press office",
+  "text": "In the evening the press office asks you to comment on a rumor that the company is being sold. The rumor is true, but the deal hasn’t been announced.",
+  "left": "“No comment”",
+  "right": "Tell the team first"
+ },
+ {
+  "id": "l3a_500",
+  "who": "Deputy",
+  "text": "In the evening your deputy admits that a week ago he missed an important email from an investor. The reply was due yesterday.",
+  "left": "Reply yourself now",
+  "right": "Have him fix it"
+ }
+]

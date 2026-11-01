@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l2a_001",
+  "who": "Recruiter",
+  "text": "At 8:30 the recruiter sends you forty résumés for an analyst role, labeled “the best of the best.” The first one’s experience: “summer camp counselor.” Get through them all by lunch?",
+  "left": "Hand them off to the team",
+  "right": "Read all forty yourself"
+ },
+ {
+  "id": "l2a_002",
+  "who": "Candidate",
+  "text": "The candidate joins the interview from his car at a red light. “I can hear you perfectly, go ahead.” Horns are blaring behind him. Carry on?",
+  "left": "Reschedule for the evening",
+  "right": "Interview over the honking"
+ },
+ {
+  "id": "l2a_003",
+  "who": "Candidate",
+  "text": "Asked “What’s your biggest weakness?”, the candidate says honestly: “I can’t stand pointless meetings.” You have seven on your calendar today. Hire him?",
+  "left": "Hire him — he gets it",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_004",
+  "who": "Director",
+  "text": "The director wants the role filled within a week: “Just hire somebody, we’re short-staffed.” Good candidates: zero. There is one who’s “fine.”",
+  "left": "Hire the “fine” one",
+  "right": "Keep looking"
+ },
+ {
+  "id": "l2a_005",
+  "who": "Test assignment",
+  "text": "A candidate’s test assignment is excellent, but the file metadata lists a completely different author. On the call he’s very convincing. What now?",
+  "left": "Ask him directly",
+  "right": "Pretend you didn’t notice"
+ },
+ {
+  "id": "l2a_006",
+  "who": "Recruiter",
+  "text": "The recruiter asks you to cut the interview to 20 minutes: “He’s hot on the market, he has three other offers.” Your question list runs an hour and a half.",
+  "left": "Cut it to 20 minutes",
+  "right": "Insist on the full interview"
+ },
+ {
+  "id": "l2a_007",
+  "who": "Candidate",
+  "text": "At the end of the interview the candidate asks: “Why did the last person in this role leave?” The last person left because of your director.",
+  "left": "Answer diplomatically",
+  "right": "Tell the truth"
+ },
+ {
+  "id": "l2a_008",
+  "who": "Candidate",
+  "text": "Your final candidate wants an offer 40% above the salary band. She’s the best you’ve seen in six months. The director is on vacation and not answering.",
+  "left": "Push it through finance",
+  "right": "Offer the standard band"
+ },
+ {
+  "id": "l2a_009",
+  "who": "Team",
+  "text": "The team wants to sit in on interviews. Now six people are on every call, and each one asks about their favorite framework.",
+  "left": "Keep it to two people",
+  "right": "Let everyone join"
+ },
+ {
+  "id": "l2a_010",
+  "who": "Inbox",
+  "text": "A candidate you rejected a month ago sends a three-page essay on why you made a mistake. The director is cc’d.",
+  "left": "Reply point by point",
+  "right": "Don’t reply"
+ },
+ {
+  "id": "l2a_011",
+  "who": "Recruiter",
+  "text": "The recruiter is thrilled: the candidate accepted! He can only start in three months, though — “wrapping up projects.” Your project is on fire now.",
+  "left": "Wait three months",
+  "right": "Find a temp contractor"
+ },
+ {
+  "id": "l2a_012",
+  "who": "Candidate",
+  "text": "The candidate sends a heartfelt thank-you note after the interview. Very touching. Last line: “I need an answer by tomorrow or I’ll take another offer.”",
+  "left": "Decide tonight",
+  "right": "Don’t cave to pressure"
+ },
+ {
+  "id": "l2a_013",
+  "who": "Head of Sales",
+  "text": "The head of sales recommends a “great guy” — his nephew. The résumé is weak, but saying no will sour things with sales for ages.",
+  "left": "Give him a fair interview",
+  "right": "Say no right away"
+ },
+ {
+  "id": "l2a_014",
+  "who": "Inner voice",
+  "text": "Third day in a row of four interviews a day. The candidates have merged into one person who says “I’m a team player.” Pause hiring?",
+  "left": "Take a week off hiring",
+  "right": "Keep up the marathon"
+ },
+ {
+  "id": "l2a_015",
+  "who": "Candidate",
+  "text": "The candidate turns out to be your old classmate — the one you used to copy homework from. He recognizes you and grins broadly.",
+  "left": "Recuse yourself",
+  "right": "Interview as usual"
+ },
+ {
+  "id": "l2a_016",
+  "who": "HR",
+  "text": "HR asks you to rewrite the job ad: “Too many requirements, nobody’s applying.” The director wrote the requirements and is very proud of them.",
+  "left": "Quietly trim them",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l2a_017",
+  "who": "Team member",
+  "text": "Your strongest employee asks you not to hire a candidate: “We worked together before. It won’t work.” The candidate is objectively good.",
+  "left": "Listen and pass",
+  "right": "Hire the candidate"
+ },
+ {
+  "id": "l2a_018",
+  "who": "Job board",
+  "text": "The job board offers a “premium listing” for half your quarterly training budget. Without it you get almost no applicants.",
+  "left": "Buy premium",
+  "right": "Ask around your network"
+ },
+ {
+  "id": "l2a_019",
+  "who": "Candidate",
+  "text": "The candidate asks more questions than you do. About the budget, about turnover, about your management style. You start sweating.",
+  "left": "Answer openly",
+  "right": "Steer it back on track"
+ },
+ {
+  "id": "l2a_020",
+  "who": "Director",
+  "text": "The director texts in the evening: “Checked your finalist’s socials. Travels too much. Won’t he take vacation right away?” You’ve already given a tentative yes.",
+  "left": "Stand up for the candidate",
+  "right": "Withdraw the offer"
+ },
+ {
+  "id": "l2a_021",
+  "who": "Candidate",
+  "text": "A junior candidate writes under “expectations”: “Become your manager within a year.” Says it without a hint of a smile.",
+  "left": "Appreciate the ambition",
+  "right": "Pass, to be safe"
+ },
+ {
+  "id": "l2a_022",
+  "who": "Recruiter",
+  "text": "The recruiter suggests an “interview marathon”: five candidates back to back, half an hour each, no breaks. “We’ll fill the role faster.”",
+  "left": "Agree",
+  "right": "Spread it over three days"
+ },
+ {
+  "id": "l2a_023",
+  "who": "Video call",
+  "text": "On a video interview, someone behind the candidate is clearly whispering answers. Sometimes you can even see a hand holding a note.",
+  "left": "Ask to see the room",
+  "right": "Ask an unexpected question"
+ },
+ {
+  "id": "l2a_024",
+  "who": "Team chat",
+  "text": "The team chat is discussing a candidate: “He said in the interview our processes are a mess.” People are offended. Then again, he’s basically right.",
+  "left": "Defend the candidate",
+  "right": "Side with the team"
+ },
+ {
+  "id": "l2a_025",
+  "who": "Candidate",
+  "text": "In the final round the candidate says he can start tomorrow — but only remotely, from another time zone. His morning is your midnight.",
+  "left": "Try a hybrid setup",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_026",
+  "who": "Recruiter",
+  "text": "The recruiter wants a feedback form for every candidate: 18 fields, including “culture fit, 1 to 7.” There were twelve candidates.",
+  "left": "Fill it all out honestly",
+  "right": "Write one line each"
+ },
+ {
+  "id": "l2a_027",
+  "who": "Candidate",
+  "text": "A candidate solved the test task better than your team solved the same problem for real six months ago. The team can see that too.",
+  "left": "Hire her and own it",
+  "right": "Say she got lucky"
+ },
+ {
+  "id": "l2a_028",
+  "who": "Inner voice",
+  "text": "Evening. You need to call three finalists and tell two of them “no.” You could send HR’s template email. Or call in person.",
+  "left": "Call them personally",
+  "right": "Send the template"
+ },
+ {
+  "id": "l2a_029",
+  "who": "Director",
+  "text": "The director wants to interview a candidate “together with you.” Midway he starts describing projects you haven’t even approved yet.",
+  "left": "Gently correct him",
+  "right": "Play along"
+ },
+ {
+  "id": "l2a_030",
+  "who": "Inbox",
+  "text": "A candidate with an offer asks for a call to “clarify a couple of things.” The couple turns out to be seventeen, including laptop color.",
+  "left": "Answer every one",
+  "right": "Hand it to HR"
+ },
+ {
+  "id": "l2a_031",
+  "who": "Fellow team lead",
+  "text": "A neighboring team lead proposes a swap: “My analyst for your designer — they’d fit better with us.” Neither candidate knows.",
+  "left": "Make the swap",
+  "right": "Decline the trade"
+ },
+ {
+  "id": "l2a_032",
+  "who": "Recruiter",
+  "text": "9 p.m., the recruiter writes: “Candidate changed his mind and took a counteroffer.” Week six of the search ends with nothing.",
+  "left": "Call him yourself",
+  "right": "Start over tomorrow"
+ },
+ {
+  "id": "l2a_033",
+  "who": "Team member",
+  "text": "An employee wants to refer a friend and collect the referral bonus. In the interview the friend mixes up basic concepts.",
+  "left": "Turn the friend down",
+  "right": "Hire on probation"
+ },
+ {
+  "id": "l2a_034",
+  "who": "Calendar",
+  "text": "A three-hour invite lands: “Interviewer Calibration.” Everyone rates how everyone else asks questions.",
+  "left": "Go and take part",
+  "right": "Decline: crunch time"
+ },
+ {
+  "id": "l2a_035",
+  "who": "Candidate",
+  "text": "The candidate suddenly asks: “Could I watch your team work for a couple of hours?” The team is not at its best today.",
+  "left": "Let him sit in",
+  "right": "Suggest another day"
+ },
+ {
+  "id": "l2a_036",
+  "who": "HR",
+  "text": "HR reports: during a reference check, your finalist’s former manager said one word — “Well…” — and then stopped answering the phone.",
+  "left": "Call again",
+  "right": "Don’t read into it"
+ },
+ {
+  "id": "l2a_037",
+  "who": "New hire",
+  "text": "The new hire’s first day. No laptop, no access, badge coming tomorrow. He’s looking at you hopefully. What now?",
+  "left": "Give him your laptop",
+  "right": "Send him to read the wiki"
+ },
+ {
+  "id": "l2a_038",
+  "who": "New hire",
+  "text": "The new hire asks if there’s a “how everything works” document. There isn’t. It all lives in three people’s heads, and one of them is on vacation.",
+  "left": "Sit down and write it",
+  "right": "Pair him with a veteran"
+ },
+ {
+  "id": "l2a_039",
+  "who": "New hire",
+  "text": "On his third day the new hire stays until 9 p.m. Says he “wants to get up to speed faster.” The team is already giving him looks.",
+  "left": "Send him home",
+  "right": "Praise his drive"
+ },
+ {
+  "id": "l2a_040",
+  "who": "HR",
+  "text": "HR wants you to throw the new hire a “welcome breakfast” at 8:30, with balloons. The new hire is an introvert — it shows even in his résumé.",
+  "left": "Keep it to a quiet coffee",
+  "right": "Go full balloons"
+ },
+ {
+  "id": "l2a_041",
+  "who": "Buddy",
+  "text": "The assigned buddy complains: “The new guy asks a question every five minutes, I can’t get anything done.” The new guy complains the buddy never talks.",
+  "left": "Assign a new buddy",
+  "right": "Talk to both of them"
+ },
+ {
+  "id": "l2a_042",
+  "who": "New hire",
+  "text": "On day one the new hire proposes rewriting half your processes: “At my last job we did it differently.” The team tenses up and goes quiet.",
+  "left": "Hear him out in a 1:1",
+  "right": "Ask him to learn first"
+ },
+ {
+  "id": "l2a_043",
+  "who": "Sysadmin",
+  "text": "The sysadmin says the new hire’s access will take two weeks: “Ticket queue.” The new hire has read the whole wiki and counted the ceiling tiles.",
+  "left": "Escalate to the director",
+  "right": "Wait your turn"
+ },
+ {
+  "id": "l2a_044",
+  "who": "New hire",
+  "text": "The new hire messages in the evening: “So I don’t need to do anything until Monday, right?” Wrong. But technically you never gave him a task.",
+  "left": "Give him a task, fast",
+  "right": "Reply “Get some rest”"
+ },
+ {
+  "id": "l2a_045",
+  "who": "New hire",
+  "text": "At his first stand-up the new hire accidentally mentions a mistake a veteran has been hiding for a month. The silence is deafening.",
+  "left": "Discuss it openly",
+  "right": "Take it to a private chat"
+ },
+ {
+  "id": "l2a_046",
+  "who": "Onboarding plan",
+  "text": "You promised the new hire a detailed 90-day onboarding plan. He starts in an hour. There is no plan. There is a file called “plan_final_2.”",
+  "left": "Sketch it in an hour",
+  "right": "Confess and build it together"
+ },
+ {
+  "id": "l2a_047",
+  "who": "New hire",
+  "text": "The new hire finished his first task in a day instead of a week and wants the next one. You haven’t come up with a next one.",
+  "left": "Grab one from the backlog",
+  "right": "Ask him to study the code"
+ },
+ {
+  "id": "l2a_048",
+  "who": "New hire",
+  "text": "Near the end of probation the new hire admits: “I don’t think I’m cutting it.” From what you’ve seen — he is, but barely.",
+  "left": "Extend probation",
+  "right": "Part ways honestly"
+ },
+ {
+  "id": "l2a_049",
+  "who": "Director",
+  "text": "The director wants to meet the new hire personally — right at his first stand-up, with the question “How exactly will you be useful to this company?”",
+  "left": "Prep the new hire",
+  "right": "Talk the director out of it"
+ },
+ {
+  "id": "l2a_050",
+  "who": "New hire",
+  "text": "The new hire left a labeled lunch container in the kitchen. Someone ate half. He’s shocked and asks if that’s normal here.",
+  "left": "Find the culprit",
+  "right": "Say “It happens”"
+ },
+ {
+  "id": "l2a_051",
+  "who": "New hire",
+  "text": "The new hire asks if he can leave at six too, like his contract says. The whole team stays until eight, though nobody ever asked them to.",
+  "left": "Say “Of course”",
+  "right": "Give a vague answer"
+ },
+ {
+  "id": "l2a_052",
+  "who": "New hire",
+  "text": "The new hire shows up in a suit and tie. The whole team wears hoodies. He sheepishly asks about a dress code. There isn’t one. There is a director, though.",
+  "left": "Say “Just be yourself”",
+  "right": "Recommend the suit"
+ },
+ {
+  "id": "l2a_053",
+  "who": "Team chat",
+  "text": "The team started a separate chat “without the new guy,” so as “not to overload him.” He happened to see the chat’s name in a shared folder.",
+  "left": "Delete that chat",
+  "right": "Explain it to him"
+ },
+ {
+  "id": "l2a_054",
+  "who": "Director",
+  "text": "The director wants the new hire to “wow” a key client from day one. The new hire is still looking for the restroom.",
+  "left": "Give him something simple",
+  "right": "Throw him at the client"
+ },
+ {
+  "id": "l2a_055",
+  "who": "New hire",
+  "text": "In the evening the new hire sends you a twenty-page “team process analysis” concluding “a lot could be optimized.” A lot means you.",
+  "left": "Read it and discuss",
+  "right": "Thank him and shelve it"
+ },
+ {
+  "id": "l2a_056",
+  "who": "Team member",
+  "text": "A senior employee refuses to mentor: “I don’t get paid for it, it’s just more work.” There’s nobody else who could mentor.",
+  "left": "Get him a bonus for it",
+  "right": "Make it an order"
+ },
+ {
+  "id": "l2a_057",
+  "who": "HR",
+  "text": "HR sends a 64-item onboarding checklist and wants the new hire’s progress ticked off daily. Item 41: “Has felt the company values.”",
+  "left": "Fill it in honestly",
+  "right": "Tick everything at once"
+ },
+ {
+  "id": "l2a_058",
+  "who": "Inner voice",
+  "text": "The new hire’s probation ends tomorrow. You never held a single feedback session. He’s waiting for a decision.",
+  "left": "Pull an all-nighter on it",
+  "right": "Extend it by a month"
+ },
+ {
+  "id": "l2a_059",
+  "who": "1:1",
+  "text": "1:1 with an employee at 9:00. He’s brought a list of twelve items. You have a call with the director at 9:30. How do you fit it in?",
+  "left": "Cover the top three",
+  "right": "Be late for the director"
+ },
+ {
+  "id": "l2a_060",
+  "who": "1:1",
+  "text": "At your 1:1 the employee says: “Everything’s fine.” Third month in a row. He won’t look up. Dig deeper?",
+  "left": "Ask him point-blank",
+  "right": "Don’t pry"
+ },
+ {
+  "id": "l2a_061",
+  "who": "1:1",
+  "text": "The evening 1:1 drags on: the employee is telling you about his renovation, his cat and his complicated mother-in-law. It’s already 7:40 p.m.",
+  "left": "Hear him out",
+  "right": "Steer back to work"
+ },
+ {
+  "id": "l2a_062",
+  "who": "Calendar",
+  "text": "Eight back-to-back 1:1s on the calendar, half an hour each. The last one ends at 1 p.m. You haven’t had breakfast.",
+  "left": "Move half of them",
+  "right": "Do all eight"
+ },
+ {
+  "id": "l2a_063",
+  "who": "1:1",
+  "text": "At a 1:1 an employee asks for a raise. The salary review budget is closed until next year. She’s the best on the team.",
+  "left": "Promise to fight for it",
+  "right": "Honestly say no"
+ },
+ {
+  "id": "l2a_064",
+  "who": "Meeting template",
+  "text": "HR rolls out a mandatory 1:1 template: six sections, a mood rating and signatures from both sides. The team is horrified.",
+  "left": "Use the template",
+  "right": "Keep the old way"
+ },
+ {
+  "id": "l2a_065",
+  "who": "1:1",
+  "text": "At your 1:1 the employee says: “Can I give you some feedback?” And without waiting, pulls out a sheet of paper.",
+  "left": "Hear it all",
+  "right": "Save it for later"
+ },
+ {
+  "id": "l2a_066",
+  "who": "Team member",
+  "text": "An employee cancels his 1:1 for the fourth time: “Busy now, later.” Rumor has it he’s going to job interviews.",
+  "left": "Catch him in person",
+  "right": "Let it go"
+ },
+ {
+  "id": "l2a_067",
+  "who": "1:1",
+  "text": "At the morning 1:1 an employee bursts into tears over a personal situation. Stand-up is in ten minutes, and he’s presenting.",
+  "left": "Send him home",
+  "right": "Present it yourself"
+ },
+ {
+  "id": "l2a_068",
+  "who": "1:1",
+  "text": "At a 1:1 you discover an employee has spent a month on a task you canceled at stand-up. He didn’t hear.",
+  "left": "Admit your mistake",
+  "right": "Say “It happens”"
+ },
+ {
+  "id": "l2a_069",
+  "who": "Team member",
+  "text": "At the end of the 1:1 an employee asks: “What are my prospects a year from now?” The honest answer: “Same as now.”",
+  "left": "Tell the truth",
+  "right": "Draw up a career plan"
+ },
+ {
+  "id": "l2a_070",
+  "who": "Director",
+  "text": "The director asks what you talk about in your 1:1s and wants short minutes sent to him.",
+  "left": "Send the minutes",
+  "right": "Refuse: it’s confidential"
+ },
+ {
+  "id": "l2a_071",
+  "who": "1:1",
+  "text": "At a 1:1 an employee complains about a colleague but asks you to “keep it between us.” The problem affects the whole team.",
+  "left": "Keep the secret",
+  "right": "Raise it openly"
+ },
+ {
+  "id": "l2a_072",
+  "who": "Inner voice",
+  "text": "Friday evening. You’ve rescheduled your 1:1 with a quiet employee three times. He hasn’t objected once. That’s what worries you.",
+  "left": "Call him now",
+  "right": "Book it for Monday"
+ },
+ {
+  "id": "l2a_073",
+  "who": "1:1",
+  "text": "An employee shows up to the 1:1 with a twenty-slide deck “On My Development.” Slide twelve shows your job title.",
+  "left": "Discuss it seriously",
+  "right": "Joke and move on"
+ },
+ {
+  "id": "l2a_074",
+  "who": "1:1",
+  "text": "At a 1:1 an employee asks bluntly: “Are there going to be layoffs?” You know the answer, but promised to stay quiet until Friday.",
+  "left": "Dodge the question",
+  "right": "Drop an honest hint"
+ },
+ {
+  "id": "l2a_075",
+  "who": "Team member",
+  "text": "An employee wants your 1:1s to be walks around the office. It’s November, wet snow, and you’re in thin shoes.",
+  "left": "Go for the walk",
+  "right": "Stay in the meeting room"
+ },
+ {
+  "id": "l2a_076",
+  "who": "1:1",
+  "text": "Video 1:1. The employee forgot his camera is on and has been playing a phone game for half an hour while you talk. You can see everything.",
+  "left": "Say it directly",
+  "right": "Pretend you can’t see"
+ },
+ {
+  "id": "l2a_077",
+  "who": "Team member",
+  "text": "An employee says he “doesn’t need 1:1s at all, everything’s clear.” The other five attend dutifully.",
+  "left": "Cancel them for him",
+  "right": "Insist on the format"
+ },
+ {
+  "id": "l2a_078",
+  "who": "1:1",
+  "text": "At a 1:1 an employee asks to work noon to 9 p.m.: “I’m a night owl, mornings I’m a vegetable.” Your stand-up is at 10.",
+  "left": "Allow the shift",
+  "right": "Keep the schedule"
+ },
+ {
+  "id": "l2a_079",
+  "who": "1:1",
+  "text": "At a 1:1 an employee asks why a colleague with the same experience earns more. The numbers really are different, and you don’t know why.",
+  "left": "Promise to look into it",
+  "right": "Refer him to HR"
+ },
+ {
+  "id": "l2a_080",
+  "who": "Director",
+  "text": "The director wants you to use 1:1s to “motivate people to work overtime without extra pay.” You look at this week’s list of meetings.",
+  "left": "Quietly sabotage it",
+  "right": "Pass it on honestly"
+ },
+ {
+  "id": "l2a_081",
+  "who": "New hire",
+  "text": "The new hire texts at 7:50: “Can’t find the office. I’m at the building with columns.” The building with columns is the business center across the street.",
+  "left": "Go out and meet him",
+  "right": "Send him a map pin"
+ },
+ {
+  "id": "l2a_082",
+  "who": "New hire",
+  "text": "The new hire asks if it’s normal to get messages at 11 p.m. Mostly, they’re from you.",
+  "left": "Promise to stop",
+  "right": "Explain how things work"
+ },
+ {
+  "id": "l2a_083",
+  "who": "New hire",
+  "text": "In week two the new hire runs a chat poll: “What should we name our team?” The options are funny. The director will definitely hate them.",
+  "left": "Back the idea",
+  "right": "Shut the poll down"
+ },
+ {
+  "id": "l2a_084",
+  "who": "Team member",
+  "text": "At a 1:1 an employee asks for a “stretch assignment.” Everything challenging right now is on fire, and there’s no room for mistakes.",
+  "left": "Take the risk",
+  "right": "Postpone a quarter"
+ },
+ {
+  "id": "l2a_085",
+  "who": "1:1",
+  "text": "End-of-day 1:1. The employee announces: “I’m burned out.” His quarterly report is due tomorrow.",
+  "left": "Take the report yourself",
+  "right": "Ask him to push through"
+ },
+ {
+  "id": "l2a_086",
+  "who": "Coach",
+  "text": "The company hired a coach to sit in on your 1:1s “for calibration.” In front of him, your people are silent as fish.",
+  "left": "Ask the coach to leave",
+  "right": "Endure it for the learning"
+ },
+ {
+  "id": "l2a_087",
+  "who": "Inbox",
+  "text": "An employee sends a 1:1 agenda: “1. My overtime. 2. Why me again. 3. Other.” The meeting is in fifteen minutes.",
+  "left": "Prepare your answers",
+  "right": "Start with “Other”"
+ },
+ {
+  "id": "l2a_088",
+  "who": "Messenger",
+  "text": "10:30 p.m., an employee writes: “Can we do a 1:1 tomorrow? It’s important.” No further explanation. A whole night of overthinking ahead.",
+  "left": "Ask right now",
+  "right": "Reply “ok” and sleep"
+ },
+ {
+  "id": "l2a_089",
+  "who": "Team member",
+  "text": "At a 1:1 an employee praises you and says you’re the best manager he’s ever had. Then asks for vacation in the middle of the quarter.",
+  "left": "Grant the vacation",
+  "right": "Suggest other dates"
+ },
+ {
+  "id": "l2a_090",
+  "who": "1:1",
+  "text": "At a 1:1 an employee suggests you switch to first names. You’ve kept a formal distance with the whole team for years. The others will notice.",
+  "left": "Go first-name",
+  "right": "Stay formal"
+ },
+ {
+  "id": "l2a_091",
+  "who": "New hire",
+  "text": "The new hire asks in the evening if he can join the team-building event of the department next door: “It looks fun, and we don’t have one.”",
+  "left": "Let him go",
+  "right": "Organize your own"
+ },
+ {
+  "id": "l2a_092",
+  "who": "Mentor",
+  "text": "The new hire’s mentor wants you to rate the new hire “below expectations” so he’ll “pull himself together faster.” The new hire is doing fine.",
+  "left": "Rate him honestly",
+  "right": "Play along with the mentor"
+ },
+ {
+  "id": "l2a_093",
+  "who": "HR department",
+  "text": "HR lost the new hire’s paperwork, and he’s been working “unofficially” for a week. He politely asks if he’ll be paid.",
+  "left": "Raise hell with HR",
+  "right": "Reassure him and wait"
+ },
+ {
+  "id": "l2a_094",
+  "who": "Director",
+  "text": "The director asks in the evening why the new hire isn’t delivering results yet. It’s the new hire’s ninth day.",
+  "left": "Defend the new hire",
+  "right": "Promise to speed up"
+ },
+ {
+  "id": "l2a_095",
+  "who": "New hire",
+  "text": "At lunch the new hire asks why your previous employee quit. The whole table turns to look at you.",
+  "left": "Tell the truth",
+  "right": "Change the subject"
+ },
+ {
+  "id": "l2a_096",
+  "who": "Inner voice",
+  "text": "Sixth new hire this year. You tell the same jokes about the coffee machine and the Wi-Fi password. Maybe finally record a video?",
+  "left": "Record a video",
+  "right": "Tell it live"
+ },
+ {
+  "id": "l2a_097",
+  "who": "1:1",
+  "text": "At an evening 1:1 an employee shares an idea for the first time. The idea is bad. But he’s been silent at every meeting for two years.",
+  "left": "Support the idea",
+  "right": "Critique it gently"
+ },
+ {
+  "id": "l2a_098",
+  "who": "Team member",
+  "text": "An employee asks to move your 1:1 to 8:00 a.m., because after that she’s “in the flow.” You arrive at 9:30 and not a minute earlier.",
+  "left": "Come in at eight",
+  "right": "Find another time"
+ },
+ {
+  "id": "l2a_099",
+  "who": "1:1",
+  "text": "At a 1:1 an employee silently places a printout in front of you: a competitor’s job ad paying 50% more. “Thoughts?”",
+  "left": "Fight to keep him",
+  "right": "Wish him luck"
+ },
+ {
+  "id": "l2a_100",
+  "who": "New hire",
+  "text": "At the end of his first month the new hire hands you a card: “To the Best Manager.” Nobody else has ever given you anything. Pin it on the wall?",
+  "left": "Pin it up proudly",
+  "right": "Put it in a drawer"
+ },
+ {
+  "id": "l2a_101",
+  "who": "Team chat",
+  "text": "Morning: two employees are fighting in ALL CAPS in the team chat over whose turn it is to be on call this weekend. Everyone else reacts with popcorn.",
+  "left": "Settle it by decree",
+  "right": "Call them both in to talk"
+ },
+ {
+  "id": "l2a_102",
+  "who": "Team member",
+  "text": "Two employees refuse to work together on a project: “It’s him or me.” The project needs both. Deadline is in a week.",
+  "left": "Split the task in half",
+  "right": "Make them work together"
+ },
+ {
+  "id": "l2a_103",
+  "who": "Team member",
+  "text": "An employee sends a long evening message: a colleague took credit for her idea in a meeting with the director. The colleague is your most valuable developer.",
+  "left": "Set the record straight",
+  "right": "Say “It happens”"
+ },
+ {
+  "id": "l2a_104",
+  "who": "Kitchen",
+  "text": "War over the fridge: someone tossed a yogurt labeled “DO NOT TOUCH.” The team has split into two camps.",
+  "left": "Buy a new yogurt",
+  "right": "Introduce fridge rules"
+ },
+ {
+  "id": "l2a_105",
+  "who": "Meeting room",
+  "text": "At stand-up two employees’ argument about report formats turns personal. One has already said “incompetent.” Everyone’s looking at you.",
+  "left": "Stop the meeting",
+  "right": "Let them finish"
+ },
+ {
+  "id": "l2a_106",
+  "who": "Inner voice",
+  "text": "You realize half the team’s conflicts happen because you assign the same task to two people at once. Admit it?",
+  "left": "Admit it at stand-up",
+  "right": "Quietly stop doing it"
+ },
+ {
+  "id": "l2a_107",
+  "who": "Team member",
+  "text": "An employee demands to be moved away from a colleague who “breathes loudly and eats nuts.” The only free desk is by the server room door.",
+  "left": "Move him by the servers",
+  "right": "Suggest headphones"
+ },
+ {
+  "id": "l2a_108",
+  "who": "HR",
+  "text": "HR tells you one of your employees filed a complaint about another of your employees. You consider both of them reasonable people.",
+  "left": "Mediate it yourself",
+  "right": "Leave it to HR"
+ },
+ {
+  "id": "l2a_109",
+  "who": "Team chat",
+  "text": "Someone posts a meme in the group chat about “a certain colleague who’s always late.” Everyone knows who. So does he.",
+  "left": "Delete the meme",
+  "right": "Talk to the author"
+ },
+ {
+  "id": "l2a_110",
+  "who": "Team members",
+  "text": "The team veterans have ganged up on the newcomers: no lunch invites, no answers to questions. The newcomers come to complain.",
+  "left": "Hold a team lunch",
+  "right": "Talk to the veterans"
+ },
+ {
+  "id": "l2a_111",
+  "who": "Team member",
+  "text": "An employee feels he does all the work while a colleague gets the praise. The tracker shows he’s only half right.",
+  "left": "Show him the tracker",
+  "right": "Praise him separately"
+ },
+ {
+  "id": "l2a_112",
+  "who": "Team member",
+  "text": "An employee leaves at exactly 6:00 p.m.; the others stay until eight and resent it. Formally, there’s nothing wrong with what she does.",
+  "left": "Defend her publicly",
+  "right": "Ask her to adapt"
+ },
+ {
+  "id": "l2a_113",
+  "who": "Messenger",
+  "text": "Two employees only talk through you: “Tell him that…” They sit two meters apart.",
+  "left": "Seat them together",
+  "right": "Keep relaying"
+ },
+ {
+  "id": "l2a_114",
+  "who": "Meeting room",
+  "text": "At the retro the team starts blaming one person for every sprint failure. He’s silent and turning red. The conversation has clearly derailed.",
+  "left": "Stop the discussion",
+  "right": "Let people vent"
+ },
+ {
+  "id": "l2a_115",
+  "who": "Team member",
+  "text": "An employee threatens to quit if his team rival gets promoted first. The rival is the one who should be promoted — he’s stronger.",
+  "left": "Promote the rival",
+  "right": "Delay both decisions"
+ },
+ {
+  "id": "l2a_116",
+  "who": "Director",
+  "text": "The director heard about a conflict on your team from someone else. “Why am I not hearing this from you?” You only found out yesterday.",
+  "left": "Tell it like it is",
+  "right": "Say it’s handled"
+ },
+ {
+  "id": "l2a_117",
+  "who": "Team members",
+  "text": "The team is feuding over a new tool. Half want one, half want the other. You’ll have to decide, and someone will be upset.",
+  "left": "Choose yourself",
+  "right": "Hold a vote"
+ },
+ {
+  "id": "l2a_118",
+  "who": "Office party",
+  "text": "At the department party, two employees who’ve long been at odds start loudly having it out by the karaoke. The mic is still on.",
+  "left": "Turn off the mic",
+  "right": "Act like it’s part of the show"
+ },
+ {
+  "id": "l2a_119",
+  "who": "Team member",
+  "text": "An employee complains a colleague “steals” his tasks in the tracker and closes them faster. The colleague says: “I’m just helping.”",
+  "left": "Assign tasks to owners",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l2a_120",
+  "who": "Team member",
+  "text": "An employee refuses to attend stand-ups “as long as he’s there.” He is her ex-boyfriend and your analyst.",
+  "left": "Have them report separately",
+  "right": "Ask her to leave it at home"
+ },
+ {
+  "id": "l2a_121",
+  "who": "Inner voice",
+  "text": "You catch yourself avoiding the kitchen because your people are always arguing there. Lunch at your desk again?",
+  "left": "Eat at your desk",
+  "right": "Go and listen in"
+ },
+ {
+  "id": "l2a_122",
+  "who": "Delegation",
+  "text": "You finally delegate the director’s report. The employee takes three times as long and does it twice as badly as you would. Redo it?",
+  "left": "Quietly redo it",
+  "right": "Give feedback"
+ },
+ {
+  "id": "l2a_123",
+  "who": "Inner voice",
+  "text": "Morning realization: this week you did twenty of your team’s tasks and none of your own. Time to learn to delegate?",
+  "left": "Hand it all out today",
+  "right": "One more week solo"
+ },
+ {
+  "id": "l2a_124",
+  "who": "Team member",
+  "text": "You gave a task to an employee, he gave it to the intern, the intern gave it to an AI. The result reached you full of mistakes.",
+  "left": "Trace the chain",
+  "right": "Fix it yourself"
+ },
+ {
+  "id": "l2a_125",
+  "who": "Delegation",
+  "text": "You delegated a client presentation. At 9 p.m. the employee writes: “I’ve started it.” The pitch is tomorrow at nine.",
+  "left": "Sit down and help",
+  "right": "Let him finish it alone"
+ },
+ {
+  "id": "l2a_126",
+  "who": "Team member",
+  "text": "An employee hands back a delegated task: “This isn’t part of my job.” You checked — technically, it isn’t.",
+  "left": "Do it yourself",
+  "right": "Rewrite her job duties"
+ },
+ {
+  "id": "l2a_127",
+  "who": "Director",
+  "text": "In a meeting the director asks about a task you delegated. You don’t know its status. The employee is sitting next to you, silent.",
+  "left": "Let him answer",
+  "right": "Take a guess"
+ },
+ {
+  "id": "l2a_128",
+  "who": "Team member",
+  "text": "The employee you delegated to sends “is this okay?” every half hour. That’s the seventh tonight.",
+  "left": "Just do it yourself",
+  "right": "Say: “Your call”"
+ },
+ {
+  "id": "l2a_129",
+  "who": "Inner voice",
+  "text": "You delegated the quarterly report but spent all morning checking every line over the employee’s shoulder. He’s visibly nervous.",
+  "left": "Step back and trust",
+  "right": "Keep supervising"
+ },
+ {
+  "id": "l2a_130",
+  "who": "Team member",
+  "text": "An employee takes on everything he’s offered and finishes nothing on time. Today he raised his hand for a new project again.",
+  "left": "Say no to him",
+  "right": "Give him the project"
+ },
+ {
+  "id": "l2a_131",
+  "who": "Task tracker",
+  "text": "You delegated a task and forgot. So did the employee. The tracker didn’t: 21 days overdue, and the director is looking at the board right now.",
+  "left": "Take the blame",
+  "right": "Hold the employee to account"
+ },
+ {
+  "id": "l2a_132",
+  "who": "Delegation",
+  "text": "You need to delegate a dull spreadsheet reconciliation. Nobody wants it. The veterans refuse; the newbie can’t handle it.",
+  "left": "Give it to the newbie",
+  "right": "Do it yourself"
+ },
+ {
+  "id": "l2a_133",
+  "who": "Team member",
+  "text": "An employee did a delegated task nothing like you imagined, but the result is even better. The director wants it “as agreed.”",
+  "left": "Defend her version",
+  "right": "Redo it as ordered"
+ },
+ {
+  "id": "l2a_134",
+  "who": "Inner voice",
+  "text": "You go on vacation in two days. Everything only you know how to do is written down nowhere. Start delegating right now?",
+  "left": "Train a deputy all night",
+  "right": "Take the laptop on vacation"
+ },
+ {
+  "id": "l2a_135",
+  "who": "Team member",
+  "text": "An employee offers: “How about I run stand-ups instead of you?” Sounds helpful. Also sounds like the start of a coup.",
+  "left": "Hand over stand-ups",
+  "right": "Keep them yourself"
+ },
+ {
+  "id": "l2a_136",
+  "who": "Team members",
+  "text": "You hand out the week’s tasks, and within an hour three people come to swap. The result is the same plan, just scrambled.",
+  "left": "Approve the swaps",
+  "right": "Restore the original plan"
+ },
+ {
+  "id": "l2a_137",
+  "who": "Director",
+  "text": "The director reminds you in the evening: “Delegate, but you’re accountable.” The employee you assigned the task to just went on sick leave.",
+  "left": "Finish it yourself",
+  "right": "Hand it to someone else"
+ },
+ {
+  "id": "l2a_138",
+  "who": "Team chat",
+  "text": "You delegated the team lunch. The employee booked a restaurant where the average bill equals your weekly salary.",
+  "left": "Cancel the booking",
+  "right": "Go and don’t think about it"
+ },
+ {
+  "id": "l2a_139",
+  "who": "Delegation",
+  "text": "For the first time you let an employee present to the director instead of you. He nailed it. The director asks: “So why do I need you?”",
+  "left": "Joke it off",
+  "right": "Take presentations back"
+ },
+ {
+  "id": "l2a_140",
+  "who": "Team member",
+  "text": "10 p.m.: “Can’t decide which font to use in the report. Could you pick?” You delegated him the entire report.",
+  "left": "Pick the font",
+  "right": "Don’t reply until morning"
+ },
+ {
+  "id": "l2a_141",
+  "who": "Deputy",
+  "text": "Your unofficial deputy wants the role made official. He won’t take the title without a raise, and there’s no budget.",
+  "left": "Push for the raise",
+  "right": "Ask him to wait"
+ },
+ {
+  "id": "l2a_142",
+  "who": "Team member",
+  "text": "An employee does everything she’s assigned perfectly, but has never once taken initiative. The director wants “more proactivity on the team.”",
+  "left": "Give her an open task",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l2a_143",
+  "who": "Inner voice",
+  "text": "8 p.m. You’re rewriting an email your report already sent to a client, “so it’s done right.” The client got it hours ago.",
+  "left": "Send a correction",
+  "right": "Close the laptop"
+ },
+ {
+  "id": "l2a_144",
+  "who": "Team members",
+  "text": "Two employees argue over who’ll answer the director’s questions while you’re on vacation. Each is sure you promised them.",
+  "left": "Pick one",
+  "right": "Split it by topic"
+ },
+ {
+  "id": "l2a_145",
+  "who": "Team chat",
+  "text": "A team conflict has escalated into a sticker war in the group chat. Hundreds of smirking cats. The director is in this chat.",
+  "left": "Write “Enough”",
+  "right": "Remove the director"
+ },
+ {
+  "id": "l2a_146",
+  "who": "Team member",
+  "text": "An employee demands a written order for every task: “So there’s no dispute later.” He usually gets about thirty tasks a day.",
+  "left": "Write the orders",
+  "right": "Explain it can’t work"
+ },
+ {
+  "id": "l2a_147",
+  "who": "Team member",
+  "text": "An employee grabbed a task you’d delegated to a colleague and did it overnight: “He’d never have made it.” The colleague is furious.",
+  "left": "Praise the result",
+  "right": "Reprimand her"
+ },
+ {
+  "id": "l2a_148",
+  "who": "Inner voice",
+  "text": "Friday evening. Your “only I can do this” list has grown to twenty items. Half are ordering water and checking receipts.",
+  "left": "Hand it all out Monday",
+  "right": "Finish it all tonight"
+ },
+ {
+  "id": "l2a_149",
+  "who": "Team member",
+  "text": "An employee brings a problem and waits for a solution. You read that you should ask: “How would you solve it?” He looks at you with longing.",
+  "left": "Ask the coaching question",
+  "right": "Just solve it"
+ },
+ {
+  "id": "l2a_150",
+  "who": "Team member",
+  "text": "The employee you put in charge of hiring an intern hired her little sister. The sister is doing pretty well, though.",
+  "left": "Keep the sister",
+  "right": "Rerun the selection"
+ },
+ {
+  "id": "l2a_151",
+  "who": "Director",
+  "text": "The director hands down the quarterly OKR: “Increase customer satisfaction by 300%.” Nobody knows how to measure it. Object?",
+  "left": "Accept as is",
+  "right": "Propose a measurable goal"
+ },
+ {
+  "id": "l2a_152",
+  "who": "Finance",
+  "text": "Finance wants your department KPI broken down into individual KPIs per person. Your team only works together; nothing can be measured separately.",
+  "left": "Invent formal KPIs",
+  "right": "Fight for a team KPI"
+ },
+ {
+  "id": "l2a_153",
+  "who": "KPI sheet",
+  "text": "Filling in the KPI sheet in the evening, you see: honestly, the department hit 87% of target. If you “count it right,” it’s 103%.",
+  "left": "Count it “right”",
+  "right": "Report the honest 87%"
+ },
+ {
+  "id": "l2a_154",
+  "who": "Team member",
+  "text": "First thing in the morning: “My KPIs are impossible to hit. Can we revisit them?” He’s right — you wrote them at night.",
+  "left": "Revise them now",
+  "right": "Say “Try your best”"
+ },
+ {
+  "id": "l2a_155",
+  "who": "Planning",
+  "text": "At the OKR session the team came up with 14 key results. The director wants three max. Everyone defends their own.",
+  "left": "Pick three yourself",
+  "right": "Keep five and argue"
+ },
+ {
+  "id": "l2a_156",
+  "who": "Inner voice",
+  "text": "Last day of the quarter. You’re one closed deal short of KPI. The client will sign if you give a discount you can’t get approved.",
+  "left": "Quietly give the discount",
+  "right": "Miss the target"
+ },
+ {
+  "id": "l2a_157",
+  "who": "Dashboard",
+  "text": "The new KPI dashboard on the big office screen shows your department in red. The cause is a formula error, but every director walks past it.",
+  "left": "Fix the formula yourself",
+  "right": "Message the analysts"
+ },
+ {
+  "id": "l2a_158",
+  "who": "OKR",
+  "text": "As taught at training, you set an ambitious OKR and hit 70%. The director sees 70% and asks why not 100%.",
+  "left": "Explain the method",
+  "right": "Lower the goal retroactively"
+ },
+ {
+  "id": "l2a_159",
+  "who": "Team member",
+  "text": "An employee hit 150% of her KPIs, but the rest of the team is dragging the number down. She asks if she’ll get a separate bonus.",
+  "left": "Get her a separate bonus",
+  "right": "Mention the team result"
+ },
+ {
+  "id": "l2a_160",
+  "who": "HR",
+  "text": "HR announces that from this quarter, every manager’s KPIs include a “team happiness index,” measured by a monthly survey.",
+  "left": "Order pizza before the survey",
+  "right": "Do nothing special"
+ },
+ {
+  "id": "l2a_161",
+  "who": "Director",
+  "text": "The director wants “number of initiatives” added to team KPIs. A week later you have 40 initiatives, including “Move the water cooler.”",
+  "left": "Weed out the junk",
+  "right": "Report all 40"
+ },
+ {
+  "id": "l2a_162",
+  "who": "Report",
+  "text": "Evening, quarterly KPI deadline. You notice one metric was calculated with the old formula all quarter. With the new one: minus 20%.",
+  "left": "Recalculate honestly",
+  "right": "Keep the old formula"
+ },
+ {
+  "id": "l2a_163",
+  "who": "Team member",
+  "text": "An employee has started “optimizing KPIs”: closing one-line tasks in the tracker to boost the count. Pretty numbers, zero value.",
+  "left": "Change the metric",
+  "right": "Leave it — nice numbers"
+ },
+ {
+  "id": "l2a_164",
+  "who": "Fellow team lead",
+  "text": "A neighboring team lead proposes a deal: he’ll put your task in his KPIs, you put his in yours. “Easier reporting for both of us.”",
+  "left": "Agree",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_165",
+  "who": "Inner voice",
+  "text": "For the first time this year, you reread the OKRs set in January. Half are irrelevant, and one is about a product shut down in March.",
+  "left": "Update the OKRs now",
+  "right": "Ride out the year"
+ },
+ {
+  "id": "l2a_166",
+  "who": "Director",
+  "text": "The director wants the department KPIs daily at 9:00 instead of monthly. Compiling them by hand takes an hour every morning.",
+  "left": "Compile them every morning",
+  "right": "Suggest weekly"
+ },
+ {
+  "id": "l2a_167",
+  "who": "Team members",
+  "text": "The team asks to keep KPIs at last year’s level: “We’re already maxed out.” The director wants 25% growth.",
+  "left": "Stand up for the team",
+  "right": "Raise them 25%"
+ },
+ {
+  "id": "l2a_168",
+  "who": "Messenger",
+  "text": "At 9:30 p.m. the director sends a screenshot of a competitor’s KPIs: “Why theirs and why ours?” The competitor’s numbers come from an ad brochure.",
+  "left": "Write a full reply",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l2a_169",
+  "who": "Quarterly plan",
+  "text": "Finance wants the quarterly plan by Friday. The director says the strategy won’t exist until next month. Plan for what?",
+  "left": "Plan blind",
+  "right": "Wait for the strategy"
+ },
+ {
+  "id": "l2a_170",
+  "who": "Stand-up",
+  "text": "Morning stand-up on the quarterly plan. The team proposes a realistic plan. Yesterday the director promised upstairs twice as much.",
+  "left": "Defend the real plan",
+  "right": "Stretch the team"
+ },
+ {
+  "id": "l2a_171",
+  "who": "Inner voice",
+  "text": "The quarterly plan is ready: 47 slides, three scenarios, a Gantt chart. In the morning the director will ask for “one page.” Cut it now?",
+  "left": "Cut it tonight",
+  "right": "Go to sleep"
+ },
+ {
+  "id": "l2a_172",
+  "who": "Finance",
+  "text": "Finance sent back your quarterly plan marked “too optimistic.” The director sent back the same plan marked “not ambitious enough.”",
+  "left": "Put them in one room",
+  "right": "Redo it twice"
+ },
+ {
+  "id": "l2a_173",
+  "who": "Team member",
+  "text": "An employee pitches a “seriously cool” project for the quarterly plan, but it has nothing to do with company goals. He’s on fire about it.",
+  "left": "Add it to the plan",
+  "right": "Shelve the dream"
+ },
+ {
+  "id": "l2a_174",
+  "who": "Strategy offsite",
+  "text": "A strategy offsite on the quarterly plan at a country hotel. The first four hours are a leadership team-bonding quest.",
+  "left": "Play enthusiastically",
+  "right": "Work on your laptop"
+ },
+ {
+  "id": "l2a_175",
+  "who": "Director",
+  "text": "Evening message from the director: “Add one more project to the quarterly plan. No resources, but you’ll manage.” The team is at 120% capacity.",
+  "left": "Add it anyway",
+  "right": "Ask to drop something"
+ },
+ {
+  "id": "l2a_176",
+  "who": "Spreadsheet",
+  "text": "The shared quarterly plan spreadsheet. Overnight someone moved every deadline a month forward. The edit history says: “Anonymous.”",
+  "left": "Hunt down Anonymous",
+  "right": "Quietly restore the dates"
+ },
+ {
+  "id": "l2a_177",
+  "who": "Quarterly plan",
+  "text": "At the quarterly plan review, another department claims half your tasks are their responsibility. The director wants a decision.",
+  "left": "Hand them over",
+  "right": "Defend your turf"
+ },
+ {
+  "id": "l2a_178",
+  "who": "Team member",
+  "text": "At the end of the day an employee quietly asks: “Can we really get everything in the plan done?” You know you can’t. So does she.",
+  "left": "Tell the truth",
+  "right": "Cheer her up"
+ },
+ {
+  "id": "l2a_179",
+  "who": "Retrospective",
+  "text": "Quarterly retro. Turns out 40% of the plan got done, but lots of unplanned work did too. How do you show the director?",
+  "left": "Show it all honestly",
+  "right": "Rewrite the plan to fit"
+ },
+ {
+  "id": "l2a_180",
+  "who": "Director",
+  "text": "The director asks for a “contingency reserve” in the quarterly plan. Then crosses it out: “We won’t have any contingencies.”",
+  "left": "Fight for the reserve",
+  "right": "Hide a reserve inside"
+ },
+ {
+  "id": "l2a_181",
+  "who": "Inner voice",
+  "text": "The night before the quarterly plan review, you realize the grand total is off by an order of magnitude. An extra zero, or a missing one?",
+  "left": "Recheck everything",
+  "right": "Call the finance guy"
+ },
+ {
+  "id": "l2a_182",
+  "who": "Team members",
+  "text": "The team runs a betting pool on what percent of the plan the department will hit. Bets range from 30% to 70%. Nobody went higher.",
+  "left": "Bet 100% yourself",
+  "right": "Ban the pool"
+ },
+ {
+  "id": "l2a_183",
+  "who": "Inbox",
+  "text": "At 8 p.m. the director forwards the quarterly plan with one edit: “Deadlines two weeks earlier.” No explanation, no resources.",
+  "left": "Accept the edit",
+  "right": "Ask for a call"
+ },
+ {
+  "id": "l2a_184",
+  "who": "OKR",
+  "text": "You discover your key result “launch the service” depends on another department that doesn’t have it in its OKRs. At all.",
+  "left": "Go to their manager",
+  "right": "Log it as a risk"
+ },
+ {
+  "id": "l2a_185",
+  "who": "Team member",
+  "text": "Friday night an employee writes: “I’ve figured out how to hit the quarterly plan. We just need to work the weekend.” He wants the whole team.",
+  "left": "Back the sprint",
+  "right": "Protect the weekend"
+ },
+ {
+  "id": "l2a_186",
+  "who": "Quarterly plan",
+  "text": "Morning. The quarterly plan is approved, signed and sent out. An hour later the director announces a “shift in priorities.” The plan is obsolete by lunch.",
+  "left": "Rewrite it from scratch",
+  "right": "Wait a week"
+ },
+ {
+  "id": "l2a_187",
+  "who": "Finance",
+  "text": "The finance guy wants the “expected economic impact” of every task in the plan. Including “Update the slide template.”",
+  "left": "Make up numbers",
+  "right": "Explain there’s no impact"
+ },
+ {
+  "id": "l2a_188",
+  "who": "KPI",
+  "text": "Final hours of the quarter. To hit the “tickets handled” KPI, you could split each ticket into three. The team suggests doing exactly that.",
+  "left": "Allow the trick",
+  "right": "Forbid it and miss"
+ },
+ {
+  "id": "l2a_189",
+  "who": "Team member",
+  "text": "An employee proposes dropping “response speed” from the department KPIs — quality matters more. The director adores speed.",
+  "left": "Back her up",
+  "right": "Keep the metric"
+ },
+ {
+  "id": "l2a_190",
+  "who": "Inner voice",
+  "text": "The team’s quarterly bonus depends on KPIs you agreed to in a hurry. The team is falling just short. Call the director and plead?",
+  "left": "Plead for the team",
+  "right": "Accept the result"
+ },
+ {
+  "id": "l2a_191",
+  "who": "Director",
+  "text": "The director asks you to prepare an “explanation for missing the plan” in advance. The quarter just started.",
+  "left": "Prepare a template",
+  "right": "Say you’ll hit it"
+ },
+ {
+  "id": "l2a_192",
+  "who": "Retrospective",
+  "text": "At the quarterly retro an employee says: “Our problem is the goals change every two weeks.” Everyone nods. The director changes the goals.",
+  "left": "Escalate it upward",
+  "right": "“We work with what we’ve got”"
+ },
+ {
+  "id": "l2a_193",
+  "who": "Analyst",
+  "text": "The analyst brings a forecast: at the current pace, the quarterly plan will be complete on March 14 next year. Today is October 1.",
+  "left": "Speed up the team",
+  "right": "Prepare the director early"
+ },
+ {
+  "id": "l2a_194",
+  "who": "Team members",
+  "text": "In the evening the team asks to stop filling in daily OKR progress reports: “They eat an hour a day.”",
+  "left": "Cancel the reports",
+  "right": "Make them weekly"
+ },
+ {
+  "id": "l2a_195",
+  "who": "Director",
+  "text": "The director wants to roll out “OKRs for every employee, including the cleaners.” Your department gets to be the “pilot.”",
+  "left": "Take on the pilot",
+  "right": "Suggest another department"
+ },
+ {
+  "id": "l2a_196",
+  "who": "Inner voice",
+  "text": "You wake at 5:40 a.m. realizing you forgot to put three employees’ vacations in the quarterly plan. You submitted it yesterday.",
+  "left": "Confess to the director",
+  "right": "Quietly reshuffle"
+ },
+ {
+  "id": "l2a_197",
+  "who": "Finance",
+  "text": "Finance proposes tying team bonuses to revenue your team has roughly zero influence on. “But at least it’s the same for everyone.”",
+  "left": "Agree",
+  "right": "Fight to the end"
+ },
+ {
+  "id": "l2a_198",
+  "who": "Team member",
+  "text": "An employee sends a proposal to revise the OKRs, with detailed math. The math is right, but it means admitting the goal was a mistake.",
+  "left": "Admit the mistake",
+  "right": "Put it off a quarter"
+ },
+ {
+  "id": "l2a_199",
+  "who": "Director",
+  "text": "The director at the morning meeting: “I don’t like the word ‘plan.’ Let’s call it a ‘roadmap.’” Every document is titled “Plan.”",
+  "left": "Rename everything",
+  "right": "Rename just the covers"
+ },
+ {
+  "id": "l2a_200",
+  "who": "Inner voice",
+  "text": "You hit 100% of your quarterly plan. Instead of praise the director says: “So the plan was too easy.” Next one: 150%.",
+  "left": "Argue about the bar",
+  "right": "Accept and raise it"
+ },
+ {
+  "id": "l2a_201",
+  "who": "Finance",
+  "text": "Morning news from finance: the department budget is cut by 15%. “You decide where to save.” Options: training, bonuses, or the holiday party.",
+  "left": "Cut training",
+  "right": "Cut the party"
+ },
+ {
+  "id": "l2a_202",
+  "who": "Budget",
+  "text": "Near year-end, the department has unspent budget left. If it’s not spent by December 31, next year’s budget will be smaller.",
+  "left": "Buy everyone new chairs",
+  "right": "Return the money"
+ },
+ {
+  "id": "l2a_203",
+  "who": "Inner voice",
+  "text": "Reviewing department expenses in the evening, you find a six-month subscription to a service nobody uses. You signed up for it.",
+  "left": "Confess to finance",
+  "right": "Quietly cancel it"
+ },
+ {
+  "id": "l2a_204",
+  "who": "Team member",
+  "text": "An employee wants the company to pay for a conference in another city: “Everyone will be there.” It costs as much as the whole team’s quarterly training budget.",
+  "left": "Pay for one person",
+  "right": "Find an online course"
+ },
+ {
+  "id": "l2a_205",
+  "who": "Finance",
+  "text": "Finance rejected the request for new monitors: “Justify the economic impact.” The old monitors flicker, and two employees have sore eyes.",
+  "left": "Write the justification",
+  "right": "Buy them yourself"
+ },
+ {
+  "id": "l2a_206",
+  "who": "Inbox",
+  "text": "7:30 p.m. email from finance: “Urgently send next year’s budget forecast by 9:00 a.m.” The template is a 14-tab spreadsheet.",
+  "left": "Work late into the night",
+  "right": "Send last year’s"
+ },
+ {
+  "id": "l2a_207",
+  "who": "Director",
+  "text": "The director wants the budget padded by 30% “just in case.” Finance wants it cut by 10%. You’re the one defending it.",
+  "left": "Listen to the director",
+  "right": "Listen to finance"
+ },
+ {
+  "id": "l2a_208",
+  "who": "Procurement",
+  "text": "Procurement demands three vendor quotes for a $5 stapler. No quotes, no payment.",
+  "left": "Collect three quotes",
+  "right": "Pay out of pocket"
+ },
+ {
+  "id": "l2a_209",
+  "who": "Team members",
+  "text": "The team asks for a holiday dinner budget. Finance allocated enough for pizza and soda — if you pick it up yourself.",
+  "left": "Chip in yourself",
+  "right": "Do the pizza"
+ },
+ {
+  "id": "l2a_210",
+  "who": "Budget",
+  "text": "The department is 3% over budget. Finance demands a written explanation. The overspend came from a decision the director made and forgot.",
+  "left": "Remind the director",
+  "right": "Write the explanation"
+ },
+ {
+  "id": "l2a_211",
+  "who": "Finance",
+  "text": "Finance introduces a rule: any expense over $100 needs three signatures. Your employee urgently needs to travel and can’t buy a ticket.",
+  "left": "Go around via the director",
+  "right": "Wait for signatures"
+ },
+ {
+  "id": "l2a_212",
+  "who": "Inner voice",
+  "text": "You’re redoing the budget spreadsheet for the twelfth time because finance keeps changing the format. Now they want thousands instead of dollars.",
+  "left": "Redo it again",
+  "right": "Write an angry email"
+ },
+ {
+  "id": "l2a_213",
+  "who": "Accounting",
+  "text": "Accounting demands original receipts from a business trip six months ago. The employee who went quit three months ago.",
+  "left": "Track down the ex-employee",
+  "right": "Absorb the expense"
+ },
+ {
+  "id": "l2a_214",
+  "who": "Director",
+  "text": "The director wants department savings that “won’t upset anyone.” The only line you can really cut is the team’s quarterly bonuses.",
+  "left": "Cut the bonuses",
+  "right": "Cut your own expenses"
+ },
+ {
+  "id": "l2a_215",
+  "who": "Finance",
+  "text": "The finance guy calls at 8 p.m.: “If you don’t use your contractor budget within a week, another department gets it.” You only need a contractor in spring.",
+  "left": "Order the work early",
+  "right": "Give up the budget"
+ },
+ {
+  "id": "l2a_216",
+  "who": "Contractor",
+  "text": "The contractor writes at 8:15 a.m.: “Running a bit behind, we’ll deliver in a month.” The deadline was yesterday, and the project was already shown to the director as done.",
+  "left": "Demand a penalty",
+  "right": "Tell the director the truth"
+ },
+ {
+  "id": "l2a_217",
+  "who": "Contractor",
+  "text": "The contractor delivered. Everything looks great, but an hour later you discover half of it was copied from free templates.",
+  "left": "Send it back for rework",
+  "right": "Accept it as is"
+ },
+ {
+  "id": "l2a_218",
+  "who": "Contractor",
+  "text": "Friday night the contractor sends an invoice twice the contract amount: “The scope grew.” It grew because of your change requests.",
+  "left": "Pay without arguing",
+  "right": "Haggle"
+ },
+ {
+  "id": "l2a_219",
+  "who": "Vendor",
+  "text": "A vendor’s account manager invites you to a “business breakfast” at a fancy restaurant. You happen to be choosing a supplier for the year. Go?",
+  "left": "Go have breakfast",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_220",
+  "who": "Contractors",
+  "text": "Contractor tender: one company is half the price, the other more reliable. Finance wants the cheap one. The team wants the reliable one.",
+  "left": "Pick the cheap one",
+  "right": "Fight for the reliable one"
+ },
+ {
+  "id": "l2a_221",
+  "who": "Contractor",
+  "text": "The contractor wants access to all your systems “for a couple of hours.” Security takes a week to review such requests.",
+  "left": "Follow the procedure",
+  "right": "Give them your password"
+ },
+ {
+  "id": "l2a_222",
+  "who": "Contractor chat",
+  "text": "The contractor made a group chat with your team and posts there at 6 a.m. Your people ask if they have to reply before work.",
+  "left": "Set reply hours",
+  "right": "Ask them to reply"
+ },
+ {
+  "id": "l2a_223",
+  "who": "Contractor",
+  "text": "The contractor shows up with a new account manager. Everything you agreed over six months will have to be explained all over again.",
+  "left": "Explain it all again",
+  "right": "Demand the old one back"
+ },
+ {
+  "id": "l2a_224",
+  "who": "Vendor",
+  "text": "A vendor promises 20% off if you sign by midnight. Legal has gone home, the director isn’t answering.",
+  "left": "Sign it yourself",
+  "right": "Let the discount go"
+ },
+ {
+  "id": "l2a_225",
+  "who": "Contractor",
+  "text": "The contractor delivered and sent a 30-question satisfaction survey. No survey, no sign-off; no sign-off, no payment.",
+  "left": "Take the survey",
+  "right": "Delegate it to someone"
+ },
+ {
+  "id": "l2a_226",
+  "who": "Contractor",
+  "text": "Mid-project, the contractor secretly offers your best employee a job. The employee told you himself.",
+  "left": "Complain to their management",
+  "right": "Give your employee a raise"
+ },
+ {
+  "id": "l2a_227",
+  "who": "Team member",
+  "text": "An employee offers to replace the contractor: “I’ll build it over the weekend.” The contractor wants $50,000; the employee wants pizza.",
+  "left": "Trust your employee",
+  "right": "Stick with the contractor"
+ },
+ {
+  "id": "l2a_228",
+  "who": "Inbox",
+  "text": "A vendor writes that prices go up 40% starting tomorrow, “in line with market conditions.” The annual budget is already approved.",
+  "left": "Look for a replacement",
+  "right": "Pay and say nothing"
+ },
+ {
+  "id": "l2a_229",
+  "who": "Contractor",
+  "text": "At the demo the contractor shows an interface you’ve never seen. “This is what you asked for.” You definitely did not ask for this.",
+  "left": "Dig up the emails",
+  "right": "Accept a compromise"
+ },
+ {
+  "id": "l2a_230",
+  "who": "Contractor",
+  "text": "In the evening the contractor asks you to sign off on completed work “for old times’ sake,” though part of it isn’t done. The director never checks sign-offs.",
+  "left": "Sign it",
+  "right": "Refuse"
+ },
+ {
+  "id": "l2a_231",
+  "who": "Procurement",
+  "text": "Procurement found a vendor 3% cheaper than the current one. Switching takes three months and means reconfiguring everything you built over two years.",
+  "left": "Switch",
+  "right": "Justify the current one"
+ },
+ {
+  "id": "l2a_232",
+  "who": "Vendor",
+  "text": "At a meeting the vendor rep gives you a branded hoodie, a travel mug and an umbrella. Compliance requires declaring gifts worth over $40.",
+  "left": "Give it to the team",
+  "right": "Declare it"
+ },
+ {
+  "id": "l2a_233",
+  "who": "Contractor",
+  "text": "The freelancer you work with vanished for a week. Today he resurfaces: “I was in the mountains, no signal.” The project is on fire.",
+  "left": "Forgive and continue",
+  "right": "Find a replacement, fast"
+ },
+ {
+  "id": "l2a_234",
+  "who": "Director",
+  "text": "The director picked a contractor for your project himself: “My old classmate, great guys.” The guys’ portfolio is empty.",
+  "left": "Give them a test",
+  "right": "Take them, no questions"
+ },
+ {
+  "id": "l2a_235",
+  "who": "Contractor",
+  "text": "The contractor offers to “optimize” the contract: drop the late-delivery penalties in exchange for 5% off. Finance loves the discount.",
+  "left": "Take the discount",
+  "right": "Keep the penalties"
+ },
+ {
+  "id": "l2a_236",
+  "who": "Vendor",
+  "text": "The vendor’s service went down at 8 p.m.; their support works until 6. Your team is sitting there staring at their screens.",
+  "left": "Send the team home",
+  "right": "Find a workaround"
+ },
+ {
+  "id": "l2a_237",
+  "who": "Contractor",
+  "text": "The contractor wants the weekly status call moved to 7:30 a.m.: their office is in another time zone. At 7:30 you’re usually still in pajamas.",
+  "left": "Agree to 7:30",
+  "right": "Propose the evening"
+ },
+ {
+  "id": "l2a_238",
+  "who": "Finance",
+  "text": "Finance hasn’t paid the contractor for two months: “It’s in the queue.” The contractor threatens to stop work, and blames you.",
+  "left": "Raise hell in finance",
+  "right": "Apologize to the contractor"
+ },
+ {
+  "id": "l2a_239",
+  "who": "Inner voice",
+  "text": "In the evening you notice the contractor billed 15 hours of calls. You remember three. Each was ten minutes long.",
+  "left": "Dispute the invoice",
+  "right": "Don’t bother"
+ },
+ {
+  "id": "l2a_240",
+  "who": "Budget",
+  "text": "Next year’s budget needs new headcount. Finance says: “Only if you cut someone you already have.”",
+  "left": "Budget without new hires",
+  "right": "Fight for the headcount"
+ },
+ {
+  "id": "l2a_241",
+  "who": "Director",
+  "text": "The director wants to buy an expensive system he saw at a friend’s company. It solves problems you simply don’t have.",
+  "left": "Buy the system",
+  "right": "Show him the numbers"
+ },
+ {
+  "id": "l2a_242",
+  "who": "Contractor",
+  "text": "The contractor invites your team to their company party “as a sign of friendship.” Compliance advises caution.",
+  "left": "Let the team go",
+  "right": "Decline for everyone"
+ },
+ {
+  "id": "l2a_243",
+  "who": "Finance",
+  "text": "Finance proposes freezing all department spending until the end of the quarter. Your work software subscription expires next week.",
+  "left": "Renew it, scandal or not",
+  "right": "Work without the software"
+ },
+ {
+  "id": "l2a_244",
+  "who": "Team member",
+  "text": "An employee paid for a year of hosting with his own card “because otherwise everything would’ve crashed.” Accounting won’t reimburse without a contract.",
+  "left": "Push for reimbursement",
+  "right": "Say “Not allowed”"
+ },
+ {
+  "id": "l2a_245",
+  "who": "Inner voice",
+  "text": "You realize your annual budget is last year’s spreadsheet plus 10%. Like everyone’s. Like last year.",
+  "left": "Rebuild from scratch",
+  "right": "Keep the +10%"
+ },
+ {
+  "id": "l2a_246",
+  "who": "Contractor",
+  "text": "The contractor brings an intern to the morning meeting who’ll “just listen.” The intern asks the most questions and records everything on a voice recorder.",
+  "left": "Ask to stop recording",
+  "right": "Allow it"
+ },
+ {
+  "id": "l2a_247",
+  "who": "Finance",
+  "text": "The finance guy wants you to explain at the board meeting why your department spent more on coffee than marketing spent on ads.",
+  "left": "Defend the coffee",
+  "right": "Cut the coffee"
+ },
+ {
+  "id": "l2a_248",
+  "who": "Vendor",
+  "text": "In the evening a vendor sends an 80-page draft contract titled “Standard terms, nothing special.” It has to be signed in the morning.",
+  "left": "Read it overnight",
+  "right": "Sign without reading"
+ },
+ {
+  "id": "l2a_249",
+  "who": "Director",
+  "text": "The director wants you to present the budget in German “because it sounds more serious.” The entire board speaks only English.",
+  "left": "Prepare it in German",
+  "right": "Gently talk him out of it"
+ },
+ {
+  "id": "l2a_250",
+  "who": "Contractor",
+  "text": "The contractor admits they lost the source files for the entire project during an office move. No backup. They probably have one, but won’t say.",
+  "left": "Demand compensation",
+  "right": "Rebuild it yourselves"
+ },
+ {
+  "id": "l2a_251",
+  "who": "Sales",
+  "text": "This morning Sales promised a client a feature that doesn’t exist and won’t this year. The client is already thanking your team in a reply-all.",
+  "left": "Tell the client the truth",
+  "right": "Build it over the weekend"
+ },
+ {
+  "id": "l2a_252",
+  "who": "Marketing",
+  "text": "Marketing is launching an ad campaign for your team’s product — and is only now finding out it exists. “Why weren’t we invited?” they yell.",
+  "left": "Apologize and invite them",
+  "right": "Point to your email"
+ },
+ {
+  "id": "l2a_253",
+  "who": "Managers’ chat",
+  "text": "In the managers’ chat, the head of the next department writes: “Your team blew the deadline again.” It was his team that blew it.",
+  "left": "Reply with facts",
+  "right": "Sort it out in person"
+ },
+ {
+  "id": "l2a_254",
+  "who": "Accounting",
+  "text": "For a month, accounting and your team have been emailing about who should process the invoices. 23 people are cc’d, including the CEO.",
+  "left": "Take it on yourselves",
+  "right": "Call a meeting"
+ },
+ {
+  "id": "l2a_255",
+  "who": "Meeting room",
+  "text": "Meeting with IT. Both sides came with decks on why the other side is to blame. Yours is 15 slides, theirs is 40.",
+  "left": "Propose a joint plan",
+  "right": "Defend your slides"
+ },
+ {
+  "id": "l2a_256",
+  "who": "Head of Sales",
+  "text": "The head of sales invites you to a bar “just to talk.” You know tomorrow the board decides whose department gets an extra headcount.",
+  "left": "Go to the bar",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_257",
+  "who": "Warehouse",
+  "text": "The warehouse won’t ship your client’s order without a paper request with a blue stamp. The director has the blue stamp; the director is on a plane.",
+  "left": "Go with your own stamp",
+  "right": "Call the warehouse head"
+ },
+ {
+  "id": "l2a_258",
+  "who": "Legal",
+  "text": "Legal has been reviewing a contract for two months; your team can’t start the project without it. Version five came back with a comma fixed.",
+  "left": "Escalate to the director",
+  "right": "Camp out at Legal"
+ },
+ {
+  "id": "l2a_259",
+  "who": "Marketing",
+  "text": "Late at night Marketing posts about your team’s “revolutionary product.” So far the product exists only as mockups.",
+  "left": "Ask them to pull it",
+  "right": "Speed up development"
+ },
+ {
+  "id": "l2a_260",
+  "who": "IT department",
+  "text": "IT updated a system without warning and broke everything for your team. IT says: “We sent a newsletter.” Nobody reads the newsletter.",
+  "left": "Politely ask for a rollback",
+  "right": "Complain to the director"
+ },
+ {
+  "id": "l2a_261",
+  "who": "Fellow team lead",
+  "text": "A neighboring team lead quietly poached your best employee. The employee is happy; you’re left with a vacancy and a grudge.",
+  "left": "Go have it out",
+  "right": "Congratulate them both"
+ },
+ {
+  "id": "l2a_262",
+  "who": "Inbox",
+  "text": "Evening email: the head of an adjacent department “informed” the director about your team’s problems. You weren’t cc’d.",
+  "left": "Reply-all",
+  "right": "Talk to him in person"
+ },
+ {
+  "id": "l2a_263",
+  "who": "Sales",
+  "text": "Sales asks your team for an urgent “small customization” for a client. Small means two weeks of work, and it’s not in your plan.",
+  "left": "Do it, plan be damned",
+  "right": "Send it to the backlog"
+ },
+ {
+  "id": "l2a_264",
+  "who": "HR",
+  "text": "You and HR have spent three months arguing over who owns onboarding. Meanwhile the newcomers are onboarding however they can — which is not at all.",
+  "left": "Take it all on",
+  "right": "Escalate it"
+ },
+ {
+  "id": "l2a_265",
+  "who": "Inner voice",
+  "text": "You catch yourself writing an email to the next department for the third time, angrier each time. It’s 9:10 p.m. Send it?",
+  "left": "Send version three",
+  "right": "Delete it and go to bed"
+ },
+ {
+  "id": "l2a_266",
+  "who": "Support",
+  "text": "Support forwards every hard customer question to your team. 74 tickets this week. Nobody on your team signed up to do support.",
+  "left": "Take the tickets",
+  "right": "Agree on a filter"
+ },
+ {
+  "id": "l2a_267",
+  "who": "Finance",
+  "text": "Finance and Sales are fighting over numbers, and the director asks you, “the neutral party,” to judge. You’re not neutral: your bonus depends on both.",
+  "left": "Judge honestly",
+  "right": "Refuse to judge"
+ },
+ {
+  "id": "l2a_268",
+  "who": "Head of Marketing",
+  "text": "The head of marketing proposes an alliance one evening: “You back my project at the board, I back yours.” His project is frankly weak.",
+  "left": "Form the alliance",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_269",
+  "who": "Leadership meeting",
+  "text": "At the leadership meeting you’re asked to shorten deadlines because “the other team is already ready.” They’re ready on paper — you’ve seen their code.",
+  "left": "Say it out loud",
+  "right": "Stay quiet and speed up"
+ },
+ {
+  "id": "l2a_270",
+  "who": "Security",
+  "text": "Security blocked your team’s cloud storage. No explanation. Files are due to the client in two hours.",
+  "left": "Go and argue",
+  "right": "Email them in pieces"
+ },
+ {
+  "id": "l2a_271",
+  "who": "Director",
+  "text": "The director asks you to “make up” with the head of the next department. You never fought; you just haven’t said hello in three years.",
+  "left": "Make the first move",
+  "right": "Say everything’s fine"
+ },
+ {
+  "id": "l2a_272",
+  "who": "Director",
+  "text": "The director wants a status report every morning. Every morning he asks about what was in the report, because he doesn’t read it.",
+  "left": "Write it shorter",
+  "right": "Report verbally"
+ },
+ {
+  "id": "l2a_273",
+  "who": "Report",
+  "text": "Monthly report to the director. Nothing to brag about this month, but there are three reasonable failures. How do you frame them?",
+  "left": "As “growth areas”",
+  "right": "As failures with lessons"
+ },
+ {
+  "id": "l2a_274",
+  "who": "Inner voice",
+  "text": "9 p.m., you’re finishing the report upstairs. One section left: “Key Team Achievements.” You’ve been staring at it for twenty minutes.",
+  "left": "Go into detail",
+  "right": "Keep it brief"
+ },
+ {
+  "id": "l2a_275",
+  "who": "CEO",
+  "text": "The CEO unexpectedly asks you to report on your department in person. Your director finds out and asks to be “invited too.”",
+  "left": "Invite the director",
+  "right": "Go without him"
+ },
+ {
+  "id": "l2a_276",
+  "who": "Director",
+  "text": "The director wants only good news in the monthly report. There’s one bad item, but it’s big: a key client is leaving.",
+  "left": "Write about the client",
+  "right": "Mention it in the hallway"
+ },
+ {
+  "id": "l2a_277",
+  "who": "Report",
+  "text": "The director sent your report back with one note: “Add more energy.” Nothing else. It’s already evening.",
+  "left": "Add exclamation marks",
+  "right": "Ask what he meant"
+ },
+ {
+  "id": "l2a_278",
+  "who": "Inbox",
+  "text": "The director forwards your report to the CEO under his own name. You find out from the CEO’s thank-you email to him.",
+  "left": "Say nothing",
+  "right": "Drop the director a hint"
+ },
+ {
+  "id": "l2a_279",
+  "who": "Dashboard",
+  "text": "The CEO wants to switch from text reports to a dashboard. Your team spent a month building it. The CEO looks at it and asks for text.",
+  "left": "Bring back the text",
+  "right": "Walk him through it"
+ },
+ {
+  "id": "l2a_280",
+  "who": "Director",
+  "text": "Evening message from the director: “Good report, but where are the risks?” Last time you wrote about risks, he said: “Don’t be so dramatic.”",
+  "left": "Add risks gently",
+  "right": "Say there are none"
+ },
+ {
+  "id": "l2a_281",
+  "who": "Inner voice",
+  "text": "You realize the report for upstairs and the report for the team tell completely different stories about the same month.",
+  "left": "Merge into one truth",
+  "right": "Keep two versions"
+ },
+ {
+  "id": "l2a_282",
+  "who": "Director",
+  "text": "The director wants the report “yesterday.” The data won’t be ready until tomorrow. You can eyeball an estimate or wait for facts.",
+  "left": "Eyeball it",
+  "right": "Wait for the data"
+ },
+ {
+  "id": "l2a_283",
+  "who": "Messenger",
+  "text": "The director sends a 9-minute voice message with edits to the report. It begins with “Quickly.” You’re on the subway and your earbuds are dead.",
+  "left": "Listen at home",
+  "right": "Ask for it in text"
+ },
+ {
+  "id": "l2a_284",
+  "who": "CEO",
+  "text": "At the morning meeting the CEO praises your team for a project. The director sits beside him nodding as if it were his project.",
+  "left": "Name your team members",
+  "right": "Modestly say thanks"
+ },
+ {
+  "id": "l2a_285",
+  "who": "Director",
+  "text": "The director wants you to rate every employee weekly on a five-point scale and send it to him. The employees don’t know.",
+  "left": "Tell the team",
+  "right": "Send it quietly"
+ },
+ {
+  "id": "l2a_286",
+  "who": "Report",
+  "text": "You sent the quarterly report and suddenly spot last quarter’s revenue figure in it. The director has already replied: “Excellent!”",
+  "left": "Send a corrected version",
+  "right": "Leave it"
+ },
+ {
+  "id": "l2a_287",
+  "who": "Director",
+  "text": "The director opens the morning with: “I hear your team does nothing.” He won’t say who said it.",
+  "left": "Show the results",
+  "right": "Ask who said it"
+ },
+ {
+  "id": "l2a_288",
+  "who": "Board",
+  "text": "You’re invited to the board to present your department’s work in three minutes. Your material is built for twenty.",
+  "left": "Squeeze it to three",
+  "right": "Talk until cut off"
+ },
+ {
+  "id": "l2a_289",
+  "who": "Inner voice",
+  "text": "Friday, 6:30 p.m. The director wants an “analytical memo” on the department by Monday. You can ruin your own weekend or the team’s.",
+  "left": "Ruin your own",
+  "right": "Split it among the team"
+ },
+ {
+  "id": "l2a_290",
+  "who": "Sales",
+  "text": "Sales complains to the director that your team is “dragging its feet.” The same day you find an email showing they withheld data for a month.",
+  "left": "Forward it to the director",
+  "right": "Settle it directly"
+ },
+ {
+  "id": "l2a_291",
+  "who": "Call center",
+  "text": "Without warning, the call center routed its hotline to your team for the duration of their team-building. The phone has been ringing since 8 a.m.",
+  "left": "Answer the calls",
+  "right": "Switch on voicemail"
+ },
+ {
+  "id": "l2a_292",
+  "who": "Logistics",
+  "text": "At 7 p.m. Logistics reports that the shipment for your project is delayed. They knew this morning, “but didn’t want to upset you.”",
+  "left": "Chew them out",
+  "right": "Find a fix, fast"
+ },
+ {
+  "id": "l2a_293",
+  "who": "HR department",
+  "text": "HR demands your team’s signatures in paper safety-briefing logs. The logs are on another floor; the team is remote.",
+  "left": "Bring everyone in",
+  "right": "Negotiate a delay"
+ },
+ {
+  "id": "l2a_294",
+  "who": "Marketing",
+  "text": "Marketing stole the name your team came up with for a project and used it for their promo. Now the project has to be renamed.",
+  "left": "Fight for the name",
+  "right": "Come up with a new one"
+ },
+ {
+  "id": "l2a_295",
+  "who": "Team members",
+  "text": "The team asks you to talk to the department next door, which blasts music across the floor after six. It’s their “creative evening.”",
+  "left": "Go and ask them",
+  "right": "Buy the team headphones"
+ },
+ {
+  "id": "l2a_296",
+  "who": "Director",
+  "text": "The director wants a new section in the weekly report: “What I personally did for the company.” You won a tender, but he did the paperwork.",
+  "left": "List the tender",
+  "right": "Write something modest"
+ },
+ {
+  "id": "l2a_297",
+  "who": "Finance",
+  "text": "Finance and Legal email you at the same time, each demanding the contract be approved by them first. Both set a noon deadline.",
+  "left": "Call a joint meeting",
+  "right": "Go with Legal"
+ },
+ {
+  "id": "l2a_298",
+  "who": "Report",
+  "text": "The director wants the report as “one page, but with all the details.” You shrink the font to 8 and squeeze the margins.",
+  "left": "Size 8 it is",
+  "right": "Say it won’t fit"
+ },
+ {
+  "id": "l2a_299",
+  "who": "Sales",
+  "text": "Sales invites you to a joint stand-up to “improve communication.” They spend ninety minutes showing off their wins, then ask how you’re doing.",
+  "left": "Share your own wins",
+  "right": "Leave after half an hour"
+ },
+ {
+  "id": "l2a_300",
+  "who": "Inner voice",
+  "text": "In the morning you realize last week’s report was never sent. The director didn’t notice. Send it now, or act like that was the plan?",
+  "left": "Send it with an apology",
+  "right": "Pretend it was sent"
+ },
+ {
+  "id": "l2a_301",
+  "who": "Director",
+  "text": "First thing in the morning the director demands the whole team come in on Saturday “to show loyalty.” There’s no work on Saturday, just loyalty.",
+  "left": "Go in alone for everyone",
+  "right": "Pass it on to the team"
+ },
+ {
+  "id": "l2a_302",
+  "who": "CEO",
+  "text": "At the all-hands, the CEO publicly criticizes your employee’s mistake. The employee is sitting in the audience, going pale.",
+  "left": "Take the blame",
+  "right": "Stay silent"
+ },
+ {
+  "id": "l2a_303",
+  "who": "Director",
+  "text": "At 10 p.m. the director messages your employee directly, bypassing you, with a task “for tomorrow morning.” The employee asks you what to do.",
+  "left": "Say “Sleep, I’ll handle it”",
+  "right": "Advise doing it"
+ },
+ {
+  "id": "l2a_304",
+  "who": "Inner voice",
+  "text": "In the morning you learn the director wants to “shake up” your team. Your two best people are on the transfer list. Tell them now?",
+  "left": "Tell them now",
+  "right": "Fight for them first"
+ },
+ {
+  "id": "l2a_305",
+  "who": "Director",
+  "text": "The director wants cameras on your team “for workload statistics.” The team is already nervously joking about a reality show.",
+  "left": "Talk him out of it",
+  "right": "Agree with conditions"
+ },
+ {
+  "id": "l2a_306",
+  "who": "Team members",
+  "text": "The team learned that the project they spent three months on is being shut down from above. Everyone’s upset. You don’t know why yet.",
+  "left": "Find out and tell them",
+  "right": "Say it’s necessary"
+ },
+ {
+  "id": "l2a_307",
+  "who": "Director",
+  "text": "The director demands employees reply within five minutes during work hours. Your analyst is in the middle of building a complex model.",
+  "left": "Answer for him",
+  "right": "Demand the replies"
+ },
+ {
+  "id": "l2a_308",
+  "who": "CEO",
+  "text": "The CEO suddenly wants to “sit with the team” and watch you work. That day the team is mid-argument about the product’s future.",
+  "left": "Reschedule the visit",
+  "right": "Let him sit in"
+ },
+ {
+  "id": "l2a_309",
+  "who": "Director",
+  "text": "In the evening the director proposes “making an example” of an employee who missed a deadline. It was missed because of the director’s own decision.",
+  "left": "Remind him of it",
+  "right": "Issue a reprimand"
+ },
+ {
+  "id": "l2a_310",
+  "who": "Team chat",
+  "text": "Someone accidentally forwards a director’s email to the team chat: “the team can’t cut it.” Everyone read it in ten seconds. Deleted, but too late.",
+  "left": "Address it openly",
+  "right": "Pretend nobody saw"
+ },
+ {
+  "id": "l2a_311",
+  "who": "Director",
+  "text": "The director wants your team to take another project, “since you’re so fast.” You’re fast because you work until midnight.",
+  "left": "Refuse for the team",
+  "right": "Take the project"
+ },
+ {
+  "id": "l2a_312",
+  "who": "Inner voice",
+  "text": "You realize you’ve spent the whole year as a buffer between the director and the team. The buffer is wrung dry. Let one punch through, for once?",
+  "left": "Let it hit the team",
+  "right": "Take the hit yourself"
+ },
+ {
+  "id": "l2a_313",
+  "who": "Director",
+  "text": "The director wants to personally run your team’s stand-up on Monday, “to energize them.” The last one like that ended with two resignations.",
+  "left": "Talk him out of it",
+  "right": "Agree"
+ },
+ {
+  "id": "l2a_314",
+  "who": "HR",
+  "text": "At the director’s request, HR asks you to rank your employees “from best to worst.” They won’t say why. Everyone knows why.",
+  "left": "Rank them honestly",
+  "right": "Refuse"
+ },
+ {
+  "id": "l2a_315",
+  "who": "Director",
+  "text": "The director wants you to personally make sure nobody on the team leaves before 7 p.m. Your contract ends at 6, like everyone’s.",
+  "left": "Don’t enforce it",
+  "right": "Stand guard"
+ },
+ {
+  "id": "l2a_316",
+  "who": "Team member",
+  "text": "In the morning an employee tells you the director yelled at her in the elevator over an email you told her to send.",
+  "left": "Go to the director",
+  "right": "Comfort her and move on"
+ },
+ {
+  "id": "l2a_317",
+  "who": "Director",
+  "text": "The director wants to hear from your team “without you” at an open-door session. He writes everything down in a notebook.",
+  "left": "Ask to attend",
+  "right": "Trust the process"
+ },
+ {
+  "id": "l2a_318",
+  "who": "Team members",
+  "text": "In the evening the team asks why the quarterly bonus was canceled. The decision came from above; you were just told after the fact.",
+  "left": "Admit you’re powerless",
+  "right": "Blame “the situation”"
+ },
+ {
+  "id": "l2a_319",
+  "who": "Director",
+  "text": "The director wants your team to file hourly written reports: what you did 9 to 10, 10 to 11, and so on.",
+  "left": "Introduce the reports",
+  "right": "Propose a one-week pilot"
+ },
+ {
+  "id": "l2a_320",
+  "who": "Rumors",
+  "text": "There’s a layoff rumor going around. Employees corner you at the coffee machine. You know exactly as much as they do.",
+  "left": "Honestly say “I don’t know”",
+  "right": "Promise it’s all fine"
+ },
+ {
+  "id": "l2a_321",
+  "who": "Director",
+  "text": "In the evening the director says: “You need to cut one person from your team. Pick by morning.” The team doesn’t know yet.",
+  "left": "Fight it to the end",
+  "right": "Choose overnight"
+ },
+ {
+  "id": "l2a_322",
+  "who": "Inner voice",
+  "text": "Today’s the layoff announcement. You rewrote your speech three times and still don’t know how to start. The meeting is in ten minutes.",
+  "left": "Speak without notes",
+  "right": "Read from the page"
+ },
+ {
+  "id": "l2a_323",
+  "who": "HR",
+  "text": "HR is holding a layoff conversation with your employee and asks you to be there “for support.” The employee is an old friend.",
+  "left": "Be there",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_324",
+  "who": "Team member",
+  "text": "A laid-off employee asks for a recommendation letter in the evening. Honestly, his work was mediocre.",
+  "left": "Write a warm letter",
+  "right": "Write an honest one"
+ },
+ {
+  "id": "l2a_325",
+  "who": "Team chat",
+  "text": "After the layoff announcement, the team chat is dead silent. Not a single message since morning. Nobody’s even talking about lunch.",
+  "left": "Post something first",
+  "right": "Let the silence be"
+ },
+ {
+  "id": "l2a_326",
+  "who": "Team member",
+  "text": "A laid-off employee offers, as a parting gift, to tell the director exactly what she thinks of his decisions. In front of you. Right now.",
+  "left": "Talk her out of it",
+  "right": "Don’t stand in her way"
+ },
+ {
+  "id": "l2a_327",
+  "who": "Director",
+  "text": "The director wants the layoffs announced so “it sounds like good news for the company.” Three out of seven are being cut.",
+  "left": "Say it honestly",
+  "right": "Use his wording"
+ },
+ {
+  "id": "l2a_328",
+  "who": "The survivors",
+  "text": "After the layoffs, the remaining four got the work of seven. In the morning they come with a question: “Is this forever?”",
+  "left": "Promise to hire",
+  "right": "Tell it like it is"
+ },
+ {
+  "id": "l2a_329",
+  "who": "CEO",
+  "text": "At the all-hands the CEO announces an “optimization.” Five minutes later you have 12 messages asking “does this affect us?”",
+  "left": "Answer each one",
+  "right": "Call a team meeting"
+ },
+ {
+  "id": "l2a_330",
+  "who": "Inner voice",
+  "text": "You learn the layoffs will reach you too — in six months. The director asks you to stay quiet for now and “get the team through the project.”",
+  "left": "See the project through",
+  "right": "Start job hunting"
+ },
+ {
+  "id": "l2a_331",
+  "who": "Team member",
+  "text": "In the morning an employee asks point-blank: “Am I on the layoff list?” You saw the list yesterday. He isn’t on it, but his friend is.",
+  "left": "Answer just about him",
+  "right": "Dodge the question"
+ },
+ {
+  "id": "l2a_332",
+  "who": "HR",
+  "text": "HR asks you to host a “farewell tea” for the laid-off employees. They themselves don’t want any tea.",
+  "left": "Cancel the tea",
+  "right": "Hold it as a formality"
+ },
+ {
+  "id": "l2a_333",
+  "who": "Layoffs",
+  "text": "A laid-off employee’s last day. In the evening he hands in his badge and laptop. He’s waiting to see if you’ll say something.",
+  "left": "Walk him to the door",
+  "right": "Shake hands at his desk"
+ },
+ {
+  "id": "l2a_334",
+  "who": "Director",
+  "text": "Before the layoffs are announced, the director wants you to make the people on the list look bad in reports, “so it’s all justified.”",
+  "left": "Refuse",
+  "right": "Tweak the reports"
+ },
+ {
+  "id": "l2a_335",
+  "who": "Rumors",
+  "text": "The courier who delivers documents to HR tells your team he saw “some kind of lists.” Panic is rising.",
+  "left": "Ask HR directly",
+  "right": "Ignore the rumors"
+ },
+ {
+  "id": "l2a_336",
+  "who": "Team members",
+  "text": "In the evening the team goes to a bar to “pay respects” to the laid-off colleagues, who also came. You were invited, but hesitantly.",
+  "left": "Go for an hour",
+  "right": "Don’t go"
+ },
+ {
+  "id": "l2a_337",
+  "who": "Inner voice",
+  "text": "The morning after the layoff announcement. You have to run a normal stand-up as if nothing happened. Or as if something did?",
+  "left": "Talk first",
+  "right": "Go straight to tasks"
+ },
+ {
+  "id": "l2a_338",
+  "who": "Director",
+  "text": "After the layoffs, the director wants to “boost team spirit” and allocates a pizza budget. It covers one pizza for four people.",
+  "left": "Chip in yourself",
+  "right": "Skip the pizza"
+ },
+ {
+  "id": "l2a_339",
+  "who": "Team member",
+  "text": "An employee who survived the layoffs confesses in the evening: “I feel guilty that they kept me.” He’s almost in tears.",
+  "left": "Talk it through longer",
+  "right": "Suggest a therapist"
+ },
+ {
+  "id": "l2a_340",
+  "who": "CEO",
+  "text": "The CEO announces in the morning: “There will be no more layoffs.” He said exactly the same thing a week before the last ones.",
+  "left": "Pass it on as is",
+  "right": "Make your own promise"
+ },
+ {
+  "id": "l2a_341",
+  "who": "Director",
+  "text": "The director won’t let your people go to a conference because “they’ll find new jobs there right away.”",
+  "left": "Fight for the trip",
+  "right": "Agree"
+ },
+ {
+  "id": "l2a_342",
+  "who": "Messenger",
+  "text": "The director messages you in the evening: “Why did your employee like a competitor’s post?” The employee liked a photo of a cat.",
+  "left": "Defend the employee",
+  "right": "Ask him to be careful"
+ },
+ {
+  "id": "l2a_343",
+  "who": "Director",
+  "text": "The director wants your team in by 8:00 on Mondays for “morning meetings with leadership.” Voluntary. Mandatory.",
+  "left": "Go yourself for everyone",
+  "right": "Make everyone go"
+ },
+ {
+  "id": "l2a_344",
+  "who": "CEO",
+  "text": "The CEO wants to move your employee into his own department “as a promotion.” A step up for him, a hole for you.",
+  "left": "Let him go happily",
+  "right": "Talk him into staying"
+ },
+ {
+  "id": "l2a_345",
+  "who": "Inner voice",
+  "text": "Friday evening. Defending your team is good, but the director has called you “the defense attorney” three times this month. Not as a compliment.",
+  "left": "Ease off",
+  "right": "Keep defending"
+ },
+ {
+  "id": "l2a_346",
+  "who": "Team members",
+  "text": "You arrive in the morning to find the team has picked over the departed colleagues’ desks for souvenirs. New hires arrive in a week.",
+  "left": "Put everything back",
+  "right": "Allow the souvenirs"
+ },
+ {
+  "id": "l2a_347",
+  "who": "HR",
+  "text": "HR sends a layoff announcement script. In it you’re supposed to say: “This was a difficult decision by leadership.” Nobody asked you.",
+  "left": "Read the script",
+  "right": "Say it in your own words"
+ },
+ {
+  "id": "l2a_348",
+  "who": "Team member",
+  "text": "A laid-off employee hands you a notebook as he leaves: “Everything I know about the system. You’ll need it.” It’s 120 handwritten pages.",
+  "left": "Take it and read it",
+  "right": "Ask him to digitize it"
+ },
+ {
+  "id": "l2a_349",
+  "who": "Inner voice",
+  "text": "A week after the layoffs, you catch yourself assigning tasks to people who no longer work here. The tracker doesn’t stop you.",
+  "left": "Clean up the tracker",
+  "right": "Leave it"
+ },
+ {
+  "id": "l2a_350",
+  "who": "Director",
+  "text": "The director wants you to give the laid-off people a “reason” so it looks fair. The real reason: a bad quarter for everyone.",
+  "left": "Tell the truth",
+  "right": "Invent a reason"
+ },
+ {
+  "id": "l2a_351",
+  "who": "HR",
+  "text": "HR announces only one person from your team can be promoted this cycle. There are three candidates, and all three know about the cycle.",
+  "left": "Promote the best",
+  "right": "Ask for a second spot"
+ },
+ {
+  "id": "l2a_352",
+  "who": "Team member",
+  "text": "An employee has been waiting two years for a promotion. You’ve promised “next cycle” three times. He politely asks which cycle that will be.",
+  "left": "Promise a fourth time",
+  "right": "Go to the director today"
+ },
+ {
+  "id": "l2a_353",
+  "who": "Director",
+  "text": "In the evening the director asks who on the team you see as your successor. The honest answer: nobody. That looks bad for you both.",
+  "left": "Name a promising one",
+  "right": "Tell the truth"
+ },
+ {
+  "id": "l2a_354",
+  "who": "Team member",
+  "text": "An employee turns down a promotion: “I don’t want to manage people, I want to do the work.” The director finds that odd.",
+  "left": "Support her choice",
+  "right": "Persuade her"
+ },
+ {
+  "id": "l2a_355",
+  "who": "Committee",
+  "text": "The promotion committee wants your candidate justified in one paragraph. You wrote three pages. The committee never reads past a paragraph.",
+  "left": "Cut it to a paragraph",
+  "right": "Send three pages"
+ },
+ {
+  "id": "l2a_356",
+  "who": "Team member",
+  "text": "In the evening an employee learns his colleague got promoted instead of him. He writes: “Can we talk tomorrow morning.” With a period at the end.",
+  "left": "Call him now",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l2a_357",
+  "who": "Team member",
+  "text": "You promoted an employee to senior specialist. Now her former peers don’t invite her to lunch. She asks how to make things like before.",
+  "left": "Talk to the team",
+  "right": "Say that happens"
+ },
+ {
+  "id": "l2a_358",
+  "who": "Director",
+  "text": "The director wants to promote one of your people whom he personally likes. You like him less — he presents brilliantly but does little.",
+  "left": "Back the promotion",
+  "right": "Object with facts"
+ },
+ {
+  "id": "l2a_359",
+  "who": "Inner voice",
+  "text": "You realize you’ve never told the team how promotions actually work here. Because you don’t fully know yourself.",
+  "left": "Find out and explain",
+  "right": "Wait for questions"
+ },
+ {
+  "id": "l2a_360",
+  "who": "Team member",
+  "text": "A freshly promoted employee starts the morning bossing his former peers around, “I’m in charge now” style. Two complaints already.",
+  "left": "Talk to him",
+  "right": "Give him time"
+ },
+ {
+  "id": "l2a_361",
+  "who": "HR",
+  "text": "HR says your employee’s promotion is approved, but without a raise: “Not the right time.” You get to tell her.",
+  "left": "Tell it straight",
+  "right": "Squeeze out something"
+ },
+ {
+  "id": "l2a_362",
+  "who": "Team member",
+  "text": "Evening message: “If I’m not promoted, I’m leaving. I already have an offer.” He’s good, but you don’t like ultimatums.",
+  "left": "Meet him halfway",
+  "right": "Don’t give in"
+ },
+ {
+  "id": "l2a_363",
+  "who": "Director",
+  "text": "In the morning the director asks you to promote his protégée from another department to lead a stream on your team. Over your people.",
+  "left": "Agree",
+  "right": "Propose your own candidate"
+ },
+ {
+  "id": "l2a_364",
+  "who": "Team member",
+  "text": "An employee is up for promotion, but her strengths are invisible to the director: she quietly cleans up problems. How do you show it?",
+  "left": "Get her a presentation",
+  "right": "Write it up in a doc"
+ },
+ {
+  "id": "l2a_365",
+  "who": "Team members",
+  "text": "In the evening chat the team jokes about a colleague’s promotion: “Now he’ll only drink from the boss mug.” The promoted one isn’t laughing.",
+  "left": "Play along",
+  "right": "Change the subject"
+ },
+ {
+  "id": "l2a_366",
+  "who": "Inner voice",
+  "text": "Your best employee is ready for promotion. The only role above him is yours, and there’s nowhere for you to go. What now?",
+  "left": "Help him move up elsewhere",
+  "right": "Hold him back"
+ },
+ {
+  "id": "l2a_367",
+  "who": "Committee",
+  "text": "At the promotion committee, the head of another department says your candidate is “too young.” The candidate is 34.",
+  "left": "Argue",
+  "right": "Defer to next cycle"
+ },
+ {
+  "id": "l2a_368",
+  "who": "Team member",
+  "text": "An employee you didn’t promote sends a 40-item spreadsheet in the evening: “What I did this year.” Item 1: “Came to work.”",
+  "left": "Go through it item by item",
+  "right": "Reply briefly"
+ },
+ {
+  "id": "l2a_369",
+  "who": "Team member",
+  "text": "In the morning an employee thanks you for her promotion with a cake for the whole team. It’s huge, and half the team is on a diet this week.",
+  "left": "Have a small slice",
+  "right": "Take it next door"
+ },
+ {
+  "id": "l2a_370",
+  "who": "HR",
+  "text": "HR wants your employee’s new title rewritten because “Senior Lead Principal Specialist” doesn’t fit in the system.",
+  "left": "Come up with a shorter one",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l2a_371",
+  "who": "Director",
+  "text": "In the evening the director wants to discuss promoting “one of yours,” but it turns out he means your rival from another department.",
+  "left": "Support your rival",
+  "right": "Say nothing"
+ },
+ {
+  "id": "l2a_372",
+  "who": "Team member",
+  "text": "An employee got promoted and immediately asks for a private office. Nobody in the building has one — not even you.",
+  "left": "Explain reality",
+  "right": "Get him a meeting room"
+ },
+ {
+  "id": "l2a_373",
+  "who": "Team members",
+  "text": "Two employees are competing for one team lead slot. Each came to you separately and asked you “not to tell the other.”",
+  "left": "Run an open contest",
+  "right": "Decide quietly"
+ },
+ {
+  "id": "l2a_374",
+  "who": "Inner voice",
+  "text": "You wonder if you promoted someone just because he complained the loudest. The quiet, strong ones stayed put.",
+  "left": "Rethink your approach",
+  "right": "Don’t overthink it"
+ },
+ {
+  "id": "l2a_375",
+  "who": "Team member",
+  "text": "Back from parental leave, an employee learns a colleague was promoted while she was away. She asks if she has a shot.",
+  "left": "Draft a growth plan",
+  "right": "Say “We’ll see”"
+ },
+ {
+  "id": "l2a_376",
+  "who": "Director",
+  "text": "The director wants the promotion to go to whoever is “most passionate about the work.” By his observation, that’s whoever leaves last.",
+  "left": "Explain the difference",
+  "right": "Accept the criterion"
+ },
+ {
+  "id": "l2a_377",
+  "who": "Team member",
+  "text": "A newly promoted employee calls in the evening: “I can’t handle it, put me back.” It took you six months to push that promotion through.",
+  "left": "Convince him to stay",
+  "right": "Return him to his old role"
+ },
+ {
+  "id": "l2a_378",
+  "who": "Calendar",
+  "text": "Four-hour “Promotion Calibration” with other managers on the calendar. Everyone will defend their own and sink everyone else’s.",
+  "left": "Defend aggressively",
+  "right": "Stay out of the fight"
+ },
+ {
+  "id": "l2a_379",
+  "who": "Team member",
+  "text": "An employee got promoted, but the official announcement is a month away. He’s already told everyone in the kitchen.",
+  "left": "Give him a warning",
+  "right": "Let it slide"
+ },
+ {
+  "id": "l2a_380",
+  "who": "Inner voice",
+  "text": "You’re writing the department-wide congratulations for a promoted employee. This is version six. Version one had too many feelings.",
+  "left": "Send the first",
+  "right": "Send the sixth"
+ },
+ {
+  "id": "l2a_381",
+  "who": "Director",
+  "text": "In the morning the director asks: “Why is nobody on your team growing?” He himself rejected your last three promotion requests.",
+  "left": "Remind him of them",
+  "right": "Promise to fix it"
+ },
+ {
+  "id": "l2a_382",
+  "who": "Team member",
+  "text": "An employee is excelling at a level above hers, but promoting her is “too early”: she’s been here under a year. She asks for at least a new title.",
+  "left": "Get her a new title",
+  "right": "Ask her to wait"
+ },
+ {
+  "id": "l2a_383",
+  "who": "Messenger",
+  "text": "In the evening a newly promoted employee asks how to give feedback to a former friend who now reports to him. You can’t do that yourself.",
+  "left": "Share your experience",
+  "right": "Send a course link"
+ },
+ {
+  "id": "l2a_384",
+  "who": "HR",
+  "text": "HR requires three peer reviews in every promotion packet. The candidate’s peers are the same people who want his spot.",
+  "left": "Collect the reviews",
+  "right": "Suggest outside reviewers"
+ },
+ {
+  "id": "l2a_385",
+  "who": "Team member",
+  "text": "An employee offers: “Promote me with no raise, I just want the line on my résumé.” Sounds suspiciously honest.",
+  "left": "Promote him",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_386",
+  "who": "Inner voice",
+  "text": "Friday evening. A former report you once promoted is now your boss. He sends you a task for the weekend.",
+  "left": "Do the task",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_387",
+  "who": "CEO",
+  "text": "At the all-hands the CEO announces that all promotions this year will be “based on hackathon results.” Your team doesn’t code.",
+  "left": "Prep the team",
+  "right": "Ask about exceptions"
+ },
+ {
+  "id": "l2a_388",
+  "who": "Team member",
+  "text": "In the morning an employee asks why his colleague made senior when they started the same day. “He’s better” sounds harsh.",
+  "left": "Say it gently but honestly",
+  "right": "Explain the criteria"
+ },
+ {
+  "id": "l2a_389",
+  "who": "Team member",
+  "text": "A newly promoted employee throws a party and invites the whole team — except the colleague who was also up for it.",
+  "left": "Ask her to invite him",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l2a_390",
+  "who": "Director",
+  "text": "In the morning the director decides to “freeze” all promotions until year-end. You already told two people they’d be promoted in December.",
+  "left": "Tell them right away",
+  "right": "Fight the freeze"
+ },
+ {
+  "id": "l2a_391",
+  "who": "Team members",
+  "text": "The team wants a transparent growth matrix: “what it takes to grow.” The director says don’t — “people will start making demands.”",
+  "left": "Build the matrix",
+  "right": "Turn the team down"
+ },
+ {
+  "id": "l2a_392",
+  "who": "Inner voice",
+  "text": "Friday evening, and you realize your strongest employee should have been promoted long ago — but then the department loses its best doer.",
+  "left": "Start a promotion packet",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l2a_393",
+  "who": "Team member",
+  "text": "An employee is late for stand-up for the third time this week. A new excuse each time: traffic, the cat, “the elevator left without me.” Everyone looks at you.",
+  "left": "Call him out publicly",
+  "right": "Talk to him privately"
+ },
+ {
+  "id": "l2a_394",
+  "who": "Director",
+  "text": "Friday evening the director sends an idea “to mull over until Monday”: merging your team with the one next door. You’ll be mulling all weekend.",
+  "left": "Call him now",
+  "right": "Mull it on Monday"
+ },
+ {
+  "id": "l2a_395",
+  "who": "Candidate",
+  "text": "Right off the bat the candidate asks about remote work, vacation, health insurance and lunches. Not a word about the job yet. He’s a very strong engineer.",
+  "left": "Answer, then ask about work",
+  "right": "Wrap up early"
+ },
+ {
+  "id": "l2a_396",
+  "who": "Contractor",
+  "text": "The contractor wants a “tour” of your office for their new employees. Your team is working and doesn’t like tours.",
+  "left": "Give the tour yourself",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_397",
+  "who": "Managers’ chat",
+  "text": "In the managers’ chat a colleague suggests “secretly” discussing the new director. As everyone knows, no chat is secret.",
+  "left": "Join the discussion",
+  "right": "Leave the chat"
+ },
+ {
+  "id": "l2a_398",
+  "who": "Inner voice",
+  "text": "Monday morning. You open your inbox: 214 emails, 180 of them cc’s “for your information.” Read them or not?",
+  "left": "Read them all",
+  "right": "Opt out of cc’s"
+ },
+ {
+  "id": "l2a_399",
+  "who": "OKR",
+  "text": "An employee proposes the key result “increase team engagement.” You ask how to measure it. He replies: “By feel.”",
+  "left": "Accept “by feel”",
+  "right": "Build a metric together"
+ },
+ {
+  "id": "l2a_400",
+  "who": "Team member",
+  "text": "In the evening an employee admits she’s scared to present at the quarterly plan review. It’s tomorrow. She needs it to grow.",
+  "left": "Rehearse together",
+  "right": "Present for her"
+ },
+ {
+  "id": "l2a_401",
+  "who": "New hire",
+  "text": "On his first morning the new hire asks the CEO for the Wi-Fi password in the elevator. The CEO called you.",
+  "left": "Apologize for him",
+  "right": "Laugh it off"
+ },
+ {
+  "id": "l2a_402",
+  "who": "Finance",
+  "text": "Finance sends a report: your department leads the company in stationery spending. Turns out 90% is sticky notes used at retros.",
+  "left": "Cut back on retros",
+  "right": "Explain why retros matter"
+ },
+ {
+  "id": "l2a_403",
+  "who": "Inner voice",
+  "text": "Evening. You’ve canceled your own meeting with your mentor for the fifth time to meet with your team. The mentor asks if you’re even alive.",
+  "left": "Reschedule again",
+  "right": "Go tomorrow morning"
+ },
+ {
+  "id": "l2a_404",
+  "who": "Team members",
+  "text": "The team greets you in the morning with a printed letter asking to switch to a four-day week. All six signed.",
+  "left": "Pass it upward",
+  "right": "Say “Not realistic”"
+ },
+ {
+  "id": "l2a_405",
+  "who": "Director",
+  "text": "The director asks for “a couple of slides” on the department for the CEO. You send two. He asks for “about fifteen more, but the same two.”",
+  "left": "Make fifteen",
+  "right": "Ask what he really needs"
+ },
+ {
+  "id": "l2a_406",
+  "who": "Contractor",
+  "text": "The contractor calls at 9:15 p.m. with an “urgent question”: can they change the button color in the mockup you approved a month ago?",
+  "left": "Answer now",
+  "right": "Call back in the morning"
+ },
+ {
+  "id": "l2a_407",
+  "who": "Inbox",
+  "text": "A candidate you rejected thanks you for the detailed feedback and promises to reapply in a year. The director really liked her too.",
+  "left": "Keep in touch",
+  "right": "Close the chapter"
+ },
+ {
+  "id": "l2a_408",
+  "who": "Rumors",
+  "text": "Rumor has it your team is getting a new manager and you’re being moved “to a project.” You hear this from the cleaner.",
+  "left": "Ask the director",
+  "right": "Pretend you didn’t hear"
+ },
+ {
+  "id": "l2a_409",
+  "who": "Team member",
+  "text": "In the evening an employee says he’s going on paternity leave in a month. You’re genuinely happy for him. But he’s running the quarter’s key project.",
+  "left": "Rework the plan",
+  "right": "Ask for a handover"
+ },
+ {
+  "id": "l2a_410",
+  "who": "Director",
+  "text": "In the morning the director asks why your team has no “feedback culture.” Yesterday you gave him feedback and he got offended.",
+  "left": "Remind him of yesterday",
+  "right": "Add another meeting"
+ },
+ {
+  "id": "l2a_411",
+  "who": "Meeting room",
+  "text": "Your team booked the meeting room for a retro, but the department next door is in there, pretending not to see the booking. They’re on an “important call.”",
+  "left": "Kick them out",
+  "right": "Hold the retro in the kitchen"
+ },
+ {
+  "id": "l2a_412",
+  "who": "Inner voice",
+  "text": "You’re at a family dinner, but your head is busy figuring out how to tell an employee his project is canceled. Your relatives ask if you’re okay.",
+  "left": "Tell them at the table",
+  "right": "Put the phone away"
+ },
+ {
+  "id": "l2a_413",
+  "who": "New hire",
+  "text": "The new hire came in at 7 a.m. to impress you. You arrive at 9:30 and find him asleep on the meeting room couch.",
+  "left": "Tactfully wake him",
+  "right": "Snap a photo for the chat"
+ },
+ {
+  "id": "l2a_414",
+  "who": "Quarterly plan",
+  "text": "The director approved the quarterly plan, then told the board it’s “the department’s plan,” not his. The department never planned half of it.",
+  "left": "Clarify in front of all",
+  "right": "Let it go"
+ },
+ {
+  "id": "l2a_415",
+  "who": "Team members",
+  "text": "Friday, 6:05 p.m. Half the team is still at their computers “so as not to look worse than the others.” Nobody’s working; they’re waiting to see who leaves first.",
+  "left": "Leave first",
+  "right": "Stay and set an example"
+ },
+ {
+  "id": "l2a_416",
+  "who": "HR",
+  "text": "HR asks you this morning to prepare an employee’s “success story” for the company magazine. The employee is firmly against publicity.",
+  "left": "Persuade the employee",
+  "right": "Turn HR down"
+ },
+ {
+  "id": "l2a_417",
+  "who": "Fellow team lead",
+  "text": "A neighboring team lead wants to “borrow” your analyst for two days. Last time, “two days” lasted three months.",
+  "left": "Lend with an agreement",
+  "right": "Refuse"
+ },
+ {
+  "id": "l2a_418",
+  "who": "Director",
+  "text": "At 8:40 p.m. the director emails with the subject “Let’s discuss your effectiveness.” The body is just a calendar link.",
+  "left": "Book the earliest slot",
+  "right": "Book a week out"
+ },
+ {
+  "id": "l2a_419",
+  "who": "Task tracker",
+  "text": "You open the tracker in the morning: 47 tasks in the column “Awaiting manager review.” The manager is you.",
+  "left": "Review them all today",
+  "right": "Allow peer review"
+ },
+ {
+  "id": "l2a_420",
+  "who": "Candidate",
+  "text": "For the test assignment, a candidate sent a video with a song about your company. The song, admittedly, is catchy.",
+  "left": "Invite to an interview",
+  "right": "Ask for the actual task"
+ },
+ {
+  "id": "l2a_421",
+  "who": "Inbox",
+  "text": "An email from another branch: “Your department is a role model — tell us how you work.” The presentation is needed by morning.",
+  "left": "Do it overnight",
+  "right": "Ask for a week"
+ },
+ {
+  "id": "l2a_422",
+  "who": "Inner voice",
+  "text": "Morning. You catch yourself answering an employee with the director’s phrase you hate: “This is not up for discussion.”",
+  "left": "Apologize to them",
+  "right": "Act like that’s normal"
+ },
+ {
+  "id": "l2a_423",
+  "who": "Director",
+  "text": "At a meeting the director holds up your team as an example — and immediately announces he’ll take half its tasks “as a best practice.”",
+  "left": "Defend your tasks",
+  "right": "Hand them over smiling"
+ },
+ {
+  "id": "l2a_424",
+  "who": "Team member",
+  "text": "In the evening an employee writes that she got into a master’s program. Classes are Thursdays from 3 p.m. Thursday is your release day.",
+  "left": "Move releases",
+  "right": "Ask her to choose"
+ },
+ {
+  "id": "l2a_425",
+  "who": "Contractor",
+  "text": "The contractor was forty minutes late for the morning meeting and suggests doing it in “fast mode.” There are two hours of questions.",
+  "left": "Move it to tomorrow",
+  "right": "Talk fast"
+ },
+ {
+  "id": "l2a_426",
+  "who": "Team members",
+  "text": "You propose a new stand-up format: “standing, 10 minutes.” A week later everyone brings chairs and sits for half an hour.",
+  "left": "Restore standing",
+  "right": "Accept the chairs"
+ },
+ {
+  "id": "l2a_427",
+  "who": "Inner voice",
+  "text": "Evening. You reread your self-review. It says: “A manager who is always available.” That’s true, and that’s the problem.",
+  "left": "Set boundaries",
+  "right": "Leave things as they are"
+ },
+ {
+  "id": "l2a_428",
+  "who": "Team chat",
+  "text": "Morning. News lands in the team chat: an industry review calls your product “promising.” Everyone’s thrilled.",
+  "left": "Throw a celebration",
+  "right": "Say: “Back to work”"
+ },
+ {
+  "id": "l2a_429",
+  "who": "Budget",
+  "text": "The laptop budget covers four. You need six. Two people will be stuck with old ones that overheated even before the pandemic.",
+  "left": "Take an old one yourself",
+  "right": "Hold a lottery"
+ },
+ {
+  "id": "l2a_430",
+  "who": "Team member",
+  "text": "At 7 p.m. Friday an employee delivers a task that was due Tuesday. The work is excellent. But Tuesday is gone.",
+  "left": "Praise the quality",
+  "right": "Discuss deadlines"
+ },
+ {
+  "id": "l2a_431",
+  "who": "Inbox",
+  "text": "The CEO sends every manager a leadership book: “Let’s discuss next week.” It’s 600 pages.",
+  "left": "Read it at night",
+  "right": "Read a summary"
+ },
+ {
+  "id": "l2a_432",
+  "who": "Video call",
+  "text": "On a video call with the director, your employee forgot to mute and said: “This again.” Everyone heard. The director went silent.",
+  "left": "Save it with a joke",
+  "right": "Apologize for the team"
+ },
+ {
+  "id": "l2a_433",
+  "who": "Team members",
+  "text": "In the evening the team asks if there’ll be a holiday gift. Last year it was a calendar with photos of the director.",
+  "left": "Buy gifts yourself",
+  "right": "Wait for word from above"
+ },
+ {
+  "id": "l2a_434",
+  "who": "New hire",
+  "text": "At the morning stand-up the new hire reads out a detailed report he prepared overnight. The task was ten minutes long.",
+  "left": "Praise the effort",
+  "right": "Explain the format"
+ },
+ {
+  "id": "l2a_435",
+  "who": "Director",
+  "text": "The director suggests you also take over the team next door “temporarily, until we find a manager.” The search has been going for a year.",
+  "left": "Take both teams",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_436",
+  "who": "Inner voice",
+  "text": "You dream that you’re holding a 1:1 with yourself and rating yourself “below expectations.” It’s too early to get up.",
+  "left": "Get up and work",
+  "right": "Go back to sleep"
+ },
+ {
+  "id": "l2a_437",
+  "who": "Team member",
+  "text": "An employee proposes “quiet hours” for the team until lunch: no meetings, no chats. The director loves calling before lunch.",
+  "left": "Introduce them",
+  "right": "Decline"
+ },
+ {
+  "id": "l2a_438",
+  "who": "Legal",
+  "text": "Legal requires every employee to sign a twelve-page nondisclosure agreement. Employees demand an explanation.",
+  "left": "Explain it yourself",
+  "right": "Send them to Legal"
+ },
+ {
+  "id": "l2a_439",
+  "who": "Messenger",
+  "text": "A former report writes in the evening that he’s job hunting and asks for a reference. He left in a scandal, but his work was good.",
+  "left": "Give the reference",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l2a_440",
+  "who": "CEO",
+  "text": "The CEO catches you at the coffee machine: “So what does your department actually do?” You have until the cappuccino finishes pouring.",
+  "left": "Pitch it briefly",
+  "right": "Invite him to a meeting"
+ },
+ {
+  "id": "l2a_441",
+  "who": "Team member",
+  "text": "An employee took a day off “for personal matters.” In the evening you see his photo from a competitor’s conference online. With a speaker badge.",
+  "left": "Ask him directly",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l2a_442",
+  "who": "Inner voice",
+  "text": "Last evening before vacation. You wrote the team a 12-page “in case something happens” guide. Send it, or trust them?",
+  "left": "Send the guide",
+  "right": "Say “You’ve got this”"
+ },
+ {
+  "id": "l2a_443",
+  "who": "Candidate",
+  "text": "A candidate came to the interview an hour early and has already befriended the whole team in the kitchen. The team says “hire her now.”",
+  "left": "Hire on their word",
+  "right": "Run the process properly"
+ },
+ {
+  "id": "l2a_444",
+  "who": "Inner voice",
+  "text": "Evening. You’re holding two finalists’ résumés. One has experience, the other has fire in her eyes. You must decide by morning.",
+  "left": "Hire the experienced one",
+  "right": "Hire the fiery one"
+ },
+ {
+  "id": "l2a_445",
+  "who": "Recruiter",
+  "text": "The recruiter wants you to record a “Why join our team” video for the careers site. The script is written, and it includes a dance.",
+  "left": "Dance",
+  "right": "Record it without dancing"
+ },
+ {
+  "id": "l2a_446",
+  "who": "New hire",
+  "text": "At the end of his first week the new hire sends you a long thank-you email plus 30 questions “to think about over the weekend.”",
+  "left": "Answer over the weekend",
+  "right": "Answer on Monday"
+ },
+ {
+  "id": "l2a_447",
+  "who": "1:1",
+  "text": "Morning 1:1. The employee suddenly says: “Could you tell me when I do something well? Just sometimes.”",
+  "left": "Promise and write it down",
+  "right": "Say silence is praise too"
+ },
+ {
+  "id": "l2a_448",
+  "who": "Team members",
+  "text": "Two employees keep arguing in the group chat even though you asked them to continue tomorrow. It’s 10:40 p.m.",
+  "left": "Lock the chat till morning",
+  "right": "Sort it out now"
+ },
+ {
+  "id": "l2a_449",
+  "who": "Team member",
+  "text": "You delegated contractor communication to an employee. In the morning the contractor calls you: “Your employee is rude to us. Can we deal with you?”",
+  "left": "Take it back yourself",
+  "right": "Back your employee"
+ },
+ {
+  "id": "l2a_450",
+  "who": "KPI",
+  "text": "Evening, KPI sheet open. One employee hit 200% of his target — thanks to tasks he quietly took from his colleagues.",
+  "left": "Rebalance the work",
+  "right": "Reward the numbers"
+ },
+ {
+  "id": "l2a_451",
+  "who": "Quarterly plan",
+  "text": "Morning, quarterly planning. An employee suggests, for the first time ever, asking customers what they need before planning.",
+  "left": "Back the idea",
+  "right": "Say: “No time”"
+ },
+ {
+  "id": "l2a_452",
+  "who": "Finance",
+  "text": "At 7:45 p.m. finance asks you to “urgently explain” a large “miscellaneous” line in the budget. “Miscellaneous” is where you put everything that didn’t fit.",
+  "left": "Itemize it in detail",
+  "right": "Reply tomorrow"
+ },
+ {
+  "id": "l2a_453",
+  "who": "Vendor",
+  "text": "A vendor announces end-of-support for the product your team’s entire workflow depends on. Six months from now.",
+  "left": "Start migrating now",
+  "right": "Kick the can"
+ },
+ {
+  "id": "l2a_454",
+  "who": "Fellow team lead",
+  "text": "In the evening a neighboring team lead admits he deliberately stalled a shared task so his team would look better than yours. He apologizes.",
+  "left": "Forgive him",
+  "right": "Tell the director"
+ },
+ {
+  "id": "l2a_455",
+  "who": "Report",
+  "text": "At 8 a.m. the director wants the monthly report to include the team’s “emotional temperature.” Nobody knows how to measure it.",
+  "left": "Poll the team with emojis",
+  "right": "Eyeball it"
+ },
+ {
+  "id": "l2a_456",
+  "who": "Director",
+  "text": "In the evening the director forwards a client complaint about your employee with one word: “Handle it.” From the email, the client is clearly in the wrong.",
+  "left": "Side with your employee",
+  "right": "Apologize to the client"
+ },
+ {
+  "id": "l2a_457",
+  "who": "Team members",
+  "text": "In the morning you announce the promotion went to the person who least expected it. He’s embarrassed. The others are trying to smile.",
+  "left": "Explain it to everyone",
+  "right": "Don’t explain"
+ },
+ {
+  "id": "l2a_458",
+  "who": "Layoffs",
+  "text": "The evening after the layoff announcement. A laid-off employee writes: “Thanks for telling me in person, not by email.” The rest ask about themselves.",
+  "left": "Meet the survivors",
+  "right": "Answer everyone tomorrow"
+ },
+ {
+  "id": "l2a_459",
+  "who": "CEO",
+  "text": "In the morning the CEO gathers the managers: “Who’s ready to take a pilot project from scratch?” Everyone stares at the table. Except you.",
+  "left": "Raise your hand",
+  "right": "Stare at the table too"
+ },
+ {
+  "id": "l2a_460",
+  "who": "Team member",
+  "text": "In the evening an employee confesses she’s been working two jobs for two months because of her mortgage. She’s coping, but very tired.",
+  "left": "Offer flexible hours",
+  "right": "Say it’s not allowed"
+ },
+ {
+  "id": "l2a_461",
+  "who": "New hire",
+  "text": "In the morning the new hire asks if he should also put an inspirational quote in his email signature, like the director. The director loves quotes.",
+  "left": "Recommend a quote",
+  "right": "Say “Not required”"
+ },
+ {
+  "id": "l2a_462",
+  "who": "Inner voice",
+  "text": "For the first time in a month, you leave at 6 p.m. In the elevator you realize you have no idea what to do with an evening. Go back and finish the report?",
+  "left": "Go back to the office",
+  "right": "Go for a walk"
+ },
+ {
+  "id": "l2a_463",
+  "who": "Director",
+  "text": "The director asks you to “just have a chat” with the employee who wrote in an anonymous survey that the director “doesn’t listen.” The survey was anonymous.",
+  "left": "Protect the anonymity",
+  "right": "Pretend you talked"
+ },
+ {
+  "id": "l2a_464",
+  "who": "Contractor",
+  "text": "During a demo the contractor accidentally shows their internal chat: “client is nitpicking again.” The client is you.",
+  "left": "Joke and carry on",
+  "right": "Demand a new manager"
+ },
+ {
+  "id": "l2a_465",
+  "who": "Inner voice",
+  "text": "A year ago you promised yourself you’d be a manager who doesn’t keep the team late. It’s 8:15 p.m. and you’re setting up a call.",
+  "left": "Cancel the call",
+  "right": "Keep it short"
+ },
+ {
+  "id": "l2a_466",
+  "who": "Team members",
+  "text": "At a team lunch everyone is discussing salaries at once. Someone has just realized they earn less than the person next to them.",
+  "left": "Change the subject",
+  "right": "Promise a review"
+ },
+ {
+  "id": "l2a_467",
+  "who": "Calendar",
+  "text": "Today’s calendar: an interview, an onboarding, a budget defense, a conflict mediation and a farewell for someone leaving. Nobody scheduled lunch.",
+  "left": "Move the interview",
+  "right": "Power through it all"
+ },
+ {
+  "id": "l2a_468",
+  "who": "Director",
+  "text": "The director wants you to tell the team there will be no salary indexation this year, “but in a positive key.” You search for a positive key.",
+  "left": "Say it honestly",
+  "right": "Find the positive key"
+ },
+ {
+  "id": "l2a_469",
+  "who": "Messenger",
+  "text": "A candidate you rejected a year ago writes in the evening: “Is the role still open? I’ve grown.” As it happens, it is.",
+  "left": "Invite to an interview",
+  "right": "Say it’s filled"
+ },
+ {
+  "id": "l2a_470",
+  "who": "HR",
+  "text": "HR wants to introduce 360-degree reviews for managers. You’ll be reviewed first. Your team is giving you mysterious looks.",
+  "left": "Volunteer to go first",
+  "right": "Ask for a delay"
+ },
+ {
+  "id": "l2a_471",
+  "who": "Team member",
+  "text": "An employee sent a report straight to the director, bypassing you. In the evening the director thanks you for an excellent report you never saw.",
+  "left": "Accept the thanks",
+  "right": "Name the author"
+ },
+ {
+  "id": "l2a_472",
+  "who": "Inner voice",
+  "text": "Monday morning. Your to-do list says “Think about department strategy.” It’s been rolling from Monday to Monday for six months.",
+  "left": "Block two hours",
+  "right": "Push it again"
+ },
+ {
+  "id": "l2a_473",
+  "who": "Team member",
+  "text": "An employee accidentally sends you a message meant for a colleague: “Three hours of meetings with him again today, hold me back.” “Him” is you.",
+  "left": "Pretend you didn’t see",
+  "right": "Talk about the meetings"
+ },
+ {
+  "id": "l2a_474",
+  "who": "Director",
+  "text": "Late in the evening the director writes: “Your team did great. But don’t relax.” Pass the first part to the team without the second?",
+  "left": "Pass on just the praise",
+  "right": "Pass on all of it"
+ },
+ {
+  "id": "l2a_475",
+  "who": "Contractor",
+  "text": "In the morning the contractor asks for a five-star review “in exchange for a discount on the next project.” Their work was three stars.",
+  "left": "Write an honest review",
+  "right": "Give five stars"
+ },
+ {
+  "id": "l2a_476",
+  "who": "Inner voice",
+  "text": "You’re sitting in an empty office thinking nobody appreciates you — not above, not below. Your phone shows 37 unread messages.",
+  "left": "Answer them all",
+  "right": "Turn off the phone"
+ },
+ {
+  "id": "l2a_477",
+  "who": "Team member",
+  "text": "An employee brings you coffee every morning. Today he brought coffee and a request for a promotion. It’s your favorite coffee, too.",
+  "left": "Promise to consider it",
+  "right": "Decline the coffee"
+ },
+ {
+  "id": "l2a_478",
+  "who": "Team chat",
+  "text": "In the evening the team is chipping in for your birthday present. You accidentally see the chat and the amount. It’s huge.",
+  "left": "Ask them not to spend",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l2a_479",
+  "who": "Finance",
+  "text": "Finance demands an employee return a bonus paid “by mistake.” He already spent it, and it was finance’s mistake.",
+  "left": "Defend the employee",
+  "right": "Pass on the demand"
+ },
+ {
+  "id": "l2a_480",
+  "who": "Team members",
+  "text": "The evening before the quarterly plan defense. The team offers to rehearse with you. It’s 7:30 p.m. and everyone’s tired.",
+  "left": "Rehearse together",
+  "right": "Send everyone home"
+ },
+ {
+  "id": "l2a_481",
+  "who": "Director",
+  "text": "In the morning the director asks why your employee leaves at 5 p.m. The employee comes in at 7 a.m. The director is asleep at that hour.",
+  "left": "Explain the schedule",
+  "right": "Ask him to stay later"
+ },
+ {
+  "id": "l2a_482",
+  "who": "Inner voice",
+  "text": "Friday evening. You’re rereading the layoff email you’ll send on Monday. It’s going to be a long weekend.",
+  "left": "Get your mind off it",
+  "right": "Keep rewriting it"
+ },
+ {
+  "id": "l2a_483",
+  "who": "Onboarding",
+  "text": "The new hire’s desk still has a photo of his predecessor with a note: “Good luck, you’ll need it.” The new hire has questions.",
+  "left": "Explain the history",
+  "right": "Quietly remove the photo"
+ },
+ {
+  "id": "l2a_484",
+  "who": "Team member",
+  "text": "An evening voice message: “I figured out why our process doesn’t work. Can I tell you tomorrow?” The voice message is 14 minutes long.",
+  "left": "Listen now",
+  "right": "Save it for morning"
+ },
+ {
+  "id": "l2a_485",
+  "who": "Meeting",
+  "text": "Morning managers’ meeting. A colleague from the next department proposes a swap: your hiring quota for his training budget.",
+  "left": "Make the swap",
+  "right": "Keep your quota"
+ },
+ {
+  "id": "l2a_486",
+  "who": "Contractor",
+  "text": "The contractor sends the final version in the evening. File name: “final_really_final_v12_client_edits.” Open it?",
+  "left": "Open it now",
+  "right": "Open it tomorrow"
+ },
+ {
+  "id": "l2a_487",
+  "who": "Inner voice",
+  "text": "Morning. You realize you can’t remember the last time you praised the team publicly. Come to think of it, the director hasn’t praised you in a while either.",
+  "left": "Praise them at stand-up",
+  "right": "Wait for a reason"
+ },
+ {
+  "id": "l2a_488",
+  "who": "Director",
+  "text": "At 7:50 p.m. the director wants to discuss a “strategically important matter.” It turns out to be the color of your team’s company hoodies.",
+  "left": "Discuss it in depth",
+  "right": "Let the team decide"
+ },
+ {
+  "id": "l2a_489",
+  "who": "Team member",
+  "text": "In the morning an employee asks you to be her mentor in the company program. It’s another weekly meeting, but she really wants it.",
+  "left": "Agree",
+  "right": "Suggest someone else"
+ },
+ {
+  "id": "l2a_490",
+  "who": "Inner voice",
+  "text": "Evening. Today you hired, fired, promoted, promised and refused. All in one day. Tomorrow is Friday. How do you survive?",
+  "left": "Go to bed early",
+  "right": "Prep for tomorrow"
+ },
+ {
+  "id": "l2a_491",
+  "who": "Candidate",
+  "text": "Mid technical interview, the candidate says: “I don’t know, but I could find out in five minutes.” The other candidates confidently made things up.",
+  "left": "Value the honesty",
+  "right": "Follow the checklist"
+ },
+ {
+  "id": "l2a_492",
+  "who": "1:1",
+  "text": "At an afternoon 1:1 an employee asks you to stop praising him in front of everyone: “They tease me about it afterward.” Praise him privately?",
+  "left": "Praise him privately",
+  "right": "Explain why public helps"
+ },
+ {
+  "id": "l2a_493",
+  "who": "Contractor",
+  "text": "At a meeting the contractor hands you a USB stick “with all the materials.” Security forbids plugging in outside USB drives.",
+  "left": "Take it to Security",
+  "right": "Plug it in when no one’s looking"
+ },
+ {
+  "id": "l2a_494",
+  "who": "Delegation",
+  "text": "You let the team choose the offsite location. They picked glamping in the woods with no signal. The director wants to stay reachable.",
+  "left": "Back the team’s choice",
+  "right": "Change the venue"
+ },
+ {
+  "id": "l2a_495",
+  "who": "Budget",
+  "text": "Finance suggests “reallocating” your training budget to the director’s entertainment expenses. The decision is, of course, yours.",
+  "left": "Agree",
+  "right": "Protect training"
+ },
+ {
+  "id": "l2a_496",
+  "who": "Rumors",
+  "text": "At lunch someone from another department asks if it’s true your team is “closing soon.” This is the first you’ve heard of it.",
+  "left": "Deny it confidently",
+  "right": "Ask the director"
+ },
+ {
+  "id": "l2a_497",
+  "who": "CEO",
+  "text": "The CEO wants a proposal to reorganize your own department within a day. “No emotions, just numbers.”",
+  "left": "Do it in a day",
+  "right": "Ask for a week"
+ },
+ {
+  "id": "l2a_498",
+  "who": "Inner voice",
+  "text": "Evening. For the third day in a row, an employee is the last one in the office and won’t leave even when there’s no work. Has something happened?",
+  "left": "Gently ask",
+  "right": "Don’t intervene"
+ },
+ {
+  "id": "l2a_499",
+  "who": "Team members",
+  "text": "In the evening the team wants to celebrate getting through a brutal quarter. The director already celebrated: he sent new targets for the next one.",
+  "left": "Go celebrate",
+  "right": "Start on the new targets"
+ },
+ {
+  "id": "l2a_500",
+  "who": "Inbox",
+  "text": "At 9 p.m. an email from HR: “Approve the promotion list by midnight.” It includes one of your people whom you never nominated.",
+  "left": "Approve as is",
+  "right": "Find out how he got there"
+ }
+]
