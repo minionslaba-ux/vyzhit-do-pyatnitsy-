@@ -2166,3 +2166,11 @@ html.docscroll body { overflow-x: hidden; overflow-x: clip; }
 .play2 .btn-main { min-width: 0; overflow-wrap: anywhere; }
 .play2 .btn-main small { white-space: normal; text-align: center; }
 .me-badge { max-width: calc(100vw - 40px); }
+
+/* Отсчёт поверх полноэкранной рекламы на телефоне (js/ads.js): «Награда через N с» → «Можно забирать» */
+.ad-count { position: fixed; left: 50%; transform: translateX(-50%); top: calc(env(safe-area-inset-top, 0px) + 10px); z-index: 2147483647; pointer-events: none;
+  padding: 9px 16px; border-radius: 99px; background: rgba(10, 8, 24, .92); color: #fff; font: 800 15px/1.2 system-ui, -apple-system, sans-serif; white-space: nowrap;
+  border: 1.5px solid #ffaa28; box-shadow: 0 4px 18px rgba(0,0,0,.5); }
+.ad-count.ready { border-color: #2de28a; background: rgba(8, 40, 24, .95); animation: adReady .6s ease-out; }
+@keyframes adReady { 0% { transform: translateX(-50%) scale(.9); } 60% { transform: translateX(-50%) scale(1.08); } 100% { transform: translateX(-50%) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .ad-count.ready { animation: none; } }

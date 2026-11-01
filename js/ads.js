@@ -2,7 +2,7 @@
 // Не чаще раза в 20 минут (и само предложение — тоже). Ролик — только по нажатию игрока, никогда посреди решения карточки;
 // на время ролика игра на паузе. Полноэкранный формат сам подстраивается под телефон (touch) и компьютер (desktop). На игровых платформах (Яндекс Игры и т. п.) — их собственная реклама, здесь выключено.
 // Блок и тип — SUPABASE_CONFIG.ads в js/config.js.
-const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 3000;  // крестик у полноэкранной рекламы Яндекса — около 5-й секунды: закрыл сразу — награда есть
+const AD_REWARD = 1, AD_COOLDOWN = 20 * 60 * 1000, AD_MIN_SHOW = 3000, AD_TOUCH_SEC = 10;  // телефон: награда — если реклама открыта 10 секунд (отсчёт поверх рекламы)  // крестик у полноэкранной рекламы Яндекса — около 5-й секунды: закрыл сразу — награда есть
 const adCfg = () => window.SUPABASE_CONFIG?.ads || {};
 const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window ? 'touch' : 'desktop';
 // блок под устройство (кабинет РСЯ: Mobile / Desktop): { id, type }
@@ -40,7 +40,7 @@ function adWatch(done, opts = {}) {
   const c = adBlock(), t0 = Date.now(); let settled = false;
   // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
   const finish = (ok, why = '') => {
-    if (settled) return; settled = true; clearTimeout(guard); clearTimeout(noShow); loading?.remove(); obs?.disconnect(); vdpPause(false);
+    if (settled) return; settled = true; clearTimeout(guard); clearTimeout(noShow); clearInterval(pillT); pill?.remove(); loading?.remove(); obs?.disconnect(); vdpPause(false);
     if (/PAGE_DISABLED|BLOCK_DISABLED|PAGE_NOT_FOUND/i.test(why)) adOff = why;
     if (opts.forced) { prefs.adForcedAt = Date.now(); prefs.adWeeks = 0; store.set(KEY.prefs, prefs); track(ok ? 'ad_forced' : 'ad_fail', { detail: `forced:${c.type}:${why}`.slice(0, 60) }); return done?.(ok); }
     if (ok) {
@@ -55,7 +55,7 @@ function adWatch(done, opts = {}) {
       toast(adOff ? L('Реклама пока недоступна: сайт ещё на проверке у Яндекса', 'Ads aren’t available yet: the site is still under review')
         : why === 'cancel' ? L('Показ рекламы отменён', 'Ad cancelled')
         : why === 'script' ? L('Реклама не загрузилась — возможно, включён блокировщик рекламы', 'The ad didn’t load — an ad blocker may be on')
-        : why.startsWith('close') ? L('Реклама закрыта раньше времени — награда только за просмотр', 'The ad was closed too early — the reward is for watching')
+        : why.startsWith('close') || why.startsWith('back') ? L(`Реклама закрыта раньше времени — награда после ${AD_TOUCH_SEC} секунд просмотра`, `The ad was closed too early — the reward comes after ${AD_TOUCH_SEC} seconds`)
         : L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
     }
     done?.(ok);
@@ -63,7 +63,7 @@ function adWatch(done, opts = {}) {
   const guard = setTimeout(() => finish(false, 'timeout'), 90000);  // ролик открылся, но не закрылся — страховка
   track('ad_open', { detail: c.type });
   vdpPause(true);
-  let loading = null, noShow = 0, obs = null;
+  let loading = null, noShow = 0, obs = null, pill = null, pillT = 0, shownAt = 0;
   if (c.type === 'banner') return adBanner(c, finish, guard, opts.forced);
   // Пока реклама грузится — наше окно «Загружаем…» с «Отменой»; не открылась за 8 с — игра продолжается сама
   loading = Object.assign(document.createElement('div'), { className: 'ad-over ad-loading', role: 'dialog' });
@@ -71,16 +71,27 @@ function adWatch(done, opts = {}) {
   document.body.append(loading);
   $('adCancel').onclick = () => finish(false, 'cancel');
   let shown = false;
+  // засчитать просмотр: обязательная — после 3 с; за награду — когда отсчёт дошёл до «можно забирать»
+  const watchedOk = () => opts.forced ? Date.now() - t0 > AD_MIN_SHOW : shown && Date.now() - shownAt >= AD_TOUCH_SEC * 1000 - 300;
   // реклама открылась: наше окно убираем; под рекламой остаётся «Вернуться в игру» — если слой Яндекса не появился, игрок не застрянет
   const opened = () => {
-    if (shown) return; shown = true; clearTimeout(noShow); obs?.disconnect(); track('ad_render', { detail: c.type });
+    if (shown) return; shown = true; shownAt = Date.now(); clearTimeout(noShow); obs?.disconnect(); track('ad_render', { detail: c.type });
     loading.innerHTML = `<button type="button" class="btn-ghost ad-back" id="adBack">${L('Вернуться в игру', 'Back to the game')}</button>`;
     loading.classList.add('ad-under');
-    $('adBack').onclick = () => { const ms = Date.now() - t0; finish(c.type !== 'rewarded' && ms > AD_MIN_SHOW, `back${Math.round(ms / 1000)}s`); };
+    // Отсчёт поверх полноэкранной рекламы Яндекса: «Награда через N с» → «Можно забирать» (кроме обязательной рекламы)
+    if (!opts.forced) {
+      let left = AD_TOUCH_SEC;
+      pill = Object.assign(document.createElement('div'), { className: 'ad-count', role: 'status' });
+      pill.setAttribute('aria-live', 'polite');
+      const draw = () => { pill.textContent = left > 0 ? L(`🎁 Награда через ${left} с`, `🎁 Reward in ${left}s`) : L('✅ Можно забирать — закройте рекламу', '✅ Reward ready — close the ad'); pill.classList.toggle('ready', left <= 0); };
+      draw(); document.documentElement.append(pill);
+      pillT = setInterval(() => { left--; draw(); if (left <= 0) { clearInterval(pillT); buzz?.('tap'); } }, 1000);
+    }
+    $('adBack').onclick = () => { const ms = Date.now() - t0; finish(c.type !== 'rewarded' && watchedOk(), `back${Math.round(ms / 1000)}s`); };
   };
   noShow = setTimeout(() => { if (!shown) finish(false, 'nofill'); }, 8000);
   // показ замечаем и по onRender, и по появлению рекламного слоя Яндекса на странице
-  obs = typeof MutationObserver !== 'undefined' ? new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1 && n !== loading && n.parentElement === document.body && !n.matches?.('.ad-over, .ad-pill, script, style, link') && (n.matches?.('iframe') || n.querySelector?.('iframe')) && n.getBoundingClientRect().height > innerHeight * 0.5) opened(); }) : null;
+  obs = typeof MutationObserver !== 'undefined' ? new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1 && n !== loading && n.parentElement === document.body && !n.matches?.('.ad-over, .ad-pill, .ad-count, script, style, link') && (n.matches?.('iframe') || n.querySelector?.('iframe')) && n.getBoundingClientRect().height > innerHeight * 0.5) opened(); }) : null;
   obs?.observe(document.body, { childList: true });
   adScript().then(() => {
     window.yaContextCb.push(() => {
@@ -89,7 +100,7 @@ function adWatch(done, opts = {}) {
           blockId: c.id, type: c.type || 'fullscreen', platform: adPlatform(),
           onRender: opened,
           onRewarded: ok => finish(!!ok, 'norew'),                                  // блок «с вознаграждением»: досмотрел
-          onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(ms > AD_MIN_SHOW, `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
+          onClose: () => { const ms = Date.now() - t0; if (c.type !== 'rewarded') finish(watchedOk(), `close${Math.round(ms / 1000)}s`); else if (!settled) finish(false, 'close'); },
           onError: e => finish(false, `err:${e?.type || ''}:${e?.code || e?.message || ''}`),
         });
       } catch (e) { finish(false, `ex:${e?.message || ''}`); }
