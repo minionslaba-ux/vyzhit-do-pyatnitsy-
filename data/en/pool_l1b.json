@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l1b_001",
+  "who": "Team chat",
+  "text": "8:10 a.m. You’ve been added to a new chat called “Project Phoenix.” 46 people, and nobody explains what the project is. 80 messages already. Read from the start?",
+  "left": "Read it all before breakfast",
+  "right": "Mute notifications"
+ },
+ {
+  "id": "l1b_002",
+  "who": "Team lead",
+  "text": "Your team lead writes “Hi” and disappears into a meeting for an hour. Nothing more. All hour you replay your mistakes of the week. Reply right away?",
+  "left": "Reply “Hi, I’m listening”",
+  "right": "Wait for the rest"
+ },
+ {
+  "id": "l1b_003",
+  "who": "Off-topic chat",
+  "text": "Morning tradition in the department’s off-topic chat: everyone posts a photo of their breakfast. Today you’ve only got a stale cracker from your desk drawer. Join in?",
+  "left": "Photograph the cracker",
+  "right": "Skip it this morning"
+ },
+ {
+  "id": "l1b_004",
+  "who": "Messenger",
+  "text": "You accidentally reacted with a clown emoji to the boss’s message about the quarter kickoff. You can remove it, but he’s already online. What now?",
+  "left": "Quietly remove it",
+  "right": "Joke about the circus of plans"
+ },
+ {
+  "id": "l1b_005",
+  "who": "Vika",
+  "text": "Vika sends you a four-minute voice message. You’re on a packed bus with no headphones. Hold the phone to your ear like it’s the nineties?",
+  "left": "Listen at your ear",
+  "right": "Ask her to text"
+ },
+ {
+  "id": "l1b_006",
+  "who": "Work chat",
+  "text": "A morning argument in the team chat: who left a window open overnight? Now a pigeon lives in the office. It was your window. Confess?",
+  "left": "Confess and evict the pigeon",
+  "right": "Suggest naming the pigeon"
+ },
+ {
+  "id": "l1b_007",
+  "who": "Team lead",
+  "text": "Before stand-up the team lead wants a status in the chat by template: “Yesterday / Today / Blockers.” Yesterday you mostly looked for the right folder. What do you write?",
+  "left": "Honestly: the folder",
+  "right": "Fancy: “Structure research”"
+ },
+ {
+  "id": "l1b_008",
+  "who": "Building chat",
+  "text": "While looking for the work chat you accidentally post in your apartment building’s chat: “Colleagues, who’s doing the report today?” Neighbors are already replying. Explain?",
+  "left": "Apologize to the neighbors",
+  "right": "Reply: “Thanks, we’ll handle it”"
+ },
+ {
+  "id": "l1b_009",
+  "who": "Intern chat",
+  "text": "In the intern chat someone asks if it’s okay to come in at 9:15. You know it is, but the boss is in this chat too. Answer?",
+  "left": "Answer honestly",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l1b_010",
+  "who": "Messenger",
+  "text": "The messenger updated overnight, and all your chat folders vanished. 120 conversations all jumbled. Sort them again?",
+  "left": "Refile everything",
+  "right": "Live in chaos"
+ },
+ {
+  "id": "l1b_011",
+  "who": "Timur",
+  "text": "Timur writes: “Are you in the office? Come over.” Going means three floors of stairs. Texting back means looking lazy. Your choice?",
+  "left": "Walk three floors",
+  "right": "Reply “What’s up?”"
+ },
+ {
+  "id": "l1b_012",
+  "who": "Team chat",
+  "text": "At 8:30 someone greeted the department with a coffee sticker for Monday. Below it, twenty identical stickers. Add yours?",
+  "left": "Add the twenty-first",
+  "right": "Start the report, no stickers"
+ },
+ {
+  "id": "l1b_013",
+  "who": "Group lead",
+  "text": "The group lead wants you to set your messenger status to “at my desk” and update it every half hour. How do you take it?",
+  "left": "Set reminders",
+  "right": "Forget by lunch"
+ },
+ {
+  "id": "l1b_014",
+  "who": "Department bot",
+  "text": "A new bot in the work chat asks every morning, “How’s your mood from 1 to 10?” and shows management the average. What do you answer?",
+  "left": "Honestly: “Four”",
+  "right": "The standard “Nine”"
+ },
+ {
+  "id": "l1b_015",
+  "who": "Dasha",
+  "text": "In the team chat Dasha asks if anyone’s seen her green mug. Your mug seems to be green too. And it has your tea in it. Check?",
+  "left": "Check the bottom of the mug",
+  "right": "Finish it and say nothing"
+ },
+ {
+  "id": "l1b_016",
+  "who": "Lunch chat",
+  "text": "The “Where are we eating” chat is collecting votes at 9 a.m. Four options, all the same shawarma place. Vote?",
+  "left": "Suggest a new place",
+  "right": "Tick the popular one"
+ },
+ {
+  "id": "l1b_017",
+  "who": "Boss",
+  "text": "The boss sent you a link with no message. It leads to a 70-page document. Ask what he needs from you?",
+  "left": "Ask directly",
+  "right": "Read all 70 pages"
+ },
+ {
+  "id": "l1b_018",
+  "who": "Project chat",
+  "text": "For two hours the project chat has been debating a button color. The vote is stuck on “blue vs. light blue.” You know the client will decide anyway. Say so?",
+  "left": "Remind them about the client",
+  "right": "Vote light blue"
+ },
+ {
+  "id": "l1b_019",
+  "who": "Team lead",
+  "text": "Your team lead writes “ok” in the chat. He used to always write “ok, thanks.” Without “thanks” it sounds like a verdict. Check if everything’s fine?",
+  "left": "Ask him",
+  "right": "Reread the task three times"
+ },
+ {
+  "id": "l1b_020",
+  "who": "Ilya",
+  "text": "Ilya answers every message forty minutes later, always with one word: “checking.” You need an answer in ten. What do you do?",
+  "left": "Walk over to his desk",
+  "right": "Wait for the sacred “checking”"
+ },
+ {
+  "id": "l1b_021",
+  "who": "Work chat",
+  "text": "You posted a screenshot to the team chat with your browser tabs visible. One reads “How to ask for a raise after one month.” Delete it?",
+  "left": "Delete it and pray",
+  "right": "Leave it and laugh"
+ },
+ {
+  "id": "l1b_022",
+  "who": "Team chat",
+  "text": "A coworker posted a long message with a question at the very end. Everyone hit “like,” but nobody answered. Be the first to reply?",
+  "left": "Reply in detail",
+  "right": "Just like it too"
+ },
+ {
+  "id": "l1b_023",
+  "who": "Manager",
+  "text": "Your manager reacts to every message of yours with the “eyes” emoji. Is that “I see,” “I’m watching” or “what have you done”? Ask?",
+  "left": "Ask directly",
+  "right": "Start writing more carefully"
+ },
+ {
+  "id": "l1b_024",
+  "who": "Messenger",
+  "text": "A message: “Can you give me a call?” You hate phone calls, and it’s from a coworker in the next department. Call back?",
+  "left": "Call and survive it",
+  "right": "Reply “Let’s do text”"
+ },
+ {
+  "id": "l1b_025",
+  "who": "Smoke-break chat",
+  "text": "You post a complaint about the long planning meeting in the “Smoke Break” chat. A second later you realize it’s the “Planning Meeting” chat. The boss is typing...",
+  "left": "Write “Just kidding!”",
+  "right": "Add “...but useful!”"
+ },
+ {
+  "id": "l1b_026",
+  "who": "Marina",
+  "text": "Marina writes every message IN ALL CAPS. Even “THANKS.” You flinch every time. Gently tell her?",
+  "left": "Mention Caps Lock",
+  "right": "Get used to flinching"
+ },
+ {
+  "id": "l1b_027",
+  "who": "Project chat",
+  "text": "In the middle of a serious discussion, a photo of you from the office party lands in the project chat: someone tagged you by mistake. You’re wearing a tinfoil crown. How do you react?",
+  "left": "Make it your avatar",
+  "right": "Ask them to delete it"
+ },
+ {
+  "id": "l1b_028",
+  "who": "Kirill the analyst",
+  "text": "Kirill drops a spreadsheet called “final_final_really_final2.xlsx” in the chat and asks you to check it. There were four finals before it. Compare them all?",
+  "left": "Compare all five finals",
+  "right": "Check only the latest"
+ },
+ {
+  "id": "l1b_029",
+  "who": "Messenger",
+  "text": "You sent the boss a message and spotted a typo: instead of “my bonus” you wrote “my bosom.” He’s already read it. Fix it?",
+  "left": "Silently edit it",
+  "right": "Correct it with a smiley"
+ },
+ {
+  "id": "l1b_030",
+  "who": "Team chat",
+  "text": "Coworkers started a cat GIF marathon in the chat. Thirty GIFs in ten minutes, and you have an urgent task. Leave the chat?",
+  "left": "Leave the chat",
+  "right": "Reply with your own cat"
+ },
+ {
+  "id": "l1b_031",
+  "who": "Client",
+  "text": "A client added you on his messenger and wrote on Saturday: “Just a question for the future.” It’s Tuesday, and you only just remembered. Reply?",
+  "left": "Reply with apologies",
+  "right": "Pretend it never arrived"
+ },
+ {
+  "id": "l1b_032",
+  "who": "Intern chat",
+  "text": "Interns are sharing salaries in their chat. Someone makes $100 more than you for the same work. Message the boss?",
+  "left": "Message the boss",
+  "right": "Just be upset"
+ },
+ {
+  "id": "l1b_033",
+  "who": "Zhenya",
+  "text": "Zhenya messages you on four apps at once: “Are you seeing this?” You aren’t, but now you’re scared to open any of them. Open one?",
+  "left": "Open the scariest one",
+  "right": "Reply: “Yes, awful”"
+ },
+ {
+  "id": "l1b_034",
+  "who": "Project chat",
+  "text": "A pinned message in the chat: “All questions in threads only.” You’ve replied outside the thread twice now. The moderator threatens a ban. Shape up?",
+  "left": "Repost in the thread",
+  "right": "Pin “Threads are evil”"
+ },
+ {
+  "id": "l1b_035",
+  "who": "Boss",
+  "text": "At 1:05 the boss writes: “Where are you?” You’re at lunch in the next room. It’s your legit lunch break, but the tone is unclear. How do you reply?",
+  "left": "“At lunch, back at 1:30”",
+  "right": "Drop the soup and run"
+ },
+ {
+  "id": "l1b_036",
+  "who": "Memes chat",
+  "text": "You post a meme in the “Office Memes” chat. Silence. A minute later someone else posts the same meme and everyone laughs. Claim credit?",
+  "left": "Claim credit",
+  "right": "Laugh with everyone"
+ },
+ {
+  "id": "l1b_037",
+  "who": "Secretary",
+  "text": "The secretary forwards 14 files to the work chat one by one, each captioned “here.” You need the sixth. Which one is the sixth — unknown.",
+  "left": "Download all 14",
+  "right": "Ask for one zip file"
+ },
+ {
+  "id": "l1b_038",
+  "who": "Team lead",
+  "text": "7:40 p.m. Your team lead writes in the team chat: “We’ll discuss tomorrow.” No context. It’ll be a long night. Ask what about?",
+  "left": "Ask right now",
+  "right": "Guess till morning"
+ },
+ {
+  "id": "l1b_039",
+  "who": "Team chat",
+  "text": "Friday evening. A coworker posted a “quick” voice message in the team chat — twelve minutes about the quarterly plan. Listen?",
+  "left": "Listen at 2x speed",
+  "right": "Save it for Monday"
+ },
+ {
+  "id": "l1b_040",
+  "who": "Messenger",
+  "text": "9 p.m. You see the boss is online. He sees you’re online. You both pretend not to see each other. Who blinks first?",
+  "left": "Go offline",
+  "right": "Write “Good evening!”"
+ },
+ {
+  "id": "l1b_041",
+  "who": "Friday bar chat",
+  "text": "The “Friday Bar” chat has six people signed up and a table booked. You wanted to go home and watch your show. They tagged you: “You in?”",
+  "left": "Go for one hour",
+  "right": "Send a sad emoji"
+ },
+ {
+  "id": "l1b_042",
+  "who": "Lyosha",
+  "text": "At 10:30 p.m. Lyosha sends a deadline meme captioned “This is us.” It’s funny, but you’re already in bed. Reply?",
+  "left": "Reply with a meme",
+  "right": "Don’t open till morning"
+ },
+ {
+  "id": "l1b_043",
+  "who": "Project chat",
+  "text": "6:55 p.m. Someone in the project chat writes: “Who last touched the budget file?” You did. A minute ago. Confess?",
+  "left": "Confess right away",
+  "right": "Wait, maybe it blows over"
+ },
+ {
+  "id": "l1b_044",
+  "who": "Boss",
+  "text": "At 8:15 p.m. the boss sent a message and immediately deleted it. All that’s left: “Message deleted.” What it said torments you all evening.",
+  "left": "Ask what he wanted",
+  "right": "Suffer till morning"
+ },
+ {
+  "id": "l1b_045",
+  "who": "Parents’ chat",
+  "text": "In the evening you accidentally send a quarterly sales spreadsheet to your kid’s class parents’ chat. The parents politely congratulate you on the revenue. Delete it?",
+  "left": "Delete and apologize",
+  "right": "Joke about a business plan"
+ },
+ {
+  "id": "l1b_046",
+  "who": "Messenger",
+  "text": "You want to leave at 6:00, but the boss’s status has said “typing...” for five minutes. Stay and wait, or close the laptop?",
+  "left": "Close the laptop",
+  "right": "Wait for his message"
+ },
+ {
+  "id": "l1b_047",
+  "who": "Nastya",
+  "text": "Nastya writes late in the evening: “Still up? Can I take your task tomorrow and you take mine?” Her task is clearly worse. Agree?",
+  "left": "Agree",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1b_048",
+  "who": "Team chat",
+  "text": "On your way out you hit “Leave group” instead of “Mute” in the department chat. A notice appears: “User has left the chat.”",
+  "left": "Beg to be re-added",
+  "right": "Let it stand as a manifesto"
+ },
+ {
+  "id": "l1b_049",
+  "who": "Messenger",
+  "text": "An evening notification: the boss added you to a chat called “Weekends Are Workdays Too (kidding).” The parentheses don’t reassure you. Join?",
+  "left": "Join and stay silent",
+  "right": "Mute notifications"
+ },
+ {
+  "id": "l1b_050",
+  "who": "Delivery bot",
+  "text": "At 11:10 p.m. a delivery bot posts in the main work chat: “Your pizza is at the door.” It’s your order number. The department perks up. What now?",
+  "left": "Promise pizza at work tomorrow",
+  "right": "Delete it, go to the door"
+ },
+ {
+  "id": "l1b_051",
+  "who": "Gosha",
+  "text": "Every evening Gosha from the next department forwards you “interesting articles” on productivity. No time to read them: your productivity is suffering. Tell him?",
+  "left": "Politely unsubscribe",
+  "right": "Read one a day"
+ },
+ {
+  "id": "l1b_052",
+  "who": "Team chat",
+  "text": "After hours the chat is discussing birthday gifts for the boss. You’re asked to write the card text “from everyone.” Take it on?",
+  "left": "Write from the heart",
+  "right": "Claim you’re lost for words"
+ },
+ {
+  "id": "l1b_053",
+  "who": "Email",
+  "text": "Your first email to an external partner. You spend twenty minutes choosing between “Good afternoon,” “Hello” and “Greetings.” Time passes; the email is empty.",
+  "left": "Go with “Good afternoon”",
+  "right": "Google etiquette for half an hour"
+ },
+ {
+  "id": "l1b_054",
+  "who": "Email",
+  "text": "In the morning you see yesterday’s email went to the whole office, not one coworker. It says “I’ll be in tomorrow if I can crawl there.” What now?",
+  "left": "Recall the message",
+  "right": "Act like it was intentional"
+ },
+ {
+  "id": "l1b_055",
+  "who": "Boss",
+  "text": "The boss wants to be cc’d on all your emails. This morning you’ve sent nine, and he replied to one: “Why do I need this?” Keep going?",
+  "left": "Keep following the rule",
+  "right": "CC only important ones"
+ },
+ {
+  "id": "l1b_056",
+  "who": "Email",
+  "text": "312 unread over the weekend. Half are newsletters, a quarter are “Re: Re: Fwd: Re.” Start from the top or the bottom?",
+  "left": "Mark all as read",
+  "right": "Go through one by one"
+ },
+ {
+  "id": "l1b_057",
+  "who": "Sveta",
+  "text": "Sveta sends an email with the subject “Question.” There’s no question inside, just an attachment “Document1.docx.” Answer a question with a question?",
+  "left": "Reply “What question?”",
+  "right": "Open it and guess"
+ },
+ {
+  "id": "l1b_058",
+  "who": "Email",
+  "text": "You’re writing to the division director and can’t pick a sign-off: “Regards,” “All the best” or “Have a great day!” Which one?",
+  "left": "“Regards,” like everyone",
+  "right": "“Have a great day!”"
+ },
+ {
+  "id": "l1b_059",
+  "who": "HR department",
+  "text": "HR asks for a request letter “in free form, but strictly following the template.” No template attached. Write it blind?",
+  "left": "Ask for the template",
+  "right": "Wing it"
+ },
+ {
+  "id": "l1b_060",
+  "who": "Email",
+  "text": "You notice that for a week you’ve been hitting “Reply All,” which includes someone who quit long ago. It all goes to his personal email. What now?",
+  "left": "Apologize to him",
+  "right": "Quietly remove him"
+ },
+ {
+  "id": "l1b_061",
+  "who": "Team lead",
+  "text": "Your team lead wants emails signed not “Regards” but “Hugs, the team!” It’s the new “brand voice.” Clients too?",
+  "left": "Sign them all that way",
+  "right": "Only internal ones"
+ },
+ {
+  "id": "l1b_062",
+  "who": "Email",
+  "text": "Yesterday’s email from a client begins: “As I mentioned in my previous email.” You never saw a previous email. Search for it?",
+  "left": "Dig through the whole inbox",
+  "right": "Ask them to resend"
+ },
+ {
+  "id": "l1b_063",
+  "who": "Auto-reply",
+  "text": "You forgot to turn off your out-of-office after vacation. For a week everyone’s been getting “I’m at the beach, back on the 12th.” It’s the 19th.",
+  "left": "Turn it off, say nothing",
+  "right": "Joke about it to everyone"
+ },
+ {
+  "id": "l1b_064",
+  "who": "Email",
+  "text": "Your email to the boss is finished. Only one decision left: a smiley after “Thanks!”? Will it add warmth or kill your career?",
+  "left": "Add the smiley",
+  "right": "Keep it formal"
+ },
+ {
+  "id": "l1b_065",
+  "who": "Accounting",
+  "text": "Accounting sends an email with a red subject line: “IMPORTANT!!! DO NOT IGNORE!!!” Inside: a reminder to submit taxi receipts by year-end. It’s January.",
+  "left": "Submit receipts now",
+  "right": "Wait till December"
+ },
+ {
+  "id": "l1b_066",
+  "who": "Email",
+  "text": "Before sending, you reread the email just in case. For the eighth time. It no longer looks like English. Send it?",
+  "left": "Send with eyes closed",
+  "right": "Reread it a ninth time"
+ },
+ {
+  "id": "l1b_067",
+  "who": "Rustam",
+  "text": "Rustam asks you to read his email to a client “with fresh eyes.” It has three paragraphs of apologies and not one sentence of substance. Be honest?",
+  "left": "Be honest",
+  "right": "Praise his style"
+ },
+ {
+  "id": "l1b_068",
+  "who": "Email",
+  "text": "You accidentally replied to a client from your personal address, “kitty_92.” The client replied there: “Thanks, kitty.” Move the thread?",
+  "left": "Move it to work email",
+  "right": "Carry on as kitty"
+ },
+ {
+  "id": "l1b_069",
+  "who": "Boss",
+  "text": "The boss replied to your long email with one word: “Fine.” Fine what? Fine as in good? Or “fine, we’ll talk”? Ask?",
+  "left": "Ask",
+  "right": "Reread and guess"
+ },
+ {
+  "id": "l1b_070",
+  "who": "Email",
+  "text": "You write “report attached” and hit Send. No attachment. A minute later three people reply: “Where is it?” How do you fix it?",
+  "left": "Resend with apologies",
+  "right": "Send the file, no words"
+ },
+ {
+  "id": "l1b_071",
+  "who": "Client",
+  "text": "A client’s email addresses you by the wrong name: “Dear Ms. Olga Petrovna.” You’re not Olga Petrovna. Correct them?",
+  "left": "Politely correct them",
+  "right": "Become Olga Petrovna"
+ },
+ {
+  "id": "l1b_072",
+  "who": "Email",
+  "text": "An email thread has grown to 34 replies with everyone cc’d. Each one says “+1” or “Thanks.” Your inbox is drowning. Ask everyone to stop?",
+  "left": "Politely ask everyone",
+  "right": "Set up a filter rule"
+ },
+ {
+  "id": "l1b_073",
+  "who": "Project manager",
+  "text": "The project manager wants emails “shorter, but with all the details.” He sent back your two-line email as “incomplete.” Rewrite it?",
+  "left": "Expand it to a page",
+  "right": "Keep it two lines"
+ },
+ {
+  "id": "l1b_074",
+  "who": "Email",
+  "text": "You want to reply “Thanks!” to a coworker’s thank-you. But it was in a thread with forty people. Hit “Reply All”?",
+  "left": "Reply just to her",
+  "right": "“Reply All”"
+ },
+ {
+  "id": "l1b_075",
+  "who": "Partner",
+  "text": "A partner only answers your emails after the phrase “Just a reminder about...” The third reminder already sounds like a threat. Write a fourth?",
+  "left": "Call instead",
+  "right": "Write “In case it got lost”"
+ },
+ {
+  "id": "l1b_076",
+  "who": "Email",
+  "text": "In your email to the boss, the attachment is named “Report_awful_but_its_what_we_have.xlsx.” The name is visible. Sent a minute ago.",
+  "left": "Resend with a new name",
+  "right": "Leave it: honesty is valued"
+ },
+ {
+  "id": "l1b_077",
+  "who": "Oleg",
+  "text": "Oleg bcc’s you on his emails so you’re “in the loop.” The recipients don’t know. Does this bother you?",
+  "left": "Ask him to stop",
+  "right": "Read and keep quiet"
+ },
+ {
+  "id": "l1b_078",
+  "who": "Lawyer",
+  "text": "The company lawyer wants a half-page disclaimer added to every client email. Your email is “Yes, that works.” Add it?",
+  "left": "Add the disclaimer",
+  "right": "Send it short"
+ },
+ {
+  "id": "l1b_079",
+  "who": "Email",
+  "text": "You’re writing a subject line. “Question” is too vague. “Urgent question re: Q3 procurement report” is too long. Which one?",
+  "left": "Detailed subject",
+  "right": "Subject: “Quick one”"
+ },
+ {
+  "id": "l1b_080",
+  "who": "Email",
+  "text": "The boss asked you to “send it to everyone.” You sent it to the department. He meant the whole company, and replies are already flying. What now?",
+  "left": "Resend to the whole company",
+  "right": "Say the department is everyone"
+ },
+ {
+  "id": "l1b_081",
+  "who": "Liza",
+  "text": "Liza replies to your emails with voice messages on the messenger. You need a written trail for the report. What do you do?",
+  "left": "Ask for replies by email",
+  "right": "Transcribe by hand"
+ },
+ {
+  "id": "l1b_082",
+  "who": "Email",
+  "text": "You accidentally sent a draft that says “write something smart here.” The recipient is the CFO. He already replied: “Awaiting something smart.”",
+  "left": "Write something smart, fast",
+  "right": "Reply with a joke"
+ },
+ {
+  "id": "l1b_083",
+  "who": "Procurement",
+  "text": "Procurement requires requests by email only, with a subject line built from an eight-field template separated by dashes. Your request is for a pen. Follow the template?",
+  "left": "Fill all eight fields",
+  "right": "Buy a pen yourself"
+ },
+ {
+  "id": "l1b_084",
+  "who": "Email",
+  "text": "A coworker from another city emails you and signs off “Kisses.” You met him once at a conference. How do you reply?",
+  "left": "Also “Kisses”",
+  "right": "A dry “Regards”"
+ },
+ {
+  "id": "l1b_085",
+  "who": "Client",
+  "text": "A client sent a twenty-point email marked “Respond to each.” Sixteen points repeat each other. Respond to each?",
+  "left": "Answer all twenty",
+  "right": "Group them into five"
+ },
+ {
+  "id": "l1b_086",
+  "who": "Email",
+  "text": "6:30 p.m. You’ve finished an email to a client, but it’s late to send. Your email has scheduled sending. Set it for 9:00 or send now?",
+  "left": "Send now",
+  "right": "Schedule for morning"
+ },
+ {
+  "id": "l1b_087",
+  "who": "Email",
+  "text": "In the evening you reread an email you sent during the day and find “Regards, your Vasya” — a coworker’s template. You’re not Vasya.",
+  "left": "Send a correction",
+  "right": "Let it stay a mystery"
+ },
+ {
+  "id": "l1b_088",
+  "who": "Boss",
+  "text": "The boss sends emails at 11 p.m. You see them at 11:01. By 11:02 you’re drafting a reply. Answer at night?",
+  "left": "Answer at night",
+  "right": "Answer at 9:00"
+ },
+ {
+  "id": "l1b_089",
+  "who": "Email",
+  "text": "Before leaving you clean out your inbox. In the trash: “Promotion: your reply required by 6:00 p.m.” It’s 6:10.",
+  "left": "Reply urgently",
+  "right": "See the boss tomorrow"
+ },
+ {
+  "id": "l1b_090",
+  "who": "Petya",
+  "text": "Petya asks: “Write a vacation email for me, I’m no good at nice wording.” It’s him turning down a joint trip with his mother-in-law. Help?",
+  "left": "Write it beautifully",
+  "right": "Give a template and leave"
+ },
+ {
+  "id": "l1b_091",
+  "who": "Email",
+  "text": "You’re heading home, but an email from the director blinks in your inbox with the subject “Something about you.” Open now or have dinner in peace?",
+  "left": "Open it now",
+  "right": "Have dinner first"
+ },
+ {
+  "id": "l1b_092",
+  "who": "Newsletter",
+  "text": "The company newsletter “Month in Review” arrives in the evening. You’re mentioned as “the employee who’s always available.” Compliment or diagnosis?",
+  "left": "Be proud, stay available",
+  "right": "Turn on Do Not Disturb"
+ },
+ {
+  "id": "l1b_093",
+  "who": "Email",
+  "text": "You accidentally marked an email from the boss as spam. Now all his emails go to spam. Today he asks why you’re not responding.",
+  "left": "Confess about the filter",
+  "right": "Blame an email glitch"
+ },
+ {
+  "id": "l1b_094",
+  "who": "HR department",
+  "text": "HR sends a survey, “Your Ideal Workday,” due by morning. You want to write “the one that’s already over.” How do you answer?",
+  "left": "Give a standard answer",
+  "right": "Answer honestly, with humor"
+ },
+ {
+  "id": "l1b_095",
+  "who": "Email",
+  "text": "While typing an email you accidentally hit Enter in the subject line. It went out with the subject “H” and no body to a client you’ve been handling for three days.",
+  "left": "Follow up with an apology",
+  "right": "Pretend “H” means “Hi”"
+ },
+ {
+  "id": "l1b_096",
+  "who": "Masha",
+  "text": "Masha asks you to check the commas in her email to the director. There are no commas. None at all. It’s 7:20 p.m., and you have movie tickets.",
+  "left": "Add the commas",
+  "right": "Send her a grammar link"
+ },
+ {
+  "id": "l1b_097",
+  "who": "Email",
+  "text": "You meant to hit “Forward” and hit “Reply.” The sender received: “Look how tedious he is.” The sender is him.",
+  "left": "Apologize in person",
+  "right": "Claim it was about someone else"
+ },
+ {
+  "id": "l1b_098",
+  "who": "Email",
+  "text": "Evening, and you’ve finally reached your “Read Later” folder. 640 emails, the oldest from your first day. What now?",
+  "left": "Delete the whole folder",
+  "right": "Read ten at a time"
+ },
+ {
+  "id": "l1b_099",
+  "who": "Partner",
+  "text": "A partner replies to your email at 9 p.m. asking for the contract “urgently by morning.” The contract is with the lawyer, and the lawyer is asleep. Wake him?",
+  "left": "Call the lawyer",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l1b_100",
+  "who": "Email",
+  "text": "In your sent folder you see that for a week you’ve signed off “Kind regrads.” Forty emails. Did anyone notice?",
+  "left": "Fix it and forget",
+  "right": "Check all forty emails"
+ },
+ {
+  "id": "l1b_101",
+  "who": "Video call",
+  "text": "9:00 a.m., morning call. You turn on your camera and see yourself for the first time today: a perfect pillow-crease grid on your cheek. Keep the camera on?",
+  "left": "Keep it on and smile",
+  "right": "Blame “bad internet”"
+ },
+ {
+  "id": "l1b_102",
+  "who": "Team lead",
+  "text": "At stand-up the team lead asks everyone to turn cameras on “for team spirit.” Behind you, laundry is drying across the entire wall. What do you do?",
+  "left": "Blur the background",
+  "right": "Say your camera’s broken"
+ },
+ {
+  "id": "l1b_103",
+  "who": "Video call",
+  "text": "You joined the call before everyone else. It’s just you and the boss. Silence. He’s silently sipping coffee and staring into the camera. Say something?",
+  "left": "Start small talk",
+  "right": "Camera off till others join"
+ },
+ {
+  "id": "l1b_104",
+  "who": "Video call",
+  "text": "At stand-up everyone gets one minute. You’re eighth and rehearsing your speech. Number three says exactly your words. What do you do?",
+  "left": "Improvise on the fly",
+  "right": "Say “Same as Petya, roughly”"
+ },
+ {
+  "id": "l1b_105",
+  "who": "Call neighbor",
+  "text": "A coworker on the morning call forgot to mute and is loudly ordering shawarma “with double garlic” by phone. Everyone’s silent. Tip him off?",
+  "left": "Message him privately",
+  "right": "Unmute and make a joke"
+ },
+ {
+  "id": "l1b_106",
+  "who": "Video call",
+  "text": "The call link in the calendar leads to last year’s meeting. One person from another department is sitting there, also waiting. Wait together?",
+  "left": "Find the right link",
+  "right": "Introduce yourself and chat"
+ },
+ {
+  "id": "l1b_107",
+  "who": "Boss",
+  "text": "The boss on the call says: “We can’t hear you.” You talk louder. “Still can’t hear you.” You shout. The neighbors bang on the radiator.",
+  "left": "Reconnect",
+  "right": "Type it all in the chat"
+ },
+ {
+  "id": "l1b_108",
+  "who": "Video call",
+  "text": "You discover you spent forty minutes on a call with a “potato filter” on — left over from a kids’ program this morning. Nobody said a word.",
+  "left": "Laugh along with everyone",
+  "right": "Quietly turn it off"
+ },
+ {
+  "id": "l1b_109",
+  "who": "Meeting host",
+  "text": "The morning meeting host asks everyone to “describe your mood in one word.” Yours is “sleepy,” but everyone says “productive.” What do you say?",
+  "left": "“Productive”",
+  "right": "“Sleepy, but hanging in”"
+ },
+ {
+  "id": "l1b_110",
+  "who": "Video call",
+  "text": "Before an important call your laptop insists on “Install camera update now.” You can’t decline, only “Remind me in 5 minutes.” The call starts in 4.",
+  "left": "Join from your phone",
+  "right": "Install and be late"
+ },
+ {
+  "id": "l1b_111",
+  "who": "Client",
+  "text": "A client joined the video call from his car. He’s driving and wants you to show him the presentation. You watch him stare at the screen at an intersection.",
+  "left": "Suggest rescheduling",
+  "right": "Narrate the slides aloud"
+ },
+ {
+  "id": "l1b_112",
+  "who": "Video call",
+  "text": "There are thirty people on the call, and only your camera is on. Everyone else is initials in circles. Turn yours off?",
+  "left": "Turn it off like everyone",
+  "right": "Keep your face on to the end"
+ },
+ {
+  "id": "l1b_113",
+  "who": "HR",
+  "text": "HR is running an “energizing” morning call with a workout to music. Cameras mandatory. You’re in pajama pants with a dress shirt on top. Stand up for the workout?",
+  "left": "Exercise seated",
+  "right": "Stand up and risk it"
+ },
+ {
+  "id": "l1b_114",
+  "who": "Video call",
+  "text": "You join the call and everyone’s speaking English: a colleague from the overseas office is here. Your English is “London is the capital of Great Britain” level. Speak up?",
+  "left": "Speak as best you can",
+  "right": "Use a translator in chat"
+ },
+ {
+  "id": "l1b_115",
+  "who": "Team lead",
+  "text": "The team lead records the video stand-up “for those who couldn’t make it.” Nobody will watch it, but you’re yawning on camera. Will anyone notice?",
+  "left": "Camera off for the yawn",
+  "right": "Yawn honestly, like a human"
+ },
+ {
+  "id": "l1b_116",
+  "who": "Video call",
+  "text": "You try to share your screen but share the wrong one: a website of cats in little hats. Someone’s already typing “Send the link.”",
+  "left": "Send the link",
+  "right": "Switch screens fast"
+ },
+ {
+  "id": "l1b_117",
+  "who": "Video call",
+  "text": "You’ve talked for five minutes straight and suddenly notice: you’re muted. Five minutes of inspired speech lost to the void. Repeat it?",
+  "left": "Repeat it word for word",
+  "right": "Say: “Bottom line, I’m in”"
+ },
+ {
+  "id": "l1b_118",
+  "who": "Video call",
+  "text": "You forgot to mute and are loudly chomping an apple on the call. Everyone hears the crunch. The host says: “Someone’s hungry.” Own up?",
+  "left": "Own up and finish it",
+  "right": "Mute silently"
+ },
+ {
+  "id": "l1b_119",
+  "who": "Boss",
+  "text": "The boss is sharing his screen and doesn’t notice a chat where he calls someone “our main slowpoke.” It might be about you. Tell him?",
+  "left": "DM him: “screen!”",
+  "right": "Stay quiet, let him notice"
+ },
+ {
+  "id": "l1b_120",
+  "who": "Video call",
+  "text": "A two-hour call, and you forgot breakfast. Eating on camera is awkward. Turning off the camera looks suspicious. What now?",
+  "left": "Eat off-camera",
+  "right": "Hold out to the end"
+ },
+ {
+  "id": "l1b_121",
+  "who": "Client",
+  "text": "The client on the call has asked “Can you hear me?” three times, though the sound is perfect. You answer “yes” each time. He can’t hear your “yes.”",
+  "left": "Type “yes” in the chat",
+  "right": "Call him by phone"
+ },
+ {
+  "id": "l1b_122",
+  "who": "Video call",
+  "text": "You joined the wrong meeting: it’s the board of directors, and you’re a junior who clicked the wrong link. Nobody’s noticed yet. Slip out quietly?",
+  "left": "Slip out quietly",
+  "right": "Listen for five minutes"
+ },
+ {
+  "id": "l1b_123",
+  "who": "Video call",
+  "text": "Mid-call your battery is dying. The charger is in another room. Someone asks you a question. The laptop says “3%.” What do you do?",
+  "left": "Answer quickly",
+  "right": "Run for the charger"
+ },
+ {
+  "id": "l1b_124",
+  "who": "Rita",
+  "text": "During the call Rita DMs you snarky comments about the speaker. You’re laughing, and your mic is on. How do you react?",
+  "left": "Ask her to stop",
+  "right": "Snark right back"
+ },
+ {
+  "id": "l1b_125",
+  "who": "Video call",
+  "text": "The host asks: “Any questions?” Half a minute of silence. Everyone’s waiting to see who caves first. Your question is dumb, but you have one.",
+  "left": "Ask your question",
+  "right": "Wait with everyone"
+ },
+ {
+  "id": "l1b_126",
+  "who": "Video call",
+  "text": "You’re sharing your screen when a notification pops up: “Mom: buy bread and don’t forget you’re my little dumpling.” Everyone saw it.",
+  "left": "Say: “Yes, I’m a dumpling”",
+  "right": "Stop sharing"
+ },
+ {
+  "id": "l1b_127",
+  "who": "Project manager",
+  "text": "The project manager holds a call that could have been an email. An hour, eight people, conclusion: “Let’s have another call.” Object?",
+  "left": "Suggest an email instead",
+  "right": "Accept another call"
+ },
+ {
+  "id": "l1b_128",
+  "who": "Video call",
+  "text": "You turn on background blur, but the app blurs you too. All that’s left on screen is your nose. Talk through your nose?",
+  "left": "Turn off the effect",
+  "right": "Carry on as a nose"
+ },
+ {
+  "id": "l1b_129",
+  "who": "Video call",
+  "text": "Coworkers on the call are voting in the chat. You zoned out and missed the question. Everyone’s voting “yes.” Click “yes” too?",
+  "left": "Click “yes”",
+  "right": "Ask what the vote’s about"
+ },
+ {
+  "id": "l1b_130",
+  "who": "Client",
+  "text": "A client on the video call asks you to “turn up the volume on the computer.” His speakers are off. He doesn’t know, and it’s hard to explain.",
+  "left": "Explain patiently",
+  "right": "Switch to text"
+ },
+ {
+  "id": "l1b_131",
+  "who": "Video call",
+  "text": "You leave the call, click “Leave” and say out loud: “Finally.” For some reason the app didn’t leave. Everyone heard.",
+  "left": "Say: “Finally, a decision!”",
+  "right": "Just leave"
+ },
+ {
+  "id": "l1b_132",
+  "who": "Video call",
+  "text": "Mid-call, someone at the next table in the cafe where you’re working starts a loud phone call. Your mic picks it all up. Ask them to keep it down?",
+  "left": "Ask the neighbor",
+  "right": "Mute and nod along"
+ },
+ {
+  "id": "l1b_133",
+  "who": "Denis the analyst",
+  "text": "On the call Denis asks the same question for the third time. Everyone’s tired. The host looks at you: “Could you explain it to him, please?” Explain?",
+  "left": "Explain once more",
+  "right": "Offer to go over it later"
+ },
+ {
+  "id": "l1b_134",
+  "who": "Video call",
+  "text": "There’s a bookshelf behind you. A coworker asks: “What’s that yellow book?” It’s a cookbook: “100 Pasta Dishes.”",
+  "left": "Talk about pasta",
+  "right": "Say: “It’s on management”"
+ },
+ {
+  "id": "l1b_135",
+  "who": "Video call",
+  "text": "6:40 p.m. An evening call with colleagues across the ocean: it’s morning for them. You were about to have dinner. The meeting drags on. Mention it’s evening for you?",
+  "left": "Mention it politely",
+  "right": "Listen hungry"
+ },
+ {
+  "id": "l1b_136",
+  "who": "Video call",
+  "text": "The evening call is in its third hour. You turn your camera off “for a minute” and fall asleep. You wake up to someone calling your name.",
+  "left": "Say: “Internet dropped”",
+  "right": "Confess you dozed off"
+ },
+ {
+  "id": "l1b_137",
+  "who": "Boss",
+  "text": "At 7 p.m. the boss says: “Let’s have a quick call.” You know his “quick”: till nine at least. Agree?",
+  "left": "Agree",
+  "right": "Suggest tomorrow morning"
+ },
+ {
+  "id": "l1b_138",
+  "who": "Video call",
+  "text": "Evening team call. You’re in the kitchen, and your mom off-screen asks which one is “that awful Grisha.” Grisha is on the call.",
+  "left": "Mute yourself",
+  "right": "Say it’s the TV"
+ },
+ {
+  "id": "l1b_139",
+  "who": "Video call",
+  "text": "Last call of the day. You forgot your camera was on and started changing into comfy clothes. You noticed halfway into the sweater.",
+  "left": "Say: “Good evening!”",
+  "right": "Camera off, say nothing"
+ },
+ {
+  "id": "l1b_140",
+  "who": "Video call",
+  "text": "On the evening call you put your headphones on in advance, but the laptop stubbornly plays sound through the speakers. Your cat is spooked by the boss’s voice.",
+  "left": "Comfort the cat",
+  "right": "Listen through your phone"
+ },
+ {
+  "id": "l1b_141",
+  "who": "Vlad",
+  "text": "Vlad suggests an after-work “casual video call,” everyone with pizza at home. It’s Friday, and you wanted silence. Join?",
+  "left": "Join for half an hour",
+  "right": "Say you’re busy"
+ },
+ {
+  "id": "l1b_142",
+  "who": "Video call",
+  "text": "7:20 p.m. You realize you’ve worn mismatched socks on calls all day. Last call now, and you’re asked to stand up and show your “workspace.”",
+  "left": "Show it as is",
+  "right": "Show only your screen"
+ },
+ {
+  "id": "l1b_143",
+  "who": "Video call",
+  "text": "End of the workday. You receive a 2-hour-40-minute recording of today’s meeting with the note “Must watch.” Watch it today?",
+  "left": "Watch at 2x speed",
+  "right": "Read just the transcript"
+ },
+ {
+  "id": "l1b_144",
+  "who": "Client",
+  "text": "At 8 p.m. a client asks you to “quickly share your screen” and check his website. You’re already in your coat and shoes. Turn the laptop back on?",
+  "left": "Boot up in your shoes",
+  "right": "Promise first thing tomorrow"
+ },
+ {
+  "id": "l1b_145",
+  "who": "Video call",
+  "text": "Evening video chat with family through the corporate app. Grandma asks why there’s a “Confidential” label in the corner of your screen.",
+  "left": "Explain it to Grandma",
+  "right": "Switch to another app"
+ },
+ {
+  "id": "l1b_146",
+  "who": "Video call",
+  "text": "You’re finally done with calls and see you never turned on Do Not Disturb. Forty messenger notifications. Open even one?",
+  "left": "Open all forty",
+  "right": "Close the laptop"
+ },
+ {
+  "id": "l1b_147",
+  "who": "Team lead",
+  "text": "At 6:55 p.m. the team lead asks you to join a “quick 10-minute retro.” You have a run in the park at 7:00. Decline?",
+  "left": "Join from your run",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1b_148",
+  "who": "Video call",
+  "text": "You leave the call, but the app froze: they can see and hear you, and you’ve gone to boil dumplings. The laptop is open in the kitchen.",
+  "left": "Explain you’re cooking",
+  "right": "Yank the plug"
+ },
+ {
+  "id": "l1b_149",
+  "who": "Inner voice",
+  "text": "8:58 a.m. Two minutes until the workday, and you’re still in bed. The laptop is on the nightstand. Working lying down — remote work or audacity?",
+  "left": "Start lying down",
+  "right": "Get up, wash, sit at the desk"
+ },
+ {
+  "id": "l1b_150",
+  "who": "Remote work",
+  "text": "First week of remote work. You realize you haven’t left your apartment in three days. Go work at the cafe around the corner?",
+  "left": "Go to the cafe",
+  "right": "Stay home"
+ },
+ {
+  "id": "l1b_151",
+  "who": "Alarm clock",
+  "text": "The alarm goes off at 8:30, but you don’t have to go anywhere. You could sleep forty more minutes and make it by nine if you skip washing up. Risk it?",
+  "left": "Sleep a bit more",
+  "right": "Get up as usual"
+ },
+ {
+  "id": "l1b_152",
+  "who": "Remote work",
+  "text": "Remote morning. You decided to work in a dress shirt to “get in the mood.” Below: pineapple shorts. Is this what balance looks like?",
+  "left": "Change fully",
+  "right": "Embrace the pineapples"
+ },
+ {
+  "id": "l1b_153",
+  "who": "Kitchen",
+  "text": "In the morning you realize your “office” is the kitchen table, and your family just sat down to breakfast. Kick everyone out or work amid the oatmeal?",
+  "left": "Work amid the oatmeal",
+  "right": "Move to the windowsill"
+ },
+ {
+  "id": "l1b_154",
+  "who": "Team lead",
+  "text": "The team lead writes at 8:05: “At your computer yet?” The workday starts at nine. You’re in the shower, phone on the washing machine. Reply with wet hands?",
+  "left": "Reply from the shower",
+  "right": "Reply at nine"
+ },
+ {
+  "id": "l1b_155",
+  "who": "Remote work",
+  "text": "The internet is crawling this morning: neighbors are downloading TV shows. Call in ten minutes. Use your phone as a hotspot?",
+  "left": "Use the hotspot",
+  "right": "Say you can’t connect"
+ },
+ {
+  "id": "l1b_156",
+  "who": "Remote work",
+  "text": "You discover your work messenger status has said “On vacation” since last summer. Nobody mentioned it. Fix it and confess?",
+  "left": "Fix it silently",
+  "right": "Joke about it in the chat"
+ },
+ {
+  "id": "l1b_157",
+  "who": "Neighbor",
+  "text": "In the morning your neighbor starts renovating, drilling in time with your thoughts. You have a report to write. Where do you flee?",
+  "left": "To a coworking space",
+  "right": "Work in earplugs"
+ },
+ {
+  "id": "l1b_158",
+  "who": "Remote work",
+  "text": "Today’s a hybrid day: work from home or the office. The boss is in the office; home is warm and quiet. Where do you go?",
+  "left": "Go to the office",
+  "right": "Stay home"
+ },
+ {
+  "id": "l1b_159",
+  "who": "Laptop",
+  "text": "This morning your work laptop won’t turn on without its cable. The cable is at the office. You have a home computer, but working on it is forbidden.",
+  "left": "Work on the home PC",
+  "right": "Go get the cable"
+ },
+ {
+  "id": "l1b_160",
+  "who": "Remote work",
+  "text": "You wake up and realize for two weeks you’ve only spoken aloud to couriers and your cat. Call coworkers “just because”?",
+  "left": "Call just because",
+  "right": "Carry on in silence"
+ },
+ {
+  "id": "l1b_161",
+  "who": "Boss",
+  "text": "New rule: remote workers check in by writing “Here” in the chat at 9:00 sharp. You wrote it at 9:01, and the bot already logged you as late. Dispute it?",
+  "left": "Take it up with the boss",
+  "right": "Set an alarm for 8:55"
+ },
+ {
+  "id": "l1b_162",
+  "who": "Remote work",
+  "text": "Morning. You sit down at your desk and realize you haven’t even washed your face, yet you’ve answered three emails. Give yourself ten minutes?",
+  "left": "Go wash up",
+  "right": "Keep working"
+ },
+ {
+  "id": "l1b_163",
+  "who": "Courier",
+  "text": "8:50. A courier buzzes the intercom with a package. Your call starts at 9:00, and he asks you to come down: “No elevator for me.” Run?",
+  "left": "Run down",
+  "right": "Reschedule delivery"
+ },
+ {
+  "id": "l1b_164",
+  "who": "Remote work",
+  "text": "Working from home, you notice you’re on your fourth cup of coffee. It’s only 10:30. Would a fifth be too much?",
+  "left": "Have a fifth",
+  "right": "Swap it for a walk"
+ },
+ {
+  "id": "l1b_165",
+  "who": "Remote work",
+  "text": "1 p.m. You’re remote and decide to have a proper lunch, office-style, with soup. While it cooks, three urgent questions land in the chat. Leave the soup?",
+  "left": "Answer over the pot",
+  "right": "Soup first"
+ },
+ {
+  "id": "l1b_166",
+  "who": "Remote work",
+  "text": "In the afternoon you learn coworkers at the office had tea and cake and “forgot” to invite you over video. Take offense?",
+  "left": "Write “Where’s my cake?”",
+  "right": "Say nothing"
+ },
+ {
+  "id": "l1b_167",
+  "who": "Remote work",
+  "text": "You’re working from home with a view of the park. Sunshine, birds. People are strolling outside mid-day. Take a longer lunch walk?",
+  "left": "Walk a whole hour",
+  "right": "Fifteen minutes and back"
+ },
+ {
+  "id": "l1b_168",
+  "who": "Team lead",
+  "text": "The team lead checks messenger statuses. Yours switched to “Away” while you were washing dishes. The team lead writes: “All ok?”",
+  "left": "Explain about the dishes",
+  "right": "Say “Working in a doc”"
+ },
+ {
+  "id": "l1b_169",
+  "who": "Remote work",
+  "text": "Your laptop sits on an ironing board because it’s the only surface at the right height. The board wobbles with every word.",
+  "left": "Buy a desk in installments",
+  "right": "Get used to the board"
+ },
+ {
+  "id": "l1b_170",
+  "who": "Remote work",
+  "text": "You realize you’ve been working from home in the same position for five hours. Your neck won’t turn. Take a stretch break or push through?",
+  "left": "Do some stretches",
+  "right": "Push through the task"
+ },
+ {
+  "id": "l1b_171",
+  "who": "Remote work",
+  "text": "Midday, the power went out in the whole building. The laptop has an hour left; the router’s already dead. Tell the boss or wait?",
+  "left": "Tell the boss",
+  "right": "Work from your phone"
+ },
+ {
+  "id": "l1b_172",
+  "who": "Courier",
+  "text": "The courier brings lunch while you’re on a call with a client. The doorbell sounds like a fire alarm. Answer it or not?",
+  "left": "Answer it, mic muted",
+  "right": "Let him wait"
+ },
+ {
+  "id": "l1b_173",
+  "who": "Remote work",
+  "text": "Coworkers at the office are discussing a task at the whiteboard, and you’re watching on video with the camera pointed at the ceiling. Ask them to turn it?",
+  "left": "Ask to turn the camera",
+  "right": "Listen to the ceiling"
+ },
+ {
+  "id": "l1b_174",
+  "who": "Remote work",
+  "text": "Midday, you’re tempted to put a show on “in the background.” The task is monotonous: fill in two hundred spreadsheet rows. Turn it on?",
+  "left": "Put the show on",
+  "right": "Work in silence"
+ },
+ {
+  "id": "l1b_175",
+  "who": "Remote work",
+  "text": "You’re working from a cafe. At the next table someone’s also on a call, discussing exactly your task. It’s your coworker from the next department.",
+  "left": "Go over and say hi",
+  "right": "Move to a corner"
+ },
+ {
+  "id": "l1b_176",
+  "who": "Boss",
+  "text": "The boss on video asks: “Where are you? Is that the sea behind you?” You’re on the balcony overlooking a reservoir. Explain?",
+  "left": "Show the reservoir",
+  "right": "Move inside"
+ },
+ {
+  "id": "l1b_177",
+  "who": "Remote work",
+  "text": "At 3 p.m. you realize you haven’t eaten, had water or stood up. But “all messages read.” Stop and have lunch?",
+  "left": "Have lunch",
+  "right": "Keep working"
+ },
+ {
+  "id": "l1b_178",
+  "who": "Anya",
+  "text": "Anya from the office writes: “Lucky you, you’re home.” You’ve spent three days in one room with the neighbors’ renovation. Explain?",
+  "left": "Tell her about the drilling",
+  "right": "Reply “Yeah, it’s bliss”"
+ },
+ {
+  "id": "l1b_179",
+  "who": "Remote work",
+  "text": "You decided to work from the park. The sun is shining right on the screen; you can’t see a thing. Your reflection looks tired. Head home?",
+  "left": "Head home",
+  "right": "Work in the shade"
+ },
+ {
+  "id": "l1b_180",
+  "who": "Remote work",
+  "text": "Midday, you catch yourself having walked only between the room and the kitchen all workday. The step counter says 300. Go for a walk?",
+  "left": "Go for a walk",
+  "right": "Pretend 300 is fine"
+ },
+ {
+  "id": "l1b_181",
+  "who": "HR department",
+  "text": "HR asks remote workers if working from home is comfortable and wants a 40-question survey filled out “for improvements.” Fill it out?",
+  "left": "Fill it out honestly",
+  "right": "Close the tab"
+ },
+ {
+  "id": "l1b_182",
+  "who": "Remote work",
+  "text": "Evening, working remote. Your family calls you to watch a movie, but you promised yourself “just half an hour more” on a presentation. That half hour is entering its second hour. Give up?",
+  "left": "Go watch the movie",
+  "right": "Just half an hour more"
+ },
+ {
+  "id": "l1b_183",
+  "who": "Remote work",
+  "text": "6:01 p.m. You close the laptop, and a minute later your phone pings: the boss replied to an email. You could take “just a peek.”",
+  "left": "Take a peek",
+  "right": "Don’t look till morning"
+ },
+ {
+  "id": "l1b_184",
+  "who": "Remote work",
+  "text": "In the evening you realize you worked all day without turning on the lights. It’s dark, and you’re sitting in the monitor’s glow. Turn on the light and wrap up?",
+  "left": "Wrap up, lights on",
+  "right": "Finish in the dark"
+ },
+ {
+  "id": "l1b_185",
+  "who": "Roommate",
+  "text": "Your roommate gets home from work and asks: “You were home all day, can you make dinner?” You were working all day.",
+  "left": "Make dinner",
+  "right": "Explain about work"
+ },
+ {
+  "id": "l1b_186",
+  "who": "Remote work",
+  "text": "Your day is done, but you can’t switch off: same room, same chair. Make yourself a “commute home” — a walk around the block?",
+  "left": "Walk around the block",
+  "right": "Collapse on the couch"
+ },
+ {
+  "id": "l1b_187",
+  "who": "Remote work",
+  "text": "At 9 p.m. you remember you didn’t log your hours in the tracker. If you don’t, the day counts as an absence. Turn the laptop on?",
+  "left": "Log it now",
+  "right": "Email accounting tomorrow"
+ },
+ {
+  "id": "l1b_188",
+  "who": "Team lead",
+  "text": "The team lead texts in the evening: “I see you’re online at 8 p.m. Don’t overwork!” You were online ordering pizza.",
+  "left": "Honestly mention pizza",
+  "right": "“Thanks, I’ll take care”"
+ },
+ {
+  "id": "l1b_189",
+  "who": "Remote work",
+  "text": "Evening, and you decide to work another hour from your favorite armchair. An hour later you realize you’ve been watching videos about building houses out of bottles.",
+  "left": "Finish the video",
+  "right": "Back to the task"
+ },
+ {
+  "id": "l1b_190",
+  "who": "Remote work",
+  "text": "Before bed you realize you haven’t been outside for two days. Tomorrow’s remote again. Go to the store just for the fresh air?",
+  "left": "Go to the store",
+  "right": "Order delivery"
+ },
+ {
+  "id": "l1b_191",
+  "who": "Boss",
+  "text": "The boss announces that starting next month, remote work is limited to two days a week. The chat is in uproar. Speak up?",
+  "left": "Speak out against it",
+  "right": "Keep quiet and accept it"
+ },
+ {
+  "id": "l1b_192",
+  "who": "Remote work",
+  "text": "Friday evening, remote. Office coworkers went to a bar without you. You see the photos in the team chat: everyone’s laughing. Join them by video?",
+  "left": "Video call them",
+  "right": "Have your own night"
+ },
+ {
+  "id": "l1b_193",
+  "who": "Remote work",
+  "text": "You’ve finished work, but the laptop insists: “Restarting in 10 minutes.” If you agree, you’ll wait for the update in the morning. What’s it going to be?",
+  "left": "Update tonight",
+  "right": "Postpone till morning"
+ },
+ {
+  "id": "l1b_194",
+  "who": "Partner",
+  "text": "Your partner suggests going out for dinner tonight. You’ve been in loungewear all day, and the thought of wearing pants is terrifying. Go?",
+  "left": "Put on pants and go",
+  "right": "Suggest delivery"
+ },
+ {
+  "id": "l1b_195",
+  "who": "Remote work",
+  "text": "Evening. You notice the work tracker counted only six hours, though you sat there ten. The rest was “inactive.” File a complaint?",
+  "left": "Write to support",
+  "right": "Work extra tomorrow"
+ },
+ {
+  "id": "l1b_196",
+  "who": "Cat",
+  "text": "9:02 a.m. Morning call. The cat has lain down right on the keyboard and refuses to move. The laptop is typing “jjjjjjjj” into the team chat. Remove the cat?",
+  "left": "Remove the cat",
+  "right": "Introduce the cat to the team"
+ },
+ {
+  "id": "l1b_197",
+  "who": "Dog",
+  "text": "The dog is whining at the door: walk time. The call starts in five minutes and lasts an hour. Dash out with her?",
+  "left": "Dash out for five minutes",
+  "right": "She can wait till it’s over"
+ },
+ {
+  "id": "l1b_198",
+  "who": "Kid brother",
+  "text": "Your little brother is on school break and wants to “work too.” He sits next to you and draws you a dinosaur report in your notebook. Send him away?",
+  "left": "Give him a toy laptop",
+  "right": "Work with the dinosaurs"
+ },
+ {
+  "id": "l1b_199",
+  "who": "Mom",
+  "text": "Mom calls at 8:45 “for a minute.” The minute is about how you’re not eating properly. Stand-up at 9:00. Interrupt Mom?",
+  "left": "Politely interrupt",
+  "right": "Hear her out"
+ },
+ {
+  "id": "l1b_200",
+  "who": "Hamster",
+  "text": "Overnight the hamster chewed through your laptop charger cable. 20% battery. Morning call with the boss in ten minutes. What now?",
+  "left": "Join from your phone",
+  "right": "Ask to reschedule"
+ },
+ {
+  "id": "l1b_201",
+  "who": "Parrot",
+  "text": "Your parrot has learned to say “Meeting adjourned!” Today he said it in the middle of the morning stand-up, and half the people left the call.",
+  "left": "Apologize for the parrot",
+  "right": "Say the parrot has a point"
+ },
+ {
+  "id": "l1b_202",
+  "who": "Cat",
+  "text": "The cat climbed into the closet and fell asleep on your work shirt. It’s now covered in fur. Client call in half an hour.",
+  "left": "Lint-roll it",
+  "right": "Wear a furry sweater"
+ },
+ {
+  "id": "l1b_203",
+  "who": "Grandma",
+  "text": "Grandma is staying over and blasts the radio first thing in the morning. You ask her to turn it down; she says: “I can’t hear what you’re saying.”",
+  "left": "Work in headphones",
+  "right": "Explain with gestures"
+ },
+ {
+  "id": "l1b_204",
+  "who": "Dog",
+  "text": "At morning stand-up the dog barks at everyone who unmutes. Her favorite target is your team lead. Everyone laughs except the team lead.",
+  "left": "Shut the dog in the bathroom",
+  "right": "Propose the dog join the team"
+ },
+ {
+  "id": "l1b_205",
+  "who": "Sister",
+  "text": "Your sister asks you to babysit her three-year-old “for a couple of hours this morning.” You have stand-up and two meetings. Agree?",
+  "left": "Agree",
+  "right": "Turn your sister down"
+ },
+ {
+  "id": "l1b_206",
+  "who": "Cat",
+  "text": "On the morning call the cat walks up to the camera and shows everyone his back. In close-up. Coworkers write: “Handsome.” Remove him?",
+  "left": "Remove the cat",
+  "right": "Let the cat attend"
+ },
+ {
+  "id": "l1b_207",
+  "who": "Partner",
+  "text": "Your partner walks behind you in a towel this morning while you’re on a call. He didn’t know the camera was on. Everyone noticed.",
+  "left": "Act like nothing happened",
+  "right": "Wave and introduce him"
+ },
+ {
+  "id": "l1b_208",
+  "who": "Kid",
+  "text": "Your nephew wants you to hear him recite a poem this morning. Right now, before your call. Listen?",
+  "left": "Listen",
+  "right": "Save it for later"
+ },
+ {
+  "id": "l1b_209",
+  "who": "Fish",
+  "text": "The aquarium behind you is gurgling louder than usual. Someone on the call asks: “Do you have a leak somewhere?” Turn off the filter?",
+  "left": "Turn off the filter",
+  "right": "Show them the fish"
+ },
+ {
+  "id": "l1b_210",
+  "who": "Cat",
+  "text": "The cat hid in the laptop box and hisses whenever you try to reach in. The warranty card IT needs is in that box.",
+  "left": "Lure the cat out with food",
+  "right": "Wait for him to leave"
+ },
+ {
+  "id": "l1b_211",
+  "who": "Neighbor’s dog",
+  "text": "Since morning the neighbor’s dog has been howling through the wall at every ring of your laptop. He seems to think it’s a friend. Mute the ringtone?",
+  "left": "Mute it",
+  "right": "Befriend the dog"
+ },
+ {
+  "id": "l1b_212",
+  "who": "Grandpa",
+  "text": "Grandpa decided to help by “fixing the internet” this morning. Now there’s no internet at all, and Grandpa is very proud. What now?",
+  "left": "Thank Grandpa",
+  "right": "Reboot the router, fast"
+ },
+ {
+  "id": "l1b_213",
+  "who": "Cat",
+  "text": "The cat walked across the keyboard and sent your boss the message “pfrrrr.” The boss replies: “Agreed.” Explain?",
+  "left": "Explain about the cat",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_214",
+  "who": "Kid",
+  "text": "Mid-presentation, the neighbor’s kid runs into the room yelling: “Your cat climbed in the toilet!” The presentation is for a client.",
+  "left": "Take a pause",
+  "right": "Carry on unfazed"
+ },
+ {
+  "id": "l1b_215",
+  "who": "Dog",
+  "text": "The dog stole your lunch off the kitchen table right as someone asked you a question on the call. You watch her run off. What do you do?",
+  "left": "Answer the question",
+  "right": "Chase the dog"
+ },
+ {
+  "id": "l1b_216",
+  "who": "Mom",
+  "text": "Mom video-calls at lunch and wants to see what you’re eating. You’re eating cookies over the keyboard. Show her?",
+  "left": "Show the cookies",
+  "right": "Say you’re at a restaurant"
+ },
+ {
+  "id": "l1b_217",
+  "who": "Cat",
+  "text": "During an important call the cat starts loudly throwing up somewhere off-screen. You’re leading the meeting. Interrupt?",
+  "left": "Ask for a minute’s pause",
+  "right": "Carry on, ignore the sounds"
+ },
+ {
+  "id": "l1b_218",
+  "who": "Parrot",
+  "text": "During the day the parrot learned the phrase “What a stupid project!” and repeats it at every call. Today you have a call with the client.",
+  "left": "Move the parrot to the bathroom",
+  "right": "Say it’s the TV"
+ },
+ {
+  "id": "l1b_219",
+  "who": "Kid",
+  "text": "Your little nephew walks up to the camera on a call and announces: “They told me you’re all boring.” Awkward pause.",
+  "left": "Joke it off",
+  "right": "Turn off the camera"
+ },
+ {
+  "id": "l1b_220",
+  "who": "Dog",
+  "text": "Midday, the dog decided it’s playtime and brought a ball right up to the laptop. She’s staring into your eyes and waiting. Resist?",
+  "left": "Throw the ball",
+  "right": "Keep working"
+ },
+ {
+  "id": "l1b_221",
+  "who": "Cat",
+  "text": "The cat has settled on the documents you need to scan. She’s sleeping deeply and sweetly. You hate to wake her, but they’re due.",
+  "left": "Wake the cat",
+  "right": "Wait half an hour"
+ },
+ {
+  "id": "l1b_222",
+  "who": "Neighbor",
+  "text": "Your neighbor knocks and asks to borrow a drill. You’re on a call with your camera on. He sees you through the crack and waves at your coworkers.",
+  "left": "Open up, hand over the drill",
+  "right": "Pretend you can’t hear"
+ },
+ {
+  "id": "l1b_223",
+  "who": "Cat",
+  "text": "The cat jumped on the desk and knocked coffee onto your work papers. You need them in an hour. How do you save them?",
+  "left": "Blow-dry them",
+  "right": "Reprint them"
+ },
+ {
+  "id": "l1b_224",
+  "who": "Partner",
+  "text": "Midday your partner is on a video call with friends in the next room. Loud laughter. You have an important meeting in five minutes.",
+  "left": "Ask him to keep it down",
+  "right": "Move to the balcony"
+ },
+ {
+  "id": "l1b_225",
+  "who": "Kid",
+  "text": "Your friend’s daughter, whom you agreed to watch, asks for help with math homework. You’re working. Help?",
+  "left": "Help with the problem",
+  "right": "Put on a cartoon for her"
+ },
+ {
+  "id": "l1b_226",
+  "who": "Cat",
+  "text": "On a call you lift the cat to the camera to show your coworkers. He wriggles free and scratches your hand. Everyone sees.",
+  "left": "Laugh at yourself",
+  "right": "Act like it’s fine"
+ },
+ {
+  "id": "l1b_227",
+  "who": "Mom",
+  "text": "Mom is visiting and decided to clean while you work. The vacuum is roaring right behind you during a call.",
+  "left": "Ask her to wait",
+  "right": "Mute and wait it out"
+ },
+ {
+  "id": "l1b_228",
+  "who": "Neighbor’s Pomeranian",
+  "text": "Your neighbor went away and left you her Pomeranian. During the day he barks at every bird outside. You have a call every hour. What now?",
+  "left": "Close the curtains",
+  "right": "Accept barking as a soundtrack"
+ },
+ {
+  "id": "l1b_229",
+  "who": "Cat",
+  "text": "In the evening you leave a call, but the cat steps on a key and rejoins it. They can see you in pajamas, food in hand.",
+  "left": "Wave and leave",
+  "right": "Shut the laptop down"
+ },
+ {
+  "id": "l1b_230",
+  "who": "Kid",
+  "text": "In the evening you need to finish a report, but your nephew wants to play hide-and-seek. He’s already hidden and waiting. Go find him?",
+  "left": "Find him",
+  "right": "Say you’ll find him later"
+ },
+ {
+  "id": "l1b_231",
+  "who": "Dog",
+  "text": "The dog has been waiting for a walk since 5:30. You’re on a call till 6:30. She’s sitting by the door with the leash in her mouth. Take pity?",
+  "left": "Step out for 10 minutes",
+  "right": "Wait till the call ends"
+ },
+ {
+  "id": "l1b_232",
+  "who": "Mom",
+  "text": "At 7 p.m. Mom calls asking how to send photos “to that email of yours.” You’re still in work mode. Explain?",
+  "left": "Explain patiently",
+  "right": "Promise to show her on the weekend"
+ },
+ {
+  "id": "l1b_233",
+  "who": "Partner",
+  "text": "In the evening your partner is upset: “Calls all day, and no time to talk to me.” You’re still on the laptop. Close it?",
+  "left": "Close the laptop",
+  "right": "Ask for half an hour more"
+ },
+ {
+  "id": "l1b_234",
+  "who": "Cat",
+  "text": "In the evening the cat brought you a “gift”: your computer mouse. The work one. Wireless. Chewed. Tomorrow you’ll have to explain to IT.",
+  "left": "Buy a new one yourself",
+  "right": "Return the chewed one honestly"
+ },
+ {
+  "id": "l1b_235",
+  "who": "Grandma",
+  "text": "Grandma video-calls and wants to see your office. You’re home, and the “office” is a stool by the window. Show her?",
+  "left": "Show the stool",
+  "right": "Show a photo from the internet"
+ },
+ {
+  "id": "l1b_236",
+  "who": "Dog",
+  "text": "You leave an evening call and see the dog chewed through the lamp cord. No light. The report isn’t done.",
+  "left": "Finish by candlelight",
+  "right": "Postpone till morning"
+ },
+ {
+  "id": "l1b_237",
+  "who": "Kid",
+  "text": "In the evening the neighbor’s kid you’re watching draws on your work laptop in marker. The drawing: a cat captioned “For the boss.”",
+  "left": "Scrub the laptop",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_238",
+  "who": "Family",
+  "text": "Over dinner your family asks how your day went. You talk about calls, and everyone dozes off. Keep going?",
+  "left": "Change the subject",
+  "right": "Finish the call saga"
+ },
+ {
+  "id": "l1b_239",
+  "who": "Cat",
+  "text": "In the evening the cat climbed into your work bag and fell asleep on the laptop. You have to get up early for the office tomorrow. Wake him?",
+  "left": "Wake the cat",
+  "right": "Let him sleep"
+ },
+ {
+  "id": "l1b_240",
+  "who": "Mom",
+  "text": "In the evening Mom says she saw you in an office party photo online. She wants to know who that “cute boy next to you” is. It’s your boss.",
+  "left": "Tell her about the boss",
+  "right": "Say you don’t remember"
+ },
+ {
+  "id": "l1b_241",
+  "who": "Hamster",
+  "text": "The hamster escaped while you were on an evening call. Somewhere in the apartment: silence. Suspicious. Start the search?",
+  "left": "Search immediately",
+  "right": "Finish work first"
+ },
+ {
+  "id": "l1b_242",
+  "who": "Dog",
+  "text": "In the evening the dog brings your slippers and drops them by the door. A clear hint. Take her for a walk?",
+  "left": "Go out for an hour",
+  "right": "Pet her and stay in"
+ },
+ {
+  "id": "l1b_243",
+  "who": "Tech support",
+  "text": "8:30 a.m. Your mouse is dead. You file a support ticket. The system automatically assigns it number 48,112 and priority “Low.” Wait?",
+  "left": "Wait your turn",
+  "right": "Go see IT in person"
+ },
+ {
+  "id": "l1b_244",
+  "who": "Sysadmin",
+  "text": "You go to the sysadmin with a question, and without looking up from his monitor he says: “File a ticket.” You’re standing three feet from him.",
+  "left": "File a ticket",
+  "right": "Wait till he looks up"
+ },
+ {
+  "id": "l1b_245",
+  "who": "Tech support",
+  "text": "This morning your monitor shows everything upside down. You call support, and they ask: “Have you tried tilting your head?” Is that a joke?",
+  "left": "Laugh and wait for a tech",
+  "right": "Complain to your manager"
+ },
+ {
+  "id": "l1b_246",
+  "who": "Printer",
+  "text": "The hallway printer prints only the first page of a document, then says “Paper jam” with no jam. Your contract is 12 pages.",
+  "left": "Print one page at a time",
+  "right": "File a ticket"
+ },
+ {
+  "id": "l1b_247",
+  "who": "Tech support",
+  "text": "Your request for a new keyboard has been “Pending approval” for three weeks. The “o” key on yours doesn’t work. Type without “o”?",
+  "left": "Bring one from home",
+  "right": "Type “0” instead of “o”"
+ },
+ {
+  "id": "l1b_248",
+  "who": "Sysadmin",
+  "text": "In the morning the sysadmin goes desk to desk silently swapping everyone’s monitors for new ones. He carries off your old one, with the cat stickers. Ask to keep it?",
+  "left": "Ask to keep the old one",
+  "right": "Accept the catless new one"
+ },
+ {
+  "id": "l1b_249",
+  "who": "Tech support",
+  "text": "The support bot replies to your ticket: “Resolved. Restart your computer.” You restarted. Not resolved. The bot closed the ticket.",
+  "left": "Reopen the ticket",
+  "right": "Call IT directly"
+ },
+ {
+  "id": "l1b_250",
+  "who": "Laptop",
+  "text": "You open your work laptop to a blue screen with a message in an unknown language. The report is due today. Call support?",
+  "left": "Call support",
+  "right": "Restart it a hundred times"
+ },
+ {
+  "id": "l1b_251",
+  "who": "Sysadmin",
+  "text": "In the morning the sysadmin asks who here “always forgets to turn off their computer.” Everyone looks at you. Your computer is glowing across the room.",
+  "left": "Confess",
+  "right": "Point at your neighbor"
+ },
+ {
+  "id": "l1b_252",
+  "who": "Tech support",
+  "text": "You got a new laptop. It can’t see any of your folders. The IT guy says: “It’s all in the cloud.” The cloud is empty.",
+  "left": "Dig through old emails",
+  "right": "Demand answers from IT"
+ },
+ {
+  "id": "l1b_253",
+  "who": "Printer",
+  "text": "This morning the printer is churning out 300 copies of yesterday’s report. Someone apparently hit “Repeat.” The pile is growing. Stop it?",
+  "left": "Pull the plug",
+  "right": "Collect it all for recycling"
+ },
+ {
+  "id": "l1b_254",
+  "who": "Tech support",
+  "text": "Support wants the ticket to include “IP address, MAC address and inventory number.” You don’t know any of the three. What do you do?",
+  "left": "Find them all yourself",
+  "right": "Write “don’t know”"
+ },
+ {
+  "id": "l1b_255",
+  "who": "Sysadmin",
+  "text": "The sysadmin disabled changing wallpapers on your computers. Now everyone has a gray logo background. You had a sea view. Ask for it back?",
+  "left": "Ask for it back",
+  "right": "Hang a sea photo on the wall"
+ },
+ {
+  "id": "l1b_256",
+  "who": "Smart speaker",
+  "text": "The office smart speaker has answered every question since morning with “Please contact tech support.” You asked the time. Call them?",
+  "left": "Joke and forget it",
+  "right": "File a ticket about it"
+ },
+ {
+  "id": "l1b_257",
+  "who": "Tech support",
+  "text": "Every morning support asks: “Has your problem been resolved?” It hasn’t, but you’ve learned to work around it. Click “Yes”?",
+  "left": "Click “Yes”",
+  "right": "Click “No,” write details"
+ },
+ {
+  "id": "l1b_258",
+  "who": "Pass",
+  "text": "Your pass doesn’t work at the turnstile this morning. The guard says: “Not my department, that’s IT.” IT is on the other side of the turnstile.",
+  "left": "Wait for someone to pass",
+  "right": "Call IT and plead"
+ },
+ {
+  "id": "l1b_259",
+  "who": "Tech support",
+  "text": "Support connects to your computer remotely. The mouse moves by itself across the screen. You watch it open the folder named “Personal.”",
+  "left": "Stop the connection",
+  "right": "Watch and blush"
+ },
+ {
+  "id": "l1b_260",
+  "who": "Sysadmin",
+  "text": "The sysadmin asks you to hold a cable while he crawls under the desk. Twenty minutes later you’re still holding the cable. He went to lunch.",
+  "left": "Drop the cable",
+  "right": "Hold on to the end"
+ },
+ {
+  "id": "l1b_261",
+  "who": "Tech support",
+  "text": "You tell support the internet isn’t working. The reply arrives three hours later: “Please email us a screenshot of the error.”",
+  "left": "Send a phone screenshot",
+  "right": "Reply with sarcasm"
+ },
+ {
+  "id": "l1b_262",
+  "who": "Printer",
+  "text": "The printer prints everything pink. You need to print a report for the director. Looks like the cyan cartridge ran out. Print in pink?",
+  "left": "Print in pink",
+  "right": "Hunt for a cartridge"
+ },
+ {
+  "id": "l1b_263",
+  "who": "Tech support",
+  "text": "You discover tickets get handled faster if you tick “Blocking the manager’s work.” That’s not true. Tick it?",
+  "left": "Tick it anyway",
+  "right": "Wait honestly"
+ },
+ {
+  "id": "l1b_264",
+  "who": "Sysadmin",
+  "text": "Once a month the sysadmin holds “computer cleanup day.” You’re asked to delete everything unnecessary. There are 340 files on your desktop. Start?",
+  "left": "Delete all the “junk”",
+  "right": "Dump it in a “Misc” folder"
+ },
+ {
+  "id": "l1b_265",
+  "who": "Tech support",
+  "text": "Your headphones died midday. Support hands out temporary ones: huge, with cat ears. There are no others. Take them?",
+  "left": "Wear them proudly",
+  "right": "Work without headphones"
+ },
+ {
+  "id": "l1b_266",
+  "who": "Slava",
+  "text": "Slava asks for help with his computer because you’re “young, you get this stuff.” You don’t get it any better than he does. Help?",
+  "left": "Help by trial and error",
+  "right": "Send him to support"
+ },
+ {
+  "id": "l1b_267",
+  "who": "Tech support",
+  "text": "Support says: “To get access to the folder, submit a request for access to the ticketing system.” You don’t have access to the ticketing system.",
+  "left": "Email the request",
+  "right": "Ask a coworker to file it"
+ },
+ {
+  "id": "l1b_268",
+  "who": "Sysadmin",
+  "text": "The sysadmin praised you for the first time: “You’re the only one who reads the instructions.” Now he sends you every new instruction to proofread.",
+  "left": "Proofread the instructions",
+  "right": "Stop reading instructions"
+ },
+ {
+  "id": "l1b_269",
+  "who": "Projector",
+  "text": "The meeting-room projector is dead. In five minutes you’re presenting to the department head. IT isn’t picking up.",
+  "left": "Present from your laptop",
+  "right": "Reschedule the meeting"
+ },
+ {
+  "id": "l1b_270",
+  "who": "Tech support",
+  "text": "Support closes your ticket with the note “Cannot reproduce.” The error reproduces for you every ten minutes. Record a video?",
+  "left": "Record a video",
+  "right": "Give up"
+ },
+ {
+  "id": "l1b_271",
+  "who": "Sysadmin",
+  "text": "The sysadmin asks you to temporarily be a “tester” for a new system. It’ll add work, but they promise a thank-you in the newsletter. Agree?",
+  "left": "Agree",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1b_272",
+  "who": "Printer",
+  "text": "The printer throws an “Insufficient memory” error. You’re printing one page with one word: “Pass.” Restart the printer?",
+  "left": "Restart it",
+  "right": "Write it by hand"
+ },
+ {
+  "id": "l1b_273",
+  "who": "Tech support",
+  "text": "To get support to come faster, coworkers advise writing that “something smells like burning.” They say it never fails. Try it?",
+  "left": "Try it",
+  "right": "Wait honestly"
+ },
+ {
+  "id": "l1b_274",
+  "who": "Desk phone",
+  "text": "Your desk phone rings, but the handset won’t lift: its cord is tangled with the monitor cable. It’s the boss calling.",
+  "left": "Call back from your cell",
+  "right": "Untangle the cords"
+ },
+ {
+  "id": "l1b_275",
+  "who": "Sysadmin",
+  "text": "The sysadmin spots a personal power strip on your desk and demands it go: “Not certified.” Your kettle runs off it.",
+  "left": "Remove the power strip",
+  "right": "Hide it under the desk"
+ },
+ {
+  "id": "l1b_276",
+  "who": "Tech support",
+  "text": "5:55 p.m. Your computer says: “Your account will be locked in 5 minutes due to inactivity.” You’ve been active all day.",
+  "left": "Call support",
+  "right": "Go home"
+ },
+ {
+  "id": "l1b_277",
+  "who": "Sysadmin",
+  "text": "The sysadmin heads home with a parting “If anything happens, just restart.” Five minutes later everything freezes. What now?",
+  "left": "Restart",
+  "right": "Call the sysadmin"
+ },
+ {
+  "id": "l1b_278",
+  "who": "Tech support",
+  "text": "An evening email: “Your request has been fulfilled.” It was for a new monitor. The monitor is on your coworker’s desk next to you.",
+  "left": "Go find out",
+  "right": "File a new request"
+ },
+ {
+  "id": "l1b_279",
+  "who": "Laptop",
+  "text": "In the evening your laptop stops charging. Important meeting in the morning. Support has gone home. What’s the plan?",
+  "left": "Borrow a coworker’s laptop",
+  "right": "Prep on your phone"
+ },
+ {
+  "id": "l1b_280",
+  "who": "Tech support",
+  "text": "In the evening IT posts in the team chat: “Tomorrow from 8 to 10 the server will be unavailable.” Your deadline is at 9:00. Submit today?",
+  "left": "Submit today",
+  "right": "Negotiate an extension"
+ },
+ {
+  "id": "l1b_281",
+  "who": "Sysadmin",
+  "text": "You’re staying late, and the sysadmin asks you to switch off “that big computer in the corner.” It’s the server. You realize this at the last moment.",
+  "left": "Refuse to touch it",
+  "right": "Double-check by phone"
+ },
+ {
+  "id": "l1b_282",
+  "who": "Tech support",
+  "text": "In the evening you get a survey: “Rate the quality of tech support.” Your ticket still isn’t resolved. Give an honest 1?",
+  "left": "Give it a 1",
+  "right": "A polite 4"
+ },
+ {
+  "id": "l1b_283",
+  "who": "Printer",
+  "text": "In the evening, after everyone’s left, the printer suddenly comes to life and prints the whole day’s documents. Yours too. Including a stray “resume_new.”",
+  "left": "Grab the printouts",
+  "right": "Leave and hope"
+ },
+ {
+  "id": "l1b_284",
+  "who": "Sysadmin",
+  "text": "The sysadmin writes at 8 p.m.: “Did you do something to your computer? Your security is disabled.” You installed a game for your lunch break.",
+  "left": "Confess honestly",
+  "right": "Say you have no idea"
+ },
+ {
+  "id": "l1b_285",
+  "who": "Tech support",
+  "text": "In the evening you decide to fix the mouse yourself with a screwdriver. Inside is a little spring that shoots under the cabinet. The mouse is dead.",
+  "left": "Search for the spring",
+  "right": "Buy a new one yourself"
+ },
+ {
+  "id": "l1b_286",
+  "who": "Laptop",
+  "text": "As you’re leaving, the laptop offers to “Check disk for errors.” It’ll take “5 minutes to 3 hours.” Click “Yes” and leave?",
+  "left": "Click “Yes” and leave",
+  "right": "Postpone the check"
+ },
+ {
+  "id": "l1b_287",
+  "who": "Tech support",
+  "text": "You’re working late, and the building’s power is shut off “as scheduled.” Your document isn’t saved. Five hours of work hang in the balance.",
+  "left": "Wait, maybe it comes back",
+  "right": "Start over at home"
+ },
+ {
+  "id": "l1b_288",
+  "who": "Sysadmin",
+  "text": "The sysadmin invites you to a bar tonight to celebrate the “server migration.” You don’t know what that is, but all of IT is going.",
+  "left": "Go to the bar",
+  "right": "Plead exhaustion"
+ },
+ {
+  "id": "l1b_289",
+  "who": "System",
+  "text": "9:00 a.m. The system demands a new password: “At least 14 characters, no repeats, no dictionary words, not similar to your last 24.” You haven’t had coffee yet.",
+  "left": "Come up with a real one",
+  "right": "Add “!” to the old one"
+ },
+ {
+  "id": "l1b_290",
+  "who": "Security",
+  "text": "Security announced a mandatory “Cyber Hygiene” course. Twelve 20-minute video lessons and a test at the end. Due Friday.",
+  "left": "Watch at 2x speed",
+  "right": "Skip ahead to the test"
+ },
+ {
+  "id": "l1b_291",
+  "who": "Phone",
+  "text": "Two-factor authentication sends codes to your work phone. Your work phone is at home; you’re at the office. Without the code you can’t log in anywhere.",
+  "left": "Go home for the phone",
+  "right": "Ask IT to reset it"
+ },
+ {
+  "id": "l1b_292",
+  "who": "Gena",
+  "text": "Gena asks in the morning: “Can I log in from your computer? My password got locked.” This is explicitly against security rules.",
+  "left": "Let Gena in",
+  "right": "Refuse, rules are rules"
+ },
+ {
+  "id": "l1b_293",
+  "who": "Security",
+  "text": "A “Clean Desk” flyer lands on your desk: when leaving, clear away all papers. Papers on your desk lie in layers like an archaeological dig.",
+  "left": "Excavate the piles",
+  "right": "Shove it all in a drawer"
+ },
+ {
+  "id": "l1b_294",
+  "who": "Email",
+  "text": "A morning email from “the CEO”: “Urgently buy gift cards and send me the codes.” The signature is right; the address is odd. What do you do?",
+  "left": "Forward it to security",
+  "right": "Delete and forget"
+ },
+ {
+  "id": "l1b_295",
+  "who": "System",
+  "text": "You enter your password, and the system says: “Incorrect. 2 attempts left.” You’ve confidently typed it for three days straight. Keep trying?",
+  "left": "Try once more",
+  "right": "Call support right away"
+ },
+ {
+  "id": "l1b_296",
+  "who": "Security",
+  "text": "Security staged a “training phishing attack.” You clicked the link “You’ve won a coffee machine.” Now you’re enrolled in extra training.",
+  "left": "Take the training",
+  "right": "Argue it was convincing"
+ },
+ {
+  "id": "l1b_297",
+  "who": "Pass",
+  "text": "In the morning you hold the door for a stranger carrying boxes. A minute later an email warning arrives: “Do not let strangers in!”",
+  "left": "Chase down the stranger",
+  "right": "Pretend it wasn’t you"
+ },
+ {
+  "id": "l1b_298",
+  "who": "Sticky note",
+  "text": "A coworker’s monitor has a sticky note with a password on it. The security officer is coming down the aisle and is about to see it. Warn your coworker?",
+  "left": "Warn them in a whisper",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l1b_299",
+  "who": "Security",
+  "text": "The security officer does a morning round checking that everyone locks their computer when getting coffee. Yours is unlocked. You’re in the coffee line.",
+  "left": "Run back",
+  "right": "Finish your coffee calmly"
+ },
+ {
+  "id": "l1b_300",
+  "who": "System",
+  "text": "This morning the system wants to confirm login “by fingerprint.” You cut your finger slicing bread. The sensor doesn’t recognize you.",
+  "left": "Try another finger",
+  "right": "Call support"
+ },
+ {
+  "id": "l1b_301",
+  "who": "Email",
+  "text": "An email arrives: “Confirm your password or your mailbox will be deleted.” Perfect design, real logo. In the address, the “o” is a zero.",
+  "left": "Report it to security",
+  "right": "Just don’t open it"
+ },
+ {
+  "id": "l1b_302",
+  "who": "Security course",
+  "text": "Morning security quiz: “What do you do if you find a flash drive in the parking lot?” A) plug it in, B) hand it in, C) throw it away. You honestly don’t know.",
+  "left": "Guess “B”",
+  "right": "Reread the whole course"
+ },
+ {
+  "id": "l1b_303",
+  "who": "Security",
+  "text": "Security banned plugging phones into computers “to charge.” Your phone is at 3%, and the kitchen outlet is taken by the kettle.",
+  "left": "Charge from the computer",
+  "right": "Walk around with a dead phone"
+ },
+ {
+  "id": "l1b_304",
+  "who": "System",
+  "text": "You entered your password and noticed Caps Lock was on — yet it let you in. So you’ve been typing it in caps all month. Tell IT?",
+  "left": "Change it just in case",
+  "right": "Rejoice and keep quiet"
+ },
+ {
+  "id": "l1b_305",
+  "who": "Security course",
+  "text": "Mandatory security test: 30 questions, passing score 100%. You got 29 of 30. You have to retake the whole thing.",
+  "left": "Retake it",
+  "right": "Get answers from coworkers"
+ },
+ {
+  "id": "l1b_306",
+  "who": "Security",
+  "text": "The security officer gives a lecture and offers an example of a bad password: “Say, Fluffy2001.” That’s your password. You break out in a sweat.",
+  "left": "Change it immediately",
+  "right": "Keep quiet, change it tonight"
+ },
+ {
+  "id": "l1b_307",
+  "who": "Karina",
+  "text": "Karina asks you to send her the shared folder password via messenger. Security forbids passwords in messengers. Karina needs it urgently.",
+  "left": "Tell her out loud",
+  "right": "Send it properly via ticket"
+ },
+ {
+  "id": "l1b_308",
+  "who": "Phone",
+  "text": "A call: “This is your employer’s bank, please read me the code from the text.” The voice is polite, with call-center noise in the background.",
+  "left": "Hang up",
+  "right": "Ask where they got your number"
+ },
+ {
+  "id": "l1b_309",
+  "who": "Security course",
+  "text": "The security course says to change passwords everywhere you reuse one. You have one password for everything, from email to pizza orders.",
+  "left": "Change them all at lunch",
+  "right": "Change just the work one"
+ },
+ {
+  "id": "l1b_310",
+  "who": "Security",
+  "text": "Security demands everyone install an authenticator app. Your phone is old and won’t install it. What do you suggest?",
+  "left": "Buy a new phone",
+  "right": "Ask for an exception"
+ },
+ {
+  "id": "l1b_311",
+  "who": "Flash drive",
+  "text": "After a meeting you find a flash drive labeled “Salaries 2025” in the conference room. You’re dying to look. Plug it in?",
+  "left": "Take it to security",
+  "right": "Plug it in"
+ },
+ {
+  "id": "l1b_312",
+  "who": "Boss",
+  "text": "Your boss reads you his email password so you can “send one email for him.” The password is his birthday. What do you do?",
+  "left": "Send the email",
+  "right": "Suggest he change it"
+ },
+ {
+  "id": "l1b_313",
+  "who": "Security course",
+  "text": "The security course asks you to create a four-word “passphrase.” Your pick: “I want home right now.” Use it?",
+  "left": "Use that phrase",
+  "right": "Make up a boring one"
+ },
+ {
+  "id": "l1b_314",
+  "who": "Security",
+  "text": "Security blocks the recipe site because it “threatens work time.” You checked it every day at lunch. Complain?",
+  "left": "File a complaint",
+  "right": "Browse on your phone"
+ },
+ {
+  "id": "l1b_315",
+  "who": "Courier",
+  "text": "A courier at the entrance asks for your last name and job title to “deliver documents.” Nobody’s expecting any documents. Tell him?",
+  "left": "Call reception",
+  "right": "Tell him and sign"
+ },
+ {
+  "id": "l1b_316",
+  "who": "Security course",
+  "text": "A gamified security course: the character “Hacker Harry” tries to steal your data. Each level takes 15 minutes. There are twelve.",
+  "left": "Play through honestly",
+  "right": "Do one level"
+ },
+ {
+  "id": "l1b_317",
+  "who": "Tonya",
+  "text": "For some reason Tonya photographed her screen full of passwords and posted it in the team chat: “Look how organized I am!” Tell her?",
+  "left": "Message her privately",
+  "right": "Report it to security"
+ },
+ {
+  "id": "l1b_318",
+  "who": "System",
+  "text": "The system allows reusing a password only after 24 changes. You change it 24 times in a row to get your favorite back. It’s not forbidden.",
+  "left": "Change it 24 times",
+  "right": "Make up a new one"
+ },
+ {
+  "id": "l1b_319",
+  "who": "Security",
+  "text": "Security requires you to wear your badge around your neck, even in the cafeteria. The lanyard keeps dipping into your soup. Follow the rule?",
+  "left": "Follow the rule",
+  "right": "Clip it to your belt"
+ },
+ {
+  "id": "l1b_320",
+  "who": "Security course",
+  "text": "After the security course you were chosen as the department’s “cyber hygiene ambassador.” You must remind coworkers to lock their screens. Accept?",
+  "left": "Accept",
+  "right": "Decline"
+ },
+ {
+  "id": "l1b_321",
+  "who": "Security course",
+  "text": "The security test asks: “How often should you change your password?” Options: “Monthly,” “Yearly,” “When you forget it.” You honestly change it when you forget it.",
+  "left": "Answer honestly",
+  "right": "Pick “Monthly”"
+ },
+ {
+  "id": "l1b_322",
+  "who": "System",
+  "text": "5:50 p.m. The system says: “Your password expires in 1 minute.” If you don’t change it, you’ll be locked out in the morning. Your brain is fried.",
+  "left": "Change it to anything",
+  "right": "Think up a strong one"
+ },
+ {
+  "id": "l1b_323",
+  "who": "Security course",
+  "text": "In the evening you remember you never finished the security course. Tomorrow’s the last day. The course is two hours. Your show is waiting.",
+  "left": "Do it tonight",
+  "right": "Do it before work"
+ },
+ {
+  "id": "l1b_324",
+  "who": "Security",
+  "text": "In the evening security sends phishing-drill results: “34% of employees clicked.” A list of names is attached. Yours is on it.",
+  "left": "Laugh with everyone",
+  "right": "Quietly do the training"
+ },
+ {
+  "id": "l1b_325",
+  "who": "Phone",
+  "text": "A text on your personal phone: “Your work account has been hacked, follow the link.” It’s evening, IT has gone home. Check it out?",
+  "left": "Report it in the morning",
+  "right": "Call security tonight"
+ },
+ {
+  "id": "l1b_326",
+  "who": "Stas",
+  "text": "Stas leaves early and asks you to “close his computer for him.” It’s unlocked, with his chats on screen. Close it?",
+  "left": "Lock it without looking",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_327",
+  "who": "System",
+  "text": "As you’re leaving, the system offers to “Remember this device for 30 days.” If you click “No,” you’ll be entering codes again tomorrow. Security advises against “Yes.”",
+  "left": "Click “Yes”",
+  "right": "Click “No”"
+ },
+ {
+  "id": "l1b_328",
+  "who": "Security course",
+  "text": "After a three-hour course you get a “Cybersecurity Expert” certificate. Mom asks if you can now hack her email password for her.",
+  "left": "Help Mom",
+  "right": "Explain it doesn’t work that way"
+ },
+ {
+  "id": "l1b_329",
+  "who": "Security",
+  "text": "In the evening the security officer says: “Show me where you keep your passwords.” You keep them in a notebook with kittens on it. Show him?",
+  "left": "Show the notebook",
+  "right": "Say it’s all in your head"
+ },
+ {
+  "id": "l1b_330",
+  "who": "Email",
+  "text": "At 8 p.m. an email arrives: “Your password has expired, click here.” You’re tired and almost click. Your hand hovers over the mouse.",
+  "left": "Click, just in case",
+  "right": "Close the laptop and sleep"
+ },
+ {
+  "id": "l1b_331",
+  "who": "System",
+  "text": "In the evening the authenticator app reports: “Sign-in attempt from another country.” You’re at home. Click “This wasn’t me”?",
+  "left": "Click “This wasn’t me”",
+  "right": "Assume it’s a glitch"
+ },
+ {
+  "id": "l1b_332",
+  "who": "Security",
+  "text": "On your way out you left your pass on your desk. The guard at the exit won’t let you out: “No pass, no exit.” Go back?",
+  "left": "Go back for the pass",
+  "right": "Sweet-talk the guard"
+ },
+ {
+  "id": "l1b_333",
+  "who": "Security course",
+  "text": "In the evening you tell friends about the security course and realize all their passwords are “123456.” Start a lecture?",
+  "left": "Give a lecture",
+  "right": "Say nothing"
+ },
+ {
+  "id": "l1b_334",
+  "who": "System",
+  "text": "You enter your password in the evening, but the keyboard switched to another language layout. Three tries means lockout. One left.",
+  "left": "Try once more",
+  "right": "Call support"
+ },
+ {
+  "id": "l1b_335",
+  "who": "Laptop",
+  "text": "8:55 a.m. You open the laptop and it shows: “Installing updates 3 of 147. Don’t turn off your computer.” Stand-up in five minutes.",
+  "left": "Join from your phone",
+  "right": "Wait for the updates"
+ },
+ {
+  "id": "l1b_336",
+  "who": "Intranet",
+  "text": "The company portal was updated overnight. The “Vacation” button moved to “My Achievements → Other → Archive.” Look for it?",
+  "left": "Search for an hour",
+  "right": "Ask in the chat"
+ },
+ {
+  "id": "l1b_337",
+  "who": "IT newsletter",
+  "text": "IT newsletter: “Starting Monday we’re switching to a new document system. Training: 6 hours of video.” Today is Friday.",
+  "left": "Watch it in advance",
+  "right": "Figure it out as you go"
+ },
+ {
+  "id": "l1b_338",
+  "who": "Email app",
+  "text": "The email app updated and now groups emails “by meaning.” The boss’s email ended up under “Entertainment.”",
+  "left": "Restore the old settings",
+  "right": "Leave it and laugh"
+ },
+ {
+  "id": "l1b_339",
+  "who": "Company messenger",
+  "text": "The company is moving to a new messenger. All chats, stickers and three years of jokes stay in the old one. Copy what matters?",
+  "left": "Copy what matters",
+  "right": "Start with a clean slate"
+ },
+ {
+  "id": "l1b_340",
+  "who": "CRM",
+  "text": "The new CRM version wants every client profile filled out again. You have three hundred. Fill them in right away?",
+  "left": "Fill in dawn to dusk",
+  "right": "Fill in as you call"
+ },
+ {
+  "id": "l1b_341",
+  "who": "Laptop",
+  "text": "This morning the laptop updated the browser, and all your saved tabs vanished. Six months of “read later.” Restore them?",
+  "left": "Dig through history",
+  "right": "Let go of the past"
+ },
+ {
+  "id": "l1b_342",
+  "who": "IT department",
+  "text": "IT announces: a new time-tracking system. Every 15 minutes you log what you’re doing. Your first entry: “Logging time.”",
+  "left": "Log honestly",
+  "right": "Log “Work” all day"
+ },
+ {
+  "id": "l1b_343",
+  "who": "Intranet",
+  "text": "After the portal update, your profile photo was replaced with another employee’s — a bearded engineer. Now everyone messages him.",
+  "left": "File a fix request",
+  "right": "Leave it, let him answer"
+ },
+ {
+  "id": "l1b_344",
+  "who": "Spreadsheets",
+  "text": "The spreadsheet app updated, and all your formulas show “#ERROR.” The report is due at 11. What now?",
+  "left": "Fix the formulas",
+  "right": "Type numbers by hand"
+ },
+ {
+  "id": "l1b_345",
+  "who": "Helper bot",
+  "text": "The new helper bot answers every question with “a useful article.” You asked how to request vacation, and it sent an article on the dangers of procrastination. Now what?",
+  "left": "Find a living human",
+  "right": "Read the article"
+ },
+ {
+  "id": "l1b_346",
+  "who": "Laptop",
+  "text": "After an update your laptop is in German. Every menu, every button. You look for how to switch back, but the menus are in German too.",
+  "left": "Call support",
+  "right": "Work in German"
+ },
+ {
+  "id": "l1b_347",
+  "who": "Calendar",
+  "text": "The calendar updated and decided you live in another time zone. All meetings shifted an hour, and you’re already late for one. What now?",
+  "left": "Fix them manually",
+  "right": "Wait for a fix"
+ },
+ {
+  "id": "l1b_348",
+  "who": "IT department",
+  "text": "This morning IT installed a new program to “improve performance.” Now your computer takes twenty minutes to boot instead of two.",
+  "left": "Complain to IT",
+  "right": "Come in earlier"
+ },
+ {
+  "id": "l1b_349",
+  "who": "Intranet",
+  "text": "The updated portal has a “thank-you wall.” Coworkers have already thanked each other. Nobody’s thanked you yet. Thank someone first?",
+  "left": "Thank three people",
+  "right": "Wait to be thanked"
+ },
+ {
+  "id": "l1b_350",
+  "who": "Messenger",
+  "text": "A messenger update added read receipts. Now everyone sees you read the boss’s message at 7:02 and didn’t reply.",
+  "left": "Reply now",
+  "right": "Turn off read receipts"
+ },
+ {
+  "id": "l1b_351",
+  "who": "Document system",
+  "text": "The new document system requires an e-signature. To get one, you must sign an application. With an e-signature.",
+  "left": "Go to IT in person",
+  "right": "Sign in pen and scan it"
+ },
+ {
+  "id": "l1b_352",
+  "who": "Laptop",
+  "text": "Overnight the laptop restarted itself for an update and closed your unsaved document. The app “recovered” it — a week-old version.",
+  "left": "Rebuild it from memory",
+  "right": "Confess to the boss"
+ },
+ {
+  "id": "l1b_353",
+  "who": "CRM",
+  "text": "The new CRM shows a full-screen “Tip of the Day” with every client call. You can close it only after 10 seconds. Forty calls a day.",
+  "left": "Wait 10 seconds",
+  "right": "Write to support"
+ },
+ {
+  "id": "l1b_354",
+  "who": "Intranet",
+  "text": "The portal was updated, and vacations now require a “multi-step process.” Nine steps. The last is “Approval of the approval.”",
+  "left": "Go through all nine",
+  "right": "Postpone vacation"
+ },
+ {
+  "id": "l1b_355",
+  "who": "Spreadsheets",
+  "text": "After an update, spreadsheets started auto-coloring cells “by the mood of the data.” Your report is now a rainbow. The boss loves it.",
+  "left": "Keep the rainbow",
+  "right": "Restore the strict style"
+ },
+ {
+  "id": "l1b_356",
+  "who": "IT department",
+  "text": "IT asks everyone to test the new system and fill out a survey: “What do you like?” You like nothing. How do you answer?",
+  "left": "Answer honestly",
+  "right": "Praise the button colors"
+ },
+ {
+  "id": "l1b_357",
+  "who": "Messenger",
+  "text": "A new messenger update automatically translates all messages into “business speak.” Your “ok” became “Your proposal has been accepted for consideration.”",
+  "left": "Turn off the translator",
+  "right": "Keep it: sounds important"
+ },
+ {
+  "id": "l1b_358",
+  "who": "Document system",
+  "text": "The new document system lost your document. Its status says: “Document exists.” Where — unknown.",
+  "left": "Redo the document",
+  "right": "Demand they find it"
+ },
+ {
+  "id": "l1b_359",
+  "who": "Intranet",
+  "text": "The new portal requires “onboarding”: five quizzes on company history. You’ve worked here six months, but it’s mandatory.",
+  "left": "Take them honestly",
+  "right": "Peek at coworkers’ answers"
+ },
+ {
+  "id": "l1b_360",
+  "who": "Video calls",
+  "text": "The video-call app updated mid-call. You got kicked out. You can only rejoin after a 12-minute update.",
+  "left": "Join from your phone",
+  "right": "Wait for the update"
+ },
+ {
+  "id": "l1b_361",
+  "who": "CRM",
+  "text": "The new CRM automatically sends clients a “Thanks for calling” email with your photo. Your passport photo. It’s embarrassing.",
+  "left": "Change the photo",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_362",
+  "who": "IT department",
+  "text": "IT rolled out “artificial intelligence” to check reports. It flags every one of your sentences as “too long.” Rewrite?",
+  "left": "Rewrite them shorter",
+  "right": "Ignore the flags"
+ },
+ {
+  "id": "l1b_363",
+  "who": "Spreadsheets",
+  "text": "The updated spreadsheet app opens files “read-only.” To edit, you need access granted by someone who’s on vacation.",
+  "left": "Make a copy and work",
+  "right": "Wait for their return"
+ },
+ {
+  "id": "l1b_364",
+  "who": "Intranet",
+  "text": "After the update, the portal lists your title as “Senior Specialist.” You’re a junior. Fix it or let it be?",
+  "left": "Fix it",
+  "right": "Let it be"
+ },
+ {
+  "id": "l1b_365",
+  "who": "IT department",
+  "text": "The new meeting-room booking system requires booking two days ahead. You need a room in 15 minutes for a call.",
+  "left": "Call from the hallway",
+  "right": "Take someone’s booking"
+ },
+ {
+  "id": "l1b_366",
+  "who": "Messenger",
+  "text": "After an update, the messenger deleted all your pinned messages. They held passwords, links and Grandma’s pie recipe.",
+  "left": "Restore everything",
+  "right": "Restore just the pie"
+ },
+ {
+  "id": "l1b_367",
+  "who": "Document system",
+  "text": "The new system requires attaching a 20-field “document card” to every document. Your document is a note: “At lunch, back at 2:00.”",
+  "left": "Fill all 20 fields",
+  "right": "Just go to lunch"
+ },
+ {
+  "id": "l1b_368",
+  "who": "Borya",
+  "text": "Borya is thrilled with the new update and wants to show you “all the cool features.” It’ll take half an hour. Work is waiting.",
+  "left": "Check out the features",
+  "right": "Turn Borya down"
+ },
+ {
+  "id": "l1b_369",
+  "who": "IT department",
+  "text": "IT sends the manual for the new program: 84 pages with pictures. The pictures are from the old version.",
+  "left": "Read it all",
+  "right": "Learn by trial and error"
+ },
+ {
+  "id": "l1b_370",
+  "who": "CRM",
+  "text": "The new CRM gives clients a “loyalty score.” Your best client got “Churn risk.” He doesn’t know. Call him?",
+  "left": "Call the client",
+  "right": "Don’t trust the software"
+ },
+ {
+  "id": "l1b_371",
+  "who": "Laptop",
+  "text": "6 p.m. You close the laptop, and it shows: “Updating. Do not turn off. About 1 hour 40 minutes remaining.” You need to take it home.",
+  "left": "Wait at the office",
+  "right": "Carry it open on the subway"
+ },
+ {
+  "id": "l1b_372",
+  "who": "IT department",
+  "text": "In the evening IT announces: “Everyone install the update before 9:00 tomorrow.” It takes an hour and a half to install.",
+  "left": "Install tonight",
+  "right": "Install in the morning, be late"
+ },
+ {
+  "id": "l1b_373",
+  "who": "Intranet",
+  "text": "In the evening the portal notifies you: “You haven’t completed the mandatory course on the new system.” It’s three hours; the deadline was yesterday.",
+  "left": "Do it tonight",
+  "right": "Say you’ll do it tomorrow"
+ },
+ {
+  "id": "l1b_374",
+  "who": "Messenger",
+  "text": "In the evening the messenger updated and turned on “status sync” for everyone. Now coworkers can see you’re listening to “Hang In There, Monday.”",
+  "left": "Turn off the status",
+  "right": "Keep it as a manifesto"
+ },
+ {
+  "id": "l1b_375",
+  "who": "Spreadsheets",
+  "text": "In the evening the updated spreadsheet app offers “AI assistance.” You accept. The AI deletes half the report as “unnecessary.”",
+  "left": "Restore it by hand",
+  "right": "Send the report as is"
+ },
+ {
+  "id": "l1b_376",
+  "who": "Laptop",
+  "text": "At home in the evening your laptop updated too and set the corporate wallpaper: “We Are One Family.” It makes home feel less cozy.",
+  "left": "Change the wallpaper",
+  "right": "Get used to it"
+ },
+ {
+  "id": "l1b_377",
+  "who": "IT department",
+  "text": "At 7:30 p.m. IT writes: “Can someone stay and test the update? We need one person.” Everyone’s silent.",
+  "left": "Stay and help",
+  "right": "Quietly go home"
+ },
+ {
+  "id": "l1b_378",
+  "who": "CRM",
+  "text": "In the evening the CRM sends all clients automatic “Happy Birthday!” emails. All of them at once. Nobody has a birthday today.",
+  "left": "Send apologies",
+  "right": "Wait for reactions"
+ },
+ {
+  "id": "l1b_379",
+  "who": "Intranet",
+  "text": "The company portal sends you a “Month in Review”: “You spent 82% of your time in calls.” That’s a department record.",
+  "left": "Be proud of the record",
+  "right": "Cut down on calls"
+ },
+ {
+  "id": "l1b_380",
+  "who": "Document system",
+  "text": "In the evening the new document system sent all your drafts to the boss for approval. Twenty of them.",
+  "left": "Recall them all",
+  "right": "Say it was intentional"
+ },
+ {
+  "id": "l1b_381",
+  "who": "Messenger",
+  "text": "In the evening you realize the messenger sent you no notifications all day after the update. You missed 40 messages. Reply?",
+  "left": "Reply to everyone",
+  "right": "Write: “Messenger glitched”"
+ },
+ {
+  "id": "l1b_382",
+  "who": "IT department",
+  "text": "IT announces: the old system shuts down for good tomorrow at 8:00. You still need to export a year of your reports from it.",
+  "left": "Export tonight",
+  "right": "Risk it, skip export"
+ },
+ {
+  "id": "l1b_383",
+  "who": "Boss",
+  "text": "8:45 a.m. The boss asks you to “quickly merge a spreadsheet” for the planning meeting. It’s twelve files from different departments in different formats. Meeting at 10.",
+  "left": "Merge it all at speed",
+  "right": "Merge the three key ones"
+ },
+ {
+  "id": "l1b_384",
+  "who": "Spreadsheets",
+  "text": "You open the department’s shared spreadsheet and see someone sorted a single column overnight without touching the others. All the data is scrambled.",
+  "left": "Restore from history",
+  "right": "Find the culprit"
+ },
+ {
+  "id": "l1b_385",
+  "who": "Vera the analyst",
+  "text": "In the morning Vera sends a report and asks you to “check the numbers.” The numbers are fine, but it’s all in a curly font like a greeting card. Mention the font?",
+  "left": "Mention the font",
+  "right": "Check only the numbers"
+ },
+ {
+  "id": "l1b_386",
+  "who": "Report",
+  "text": "You spend three hours on the weekly report every Monday. Nobody reads it: you checked — since March it’s contained “If you’re reading this, let me know.” Keep going?",
+  "left": "Keep doing it",
+  "right": "Ask if it’s needed"
+ },
+ {
+  "id": "l1b_387",
+  "who": "Spreadsheets",
+  "text": "This morning you discover the spreadsheet is 300 MB and takes twenty minutes to open. Inside: 40 hidden sheets named “Sheet1 (copy 17).”",
+  "left": "Delete the hidden sheets",
+  "right": "Wait twenty minutes"
+ },
+ {
+  "id": "l1b_388",
+  "who": "Finance guy",
+  "text": "The finance guy wants the report “broken down.” Broken down how, he doesn’t say. Options: by month, region, manager. Ask?",
+  "left": "Ask for clarification",
+  "right": "Break it down every way"
+ },
+ {
+  "id": "l1b_389",
+  "who": "Spreadsheets",
+  "text": "You open “Budget_final” and see the total is calculated by the formula “=5+5.” Someone “fixed it by hand.” What now?",
+  "left": "Recalculate it properly",
+  "right": "Don’t touch others’ work"
+ },
+ {
+  "id": "l1b_390",
+  "who": "Boss",
+  "text": "In the morning the boss says: “I need a chart. A pretty one. So everything’s clear.” He sent no data. Make a chart out of thin air?",
+  "left": "Ask what data",
+  "right": "Draw something pretty"
+ },
+ {
+  "id": "l1b_391",
+  "who": "Margarita",
+  "text": "In the morning Margarita renamed every column in the shared spreadsheet “for convenience.” Your formulas broke. She’s proud of the result.",
+  "left": "Ask her to revert",
+  "right": "Fix the formulas"
+ },
+ {
+  "id": "l1b_392",
+  "who": "Report",
+  "text": "The report template requires a “Conclusions” field. Your data supports exactly one: “Nothing changed.” Write it honestly?",
+  "left": "Write it honestly",
+  "right": "Spin some “dynamics”"
+ },
+ {
+  "id": "l1b_393",
+  "who": "Spreadsheets",
+  "text": "The spreadsheet asks you to “Enable macros.” Security forbids it, and without macros the file just shows “Enable macros.”",
+  "left": "Enable macros",
+  "right": "Ask for another file"
+ },
+ {
+  "id": "l1b_394",
+  "who": "Group lead",
+  "text": "The group lead introduced a new rule this morning: all reports as PDFs, but editable. You have no idea how that’s possible.",
+  "left": "Ask how",
+  "right": "Search for a way"
+ },
+ {
+  "id": "l1b_395",
+  "who": "Report",
+  "text": "This morning you realize the report you submitted yesterday was for last month. You opened the wrong file. The boss hasn’t read it yet.",
+  "left": "Quietly swap the file",
+  "right": "Confess to the boss"
+ },
+ {
+  "id": "l1b_396",
+  "who": "Spreadsheets",
+  "text": "You open the shared spreadsheet and five people are already in it. Their cursors jump across cells. Your cell keeps getting overwritten.",
+  "left": "Work in a copy",
+  "right": "Post “Don’t touch D14”"
+ },
+ {
+  "id": "l1b_397",
+  "who": "Finance department",
+  "text": "Finance sends your report back with the note “Off by $3.” You hunt for those three dollars across 4,000 rows.",
+  "left": "Hunt down the $3",
+  "right": "Chip in the $3 yourself"
+ },
+ {
+  "id": "l1b_398",
+  "who": "Report",
+  "text": "The report needs to show “growth.” There is growth — but only if the chart starts at 98% instead of zero. Is that allowed?",
+  "left": "Start at 98%",
+  "right": "Show the honest chart"
+ },
+ {
+  "id": "l1b_399",
+  "who": "Boss",
+  "text": "In the morning the boss asks to “add one more column to the report.” An hour later: “one more.” By lunch the report has 43 columns.",
+  "left": "Keep adding",
+  "right": "Suggest a separate report"
+ },
+ {
+  "id": "l1b_400",
+  "who": "Spreadsheets",
+  "text": "This morning you find something personal in the shared spreadsheet: a birthday gift list. Your name is on the “no gift” list.",
+  "left": "Sulk in silence",
+  "right": "Ask why"
+ },
+ {
+  "id": "l1b_401",
+  "who": "Pasha the analyst",
+  "text": "Pasha sends a report with every number highlighted in red “for emphasis.” It’s impossible to read. You have to present it to the boss.",
+  "left": "Redo the formatting",
+  "right": "Present it as is"
+ },
+ {
+  "id": "l1b_402",
+  "who": "Report",
+  "text": "You spent three days on a report. The boss opened it, glanced at the first page and said: “Can we get all this in one number?”",
+  "left": "Boil it down to one number",
+  "right": "Explain why you can’t"
+ },
+ {
+  "id": "l1b_403",
+  "who": "Spreadsheets",
+  "text": "You accidentally clicked “Delete row” in the shared spreadsheet. Gone: the row with the whole department’s salaries. You can undo it, but only if nobody saves.",
+  "left": "Undo it, fast",
+  "right": "Tell everyone “Don’t save!”"
+ },
+ {
+  "id": "l1b_404",
+  "who": "Boss",
+  "text": "The boss wants a report “like last time, only better.” He returned last time’s report with the note “Not bad.” What does “better” mean?",
+  "left": "Improve everything",
+  "right": "Ask what exactly"
+ },
+ {
+  "id": "l1b_405",
+  "who": "Report",
+  "text": "A 30-page report template. 28 pages fill in automatically. Two are “Analysis and Conclusions.” You’ve been staring at them for an hour.",
+  "left": "Copy last month’s",
+  "right": "Write new ones"
+ },
+ {
+  "id": "l1b_406",
+  "who": "Spreadsheets",
+  "text": "In the pivot table it turns out “New York,” “new york” and “NYC” count as three different cities. The totals don’t add up.",
+  "left": "Fix them by hand",
+  "right": "Add a footnote"
+ },
+ {
+  "id": "l1b_407",
+  "who": "Tamara",
+  "text": "Tamara asks you to teach her pivot tables. She wants to learn “in five minutes.” It took you a month.",
+  "left": "Teach for five minutes",
+  "right": "Teach it properly"
+ },
+ {
+  "id": "l1b_408",
+  "who": "Report",
+  "text": "You handed the report to the boss. An hour later he returns it with red-ink edits. There are no edits, just the words: “See for yourself.”",
+  "left": "Recheck everything",
+  "right": "Ask what to look at"
+ },
+ {
+  "id": "l1b_409",
+  "who": "Spreadsheets",
+  "text": "A formula in the spreadsheet works, but you don’t understand why. It was built by someone who quit two years ago. Touch it?",
+  "left": "Figure out the formula",
+  "right": "Never touch it"
+ },
+ {
+  "id": "l1b_410",
+  "who": "Project manager",
+  "text": "The project manager wants a “real-time dashboard.” The data arrives once a month, by email, as scans.",
+  "left": "Build the dashboard",
+  "right": "Explain the limitation"
+ },
+ {
+  "id": "l1b_411",
+  "who": "Report",
+  "text": "You find a typo in the client company’s name in the report: “Daisey LLC.” The report has already gone to the client. Call them?",
+  "left": "Call and apologize",
+  "right": "Fix it in the next version"
+ },
+ {
+  "id": "l1b_412",
+  "who": "Spreadsheets",
+  "text": "While building a report you notice a coworker’s numbers for last quarter are wrong. If you say so, he’ll get in trouble.",
+  "left": "Tell the boss",
+  "right": "Tell the coworker privately"
+ },
+ {
+  "id": "l1b_413",
+  "who": "Boss",
+  "text": "The boss wants a report “by lunch.” You ask which lunch. He says: “Well, mine.” He eats lunch whenever he feels like it.",
+  "left": "Have it by noon",
+  "right": "Have it by 3 p.m."
+ },
+ {
+  "id": "l1b_414",
+  "who": "Report",
+  "text": "Your report was sent “upstairs.” A day later the question comes back: “Who wrote this wonderful report?” Your boss replies that he did.",
+  "left": "Say nothing",
+  "right": "Tactfully remind him"
+ },
+ {
+  "id": "l1b_415",
+  "who": "Spreadsheets",
+  "text": "You’re hunting for one error in a 5,000-row spreadsheet. Found it. Fixed it. The spreadsheet says: “4,999 other errors detected.”",
+  "left": "Keep fixing",
+  "right": "Close it and sigh"
+ },
+ {
+  "id": "l1b_416",
+  "who": "Mitya the analyst",
+  "text": "Mitya proposes “automating the report.” It’ll take two weeks. Right now you do it in an hour. The boss already loves the idea.",
+  "left": "Back Mitya",
+  "right": "Say it’s not efficient"
+ },
+ {
+  "id": "l1b_417",
+  "who": "Report",
+  "text": "You’ve been asked to write a report on how much time the department spends on reports. The report will take three days.",
+  "left": "Report on the reports",
+  "right": "Joke about the irony"
+ },
+ {
+  "id": "l1b_418",
+  "who": "Spreadsheets",
+  "text": "You color-coded the spreadsheet rows for convenience. A coworker asks what each color means. You forgot.",
+  "left": "Invent a legend",
+  "right": "Repaint it all white"
+ },
+ {
+  "id": "l1b_419",
+  "who": "Nikolai",
+  "text": "Nikolai sends you a spreadsheet “for your information.” It’s forty sheets linked by formulas to your spreadsheet. Now yours is crawling.",
+  "left": "Unlink from his file",
+  "right": "Endure the lag"
+ },
+ {
+  "id": "l1b_420",
+  "who": "Report",
+  "text": "6:30 p.m. The report is almost done. Just the chart labels left. You can no longer remember what blue means and what red means.",
+  "left": "Finish it tonight",
+  "right": "Leave it for morning"
+ },
+ {
+  "id": "l1b_421",
+  "who": "Boss",
+  "text": "At 7 p.m. the boss writes: “Looked at the report. I have questions.” No questions included. It’ll be a restless night. Ask which ones?",
+  "left": "Ask right away",
+  "right": "Wait till morning"
+ },
+ {
+  "id": "l1b_422",
+  "who": "Spreadsheets",
+  "text": "In the evening you close the spreadsheet and forget to save. The app asks: “Save changes?” On autopilot, you click “No.”",
+  "left": "Redo it all",
+  "right": "Submit what’s left"
+ },
+ {
+  "id": "l1b_423",
+  "who": "Report",
+  "text": "The report is ready in the evening, but you realize: if you send it now, the boss will think you stay late. Is that good or bad?",
+  "left": "Send it now",
+  "right": "Schedule it for 9:00"
+ },
+ {
+  "id": "l1b_424",
+  "who": "Spreadsheets",
+  "text": "At 8 p.m. you discover the spreadsheet has been calculating everything wrong since the start of the quarter. Tomorrow it’s being presented to management.",
+  "left": "Recalculate overnight",
+  "right": "Warn the boss"
+ },
+ {
+  "id": "l1b_425",
+  "who": "Yana",
+  "text": "Yana asks you in the evening to “just take a look” at her report. It’s 60 pages. She says “there’s not much.”",
+  "left": "Read it carefully",
+  "right": "Skim it diagonally"
+ },
+ {
+  "id": "l1b_426",
+  "who": "Report",
+  "text": "In the evening you think you’ve submitted the report. But the email is stuck in the Outbox. It’s 9 p.m., and the boss already asked about it this morning.",
+  "left": "Send with apologies",
+  "right": "Send in the morning, explain"
+ },
+ {
+  "id": "l1b_427",
+  "who": "Spreadsheets",
+  "text": "In the evening you decided to “improve the spreadsheet a little.” Three hours later it’s beautiful, but it doesn’t work anymore.",
+  "left": "Roll back the changes",
+  "right": "Fix it into the night"
+ },
+ {
+  "id": "l1b_428",
+  "who": "Boss",
+  "text": "At 6:50 p.m. the boss says: “Good report, but let’s redo it all in a different format.” It’s Friday.",
+  "left": "Redo it over the weekend",
+  "right": "Agree on Monday"
+ },
+ {
+  "id": "l1b_429",
+  "who": "Report",
+  "text": "Your report made it into the final presentation for the director. In the evening you see your key conclusion was cut out.",
+  "left": "Ask why",
+  "right": "Accept it"
+ },
+ {
+  "id": "l1b_430",
+  "who": "Spreadsheets",
+  "text": "In the evening your family asks for help with the household budget in a spreadsheet. You stared at spreadsheets all day. Again?",
+  "left": "Help with the budget",
+  "right": "Say: “Anything but spreadsheets”"
+ },
+ {
+  "id": "l1b_431",
+  "who": "Finance guy",
+  "text": "At 6:45 p.m. the finance guy asks for “one small data export.” It takes two hours to generate. Leave it running and go?",
+  "left": "Wait for the export",
+  "right": "Start it and leave"
+ },
+ {
+  "id": "l1b_432",
+  "who": "Report",
+  "text": "An evening email: “Your report was chosen as the best in the department! Prepare a 30-minute presentation by morning.” Joy and terror.",
+  "left": "Prepare it overnight",
+  "right": "Ask for time till noon"
+ },
+ {
+  "id": "l1b_433",
+  "who": "Spreadsheets",
+  "text": "In the evening, dreaming of vacation, you make a “Vacation Plan” spreadsheet. In the morning it accidentally opens on the shared screen.",
+  "left": "Say it’s a test file",
+  "right": "Show it proudly"
+ },
+ {
+  "id": "l1b_434",
+  "who": "Inner voice",
+  "text": "8:20 a.m. You reread yesterday’s email to the boss: “Look at the report at any convenient tiem.” The boss replied “Ok,” but what if he noticed? Send a correction?",
+  "left": "Send a correction",
+  "right": "Act like it’s fine"
+ },
+ {
+  "id": "l1b_435",
+  "who": "Autocorrect",
+  "text": "Your phone’s autocorrect turned “Good morning, Igor Petrovich” into “Good morning, Igor Pierogi.” Sent. The boss is online.",
+  "left": "Apologize right away",
+  "right": "Wait for a reaction"
+ },
+ {
+  "id": "l1b_436",
+  "who": "Boss",
+  "text": "The boss replies to your email in the morning: “What is a ’quaterly report’?” One missing “r,” and you’re the center of attention.",
+  "left": "Admit the typo",
+  "right": "Say: “It’s a new format”"
+ },
+ {
+  "id": "l1b_437",
+  "who": "Email",
+  "text": "You emailed the boss with the subject “Weekly report,” but the body says “Weakly report.” The boss forwarded it to the department with the note “Learning moment.”",
+  "left": "Laugh along",
+  "right": "Be upset in silence"
+ },
+ {
+  "id": "l1b_438",
+  "who": "Messenger",
+  "text": "In the morning you text the boss “Running 10 min late, traffic,” but autocomplete adds “love you.” You can’t delete it — already read.",
+  "left": "Explain autocomplete",
+  "right": "Add “just kidding”"
+ },
+ {
+  "id": "l1b_439",
+  "who": "Messenger",
+  "text": "You meant to write the boss “OK, will do,” but your finger slipped: “OK, will do. Probably.” He’s already typing a reply.",
+  "left": "Clarify: “Definitely will do”",
+  "right": "Wait for his reply"
+ },
+ {
+  "id": "l1b_440",
+  "who": "Email",
+  "text": "In your email to the director you botched the grammar: “Please considering my proposal.” Sent. The director is famous for loving grammar.",
+  "left": "Send a corrected version",
+  "right": "Hope he won’t notice"
+ },
+ {
+  "id": "l1b_441",
+  "who": "Autocorrect",
+  "text": "Your phone turned “Report is done” into “Report is dumb.” Your boss has a sense of humor. Or not. Find out?",
+  "left": "Correct and apologize",
+  "right": "Reply with a smiley"
+ },
+ {
+  "id": "l1b_442",
+  "who": "Inner voice",
+  "text": "In the morning you realize you signed every email to the boss yesterday “Your’s truly.” With the apostrophe. Eight emails.",
+  "left": "Never sleep again",
+  "right": "Accept it and improve"
+ },
+ {
+  "id": "l1b_443",
+  "who": "Email",
+  "text": "You sent the boss a link to a document, but pasted the wrong one: instead of the report, “Best Cat Fails” video. He already opened it.",
+  "left": "Send the right link",
+  "right": "Joke about stress"
+ },
+ {
+  "id": "l1b_444",
+  "who": "Messenger",
+  "text": "In the work chat you called the boss “Ivan Ivanovich.” He’s Ivan Petrovich. Everyone saw.",
+  "left": "Apologize publicly",
+  "right": "Quietly correct it"
+ },
+ {
+  "id": "l1b_445",
+  "who": "Email",
+  "text": "In the morning the boss replies: “Thanks, but I’m Sergei, not Sergai.” You reread your email: “Dear Sergai.”",
+  "left": "Send an apology",
+  "right": "Say it was a joke"
+ },
+ {
+  "id": "l1b_446",
+  "who": "Boss",
+  "text": "The boss holds up your email as an example to the department: “This is how you write.” It has two typos, and you can see them. Stay quiet?",
+  "left": "Stay quiet",
+  "right": "Point out the errors"
+ },
+ {
+  "id": "l1b_447",
+  "who": "Messenger",
+  "text": "Your status in the work chat this morning: “Working on the reprot.” It’s been up since Monday. It’s Wednesday. Has anyone noticed?",
+  "left": "Fix the status",
+  "right": "Keep it as your signature style"
+ },
+ {
+  "id": "l1b_448",
+  "who": "Email",
+  "text": "You write the boss “I’m in a meeting” and send “I’m in a meating.” He replies: “Where’s the meating?”",
+  "left": "Joke it off",
+  "right": "Answer seriously"
+ },
+ {
+  "id": "l1b_449",
+  "who": "Autocorrect",
+  "text": "Autocorrect turned “Can we discuss at 11?” into “Can we discuss at age 11?” The boss replied: “Let’s make it sooner.”",
+  "left": "Apologize",
+  "right": "Reply: “How about 10?”"
+ },
+ {
+  "id": "l1b_450",
+  "who": "Email",
+  "text": "You sent the boss an email reading “Please approve. Do not approve.” It’s a leftover from your draft.",
+  "left": "Send a corrected one",
+  "right": "Call and explain"
+ },
+ {
+  "id": "l1b_451",
+  "who": "Messenger",
+  "text": "You write the boss: “The file’s in your inbox.” No attachment. The boss replies: “Where?” You attach the wrong one.",
+  "left": "Attach the right one",
+  "right": "Send a folder link"
+ },
+ {
+  "id": "l1b_452",
+  "who": "Email",
+  "text": "You mixed up recipients: “How do I politely say no to my boss?” went to your boss. A minute later he writes: “Want some tips?”",
+  "left": "Confess and laugh",
+  "right": "Say it’s about an old job"
+ },
+ {
+  "id": "l1b_453",
+  "who": "Messenger",
+  "text": "Instead of “Done, please check,” you sent the boss “Done, please check” plus a dancing potato sticker. Your finger missed.",
+  "left": "Send an explanation too",
+  "right": "Leave the potato"
+ },
+ {
+  "id": "l1b_454",
+  "who": "Boss",
+  "text": "The boss sent you a document riddled with typos and asked you to “check the spelling.” There are 64 errors. Fix them all?",
+  "left": "Fix all 64",
+  "right": "Fix only the glaring ones"
+ },
+ {
+  "id": "l1b_455",
+  "who": "Email",
+  "text": "You sent an important email to the boss and only then noticed the subject says “Proposla” instead of “Proposal.” He hasn’t opened it yet.",
+  "left": "Recall the email",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_456",
+  "who": "Messenger",
+  "text": "The boss asks for a client’s number. You sent it, but swapped two digits. The boss already called. He reached a pizzeria.",
+  "left": "Apologize",
+  "right": "Joke about lunch"
+ },
+ {
+  "id": "l1b_457",
+  "who": "Email",
+  "text": "In your email to the boss you wrote “Best regards” and forgot to finish your name. It reads “Best regards, a.” Sent.",
+  "left": "Finish it in a new email",
+  "right": "Leave it a mystery"
+ },
+ {
+  "id": "l1b_458",
+  "who": "Lena",
+  "text": "Lena sends you an email she’s about to send to the boss. The first line says “Good afternon” instead of “Good afternoon.” Tell her?",
+  "left": "Tell Lena",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l1b_459",
+  "who": "Email",
+  "text": "6:10 p.m. You sent the boss the final report, and the first line reads: “Final report (not final).” It was a note to yourself.",
+  "left": "Send a corrected one",
+  "right": "Call and explain"
+ },
+ {
+  "id": "l1b_460",
+  "who": "Messenger",
+  "text": "In the evening you text the boss: “Will be in at 9 tomorrow.” Autocorrect changed it to “at 7 p.m. tomorrow.” The boss replied: “OK.”",
+  "left": "Correct it right away",
+  "right": "Show up at 7 p.m."
+ },
+ {
+  "id": "l1b_461",
+  "who": "Email",
+  "text": "Your vacation request email came out wrong: “Please release me in August.” It sounds like a desperate plea.",
+  "left": "Rewrite it formally",
+  "right": "Leave it: it’s honest"
+ },
+ {
+  "id": "l1b_462",
+  "who": "Messenger",
+  "text": "In the evening you meant to text Mom “Love you, kisses,” but sent it to the boss. The boss replies: “Likewise. Report by morning.”",
+  "left": "Act like it was intended",
+  "right": "Apologize and die inside"
+ },
+ {
+  "id": "l1b_463",
+  "who": "Email",
+  "text": "Rereading your email to the boss in the evening, you see: “I commit to delivering everything by Friday.” You meant “I’ll try.” The commitment’s been made.",
+  "left": "Deliver by Friday",
+  "right": "Send a correction"
+ },
+ {
+  "id": "l1b_464",
+  "who": "Messenger",
+  "text": "You sent the boss a voice message you accidentally recorded at the store. You can hear yourself haggling over a cucumber discount. Delete it?",
+  "left": "Delete and apologize",
+  "right": "Leave it: let him know"
+ },
+ {
+  "id": "l1b_465",
+  "who": "Email",
+  "text": "In the evening you realize your email to the boss said “by Tuesday” instead of “by Thursday.” The boss has already put it in his calendar.",
+  "left": "Deliver by Tuesday",
+  "right": "Ask to move it"
+ },
+ {
+  "id": "l1b_466",
+  "who": "Inner voice",
+  "text": "Before bed you remember signing an email to the boss “Regards, your kitty.” It was your personal email signature. You can’t sleep.",
+  "left": "Write him at 11 p.m.",
+  "right": "Wait for morning"
+ },
+ {
+  "id": "l1b_467",
+  "who": "Messenger",
+  "text": "You replied “Ok” to the boss’s message “Are you fired?” — he meant “Are you tired?” Now you’re both afraid to continue.",
+  "left": "Clarify the question",
+  "right": "Say: “Ok as in, full of energy”"
+ },
+ {
+  "id": "l1b_468",
+  "who": "Email",
+  "text": "In the evening you sent the boss a spreadsheet with the comment: “This mistake isn’t mine, it’s Petya’s.” Petya is cc’d.",
+  "left": "Apologize to Petya",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_469",
+  "who": "Boss",
+  "text": "In the evening the boss writes: “Pay attention to the commas in your emails.” No examples. You start rechecking every email from the past month.",
+  "left": "Check every email",
+  "right": "Sign up for a punctuation course"
+ },
+ {
+  "id": "l1b_470",
+  "who": "Email",
+  "text": "In the evening you accidentally sent the boss an email reading “Stop pestering me, I’m not a robot,” which you’d written just to vent. You meant to delete it.",
+  "left": "Talk to him in person, fast",
+  "right": "Turn off your phone"
+ },
+ {
+  "id": "l1b_471",
+  "who": "Messenger",
+  "text": "You sent the boss “Have a nice evening!” with a typo: “Have a nice evning!” He replied: “You too, have a nice evning.”",
+  "left": "Reply with a smiley",
+  "right": "Don’t reply, just cringe"
+ },
+ {
+  "id": "l1b_472",
+  "who": "Email",
+  "text": "In the evening you emailed the boss and “key clients” turned into “keg clients.” The email went to finance too.",
+  "left": "Send a correction to all",
+  "right": "Say it’s a term of art"
+ },
+ {
+  "id": "l1b_473",
+  "who": "Vanya",
+  "text": "In the evening Vanya sends a screenshot: “Your report to the boss spells it ’qaurter.’” The report is already on the director’s desk.",
+  "left": "Send a corrected one",
+  "right": "Thank him and let it go"
+ },
+ {
+  "id": "l1b_474",
+  "who": "Messenger",
+  "text": "In the evening you mean to write “You’re all done, I’m off!” in the work chat, but send just “You’re all done.” The chat freezes. The boss posts a question mark.",
+  "left": "Add “...I’m off!”",
+  "right": "Leave without explaining"
+ },
+ {
+  "id": "l1b_475",
+  "who": "Email",
+  "text": "In the evening you learn the boss printed your typo-filled email and pinned it to the board labeled “Training example.”",
+  "left": "Ask him to take it down",
+  "right": "Act proud of it"
+ },
+ {
+  "id": "l1b_476",
+  "who": "Inner voice",
+  "text": "In the evening you reread everything you sent the boss today. Every third message has a typo. Sign up for a typing course?",
+  "left": "Sign up for the course",
+  "right": "Buy a new keyboard"
+ },
+ {
+  "id": "l1b_477",
+  "who": "Email",
+  "text": "You sent the boss a report named “Report_midnight_nonsense.docx.” The name was left over from the draft. Sent at 9 p.m.",
+  "left": "Rename and resend",
+  "right": "Keep it as your style"
+ },
+ {
+  "id": "l1b_478",
+  "who": "Messenger",
+  "text": "In the evening you write the boss “Thanks for your patience,” but autocorrect adds “and dumplings.” There were no dumplings.",
+  "left": "Explain autocorrect",
+  "right": "Invite him for dumplings"
+ },
+ {
+  "id": "l1b_479",
+  "who": "Boss",
+  "text": "In the evening the boss sends back your own email with every error highlighted in red. At the bottom: “Great job, but...” Reply?",
+  "left": "Reply with thanks",
+  "right": "Don’t reply till morning"
+ },
+ {
+  "id": "l1b_480",
+  "who": "Email",
+  "text": "The budget that went to the boss has an extra zero: $1,000,000 instead of $100,000. The boss already forwarded the file to the director. What now?",
+  "left": "Warn them urgently",
+  "right": "Wait, maybe nobody notices"
+ },
+ {
+  "id": "l1b_481",
+  "who": "Messenger",
+  "text": "You write the boss “I’ll think about your proposal,” then send “I’ll think about your proposal” plus a photo of your dinner.",
+  "left": "Apologize for the dinner",
+  "right": "Say “Bon appetit”"
+ },
+ {
+  "id": "l1b_482",
+  "who": "Email",
+  "text": "You replied to the boss without reading his email to the end. The last line asked: “Can you come in on Saturday?” You answered “Of course!”",
+  "left": "Come in on Saturday",
+  "right": "Say you changed your mind"
+ },
+ {
+  "id": "l1b_483",
+  "who": "Danya",
+  "text": "Danya asks in the evening: “Did you call the boss ’Your Majesty’ in the team chat?” Autocorrect turned “your vision” into that.",
+  "left": "Explain in the team chat",
+  "right": "Don’t explain"
+ },
+ {
+  "id": "l1b_484",
+  "who": "Messenger",
+  "text": "In the evening you texted the boss “Will have it by 9 a.m.,” though you meant “9 p.m.” — and it’s already 9 p.m. The boss replied: “Great, see it in the morning.”",
+  "left": "Have it by morning",
+  "right": "Confess the typo"
+ },
+ {
+  "id": "l1b_485",
+  "who": "Email",
+  "text": "You sent the boss a request for a day off dated “February 31.” The boss approved it. Is that a joke, or did he not read it?",
+  "left": "Clarify the date",
+  "right": "Take another day off"
+ },
+ {
+  "id": "l1b_486",
+  "who": "Messenger",
+  "text": "In the evening you write the boss “Everything’s under control,” but it comes out “under contol.” He replies: “Then all is well.”",
+  "left": "Send a correction",
+  "right": "Rejoice and go to bed"
+ },
+ {
+  "id": "l1b_487",
+  "who": "Email",
+  "text": "You realize that for a whole month you’ve signed emails “Sales Manger” instead of “Sales Manager.” The boss said nothing.",
+  "left": "Fix your signature",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_488",
+  "who": "Inner voice",
+  "text": "In the evening you resolve never to message the boss again without spellcheck. At 11:40 p.m. he texts: “Still up?”",
+  "left": "Reply with spellcheck",
+  "right": "Don’t reply"
+ },
+ {
+  "id": "l1b_489",
+  "who": "Messenger",
+  "text": "In the evening you write in the work chat “Boss, you’re a genius!” — it was meant for a coworker, but you mixed up names. The boss is delighted.",
+  "left": "Leave it as is",
+  "right": "Honestly correct it"
+ },
+ {
+  "id": "l1b_490",
+  "who": "Email",
+  "text": "You sent the boss an email ending with “P.S. don’t forget to buy cat food.” It was a note to yourself.",
+  "left": "Explain to him",
+  "right": "Act like it’s normal"
+ },
+ {
+  "id": "l1b_491",
+  "who": "Messenger",
+  "text": "You sent the boss a photo of a document, but your reflection in pajamas is visible in a mirror. Sent at 10:15 p.m.",
+  "left": "Delete and send a scan",
+  "right": "Leave it: it’s evening"
+ },
+ {
+  "id": "l1b_492",
+  "who": "Email",
+  "text": "In the evening you see your email to the boss went out in size-48 font. Every word is as big as your palm on screen.",
+  "left": "Resend it normally",
+  "right": "Say it’s for readability"
+ },
+ {
+  "id": "l1b_493",
+  "who": "Alisa",
+  "text": "Alisa writes in the evening: “The boss quoted your email at the meeting today. There was a typo in ’strategy.’” You weren’t at the meeting.",
+  "left": "Apologize to the boss",
+  "right": "Laugh with Alisa"
+ },
+ {
+  "id": "l1b_494",
+  "who": "Team chat",
+  "text": "7:30 p.m. Someone in the team chat asks if a laptop charger was left at the office. You’re home, and the charger is yours, in your bag. Own up?",
+  "left": "Own up, bring it tomorrow",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l1b_495",
+  "who": "Video call",
+  "text": "The evening call ended, but you forgot to leave. Half an hour later two coworkers join the same room and discuss your report. They’re praising it. Reveal yourself?",
+  "left": "Say “Thank you!”",
+  "right": "Quietly leave"
+ },
+ {
+  "id": "l1b_496",
+  "who": "Tech support",
+  "text": "8:10 p.m. Your laptop says your access certificate expired today. Support closes at 6 p.m. Tomorrow at 9:00 you present from your laptop.",
+  "left": "Come in at 8 a.m.",
+  "right": "Ask a coworker to present"
+ },
+ {
+  "id": "l1b_497",
+  "who": "Remote work",
+  "text": "In the evening you notice it’s the third day in a row you’re eating dinner at your work desk in front of your open inbox. The plate is right on the keyboard. Relocate dinner?",
+  "left": "Eat in the kitchen",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1b_498",
+  "who": "Spreadsheets",
+  "text": "Before leaving, a coworker asks you to “close his spreadsheet without saving.” You click the wrong thing, and his changes save over the original. Tell him now?",
+  "left": "Tell him right away",
+  "right": "Restore it from history"
+ },
+ {
+  "id": "l1b_499",
+  "who": "Cat",
+  "text": "In the evening the cat sat on the keyboard just as you were sending a report. Your email to the boss now contains the line “zzzzzzxxxx.” Sent.",
+  "left": "Send apologies from the cat",
+  "right": "Resend without the line"
+ },
+ {
+  "id": "l1b_500",
+  "who": "Intranet",
+  "text": "In the evening the portal notifies you: “Happy anniversary — six months with the company!” Only the portal and your mom congratulated you. Tell coworkers?",
+  "left": "Bring cake tomorrow",
+  "right": "Celebrate quietly at home"
+ }
+]

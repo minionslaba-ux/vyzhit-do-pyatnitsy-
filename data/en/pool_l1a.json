@@ -1,0 +1,3502 @@
+[
+ {
+  "id": "l1a_001",
+  "who": "Turnstile",
+  "text": "First day on the job. Your temporary pass won’t open the turnstile, the guard went for coffee, and the welcome meeting starts at 9:00. What now?",
+  "left": "Wait by the guard booth",
+  "right": "Crawl under the turnstile"
+ },
+ {
+  "id": "l1a_002",
+  "who": "Mentor",
+  "text": "Your mentor greets you with: “I’ve only been here two weeks myself, but we’ll figure it out.” He’s holding your contract upside down.",
+  "left": "Figure it out together",
+  "right": "Ask for a different mentor"
+ },
+ {
+  "id": "l1a_003",
+  "who": "HR",
+  "text": "HR hands you a welcome pack: a mug, a notebook and a thick brochure called “Our Values.” There’s an oral quiz on it in an hour. Read it?",
+  "left": "Cram the values",
+  "right": "Just look at the pictures"
+ },
+ {
+  "id": "l1a_004",
+  "who": "Onboarding",
+  "text": "The onboarding course on the intranet: 47 video lessons, 20 minutes each. The “Next” button only unlocks once the video ends.",
+  "left": "Watch them honestly",
+  "right": "Play them at 2x speed"
+ },
+ {
+  "id": "l1a_005",
+  "who": "Rita",
+  "text": "Rita from the next department whispers an offer: “a tour of the office’s unwritten rules.” She says it’ll take five minutes. Sounds like an hour at least.",
+  "left": "Take the tour",
+  "right": "Plead a full to-do list"
+ },
+ {
+  "id": "l1a_006",
+  "who": "Team chat",
+  "text": "You’ve been added to the department chat. 312 unread messages, and everyone’s waiting for you to introduce yourself. Say something?",
+  "left": "Just write “Hi!”",
+  "right": "Compose a full biography"
+ },
+ {
+  "id": "l1a_007",
+  "who": "Inner voice",
+  "text": "End of day one. You still don’t know where the bathroom is on this floor, and it’s getting awkward to ask. Admit it?",
+  "left": "Ask your desk neighbor",
+  "right": "Find it yourself"
+ },
+ {
+  "id": "l1a_008",
+  "who": "Sysadmin",
+  "text": "Your laptop is “still on its way.” The sysadmin gives you an ancient PC with the previous owner’s Solitaire still open — high score 1,200.",
+  "left": "Get to work on it",
+  "right": "Beat the high score first"
+ },
+ {
+  "id": "l1a_009",
+  "who": "Manager",
+  "text": "Your manager says to “read the documentation for now.” There is no documentation — just a folder called “New Folder (3)” with one screenshot.",
+  "left": "Study the screenshot all day",
+  "right": "Go ask questions"
+ },
+ {
+  "id": "l1a_010",
+  "who": "Mom",
+  "text": "Mom calls in the evening: “So, have they promoted you yet?” So far all you’ve got is a badge with your name misspelled.",
+  "left": "Tell her the whole truth",
+  "right": "Say everything’s great"
+ },
+ {
+  "id": "l1a_011",
+  "who": "Probation",
+  "text": "First week of probation. 8:40 a.m.: the office is empty, lights off, nobody around. Looks like everyone here rolls in at eleven.",
+  "left": "Sit in the dark and wait",
+  "right": "Go for a walk till ten"
+ },
+ {
+  "id": "l1a_012",
+  "who": "Mentor",
+  "text": "Your mentor gives you a task: “Do it like last time.” It’s your third day. There was no last time. Ask?",
+  "left": "Ask what he means",
+  "right": "Fill in the blanks yourself"
+ },
+ {
+  "id": "l1a_013",
+  "who": "Accounting",
+  "text": "Accounting needs a form for your payroll card. It’s eight pages long and asks for “paternal grandmother’s maiden name.”",
+  "left": "Call grandma",
+  "right": "Write “Don’t remember”"
+ },
+ {
+  "id": "l1a_014",
+  "who": "Timur",
+  "text": "Timur invites the newbies to a “get-to-know-you” at a bar after work. You don’t know anyone’s name yet, and your report to your mentor is due at nine tomorrow.",
+  "left": "Go and get to know people",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_015",
+  "who": "Office manager",
+  "text": "The office manager shows you your workspace: a desk by the meeting room door, a chair missing an armrest and a cactus “from the last person.” Thoughts?",
+  "left": "Accept it all with a smile",
+  "right": "Ask for another spot"
+ },
+ {
+  "id": "l1a_016",
+  "who": "Welcome email",
+  "text": "HR sent an email about you to the whole company: photo, hobbies and the line “loves pies.” Now everyone walking by makes a pie joke.",
+  "left": "Bring pies on Friday",
+  "right": "Joke back, share no pies"
+ },
+ {
+  "id": "l1a_017",
+  "who": "Probation",
+  "text": "You notice everyone on probation leaves at 6:00 sharp — except you. Apparently waiting for the boss to leave isn’t required.",
+  "left": "Leave with everyone",
+  "right": "Stay a bit for show"
+ },
+ {
+  "id": "l1a_018",
+  "who": "Passwords",
+  "text": "The sysadmin hands you twelve passwords for different systems and asks you to “never write them down.” Each one expires in thirty days.",
+  "left": "Sticky note under the keyboard",
+  "right": "Memorize them all"
+ },
+ {
+  "id": "l1a_019",
+  "who": "Department head",
+  "text": "At the planning meeting the department head asks: “What does our newbie think?” Everyone turns to you. You’ve been here four days.",
+  "left": "Share an honest idea",
+  "right": "“Still learning the processes”"
+ },
+ {
+  "id": "l1a_020",
+  "who": "Olesya",
+  "text": "Olesya offers, “as a friend,” to share all her tasks “so you get up to speed faster.” She has thirty-eight of them.",
+  "left": "Take a couple of tasks",
+  "right": "Just read them over"
+ },
+ {
+  "id": "l1a_021",
+  "who": "Newbie chat",
+  "text": "In the newbie chat someone writes: “Does anyone else feel cheated about the cookies?” The cookies you were promised really aren’t in the kitchen.",
+  "left": "Join the rebellion",
+  "right": "Stay quiet, keep a low profile"
+ },
+ {
+  "id": "l1a_022",
+  "who": "Survey",
+  "text": "HR asks you to fill out an “adaptation survey”: rate how happy you are on day three, from 1 to 10. It’s not anonymous.",
+  "left": "Give an honest 6",
+  "right": "Give it a 10"
+ },
+ {
+  "id": "l1a_023",
+  "who": "Guidelines",
+  "text": "Your mentor sends a 140-page handbook: “Just the important stuff.” The important parts are highlighted in yellow. Everything is highlighted in yellow.",
+  "left": "Read it cover to cover",
+  "right": "Ask what really matters"
+ },
+ {
+  "id": "l1a_024",
+  "who": "Home",
+  "text": "At home you realize you’ve introduced yourself wrong all day: there are already two people with your name, so they listed you under a third variation.",
+  "left": "Correct everyone tomorrow",
+  "right": "Keep the new name"
+ },
+ {
+  "id": "l1a_025",
+  "who": "Subway",
+  "text": "Your first rush-hour commute. At the transfer the crowd sweeps you out the wrong exit. Seven minutes until the workday starts.",
+  "left": "Run around the block",
+  "right": "Text that you’ll be late"
+ },
+ {
+  "id": "l1a_026",
+  "who": "Mentor",
+  "text": "Your mentor leaves on a three-week vacation two days after you start. His parting words: “Message me if anything comes up. I won’t reply.”",
+  "left": "Figure it out yourself",
+  "right": "Find an unofficial mentor"
+ },
+ {
+  "id": "l1a_027",
+  "who": "Intranet",
+  "text": "The company portal demands a profile photo. The only decent one is from your graduation — wearing a crown.",
+  "left": "Upload the crown photo",
+  "right": "Take a selfie against a wall"
+ },
+ {
+  "id": "l1a_028",
+  "who": "Inner voice",
+  "text": "First Friday evening. You still don’t get what your department actually does, but nobody seems to care.",
+  "left": "Ask directly on Monday",
+  "right": "Keep nodding along"
+ },
+ {
+  "id": "l1a_029",
+  "who": "Security guard",
+  "text": "The guard demands to see your pass, though he saw you yesterday and the day before. Your pass is in your other jacket.",
+  "left": "Go home for the pass",
+  "right": "Sweet-talk the guard"
+ },
+ {
+  "id": "l1a_030",
+  "who": "HR department",
+  "text": "HR lost the copy of your diploma. They need the original, and it’s at your parents’ place in another city.",
+  "left": "Ask your parents to mail it",
+  "right": "Offer a certified scan"
+ },
+ {
+  "id": "l1a_031",
+  "who": "Gosha",
+  "text": "Gosha kindly warns you that your desk is “cursed”: the last three people who sat there didn’t pass probation.",
+  "left": "Ask to be moved",
+  "right": "Hang a lucky charm on it"
+ },
+ {
+  "id": "l1a_032",
+  "who": "Email",
+  "text": "64 emails in the morning. Half are department newsletters you didn’t know existed; the rest are automatic notifications about your own onboarding.",
+  "left": "Sort everything into folders",
+  "right": "Mark all as read"
+ },
+ {
+  "id": "l1a_033",
+  "who": "Manager",
+  "text": "Your manager praises you in front of everyone for your first task. Truth is, your desk neighbor did almost all of it.",
+  "left": "Admit you had help",
+  "right": "Take the praise"
+ },
+ {
+  "id": "l1a_034",
+  "who": "Pass",
+  "text": "Your pass opens every floor except yours. Every time you have to wait for someone to come out.",
+  "left": "File a request with security",
+  "right": "Befriend your door neighbors"
+ },
+ {
+  "id": "l1a_035",
+  "who": "Mentor",
+  "text": "Your mentor suggests a video “sync-up” at 8 p.m., since he’s in meetings all day. Your evening is already planned.",
+  "left": "Agree to the call",
+  "right": "Move it to the morning"
+ },
+ {
+  "id": "l1a_036",
+  "who": "Inner voice",
+  "text": "You showed up in a dress shirt; everyone else is in hoodies. Even the CEO is in a hoodie. You feel like a guest at the wrong wedding.",
+  "left": "Undo the top button",
+  "right": "Run out and buy a hoodie"
+ },
+ {
+  "id": "l1a_037",
+  "who": "Vika",
+  "text": "Vika asks how much salary you were offered. She says it’s “just for statistics” and already has a spreadsheet open.",
+  "left": "Tell her honestly",
+  "right": "Change the subject to weather"
+ },
+ {
+  "id": "l1a_038",
+  "who": "Department head",
+  "text": "On his way out the department head says: “Tomorrow, show me what you got done this week.” The week was mostly access requests.",
+  "left": "Make slides overnight",
+  "right": "Honestly show the requests"
+ },
+ {
+  "id": "l1a_039",
+  "who": "Sticky note",
+  "text": "A note on your monitor from the previous employee: “Don’t trust Sergei from logistics.” Sergei from logistics just emailed you.",
+  "left": "Reply to Sergei carefully",
+  "right": "Peel it off and forget it"
+ },
+ {
+  "id": "l1a_040",
+  "who": "Mentor",
+  "text": "Your mentor accidentally sends you a voice message meant for his wife: “The newbie seems okay, but slow.” You both pretend it never happened.",
+  "left": "Start working faster",
+  "right": "Joke about the voice message"
+ },
+ {
+  "id": "l1a_041",
+  "who": "Team chat",
+  "text": "You accidentally put a fire emoji on a message about a colleague leaving the company. You can’t undo it — someone already noticed.",
+  "left": "Explain yourself in the chat",
+  "right": "Act like you meant it"
+ },
+ {
+  "id": "l1a_042",
+  "who": "Probation",
+  "text": "Halfway through probation. HR invites you to a “check-in chat” on Friday at 6:30 p.m. Saying no doesn’t seem to be an option.",
+  "left": "Go and be open",
+  "right": "Ask for another time"
+ },
+ {
+  "id": "l1a_043",
+  "who": "Denis",
+  "text": "Denis offers you his “lucky” chair: the last newbie who sat on it got promoted within a month. It creaks and leans to the left.",
+  "left": "Take the lucky chair",
+  "right": "Keep your own"
+ },
+ {
+  "id": "l1a_044",
+  "who": "HR department",
+  "text": "You need to sign twenty documents. HR says “don’t read them, it’s standard.” One is titled “Consent to Everything.”",
+  "left": "Sign without reading",
+  "right": "Read every page"
+ },
+ {
+  "id": "l1a_045",
+  "who": "Corporate jargon",
+  "text": "At the meeting you hear “sync,” “sign-off,” “escalate,” “commit.” The only word you understand is “lunch.”",
+  "left": "Take notes and google later",
+  "right": "Ask in front of everyone"
+ },
+ {
+  "id": "l1a_046",
+  "who": "Friends",
+  "text": "Your friends in the group chat ask about the new job and expect funny stories. The funniest thing all week: you got stuck in the turnstile.",
+  "left": "Tell the turnstile story",
+  "right": "Complain about everything"
+ },
+ {
+  "id": "l1a_047",
+  "who": "Office customs",
+  "text": "Turns out it’s tradition for the newbie to bring a cake at the end of week one. You find this out on Friday morning.",
+  "left": "Dash to the bakery",
+  "right": "Promise one next week"
+ },
+ {
+  "id": "l1a_048",
+  "who": "Manager",
+  "text": "Your manager asks why you still aren’t on the work messenger. You requested access a week ago; the ticket is “in progress.”",
+  "left": "Complain about the ticket",
+  "right": "Take the blame"
+ },
+ {
+  "id": "l1a_049",
+  "who": "Lyova",
+  "text": "Lyova from the next department learns you’re new and cheerfully says: “Fresh blood! You’ll take the meeting minutes.” Nobody likes taking minutes.",
+  "left": "Agree to take them",
+  "right": "Joke your way out"
+ },
+ {
+  "id": "l1a_050",
+  "who": "Inner voice",
+  "text": "First week done. You have seven new passwords, three mysterious tasks and one logo mug. Celebrate?",
+  "left": "Throw yourself a party",
+  "right": "Review passwords before bed"
+ },
+ {
+  "id": "l1a_051",
+  "who": "Printer",
+  "text": "The printer on your floor glows red: “Paper jam in tray 4.” It has three trays. You need the contract printed in ten minutes.",
+  "left": "Dive into the printer’s guts",
+  "right": "Run to another floor"
+ },
+ {
+  "id": "l1a_052",
+  "who": "Printer",
+  "text": "You sent two pages to print, and the printer is now on page 100 of someone else’s presentation. Your pages are at the back of the queue.",
+  "left": "Cancel their print job",
+  "right": "Wait patiently"
+ },
+ {
+  "id": "l1a_053",
+  "who": "Printer",
+  "text": "6:55 p.m. The printer finally prints your report, but every page has a streak and a “Low toner” message. Redo it?",
+  "left": "Hand it in as is",
+  "right": "Hunt for toner in cabinets"
+ },
+ {
+  "id": "l1a_054",
+  "who": "Scanner",
+  "text": "The scanner emails every file to someone who quit two years ago. The settings are password-protected and nobody knows the password.",
+  "left": "Photograph pages on phone",
+  "right": "File an IT ticket"
+ },
+ {
+  "id": "l1a_055",
+  "who": "Laminator",
+  "text": "The office manager trusted you to laminate the “Quiet Please” signs. The laminator chewed up the first one and smells of burning plastic.",
+  "left": "Keep laminating",
+  "right": "Print them unlaminated"
+ },
+ {
+  "id": "l1a_056",
+  "who": "Shredder",
+  "text": "You’re shredding old drafts when the shredder suddenly grabs the end of your tie. Your manager is walking past.",
+  "left": "Yank it out with dignity",
+  "right": "Call for help"
+ },
+ {
+  "id": "l1a_057",
+  "who": "Open space",
+  "text": "Your open-space neighbor plays voice messages on speaker every morning. Today his aunt is sharing her recipe for meat jelly.",
+  "left": "Ask him to use headphones",
+  "right": "Write down the recipe"
+ },
+ {
+  "id": "l1a_058",
+  "who": "Open space",
+  "text": "The colleague across from you loudly crunches a carrot during your call with a client. The client asks what that noise is.",
+  "left": "Say it’s construction",
+  "right": "Ask the colleague to stop"
+ },
+ {
+  "id": "l1a_059",
+  "who": "Open space",
+  "text": "Every evening someone switches off the lights at 6:01 without checking if anyone’s still there. Tonight you’re left in the dark.",
+  "left": "Work by screen light",
+  "right": "Take the hint and leave"
+ },
+ {
+  "id": "l1a_060",
+  "who": "Open space",
+  "text": "New open-space rule: “Quiet hours from 10 to 12.” Your keyboard clicks like castanets, and people have turned around twice.",
+  "left": "Type slowly and gently",
+  "right": "Bring a quiet keyboard"
+ },
+ {
+  "id": "l1a_061",
+  "who": "Open space",
+  "text": "Your neighbor put a “Pumpkin Spice” scented candle on the shared desk. By lunch your eyes are watering, but everyone else loves it.",
+  "left": "Endure it for the vibe",
+  "right": "Quietly blow it out"
+ },
+ {
+  "id": "l1a_062",
+  "who": "Open space",
+  "text": "Before leaving you notice someone left their backpack on your chair and half a cup of tea on your desk. Looks like your spot’s been “reserved.”",
+  "left": "Move their stuff next door",
+  "right": "Leave a polite note"
+ },
+ {
+  "id": "l1a_063",
+  "who": "Coffee machine",
+  "text": "The coffee machine asks: “What’s your favorite drink?” and offers to create a fingerprint profile. The line behind you sighs.",
+  "left": "Create a profile",
+  "right": "Hit “Skip”"
+ },
+ {
+  "id": "l1a_064",
+  "who": "Coffee machine",
+  "text": "The coffee machine only makes cappuccino: the “Americano” button is worn off, and someone drew a skull there in marker. Press the skull?",
+  "left": "Press the skull",
+  "right": "Settle for cappuccino"
+ },
+ {
+  "id": "l1a_065",
+  "who": "Coffee machine",
+  "text": "In the evening the coffee machine decided to self-clean and flooded the counter with hot water. Someone’s papers were lying there.",
+  "left": "Rescue the papers",
+  "right": "Call the office manager"
+ },
+ {
+  "id": "l1a_066",
+  "who": "Coffee machine",
+  "text": "Your first time using the office coffee machine. You press a button — it hums, blinks and produces only steam. People behind you whisper.",
+  "left": "Ask how it works",
+  "right": "Leave with an empty cup"
+ },
+ {
+  "id": "l1a_067",
+  "who": "Coffee machine",
+  "text": "The office manager announces: coffee is now by coupon only, five cups a week. You drink five cups by lunch.",
+  "left": "Buy coffee at a cafe",
+  "right": "Beg coworkers for coupons"
+ },
+ {
+  "id": "l1a_068",
+  "who": "Coffee machine",
+  "text": "The coffee machine gets turned off after six, and you have two hours of report left. There’s a “rainy day” pack of instant coffee in the cupboard.",
+  "left": "Drink the instant",
+  "right": "Go home without coffee"
+ },
+ {
+  "id": "l1a_069",
+  "who": "Fridge",
+  "text": "Someone ate your yogurt from the office fridge. The lid had a sticker with your name; the empty cup has lipstick marks.",
+  "left": "Launch an investigation",
+  "right": "Buy another, label it bigger"
+ },
+ {
+  "id": "l1a_070",
+  "who": "Fridge",
+  "text": "The office manager threatens to throw out everything in the fridge on Friday. Your soup container is in there — forgotten two weeks ago.",
+  "left": "Quietly take your soup",
+  "right": "Don’t confess"
+ },
+ {
+  "id": "l1a_071",
+  "who": "Fridge",
+  "text": "The kitchen fridge emits a smell you can detect from the elevator. Someone has to open it. Everyone’s looking at you, the newbie.",
+  "left": "Open it and clean up",
+  "right": "Claim an allergy"
+ },
+ {
+  "id": "l1a_072",
+  "who": "Fridge",
+  "text": "There’s a fridge-cleaning rota on the door. Your name is down for this Friday, though nobody asked you.",
+  "left": "Accept it and clean",
+  "right": "Protest in the chat"
+ },
+ {
+  "id": "l1a_073",
+  "who": "Microwave",
+  "text": "The microwave line is eight people long, each with a container. Your break is only half an hour.",
+  "left": "Eat it cold",
+  "right": "Ask to cut in line"
+ },
+ {
+  "id": "l1a_074",
+  "who": "Microwave",
+  "text": "Someone microwaved fish, and the whole kitchen smells like the sea. You’re the last person leaving the kitchen just as the CEO walks in.",
+  "left": "Explain it wasn’t you",
+  "right": "Say nothing and leave"
+ },
+ {
+  "id": "l1a_075",
+  "who": "Kettle",
+  "text": "The office kettle switches off a second before boiling, then starts heating again. This has been going on for twenty minutes.",
+  "left": "Wait it out",
+  "right": "Drink warm water"
+ },
+ {
+  "id": "l1a_076",
+  "who": "Water cooler",
+  "text": "You emptied the water cooler, so etiquette says you’re the one installing the new 5-gallon jug. Someone’s already waiting with a mug.",
+  "left": "Install the jug",
+  "right": "Step away “for a minute”"
+ },
+ {
+  "id": "l1a_077",
+  "who": "Kitchen",
+  "text": "The kitchen sink is piled with dirty mugs. Yours is somewhere at the bottom. Everyone else has gone home.",
+  "left": "Wash them all",
+  "right": "Wash only yours"
+ },
+ {
+  "id": "l1a_078",
+  "who": "Dress code",
+  "text": "Fridays are casual here, but you came in a suit. You have a lunch meeting with an important client, and everyone else is in jeans.",
+  "left": "Keep the suit on",
+  "right": "Lose the jacket, roll sleeves"
+ },
+ {
+  "id": "l1a_079",
+  "who": "Dress code",
+  "text": "HR reminds everyone of the dress code: “No sneakers.” You’re in sneakers; your dress shoes are at home. Website photo shoot in an hour.",
+  "left": "Stand in the back row",
+  "right": "Run home for shoes"
+ },
+ {
+  "id": "l1a_080",
+  "who": "Dress code",
+  "text": "In the evening you discover you wore your sweater inside out all day. The tag was sticking out on your back. Nobody said a word.",
+  "left": "Ask why nobody told you",
+  "right": "Laugh at yourself"
+ },
+ {
+  "id": "l1a_081",
+  "who": "Dress code",
+  "text": "The chat announced Bright Socks Week. Your socks come in gray, black and more gray. You leave the house in ten minutes.",
+  "left": "Wear mismatched socks",
+  "right": "Sit this one out"
+ },
+ {
+  "id": "l1a_082",
+  "who": "Dress code",
+  "text": "You and the department head are wearing the same shirt. He noticed too and says: “Well, that’s it — we’re a team now.”",
+  "left": "Play along with the joke",
+  "right": "Throw a cardigan over it"
+ },
+ {
+  "id": "l1a_083",
+  "who": "Dress code",
+  "text": "The dress code for the office party is “Glamorous Office.” You own one blazer and some glitter from a card-making kit.",
+  "left": "Glitter the blazer",
+  "right": "Come in normal clothes"
+ },
+ {
+  "id": "l1a_084",
+  "who": "Commute",
+  "text": "Your bus drove right past the stop again without stopping. The next one is in twenty minutes; a taxi is pricey.",
+  "left": "Call a taxi",
+  "right": "Wait for the next bus"
+ },
+ {
+  "id": "l1a_085",
+  "who": "Commute",
+  "text": "Your lunchtime doctor’s appointment ran long, and now your minibus is stuck in traffic. Meeting in fifteen minutes.",
+  "left": "Join from your phone",
+  "right": "Text that you’ll be late"
+ },
+ {
+  "id": "l1a_086",
+  "who": "Commute",
+  "text": "The evening train is canceled. The next one’s in an hour, and dinner is waiting at home. A colleague offers a ride, but he lives the other way.",
+  "left": "Accept the offer",
+  "right": "Wait for the train"
+ },
+ {
+  "id": "l1a_087",
+  "who": "Subway",
+  "text": "You run into the department head on the subway. Seven more stops together, and zero topics to talk about.",
+  "left": "Make small talk",
+  "right": "Pretend you didn’t see him"
+ },
+ {
+  "id": "l1a_088",
+  "who": "Commute",
+  "text": "On your way to a client meeting you realize you took the minibus in the wrong direction. You only figured it out at the last stop.",
+  "left": "Taxi on your own dime",
+  "right": "Reschedule the meeting"
+ },
+ {
+  "id": "l1a_089",
+  "who": "Subway",
+  "text": "On the evening subway, the woman next to you is reading a book you’ve wanted for ages. She’s on the last page, it seems. This is your stop.",
+  "left": "Ride on and ask her",
+  "right": "Get off at your stop"
+ },
+ {
+  "id": "l1a_090",
+  "who": "Being late",
+  "text": "Your alarm didn’t go off; you wake up at 9:10. The workday started at nine. You’re on probation.",
+  "left": "Admit the alarm failed",
+  "right": "Blame traffic"
+ },
+ {
+  "id": "l1a_091",
+  "who": "Being late",
+  "text": "You’re twenty minutes late back from lunch: the cafe forgot your order. Your manager pointedly checks the clock.",
+  "left": "Explain about the cafe",
+  "right": "Stay late tonight"
+ },
+ {
+  "id": "l1a_092",
+  "who": "Being late",
+  "text": "You arrive at the company dinner an hour after everyone else. All that’s left are empty plates and coworkers already doing karaoke.",
+  "left": "Jump in and sing",
+  "right": "Quietly eat in a corner"
+ },
+ {
+  "id": "l1a_093",
+  "who": "Being late",
+  "text": "You walk into the building at 9:00 sharp, but the elevator reaches your floor at 9:04. The planning meeting has already started.",
+  "left": "Walk in apologizing",
+  "right": "Quietly slip to your seat"
+ },
+ {
+  "id": "l1a_094",
+  "who": "Lunch",
+  "text": "Coworkers invite you to the cafeteria for lunch. You brought food from home, but eating alone in the kitchen is boring.",
+  "left": "Bring your container along",
+  "right": "Eat at your desk"
+ },
+ {
+  "id": "l1a_095",
+  "who": "Lunch",
+  "text": "You paid for the whole department’s lunch because “we’ll send you the money later.” A week later, two out of seven have paid.",
+  "left": "Remind them in the chat",
+  "right": "Chalk it up to experience"
+ },
+ {
+  "id": "l1a_096",
+  "who": "Lunch",
+  "text": "At 9 a.m. your coworkers are already debating where to go for lunch. The chat poll has dragged on for forty minutes and 120 messages.",
+  "left": "Vote and mute the chat",
+  "right": "Suggest your own place"
+ },
+ {
+  "id": "l1a_097",
+  "who": "Lunch",
+  "text": "At lunch coworkers discuss who’s the slowest in the department. You’ve been here a week and suspect they’re about to mention you.",
+  "left": "Change the subject",
+  "right": "Make a joke about it first"
+ },
+ {
+  "id": "l1a_098",
+  "who": "Lunch",
+  "text": "Coworkers plan a “long lunch” on Friday from 1 to 4. Your manager’s on vacation, but you’re still on probation.",
+  "left": "Go with everyone",
+  "right": "Stay at your desk"
+ },
+ {
+  "id": "l1a_099",
+  "who": "Open space",
+  "text": "Your desk is right by the entrance, and everyone who walks in feels the need to nod, say hi or ask for directions.",
+  "left": "Post a “Not Reception” sign",
+  "right": "Smile at everyone"
+ },
+ {
+  "id": "l1a_100",
+  "who": "Open space",
+  "text": "Your desk neighbor keeps moving your chair over to his desk because “it’s comfier.” Today he took your monitor too.",
+  "left": "Talk to him directly",
+  "right": "Tell the office manager"
+ },
+ {
+  "id": "l1a_101",
+  "who": "Mentor",
+  "text": "Your mentor texts at 7:30 a.m.: “Look over my code before the meeting, it’s all self-explanatory.” The file is 3,000 lines with zero comments.",
+  "left": "Read it on the subway",
+  "right": "Skim it diagonally"
+ },
+ {
+  "id": "l1a_102",
+  "who": "Mentor",
+  "text": "Your mentor is an hour late, and you can’t start a single task without him. The department is giving you pitying looks.",
+  "left": "Ask the neighbors for a task",
+  "right": "Drink tea and wait"
+ },
+ {
+  "id": "l1a_103",
+  "who": "Mentor",
+  "text": "Your mentor teaches you “real work”: how to keep a work file open whenever management walks behind you.",
+  "left": "Add it to your arsenal",
+  "right": "Politely pass"
+ },
+ {
+  "id": "l1a_104",
+  "who": "Probation",
+  "text": "A calendar reminder pops up: “30 days left of probation.” One of your coworkers set it up as a joke.",
+  "left": "Laugh along",
+  "right": "Take on more tasks"
+ },
+ {
+  "id": "l1a_105",
+  "who": "Probation",
+  "text": "Your boss asks you to run the morning stand-up “to test your leadership skills.” It starts in fifteen minutes.",
+  "left": "Run it as best you can",
+  "right": "Ask to postpone a week"
+ },
+ {
+  "id": "l1a_106",
+  "who": "Subway",
+  "text": "The man across from you on the subway is reading a printout with your company’s logo. He might be your future client.",
+  "left": "Strike up a conversation",
+  "right": "Hide behind your phone"
+ },
+ {
+  "id": "l1a_107",
+  "who": "Scooter",
+  "text": "You decided to ride a rental scooter to work. Halfway there the battery died, and the office is two more kilometers uphill.",
+  "left": "Push it on foot",
+  "right": "Ditch it, take the bus"
+ },
+ {
+  "id": "l1a_108",
+  "who": "Bus",
+  "text": "The morning bus driver is blasting accordion music. The whole bus is silently humming along. You forgot your headphones.",
+  "left": "Endure and hum along",
+  "right": "Get off and walk"
+ },
+ {
+  "id": "l1a_109",
+  "who": "Commuter train",
+  "text": "You fell asleep on the train and woke up to the conductor shaking your shoulder. You’ve overshot your station by three stops.",
+  "left": "Call your manager",
+  "right": "Head back and say nothing"
+ },
+ {
+  "id": "l1a_110",
+  "who": "Bike",
+  "text": "You biked to work and discovered the office has no shower. At 10:00 you have a face-to-face with the department head.",
+  "left": "Freshen up with wet wipes",
+  "right": "Sit far from everyone"
+ },
+ {
+  "id": "l1a_111",
+  "who": "Being late",
+  "text": "You’re ten minutes late, and the CEO is standing by the elevator. He’s late too, and gives you a conspiratorial wink.",
+  "left": "Wink back",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l1a_112",
+  "who": "Being late",
+  "text": "Late again — third time this week. A coworker quietly advises: “Say you were held up at the doctor’s. Everyone does.”",
+  "left": "Take the advice",
+  "right": "Confess honestly"
+ },
+ {
+  "id": "l1a_113",
+  "who": "Coffee machine",
+  "text": "In the coffee line you end up behind the division director. He’s been choosing a drink for two minutes, reading the ingredients.",
+  "left": "Recommend your favorite",
+  "right": "Wait patiently"
+ },
+ {
+  "id": "l1a_114",
+  "who": "Coffee",
+  "text": "Coworkers are chipping in for a coffee bean subscription, $10 a month each. You only drink tea.",
+  "left": "Chip in to be a team player",
+  "right": "Decline, stick to tea"
+ },
+ {
+  "id": "l1a_115",
+  "who": "Fridge",
+  "text": "A new note on the fridge: “Whoever’s eating other people’s cheesecakes — the camera sees you.” Yesterday you took one from a box marked “for everyone.”",
+  "left": "Confess in the chat",
+  "right": "Reread the box label"
+ },
+ {
+  "id": "l1a_116",
+  "who": "Kitchen",
+  "text": "You head to the kitchen first thing, and the office manager is already there with gloves and a trash bag: “Great, help me clear out the cupboards.”",
+  "left": "Help with the cupboards",
+  "right": "Say you have an urgent call"
+ },
+ {
+  "id": "l1a_117",
+  "who": "Open space",
+  "text": "You got a desk right by the window. The sun hits your monitor so hard all you can see is your own reflection.",
+  "left": "Tape up a newspaper blind",
+  "right": "Work in sunglasses"
+ },
+ {
+  "id": "l1a_118",
+  "who": "Printer",
+  "text": "The printer greets you with: “Firmware update required. Do not turn off the device.” The update has been running for three days.",
+  "left": "Press “Cancel”",
+  "right": "Print at the neighbors’"
+ },
+ {
+  "id": "l1a_119",
+  "who": "Printer",
+  "text": "You accidentally printed a personal document — your résumé for another company. It’s sitting in the shared printer tray. HR is standing right there.",
+  "left": "Grab it, poker-faced",
+  "right": "Say it’s not yours"
+ },
+ {
+  "id": "l1a_120",
+  "who": "Printer",
+  "text": "The color printer is available only “with manager approval.” You need to print one chart for a presentation.",
+  "left": "Request approval",
+  "right": "Print in black and white"
+ },
+ {
+  "id": "l1a_121",
+  "who": "Projector",
+  "text": "The meeting-room projector shows everything mirrored. Your manager asks you to “fix it quick” — you’re the young generation, after all.",
+  "left": "Fiddle with the settings",
+  "right": "Suggest using a laptop"
+ },
+ {
+  "id": "l1a_122",
+  "who": "Mouse",
+  "text": "Your wireless mouse suddenly starts controlling the cursor on your neighbor’s computer. He’s already sent someone a spreadsheet twice.",
+  "left": "Confess to your neighbor",
+  "right": "Quietly swap the batteries"
+ },
+ {
+  "id": "l1a_123",
+  "who": "Desk phone",
+  "text": "The landline on your desk is ringing, and you don’t know how to transfer calls. Judging by the number, it’s the CEO.",
+  "left": "Pick up and improvise",
+  "right": "Let it ring"
+ },
+ {
+  "id": "l1a_124",
+  "who": "Lunch",
+  "text": "Coworkers are going for the business lunch at “the usual place.” All they serve is soup with a lone floating circle of grease and fruit punch.",
+  "left": "Go with coworkers",
+  "right": "Find your own cafe"
+ },
+ {
+  "id": "l1a_125",
+  "who": "Lunch",
+  "text": "At a team lunch the department head tells a joke you heard in kindergarten. Everyone laughs a little louder than necessary.",
+  "left": "Laugh along",
+  "right": "Tell your own joke"
+ },
+ {
+  "id": "l1a_126",
+  "who": "Lunch",
+  "text": "Coworkers argue over who pays the shared bill. They propose “last one to finish pays.” You’re a slow eater.",
+  "left": "Eat twice as fast",
+  "right": "Pay for yourself"
+ },
+ {
+  "id": "l1a_127",
+  "who": "Fridge",
+  "text": "There’s a cake in the fridge reading “Happy Birthday, Marina!” Marina works in another building. The cake is three days old.",
+  "left": "Suggest everyone eat it",
+  "right": "Take the cake to Marina"
+ },
+ {
+  "id": "l1a_128",
+  "who": "Kitchen",
+  "text": "In the kitchen you accidentally broke someone’s mug that says “World’s Best Grandma.” No witnesses except the coffee machine.",
+  "left": "Confess in the team chat",
+  "right": "Secretly buy an identical one"
+ },
+ {
+  "id": "l1a_129",
+  "who": "Open space",
+  "text": "A coworker is filming a “day in the life of an office” video for social media right in the open space. Your desk, piled with candy wrappers, is in the shot.",
+  "left": "Ask them to cut it",
+  "right": "Wave at the camera"
+ },
+ {
+  "id": "l1a_130",
+  "who": "Open space",
+  "text": "Open-space debate: open the window or not? Half are freezing, half are suffocating. You sit right by the window.",
+  "left": "Open the window",
+  "right": "Keep it shut"
+ },
+ {
+  "id": "l1a_131",
+  "who": "Dress code",
+  "text": "The client meeting was moved to your office in thirty minutes. Your T-shirt says “Don’t Talk to Me Before Coffee.”",
+  "left": "Borrow a coworker’s blazer",
+  "right": "Go out in the T-shirt"
+ },
+ {
+  "id": "l1a_132",
+  "who": "Commute",
+  "text": "Documents need delivering, but the courier is sick. Your manager asks you to take the subway to the other end of town.",
+  "left": "Take the documents",
+  "right": "Suggest e-signatures"
+ },
+ {
+  "id": "l1a_133",
+  "who": "Mentor",
+  "text": "Your mentor suggests “a quick work session” on the weekend so you can settle in better. You planned to do absolutely nothing.",
+  "left": "Agree to the weekend",
+  "right": "Suggest Tuesday"
+ },
+ {
+  "id": "l1a_134",
+  "who": "Mentor",
+  "text": "Before leaving, your mentor leaves a note: “I’m out tomorrow, you’ve got this.” Below it: a smiley face and three exclamation marks.",
+  "left": "Prepare at home tonight",
+  "right": "Deal with it tomorrow"
+ },
+ {
+  "id": "l1a_135",
+  "who": "Probation",
+  "text": "A coworker confides that the boss “keeps an eye on” newbies based on who leaves last. It’s 6:05 p.m.",
+  "left": "Stay till the bitter end",
+  "right": "Leave with a clear conscience"
+ },
+ {
+  "id": "l1a_136",
+  "who": "Probation",
+  "text": "You’re asked to sign a one-month probation extension, “just a formality.” No reason given.",
+  "left": "Sign quietly",
+  "right": "Ask for an explanation"
+ },
+ {
+  "id": "l1a_137",
+  "who": "Commuter train",
+  "text": "On the evening train you run into a coworker from accounting. She happily sits next to you and starts telling you about her vacation. It’s an hour’s ride.",
+  "left": "Listen and nod",
+  "right": "Fake a phone call"
+ },
+ {
+  "id": "l1a_138",
+  "who": "Subway",
+  "text": "You barely squeezed into a rush-hour subway car. Your backpack is still outside, stuck in the doors. The train isn’t moving.",
+  "left": "Pull the backpack in",
+  "right": "Get off at this station"
+ },
+ {
+  "id": "l1a_139",
+  "who": "Taxi",
+  "text": "You called a taxi after work, and the driver turns out to be a former employee of your company. He spends the whole ride explaining why he quit.",
+  "left": "Ask for the juicy details",
+  "right": "Put on headphones"
+ },
+ {
+  "id": "l1a_140",
+  "who": "Walking",
+  "text": "You decided to walk home to clear your head. Twenty minutes later you realize you’re lost in an industrial zone.",
+  "left": "Call a taxi",
+  "right": "Trust the GPS to the end"
+ },
+ {
+  "id": "l1a_141",
+  "who": "Being late",
+  "text": "You missed the start of the evening team-building event, and all the teams are set. The host offers you the role of judge.",
+  "left": "Be the judge",
+  "right": "Ask to join any team"
+ },
+ {
+  "id": "l1a_142",
+  "who": "Coffee machine",
+  "text": "The office manager asked you to switch off the coffee machine before leaving. In the morning it turns out she meant the kitchen lights.",
+  "left": "Own up in the morning",
+  "right": "Blame the cleaner"
+ },
+ {
+  "id": "l1a_143",
+  "who": "Fridge",
+  "text": "Before the holidays the office manager announces: anything left in the fridge after 7 p.m. gets thrown out. Your expensive cheese is in there.",
+  "left": "Haul the cheese home",
+  "right": "Treat everyone to cheese"
+ },
+ {
+  "id": "l1a_144",
+  "who": "Kitchen",
+  "text": "On your way out you notice the kitchen faucet is leaking, and a plumber can only be called through a ticket in the system.",
+  "left": "Fill out the ticket",
+  "right": "Shut the valve and leave"
+ },
+ {
+  "id": "l1a_145",
+  "who": "Lunch",
+  "text": "Coworkers invite you to a late “lunch-dinner” after six since they didn’t make it earlier. Mentally you went home hours ago.",
+  "left": "Go with them",
+  "right": "Decline and go home"
+ },
+ {
+  "id": "l1a_146",
+  "who": "Open space",
+  "text": "Only you and the cleaner are left in the open space. He’s running the vacuum right by your desk and isn’t moving on.",
+  "left": "Pack up and go home",
+  "right": "Ask him to wait"
+ },
+ {
+  "id": "l1a_147",
+  "who": "Dress code",
+  "text": "In the evening HR announces: tomorrow is the company calendar photo shoot, everyone wear white. You have nothing white.",
+  "left": "Go shopping",
+  "right": "Show up in beige"
+ },
+ {
+  "id": "l1a_148",
+  "who": "Printer",
+  "text": "You stayed late to print a report, but the printer demands a personal PIN. You’ll get your PIN in a week.",
+  "left": "Borrow a coworker’s PIN",
+  "right": "Send the report as a file"
+ },
+ {
+  "id": "l1a_149",
+  "who": "Locker",
+  "text": "On your way out you realize the key to your locker is stuck in the lock. Your jacket is inside, and it’s raining.",
+  "left": "Call the facilities guy",
+  "right": "Go home jacketless"
+ },
+ {
+  "id": "l1a_150",
+  "who": "Inner voice",
+  "text": "In the evening you replay everything you said today. Especially: “Sure, I’ll figure it out tonight.”",
+  "left": "Figure it out tonight",
+  "right": "Confess tomorrow"
+ },
+ {
+  "id": "l1a_151",
+  "who": "Alarm clock",
+  "text": "The alarm went off, but you hit “Stop” instead of “Snooze.” It’s 8:20; you needed to leave at 8:00.",
+  "left": "Run out without breakfast",
+  "right": "Eat breakfast, be late"
+ },
+ {
+  "id": "l1a_152",
+  "who": "Cat",
+  "text": "The cat lay down on the shirt you ironed for your first team meeting. It’s now covered in fur, and time is short.",
+  "left": "Lint-roll it with tape in the elevator",
+  "right": "Wear a sweater"
+ },
+ {
+  "id": "l1a_153",
+  "who": "Roommate",
+  "text": "Your roommate has hogged the bathroom for forty minutes. You have to leave in twenty and haven’t even washed your face.",
+  "left": "Bang on the door",
+  "right": "Wash up in the kitchen"
+ },
+ {
+  "id": "l1a_154",
+  "who": "GPS",
+  "text": "The navigation app routes you through a closed subway station. The alternative: three transfers and a bus through back streets.",
+  "left": "Trust the app",
+  "right": "Take the transfers"
+ },
+ {
+  "id": "l1a_155",
+  "who": "Conductor",
+  "text": "The tram conductor won’t take cards, only cash. All you have is a card and a few coins to last until payday.",
+  "left": "Hand over your last coins",
+  "right": "Get off and walk"
+ },
+ {
+  "id": "l1a_156",
+  "who": "Minibus",
+  "text": "The minibus driver asks passengers to pass the fare forward. You do, and a minute later you’re handed change for twelve people and asked to distribute it.",
+  "left": "Hand out the change honestly",
+  "right": "Pass it back to the driver"
+ },
+ {
+  "id": "l1a_157",
+  "who": "Barista",
+  "text": "The barista at the cafe near the office knows your name and order. Today he ceremoniously hands you “the usual,” though you wanted to try something new.",
+  "left": "Take the usual",
+  "right": "Order something new"
+ },
+ {
+  "id": "l1a_158",
+  "who": "Cleaner",
+  "text": "In the morning the cleaner is mopping right by your desk and asks you not to walk there until it dries. That’ll be about twenty minutes.",
+  "left": "Work on the windowsill",
+  "right": "Go get coffee"
+ },
+ {
+  "id": "l1a_159",
+  "who": "Security guard",
+  "text": "The guard at the entrance is a huge soccer fan and expects you to discuss last night’s match. You didn’t watch and don’t know who played.",
+  "left": "Pretend you watched",
+  "right": "Admit you don’t follow it"
+ },
+ {
+  "id": "l1a_160",
+  "who": "Intern",
+  "text": "An intern who started a week after you already treats you as an “old-timer” and asks questions you can’t answer.",
+  "left": "Honestly say “I don’t know”",
+  "right": "Confidently make something up"
+ },
+ {
+  "id": "l1a_161",
+  "who": "Elevator",
+  "text": "You’re in the elevator with the CEO. He asks: “And who are you?” Eight more floors to go.",
+  "left": "Tell him about yourself brightly",
+  "right": "Keep it short"
+ },
+ {
+  "id": "l1a_162",
+  "who": "Notifications",
+  "text": "The work messenger on your phone starts pinging at 6 a.m.: coworkers in another time zone are already at work.",
+  "left": "Turn off notifications",
+  "right": "Read over breakfast"
+ },
+ {
+  "id": "l1a_163",
+  "who": "Supply room",
+  "text": "The facilities manager issues stationery strictly by the list: two pens, one notepad, five paper clips a month. You ask for a stapler.",
+  "left": "Bring yours from home",
+  "right": "“Borrow” the neighbor’s forever"
+ },
+ {
+  "id": "l1a_164",
+  "who": "Open space",
+  "text": "Your open-space neighbor shakes your hand every morning. Only his hands are always cold and a bit sticky.",
+  "left": "Switch to a nod",
+  "right": "Endure the handshakes"
+ },
+ {
+  "id": "l1a_165",
+  "who": "Coffee machine",
+  "text": "A sign on the coffee machine: “Broken. Do not touch!” Next to it, a coworker with a mug says he knows a secret trick.",
+  "left": "Try the trick",
+  "right": "Don’t risk it"
+ },
+ {
+  "id": "l1a_166",
+  "who": "Dress code",
+  "text": "A foreign delegation is visiting today. Word is everyone must look “respectable.” You’re wearing dinosaur sneakers.",
+  "left": "Swap shoes with a coworker",
+  "right": "Never leave your desk"
+ },
+ {
+  "id": "l1a_167",
+  "who": "Being late",
+  "text": "You’re late because you helped an elderly lady carry her bags to her door. Your manager probably won’t appreciate it.",
+  "left": "Tell it like it was",
+  "right": "Just apologize"
+ },
+ {
+  "id": "l1a_168",
+  "who": "Vending machine",
+  "text": "The vending machine ate your last two dollars and didn’t drop the chocolate bar. It’s dangling from the coil, half out.",
+  "left": "Shake the machine",
+  "right": "Accept your fate"
+ },
+ {
+  "id": "l1a_169",
+  "who": "Cafeteria",
+  "text": "At the cafeteria counter you’re accidentally given a double portion of meatballs. The cook has already turned away. Coworkers are behind you in line.",
+  "left": "Take it and share",
+  "right": "Return the extra"
+ },
+ {
+  "id": "l1a_170",
+  "who": "Food delivery",
+  "text": "You ordered lunch to the office, but the courier took it to the building next door with the same number. He’s waiting for you there.",
+  "left": "Run next door",
+  "right": "Cancel and go hungry"
+ },
+ {
+  "id": "l1a_171",
+  "who": "Lunch",
+  "text": "A vegan coworker offers you a taste of his lunch: a lentil patty. He’s watching expectantly, napkin at the ready.",
+  "left": "Try it and praise it",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_172",
+  "who": "Lunch",
+  "text": "You bring homemade borscht in a thermos for lunch. Coworkers have caught the scent and are drifting toward the kitchen with spoons.",
+  "left": "Share the borscht",
+  "right": "Eat it alone"
+ },
+ {
+  "id": "l1a_173",
+  "who": "Lunch",
+  "text": "The boss suggests having lunch together to “get to know each other better.” It’s at a restaurant, and the bill will apparently be split.",
+  "left": "Go and splurge",
+  "right": "Point to your lunchbox"
+ },
+ {
+  "id": "l1a_174",
+  "who": "Mouse",
+  "text": "Your mouse jerks across the desk: there’s a torn-off corner of an “Inventory No. 0045” sticker under it. Without the sticker, the mouse might get written off.",
+  "left": "Work with the sticker",
+  "right": "Tape it on the side"
+ },
+ {
+  "id": "l1a_175",
+  "who": "Keyboard",
+  "text": "The letter “J” doesn’t work on your keyboard. You’re writing a report on the “Jade Jewel Junction” housing complex.",
+  "left": "Copy-paste every “J”",
+  "right": "Abbreviate it to “JJJ”"
+ },
+ {
+  "id": "l1a_176",
+  "who": "Monitor",
+  "text": "You got a second monitor. It glows blue even when turned off and crackles quietly now and then.",
+  "left": "Use it as is",
+  "right": "Return it to the sysadmin"
+ },
+ {
+  "id": "l1a_177",
+  "who": "Desk phone",
+  "text": "You answered the landline, and it’s an elderly lady who thinks she’s calling her doctor’s office. She really needs advice.",
+  "left": "Help her find the number",
+  "right": "Politely say goodbye"
+ },
+ {
+  "id": "l1a_178",
+  "who": "Printer",
+  "text": "The department printer prints everything on the back of used paper — “to save money.” The back of your report has someone’s salaries on it.",
+  "left": "Take it to accounting",
+  "right": "Quietly shred it"
+ },
+ {
+  "id": "l1a_179",
+  "who": "Stationery",
+  "text": "After the meeting you realize you walked off with someone’s expensive pen. The owner is already searching every desk.",
+  "left": "Return it with apologies",
+  "right": "Sneak it back"
+ },
+ {
+  "id": "l1a_180",
+  "who": "Messenger",
+  "text": "You mixed up chats and sent a dancing cat sticker to the work chat. The boss reacts with a “?”",
+  "left": "Explain the mistake",
+  "right": "Send another cat"
+ },
+ {
+  "id": "l1a_181",
+  "who": "Open space",
+  "text": "Coworkers in the open space are celebrating someone’s birthday: balloons, party poppers, singing. You’re on an important call with a client.",
+  "left": "Escape to a meeting room",
+  "right": "Invite the client to sing along"
+ },
+ {
+  "id": "l1a_182",
+  "who": "Open space",
+  "text": "The coworker across from you sneezes loudly every five minutes and says “Sorry,” and everyone chants “Bless you.” Hard to work.",
+  "left": "Join the “Bless you” chorus",
+  "right": "Put on headphones"
+ },
+ {
+  "id": "l1a_183",
+  "who": "Open space",
+  "text": "The open space now has “quiet zones” and “social zones.” Your desk suddenly ended up in a social zone, and you love quiet.",
+  "left": "Ask to be moved",
+  "right": "Start socializing"
+ },
+ {
+  "id": "l1a_184",
+  "who": "Probation",
+  "text": "You get your first solo assignment, with the note: “It’s important, but don’t panic.” Deadline: today at 5 p.m.",
+  "left": "Skip lunch",
+  "right": "Ask a coworker for help"
+ },
+ {
+  "id": "l1a_185",
+  "who": "Mentor",
+  "text": "Your mentor assigns you a task and then immediately does it himself “because it’s faster.” You watch him type.",
+  "left": "Ask to do it yourself",
+  "right": "Learn in silence"
+ },
+ {
+  "id": "l1a_186",
+  "who": "Commuter train",
+  "text": "On the train home you dozed off on a stranger’s shoulder. He hasn’t woken you for five stations and is patiently reading the news.",
+  "left": "Apologize and move",
+  "right": "Thank him, keep napping"
+ },
+ {
+  "id": "l1a_187",
+  "who": "Traffic jam",
+  "text": "You’re riding home in a coworker’s car. In traffic he puts on an audiobook about leveling up your leadership skills. An hour to go.",
+  "left": "Listen together",
+  "right": "Ask for music"
+ },
+ {
+  "id": "l1a_188",
+  "who": "Scooter",
+  "text": "You’re racing to the train on a scooter in the evening when you spot your boss behind you on an identical scooter. He’s late for the train too.",
+  "left": "Overtake the boss",
+  "right": "Let him pass"
+ },
+ {
+  "id": "l1a_189",
+  "who": "Being late",
+  "text": "You missed the last bus to your neighborhood. The next one’s in the morning. A coworker lives near the office.",
+  "left": "Ask to crash at theirs",
+  "right": "Take a taxi"
+ },
+ {
+  "id": "l1a_190",
+  "who": "Fridge",
+  "text": "You discover someone’s been sipping your milk every day. Today there’s a smiley face drawn on the carton.",
+  "left": "Draw a smiley back",
+  "right": "Take the milk home"
+ },
+ {
+  "id": "l1a_191",
+  "who": "Kitchen",
+  "text": "After the office party there’s a mountain of dishes in the kitchen. The office manager suggests that “whoever’s still here” wash them. You’re still here.",
+  "left": "Do the dishes",
+  "right": "Fake an urgent call"
+ },
+ {
+  "id": "l1a_192",
+  "who": "Coffee machine",
+  "text": "In the evening you volunteered to clean the coffee machine and found something green growing inside. It seems to be moving.",
+  "left": "Scrub it and save the coffee",
+  "right": "Take a photo for the chat"
+ },
+ {
+  "id": "l1a_193",
+  "who": "Mom",
+  "text": "Mom calls to ask if they feed you well at work. You’re finishing your second chocolate bar instead of dinner.",
+  "left": "Promise to eat soup",
+  "right": "Say you had a salad"
+ },
+ {
+  "id": "l1a_194",
+  "who": "Classmate",
+  "text": "A college classmate invites you to a bar, bragging he’s already been promoted. You just left a meeting about how to use the printer.",
+  "left": "Go and listen",
+  "right": "Say you’re busy"
+ },
+ {
+  "id": "l1a_195",
+  "who": "Mentor",
+  "text": "Your mentor gives you a ride to the subway and offers “advice for life”: never say “that’s not my job.”",
+  "left": "Write it down",
+  "right": "Push back about boundaries"
+ },
+ {
+  "id": "l1a_196",
+  "who": "Probation",
+  "text": "In the last week of probation you’re asked to stay after work and “just have a chat” with HR. No details.",
+  "left": "Stay and sweat it out",
+  "right": "Ask for details"
+ },
+ {
+  "id": "l1a_197",
+  "who": "Open space",
+  "text": "You’re the last to leave and notice someone left their computer on with a chat open. They’re discussing you.",
+  "left": "Shut it down unread",
+  "right": "Read with one eye"
+ },
+ {
+  "id": "l1a_198",
+  "who": "Dress code",
+  "text": "You decide to wear your favorite bright shirt tomorrow. Your roommate says: “You can’t wear that to an office.” Your office is dull.",
+  "left": "Wear the bright one",
+  "right": "Stick with gray"
+ },
+ {
+  "id": "l1a_199",
+  "who": "Shredder",
+  "text": "You’ve been told to shred old documents. There are six boxes, and the shredder overheats every ten minutes.",
+  "left": "Work in shifts",
+  "right": "Leave it for tomorrow"
+ },
+ {
+  "id": "l1a_200",
+  "who": "Inner voice",
+  "text": "Lying in bed, you remember calling a coworker by the wrong name in the kitchen today. She corrected you, and you made the same mistake again.",
+  "left": "Apologize tomorrow",
+  "right": "Pretend it never happened"
+ },
+ {
+  "id": "l1a_201",
+  "who": "Anya",
+  "text": "Anya brings a mug to your desk that says “Newbie of the Month.” Turns out every newbie gets one, and drinking from it at stand-up is mandatory.",
+  "left": "Sip from it proudly",
+  "right": "Hide it in a drawer"
+ },
+ {
+  "id": "l1a_202",
+  "who": "Stepan",
+  "text": "Stepan insists the best way to fit in is to bring cookies to the kitchen every morning. He’s very fond of oatmeal ones, by the way.",
+  "left": "Bring cookies",
+  "right": "Bring some just for you"
+ },
+ {
+  "id": "l1a_203",
+  "who": "Nina",
+  "text": "At 9:05 Nina loudly announces: “Whoever took my stapler — give it back!” Her stapler is on your desk, and you have no idea how it got there.",
+  "left": "Return it with apologies",
+  "right": "Quietly slip it back"
+ },
+ {
+  "id": "l1a_204",
+  "who": "Group lead",
+  "text": "The group lead wants a daily report from you on “what you did yesterday.” Yesterday you mostly filed access requests.",
+  "left": "Dress it up nicely",
+  "right": "Write it honestly"
+ },
+ {
+  "id": "l1a_205",
+  "who": "CEO’s assistant",
+  "text": "The CEO’s assistant asks you to help “for a sec” carry boxes of partner gifts to the sixth floor. The elevator’s broken.",
+  "left": "Carry the boxes",
+  "right": "Plead a meeting"
+ },
+ {
+  "id": "l1a_206",
+  "who": "Boris",
+  "text": "Boris comes in at 7:00 and leaves at 4:00. Now he insists you join his “early birds club.” You’re a night owl.",
+  "left": "Join the club",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_207",
+  "who": "Courier",
+  "text": "A courier brought a package addressed to your predecessor. Judging by the sound, there’s something glass and sloshing inside.",
+  "left": "Sign for it",
+  "right": "Send it back"
+ },
+ {
+  "id": "l1a_208",
+  "who": "Office manager",
+  "text": "The office manager asks every newbie to post “three interesting facts about yourself” in the team chat. So far everyone wrote about travel and cats.",
+  "left": "Write about your cat",
+  "right": "Opt out of the game"
+ },
+ {
+  "id": "l1a_209",
+  "who": "Team chat",
+  "text": "A poll in the team chat: “What time are we leaving for the cleanup day tomorrow?” It’s news to you that you’re part of a cleanup day.",
+  "left": "Sign up and go",
+  "right": "Don’t answer"
+ },
+ {
+  "id": "l1a_210",
+  "who": "Tram",
+  "text": "The tram has stopped: a car is parked on the tracks. Passengers debate who’ll go find the driver. Everyone looks at you.",
+  "left": "Go find the driver",
+  "right": "Get off and walk"
+ },
+ {
+  "id": "l1a_211",
+  "who": "Alarm clock",
+  "text": "You were so afraid of being late that you reached the office at 7:30. The doors open at 8:30, and it’s drizzling.",
+  "left": "Wait under the awning",
+  "right": "Go get breakfast"
+ },
+ {
+  "id": "l1a_212",
+  "who": "Subway",
+  "text": "In the morning subway crush someone spilled coffee on you. There’s a stain the size of Australia on your shirt.",
+  "left": "Go home and change",
+  "right": "Button your jacket to the chin"
+ },
+ {
+  "id": "l1a_213",
+  "who": "Probation",
+  "text": "You’re told you can’t take time off during probation. And today at 10:00 a repairman is coming to fix your fridge.",
+  "left": "Reschedule the repairman",
+  "right": "Ask for an hour off"
+ },
+ {
+  "id": "l1a_214",
+  "who": "Arseny",
+  "text": "Arseny brings his own coffee machine to the office and announces it’s “insiders only.” You don’t know yet if you’re an insider.",
+  "left": "Ask how to become one",
+  "right": "Drink the office coffee"
+ },
+ {
+  "id": "l1a_215",
+  "who": "Sysadmin",
+  "text": "The sysadmin asks you to come in at 8 a.m. tomorrow to install software. He himself works from eight to four.",
+  "left": "Show up at eight",
+  "right": "Ask for a remote install"
+ },
+ {
+  "id": "l1a_216",
+  "who": "Open space",
+  "text": "Your desk is pushed right up against a coworker’s, and every half hour he moves your monitor “to his half.”",
+  "left": "Draw a border with tape",
+  "right": "Silently move it back"
+ },
+ {
+  "id": "l1a_217",
+  "who": "Dress code",
+  "text": "The sales folks hint that your cat socks are “not very professional.” You notice two of them are wearing shark socks.",
+  "left": "Point out the sharks",
+  "right": "Buy serious socks"
+ },
+ {
+  "id": "l1a_218",
+  "who": "Sveta",
+  "text": "Sveta asks you to look after her ficus while she’s on vacation: water it, wipe the leaves and “talk to it kindly.”",
+  "left": "Take the ficus",
+  "right": "Suggest another department"
+ },
+ {
+  "id": "l1a_219",
+  "who": "Sasha",
+  "text": "At lunch Sasha says he’s switched jobs five times this year and “it was awful everywhere.” You’ve never switched jobs.",
+  "left": "Ask for details",
+  "right": "Change the topic to TV shows"
+ },
+ {
+  "id": "l1a_220",
+  "who": "Department head",
+  "text": "The department head asks you to speak at the all-hands about “My First Month.” Five minutes, two hundred people.",
+  "left": "Agree to speak",
+  "right": "Ask to postpone"
+ },
+ {
+  "id": "l1a_221",
+  "who": "Cafeteria",
+  "text": "The cafeteria offers a “$5 set lunch”: soup, main course, fruit punch and a mandatory slice of bread with mustard.",
+  "left": "Get the set lunch",
+  "right": "Get just a salad"
+ },
+ {
+  "id": "l1a_222",
+  "who": "Cafe",
+  "text": "Coworkers lunch at a cafe where the waiter always brings the wrong thing. Today you got fish instead of chicken.",
+  "left": "Send it back",
+  "right": "Eat the fish"
+ },
+ {
+  "id": "l1a_223",
+  "who": "Ilya",
+  "text": "Ilya comes over: “Hey, you have database access, right? Look up one number for me.” You were given access for a different task.",
+  "left": "Look up the number",
+  "right": "Send him to the manager"
+ },
+ {
+  "id": "l1a_224",
+  "who": "Fridge",
+  "text": "You find your lunch container in the fridge, and next to it an identical one, also labeled with your name. There are two of you with the same name.",
+  "left": "Open both",
+  "right": "Find your namesake"
+ },
+ {
+  "id": "l1a_225",
+  "who": "Kitchen",
+  "text": "Coworkers are arguing in the kitchen over whose turn it is to buy dish sponges. The office manager asks you, the newbie, to “sort it out.”",
+  "left": "Buy sponges yourself",
+  "right": "Make a rota"
+ },
+ {
+  "id": "l1a_226",
+  "who": "Coffee machine",
+  "text": "Instead of coffee, the machine gave you hot milk that smells of cocoa. It has no “milk” or “cocoa” buttons.",
+  "left": "Drink the mystery",
+  "right": "Report it to support"
+ },
+ {
+  "id": "l1a_227",
+  "who": "Printer",
+  "text": "You’re trying to print one page, and the printer says “Printing 1 of 238.” Someone apparently sent an entire book.",
+  "left": "Wait with a book",
+  "right": "Clear the queue"
+ },
+ {
+  "id": "l1a_228",
+  "who": "Scanner",
+  "text": "You’ve been asked to scan a 200-page contract. The scanner takes one page at a time and asks “Continue?” every time.",
+  "left": "Click two hundred times",
+  "right": "Shoot it on your phone"
+ },
+ {
+  "id": "l1a_229",
+  "who": "Open space",
+  "text": "Your open-space neighbors are discussing you: “What’s the name of the one by the window?” You’re three feet away, hidden by the water cooler.",
+  "left": "Introduce yourself now",
+  "right": "Keep eavesdropping"
+ },
+ {
+  "id": "l1a_230",
+  "who": "Open space",
+  "text": "A coworker in the next row has been humming the same line of a song all morning. Now it’s stuck in your head.",
+  "left": "Ask for a new song",
+  "right": "Hum along louder"
+ },
+ {
+  "id": "l1a_231",
+  "who": "Probation",
+  "text": "Your manager says in passing: “Come see me after lunch.” Nothing else. Lunch starts in five minutes.",
+  "left": "Skip lunch and wait",
+  "right": "Have lunch calmly"
+ },
+ {
+  "id": "l1a_232",
+  "who": "Being late",
+  "text": "You were late to your own first presentation to the department: you mixed up the meeting rooms. Everyone’s waiting, the projector’s warmed up.",
+  "left": "Start without apologizing",
+  "right": "Apologize at length"
+ },
+ {
+  "id": "l1a_233",
+  "who": "Dress code",
+  "text": "Badge photos were announced out of nowhere. Today your T-shirt says “Mondays Are the Worst,” and it’s Wednesday.",
+  "left": "Get photographed as is",
+  "right": "Borrow a cardigan"
+ },
+ {
+  "id": "l1a_234",
+  "who": "Marat",
+  "text": "Before leaving, Marat proposes a bet: whoever finishes their report first skips kitchen duty for a week. Your report is five pages.",
+  "left": "Take the bet",
+  "right": "Decline"
+ },
+ {
+  "id": "l1a_235",
+  "who": "Vera",
+  "text": "Vera asks you to cover her evening phone shift: “I have a date, pretty please.” You’d planned yoga.",
+  "left": "Cover for Vera",
+  "right": "Go to yoga"
+ },
+ {
+  "id": "l1a_236",
+  "who": "Department head",
+  "text": "At 6:10 p.m. the department head asks you to “run through” a spreadsheet. It has 4,000 rows and needs “fresh eyes.”",
+  "left": "Run through it till night",
+  "right": "Promise it by morning"
+ },
+ {
+  "id": "l1a_237",
+  "who": "Coworkers",
+  "text": "Coworkers invite you to their Wednesday board game night. The rules take forty minutes to explain.",
+  "left": "Stay and play",
+  "right": "Head home"
+ },
+ {
+  "id": "l1a_238",
+  "who": "Team chat",
+  "text": "In the evening team chat, coworkers argue whose turn it is to order water for the office. You’ve been tagged three times.",
+  "left": "Order the water",
+  "right": "Don’t reply till morning"
+ },
+ {
+  "id": "l1a_239",
+  "who": "Roommate",
+  "text": "Your roommate invited guests, and you have a check-in with your mentor at eight tomorrow. The music is shaking the floor.",
+  "left": "Join the party",
+  "right": "Talk to your roommate"
+ },
+ {
+  "id": "l1a_240",
+  "who": "Bus",
+  "text": "On the evening bus you recognize the man next to you as a future client discussed at today’s meeting. He doesn’t know you.",
+  "left": "Introduce yourself",
+  "right": "Ride quietly"
+ },
+ {
+  "id": "l1a_241",
+  "who": "Minibus",
+  "text": "The evening minibus is packed, and the driver says: “Squeeze in, there’s standing room.” You’re already standing on one leg.",
+  "left": "Ride on one leg",
+  "right": "Wait for the next one"
+ },
+ {
+  "id": "l1a_242",
+  "who": "Being late",
+  "text": "You got so absorbed in a task that you’re late for drinks with friends celebrating your new job. They’ve already ordered a cake.",
+  "left": "Rush to the cafe",
+  "right": "Suggest rescheduling"
+ },
+ {
+  "id": "l1a_243",
+  "who": "Fridge",
+  "text": "In the evening the office manager audits the fridge and posts photos of “unclaimed” food. Among them: your grandma’s jar of jam.",
+  "left": "Claim it in shame",
+  "right": "Gift it to the office"
+ },
+ {
+  "id": "l1a_244",
+  "who": "Coffee machine",
+  "text": "You notice the coffee machine was left on for the weekend. Only the office manager has the kitchen key, and she’s already left.",
+  "left": "Call the office manager",
+  "right": "Leave it as is"
+ },
+ {
+  "id": "l1a_245",
+  "who": "Kitchen",
+  "text": "Heading home, you find someone’s forgotten car keys in the kitchen. The keychain has a photo of a dog.",
+  "left": "Take them to security",
+  "right": "Post in chat and leave"
+ },
+ {
+  "id": "l1a_246",
+  "who": "Printer",
+  "text": "You’re printing handouts for a morning meeting when the printer pops and starts smoking. The office is nearly empty.",
+  "left": "Call security",
+  "right": "Quietly go home"
+ },
+ {
+  "id": "l1a_247",
+  "who": "Messenger",
+  "text": "At 9 p.m. your manager sends you a seven-minute voice message. The app shows you’ve “listened” to it.",
+  "left": "Reply right away",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l1a_248",
+  "who": "Inner voice",
+  "text": "You spent three hours choosing what to wear to tomorrow’s meeting with sales. Your closet holds the same thing in different colors.",
+  "left": "Go to bed as is",
+  "right": "Iron three options"
+ },
+ {
+  "id": "l1a_249",
+  "who": "Probation",
+  "text": "An evening email from HR: “Your probation has been successfully extended.” The word “successfully” is especially worrying.",
+  "left": "Email HR with questions",
+  "right": "Don’t think till morning"
+ },
+ {
+  "id": "l1a_250",
+  "who": "Open space",
+  "text": "As you leave, you see every monitor in the open space is on and the lights are blazing. The last people left an hour ago.",
+  "left": "Turn everything off",
+  "right": "Leave, not your problem"
+ },
+ {
+  "id": "l1a_251",
+  "who": "Dasha",
+  "text": "Dasha greets you at the door: it’s the department head’s birthday, and everyone has signed the card except you. He’ll be here in five minutes.",
+  "left": "Write something warm",
+  "right": "Just sign your name"
+ },
+ {
+  "id": "l1a_252",
+  "who": "Department head",
+  "text": "At stand-up the department head calls you by the previous employee’s name. Second time this week. Everyone acts like it’s normal.",
+  "left": "Gently correct him",
+  "right": "Answer to the other name"
+ },
+ {
+  "id": "l1a_253",
+  "who": "Zhenya",
+  "text": "Zhenya offers to drive you to work every morning. The only catch: leaving at 6:50 and listening to investing podcasts.",
+  "left": "Agree to carpool",
+  "right": "Stick with the bus"
+ },
+ {
+  "id": "l1a_254",
+  "who": "Accountant Irina",
+  "text": "Irina from accounting calls at 8:45: your bank details had a typo, and your salary went “somewhere.” Today is payday.",
+  "left": "Go to the bank before work",
+  "right": "Sort it out by phone"
+ },
+ {
+  "id": "l1a_255",
+  "who": "Security guard",
+  "text": "The guard insists you leave your bike outside the premises. There are no racks, just a pole with a “No Parking” sign.",
+  "left": "Lock it to the pole",
+  "right": "Take the subway instead"
+ },
+ {
+  "id": "l1a_256",
+  "who": "Bus",
+  "text": "On the bus you see a coworker you didn’t recognize in his winter hat. He says hi, and you stare at him like a stranger.",
+  "left": "Admit you didn’t recognize him",
+  "right": "Pretend you did"
+ },
+ {
+  "id": "l1a_257",
+  "who": "Building entrance",
+  "text": "Leaving home, you find someone has locked the building’s front door from inside. No concierge, and the neighbors are asleep.",
+  "left": "Ring the neighbors",
+  "right": "Climb out a ground-floor window"
+ },
+ {
+  "id": "l1a_258",
+  "who": "Subway",
+  "text": "An announcement: your transfer station is closed for repairs starting today. You read about it a month ago and forgot.",
+  "left": "Take a detour",
+  "right": "Text that you’ll be late"
+ },
+ {
+  "id": "l1a_259",
+  "who": "Kirill from IT",
+  "text": "Kirill from IT says your laptop “arrived, but without a charger.” The charger arrives Thursday. Battery: 18%.",
+  "left": "Work by a hallway outlet",
+  "right": "Borrow someone’s charger"
+ },
+ {
+  "id": "l1a_260",
+  "who": "Tamara",
+  "text": "Every morning at nine Tamara opens the window “for fresh air,” then leaves for tea. Today it’s 5°F outside.",
+  "left": "Close the window",
+  "right": "Work in your coat"
+ },
+ {
+  "id": "l1a_261",
+  "who": "Misha the intern",
+  "text": "Misha the intern came to work in a three-piece suit with a briefcase. You’re in a hoodie. He looks at you with a hint of superiority.",
+  "left": "Compliment the suit",
+  "right": "Joke about the briefcase"
+ },
+ {
+  "id": "l1a_262",
+  "who": "Coffee machine",
+  "text": "You try making a cappuccino on the professional coffee machine for the first time. There’s foam everywhere except the cup.",
+  "left": "Clean it all up yourself",
+  "right": "Call the amateur barista"
+ },
+ {
+  "id": "l1a_263",
+  "who": "Fridge",
+  "text": "There’s a note on your container in the fridge: “Dear sir or madam! Your lunch smells up the whole kitchen. Respectfully, the Kitchen.”",
+  "left": "Reply with a note",
+  "right": "Keep lunch in your bag"
+ },
+ {
+  "id": "l1a_264",
+  "who": "Water cooler",
+  "text": "The department cooler dispenses plastic-flavored water and sometimes burps bubbles. Coworkers adore it and call it “Fluffy.”",
+  "left": "Drink from Fluffy",
+  "right": "Bring water from home"
+ },
+ {
+  "id": "l1a_265",
+  "who": "Printer",
+  "text": "The department printer is nicknamed “Diva,” and everyone has their own ritual phrase for it. You don’t have yours yet, and you need a printout urgently.",
+  "left": "Ask the veterans for one",
+  "right": "Give Diva a gentle kick"
+ },
+ {
+  "id": "l1a_266",
+  "who": "Being late",
+  "text": "You’re fifteen minutes late because of traffic. In the elevator you bump into the department head, who’s twenty minutes late.",
+  "left": "Commiserate with him",
+  "right": "Say nothing, exit first"
+ },
+ {
+  "id": "l1a_267",
+  "who": "Sales department",
+  "text": "The sales team invited you to a “client lunch” to watch the pros at work. It’s going on three hours, and the client is talking about fishing.",
+  "left": "Stay till the end",
+  "right": "Get back to your tasks"
+ },
+ {
+  "id": "l1a_268",
+  "who": "Pavel",
+  "text": "Pavel asks you to cover for him: “If anyone asks, I’m in a meeting.” He’s actually at the barber across the street.",
+  "left": "Cover for Pavel",
+  "right": "Refuse to cover"
+ },
+ {
+  "id": "l1a_269",
+  "who": "Lida",
+  "text": "At lunch Lida shows photos of her home renovation — 214 of them. At photo 30 you realize you’re expected to comment on each one.",
+  "left": "Comment on every one",
+  "right": "Fake a phone call"
+ },
+ {
+  "id": "l1a_270",
+  "who": "Group lead",
+  "text": "The group lead asks you to prepare “a little presentation, a couple of slides.” An hour later you learn it’s going to the board of directors.",
+  "left": "Redo it from scratch",
+  "right": "Keep it to a couple slides"
+ },
+ {
+  "id": "l1a_271",
+  "who": "Courier",
+  "text": "A courier brings five pizzas someone ordered and asks you to sign. Whoever ordered them isn’t in, and the pizzas are getting cold.",
+  "left": "Hand pizza out to everyone",
+  "right": "Refuse the delivery"
+ },
+ {
+  "id": "l1a_272",
+  "who": "Cafe",
+  "text": "You ordered a “light salad” for lunch, and they brought a bowl the size of a tire. Coworkers are waiting for you to finish.",
+  "left": "Finish every bite",
+  "right": "Get it to go"
+ },
+ {
+  "id": "l1a_273",
+  "who": "Cafeteria",
+  "text": "The cafeteria is full except for the table where the entire senior management is eating. Tray in hand, soup getting cold.",
+  "left": "Join the executives",
+  "right": "Eat standing by the window"
+ },
+ {
+  "id": "l1a_274",
+  "who": "Kitchen",
+  "text": "There’s a cold war in the kitchen: someone keeps putting the kettle back empty. You just used it, and it’s empty.",
+  "left": "Fill it and keep quiet",
+  "right": "Post about it in the chat"
+ },
+ {
+  "id": "l1a_275",
+  "who": "Coffee machine",
+  "text": "The coffee machine jammed and wants a service code. The code is on a sticky note behind the machine, high up near the ceiling.",
+  "left": "Climb for the sticker",
+  "right": "Call the service line"
+ },
+ {
+  "id": "l1a_276",
+  "who": "Copier",
+  "text": "You need a copy of your passport for HR. The copier mirrors everything, and your passport looks like a spy’s.",
+  "left": "Hand in the mirror copy",
+  "right": "Find another copier"
+ },
+ {
+  "id": "l1a_277",
+  "who": "Projector",
+  "text": "During your presentation the projector gives the slides a strong blue tint. You’re talking about “warm” leads.",
+  "left": "Joke about the chill",
+  "right": "Fix it on the fly"
+ },
+ {
+  "id": "l1a_278",
+  "who": "Open space",
+  "text": "You forgot to mute messenger notifications. Your desk dings every seven seconds, and the open space is getting annoyed.",
+  "left": "Mute it and apologize",
+  "right": "Just lower the volume"
+ },
+ {
+  "id": "l1a_279",
+  "who": "Open space",
+  "text": "Your desk neighbor chews his nails during calls. You can hear it even through your headphones.",
+  "left": "Gift him some nuts",
+  "right": "Ask him to stop"
+ },
+ {
+  "id": "l1a_280",
+  "who": "Dress code",
+  "text": "You wore new shoes, and by lunch you’ve got a blister the size of a coin. Up next: a standing meeting — a warehouse tour with a client.",
+  "left": "Grin and bear it",
+  "right": "Switch to sneakers"
+ },
+ {
+  "id": "l1a_281",
+  "who": "Probation",
+  "text": "Making the rounds, your manager notices a job site open on your screen. You were just checking salaries “for general knowledge.”",
+  "left": "Explain honestly",
+  "right": "Close the tab in silence"
+ },
+ {
+  "id": "l1a_282",
+  "who": "Mentor Igor",
+  "text": "Your mentor Igor shows you a “secret way” around the approval system. It’s clearly against the rules but saves three days.",
+  "left": "Use the shortcut",
+  "right": "Do it by the book"
+ },
+ {
+  "id": "l1a_283",
+  "who": "Department head",
+  "text": "The department head asked you to take meeting notes. He talks fast, jumps between topics and suddenly asks: “Got all that?”",
+  "left": "Say “yes” and improvise",
+  "right": "Ask him to repeat"
+ },
+ {
+  "id": "l1a_284",
+  "who": "Roma",
+  "text": "At 6 p.m. Roma invites you to play soccer with coworkers. You haven’t played since school, but they need a goalkeeper.",
+  "left": "Stand in goal",
+  "right": "Claim a bad back"
+ },
+ {
+  "id": "l1a_285",
+  "who": "Ksyusha",
+  "text": "In the evening Ksyusha offers to swap desks: hers is by the window, yours is by the water cooler. She says the cooler is “cozier.”",
+  "left": "Swap desks",
+  "right": "Stay by the cooler"
+ },
+ {
+  "id": "l1a_286",
+  "who": "HR Alyona",
+  "text": "Alyona from HR writes at 7:30 p.m.: “We need your photo for the newbie board by 9:00 tomorrow — a smiley one.” You’re in pajamas.",
+  "left": "Take a selfie now",
+  "right": "Take one in the morning"
+ },
+ {
+  "id": "l1a_287",
+  "who": "CEO",
+  "text": "You stayed late, and the CEO ends up in the elevator with you. He unexpectedly offers you a lift to the subway.",
+  "left": "Accept the offer",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_288",
+  "who": "Commuter train",
+  "text": "The evening train is delayed forty minutes. On the platform you meet three coworkers who are also waiting.",
+  "left": "Join them at a cafe",
+  "right": "Wait off to the side with a book"
+ },
+ {
+  "id": "l1a_289",
+  "who": "Taxi",
+  "text": "You’re sharing a taxi with a coworker. The driver goes through downtown, your coworker says nothing, the meter keeps running. You’re splitting it.",
+  "left": "Ask for another route",
+  "right": "Stay quiet like them"
+ },
+ {
+  "id": "l1a_290",
+  "who": "Traffic jam",
+  "text": "Traffic leaving the city is at a dead stop. The GPS says 2 hours 15 minutes. A coworker is snoring in the back seat.",
+  "left": "Wake them up to chat",
+  "right": "Listen to an audiobook"
+ },
+ {
+  "id": "l1a_291",
+  "who": "Being late",
+  "text": "You were late to your own end-of-probation party: stuck in the elevator. Coworkers already ate the cake.",
+  "left": "Laugh it off together",
+  "right": "Take offense and leave"
+ },
+ {
+  "id": "l1a_292",
+  "who": "Fridge",
+  "text": "After the party the fridge holds three salads and half a jar of pickles. The office manager says: “Help yourselves.”",
+  "left": "Take it all",
+  "right": "Take one pickle"
+ },
+ {
+  "id": "l1a_293",
+  "who": "Kitchen",
+  "text": "Before leaving you find an unlabeled box of chocolates in the kitchen. The lid says “Help yourself.” Inside: nothing.",
+  "left": "Bring a box of your own",
+  "right": "Put the empty one back"
+ },
+ {
+  "id": "l1a_294",
+  "who": "Coffee machine",
+  "text": "The department ran out of coffee in the evening, and you have three hours of work left. A coworker offers “an energy drink from the stash.” It glows green.",
+  "left": "Drink the energy drink",
+  "right": "Power through on tea"
+ },
+ {
+  "id": "l1a_295",
+  "who": "Probation",
+  "text": "Just before probation ends you get an email: “Complete a self-assessment on 40 criteria.” Due tomorrow morning.",
+  "left": "Write all night",
+  "right": "Keep it brief"
+ },
+ {
+  "id": "l1a_296",
+  "who": "Mentor Igor",
+  "text": "On Friday evening your mentor Igor sends you “some useful weekend reading” — a 600-page book about sales.",
+  "left": "Start reading",
+  "right": "Read about cats instead"
+ },
+ {
+  "id": "l1a_297",
+  "who": "Inner voice",
+  "text": "All day you were too shy to ask how the coffee machine works, so you drank water. Tomorrow it’ll be the same coffee machine.",
+  "left": "Watch a video tutorial",
+  "right": "Buy yourself a thermos"
+ },
+ {
+  "id": "l1a_298",
+  "who": "Mom",
+  "text": "Mom asks if anyone’s being mean to you at work. And whether you’d like her to call your boss.",
+  "left": "Talk Mom out of it",
+  "right": "Tell her a funny story"
+ },
+ {
+  "id": "l1a_299",
+  "who": "Dress code",
+  "text": "Tomorrow is “White Top, Black Bottom Day.” You own white pants and a black T-shirt. The other way around.",
+  "left": "Wear it reversed",
+  "right": "Head to the mall"
+ },
+ {
+  "id": "l1a_300",
+  "who": "Newbie chat",
+  "text": "Someone in the newbie chat proposes an “informal meetup” at a bar on Friday. He’s already picked a bar on the other side of town.",
+  "left": "Go",
+  "right": "Suggest a closer bar"
+ },
+ {
+  "id": "l1a_301",
+  "who": "Gleb",
+  "text": "Gleb tells you there’s an “unspoken queue” for the best mug in the kitchen. You took it yesterday, not knowing the rules.",
+  "left": "Return the mug",
+  "right": "Suggest drawing lots"
+ },
+ {
+  "id": "l1a_302",
+  "who": "Grandma",
+  "text": "Grandma packed you pies for work, one for each person in the department. There are twelve people and seven pies.",
+  "left": "Give them all away",
+  "right": "Eat them on the way"
+ },
+ {
+  "id": "l1a_303",
+  "who": "Neighbor",
+  "text": "Your neighbor across the landing heard you got an office job and asks you to print forty pages of a gardening magazine at work.",
+  "left": "Print them on the sly",
+  "right": "Turn the neighbor down"
+ },
+ {
+  "id": "l1a_304",
+  "who": "Security",
+  "text": "At the entrance you’re asked to show what’s in your bag: three bananas, a charger and a pack of cookies “for the team.”",
+  "left": "Offer security a cookie",
+  "right": "Silently open the bag"
+ },
+ {
+  "id": "l1a_305",
+  "who": "Subway",
+  "text": "You’re face to face on the subway with someone who clearly had garlic for breakfast. Nowhere to move, six stops to go.",
+  "left": "Switch cars at the next stop",
+  "right": "Endure it to the end"
+ },
+ {
+  "id": "l1a_306",
+  "who": "Bike lane",
+  "text": "A coworker from accounting is pedaling slowly ahead of you in the bike lane on a cruiser with a basket. No room to pass.",
+  "left": "Ride behind her",
+  "right": "Pass her on the grass"
+ },
+ {
+  "id": "l1a_307",
+  "who": "Department head",
+  "text": "At 8:58 the department head asks why you’re not at your desk. You’re at the coffee machine; there are two minutes till nine.",
+  "left": "Point out the time",
+  "right": "Run to your desk coffeeless"
+ },
+ {
+  "id": "l1a_308",
+  "who": "Sonya",
+  "text": "Sonya brings her kid to the office: the daycare is quarantined. The kid is already at your desk drawing in your planner.",
+  "left": "Let the kid have it",
+  "right": "Ask for your planner back"
+ },
+ {
+  "id": "l1a_309",
+  "who": "Alarm clock",
+  "text": "You set your clock fifteen minutes fast so you won’t be late. Now every morning you spend fifteen minutes calculating what time it really is.",
+  "left": "Set it back to real time",
+  "right": "Keep fooling yourself"
+ },
+ {
+  "id": "l1a_310",
+  "who": "Kirill from IT",
+  "text": "Kirill comes to install your antivirus and sees 140 files named “New Document” on your desktop. He silently takes a photo.",
+  "left": "Ask him not to share it",
+  "right": "Joke about your system"
+ },
+ {
+  "id": "l1a_311",
+  "who": "CEO’s assistant",
+  "text": "The CEO’s assistant asks you to collect the mail from the ground-floor box every morning, “since you’re the newbie and walk past anyway.”",
+  "left": "Collect the mail",
+  "right": "Suggest a rota"
+ },
+ {
+  "id": "l1a_312",
+  "who": "Probation",
+  "text": "You got a task, but didn’t understand a word of it. Asking means admitting it. And there are two months of probation left.",
+  "left": "Ask your manager",
+  "right": "Figure it out yourself"
+ },
+ {
+  "id": "l1a_313",
+  "who": "Being late",
+  "text": "You walked into stand-up late just as the boss was saying: “How nice that everyone’s on time.”",
+  "left": "Apologize out loud",
+  "right": "Sit down quietly and nod"
+ },
+ {
+  "id": "l1a_314",
+  "who": "Coffee machine",
+  "text": "Someone left a cup of yesterday’s half-finished latte in the coffee machine. You can’t remove it — it’s stuck.",
+  "left": "Scrub the cup off",
+  "right": "Make coffee next door"
+ },
+ {
+  "id": "l1a_315",
+  "who": "Dress code",
+  "text": "The department introduced “Green Thursday”: everyone wears all green. It’s Thursday. The only green thing you own is an apple.",
+  "left": "Put the apple in your pocket",
+  "right": "Come as usual"
+ },
+ {
+  "id": "l1a_316",
+  "who": "Printer",
+  "text": "A sign on the copy room door: “Printing for business purposes only. Usage is tracked.” You need to print concert tickets.",
+  "left": "Print the tickets",
+  "right": "Show them on your phone"
+ },
+ {
+  "id": "l1a_317",
+  "who": "Vadim",
+  "text": "Over lunch Vadim says he’s been here nine years and “never once taken a vacation.” He gives you a meaningful look.",
+  "left": "Admire his stamina",
+  "right": "Ask why live like that"
+ },
+ {
+  "id": "l1a_318",
+  "who": "HR Alyona",
+  "text": "Alyona from HR invites you for “coffee with HR” to see how you’re settling in. The coffee is instant; the conversation is on the record.",
+  "left": "Tell it like it is",
+  "right": "Say only good things"
+ },
+ {
+  "id": "l1a_319",
+  "who": "Accountant Irina",
+  "text": "Irina asks you for a signed expense report, though you haven’t spent anything. She says “that’s the rule for newbies.”",
+  "left": "Fill in a zero report",
+  "right": "Ask your boss"
+ },
+ {
+  "id": "l1a_320",
+  "who": "Gosha",
+  "text": "At lunch Gosha dares you to eat “the spiciest soup in town.” The loser cleans the coffee machine for a week.",
+  "left": "Accept the challenge",
+  "right": "Decline and laugh"
+ },
+ {
+  "id": "l1a_321",
+  "who": "Zlata",
+  "text": "Zlata asks if she can “just for a minute” put her shoe boxes in your desk drawer. Your drawer is small as it is.",
+  "left": "Let her",
+  "right": "Suggest the hallway closet"
+ },
+ {
+  "id": "l1a_322",
+  "who": "Department head",
+  "text": "The department head asks you to accompany a visiting partner to lunch. The guest speaks only Spanish; yours is “with a dictionary.”",
+  "left": "Go and smile a lot",
+  "right": "Call a coworker for backup"
+ },
+ {
+  "id": "l1a_323",
+  "who": "Courier service",
+  "text": "You need to send a letter by courier, but the order form has forty fields, including “letter weight in grams” and “envelope color.”",
+  "left": "Fill it all in honestly",
+  "right": "Take it to the post office"
+ },
+ {
+  "id": "l1a_324",
+  "who": "Water cooler",
+  "text": "Your first time changing the cooler jug, and water gushes all over the floor. The cleaner is out at lunch.",
+  "left": "Mop it up yourself",
+  "right": "Put up a “Wet Floor” sign"
+ },
+ {
+  "id": "l1a_325",
+  "who": "Cafeteria",
+  "text": "Fridays are “fish day” in the cafeteria. On those days the whole department eats at the cafe across the street. You’ve been invited for the first time.",
+  "left": "Go with the department",
+  "right": "Give fish day a try"
+ },
+ {
+  "id": "l1a_326",
+  "who": "Lunch",
+  "text": "You come back from lunch to find a courier in your chair who’s “just waiting.” He’s been waiting twenty minutes.",
+  "left": "Politely ask him to move",
+  "right": "Work standing up"
+ },
+ {
+  "id": "l1a_327",
+  "who": "Kitchen",
+  "text": "Someone hung a poster in the kitchen: “Your mom doesn’t work here.” Under it sits a dirty plate, and everyone’s looking at you.",
+  "left": "Wash it, though not yours",
+  "right": "Prove it’s not yours"
+ },
+ {
+  "id": "l1a_328",
+  "who": "Open space",
+  "text": "Your open-space neighbor suggests putting “some greenery for good vibes” on your desk — four pots of basil. It smells like pizza.",
+  "left": "Say yes to basil",
+  "right": "Decline"
+ },
+ {
+  "id": "l1a_329",
+  "who": "Open space",
+  "text": "The coworker across the desk loudly cracks his neck every half hour. You flinch every time and lose your train of thought.",
+  "left": "Recommend a massage therapist",
+  "right": "Start stretching with him"
+ },
+ {
+  "id": "l1a_330",
+  "who": "Mentor Igor",
+  "text": "Your mentor Igor had you reply to a client, but rewrote the whole email in his own words before sending. He cc’d the boss.",
+  "left": "Learn from the edits",
+  "right": "Ask to discuss the edits"
+ },
+ {
+  "id": "l1a_331",
+  "who": "Laptop",
+  "text": "Your laptop starts updating in the middle of screen-sharing at a meeting. Update 1 of 27.",
+  "left": "Wait for the update",
+  "right": "Continue on someone’s laptop"
+ },
+ {
+  "id": "l1a_332",
+  "who": "Dress code",
+  "text": "At a client meeting a button pops off your blazer and rolls loudly under the conference table. The client watches it closely.",
+  "left": "Retrieve it with a smile",
+  "right": "Act like it’s not yours"
+ },
+ {
+  "id": "l1a_333",
+  "who": "Probation",
+  "text": "Your manager asks you to draw up your own probation plan. Nobody has told you any goals or criteria yet.",
+  "left": "Invent an ambitious plan",
+  "right": "Ask for the basics"
+ },
+ {
+  "id": "l1a_334",
+  "who": "Oleg",
+  "text": "Before leaving, Oleg asks you to “keep an eye on his fish” in the tank by his desk. Feeding is “by eye.” He’s away for a week.",
+  "left": "Feed the fish",
+  "right": "Hand it off to the cleaner"
+ },
+ {
+  "id": "l1a_335",
+  "who": "Dasha",
+  "text": "At 6:30 p.m. Dasha says everyone’s going to trivia night and “you’re coming, right?” The team is called “Office Plankton.”",
+  "left": "Go to trivia",
+  "right": "Plead exhaustion"
+ },
+ {
+  "id": "l1a_336",
+  "who": "HR",
+  "text": "In the evening HR sends all newbies a 45-minute video address from the CEO, asking for “feedback.”",
+  "left": "Watch and write",
+  "right": "Review it unwatched"
+ },
+ {
+  "id": "l1a_337",
+  "who": "Commuter train",
+  "text": "You boarded the wrong train: it runs nonstop to the end of the line, which is in the next region.",
+  "left": "Take a train back",
+  "right": "Taxi back"
+ },
+ {
+  "id": "l1a_338",
+  "who": "Bus",
+  "text": "You doze off on the evening bus and drop your phone. In the morning you learn the work chat received the message “aaaaaaaaaaaaaaaaaa.”",
+  "left": "Explain in the chat",
+  "right": "Leave it a mystery"
+ },
+ {
+  "id": "l1a_339",
+  "who": "Being late",
+  "text": "You were late for dinner with your parents because you “had to finish something.” Mom has already cleared the table.",
+  "left": "Promise to be on time",
+  "right": "Say work comes first"
+ },
+ {
+  "id": "l1a_340",
+  "who": "Department head",
+  "text": "At 6:40 p.m. the department head says: “Great job, go home.” Five minutes later he sends a task “for tomorrow morning, but today would be better.”",
+  "left": "Do it today",
+  "right": "Do it in the morning"
+ },
+ {
+  "id": "l1a_341",
+  "who": "Fridge",
+  "text": "You left a container of soup in the fridge on Friday. It’s Monday, and coworkers say “something lives in there.”",
+  "left": "Retrieve it publicly",
+  "right": "Ask the cleaner"
+ },
+ {
+  "id": "l1a_342",
+  "who": "Kitchen",
+  "text": "After you left, someone wrote on your mug in marker: “Longest Coffee Line.” It’s about how long you spend at the machine.",
+  "left": "Laugh and keep using it",
+  "right": "Scrub off the writing"
+ },
+ {
+  "id": "l1a_343",
+  "who": "Coffee machine",
+  "text": "The office manager asks you to learn to take apart the coffee machine “so there’s one more person in charge.” The manual is in Italian.",
+  "left": "Master the machine",
+  "right": "Decline"
+ },
+ {
+  "id": "l1a_344",
+  "who": "Roommate",
+  "text": "Your roommate wants help assembling a wardrobe tonight. You’re still at work, and he says “the wardrobe won’t wait.”",
+  "left": "Go build the wardrobe",
+  "right": "Stay and finish the task"
+ },
+ {
+  "id": "l1a_345",
+  "who": "Friends",
+  "text": "Friends invite you to a party celebrating your new job. They’re heading out at 10 p.m.; you have to get up at 6:30.",
+  "left": "Go till midnight",
+  "right": "Celebrate on the weekend"
+ },
+ {
+  "id": "l1a_346",
+  "who": "Dress code",
+  "text": "You arrive at the company evening in a suit, and it turns out to be a pajama party. Everyone’s in slippers with pillows.",
+  "left": "Dash home to change",
+  "right": "Stay in the suit"
+ },
+ {
+  "id": "l1a_347",
+  "who": "Probation",
+  "text": "Finally the news: you passed probation! The boss suggests celebrating with a department dinner on you.",
+  "left": "Treat the department",
+  "right": "Suggest splitting it"
+ },
+ {
+  "id": "l1a_348",
+  "who": "Printer",
+  "text": "In the evening the printer suddenly starts printing your college term paper from three years ago. Someone sent it from your account.",
+  "left": "Grab it and laugh",
+  "right": "Look into your account"
+ },
+ {
+  "id": "l1a_349",
+  "who": "Inner voice",
+  "text": "All evening you keep remembering calling your boss “Mom” at stand-up. He pretended not to hear.",
+  "left": "Joke about it tomorrow",
+  "right": "Pretend it never happened"
+ },
+ {
+  "id": "l1a_350",
+  "who": "Team chat",
+  "text": "In the evening team chat, coworkers started a pet photo contest. All you have is a cactus.",
+  "left": "Send the cactus",
+  "right": "Quietly sit it out"
+ },
+ {
+  "id": "l1a_351",
+  "who": "Liza",
+  "text": "Every morning Liza holds “five minutes of positivity”: everyone takes turns saying what they’re grateful for. You’re only grateful the coffee machine works.",
+  "left": "Mention the coffee machine",
+  "right": "Make up something lofty"
+ },
+ {
+  "id": "l1a_352",
+  "who": "Fyodor",
+  "text": "Fyodor took over your desk for the morning: “Your monitor’s bigger, and I need to look at some charts.” You came to work, and he’s already there.",
+  "left": "Let him, sit next to him",
+  "right": "Ask him to move"
+ },
+ {
+  "id": "l1a_353",
+  "who": "Department head",
+  "text": "The department head says to “pick a task from the backlog yourself.” The backlog has 600 tasks, half with no description.",
+  "left": "Take the easiest",
+  "right": "Take the hardest"
+ },
+ {
+  "id": "l1a_354",
+  "who": "Receptionist",
+  "text": "The receptionist asks you to “cover for ten minutes.” Half an hour later she still isn’t back, and the phone is ringing off the hook.",
+  "left": "Answer the calls",
+  "right": "Go back to your desk"
+ },
+ {
+  "id": "l1a_355",
+  "who": "Notification",
+  "text": "The company system notifies you: “Your password expires in 1 day.” To change it you must call IT, and IT opens at 10:00.",
+  "left": "Wait until ten",
+  "right": "Borrow someone’s laptop"
+ },
+ {
+  "id": "l1a_356",
+  "who": "Courier",
+  "text": "A courier delivered your online order to the office. The box is huge and says “Fragile: Inflatable Pool.” Everyone sees it.",
+  "left": "Joke about summer",
+  "right": "Shove it under the desk"
+ },
+ {
+  "id": "l1a_357",
+  "who": "Tram",
+  "text": "The tram is so slow an old man walking his dog is overtaking it. Four more stops to the office.",
+  "left": "Get off and walk",
+  "right": "Sit and read"
+ },
+ {
+  "id": "l1a_358",
+  "who": "Car sharing",
+  "text": "First time using car sharing to get to the office, and you can’t find the headlight switch. It’s already light, but the manual mentions a fine.",
+  "left": "Figure it out calmly",
+  "right": "Drive without headlights"
+ },
+ {
+  "id": "l1a_359",
+  "who": "Weather",
+  "text": "It’s pouring this morning, and you left your umbrella at the office yesterday. Ten minutes’ walk to the subway, and a 9:30 meeting with your manager.",
+  "left": "Run through the rain",
+  "right": "Wait for it to ease up"
+ },
+ {
+  "id": "l1a_360",
+  "who": "Fridge",
+  "text": "Someone left a note on your yogurt in the fridge: “Not mine, but I really want it.” The yogurt is untouched.",
+  "left": "Gift them the yogurt",
+  "right": "Write “No”"
+ },
+ {
+  "id": "l1a_361",
+  "who": "Kitchen",
+  "text": "The kitchen dishwasher broke, and the office manager announces: “We wash by hand, in turns.” Newbies go first.",
+  "left": "Wash with enthusiasm",
+  "right": "Bring your own mug"
+ },
+ {
+  "id": "l1a_362",
+  "who": "Coffee machine",
+  "text": "The coffee machine switched to “winter mode” and only dispenses coffee at 9:00, 12:00 and 3:00. It’s 9:03.",
+  "left": "Wait till noon",
+  "right": "Dash to the cafe"
+ },
+ {
+  "id": "l1a_363",
+  "who": "Open space",
+  "text": "The open space got a “thank-you board,” and everyone’s writing sticky notes to each other. Nobody has written one for you yet.",
+  "left": "Write a note for a coworker",
+  "right": "Ignore it"
+ },
+ {
+  "id": "l1a_364",
+  "who": "Probation",
+  "text": "An email: “Please log your start and end times daily.” They forgot to install the time-tracking system for you.",
+  "left": "Log it in a notebook",
+  "right": "Don’t log at all"
+ },
+ {
+  "id": "l1a_365",
+  "who": "Dress code",
+  "text": "You’re summoned to a “partner meeting” in five minutes. You’re wearing a hoodie and sneakers.",
+  "left": "Go as you are",
+  "right": "Borrow Fyodor’s blazer"
+ },
+ {
+  "id": "l1a_366",
+  "who": "Being late",
+  "text": "You’re running late, and a coworker texts: “No rush, the boss isn’t in yet.” A minute later the boss writes: “Where is everyone?”",
+  "left": "Run like the wind",
+  "right": "Admit you’re on your way"
+ },
+ {
+  "id": "l1a_367",
+  "who": "Vika",
+  "text": "Vika asks how you get everything done so fast. You honestly say you use templates — and now Vika wants all of them.",
+  "left": "Share your templates",
+  "right": "Say it’s a secret"
+ },
+ {
+  "id": "l1a_368",
+  "who": "Arseny",
+  "text": "At lunch Arseny holds a tasting of his homemade pickles. The cucumbers, he says, have “a secret ingredient.” The secret smells strong.",
+  "left": "Try the pickles",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_369",
+  "who": "Lyova",
+  "text": "Once an hour Lyova stops by your desk: “So, how’s it going?” He just walks on and doesn’t wait for an answer.",
+  "left": "Answer in detail",
+  "right": "Just wave"
+ },
+ {
+  "id": "l1a_370",
+  "who": "CEO",
+  "text": "The CEO walks past your desk and suddenly asks: “What are you working on right now?” You’re picking lunch in a delivery app.",
+  "left": "Confess honestly",
+  "right": "Quickly open a spreadsheet"
+ },
+ {
+  "id": "l1a_371",
+  "who": "Printer",
+  "text": "The printer printed your department budget table in 12-point font across 87 pages. It “forgot” your “fit to one page” setting.",
+  "left": "Staple it and deliver",
+  "right": "Send it as a file"
+ },
+ {
+  "id": "l1a_372",
+  "who": "Printer",
+  "text": "The printer on your floor starts printing by itself — pages of static. Coworkers whisper that “it’s possessed.”",
+  "left": "Call IT",
+  "right": "Hang a holy icon on it"
+ },
+ {
+  "id": "l1a_373",
+  "who": "Desk phone",
+  "text": "You answered a client’s call, but there are two more voices on the line, all talking at once. Looks like you started a conference call by accident.",
+  "left": "Take control",
+  "right": "Hang up"
+ },
+ {
+  "id": "l1a_374",
+  "who": "Lunch",
+  "text": "At lunch you find a cozy, quiet cafe none of your coworkers know about. Today Lida spots you there and waves happily.",
+  "left": "Invite her to your table",
+  "right": "Wave and leave"
+ },
+ {
+  "id": "l1a_375",
+  "who": "Lunch",
+  "text": "At lunch someone at the next table asks: “Is that your bag in the aisle?” It is, and a serving cart just rolled over it.",
+  "left": "Argue with the waiter",
+  "right": "Let it go"
+ },
+ {
+  "id": "l1a_376",
+  "who": "Fridge",
+  "text": "You put a cake in the fridge for the department. An hour later half of it is gone, and the party is at 4 p.m.",
+  "left": "Buy another one",
+  "right": "Serve the half proudly"
+ },
+ {
+  "id": "l1a_377",
+  "who": "Coffee machine",
+  "text": "The coffee machine went on strike, and coworkers have gathered around it for an “emergency meeting.” The department head is waiting for you.",
+  "left": "Stay with coworkers",
+  "right": "Go see the boss"
+ },
+ {
+  "id": "l1a_378",
+  "who": "Open space",
+  "text": "You finally got noise-canceling headphones. Now you can’t hear when people talk to you, and coworkers keep tapping your shoulder.",
+  "left": "Take the headphones off",
+  "right": "Post a “Message Me” sign"
+ },
+ {
+  "id": "l1a_379",
+  "who": "Open space",
+  "text": "Someone put up holiday string lights in the open space, blinking right into your eyes. The whole department loves them.",
+  "left": "Turn the lights away",
+  "right": "Endure the festivities"
+ },
+ {
+  "id": "l1a_380",
+  "who": "Mentor Igor",
+  "text": "Your mentor Igor says you’re “ready to work independently” and moves to another department. You still have seven questions in your notebook.",
+  "left": "Ask them in the chat",
+  "right": "Figure it out yourself"
+ },
+ {
+  "id": "l1a_381",
+  "who": "Probation",
+  "text": "In a one-on-one your manager asks: “How do you like it here? Be honest.” The door is closed behind you, his smile is in front of you.",
+  "left": "Tell the truth",
+  "right": "Say it’s all wonderful"
+ },
+ {
+  "id": "l1a_382",
+  "who": "Dress code",
+  "text": "A coworker points out you’re wearing the same cardigan as her. It’s the third time this month she’s joked about “the twins department.”",
+  "left": "Joke back",
+  "right": "Retire the cardigan"
+ },
+ {
+  "id": "l1a_383",
+  "who": "Rita",
+  "text": "At 6 p.m. Rita suggests “quickly settling a debate”: the department can’t decide where to hold the New Year’s party. 400 messages in the chat.",
+  "left": "Dive in and help",
+  "right": "Vote and leave"
+ },
+ {
+  "id": "l1a_384",
+  "who": "Timur",
+  "text": "Timur asks to borrow your pass: he left his at home and has to come in early tomorrow.",
+  "left": "Lend him the pass",
+  "right": "Say no"
+ },
+ {
+  "id": "l1a_385",
+  "who": "Department head",
+  "text": "The department head asks why you’re always first to leave. You leave at 6:00, as your contract says.",
+  "left": "Explain about the contract",
+  "right": "Stay another half hour"
+ },
+ {
+  "id": "l1a_386",
+  "who": "Bus",
+  "text": "You’ve been waiting forty minutes for the bus. The board has said “Arriving” the whole time. Coworkers left by taxi long ago.",
+  "left": "Keep waiting",
+  "right": "Call a taxi"
+ },
+ {
+  "id": "l1a_387",
+  "who": "Subway",
+  "text": "On the subway you see an ad for a course: “Pass Probation in 3 Days.” Your boss is in the same car.",
+  "left": "Snap a photo of the ad",
+  "right": "Turn to the window"
+ },
+ {
+  "id": "l1a_388",
+  "who": "Traffic jam",
+  "text": "You’re stuck in traffic, and a company-paid online course starts at 7 p.m. The boss personally asked about your progress.",
+  "left": "Join from the car",
+  "right": "Watch the recording later"
+ },
+ {
+  "id": "l1a_389",
+  "who": "Kitchen",
+  "text": "Late in the kitchen you catch a coworker secretly eating someone else’s candy from a cupboard. He sees you and holds out a piece.",
+  "left": "Take the candy",
+  "right": "Decline and leave"
+ },
+ {
+  "id": "l1a_390",
+  "who": "Coffee machine",
+  "text": "Management decided to move the kitchen coffee machine into the CEO’s office. Coworkers are collecting signatures: “Bring Back the Coffee.”",
+  "left": "Sign the petition",
+  "right": "Stay out of it"
+ },
+ {
+  "id": "l1a_391",
+  "who": "Fridge",
+  "text": "You stayed late and you’re starving. In the fridge is someone’s labeled chocolate bar. The owner has gone home.",
+  "left": "Eat it, buy a new one",
+  "right": "Hold out till home"
+ },
+ {
+  "id": "l1a_392",
+  "who": "Probation",
+  "text": "You’re asked to stay late to help with the department move. They promise it’ll “be taken into account” in your probation review.",
+  "left": "Stay and haul boxes",
+  "right": "Go home"
+ },
+ {
+  "id": "l1a_393",
+  "who": "Being late",
+  "text": "You were late to a friend’s birthday because you stayed late at work. Your friend says “No big deal,” but sounds hurt.",
+  "left": "Double up on the gift",
+  "right": "Joke about work"
+ },
+ {
+  "id": "l1a_394",
+  "who": "Dress code",
+  "text": "Tomorrow is “Business Attire Day,” and you’re ironing a shirt. The iron burns an iron-shaped hole in the back.",
+  "left": "Wear it under a blazer",
+  "right": "Wear a sweater"
+ },
+ {
+  "id": "l1a_395",
+  "who": "Home",
+  "text": "You get home and realize you’ve walked around all day with a “Don’t forget!” sticky note on your back. Don’t forget what — unknown.",
+  "left": "Ask in the chat",
+  "right": "Pretend it never happened"
+ },
+ {
+  "id": "l1a_396",
+  "who": "Inner voice",
+  "text": "As you fall asleep you remember you never replied to HR’s email about the trial review. It was due today.",
+  "left": "Get up and reply",
+  "right": "Reply in the morning"
+ },
+ {
+  "id": "l1a_397",
+  "who": "Friend",
+  "text": "A friend calls and asks if your office really has a coffee machine and a foosball table like on TV. All it has is a broken water cooler.",
+  "left": "Embellish the story",
+  "right": "Tell the truth"
+ },
+ {
+  "id": "l1a_398",
+  "who": "Intranet",
+  "text": "News on the company portal: “Our newbie set a record for fastest onboarding.” It’s you — because you fast-forwarded everything.",
+  "left": "Accept the glory",
+  "right": "Confess to skipping"
+ },
+ {
+  "id": "l1a_399",
+  "who": "Team chat",
+  "text": "In the evening chat coworkers decided you’re in charge of picking the film for “movie night.” The vote is in an hour.",
+  "left": "Pick a film",
+  "right": "Suggest drawing lots"
+ },
+ {
+  "id": "l1a_400",
+  "who": "Mentor Igor",
+  "text": "Your former mentor Igor calls in the evening to see “how you’re managing without him.” The call lasts forty minutes.",
+  "left": "Listen to his advice",
+  "right": "Thank him and wrap up"
+ },
+ {
+  "id": "l1a_401",
+  "who": "Kira",
+  "text": "Kira suggests commuting together on the train “so it’s not boring.” Her train is half an hour earlier than yours.",
+  "left": "Ride with Kira",
+  "right": "Take your own train"
+ },
+ {
+  "id": "l1a_402",
+  "who": "Facilities manager",
+  "text": "The facilities manager wants you to sign for your equipment: desk, chair, lamp and “one potted cactus.” The cactus is already dead.",
+  "left": "Sign for the cactus",
+  "right": "Demand a living cactus"
+ },
+ {
+  "id": "l1a_403",
+  "who": "Galina the cleaner",
+  "text": "Every morning Galina the cleaner moves your keyboard to the edge of the desk and wipes it with alcohol. The keys are starting to stick.",
+  "left": "Ask her not to touch it",
+  "right": "Wipe it yourself first"
+ },
+ {
+  "id": "l1a_404",
+  "who": "Reception",
+  "text": "A sign at reception reads “Guests register here.” Once again you’re asked to sign in as a guest, though you’ve worked here three weeks.",
+  "left": "Sign in",
+  "right": "Breeze past with a smile"
+ },
+ {
+  "id": "l1a_405",
+  "who": "Scooter",
+  "text": "Your rental scooter refuses to park by the office: “Restricted zone.” The allowed zone is a ten-minute walk away.",
+  "left": "Ride it to the zone",
+  "right": "Ditch it and pay the fine"
+ },
+ {
+  "id": "l1a_406",
+  "who": "Subway",
+  "text": "On the escalator you notice your mentor standing in front of you. He’s yawning and clearly trying not to fall asleep.",
+  "left": "Wake him with small talk",
+  "right": "Quietly ride past"
+ },
+ {
+  "id": "l1a_407",
+  "who": "Air conditioner",
+  "text": "The AC above your desk has been blowing like a hurricane since morning. Only the department head has the remote, and he’s on vacation.",
+  "left": "Wrap up in a scarf",
+  "right": "Tape cardboard over the vent"
+ },
+ {
+  "id": "l1a_408",
+  "who": "Roommate",
+  "text": "Your roommate accidentally drank your morning coffee and left a note: “Sorry, it was a strategic decision.”",
+  "left": "Go without coffee",
+  "right": "Buy coffee on the way"
+ },
+ {
+  "id": "l1a_409",
+  "who": "Newbie chat",
+  "text": "Someone in the newbie chat writes: “Has anyone figured out what KPI means?” Silence. You haven’t either, but you decide to answer.",
+  "left": "Explain your best guess",
+  "right": "Stay quiet"
+ },
+ {
+  "id": "l1a_410",
+  "who": "Manager",
+  "text": "Your manager gives you your first serious task and says: “Don’t worry, you’re on probation, mistakes are allowed.” Sounds ominous.",
+  "left": "Dive in with gusto",
+  "right": "Ask for a helper"
+ },
+ {
+  "id": "l1a_411",
+  "who": "Elevator",
+  "text": "The elevator arrives with five coworkers already in it. You’d make six; the limit is five. Everyone’s looking at you.",
+  "left": "Wait for the next one",
+  "right": "Squeeze in"
+ },
+ {
+  "id": "l1a_412",
+  "who": "Shop by the office",
+  "text": "The cashier at the shop near the office remembers you and says every morning: “Coffee and a bun again?” Today you wanted a salad.",
+  "left": "Get the salad",
+  "right": "Get the bun, don’t disappoint"
+ },
+ {
+  "id": "l1a_413",
+  "who": "Courtyard",
+  "text": "A pinecone falls on your head in the office courtyard. A second later you realize a squirrel threw it. Coworkers saw and are filming.",
+  "left": "Take a bow",
+  "right": "Brush it off and leave"
+ },
+ {
+  "id": "l1a_414",
+  "who": "Department head",
+  "text": "In the morning the department head asks: “What were you doing all day yesterday?” You were at a training session he invited you to.",
+  "left": "Remind him of the training",
+  "right": "List your small tasks"
+ },
+ {
+  "id": "l1a_415",
+  "who": "Probation",
+  "text": "You’re on probation, and “HR — Inspection” signs are appearing on desks. Today they’re inspecting your department.",
+  "left": "Make your desk spotless",
+  "right": "Work as usual"
+ },
+ {
+  "id": "l1a_416",
+  "who": "Misha the intern",
+  "text": "Misha the intern asks how to become “a pro like you.” It’s flattering, but you’ve only been at the company a month.",
+  "left": "Offer wise advice",
+  "right": "Admit you’re still learning"
+ },
+ {
+  "id": "l1a_417",
+  "who": "Nina",
+  "text": "Nina offers to “swap tasks”: hers is “reconcile spreadsheets,” yours is “welcome the delegation.” The delegation brings gifts.",
+  "left": "Swap",
+  "right": "Keep the delegation"
+ },
+ {
+  "id": "l1a_418",
+  "who": "Stepan",
+  "text": "At lunch Stepan confesses your predecessor quit “because of the coffee machine.” He gives no details, just chews meaningfully.",
+  "left": "Dig for details",
+  "right": "Change the subject"
+ },
+ {
+  "id": "l1a_419",
+  "who": "Marketing",
+  "text": "Marketing asks you to star in an ad about “happy employees.” You need to smile and say “I love Mondays.”",
+  "left": "Do the shoot",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_420",
+  "who": "Lawyer",
+  "text": "The company lawyer asks you to sign a nondisclosure agreement. You don’t know a single company secret yet.",
+  "left": "Sign it",
+  "right": "Ask what the secrets are"
+ },
+ {
+  "id": "l1a_421",
+  "who": "IT support",
+  "text": "IT support needs a screenshot of the error, or they won’t accept the ticket. The error is that your monitor won’t turn on at all.",
+  "left": "Snap it with your phone",
+  "right": "Explain over the phone"
+ },
+ {
+  "id": "l1a_422",
+  "who": "Vadim",
+  "text": "Vadim asks you to help move his desk “a couple of inches.” It’s solid oak and weighs as much as a grand piano.",
+  "left": "Move the desk",
+  "right": "Suggest the facilities guy"
+ },
+ {
+  "id": "l1a_423",
+  "who": "Cafe",
+  "text": "You ordered the business lunch and dipped your sleeve in the soup. In twenty minutes you meet the division director.",
+  "left": "Wash it in the restroom",
+  "right": "Go with the stain"
+ },
+ {
+  "id": "l1a_424",
+  "who": "Cafeteria",
+  "text": "The cafeteria cashier won’t take anything bigger than a $20. All you have is a $100 bill, and the line stretches to the door.",
+  "left": "Ask coworkers to chip in",
+  "right": "Return the tray"
+ },
+ {
+  "id": "l1a_425",
+  "who": "Delivery",
+  "text": "The food delivery guy calls: “I’m at the turnstile, they won’t let me in.” You’re on the ninth floor, and the elevator’s under repair.",
+  "left": "Run down the stairs",
+  "right": "Cancel the order"
+ },
+ {
+  "id": "l1a_426",
+  "who": "Coffee machine",
+  "text": "At lunchtime the coffee machine displays “Error 404: Coffee Not Found.” Someone set it up as a joke. Coworkers are laughing; you want to sleep.",
+  "left": "Reboot it",
+  "right": "Laugh along"
+ },
+ {
+  "id": "l1a_427",
+  "who": "Fridge",
+  "text": "The office manager introduced color-coded stickers by department for fridge food. Your department is pink. There are no stickers.",
+  "left": "Go get stickers",
+  "right": "Label it in pen"
+ },
+ {
+  "id": "l1a_428",
+  "who": "Printer",
+  "text": "The printer stamps “Trial Version” in the corner of your documents. The driver license has expired.",
+  "left": "Hand them in like that",
+  "right": "Find who’s in charge"
+ },
+ {
+  "id": "l1a_429",
+  "who": "Open space",
+  "text": "The coworker across from you turned her monitor so you can see her chat. They’re discussing your last report, and not kindly.",
+  "left": "Pretend you don’t see",
+  "right": "Go talk to her"
+ },
+ {
+  "id": "l1a_430",
+  "who": "Meeting",
+  "text": "You’re presenting at a meeting for the first time, but your mic isn’t working online. You’re moving your lips, and the boss says: “Great, thanks!”",
+  "left": "Don’t argue with success",
+  "right": "Repeat it in the chat"
+ },
+ {
+  "id": "l1a_431",
+  "who": "Probation",
+  "text": "Halfway through probation you realize you’ve never seen your own job description. Turns out it’s still “being written.”",
+  "left": "Offer to write it yourself",
+  "right": "Wait for it"
+ },
+ {
+  "id": "l1a_432",
+  "who": "Dress code",
+  "text": "You were called into a meeting with investors, but today you came in shorts — it was hot. A coworker’s blazer is three sizes too big for you.",
+  "left": "Wear the blazer",
+  "right": "Stay seated at the table"
+ },
+ {
+  "id": "l1a_433",
+  "who": "Being late",
+  "text": "After lunch you were stuck in the elevator for fifteen minutes and missed a call with a client. He thinks you ignored him.",
+  "left": "Explain in detail",
+  "right": "Just apologize"
+ },
+ {
+  "id": "l1a_434",
+  "who": "Kira",
+  "text": "Kira invites you to the department’s “get-to-know-you night”: bowling with team shirts. The shirts are already ordered with your name. Misspelled.",
+  "left": "Go in the shirt",
+  "right": "Don’t go"
+ },
+ {
+  "id": "l1a_435",
+  "who": "Department head",
+  "text": "The department head offers you a ride home. On the way he quizzes you: “So what is a profit margin?”",
+  "left": "Answer like it’s an exam",
+  "right": "Ask to be dropped at the subway"
+ },
+ {
+  "id": "l1a_436",
+  "who": "Security guard",
+  "text": "You’re leaving at 8 p.m., and the guard says: “Last one out again. Careful, you’ll burn out before probation ends.” He seems to be the only one who noticed.",
+  "left": "Thank him for caring",
+  "right": "Stay another hour"
+ },
+ {
+  "id": "l1a_437",
+  "who": "Taxi driver",
+  "text": "The taxi driver learns you work in an office and spends the ride urging you to “get out while you’re young.” He’s had three office jobs and a nervous twitch.",
+  "left": "Listen carefully",
+  "right": "Turn on music"
+ },
+ {
+  "id": "l1a_438",
+  "who": "Commuter train",
+  "text": "Someone offers you their seat on the evening train. You wonder if you really look that tired. They’re waiting for an answer.",
+  "left": "Sit and say thanks",
+  "right": "Cheerfully decline"
+ },
+ {
+  "id": "l1a_439",
+  "who": "Scooter",
+  "text": "Riding your scooter home, you see a coworker walking in the rain. The scooter only fits one.",
+  "left": "Give them the scooter",
+  "right": "Wave and ride on"
+ },
+ {
+  "id": "l1a_440",
+  "who": "Kitchen",
+  "text": "Late in the kitchen you catch the facilities manager counting tea bags. He looks up: “Was it you who took two?”",
+  "left": "Confess",
+  "right": "Say you had lemon tea"
+ },
+ {
+  "id": "l1a_441",
+  "who": "Fridge",
+  "text": "You find your lunch in the fridge, a third of it eaten. A note on the container: “Thanks, delicious, can I get the recipe?”",
+  "left": "Share the recipe",
+  "right": "Hunt down the culprit"
+ },
+ {
+  "id": "l1a_442",
+  "who": "Coffee machine",
+  "text": "For the first time you’re alone in the office in the evening, and the coffee machine suddenly speaks: “Time to rest.” Must be an update.",
+  "left": "Obey the coffee machine",
+  "right": "Brew one more cup"
+ },
+ {
+  "id": "l1a_443",
+  "who": "Dress code",
+  "text": "The evening office party’s dress code is “Movie Stars.” You came in normal clothes; the boss came as a vampire.",
+  "left": "Call yourself an office zombie",
+  "right": "Take photos off to the side"
+ },
+ {
+  "id": "l1a_444",
+  "who": "Probation",
+  "text": "On the last day of probation HR calls: “We’re still thinking. Come in tomorrow.” Sounds mysterious.",
+  "left": "Lie awake all night",
+  "right": "Go to the movies"
+ },
+ {
+  "id": "l1a_445",
+  "who": "Being late",
+  "text": "You were late to a school reunion — “work ran late.” Everyone’s already discussing their promotions.",
+  "left": "Tell the printer story",
+  "right": "Say a promotion’s coming"
+ },
+ {
+  "id": "l1a_446",
+  "who": "Mom",
+  "text": "Mom sent you a photo of pies with the caption “Are you eating enough?” — in the work messenger. (How did she get in there?) The whole department sees it.",
+  "left": "Send Mom a smiley",
+  "right": "Delete it and explain"
+ },
+ {
+  "id": "l1a_447",
+  "who": "Mentor",
+  "text": "Your mentor calls in the evening and suggests skipping work tomorrow for an industry expo. The boss doesn’t know yet.",
+  "left": "Go to the expo",
+  "right": "Decline"
+ },
+ {
+  "id": "l1a_448",
+  "who": "Inner voice",
+  "text": "Lying in bed, you realize today might have been the first time in a month you arrived on time. Nobody noticed.",
+  "left": "Be proud of yourself",
+  "right": "Come even earlier tomorrow"
+ },
+ {
+  "id": "l1a_449",
+  "who": "Roommate",
+  "text": "Your roommate asks why you talk in your sleep about “approvals” every night. He recorded it.",
+  "left": "Listen to the recording",
+  "right": "Ask him to delete it"
+ },
+ {
+  "id": "l1a_450",
+  "who": "Team chat",
+  "text": "In the evening chat coworkers ask: “Who’s bringing something for tea tomorrow?” An awkward pause. You’re the newbie, and everyone’s waiting.",
+  "left": "Bring a pie",
+  "right": "Send an emoji"
+ },
+ {
+  "id": "l1a_451",
+  "who": "Dima",
+  "text": "Every morning Dima puts a bowl of candy on the shared table and notes in a notebook who took how many. At month’s end — “the final tally.”",
+  "left": "Take candy boldly",
+  "right": "Don’t take any"
+ },
+ {
+  "id": "l1a_452",
+  "who": "Polina",
+  "text": "Polina asks you to answer her work phone until lunch because “calls give her migraines.” Your own phone rings just as much.",
+  "left": "Answer both",
+  "right": "Gently refuse"
+ },
+ {
+  "id": "l1a_453",
+  "who": "HR director",
+  "text": "The HR director does a morning round, asking each newbie: “What animal do you feel like on the team?”",
+  "left": "Answer “A sloth”",
+  "right": "Answer “An ant”"
+ },
+ {
+  "id": "l1a_454",
+  "who": "Mail carrier",
+  "text": "The mail carrier brings a registered letter for you to the office: a fine for riding the train without a ticket. You definitely paid.",
+  "left": "Dispute the fine",
+  "right": "Pay it and forget it"
+ },
+ {
+  "id": "l1a_455",
+  "who": "Parking",
+  "text": "First time driving in, you took an empty spot by the entrance. A minute later you learn it’s the CEO’s spot.",
+  "left": "Move the car",
+  "right": "Leave an apology note"
+ },
+ {
+  "id": "l1a_456",
+  "who": "Bus",
+  "text": "Your manager calls while you’re on the bus. The driver just cranked up the music, and the woman next to you is telling a friend about a wedding.",
+  "left": "Answer, covering the phone",
+  "right": "Call back in ten minutes"
+ },
+ {
+  "id": "l1a_457",
+  "who": "Weather",
+  "text": "It’s icy this morning, and you arrive at the office having slid the last hundred yards on your soles. Coworkers at the window applaud.",
+  "left": "Take a bow",
+  "right": "Act like it was planned"
+ },
+ {
+  "id": "l1a_458",
+  "who": "Kirill from IT",
+  "text": "Kirill says your laptop is “infected” and must be reinstalled. All your files from the past week will be gone.",
+  "left": "Back up to a flash drive",
+  "right": "Trust Kirill"
+ },
+ {
+  "id": "l1a_459",
+  "who": "Mentor",
+  "text": "Your mentor sends a morning list of “things to know about coworkers”: who loves sweets, who can’t stand loud laughter, who’s “not a morning person.”",
+  "left": "Memorize the list",
+  "right": "Learn for yourself"
+ },
+ {
+  "id": "l1a_460",
+  "who": "Probation",
+  "text": "You’re handed the key to the safe with the company stamps because “there’s nobody else.” It’s your second week, and there are nine stamps in there.",
+  "left": "Take responsibility",
+  "right": "Refuse the key"
+ },
+ {
+  "id": "l1a_461",
+  "who": "Coffee machine",
+  "text": "Someone stuck a note on the coffee machine: “Limit: 2 cups per person per day.” You’re on your third, and the note’s author is standing right there.",
+  "left": "Make the third",
+  "right": "Give up coffee"
+ },
+ {
+  "id": "l1a_462",
+  "who": "Fridge",
+  "text": "You go to put your lunch in the fridge, but it’s so full the door won’t close. On top sits a cake marked “Do Not Touch.”",
+  "left": "Move the cake",
+  "right": "Keep lunch under your desk"
+ },
+ {
+  "id": "l1a_463",
+  "who": "Printer",
+  "text": "The department printer now only works through a phone app. The app wants you to accept 47 terms and conditions.",
+  "left": "Accept all, unread",
+  "right": "Ask a coworker to print"
+ },
+ {
+  "id": "l1a_464",
+  "who": "Open space",
+  "text": "Your desk neighbor is trying to talk you into switching to standing desks together. “They say it’s healthy.” It costs twice as much as a regular desk.",
+  "left": "Try standing",
+  "right": "Stay in your chair"
+ },
+ {
+  "id": "l1a_465",
+  "who": "Being late",
+  "text": "You were late because of roadwork and invented an excuse on the way. But your manager is on vacation, and the deputy didn’t even ask.",
+  "left": "Tell the story anyway",
+  "right": "Quietly rejoice"
+ },
+ {
+  "id": "l1a_466",
+  "who": "Dress code",
+  "text": "Everyone came to work in the same blue sweater: turns out it was a company gift, and you never got one.",
+  "left": "Ask about the sweater",
+  "right": "Act like it’s normal"
+ },
+ {
+  "id": "l1a_467",
+  "who": "Team chat",
+  "text": "In the morning chat a coworker asks: “Who can cover for me on a client call in five minutes?” Silence. Everyone’s waiting for you.",
+  "left": "Cover the call",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l1a_468",
+  "who": "Anatoly",
+  "text": "Anatoly, a department veteran, tells you over lunch “how things were back in 2009.” Lunch ended long ago, and he’s only up to 2011.",
+  "left": "Hear him out",
+  "right": "Excuse yourself and leave"
+ },
+ {
+  "id": "l1a_469",
+  "who": "Zlata",
+  "text": "Zlata brings her dog to the office, and it immediately lies down on your feet. You can’t get up, and there’s a meeting in five minutes.",
+  "left": "Don’t wake the dog",
+  "right": "Carefully wriggle free"
+ },
+ {
+  "id": "l1a_470",
+  "who": "Internal audit",
+  "text": "Internal audit picks you for a “knowledge of procedures” check. The only procedure you’ve read is the one for the coffee machine.",
+  "left": "Bluff confidently",
+  "right": "Ask to reschedule"
+ },
+ {
+  "id": "l1a_471",
+  "who": "Client",
+  "text": "A client calls demanding “that manager who was here before you.” That manager was fired for rudeness.",
+  "left": "Tell the truth",
+  "right": "Become “that manager”"
+ },
+ {
+  "id": "l1a_472",
+  "who": "Cafeteria",
+  "text": "The cafeteria cook recognizes you and serves soup “home-style, extra big.” The portion is bigger than the bowl. You have a report after lunch.",
+  "left": "Eat it all",
+  "right": "Decline seconds"
+ },
+ {
+  "id": "l1a_473",
+  "who": "Lunch",
+  "text": "You’ve noticed the whole department lunches together at 1:00 sharp. You’re used to eating at noon, and your stomach is already protesting.",
+  "left": "Wait an hour",
+  "right": "Eat early"
+ },
+ {
+  "id": "l1a_474",
+  "who": "Lunch",
+  "text": "At lunch a coworker shares something shady about the boss and adds: “Don’t tell anyone!” The boss is sitting at the next table.",
+  "left": "Change the subject",
+  "right": "Whisper for details"
+ },
+ {
+  "id": "l1a_475",
+  "who": "Kitchen",
+  "text": "A kitchen dispute erupts: put dirty spoons in the sink or wash them right away? You’re asked to be the “impartial judge.”",
+  "left": "Be the judge",
+  "right": "Tactfully exit"
+ },
+ {
+  "id": "l1a_476",
+  "who": "Fridge",
+  "text": "You find a container in the fridge labeled “Boss’s Lunch. Do Not Open.” It’s sitting on top of your yogurt.",
+  "left": "Move the container",
+  "right": "Leave the yogurt"
+ },
+ {
+  "id": "l1a_477",
+  "who": "Coffee machine",
+  "text": "The office bought a new touchscreen coffee machine. Only the IT department knows how to use it, and they’re at lunch.",
+  "left": "Press everything",
+  "right": "Wait for IT"
+ },
+ {
+  "id": "l1a_478",
+  "who": "Projector",
+  "text": "The meeting-room projector is dead, and the boss asks you to “come up with something.” All you have is a white wall and a laptop.",
+  "left": "Turn the laptop to the room",
+  "right": "Run to storage for a projector"
+ },
+ {
+  "id": "l1a_479",
+  "who": "Open space",
+  "text": "Open-space neighbors are loudly discussing a show and spoiling the episode you haven’t seen yet. The one you’ve waited for all week.",
+  "left": "Ask them not to spoil it",
+  "right": "Join the discussion"
+ },
+ {
+  "id": "l1a_480",
+  "who": "Dress code",
+  "text": "It’s “Tie Day,” and someone ceremoniously tied a fish-shaped tie on you. Meeting with investors in an hour.",
+  "left": "Keep the fish",
+  "right": "Take it off before the meeting"
+ },
+ {
+  "id": "l1a_481",
+  "who": "Probation",
+  "text": "Your manager offers to “end your probation early” if you close a task in a week that the last three newbies failed to close.",
+  "left": "Take on the task",
+  "right": "Ask for a real deadline"
+ },
+ {
+  "id": "l1a_482",
+  "who": "Being late",
+  "text": "You were late to your own HR meeting, and HR already left for the next one. Your calendar now says “Meeting missed due to employee.”",
+  "left": "Write an apology",
+  "right": "Quietly rebook"
+ },
+ {
+  "id": "l1a_483",
+  "who": "Yana",
+  "text": "At 6 p.m. Yana says it’s her last day and throws a farewell with cake. You’ve known her three days, but the cake looks tempting.",
+  "left": "Stay for the farewell",
+  "right": "Say goodbye and leave"
+ },
+ {
+  "id": "l1a_484",
+  "who": "Marat",
+  "text": "Marat asks you to “babysit” his online presentation tonight: just click “next” on his signal. The signal is his cough.",
+  "left": "Agree",
+  "right": "Refuse"
+ },
+ {
+  "id": "l1a_485",
+  "who": "CEO",
+  "text": "At 7 p.m. the CEO walks through the office and sees you alone in the open space. He nods and says: “Good.” Unclear what exactly.",
+  "left": "Stay longer",
+  "right": "Leave right after him"
+ },
+ {
+  "id": "l1a_486",
+  "who": "Commuter train",
+  "text": "On the train you notice the man next to you has a report from your company on his lap stamped “Confidential.” He’s asleep.",
+  "left": "Wake him and tell him",
+  "right": "Pretend you didn’t see"
+ },
+ {
+  "id": "l1a_487",
+  "who": "Subway",
+  "text": "Your first rush-hour ride home, and you can’t get off at your stop: the human tide sweeps you back into the car.",
+  "left": "Ride to the next stop",
+  "right": "Fight your way out"
+ },
+ {
+  "id": "l1a_488",
+  "who": "Walking",
+  "text": "You decided to walk home to save money. Halfway there it starts pouring, and your umbrella is at work.",
+  "left": "Keep walking",
+  "right": "Take the bus"
+ },
+ {
+  "id": "l1a_489",
+  "who": "Being late",
+  "text": "You were late to your own surprise dinner, thrown by coworkers for your first month. Everyone hid for forty minutes.",
+  "left": "Act surprised",
+  "right": "Apologize at length"
+ },
+ {
+  "id": "l1a_490",
+  "who": "Coffee machine",
+  "text": "In the evening you accidentally pressed “Full Cleaning” on the coffee machine. It’ll take two hours and it’s humming through the whole kitchen.",
+  "left": "Wait till it’s done",
+  "right": "Leave it running"
+ },
+ {
+  "id": "l1a_491",
+  "who": "Fridge",
+  "text": "Before the weekend the office manager asks everyone to take their food out of the fridge. Your container is in there, but inside is something you don’t remember.",
+  "left": "Open it and investigate",
+  "right": "Toss it unopened"
+ },
+ {
+  "id": "l1a_492",
+  "who": "Kitchen",
+  "text": "On your way out you notice someone left the kettle on with nothing in it. It’s starting to smoke.",
+  "left": "Turn it off, air it out",
+  "right": "Call security"
+ },
+ {
+  "id": "l1a_493",
+  "who": "Dress code",
+  "text": "In the evening HR sends a 50-page “business style guide.” Page 12 shows a photo of the shoes you wore today, as an example of “don’t.”",
+  "left": "Laugh at yourself",
+  "right": "Complain to HR"
+ },
+ {
+  "id": "l1a_494",
+  "who": "Probation",
+  "text": "An evening email: “Congratulations on passing probation!” A minute later: “Sorry, this email was sent in error.”",
+  "left": "Call HR",
+  "right": "Wait for official word"
+ },
+ {
+  "id": "l1a_495",
+  "who": "Mentor",
+  "text": "Your mentor suggests continuing “mentorship” over dinners on Fridays. He’s already booked a restaurant.",
+  "left": "Go to dinner",
+  "right": "Suggest daytime coffee"
+ },
+ {
+  "id": "l1a_496",
+  "who": "Friends",
+  "text": "Friends in the group chat ask why you’ve stopped going out in the evenings. You check the time: 9:40 p.m., and you’ve just left the office.",
+  "left": "Go meet your friends",
+  "right": "Go home and sleep"
+ },
+ {
+  "id": "l1a_497",
+  "who": "Inner voice",
+  "text": "Friday evening. Your first month at the new job is behind you. You survived, but a coworker already said “next month gets more interesting.”",
+  "left": "Celebrate",
+  "right": "Prep for Monday"
+ },
+ {
+  "id": "l1a_498",
+  "who": "Newbie chat",
+  "text": "Someone in the newbie chat proposes “putting out a wall newspaper” on how to survive probation. You’ll be the one writing it.",
+  "left": "Write the newsletter",
+  "right": "Decline"
+ },
+ {
+  "id": "l1a_499",
+  "who": "Neighbor",
+  "text": "Your neighbor across the landing heard you work in an office and asks you to “print a couple of photos” at work. A couple means 300.",
+  "left": "Print them",
+  "right": "Politely decline"
+ },
+ {
+  "id": "l1a_500",
+  "who": "Mom",
+  "text": "Mom asks what exactly your job is. You explain for three minutes, and she replies: “So you’re a secretary?”",
+  "left": "Explain again",
+  "right": "Accept being a secretary"
+ }
+]
