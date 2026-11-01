@@ -1,0 +1,1336 @@
+{
+ "tips": [
+  {
+   "id": "t001",
+   "cat": "breaks",
+   "ru": "Поставьте будильник на 13:00 с подписью «обед без ноутбука». Еда вдали от экрана — это тоже работа: над тем, чтобы дожить до вечера.",
+   "en": "Set a 1 pm alarm labelled \"lunch without the laptop\". Eating away from the screen is work too: the work of making it to the evening."
+  },
+  {
+   "id": "t002",
+   "cat": "breaks",
+   "ru": "Правило 50/10: пятьдесят минут работы, десять — встать, налить воды, посмотреть в окно. Таймер в телефоне справится лучше силы воли.",
+   "en": "Try 50/10: fifty minutes of work, ten to stand up, get water and look out of the window. A phone timer beats willpower here."
+  },
+  {
+   "id": "t003",
+   "cat": "breaks",
+   "ru": "Каждые 20 минут переведите взгляд на что-то дальнее секунд на 20. Глазам тоже нужен перекур, только без сигарет.",
+   "en": "Every 20 minutes, look at something far away for about 20 seconds. Your eyes deserve a smoke break too, minus the smoke."
+  },
+  {
+   "id": "t004",
+   "cat": "breaks",
+   "ru": "Между двумя созвонами оставляйте 5 минут пустыми. Назовите слот в календаре «переход» — коллеги решат, что это важная встреча.",
+   "en": "Leave 5 empty minutes between calls. Call the slot \"transition\" in your calendar; colleagues will assume it's an important meeting."
+  },
+  {
+   "id": "t005",
+   "cat": "breaks",
+   "ru": "Микропауза: закройте глаза, сделайте три медленных выдоха и только потом открывайте следующее письмо. Занимает 30 секунд, работает как кнопка «сохранить».",
+   "en": "Micro-pause: close your eyes, take three slow breaths out, then open the next email. Thirty seconds that work like a save button."
+  },
+  {
+   "id": "t006",
+   "cat": "breaks",
+   "ru": "Пьёте чай? Идите за ним на дальнюю кухню. Маленькая прогулка по офису — законный повод оторваться от задачи.",
+   "en": "Having tea? Fetch it from the far kitchen. A little walk across the office is a perfectly legal reason to step away from the task."
+  },
+  {
+   "id": "t007",
+   "cat": "breaks",
+   "ru": "Если вы заметили, что третий раз перечитываете один и тот же абзац, — это не лень, это сигнал к перерыву. Встаньте на пять минут.",
+   "en": "If you're reading the same paragraph for the third time, that's not laziness, it's a signal. Stand up for five minutes."
+  },
+  {
+   "id": "t008",
+   "cat": "breaks",
+   "ru": "Обед — это не «доесть над клавиатурой». Выйдите хотя бы на 20 минут: на улицу, в кафе, на лавочку. Задачи никуда не убегут, честно.",
+   "en": "Lunch isn't \"finish eating over the keyboard\". Go out for at least 20 minutes: a street, a café, a bench. The tasks won't run away, promise."
+  },
+  {
+   "id": "t009",
+   "cat": "breaks",
+   "ru": "Сделайте перерыв по-настоящему пустым: без ленты новостей и рабочих чатов. Скролл — это не отдых, а работа в другой вкладке.",
+   "en": "Make your break truly empty: no news feed, no work chats. Scrolling isn't rest, it's just work in another tab."
+  },
+  {
+   "id": "t010",
+   "cat": "breaks",
+   "ru": "Поставьте бутылку воды на стол и договоритесь с собой: допили — идёте наливать новую. Встроенный таймер перерывов.",
+   "en": "Put a water bottle on your desk. When it's empty, you walk to refill it. A built-in break timer."
+  },
+  {
+   "id": "t011",
+   "cat": "breaks",
+   "ru": "После сложного разговора не прыгайте сразу в следующую задачу. Две минуты посидеть, подышать, записать итог — и только потом дальше.",
+   "en": "After a tough conversation, don't jump straight into the next task. Two minutes to sit, breathe and jot down the outcome, then move on."
+  },
+  {
+   "id": "t012",
+   "cat": "breaks",
+   "ru": "Попробуйте «перерыв по окну»: раз в час подойдите к окну и найдите три вещи, которые не замечали. Мозгу нравится новизна.",
+   "en": "Try a window break: once an hour, go to a window and spot three things you hadn't noticed. Brains love a bit of novelty."
+  },
+  {
+   "id": "t013",
+   "cat": "breaks",
+   "ru": "Если день состоит из созвонов, предложите делать встречи на 25 и 50 минут вместо 30 и 60. Освободившиеся минуты — ваши.",
+   "en": "If your day is all calls, suggest 25- and 50-minute meetings instead of 30 and 60. The minutes you win back are yours."
+  },
+  {
+   "id": "t014",
+   "cat": "breaks",
+   "ru": "Перерыв не надо заслуживать. Его не выдают за выполненный план — он нужен, чтобы план вообще был выполним.",
+   "en": "You don't have to earn a break. It isn't a reward for hitting the plan; it's what makes the plan doable at all."
+  },
+  {
+   "id": "t015",
+   "cat": "breaks",
+   "ru": "Запланируйте два перерыва прямо в календарь, как встречи с важным клиентом. Этот клиент — вы.",
+   "en": "Put two breaks in your calendar like meetings with an important client. That client is you."
+  },
+  {
+   "id": "t016",
+   "cat": "breaks",
+   "ru": "Поработали за экраном пару часов? Выйдите на улицу хотя бы на пять минут. Дневной свет и свежий воздух — простой способ перезагрузиться.",
+   "en": "Been at the screen for a couple of hours? Step outside for even five minutes. Daylight and fresh air are a simple reset."
+  },
+  {
+   "id": "t017",
+   "cat": "breaks",
+   "ru": "Во время перерыва займите руки чем-то нерабочим: полить цветок, сложить бумаги, почистить мандарин. Голова отдыхает, когда руки заняты.",
+   "en": "On a break, give your hands something non-work: water a plant, tidy papers, peel a tangerine. Your head rests when your hands are busy."
+  },
+  {
+   "id": "t018",
+   "cat": "breaks",
+   "ru": "Если перерывы постоянно «съедаются», начните с одного маленького: 10 минут в 16:00. Привычка растёт из малого.",
+   "en": "If your breaks keep getting eaten, start with one small one: 10 minutes at 4 pm. Habits grow from tiny seeds."
+  },
+  {
+   "id": "t019",
+   "cat": "breaks",
+   "ru": "Перед уходом на перерыв запишите одной строкой, на чём остановились. Так возвращаться легче, и отдыхать спокойнее.",
+   "en": "Before a break, write one line about where you stopped. Coming back is easier, and resting feels calmer."
+  },
+  {
+   "id": "t020",
+   "cat": "breaks",
+   "ru": "Напоминание от Миры: стул не обидится, если вы встанете. Он привык.",
+   "en": "A reminder from Mira: your chair won't be offended if you stand up. It's used to it."
+  },
+  {
+   "id": "t021",
+   "cat": "sleep",
+   "ru": "Поставьте будильник «пора закругляться» за час до сна. Не чтобы сразу лечь, а чтобы начать сворачивать день.",
+   "en": "Set a \"time to wind down\" alarm an hour before bed. Not to sleep right away, just to start closing the day."
+  },
+  {
+   "id": "t022",
+   "cat": "sleep",
+   "ru": "Старайтесь ложиться и вставать примерно в одно и то же время, даже в выходные. Телу нравится предсказуемость больше, чем героизм.",
+   "en": "Try to go to bed and wake up at roughly the same time, weekends included. Your body likes predictability more than heroics."
+  },
+  {
+   "id": "t023",
+   "cat": "sleep",
+   "ru": "Заряжайте телефон не у кровати, а на другом конце комнаты. Утром придётся встать, а вечером не тянет «ещё одно видео».",
+   "en": "Charge your phone across the room, not by the bed. You'll have to get up in the morning, and there's less \"just one more video\" at night."
+  },
+  {
+   "id": "t024",
+   "cat": "sleep",
+   "ru": "Рабочую почту после 21:00 можно не проверять. Письмо, прочитанное ночью, обычно ничего не решает, зато мешает уснуть.",
+   "en": "You can skip work email after 9 pm. A message read at night rarely changes anything, but it can keep you awake."
+  },
+  {
+   "id": "t025",
+   "cat": "sleep",
+   "ru": "Если мысли о делах не дают уснуть, запишите их на листок у кровати. Список подождёт до утра, а голове станет свободнее.",
+   "en": "If work thoughts keep you up, write them on a notepad by the bed. The list can wait till morning, and your head gets lighter."
+  },
+  {
+   "id": "t026",
+   "cat": "sleep",
+   "ru": "Многим помогает правило: кофе — до обеда. Попробуйте неделю и посмотрите, как вам спится.",
+   "en": "Many people find \"coffee before lunch only\" helps. Try it for a week and see how you sleep."
+  },
+  {
+   "id": "t027",
+   "cat": "sleep",
+   "ru": "Сделайте спальню чуть прохладнее и темнее: проветрите перед сном, задёрните шторы. Простые вещи, которые часто работают.",
+   "en": "Make the bedroom a bit cooler and darker: air it out before bed, close the curtains. Simple things that often work."
+  },
+  {
+   "id": "t028",
+   "cat": "sleep",
+   "ru": "Придумайте себе вечерний ритуал из 2–3 шагов: душ, книга, приглушённый свет. Повторение подсказывает телу: смена закончилась.",
+   "en": "Create a 2-3 step evening ritual: shower, book, dim lights. Repetition tells your body the shift is over."
+  },
+  {
+   "id": "t029",
+   "cat": "sleep",
+   "ru": "Не можете уснуть минут 20? Встаньте, посидите при тусклом свете с бумажной книгой и вернитесь в кровать, когда потянет в сон.",
+   "en": "Can't fall asleep for about 20 minutes? Get up, sit in dim light with a paper book, and go back to bed when you feel sleepy."
+  },
+  {
+   "id": "t030",
+   "cat": "sleep",
+   "ru": "Кровать — для сна, а не для отчётов. Если работаете из дома, найдите для ноутбука любое другое место.",
+   "en": "The bed is for sleep, not reports. If you work from home, find any other spot for the laptop."
+  },
+  {
+   "id": "t031",
+   "cat": "sleep",
+   "ru": "Утром первые 10 минут без телефона: вода, окно, потянуться. Новости и чаты подождут, а день начнётся с вас, а не с них.",
+   "en": "First 10 minutes of the morning without your phone: water, window, stretch. News and chats can wait; let the day start with you."
+  },
+  {
+   "id": "t032",
+   "cat": "sleep",
+   "ru": "Утренний дневной свет помогает настроить внутренние часы. Постойте у окна или пройдитесь до остановки чуть медленнее.",
+   "en": "Morning daylight helps set your internal clock. Stand by the window or walk to the bus stop a little slower."
+  },
+  {
+   "id": "t033",
+   "cat": "sleep",
+   "ru": "Сон — это не то, что остаётся после всех дел. Впишите время отбоя в план дня так же, как дедлайн.",
+   "en": "Sleep isn't what's left after everything else. Put bedtime into your daily plan, just like a deadline."
+  },
+  {
+   "id": "t034",
+   "cat": "sleep",
+   "ru": "Если хочется вздремнуть днём, 15–20 минут обычно лучше, чем час. И лучше не позже середины дня.",
+   "en": "If you nap, 15-20 minutes usually beats an hour. And ideally no later than mid-afternoon."
+  },
+  {
+   "id": "t035",
+   "cat": "sleep",
+   "ru": "Плотный ужин прямо перед сном многим мешает отдыхать. Попробуйте поужинать за пару часов до отбоя.",
+   "en": "A heavy dinner right before bed gets in many people's way. Try eating a couple of hours before lights out."
+  },
+  {
+   "id": "t036",
+   "cat": "sleep",
+   "ru": "Включите на телефоне ночной режим «не беспокоить» по расписанию. Пусть это решение принимается один раз, а не каждый вечер.",
+   "en": "Schedule your phone's do-not-disturb for the night. Make the decision once instead of every evening."
+  },
+  {
+   "id": "t037",
+   "cat": "sleep",
+   "ru": "Сериал «ещё одну серию» — главный похититель сна. Решите заранее, сколько серий смотрите, и скажите это вслух.",
+   "en": "\"Just one more episode\" is the top sleep thief. Decide in advance how many you'll watch, and say it out loud."
+  },
+  {
+   "id": "t038",
+   "cat": "sleep",
+   "ru": "Переработали ночью ради дедлайна? Бывает. Следующей ночью дайте себе лечь пораньше, а не отыгрываться кофе.",
+   "en": "Stayed up late for a deadline? It happens. Next night, go to bed earlier instead of making up for it with coffee."
+  },
+  {
+   "id": "t039",
+   "cat": "sleep",
+   "ru": "Последние полчаса перед сном — без рабочих тем. Если голова продолжает совещание, скажите ей: «Повестка закрыта».",
+   "en": "Keep the last half hour before bed work-free. If your head keeps the meeting going, tell it: \"Agenda closed.\""
+  },
+  {
+   "id": "t040",
+   "cat": "sleep",
+   "ru": "Ведите на неделю простой дневник: во сколько легли, как спали. Часто закономерности видны сразу, без всяких гаджетов.",
+   "en": "Keep a simple diary for a week: when you went to bed, how you slept. Patterns often jump out without any gadgets."
+  },
+  {
+   "id": "t041",
+   "cat": "boundaries",
+   "ru": "Выключите рабочие уведомления после 19:00. Если что-то правда горит, вам позвонят, а не напишут в общий чат со смайликом.",
+   "en": "Turn off work notifications after 7 pm. If something's truly on fire, someone will call rather than post in the group chat with an emoji."
+  },
+  {
+   "id": "t042",
+   "cat": "boundaries",
+   "ru": "Фраза-спасатель: «Давайте я посмотрю и отвечу завтра до 12». Это не отказ, это честный срок.",
+   "en": "A lifesaver phrase: \"Let me look and get back to you by noon tomorrow.\" Not a refusal, just an honest timeline."
+  },
+  {
+   "id": "t043",
+   "cat": "boundaries",
+   "ru": "Сказать «нет» можно вежливо: «Сейчас не возьму — у меня отчёт до пятницы. Могу в понедельник». Объяснять больше не обязательно.",
+   "en": "You can say no politely: \"I can't take this now, I've got a report due Friday. Monday works.\" No need to explain further."
+  },
+  {
+   "id": "t044",
+   "cat": "boundaries",
+   "ru": "Пропишите в профиле мессенджера рабочие часы. Это тихий способ сказать «я отвечу утром» без неловких разговоров.",
+   "en": "Add your working hours to your messenger profile. It's a quiet way to say \"I'll reply in the morning\" without awkward talks."
+  },
+  {
+   "id": "t045",
+   "cat": "boundaries",
+   "ru": "Уберите рабочую почту с главного экрана телефона. Чем дальше иконка, тем реже рука тянется её открыть в выходной.",
+   "en": "Move work email off your phone's home screen. The further away the icon, the less your thumb drifts to it on weekends."
+  },
+  {
+   "id": "t046",
+   "cat": "boundaries",
+   "ru": "Если вам пишут вечером, не обязательно отвечать вечером. Отложенная отправка — отличный инструмент для границ.",
+   "en": "If someone writes in the evening, you don't have to reply in the evening. Scheduled send is a great boundary tool."
+  },
+  {
+   "id": "t047",
+   "cat": "boundaries",
+   "ru": "Когда просят «на минутку», спросите: «А сколько это займёт на самом деле и к какому сроку?» Минутки любят растягиваться.",
+   "en": "When asked for \"just a minute\", ask: \"How long will it really take, and by when?\" Minutes love to stretch."
+  },
+  {
+   "id": "t048",
+   "cat": "boundaries",
+   "ru": "Придумайте ритуал окончания рабочего дня: закрыть ноутбук, записать план на завтра, сказать «смена окончена». Мозгу нужна точка.",
+   "en": "Create an end-of-day ritual: close the laptop, write tomorrow's plan, say \"shift over\". Your brain needs a full stop."
+  },
+  {
+   "id": "t049",
+   "cat": "boundaries",
+   "ru": "Работаете из дома? Убирайте ноутбук вечером с глаз долой — в ящик или сумку. С глаз долой — из чата вон.",
+   "en": "Working from home? Put the laptop away in the evening, in a drawer or bag. Out of sight, out of the chat."
+  },
+  {
+   "id": "t050",
+   "cat": "boundaries",
+   "ru": "Отказ от задачи — это не отказ от человека. Можно ценить коллегу и всё равно сказать: «Я не успею это качественно».",
+   "en": "Declining a task isn't rejecting a person. You can value a colleague and still say, \"I can't do this well in time.\""
+  },
+  {
+   "id": "t051",
+   "cat": "boundaries",
+   "ru": "Если вы в отпуске, поставьте автоответ с датой возвращения и именем того, кто вас заменяет. И верьте в него.",
+   "en": "On vacation, set an auto-reply with your return date and who's covering for you. And trust it."
+  },
+  {
+   "id": "t052",
+   "cat": "boundaries",
+   "ru": "Попробуйте предложить альтернативу вместо «да»: «Могу сделать часть А сейчас, часть Б — на следующей неделе».",
+   "en": "Try offering an alternative instead of \"yes\": \"I can do part A now and part B next week.\""
+  },
+  {
+   "id": "t053",
+   "cat": "boundaries",
+   "ru": "Выключите звук у рабочих чатов, где вы не главный участник. Заходите туда два-три раза в день по своему расписанию.",
+   "en": "Mute work chats where you're not a key player. Check them two or three times a day on your own schedule."
+  },
+  {
+   "id": "t054",
+   "cat": "boundaries",
+   "ru": "Перед тем как сказать «да», возьмите паузу: «Дайте мне 10 минут проверить календарь». Многие «да» рождаются от неловкости.",
+   "en": "Before saying yes, pause: \"Give me 10 minutes to check my calendar.\" Many yeses are born out of awkwardness."
+  },
+  {
+   "id": "t055",
+   "cat": "boundaries",
+   "ru": "Ваш выходной — не «запасной рабочий день». Если очень надо, договоритесь о компенсации или переносе, а не просто «выручите».",
+   "en": "Your day off isn't a spare workday. If it's truly needed, agree on time back or a swap, not just \"help us out\"."
+  },
+  {
+   "id": "t056",
+   "cat": "boundaries",
+   "ru": "Закрывайте вкладку с рабочим чатом во время обеда. Полчаса тишины — нормальная часть рабочего дня.",
+   "en": "Close the work chat tab during lunch. Half an hour of quiet is a normal part of the workday."
+  },
+  {
+   "id": "t057",
+   "cat": "boundaries",
+   "ru": "Если руководитель пишет поздно, можно спокойно уточнить: «Это нужно сегодня или завтра утром подойдёт?» Чаще всего — завтра.",
+   "en": "If your manager writes late, you can calmly ask: \"Do you need this tonight, or is tomorrow morning fine?\" Usually it's tomorrow."
+  },
+  {
+   "id": "t058",
+   "cat": "boundaries",
+   "ru": "Границы — это не стена, а дверь с расписанием. Вы решаете, когда она открыта.",
+   "en": "Boundaries aren't a wall, they're a door with opening hours. You decide when it's open."
+  },
+  {
+   "id": "t059",
+   "cat": "boundaries",
+   "ru": "Не берите рабочий ноутбук домой «на всякий случай» каждый день. «Всякий случай» обычно превращается в каждый вечер.",
+   "en": "Don't take the work laptop home every day \"just in case\". \"Just in case\" tends to become every evening."
+  },
+  {
+   "id": "t060",
+   "cat": "boundaries",
+   "ru": "Уходя, скажите коллегам «до завтра» вслух. Простая фраза помогает и вам, и им понять, что смена закончилась.",
+   "en": "When leaving, say \"see you tomorrow\" out loud. A simple phrase that helps you and them know the shift is over."
+  },
+  {
+   "id": "t061",
+   "cat": "workload",
+   "ru": "Составьте список на день из трёх главных дел. Остальное — бонус. Если выполнили три, день удался.",
+   "en": "Make a daily list of three main tasks. Everything else is a bonus. Did all three? The day was a success."
+  },
+  {
+   "id": "t062",
+   "cat": "workload",
+   "ru": "Перед списком дел спросите себя: что будет, если это не сделать сегодня? Если ответ «ничего страшного», это задача на завтра.",
+   "en": "Before writing your to-do list, ask: what happens if this isn't done today? If \"nothing terrible\", it's tomorrow's task."
+  },
+  {
+   "id": "t063",
+   "cat": "workload",
+   "ru": "Умножайте свою оценку времени на полтора. Не потому что вы медленные, а потому что жизнь любит сюрпризы.",
+   "en": "Multiply your time estimates by 1.5. Not because you're slow, but because life loves surprises."
+  },
+  {
+   "id": "t064",
+   "cat": "workload",
+   "ru": "Самую сложную задачу делайте в то время, когда у вас больше всего сил. Для кого-то это утро, для кого-то — после обеда.",
+   "en": "Tackle the hardest task when your energy peaks. For some that's morning, for others it's after lunch."
+  },
+  {
+   "id": "t065",
+   "cat": "workload",
+   "ru": "Огромная задача пугает? Разбейте её на шаги по 15–30 минут. «Написать отчёт» превращается в «открыть файл и набросать план».",
+   "en": "Huge task feels scary? Break it into 15-30 minute steps. \"Write the report\" becomes \"open the file and sketch an outline\"."
+  },
+  {
+   "id": "t066",
+   "cat": "workload",
+   "ru": "Когда задач слишком много, принесите список руководителю и спросите: «Что из этого важнее всего?» Это не слабость, это управление.",
+   "en": "When there's too much, bring your list to your manager and ask, \"What matters most here?\" That's not weakness, it's management."
+  },
+  {
+   "id": "t067",
+   "cat": "workload",
+   "ru": "Заблокируйте в календаре 90 минут «без встреч» для глубокой работы. Отключите чаты и наслаждайтесь тишиной.",
+   "en": "Block 90 meeting-free minutes in your calendar for deep work. Mute the chats and enjoy the quiet."
+  },
+  {
+   "id": "t068",
+   "cat": "workload",
+   "ru": "Мелкие дела до пяти минут собирайте в одну пачку и делайте подряд. Так они не размазываются по всему дню.",
+   "en": "Batch small tasks under five minutes and do them in one go. That way they don't smear across your whole day."
+  },
+  {
+   "id": "t069",
+   "cat": "workload",
+   "ru": "Многозадачность — миф с хорошим пиаром. Одна задача за раз часто быстрее, чем три одновременно.",
+   "en": "Multitasking is a myth with great PR. One task at a time is often faster than three at once."
+  },
+  {
+   "id": "t070",
+   "cat": "workload",
+   "ru": "В конце дня запишите три задачи на завтра. Утром не придётся решать, с чего начать, — решение уже принято.",
+   "en": "At the end of the day, write down three tasks for tomorrow. In the morning the decision is already made."
+  },
+  {
+   "id": "t071",
+   "cat": "workload",
+   "ru": "Если задача висит в списке больше двух недель, решите её судьбу: сделать, делегировать или честно вычеркнуть.",
+   "en": "If a task has sat on your list for over two weeks, decide its fate: do it, delegate it, or honestly cross it out."
+  },
+  {
+   "id": "t072",
+   "cat": "workload",
+   "ru": "Спросите на встрече: «Какой результат нам нужен?» Встреча без цели часто может стать письмом.",
+   "en": "Ask in meetings: \"What outcome do we need?\" A meeting without a goal can often be an email."
+  },
+  {
+   "id": "t073",
+   "cat": "workload",
+   "ru": "Ведите список «сделано» рядом со списком «сделать». В конце недели будет видно, сколько вы на самом деле успели.",
+   "en": "Keep a \"done\" list next to your to-do list. By Friday you'll see how much you actually got through."
+  },
+  {
+   "id": "t074",
+   "cat": "workload",
+   "ru": "«Срочно» и «важно» — разные вещи. Срочное кричит, важное ждёт молча. Найдите сегодня хотя бы полчаса на важное.",
+   "en": "\"Urgent\" and \"important\" aren't the same. Urgent shouts, important waits quietly. Find half an hour for the important."
+  },
+  {
+   "id": "t075",
+   "cat": "workload",
+   "ru": "Если просят добавить задачу, спросите, какую из текущих можно отложить. Дней в неделе по-прежнему пять.",
+   "en": "When asked to add a task, ask which current one can wait. There are still only five days in a week."
+  },
+  {
+   "id": "t076",
+   "cat": "workload",
+   "ru": "Проверяйте почту по расписанию, например в 10, 13 и 16 часов. Между этими точками — работа, а не реакция.",
+   "en": "Check email on a schedule, say at 10, 1 and 4. In between, do the work rather than react."
+  },
+  {
+   "id": "t077",
+   "cat": "workload",
+   "ru": "Готово лучше, чем идеально, особенно для черновиков. Отправьте первую версию и попросите обратную связь пораньше.",
+   "en": "Done beats perfect, especially for drafts. Send version one and ask for feedback early."
+  },
+  {
+   "id": "t078",
+   "cat": "workload",
+   "ru": "Просите помощи до того, как стало поздно. Фраза «Нужен свежий взгляд на эту задачу» легко звучит и для вас, и для коллеги.",
+   "en": "Ask for help before it's too late. Try: \"I could use a fresh pair of eyes on this.\" Easy to say, easy to hear."
+  },
+  {
+   "id": "t079",
+   "cat": "workload",
+   "ru": "Раз в неделю делайте 15-минутный обзор: что сделано, что зависло, что можно отпустить. Голова скажет спасибо.",
+   "en": "Once a week, do a 15-minute review: what's done, what's stuck, what you can let go. Your head will thank you."
+  },
+  {
+   "id": "t080",
+   "cat": "workload",
+   "ru": "Делегирование — это не «спихнуть». Объясните, зачем задача и какой результат нужен, и дайте человеку сделать по-своему.",
+   "en": "Delegating isn't dumping. Explain why the task matters and what result you need, then let the person do it their way."
+  },
+  {
+   "id": "t081",
+   "cat": "movement",
+   "ru": "Поднимитесь по лестнице хотя бы на один этаж вместо лифта. Это маленький спортзал, который всегда рядом.",
+   "en": "Take the stairs for at least one floor instead of the lift. A tiny gym that's always nearby."
+  },
+  {
+   "id": "t082",
+   "cat": "movement",
+   "ru": "Созвон без камеры? Проведите его стоя или прогуливаясь по комнате. Голос часто звучит бодрее.",
+   "en": "Camera-off call? Take it standing or pacing around the room. Your voice often sounds livelier too."
+  },
+  {
+   "id": "t083",
+   "cat": "movement",
+   "ru": "Каждый час — минутка разминки: покрутить плечами, потянуть шею, встать на носочки. Можно прямо у стола.",
+   "en": "Every hour, a one-minute stretch: roll your shoulders, ease your neck, rise up on your toes. Right at your desk."
+  },
+  {
+   "id": "t084",
+   "cat": "movement",
+   "ru": "Выйдите на одну остановку раньше и пройдитесь. Десять минут шага — и в голове становится просторнее.",
+   "en": "Get off one stop early and walk. Ten minutes on foot and your head feels roomier."
+  },
+  {
+   "id": "t085",
+   "cat": "movement",
+   "ru": "Предложите коллеге «встречу на ходу»: обсудить вопрос во время прогулки вокруг здания. Идеи часто идут вместе с ногами.",
+   "en": "Suggest a walking meeting: discuss things while strolling round the building. Ideas often move with your feet."
+  },
+  {
+   "id": "t086",
+   "cat": "movement",
+   "ru": "Движение не обязано быть спортом. Танец под одну песню на кухне тоже считается.",
+   "en": "Movement doesn't have to be sport. Dancing to one song in the kitchen absolutely counts."
+  },
+  {
+   "id": "t087",
+   "cat": "movement",
+   "ru": "Поставьте напоминание «встань» каждые 45 минут. Встали, сделали пару шагов — можно садиться обратно.",
+   "en": "Set a \"stand up\" reminder every 45 minutes. Stand, take a few steps, then sit back down."
+  },
+  {
+   "id": "t088",
+   "cat": "movement",
+   "ru": "Проверьте, как вы сидите: стопы на полу, экран на уровне глаз, плечи опущены. Сейчас, пока читаете это, — работает?",
+   "en": "Check how you're sitting: feet on the floor, screen at eye level, shoulders down. Right now, while reading this. Better?"
+  },
+  {
+   "id": "t089",
+   "cat": "movement",
+   "ru": "Выберите движение, которое вам нравится, а не то, которое «надо». Велосипед, бассейн, йога, прогулка с собакой — всё подходит.",
+   "en": "Pick movement you enjoy, not the one you \"should\" do. Cycling, swimming, yoga, walking a dog: all of it counts."
+  },
+  {
+   "id": "t090",
+   "cat": "movement",
+   "ru": "Обеденная прогулка 15 минут — простой способ подвигаться и увидеть небо. Солнце, дождь — всё равно лучше, чем потолок.",
+   "en": "A 15-minute lunch walk is an easy way to move and see the sky. Sun or rain, still better than the ceiling."
+  },
+  {
+   "id": "t091",
+   "cat": "movement",
+   "ru": "Ставьте мусорную корзину и принтер подальше от стола. Каждый поход — несколько дополнительных шагов.",
+   "en": "Keep the bin and printer away from your desk. Every trip means a few extra steps."
+  },
+  {
+   "id": "t092",
+   "cat": "movement",
+   "ru": "Разомните кисти: сожмите и разожмите кулаки 10 раз, покрутите запястьями. Руки много печатают — им тоже нужна пауза.",
+   "en": "Loosen your hands: clench and open your fists 10 times, roll your wrists. Hands type a lot and deserve a pause too."
+  },
+  {
+   "id": "t093",
+   "cat": "movement",
+   "ru": "Начните с малого: пять минут движения в день лучше, чем час «с понедельника», который так и не настал.",
+   "en": "Start small: five minutes of movement a day beats an hour \"from Monday\" that never arrives."
+  },
+  {
+   "id": "t094",
+   "cat": "movement",
+   "ru": "После работы смените «режим» движением: короткая прогулка или растяжка помогают отделить рабочее время от личного.",
+   "en": "After work, switch modes with movement: a short walk or stretch helps separate work time from your own."
+  },
+  {
+   "id": "t095",
+   "cat": "movement",
+   "ru": "Пригласите друга на прогулку вместо кафе. И поговорите, и подвигаетесь — два в одном.",
+   "en": "Invite a friend for a walk instead of a café. You talk and you move: two for one."
+  },
+  {
+   "id": "t096",
+   "cat": "movement",
+   "ru": "Работаете из дома? Устройте «дорогу на работу»: 10 минут прогулки утром и вечером, будто едете в офис.",
+   "en": "Working from home? Create a fake commute: a 10-minute walk in the morning and evening, as if heading to the office."
+  },
+  {
+   "id": "t097",
+   "cat": "movement",
+   "ru": "Потянитесь, как кошка, сразу после пробуждения. Да, прямо в кровати. Кошки знают толк в жизни.",
+   "en": "Stretch like a cat right after waking up. Yes, still in bed. Cats know a thing or two about life."
+  },
+  {
+   "id": "t098",
+   "cat": "movement",
+   "ru": "Если сидите весь день, попробуйте иногда работать стоя — за высокой стойкой или подоконником. Смена позы уже помогает.",
+   "en": "If you sit all day, try working standing up sometimes, at a high counter or windowsill. Just changing posture helps."
+  },
+  {
+   "id": "t099",
+   "cat": "movement",
+   "ru": "Отмечайте в календаре дни, когда двигались. Цепочка из отметок мотивирует не прерывать её.",
+   "en": "Mark the days you moved on a calendar. A chain of marks is a nice motivation not to break it."
+  },
+  {
+   "id": "t100",
+   "cat": "movement",
+   "ru": "Почувствовали, что «кипите»? Быстрая прогулка по коридору или лестнице помогает выпустить пар до того, как отправить резкое письмо.",
+   "en": "Feeling yourself boil over? A brisk walk down the corridor or stairs helps let off steam before sending a sharp email."
+  },
+  {
+   "id": "t101",
+   "cat": "mind",
+   "ru": "Запишите вечером три вещи, которые сегодня получились. Даже «разобраться со сложным письмом» — тоже победа.",
+   "en": "In the evening, write down three things that went well today. Even \"answered a tricky email\" counts as a win."
+  },
+  {
+   "id": "t102",
+   "cat": "mind",
+   "ru": "Поймали себя на мысли «я ничего не успеваю»? Перефразируйте: «Часть уже готова, остальное запланирую». Звучит иначе, правда?",
+   "en": "Caught yourself thinking \"I get nothing done\"? Rephrase: \"I did part of it, and I'll plan the rest.\" Feels different, right?"
+  },
+  {
+   "id": "t103",
+   "cat": "mind",
+   "ru": "Говорите с собой так, как говорили бы с хорошим другом. Другу вы бы не сказали «опять всё не так», правда?",
+   "en": "Talk to yourself the way you'd talk to a good friend. You wouldn't tell a friend \"wrong again\", would you?"
+  },
+  {
+   "id": "t104",
+   "cat": "mind",
+   "ru": "Перфекционизм часто обещает качество, а приносит усталость. Определите заранее, что для этой задачи значит «достаточно хорошо».",
+   "en": "Perfectionism promises quality but often delivers exhaustion. Decide upfront what \"good enough\" means for this task."
+  },
+  {
+   "id": "t105",
+   "cat": "mind",
+   "ru": "Ошибка — это информация, а не приговор. Спросите себя: «Что я из этого узнаю?» — и двигайтесь дальше.",
+   "en": "A mistake is information, not a verdict. Ask, \"What does this teach me?\" and move on."
+  },
+  {
+   "id": "t106",
+   "cat": "mind",
+   "ru": "Празднуйте маленькие победы: закрыли задачу — съешьте вкусную печеньку, отметьте галочкой, скажите себе «молодец».",
+   "en": "Celebrate small wins: closed a task? Have a nice biscuit, tick it off, tell yourself \"well done\"."
+  },
+  {
+   "id": "t107",
+   "cat": "mind",
+   "ru": "Сравнивать себя с коллегами — как сравнивать свою кухню с чужой витриной. Сравнивайте себя с собой месяц назад.",
+   "en": "Comparing yourself to colleagues is like comparing your kitchen to someone's shop window. Compare yourself to you a month ago."
+  },
+  {
+   "id": "t108",
+   "cat": "mind",
+   "ru": "Дыхание 4–6: вдох на четыре счёта, выдох на шесть. Пять повторов перед важной встречей — и голос звучит спокойнее.",
+   "en": "4-6 breathing: in for four counts, out for six. Five rounds before an important meeting, and your voice sounds steadier."
+  },
+  {
+   "id": "t109",
+   "cat": "mind",
+   "ru": "Тревожная мысль «а вдруг всё пойдёт не так»? Спросите: «А если пойдёт так — что тогда?» Мозг охотно рисует и хорошие сценарии.",
+   "en": "Worried \"what if it all goes wrong\"? Ask, \"What if it goes right?\" Your brain can draw good scenarios too."
+  },
+  {
+   "id": "t110",
+   "cat": "mind",
+   "ru": "Не обязательно любить свою работу каждый день. Нормально иметь средние дни. Средний день — тоже день.",
+   "en": "You don't have to love your job every day. Average days are normal. An average day is still a day."
+  },
+  {
+   "id": "t111",
+   "cat": "mind",
+   "ru": "Похвала от коллеги? Сохраните её в отдельную папку «приятное». Открывайте, когда кажется, что всё зря.",
+   "en": "Got praise from a colleague? Save it in a \"nice things\" folder. Open it when it feels like nothing matters."
+  },
+  {
+   "id": "t112",
+   "cat": "mind",
+   "ru": "Слово «должен» замените на «я выбираю» или «я хочу». «Я выбираю закончить отчёт» звучит как решение, а не как наказание.",
+   "en": "Swap \"I must\" for \"I choose\" or \"I want\". \"I choose to finish the report\" sounds like a decision, not a punishment."
+  },
+  {
+   "id": "t113",
+   "cat": "mind",
+   "ru": "Пять минут тишины в день: сядьте удобно и просто замечайте, как дышите. Мысли улетают — возвращайте внимание без упрёков.",
+   "en": "Five quiet minutes a day: sit comfortably and notice your breath. When thoughts drift, bring attention back, no scolding."
+  },
+  {
+   "id": "t114",
+   "cat": "mind",
+   "ru": "Если голова гудит от мыслей, выпишите всё на бумагу без редактуры, минут на пять. Потом можно выбросить листок.",
+   "en": "If your head is buzzing, write everything down unedited for five minutes. Then feel free to bin the page."
+  },
+  {
+   "id": "t115",
+   "cat": "mind",
+   "ru": "Вы — не ваш KPI. Цифры описывают задачу, а не вашу ценность как человека.",
+   "en": "You are not your KPI. Numbers describe the task, not your worth as a person."
+  },
+  {
+   "id": "t116",
+   "cat": "mind",
+   "ru": "Заметили внутреннего критика? Дайте ему смешное имя. Когда «Гена Дедлайнов» опять ворчит, его проще не принимать всерьёз.",
+   "en": "Noticed your inner critic? Give it a silly name. When \"Deadline Dave\" grumbles again, it's easier not to take him seriously."
+  },
+  {
+   "id": "t117",
+   "cat": "mind",
+   "ru": "Не всё зависит от вас. Разделите лист на две колонки: «могу повлиять» и «не могу». Силы тратьте на первую.",
+   "en": "Not everything is up to you. Split a page into \"can influence\" and \"can't\". Spend your energy on the first column."
+  },
+  {
+   "id": "t118",
+   "cat": "mind",
+   "ru": "Пятница — хороший день, чтобы вспомнить, что получилось за неделю. Не что не успели, а что успели.",
+   "en": "Friday is a good day to recall what went well this week. Not what you didn't finish, but what you did."
+  },
+  {
+   "id": "t119",
+   "cat": "mind",
+   "ru": "Сделайте паузу перед ответом на неприятное письмо: черновик сейчас, отправка через час. Через час слова обычно мягче.",
+   "en": "Pause before replying to an annoying email: draft now, send in an hour. An hour later the words are usually kinder."
+  },
+  {
+   "id": "t120",
+   "cat": "mind",
+   "ru": "Сегодня тяжело? Можно снизить планку: не «сделать всё», а «сделать одно дело и позаботиться о себе». Этого достаточно.",
+   "en": "Tough day? Lower the bar: not \"do everything\" but \"do one thing and look after yourself\". That's enough."
+  },
+  {
+   "id": "t121",
+   "cat": "social",
+   "ru": "Напишите сегодня другу просто так: «Думаю о тебе, как ты?» Связь поддерживается маленькими сообщениями.",
+   "en": "Text a friend today for no reason: \"Thinking of you, how are you?\" Connection is kept alive by small messages."
+  },
+  {
+   "id": "t122",
+   "cat": "social",
+   "ru": "Обедайте иногда с коллегами и договоритесь не говорить о работе. Узнаете, кто из них печёт хлеб или ходит в горы.",
+   "en": "Have lunch with colleagues sometimes and agree not to talk shop. You'll find out who bakes bread or climbs mountains."
+  },
+  {
+   "id": "t123",
+   "cat": "social",
+   "ru": "Поделиться усталостью с близким человеком — не жалоба, а способ не нести всё в одиночку.",
+   "en": "Sharing your tiredness with someone close isn't complaining, it's a way of not carrying everything alone."
+  },
+  {
+   "id": "t124",
+   "cat": "social",
+   "ru": "Договоритесь о регулярной встрече с другом: раз в две недели, одно и то же время. Регулярность защищает от «как-нибудь потом».",
+   "en": "Set a regular catch-up with a friend: every two weeks, same time. Regularity protects against \"sometime later\"."
+  },
+  {
+   "id": "t125",
+   "cat": "social",
+   "ru": "Скажите коллеге спасибо за конкретное: «Спасибо за помощь с таблицей». Это приятно обоим.",
+   "en": "Thank a colleague for something specific: \"Thanks for helping with that spreadsheet.\" It feels good for both of you."
+  },
+  {
+   "id": "t126",
+   "cat": "social",
+   "ru": "Найдите на работе «союзника» — человека, с которым можно честно сказать «сегодня сложно». Обычно он тоже ищет вас.",
+   "en": "Find an ally at work, someone you can honestly tell \"today's hard\". They're often looking for you too."
+  },
+  {
+   "id": "t127",
+   "cat": "social",
+   "ru": "Позвоните, а не напишите. Голос близкого человека иногда заменяет десять сообщений.",
+   "en": "Call instead of texting. A loved one's voice sometimes beats ten messages."
+  },
+  {
+   "id": "t128",
+   "cat": "social",
+   "ru": "Попросить помощи у коллеги — не значит показаться слабым. Люди чаще рады помочь, чем мы думаем.",
+   "en": "Asking a colleague for help doesn't make you look weak. People are often happier to help than we expect."
+  },
+  {
+   "id": "t129",
+   "cat": "social",
+   "ru": "Устройте с друзьями вечер настольных игр. Живой смех за одним столом сложно заменить чем-то ещё.",
+   "en": "Host a board game night with friends. Real laughter around one table is hard to replace."
+  },
+  {
+   "id": "t130",
+   "cat": "social",
+   "ru": "Если вы работаете удалённо, заведите «виртуальный кофе» с коллегой на 15 минут раз в неделю. Без повестки.",
+   "en": "If you're remote, set up a 15-minute virtual coffee with a colleague once a week. No agenda."
+  },
+  {
+   "id": "t131",
+   "cat": "social",
+   "ru": "Слушать другого — тоже отдых от себя. Спросите близкого, как прошёл его день, и правда выслушайте.",
+   "en": "Listening to someone else is a break from yourself too. Ask a loved one about their day, and really listen."
+  },
+  {
+   "id": "t132",
+   "cat": "social",
+   "ru": "Присоединитесь к клубу по интересам: книжному, беговому, языковому. Новые люди — новые темы, кроме дедлайнов.",
+   "en": "Join a club: books, running, languages. New people bring new topics besides deadlines."
+  },
+  {
+   "id": "t133",
+   "cat": "social",
+   "ru": "Не обязательно быть душой компании. Одна тёплая беседа в неделю — уже хорошая порция общения.",
+   "en": "You don't have to be the life of the party. One warm conversation a week is already a good dose of connection."
+  },
+  {
+   "id": "t134",
+   "cat": "social",
+   "ru": "Похвалите коллегу при руководителе. Это укрепляет команду, а в дружной команде легче справляться с нагрузкой.",
+   "en": "Praise a colleague in front of your manager. It strengthens the team, and a close-knit team makes heavy workloads easier to handle."
+  },
+  {
+   "id": "t135",
+   "cat": "social",
+   "ru": "Если в команде тяжёлый период, предложите короткую ретроспективу: что помогает, что мешает. Вместе проще найти выход.",
+   "en": "If your team's having a rough patch, suggest a short retro: what helps, what gets in the way. It's easier to find a way out together."
+  },
+  {
+   "id": "t136",
+   "cat": "social",
+   "ru": "Обнимите близких, если им это нравится. Тёплое прикосновение — простая форма поддержки.",
+   "en": "Hug your loved ones, if they like hugs. A warm touch is a simple form of support."
+  },
+  {
+   "id": "t137",
+   "cat": "social",
+   "ru": "Скучаете по старому другу? Отправьте ему мем или фото из общих воспоминаний. Повод не обязателен.",
+   "en": "Miss an old friend? Send them a meme or a photo from shared memories. No reason needed."
+  },
+  {
+   "id": "t138",
+   "cat": "social",
+   "ru": "Общение с теми, кто не из вашей профессии, помогает вспомнить, что мир больше одного офиса.",
+   "en": "Talking with people outside your field reminds you the world is bigger than one office."
+  },
+  {
+   "id": "t139",
+   "cat": "social",
+   "ru": "Чувствуете, что отдаляетесь от людей? Начните с малого: одно сообщение, один звонок, одна встреча в выходные.",
+   "en": "Feeling yourself pulling away from people? Start small: one message, one call, one meetup at the weekend."
+  },
+  {
+   "id": "t140",
+   "cat": "social",
+   "ru": "Поддержка работает в обе стороны: предложите помощь новичку в команде. Помогая, мы часто сами чувствуем себя увереннее.",
+   "en": "Support works both ways: offer help to a newcomer on your team. Helping others often boosts our own confidence."
+  },
+  {
+   "id": "t141",
+   "cat": "rest",
+   "ru": "Запланируйте отпуск заранее и поставьте его в календарь. Отпуск, у которого есть дата, случается гораздо чаще.",
+   "en": "Plan your vacation ahead and put it in your calendar. A vacation with a date happens far more often."
+  },
+  {
+   "id": "t142",
+   "cat": "rest",
+   "ru": "В выходные выделите хотя бы полдня, где нет ни одного «надо». Только «хочу» или «ничего».",
+   "en": "At the weekend, keep at least half a day free of \"shoulds\". Only \"wants\" or nothing at all."
+  },
+  {
+   "id": "t143",
+   "cat": "rest",
+   "ru": "Вспомните хобби, которое было до этой работы. Рисование, гитара, вязание? Дайте ему 30 минут на этой неделе.",
+   "en": "Remember a hobby you had before this job. Drawing, guitar, knitting? Give it 30 minutes this week."
+  },
+  {
+   "id": "t144",
+   "cat": "rest",
+   "ru": "Отдых — это не награда за продуктивность, а часть её. Батарейку заряжают не тогда, когда она «заслужила».",
+   "en": "Rest isn't a reward for productivity; it's part of it. You charge a battery because it needs it, not because it earned it."
+  },
+  {
+   "id": "t145",
+   "cat": "rest",
+   "ru": "Короткий отпуск тоже отпуск. Длинные выходные за городом иногда освежают не хуже двух недель.",
+   "en": "A short break is still a break. A long weekend out of town can be as refreshing as two weeks away."
+  },
+  {
+   "id": "t146",
+   "cat": "rest",
+   "ru": "Попробуйте отдых без экрана: парк, музей, кухня, книга. Глаза и голова отдыхают по-разному.",
+   "en": "Try screen-free rest: a park, a museum, cooking, a book. Your eyes and head rest in different ways."
+  },
+  {
+   "id": "t147",
+   "cat": "rest",
+   "ru": "Займитесь чем-то руками: пазл, лепка, рассада, сборка модели. Руки заняты — мысли о работе потихоньку отходят.",
+   "en": "Do something with your hands: a puzzle, clay, seedlings, a model kit. Busy hands help work thoughts drift away."
+  },
+  {
+   "id": "t148",
+   "cat": "rest",
+   "ru": "Сделайте «день без планов» хотя бы раз в месяц. Проснитесь и решите по настроению.",
+   "en": "Have a \"no plans day\" at least once a month. Wake up and decide based on your mood."
+  },
+  {
+   "id": "t149",
+   "cat": "rest",
+   "ru": "В отпуске удалите рабочие приложения с телефона на время. Вернуть их можно за минуту, а отдыха прибавится.",
+   "en": "On vacation, temporarily remove work apps from your phone. Reinstalling takes a minute, and your rest gets bigger."
+  },
+  {
+   "id": "t150",
+   "cat": "rest",
+   "ru": "Хобби не обязано быть полезным или монетизированным. Можно плохо рисовать и получать от этого удовольствие.",
+   "en": "A hobby doesn't have to be useful or profitable. You can draw badly and enjoy every minute."
+  },
+  {
+   "id": "t151",
+   "cat": "rest",
+   "ru": "Природа помогает многим переключиться. Выберите ближайший парк или лес и сходите туда в эти выходные.",
+   "en": "Nature helps many people switch off. Pick the nearest park or woods and go there this weekend."
+  },
+  {
+   "id": "t152",
+   "cat": "rest",
+   "ru": "Составьте «меню отдыха»: список из 10 вещей, которые вас радуют, от ванны до прогулки. Когда устали, просто выбирайте.",
+   "en": "Make a \"rest menu\": a list of 10 things that cheer you up, from a bath to a walk. When tired, just pick one."
+  },
+  {
+   "id": "t153",
+   "cat": "rest",
+   "ru": "Не тратьте всё воскресенье на тревогу о понедельнике. Запишите план на неделю за 10 минут, а остальное время — ваше.",
+   "en": "Don't spend all Sunday dreading Monday. Write the week's plan in 10 minutes, and keep the rest of the day for you."
+  },
+  {
+   "id": "t154",
+   "cat": "rest",
+   "ru": "Отпуск лучше не откладывать «до сдачи проекта». Всегда будет следующий проект.",
+   "en": "Better not postpone vacation \"until the project's done\". There will always be another project."
+  },
+  {
+   "id": "t155",
+   "cat": "rest",
+   "ru": "Попробуйте что-то новое в выходные: новый маршрут, новое блюдо, новый жанр кино. Новизна освежает.",
+   "en": "Try something new at the weekend: a new route, a new dish, a new film genre. Novelty is refreshing."
+  },
+  {
+   "id": "t156",
+   "cat": "rest",
+   "ru": "Поваляться на диване — тоже нормальный отдых. Не всё свободное время должно быть «эффективным».",
+   "en": "Lounging on the sofa is perfectly good rest. Not all free time needs to be \"productive\"."
+  },
+  {
+   "id": "t157",
+   "cat": "rest",
+   "ru": "Вернувшись из отпуска, оставьте первый день для разбора почты и встреч с командой, без серьёзных дедлайнов.",
+   "en": "Back from vacation? Keep day one for sorting email and catching up with the team, without big deadlines."
+  },
+  {
+   "id": "t158",
+   "cat": "rest",
+   "ru": "Вечером в будний день сделайте одну приятную вещь только для себя: вкусный ужин, серия любимого шоу, тёплый душ.",
+   "en": "On a weekday evening, do one nice thing just for you: a tasty dinner, an episode of a favourite show, a warm shower."
+  },
+  {
+   "id": "t159",
+   "cat": "rest",
+   "ru": "Если отдых не восстанавливает, попробуйте другой тип: активный вместо пассивного или наоборот.",
+   "en": "If rest isn't recharging you, try a different kind: active instead of passive, or the other way round."
+  },
+  {
+   "id": "t160",
+   "cat": "rest",
+   "ru": "Читайте для удовольствия, а не для развития. Детектив или фэнтези в метро — маленький отпуск от реальности.",
+   "en": "Read for fun, not self-improvement. A mystery or fantasy novel on the train is a tiny vacation from reality."
+  },
+  {
+   "id": "t161",
+   "cat": "help",
+   "ru": "Если усталость, плохой сон или подавленное настроение держатся несколько недель, стоит поговорить с врачом или психологом. Это нормальный шаг заботы о себе.",
+   "en": "If tiredness, poor sleep or low mood last for several weeks, it's worth talking to a doctor or a psychologist. It's a normal step of self-care."
+  },
+  {
+   "id": "t162",
+   "cat": "help",
+   "ru": "Обратиться к специалисту — не признак слабости. Мы же идём к стоматологу, когда болит зуб, а не ждём, пока «само пройдёт».",
+   "en": "Seeing a professional isn't a sign of weakness. We go to the dentist for a toothache instead of waiting for it to \"pass\"."
+  },
+  {
+   "id": "t163",
+   "cat": "help",
+   "ru": "Узнайте, есть ли у вашей компании программа поддержки сотрудников или консультации психолога. Иногда это уже есть, просто о нём мало говорят.",
+   "en": "Find out if your company offers an employee support programme or counselling. Sometimes it exists but isn't talked about much."
+  },
+  {
+   "id": "t164",
+   "cat": "help",
+   "ru": "Поговорите с руководителем о нагрузке заранее, а не когда сил уже нет. Начните с фактов: «У меня сейчас пять проектов, и я не успеваю качественно».",
+   "en": "Talk to your manager about workload early, not when you're running on empty. Start with facts: \"I have five projects and can't do them all well.\""
+  },
+  {
+   "id": "t165",
+   "cat": "help",
+   "ru": "Если вам тяжело, расскажите об этом хотя бы одному человеку, которому доверяете. Произнести вслух — уже половина пути.",
+   "en": "If you're struggling, tell at least one person you trust. Saying it out loud is already half the journey."
+  },
+  {
+   "id": "t166",
+   "cat": "help",
+   "ru": "Советы Миры — это игровые подсказки о бытовых привычках, а не замена консультации специалиста. Если плохо по-настоящему, обратитесь к врачу.",
+   "en": "Mira's tips are in-game hints about everyday habits, not a substitute for a professional. If you feel truly unwell, please see a doctor."
+  },
+  {
+   "id": "t167",
+   "cat": "help",
+   "ru": "Не знаете, с чего начать разговор со специалистом? Запишите заранее, что беспокоит, как давно и что мешает в жизни. Так проще.",
+   "en": "Not sure how to start talking to a professional? Write down what bothers you, for how long, and how it affects life. It makes it easier."
+  },
+  {
+   "id": "t168",
+   "cat": "help",
+   "ru": "Если вам кажется, что вы «просто ленитесь» уже много недель подряд, возможно, дело не в лени. Это хороший повод обсудить состояние с врачом.",
+   "en": "If you've felt \"just lazy\" for many weeks in a row, it may not be laziness at all. That's a good reason to talk it over with a doctor."
+  },
+  {
+   "id": "t169",
+   "cat": "help",
+   "ru": "Попросить отпуск или больничный, когда он нужен, — это ответственно. Работе нужен человек с силами, а не героизм на последнем заряде.",
+   "en": "Asking for leave or sick days when you need them is responsible. Work needs someone with energy, not heroics on the last 1%."
+  },
+  {
+   "id": "t170",
+   "cat": "help",
+   "ru": "Если в остром состоянии становится страшно за себя, не оставайтесь с этим в одиночку: сразу позвоните близкому человеку или в экстренные службы.",
+   "en": "If things ever feel acutely frightening, please don't stay alone with it: call someone close right away or contact your local emergency services."
+  },
+  {
+   "id": "t171",
+   "cat": "keep",
+   "ru": "Вы хорошо спите — это огромный ресурс. Берегите свой режим, даже когда работа пытается его подвинуть.",
+   "en": "You're sleeping well, and that's a huge resource. Protect your routine, even when work tries to push it around."
+  },
+  {
+   "id": "t172",
+   "cat": "keep",
+   "ru": "Вы делаете перерывы — отлично! Это не потерянное время, а инвестиция во вторую половину дня. Так держать.",
+   "en": "You take breaks, brilliant! That's not lost time, it's an investment in the afternoon. Keep it up."
+  },
+  {
+   "id": "t173",
+   "cat": "keep",
+   "ru": "Вы заканчиваете работу вовремя. Это умение многие осваивают годами. Продолжайте защищать свои вечера.",
+   "en": "You finish work on time. Many people take years to learn that. Keep guarding your evenings."
+  },
+  {
+   "id": "t174",
+   "cat": "keep",
+   "ru": "Похоже, у вас здоровые привычки. Запишите, что именно помогает, — пригодится в напряжённый месяц.",
+   "en": "Looks like you've got healthy habits. Write down exactly what helps; it'll come in handy during a busy month."
+  },
+  {
+   "id": "t175",
+   "cat": "keep",
+   "ru": "Ваш режим работает. Не меняйте то, что не сломано, и позвольте себе гордиться этим чуть-чуть.",
+   "en": "Your routine works. Don't fix what isn't broken, and let yourself feel a little proud of it."
+  },
+  {
+   "id": "t176",
+   "cat": "keep",
+   "ru": "Отлично, что вы находите время на отдых. Можно поделиться своими лайфхаками с коллегой, которому сейчас сложнее.",
+   "en": "Great that you make time for rest. Maybe share your tricks with a colleague who's having a harder time."
+  },
+  {
+   "id": "t177",
+   "cat": "keep",
+   "ru": "Вы держите баланс — это звучит скромно, но это настоящий навык. Отметьте его в своём списке побед.",
+   "en": "You're keeping a balance. Sounds modest, but it's a real skill. Add it to your list of wins."
+  },
+  {
+   "id": "t178",
+   "cat": "keep",
+   "ru": "Хорошие привычки любят повторение. Продолжайте в том же духе, и они будут держать вас в трудные недели.",
+   "en": "Good habits love repetition. Keep going, and they'll hold you up during tough weeks."
+  },
+  {
+   "id": "t179",
+   "cat": "keep",
+   "ru": "Ваш ответ радует Миру. Сегодня совет простой: продолжайте, и не забывайте замечать, как вам хорошо.",
+   "en": "Your answer makes Mira happy. Today's advice is simple: keep going, and notice how good it feels."
+  },
+  {
+   "id": "t180",
+   "cat": "keep",
+   "ru": "Если вдруг неделя выбьет из колеи, помните: вы уже умеете восстанавливаться. Просто вернитесь к своим привычкам.",
+   "en": "If a week ever knocks you off track, remember you already know how to recover. Just return to your habits."
+  }
+ ],
+ "quiz": [
+  {
+   "id": "sleep",
+   "ru": "Как вы спите последнюю неделю?",
+   "en": "How have you been sleeping this past week?",
+   "a": [
+    {
+     "ru": "Хорошо, высыпаюсь почти всегда",
+     "en": "Well, I get enough sleep most nights",
+     "cat": "keep"
+    },
+    {
+     "ru": "По-разному, иногда засиживаюсь допоздна",
+     "en": "It varies, sometimes I stay up too late",
+     "cat": "sleep"
+    },
+    {
+     "ru": "Плохо уже давно, просыпаюсь без сил",
+     "en": "Poorly for a long time, I wake up drained",
+     "cat": "help"
+    }
+   ]
+  },
+  {
+   "id": "breaks",
+   "ru": "Как часто вы делаете перерывы в рабочий день?",
+   "en": "How often do you take breaks during the workday?",
+   "a": [
+    {
+     "ru": "Регулярно, и обедаю не за столом",
+     "en": "Regularly, and I eat lunch away from my desk",
+     "cat": "keep"
+    },
+    {
+     "ru": "Иногда, если вспомню",
+     "en": "Sometimes, if I remember",
+     "cat": "breaks"
+    },
+    {
+     "ru": "Почти никогда, ем над клавиатурой",
+     "en": "Almost never, I eat over the keyboard",
+     "cat": "movement"
+    }
+   ]
+  },
+  {
+   "id": "hours",
+   "ru": "Работа часто заходит на ваши вечера и выходные?",
+   "en": "Does work often spill into your evenings and weekends?",
+   "a": [
+    {
+     "ru": "Нет, после работы я отключаюсь",
+     "en": "No, I switch off after work",
+     "cat": "keep"
+    },
+    {
+     "ru": "Бывает, проверяю чаты по вечерам",
+     "en": "Sometimes, I check chats in the evening",
+     "cat": "boundaries"
+    },
+    {
+     "ru": "Постоянно, задач больше, чем часов",
+     "en": "All the time, there are more tasks than hours",
+     "cat": "workload"
+    }
+   ]
+  }
+ ],
+ "after_bad_week": [
+  {
+   "ru": "Неделя сгорела — бывает даже у лучших. Это всего лишь игровая неделя, а вот реальная усталость заслуживает заботы. Попейте воды и потянитесь.",
+   "en": "The week burned out. It happens to the best of us. It's just a game week, but real tiredness deserves care too. Drink some water and stretch."
+  },
+  {
+   "ru": "Ох, персонаж выдохся. В игре это повод начать заново, в жизни — повод сделать паузу. Предлагаю пять минут у окна.",
+   "en": "Oh, your character ran out of steam. In the game it's a restart; in life it's a cue to pause. How about five minutes by the window?"
+  },
+  {
+   "ru": "Шкала на нуле — значит, нагрузка была больше ресурса. Так бывает и вне игры. Маленький шаг: выберите сегодня одну приятную вещь для себя.",
+   "en": "A bar at zero means the load outgrew the resources. That happens off-screen too. Tiny step: pick one nice thing for yourself today."
+  },
+  {
+   "ru": "Игровая неделя потеряна, но вы — нет. Если в жизни тоже накопилась усталость, начните с раннего отбоя сегодня.",
+   "en": "The game week is lost, but you aren't. If real-life tiredness has piled up too, start with an early night tonight."
+  },
+  {
+   "ru": "Не ругайте себя за проигрыш. В следующей неделе попробуйте чаще отдыхать — и персонажу, и себе.",
+   "en": "Don't scold yourself for losing. Next week, try resting more often, both your character and you."
+  },
+  {
+   "ru": "Энергия кончилась? В игре её восстановит новая неделя. В жизни — сон, еда и немного тишины. Начните с чего-то одного.",
+   "en": "Out of energy? In the game, a new week restores it. In life it's sleep, food and a little quiet. Start with just one."
+  },
+  {
+   "ru": "Персонаж сгорел, а Мира рядом. Это просто игра, но если узнаёте в нём себя, давайте обсудим пару привычек.",
+   "en": "Your character burned out, but Mira's here. It's just a game, but if you recognise yourself in them, let's talk about a couple of habits."
+  },
+  {
+   "ru": "Рассудок на нуле — сигнал, что пора сбавить темп. В игре и в жизни работает одно правило: отдых — это часть плана.",
+   "en": "Sanity at zero is a sign to slow down. The same rule works in the game and in life: rest is part of the plan."
+  },
+  {
+   "ru": "Пятница не случилась — бывает. Сделайте три глубоких выдоха и попробуйте ещё раз, но с перерывами.",
+   "en": "Friday didn't happen this time. It happens. Take three deep breaths out and try again, with breaks this time."
+  },
+  {
+   "ru": "Игра честно показала: на одном энтузиазме не доедешь. Маленький шаг на сегодня: закройте рабочие чаты на час.",
+   "en": "The game showed it honestly: enthusiasm alone won't get you there. Tiny step for today: close work chats for an hour."
+  },
+  {
+   "ru": "Неделя прошла не по плану, и это нормально. Здесь можно перезапуститься в один клик, а в жизни — хотя бы выспаться.",
+   "en": "The week didn't go to plan, and that's okay. Here a restart is one click; in life, at least get a good night's sleep."
+  },
+  {
+   "ru": "Ничего страшного, это всего лишь пиксели. Но если вы и вправду устали, заварите чай и посидите пять минут без телефона.",
+   "en": "No harm done, it's just pixels. But if you're actually tired, make some tea and sit for five minutes without your phone."
+  },
+  {
+   "ru": "В игре проигрыш — это опыт. В жизни тоже. Что бы вы сделали иначе на следующей неделе? Одно изменение достаточно.",
+   "en": "In the game, losing is experience. In life too. What would you do differently next week? One change is enough."
+  },
+  {
+   "ru": "Персонаж ушёл на внеплановый отдых. Может, и вам стоит? Хотя бы прогулку до магазина без наушников.",
+   "en": "Your character went on unplanned leave. Maybe you could use some too? Even a walk to the shop without headphones."
+  },
+  {
+   "ru": "Я не буду читать нотаций. Просто напомню: настоящая усталость важнее игровых очков. Позаботьтесь о себе сегодня вечером.",
+   "en": "No lectures from me. Just a reminder: real tiredness matters more than game points. Look after yourself this evening."
+  },
+  {
+   "ru": "Сгорела неделя, а не вы. Прежде чем начать заново, встаньте и потянитесь — заодно и персонажу станет легче.",
+   "en": "The week burned out, not you. Before restarting, stand up and stretch. Your character will feel lighter too."
+  },
+  {
+   "ru": "Бывают недели, когда всё против. В игре — рандом, в жизни — тоже. Сегодня достаточно сделать одно маленькое дело.",
+   "en": "Some weeks everything's against you. In the game it's random, in life too. Today, one small task is enough."
+  },
+  {
+   "ru": "Шкала обнулилась, но пятница всё равно наступит. Пока ждём, предлагаю стакан воды и три медленных вдоха.",
+   "en": "The bar hit zero, but Friday will still come. While we wait, how about a glass of water and three slow breaths?"
+  },
+  {
+   "ru": "Если игра кажется слишком похожей на вашу неделю, это повод взглянуть на свои границы. Начните с выключенных уведомлений вечером.",
+   "en": "If the game feels too much like your real week, it's a nudge to check your boundaries. Start by muting notifications tonight."
+  },
+  {
+   "ru": "Персонажу нужен отдых, и он его получит. А вам? Запланируйте на эти выходные что-нибудь только для себя.",
+   "en": "Your character needs rest and will get it. What about you? Plan something just for yourself this weekend."
+  },
+  {
+   "ru": "Проиграть неделю — не провал, а сигнал. Игра даёт его громко, жизнь — тихо. Прислушайтесь к обоим.",
+   "en": "Losing a week isn't failure, it's a signal. The game says it loudly, life says it quietly. Listen to both."
+  },
+  {
+   "ru": "Ох. Давайте без самокритики: вы играли, чтобы отвлечься, и это уже хорошо. Сделайте короткую паузу и возвращайтесь.",
+   "en": "Oh dear. No self-criticism, please: you played to unwind, and that's already good. Take a short pause and come back."
+  },
+  {
+   "ru": "В игре силы восстанавливаются кнопкой. В жизни — сном, едой, людьми и временем. Не экономьте на этом.",
+   "en": "In the game, energy comes back with a button. In life, with sleep, food, people and time. Don't skimp on those."
+  },
+  {
+   "ru": "Это была тяжёлая игровая неделя. Если и реальная такая же, расскажите о ней кому-то близкому. Вслух становится легче.",
+   "en": "That was a tough game week. If your real one was too, tell someone close about it. Saying it out loud helps."
+  },
+  {
+   "ru": "Ничего, следующая неделя будет новой. Маленький шаг до неё: запишите одну вещь, которая сегодня всё-таки получилась.",
+   "en": "It's alright, next week is a fresh one. A tiny step before then: write down one thing that did go well today."
+  }
+ ],
+ "greet": [
+  {
+   "ru": "Заходите, присаживайтесь. Чай, кофе или просто тишина?",
+   "en": "Come in, take a seat. Tea, coffee, or just some quiet?"
+  },
+  {
+   "ru": "О, привет! Как вы сегодня, по шкале от «понедельник» до «пятница»?",
+   "en": "Oh, hi! How are you today, on a scale from Monday to Friday?"
+  },
+  {
+   "ru": "Рада вас видеть. Дверь закрыта, чаты подождут.",
+   "en": "Glad to see you. The door's closed, the chats can wait."
+  },
+  {
+   "ru": "Здравствуйте! Мой кабинет — зона без дедлайнов.",
+   "en": "Hello! My office is a deadline-free zone."
+  },
+  {
+   "ru": "Привет! Сделаем паузу на пару минут?",
+   "en": "Hi! Shall we take a pause for a couple of minutes?"
+  },
+  {
+   "ru": "Заглянули? Отлично. Плед на диване, если что.",
+   "en": "Popped in? Great. There's a blanket on the sofa if you need it."
+  },
+  {
+   "ru": "Добро пожаловать! Тут можно выдохнуть.",
+   "en": "Welcome! You can breathe out here."
+  },
+  {
+   "ru": "А я как раз заварила чай. Рассказывайте, как неделя?",
+   "en": "I've just made tea. So, how's the week going?"
+  },
+  {
+   "ru": "Привет! Сегодня без нотаций, обещаю. Только пара идей.",
+   "en": "Hi! No lectures today, promise. Just a couple of ideas."
+  },
+  {
+   "ru": "Снова вы — и это хорошо. Забота о себе любит регулярность.",
+   "en": "You again, and that's a good thing. Self-care loves regularity."
+  },
+  {
+   "ru": "Здравствуйте! Цветок на подоконнике тоже рад вас видеть.",
+   "en": "Hello! The plant on the windowsill is happy to see you too."
+  },
+  {
+   "ru": "Проходите. Здесь отчёты не принимаются, только улыбки.",
+   "en": "Come on in. No reports accepted here, only smiles."
+  },
+  {
+   "ru": "Привет! Как спалось? Можно честно.",
+   "en": "Hi! How did you sleep? Honesty welcome."
+  },
+  {
+   "ru": "Ой, вы как раз вовремя — у меня свежий совет.",
+   "en": "Oh, perfect timing, I've got a fresh tip for you."
+  },
+  {
+   "ru": "Добрый день! Пять минут для себя — отличная инвестиция.",
+   "en": "Good afternoon! Five minutes for yourself is a great investment."
+  },
+  {
+   "ru": "Заходите! Телефон можно положить экраном вниз.",
+   "en": "Come in! Feel free to put your phone face down."
+  },
+  {
+   "ru": "Привет-привет! До пятницы ближе, чем кажется.",
+   "en": "Hi there! Friday is closer than it seems."
+  },
+  {
+   "ru": "Рада, что вы зашли. Давайте посмотрим, чем вам помочь.",
+   "en": "Glad you came by. Let's see how I can help."
+  },
+  {
+   "ru": "Здравствуйте! Сегодня в меню: перерыв, вода и немного доброты к себе.",
+   "en": "Hello! Today's menu: a break, some water, and a bit of kindness to yourself."
+  },
+  {
+   "ru": "Входите! Мира на месте, кофемашина тоже.",
+   "en": "Come in! Mira's here, and so is the coffee machine."
+  }
+ ]
+}
