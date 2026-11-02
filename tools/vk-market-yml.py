@@ -34,7 +34,7 @@ out = ['<?xml version="1.0" encoding="UTF-8"?>', '<yml_catalog date="2026-11-02T
        '<categories><category id="1">Игровая валюта</category><category id="2">Наборы</category></categories>', '<offers>']
 for id_, cat, name, price, buy, desc in ITEMS:
     out.append(f'<offer id="{id_}" available="true"><url>{x(S + "?buy=" + buy + "&utm_source=vk_market")}</url><price>{price}</price><currencyId>RUR</currencyId>'
-               f'<categoryId>{cat}</categoryId><picture>{S}promo/vk/market/{id_}.png</picture><name>{x(name)}</name><description>{x(desc)}</description></offer>')
+               f'<categoryId>{cat}</categoryId><picture>{S}promo/vk/market/{id_}.png?v=2</picture><name>{x(name)}</name><description>{x(desc)}</description></offer>')
 out += ['</offers>', '</shop>', '</yml_catalog>']
 text = '\n'.join(out) + '\n'
 path = os.path.join(ROOT, 'promo/vk/market.yml')
