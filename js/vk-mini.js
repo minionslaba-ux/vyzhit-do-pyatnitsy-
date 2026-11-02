@@ -29,11 +29,11 @@
   // того же аккаунта, что «Войти через VK ID» на сайте. Один раз за запуск; не вышло — играем гостем, как раньше.
   const autoLogin = async () => {
     if (!q.get('sign') || typeof registered !== 'function' || registered() || !board.online) return;
-    try { if (sessionStorage.getItem('vdp-vk-login')) return; sessionStorage.setItem('vdp-vk-login', '1'); } catch {}
+    try { if (sessionStorage.getItem('vdp-vk-login') === q.get('sign')) return; sessionStorage.setItem('vdp-vk-login', q.get('sign')); } catch {}  // раз на каждый запуск
     const info = await vkBridge('VKWebAppGetUserInfo');
     const name = [info?.first_name, info?.last_name].filter(Boolean).join(' ');
     try { const j = await fnPost('tg-login', { vk_launch: { params: location.search, name } }); if (j?.access_token) await socialDone(j, 'vk'); }
-    catch { track('vk_app', { detail: 'login_fail' }); }
+    catch (e) { track('vk_app', { detail: `login_fail:${e?.message || ''}:${e?.why || ''}`.slice(0, 60) }); }
   };
   dataReady.then(() => setTimeout(autoLogin, 800));
   bus.on('menu', () => { if (!window.__vkOpened) { window.__vkOpened = 1; track('vk_app', { detail: q.get('vk_platform') || '' }); } });

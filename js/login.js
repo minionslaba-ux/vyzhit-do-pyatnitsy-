@@ -8,7 +8,7 @@ const TG_BOT_ID = window.SUPABASE_CONFIG?.telegram?.botId || 0;
 async function fnPost(name, body) {
   const r = await fetch(SOC_FN() + name, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' }, body: JSON.stringify(body) });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw Object.assign(new Error(j.error || String(r.status)), { code: j.error });
+  if (!r.ok) throw Object.assign(new Error(j.error || String(r.status)), { code: j.error, why: j.why });
   return j;
 }
 // Аккаунт без почты (вошли через Telegram или VK) — служебный адрес, показываем название сервиса
