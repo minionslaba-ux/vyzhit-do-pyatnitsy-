@@ -28,6 +28,8 @@ export const ADMIN_COMMANDS2 = [
   { command: 'pushes', description: 'Подписчики пушей' },
   { command: 'groups', description: 'Группы Telegram с ботом' },
   { command: 'vk', description: 'ВКонтакте: игроки и посты' },
+  { command: 'vkpost', description: 'Пост в группу ВК: /vkpost текст' },
+  { command: 'vkqueue', description: 'Очередь постов ВК' },
 ];
 export const HELP2 = `
 
@@ -47,7 +49,11 @@ export const HELP2 = `
 📈 <b>Аналитика</b>
 /cards — на каких карточках чаще всего увольняют
 /breaks — какие разминки играют · /ads — показы рекламы
-/pushes — подписчики пушей · /groups — группы Telegram · /vk — ВКонтакте`;
+/pushes — подписчики пушей · /groups — группы Telegram · /vk — ВКонтакте
+
+📰 <b>Посты в группу ВК</b> (каждый день в 12:31 выходит пост из очереди, пусто — обычный: Мира, разминка, «Что бы вы выбрали?»; по понедельникам — итоги недели)
+/vkpost текст — превью и кнопки «В очередь» / «Сейчас». Картинка: вставьте в текст ссылку на фото из группы (vk.com/photo-242860183_…)
+/vkqueue — что в очереди · /vkdel номер — убрать из очереди`;
 
 type Ctx = { db: any; api: (m: string, b?: Record<string, unknown>) => Promise<any>; token: string };
 
@@ -73,6 +79,32 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
   const { db, api } = ctx;
   const say = (text: string, extra: Record<string, unknown> = {}) => api('sendMessage', { chat_id: chatId, text: text.slice(0, 4000), parse_mode: 'HTML', disable_web_page_preview: true, ...extra });
   switch (cmd) {
+    case 'vkpost': {
+      const raw = rest.trim();
+      if (raw.length < 5) { await say('Формат: <code>/vkpost текст поста</code>\nСсылку на игру добавьте в текст. Картинка — ссылка на фото из группы: vk.com/photo-242860183_457239039'); return true; }
+      const m = raw.match(/(?:https?:\/\/)?(?:m\.)?vk\.(?:com|ru)\/photo(-?\d+_\d+)/);
+      const photo = m ? `photo${m[1]}` : null, text = (m ? raw.replace(m[0], '') : raw).trim().slice(0, 4000);
+      const { data: d } = await db.from('admin_drafts').insert({ tg_id: tg, kind: 'vkpost', payload: { text, photo } }).select('id').single();
+      const { count } = await db.from('vk_queue').select('id', { head: true, count: 'exact' }).is('posted_at', null);
+      await say(`📰 <b>Пост в ВК</b>${photo ? ' · 🖼 с картинкой' : ''}\n\n${esc(text)}\n\n<i>В очереди сейчас: ${count ?? 0}. «В очередь» — выйдет в 12:31 после остальных.</i>`,
+        { reply_markup: { inline_keyboard: [[{ text: '🗓 В очередь', callback_data: `adm:${d.id}:queue` }, { text: '🚀 Сейчас', callback_data: `adm:${d.id}:now` }], [{ text: '✖ Отмена', callback_data: `adm:${d.id}:no` }]] } });
+      return true;
+    }
+    case 'vkqueue': {
+      const { data } = await db.from('vk_queue').select('id, text, photo, created_at').is('posted_at', null).order('id').limit(20);
+      const { data: done } = await db.from('vk_queue').select('id, post_id, posted_at').not('posted_at', 'is', null).order('posted_at', { ascending: false }).limit(3);
+      const lines = [`📰 <b>Очередь постов ВК: ${data?.length || 0}</b> (по одному в день в 12:31, кроме понедельника)`];
+      (data || []).forEach((q: any, i: number) => lines.push(`${i + 1}. <code>#${q.id}</code>${q.photo ? ' 🖼' : ''} ${esc(q.text.split('\n')[0].slice(0, 80))}`));
+      if (done?.length) lines.push('', '<b>Недавно вышли:</b>', ...done.map((q: any) => `#${q.id} — ${msk(q.posted_at).slice(5)} https://vk.com/wall-${VK_GROUP}_${q.post_id}`));
+      lines.push('', 'Убрать: /vkdel номер');
+      await say(lines.join('\n')); return true;
+    }
+    case 'vkdel': {
+      const id = parseInt(rest.replace('#', ''), 10);
+      if (!id) { await say('Формат: <code>/vkdel 5</code> — номер из /vkqueue'); return true; }
+      const { data } = await db.from('vk_queue').delete().eq('id', id).is('posted_at', null).select('id');
+      await say(data?.length ? `🗑 Пост #${id} убран из очереди.` : 'Такого поста в очереди нет (или он уже вышел).'); return true;
+    }
     case 'health': {
       const t0 = Date.now();
       const site = await fetch(SITE, { cache: 'no-store' }).then(r => r.status).catch(() => 0), ms = Date.now() - t0;
@@ -265,6 +297,26 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
 
 // Кнопки под превью /msg. true — черновик наш и обработан
 export async function adminCallback2(ctx: Ctx, d: any, act: string, done: (t: string) => Promise<any>): Promise<boolean> {
+  if (d.kind === 'vkpost') {
+    const p = d.payload || {};
+    if (act === 'queue') {
+      const { data, error } = await ctx.db.from('vk_queue').insert({ text: p.text, photo: p.photo, created_by: d.tg_id }).select('id').single();
+      await done(error ? `❌ ${esc(error.message)}` : `🗓 Пост #${data.id} в очереди — выйдет в ближайшие дни в 12:31. Очередь: /vkqueue`);
+      return true;
+    }
+    if (act === 'now') {
+      const token = Deno.env.get('VK_GROUP_TOKEN') || '', gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
+      if (!token || !gid) { await done('❌ Нет ключа группы ВК (VK_GROUP_TOKEN / VK_GROUP_ID в секретах).'); return true; }
+      const post = (extra: Record<string, string>) => fetch('https://api.vk.com/method/wall.post', { method: 'POST', body: new URLSearchParams({ owner_id: `-${gid}`, from_group: '1', message: p.text, ...extra, access_token: token, v: '5.199' }) }).then(x => x.json()).catch(e => ({ error: { error_msg: String(e) } }));
+      let r = await post(p.photo ? { attachments: p.photo } : {});
+      if (r.error && p.photo) r = await post({});
+      if (r.error) { await done(`❌ ВК: ${esc(r.error.error_msg || r.error.error_code)}`); return true; }
+      await ctx.db.from('vk_queue').insert({ text: p.text, photo: p.photo, created_by: d.tg_id, posted_at: new Date().toISOString(), post_id: r.response?.post_id ?? null });
+      await done(`✅ Опубликовано: https://vk.com/wall-${VK_GROUP}_${r.response?.post_id}`);
+      return true;
+    }
+    return true;
+  }
   if (d.kind !== 'dm') return false;
   if (act !== 'send') return true;
   const p = d.payload || {};

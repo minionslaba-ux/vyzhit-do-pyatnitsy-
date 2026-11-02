@@ -64,6 +64,11 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   }
   // по понедельникам — итоги недели (kind 3); в остальные дни по кругу 0 Мира, 1 разминка, 2 ситуация
   const kind = kindArg ?? (new Date(mskDate).getUTCDay() === 1 ? 3 : Math.floor(Date.parse(mskDate) / 864e5) % 3);
+  // Очередь анонсов (таблица vk_queue, команда бота /vkpost): в любой день, кроме понедельника (итоги недели), — сначала она
+  if (kind !== 3 && kindArg == null) {
+    const q = await vkQueuePost(db, gid, token, test);
+    if (q && !q.error) { if (!test && q.post_id) await db.from('vk_posts').update({ post_id: q.post_id }).eq('day', mskDate); return q.result; }  // ошибка — выйдет обычный пост
+  }
   const link = (q = '') => `${SITE}?utm_source=vk${q}`;
   let message = '', url = link();
   if (kind === 0) {
@@ -91,4 +96,19 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   if (r.error) { if (!test) await db.from('vk_posts').delete().eq('day', mskDate); return `error: ${r.error.error_msg || r.error.error_code}${note}`; }  // попробуем при следующем вызове
   if (!test) await db.from('vk_posts').update({ post_id: r.response?.post_id ?? null }).eq('day', mskDate);
   return `posted ${r.response?.post_id}${note}`;
+}
+
+// Опубликовать первый пост из очереди vk_queue. null — очередь пуста; { result } — что получилось
+export async function vkQueuePost(db: any, gid: string, token: string, test = false, id?: number): Promise<{ result: string; post_id?: number; error?: boolean } | null> {
+  let qb = db.from('vk_queue').select('id, text, photo').is('posted_at', null).order('id', { ascending: true }).limit(1);
+  if (id) qb = db.from('vk_queue').select('id, text, photo').eq('id', id).is('posted_at', null).limit(1);
+  const { data } = await qb;
+  const q = data?.[0]; if (!q) return null;
+  if (test) return { result: `queue #${q.id} (test, not posted)` };
+  let r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: q.text, ...(q.photo ? { attachments: q.photo } : {}) }, token);
+  if (r.error && q.photo) r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: q.text }, token);
+  if (r.error) return { result: `error: ${r.error.error_msg || r.error.error_code} (queue #${q.id})`, error: true };
+  const post_id = r.response?.post_id ?? null;
+  await db.from('vk_queue').update({ posted_at: new Date().toISOString(), post_id }).eq('id', q.id);
+  return { result: `posted ${post_id} (queue #${q.id})`, post_id };
 }
