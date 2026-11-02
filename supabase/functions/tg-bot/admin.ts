@@ -1,5 +1,6 @@
 // Команды разработчика в личке бота (только dev_admins). Всё, что уходит людям, сначала показывается превью с кнопками
 // «Отправить» / «Отмена» — черновик хранится в admin_drafts. Список команд — /help.
+import { ADMIN_COMMANDS2, HELP2, adminCallback2, adminCommand2 } from './admin2.ts';
 const SITE = 'https://survivefriday.com/';
 const APP = 'https://t.me/Survivefridaybot?startapp';
 const POOLS = ['pool', 'pool2', 'pool3', 'pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool_l3a', 'pool_l3b', 'pool_l3c'];
@@ -26,6 +27,7 @@ export const ADMIN_COMMANDS = [
   { command: 'export', description: 'Игроки в Excel' },
   { command: 'idea', description: 'Что поправить в игре: /idea текст' },
   { command: 'ideas', description: 'Список идей и что с ними сделано' },
+  ...ADMIN_COMMANDS2,
 ];
 const HELP = `🛠 <b>Команды разработчика</b>
 
@@ -52,7 +54,7 @@ const HELP = `🛠 <b>Команды разработчика</b>
 
 🛠 <b>Правки игры</b>
 /idea текст — что поправить или добавить в игре. Каждый день в 03:17 МСК Claude разбирает новые идеи, правит игру и присылает сюда отчёт
-/ideas — последние идеи и что с ними сделано`;
+/ideas — последние идеи и что с ними сделано` + HELP2;
 
 type Ctx = { db: any; api: (m: string, b?: Record<string, unknown>) => Promise<any>; token: string };
 
@@ -188,7 +190,7 @@ export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: 
       await say(`📌 Быстрое меню в группах: <code>${esc(JSON.stringify(r))}</code>`); return true;
     }
   }
-  return false;
+  return adminCommand2(ctx, cmd, rest, chatId, tg);
 }
 
 // Нажатие кнопки под превью
@@ -209,6 +211,7 @@ export async function adminCallback(ctx: Ctx, cq: any) {
   if (act === 'again' && d.kind === 'event') { await db.from('admin_drafts').delete().eq('id', d.id); await done('🔄 Ищу другую…'); return adminCommand(ctx, 'event', '', chatId, tg); }
   await db.from('admin_drafts').delete().eq('id', d.id);  // один черновик — одна отправка
   if (act === 'no') return done('✖ Отменено.');
+  if (await adminCallback2(ctx, d, act, done)) return;
   const p = d.payload || {};
   if (d.kind === 'push') {
     const { data: k } = await db.from('push_keys').select('cron_key').eq('id', 1).maybeSingle();
