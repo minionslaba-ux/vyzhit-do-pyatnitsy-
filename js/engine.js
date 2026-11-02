@@ -191,7 +191,7 @@ function loadLevel(lvl) {
 // Перед стартом недели ждём данные; кнопка показывает, что идёт загрузка
 async function whenReady(btn) {
   if (dataLoaded) return;
-  const t = btn?.textContent; if (btn) { btn.textContent = 'Загружаю карточки…'; btn.disabled = true; }
+  const t = btn?.textContent; if (btn) { btn.textContent = L('Загружаю карточки…', 'Loading cards…'); btn.disabled = true; }
   await dataReady;
   if (btn) { btn.textContent = t; btn.disabled = false; }
 }

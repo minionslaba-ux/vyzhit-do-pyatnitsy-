@@ -213,7 +213,7 @@ bus.on('weekEnd', x => {
   const n = Math.round(S.earned || 0); if (!n) return;
   prefs.x2Weeks--; savePrefs(); addCash(n);
   track('shop_x2', { detail: String(n) });
-  setTimeout(() => toast(L(`⚡ x2 у.е.: ещё +${money(n)} к зарплате недели`, `⚡ x2 $: another +${money(n)} on top of this week’s pay`)), 2000);
+  setTimeout(() => toast(L(`⚡ x2 у.е.: ещё +${money(n)} к зарплате недели`, `⚡ Double pay: another +${money(n)} on top of this week’s pay`)), 2000);
 });
 // Редкие вещи греют душу каждую неделю
 bus.on('weekEnd', x => {
@@ -236,7 +236,7 @@ const seasonLevel = st => Math.min(SEASON_LEVELS, st.weeks || 0);
 const SEASON_FREE = { 2: { ue: 2 }, 4: { ue: 2 }, 6: { hints: 2 }, 8: { ue: 3 }, 10: { ue: 5 } };
 const SEASON_PAID = { 1: { ue: 8 }, 2: { hints: 3 }, 3: { ue: 12 }, 4: { x2: 1 }, 5: { ue: 16 }, 6: { hints: 5 }, 7: { ue: 20 }, 8: { noads: 7 }, 9: { ue: 25 }, 10: { item: 1, theme: 1 } };
 const rewardText = (r, st) => [
-  r.ue && `💰 ${money(r.ue)}`, r.hints && `💡 ${L(`${r.hints} подсказ${r.hints < 5 ? 'ки' : 'ок'}`, `${r.hints} hints`)}`, r.x2 && `⚡ x2 ${L('у.е. на неделю', '$ for a week')}`,
+  r.ue && `💰 ${money(r.ue)}`, r.hints && `💡 ${L(`${r.hints} подсказ${r.hints < 5 ? 'ки' : 'ок'}`, `${r.hints} hints`)}`, r.x2 && `⚡ ${L('x2 у.е. на неделю', 'Double pay for a week')}`,
   r.noads && `🚫 ${L(`${r.noads} дней без рекламы`, `${r.noads} days ad-free`)}`, r.item && `🏆 ${esc(goodText(seasonItem(st?.id || seasonId()), shpHero()))}`, r.theme && `🎨 ${L('тема на выбор', 'a theme of your choice')}`,
 ].filter(Boolean).join(' + ');
 const seasonClaimable = st => {
@@ -325,7 +325,7 @@ function seasonCard() {
 const noAdsSale = () => !window.VK_MINI && !window.NO_PAY;
 const DEALS = [
   { id: 'hints5', ico: '💡', base: 10, price: 6, t: () => L('5 подсказок', '5 hints') },
-  { id: 'x2', ico: '⚡', base: X2_PRICE, price: 4, t: () => L('x2 у.е. за неделю', 'x2 $ for a week') },
+  { id: 'x2', ico: '⚡', base: X2_PRICE, price: 4, t: () => L('x2 у.е. за неделю', 'Double pay for a week') },
   { id: 'noads7', ico: '🚫', base: 12, price: 8, t: () => L('Неделя без рекламы', 'A week ad-free') },
   { id: 'item', ico: '✨', t: () => '' },
   { id: 'pet', ico: '🐾', t: () => '' },
@@ -462,7 +462,7 @@ function openStore(section = '', after) {
           <p class="join-err" role="alert"></p>
           <button class="btn-main" type="button" data-product="noads">${L('Купить за 99 ₽', 'Buy for 99 ₽')}</button></div>`}</section>
       <section id="shpBoost" class="shp-sec"><h3 class="hs-h">⚡ ${L('Бустеры', 'Boosters')}</h3>
-        ${rows([['x2', '⚡', L('x2 у.е. за неделю', 'x2 $ for a week'), X2_PRICE, (prefs.x2Weeks || 0) ? L(`зарплата недели — ещё раз · запас: ${prefs.x2Weeks} нед.`, `this week’s pay again · stocked: ${prefs.x2Weeks} wk`) : L('зарплата ближайшей недели — ещё раз', 'your next week’s pay, once more')],
+        ${rows([['x2', '⚡', L('x2 у.е. за неделю', 'Double pay for a week'), X2_PRICE, (prefs.x2Weeks || 0) ? L(`зарплата недели — ещё раз · запас: ${prefs.x2Weeks} нед.`, `this week’s pay again · stocked: ${prefs.x2Weeks} wk`) : L('зарплата ближайшей недели — ещё раз', 'your next week’s pay, once more')],
           ['hints', '💡', L(`${HINTS_PACK.n} подсказок`, `${HINTS_PACK.n} hints`), HINTS_PACK.price, L(`вместо ${money(HINTS_PACK.n * HINT_BASE)}${prefs.freeHints ? ` · есть: ${prefs.freeHints}` : ''}`, `instead of ${money(HINTS_PACK.n * HINT_BASE)}${prefs.freeHints ? ` · you have ${prefs.freeHints}` : ''}`)]],
           ([id, ico, t, price, sub]) => `<div class="gp-item"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-boost="${id}"`, price)}</div>`)}</section>
       <section id="shpRare" class="shp-sec"><h3 class="hs-h">✨ ${L('Редкое — только здесь', 'Rare — only here')}</h3>
@@ -496,7 +496,7 @@ function openStore(section = '', after) {
     });
     m.querySelectorAll('[data-boost]').forEach(b => b.onclick = () => {
       const id = b.dataset.boost;
-      if (id === 'x2') { if (!shpSpend(X2_PRICE, 'x2', L('x2 у.е. за неделю', 'x2 $ for a week'), back)) return; prefs.x2Weeks = (prefs.x2Weeks || 0) + 1; toast(L('⚡ x2 у.е.: зарплата следующей законченной недели придёт ещё раз', '⚡ x2 $: the pay for your next finished week comes twice')); }
+      if (id === 'x2') { if (!shpSpend(X2_PRICE, 'x2', L('x2 у.е. за неделю', 'Double pay for a week'), back)) return; prefs.x2Weeks = (prefs.x2Weeks || 0) + 1; toast(L('⚡ x2 у.е.: зарплата следующей законченной недели придёт ещё раз', '⚡ Double pay: the pay for your next finished week comes twice')); }
       if (id === 'hints') { if (!shpSpend(HINTS_PACK.price, 'hints', L(`${HINTS_PACK.n} подсказок`, `${HINTS_PACK.n} hints`), back)) return; prefs.freeHints = (prefs.freeHints || 0) + HINTS_PACK.n; toast(L(`💡 +${HINTS_PACK.n} подсказок — кнопка «Подсказка» в неделе`, `💡 +${HINTS_PACK.n} hints — use the “Hint” button during a week`)); }
       savePrefs(); render();
     });
