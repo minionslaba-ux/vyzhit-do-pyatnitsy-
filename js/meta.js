@@ -354,7 +354,7 @@ bus.on('weekEnd', x => {
   const at = views.end.querySelector('.end-sheet .stack'); if (!at) return;
   store.set('vdp-vk-ask', wk);
   at.insertAdjacentHTML('beforebegin', `<a class="vk-invite" id="vkInvite" href="https://vk.ru/${g}?utm_source=game_win" target="_blank" rel="noopener">
-    <span class="vk-mark" aria-hidden="true">VK</span><span><b>Мы во ВКонтакте</b><small>Разминка дня, советы Миры и «Что бы вы выбрали?» — подпишитесь, чтобы не пропустить</small></span></a>`);
+    <span class="vk-mark" aria-hidden="true">VK</span><span><b>Мы во ВКонтакте</b><small>Разминка дня, советы Миры и «Что бы вы выбрали?»</small></span></a>`);
   $('vkInvite').onclick = () => { prefs.vkJoined = 1; store.set(KEY.prefs, prefs); track('vk_group', { detail: 'win' }); };
 });
 async function tgGroup() {

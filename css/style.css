@@ -2412,3 +2412,5 @@ html.light .btn-vkgroup { color: #0058cc; }
 .vk-invite b { display: block; font-size: 14.5px; } .vk-invite small { display: block; font-size: 13px; line-height: 1.35; color: var(--text-2); margin-top: 2px; }
 .vk-invite .vk-mark { width: 40px; height: 40px; border-radius: 12px; font-size: 13px; }
 @media (prefers-reduced-motion: reduce) { .vk-invite { animation: none; } }
+.vk-invite, .psy-invite { text-align: left; }
+.vk-invite > span:last-child, .psy-invite > span:last-child { min-width: 0; }
