@@ -66,6 +66,13 @@ def psy_check():
     return len(files)
 
 
+def vk_market():
+    # Товары ВК (promo/vk/market.yml) — цены из robokassa-pay; при выкладке пересобираем, при --check только проверяем
+    r = subprocess.run([sys.executable, 'tools/vk-market-yml.py', *(['--check'] if '--check' in sys.argv else [])], capture_output=True, text=True)
+    if r.returncode:
+        problems.append((r.stdout or r.stderr).strip())
+
+
 def lists_check():
     idx = open('index.html', encoding='utf-8').read()
     en = open('en.html', encoding='utf-8').read()
@@ -122,6 +129,7 @@ def main():
     nj = json_check()
     ne = en_check()
     psy_check()
+    vk_market()
     ns = lists_check()
     print(f'Версия: v{v} · JS-файлов: {js} · JSON: {nj} · переводов карточек: {ne} · скриптов в index.html: {ns}')
     if problems:
