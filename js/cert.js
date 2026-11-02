@@ -90,7 +90,7 @@ async function certStart(after) {
       track('cert_life_buy', { detail: key });
       toast(L(`Подсказка куплена: −${money(CERT_LIFE_PRICE)} · на счёте ${money(C2.bank)}`, `Lifeline bought: −${money(CERT_LIFE_PRICE)} · balance ${money(C2.bank)}`));
       use();
-    } else if (window.VDP_PLATFORM) toast(L(`Подсказка стоит ${money(CERT_LIFE_PRICE)} — на счёте не хватает`, `A lifeline costs ${money(CERT_LIFE_PRICE)} — not enough balance`));
+    } else if (window.VDP_PLATFORM || window.NO_PAY) toast(L(`Подсказка стоит ${money(CERT_LIFE_PRICE)} — на счёте не хватает`, `A lifeline costs ${money(CERT_LIFE_PRICE)} — not enough balance`));
     else {
       away = true;
       openTopup({ need: lackOf(CERT_LIFE_PRICE), why: L(`Подсказка в аттестации — ${money(CERT_LIFE_PRICE)} · на счёте ${money(C2.bank)} · таймер на паузе`, `An exam lifeline costs ${money(CERT_LIFE_PRICE)} · you have ${money(C2.bank)} · the timer is paused`),

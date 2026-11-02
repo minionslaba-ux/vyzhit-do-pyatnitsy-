@@ -113,7 +113,7 @@ function themeCouponPick(back) {
 
 // ---------- Стартовый набор ----------
 // В ВК — только если включена оплата голосами и владелец назначил цену набора (vkPrice, js/topup.js)
-const starterOn = () => !window.VDP_PLATFORM && (!window.VK_MINI || vkPrice('starter') > 0) && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
+const starterOn = () => !window.VDP_PLATFORM && !window.NO_PAY && (!window.VK_MINI || vkPrice('starter') > 0) && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
 // where: 'tu' — в окне пополнения (там своё согласие с офертой), 'shp' — в магазине
 function shopStarterHtml(where = 'shp') {
   if (!starterOn()) return '';
@@ -144,6 +144,7 @@ async function productPay(btn) {
   const agree = card?.querySelector('input[type=checkbox]') || box.querySelector('#tuAgree'), err = card?.querySelector('.join-err') || box.querySelector('#tuErr');
   const say = t => { if (err) err.textContent = t; else toast(t); };
   if (agree && !agree.checked) return say(L('Отметьте согласие с офертой.', 'Please accept the public offer.'));
+  if (window.NO_PAY) return toast(L('В этой версии игры покупок нет. У.е. зарабатываются в игре: зарплата в карьере, задания дня, разминки и серия дней.', 'There are no purchases in this version. Earn $ in the game: career salary, daily tasks, breaks and day streaks.'));
   if (window.VK_MINI) return toast(L('Покупки в приложении ВКонтакте пока недоступны — играть можно бесплатно', 'Purchases aren’t available in the VK app yet — the game is free to play'));
   if (window.VDP_PLATFORM) return toast(L('Покупка доступна на сайте survivefriday.com', 'Purchases are available on survivefriday.com'));
   if (!(typeof registered === 'function' && registered())) {
@@ -169,7 +170,7 @@ async function productPay(btn) {
 
 // ---------- «☕ Кофе разработчикам»: цифровой товар за 100 ₽ (не пожертвование) — значок «☕ Меценат ×N» в профиле и +10 у.е. ----------
 const coffeeBadge = () => (prefs.coffeeN || 0) > 0 ? `<span class="shp-maecenas" title="${L('Купил кофе разработчикам', 'Bought the devs a coffee')}">☕ ${L('Меценат', 'Patron')}${prefs.coffeeN > 1 ? ` ×${prefs.coffeeN}` : ''}</span>` : '';
-const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM ? '' : window.VK_MINI ? coffeeVkHtml() : `<div class="shp-coffee shp-pay">
+const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM || window.NO_PAY ? '' : window.VK_MINI ? coffeeVkHtml() : `<div class="shp-coffee shp-pay">
   <b>☕ ${L('Кофе разработчикам', 'A coffee for the devs')} — 100 ₽</b>
   <p>${L('Игру делает один человек по вечерам. Угостите разработчика кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Treat the developer to a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
   ${coffeeBadge() ? `<p class="shp-ok">${L('Ваш значок:', 'Your badge:')} ${coffeeBadge()} — ${L('спасибо!', 'thank you!')}</p>` : ''}
@@ -321,7 +322,7 @@ function seasonCard() {
 
 // ---------- предложение дня ----------
 // Где у игры нет своей рекламы (приложение ВКонтакте) — «без рекламы» не продаём: ни раздел, ни предложение дня
-const noAdsSale = () => !window.VK_MINI;
+const noAdsSale = () => !window.VK_MINI && !window.NO_PAY;
 const DEALS = [
   { id: 'hints5', ico: '💡', base: 10, price: 6, t: () => L('5 подсказок', '5 hints') },
   { id: 'x2', ico: '⚡', base: X2_PRICE, price: 4, t: () => L('x2 у.е. за неделю', 'x2 $ for a week') },
@@ -455,7 +456,7 @@ function openStore(section = '', after) {
         <p class="field-note">${noAdsOn() ? `<b class="shp-ok">✓ ${prefs.noAdsForever ? L('Реклама отключена навсегда', 'Ads are off forever') : L(`Реклама отключена: ещё ${pl(noAdsDays(), 'день', 'дня', 'дней', 'day', 'days')}`, `Ads are off: ${pl(noAdsDays(), '', '', '', 'more day', 'more days')}`)}</b> · ` : ''}${L('Ни обязательной рекламы между неделями и после разминок, ни всплывающих предложений. «Реклама за награду» остаётся — только если сами нажмёте.', 'No ads between weeks or after warm-ups and no ad pop-ups. Rewarded ads stay — only when you tap them.')}</p>
         ${prefs.noAdsForever ? '' : rows([['d30', '📅', L('30 дней без рекламы', '30 days ad-free'), NOADS.d30.price, L('продлевает текущий срок', 'extends your current period')], ['forever', '♾️', L('Навсегда', 'Forever'), NOADS.forever.price, L('один раз — и больше никакой рекламы', 'pay once — no more ads, ever')]],
           ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}
-        ${prefs.noAdsForever || window.VDP_PLATFORM || window.VK_MINI ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
+        ${prefs.noAdsForever || window.VDP_PLATFORM || window.VK_MINI || window.NO_PAY ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
           <p>${L('Оплата картой или СБП, без трат у.е. Срок складывается с текущим.', 'Pay by card, no $ spent. Adds to your current period.')}</p>
           <label class="tu-agree"><input type="checkbox"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>
           <p class="join-err" role="alert"></p>

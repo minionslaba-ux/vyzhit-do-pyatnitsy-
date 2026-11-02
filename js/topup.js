@@ -18,6 +18,7 @@ const firstBonusOn = () => !prefs.paidUser;
 const lackOf = price => { const C2 = careerNow(); return C2 ? Math.max(0, price - Math.max(0, C2.bank)) : price; };
 
 function openTopup({ need = 0, why = '', then } = {}) {
+  if (window.NO_PAY) { toast(L('В этой версии игры покупок нет. У.е. зарабатываются в игре: зарплата в карьере, задания дня, разминки и серия дней.', 'There are no purchases in this version. Earn $ in the game: career salary, daily tasks, breaks and day streaks.')); return then?.(); }  // RuStore — без оплаты
   if (window.VK_MINI) return openVkTopup({ need, why, then });  // внутри ВК — голоса ВК (или «пока недоступно»)
   if (window.VDP_PLATFORM) return toast(L('Покупка у.е. доступна на сайте survivefriday.com', 'Buying $ is available on survivefriday.com'));
   const m = $('modal'), C2 = careerNow();
@@ -156,7 +157,7 @@ document.addEventListener('click', e => {
   openTopup({ need: +b.dataset.topup || 0, why: b.dataset.topupWhy || '', then: back });
 }, true);
 // Кнопка «нет денег» → «пополнить»: html-кусок для вставки рядом с ценой
-const topupBtn = (need, back, why = '', cls = 'btn-chip tu-btn') => `<button type="button" class="${cls}" data-topup="${need}" data-topup-back="${back || ''}" data-topup-why="${esc(why)}">💰 ${need ? L(`Не хватает ${need} — пополнить`, `$${need} short — top up`) : L('Пополнить', 'Top up')}</button>`;
+const topupBtn = (need, back, why = '', cls = 'btn-chip tu-btn') => window.NO_PAY ? '' : `<button type="button" class="${cls}" data-topup="${need}" data-topup-back="${back || ''}" data-topup-why="${esc(why)}">💰 ${need ? L(`Не хватает ${need} — пополнить`, `$${need} short — top up`) : L('Пополнить', 'Top up')}</button>`;
 
 // ---------- зачисление оплаченных у.е. ----------
 // Робокасса подтверждает оплату серверу (robokassa-result), а игра забирает у.е. на счёт карьеры (claim_purchases):

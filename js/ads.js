@@ -270,6 +270,7 @@ function adForced(go) {
   const run = () => { if (fired) return; fired = true; clearInterval(t); m.hidden = true; adWatch(() => go(), { forced: true }); };
   const t = setInterval(() => { n--; if ($('afT')) $('afT').textContent = n; if (n <= 0) run(); }, 1000);
   $('afGo').onclick = run;
+  if (window.NO_PAY && $('afOff')) $('afOff').hidden = true;
   $('afOff').onclick = () => { fired = true; clearInterval(t); if (typeof openShopNoAds === 'function') return openShopNoAds(() => adForced(go)); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go) }); };
 }
 if (typeof window.startWeek === 'function') { const sw0 = window.startWeek; window.startWeek = function (...a) { return adForced(() => sw0.apply(this, a)); }; }

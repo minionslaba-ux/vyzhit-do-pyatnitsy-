@@ -2481,3 +2481,6 @@ html.light .btn-quick { color: #9a4d00; border-color: rgba(200,120,0,.6); }
 html.light .heat-card { background: rgba(0,0,0,.035); border-color: rgba(0,0,0,.12); }
 html.light .heat-bar { background: rgba(0,0,0,.08); }
 html.light .heat-top em.up { color: #c2410c; } html.light .heat-top em.down { color: #0f7a46; }
+
+/* RuStore (html.no-pay, js/i18n.js): без покупок за рубли — прячем ссылки на цены и карточки оплаты */
+html.no-pay a[href$="tseny.html"], html.no-pay .shp-pay, html.no-pay .tu-btn, html.no-pay #afOff { display: none !important; }
