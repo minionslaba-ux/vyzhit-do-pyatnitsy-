@@ -48,15 +48,33 @@ async function vkUser(v: any) {
   return u?.user_id ? { id: Number(u.user_id), first_name: u.first_name, last_name: u.last_name } : null;
 }
 
+// Мини-приложение ВКонтакте: ВК передаёт параметры запуска (vk_user_id и др.), подписанные «Защищённым ключом» приложения.
+// Секрет VK_APP_SECRET добавляет владелец (Supabase → Edge Functions → Secrets). Подпись: HMAC-SHA256 от отсортированных vk_*-параметров,
+// base64url без «=». Аккаунт — тот же, что у входа через VK ID (vk_accounts, vk<id>@vk.survivefriday.com). Имя приходит от клиента — только для подписи профиля.
+async function vkLaunchUser(v: any) {
+  const secret = Deno.env.get('VK_APP_SECRET');
+  if (!secret || !v || typeof v.params !== 'string') return null;
+  const q = new URLSearchParams(v.params.replace(/^\?/, ''));
+  const vkp = [...q.entries()].filter(([k]) => k.startsWith('vk_')).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0);
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(new URLSearchParams(vkp).toString())));
+  const sign = btoa(String.fromCharCode(...mac)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  if (sign !== q.get('sign')) return null;
+  const ts = Number(q.get('vk_ts') || 0);
+  if (ts && Date.now() / 1000 - ts > 7 * 86400) return null;  // старые параметры запуска не принимаем
+  const id = Number(q.get('vk_user_id'));
+  return id > 0 ? { id, first_name: String(v.name || '').replace(/[<>]/g, '').slice(0, 24) } : null;
+}
+
 Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
     const body = await req.json();
-    const vk = !!body.vk;
+    const vkl = !!body.vk_launch, vk = !!body.vk || vkl;
     const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
     if (!vk && !token) return json({ error: 'not_configured' }, 503);
     if (body.action === 'bot_id') return json({ bot_id: Number(token.split(':')[0]) });
-    const u = vk ? await vkUser(body.vk) : await verify(token, body);
+    const u = vkl ? await vkLaunchUser(body.vk_launch) : vk ? await vkUser(body.vk) : await verify(token, body);
     if (!u?.id) return json({ error: vk ? 'vk_failed' : 'bad_signature' }, 403);
     const T = vk ? { table: 'vk_accounts', key: 'vk_id', mail: 'vk' } : { table: 'tg_accounts', key: 'tg_id', mail: 'tg' };
     const name = [u.first_name, u.last_name].filter(Boolean).join(' ').slice(0, 24) || (u as any).username || (vk ? 'VK' : 'Telegram');

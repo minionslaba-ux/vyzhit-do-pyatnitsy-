@@ -2,7 +2,8 @@
 // Telegram и VK проверяет функция tg-login на сервере и выдаёт обычную сессию Supabase — как вход по ссылке из письма.
 // Если игрок уже вошёл, Telegram или VK привязывается к его аккаунту (потом можно входить любым способом).
 const SOC_FN = () => (window.SUPABASE_CONFIG?.url || '').replace(/\/+$/, '') + '/functions/v1/';
-const VK_APP = String(window.SUPABASE_CONFIG?.vk?.app || '');
+// Внутри мини-приложения ВКонтакте окно VK ID не открывается (белый экран) — там кнопок VK ID нет, вход по launch params (js/vk-mini.js)
+const VK_APP = window.VK_MINI ? '' : String(window.SUPABASE_CONFIG?.vk?.app || '');
 const TG_BOT_ID = window.SUPABASE_CONFIG?.telegram?.botId || 0;
 async function fnPost(name, body) {
   const r = await fetch(SOC_FN() + name, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' }, body: JSON.stringify(body) });

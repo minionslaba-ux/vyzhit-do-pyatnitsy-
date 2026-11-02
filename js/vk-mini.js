@@ -25,5 +25,16 @@
   window.addEventListener('message', e => { const d = e.data; if (d && d.type === 'vk-connect') onEvent({ detail: d.detail || { data: d.data } }); });
   vkBridge('VKWebAppInit');
   vkBridge('VKWebAppSetViewSettings', { status_bar_style: 'light', action_bar_color: '#07070d', navigation_bar_color: '#07070d' });
+  // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию
+  // того же аккаунта, что «Войти через VK ID» на сайте. Один раз за запуск; не вышло — играем гостем, как раньше.
+  const autoLogin = async () => {
+    if (!q.get('sign') || typeof registered !== 'function' || registered() || !board.online) return;
+    try { if (sessionStorage.getItem('vdp-vk-login')) return; sessionStorage.setItem('vdp-vk-login', '1'); } catch {}
+    const info = await vkBridge('VKWebAppGetUserInfo');
+    const name = [info?.first_name, info?.last_name].filter(Boolean).join(' ');
+    try { const j = await fnPost('tg-login', { vk_launch: { params: location.search, name } }); if (j?.access_token) await socialDone(j, 'vk'); }
+    catch { track('vk_app', { detail: 'login_fail' }); }
+  };
+  dataReady.then(() => setTimeout(autoLogin, 800));
   bus.on('menu', () => { if (!window.__vkOpened) { window.__vkOpened = 1; track('vk_app', { detail: q.get('vk_platform') || '' }); } });
 })();
