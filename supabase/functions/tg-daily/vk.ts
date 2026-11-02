@@ -8,34 +8,27 @@ const SITE = 'https://survivefriday.com/';
 const POOLS = ['pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool_l3a'];
 const getJson = (f: string) => fetch(SITE + f).then(r => r.ok ? r.json() : null).catch(() => null);
 const pick = <T>(a: T[]) => a[Math.floor(Math.random() * a.length)];
-// Картинки к постам — с сайта (promo/vk, их рисует tools/vk-promo.js); по виду поста
-const PICS: Record<number, string[]> = { 0: ['promo/vk/post-3-mira.png'], 1: ['promo/vk/post-4-breaks.png'], 2: ['promo/vk/post-2-how.png', 'promo/vk/post-6-daily.png', 'promo/vk/post-5-mole.png', 'promo/vk/post-7-career.png', 'promo/vk/post-1-welcome.png'] };
 const vkApi = (method: string, params: Record<string, string>, token: string) =>
   fetch(`https://api.vk.com/method/${method}`, { method: 'POST', body: new URLSearchParams({ ...params, access_token: token, v: '5.199' }) }).then(x => x.json()).catch(e => ({ error: { error_msg: String(e) } }));
-// Загрузить картинку и вернуть вложение photo<owner>_<id>. Стена — только для ключа пользователя, поэтому если не вышло,
-// пробуем загрузку «для сообщений» (её ключ сообщества умеет). Не получилось ничего — пост уйдёт без картинки. log — что пробовали.
-async function uploadPic(path: string, gid: string, token: string, log: string[]): Promise<string> {
-  const img = await fetch(SITE + path).then(r => r.ok ? r.blob() : null).catch(() => null);
-  if (!img) { log.push('no image'); return ''; }
-  const send = async (url: string) => { const f = new FormData(); f.append('photo', img, 'post.png'); return fetch(url, { method: 'POST', body: f }).then(x => x.json()).catch(() => null); };
-  const w = await vkApi('photos.getWallUploadServer', { group_id: gid }, token);
-  if (w.response?.upload_url) {
-    const u = await send(w.response.upload_url);
-    const s = u && await vkApi('photos.saveWallPhoto', { group_id: gid, photo: u.photo, server: String(u.server), hash: u.hash }, token);
-    const p = s?.response?.[0]; if (p) return `photo${p.owner_id}_${p.id}`;
-    log.push(`wall save: ${s?.error?.error_msg || 'no upload'}`);
-  } else log.push(`wall: ${w.error?.error_msg}`);
-  const m = await vkApi('photos.getMessagesUploadServer', { peer_id: '0' }, token);
-  if (m.response?.upload_url) {
-    const u = await send(m.response.upload_url);
-    const s = u && await vkApi('photos.saveMessagesPhoto', { photo: u.photo, server: String(u.server), hash: u.hash }, token);
-    const p = s?.response?.[0]; if (p) return `photo${p.owner_id}_${p.id}${p.access_key ? '_' + p.access_key : ''}`;
-    log.push(`msg save: ${s?.error?.error_msg || 'no upload'}`);
-  } else log.push(`msg: ${m.error?.error_msg}`);
-  return '';
+// Картинки к постам: альбом группы «Для постов» (владелец загрузил 30 файлов из promo/vk/vk-posts-30.zip одним разом).
+// Порядок фото в альбоме = порядок имён файлов: ask-01…07, brk-05…49, mira-01…10 (tools/vk-pack.js).
+// Читать альбом: сервисный ключ приложения VK_SERVICE_TOKEN (если задан) или ключ группы. Не вышло — пост без картинки.
+const VK_ALBUM = '314848064';
+const PACK = [...[1, 2, 3, 4, 5, 6, 7].map(i => `ask-${String(i).padStart(2, '0')}`), ...[5, 6, 22, 24, 28, 30, 34, 39, 41, 43, 44, 45, 49].map(i => `brk-${String(i).padStart(2, '0')}`),
+  ...[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => `mira-${String(i).padStart(2, '0')}`)];
+export async function vkAlbum(gid: string): Promise<{ map: Record<string, string>; err?: string; n?: number }> {
+  const token = Deno.env.get('VK_SERVICE_TOKEN') || Deno.env.get('VK_GROUP_TOKEN') || '';
+  const r = await vkApi('photos.get', { owner_id: `-${gid}`, album_id: VK_ALBUM, rev: '0', count: '100' }, token);
+  const items = (r.response?.items || []).sort((a: any, b: any) => a.id - b.id);
+  if (!items.length) return { map: {}, err: r.error?.error_msg || 'empty album' };
+  if (items.length !== PACK.length) return { map: {}, err: `в альбоме ${items.length} фото, ожидалось ${PACK.length}`, n: items.length };
+  return { map: Object.fromEntries(PACK.map((f, i) => [f, `photo${items[i].owner_id}_${items[i].id}`])), n: items.length };
 }
+const picFor = (map: Record<string, string>, kind: number, brkId: number) => {
+  const keys = Object.keys(map), want = kind === 0 ? keys.filter(k => k.startsWith('mira')) : kind === 1 ? [`brk-${String(brkId).padStart(2, '0')}`] : keys.filter(k => k.startsWith('ask'));
+  const ok = want.filter(k => map[k]); return ok.length ? map[pick(ok)] : '';
+};
 
-// test: пробный пост по одноразовому коду (index.ts, body.vk_test) — без записи в vk_posts, ежедневный пост не блокирует; kind — 0 Мира, 1 разминка, 2 ситуация
 export async function vkDaily(db: any, mskDate: string, brk: [number, string, string, string], test = false, kindArg?: number): Promise<string> {
   const token = Deno.env.get('VK_GROUP_TOKEN'), gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
   if (!token || !gid) return 'off';
@@ -63,7 +56,9 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   }
   // ссылка — в тексте: вложение-ссылку без картинки ключ сообщества публиковать не может (link_photo_sizing_rule)
   const log: string[] = [];
-  const pic = await uploadPic(pick(PICS[kind] || PICS[2]), gid, token, log);
+  const album = await vkAlbum(gid);
+  if (album.err) log.push(`album: ${album.err}`);
+  const pic = picFor(album.map, kind, brk[0]);
   let r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: `${message}\n\n${url}`, ...(pic ? { attachments: pic } : {}) }, token);
   if (r.error && pic) { log.push(`post with pic: ${r.error.error_msg}`); r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: `${message}\n\n${url}` }, token); }
   const note = pic && !log.length ? ' +pic' : log.length ? ` (${log.join('; ')})` : '';

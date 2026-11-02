@@ -7,7 +7,7 @@
 // Тест: POST {"test": "<код>"} — 10 примеров в главную группу; код одноразовый, создаётся только в базе (bot_test_tokens).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
-import { vkDaily } from './vk.ts';
+import { vkAlbum, vkDaily } from './vk.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -138,6 +138,10 @@ Deno.serve(async req => {
     const { data: t } = await db.from('bot_test_tokens').delete().eq('token', body.vk_test).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
     if (!t?.length) return new Response('forbidden', { status: 403 });
     const d = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+    if (body.probe) {  // только прочитать альбом и показать сопоставление файлов и фото, без поста
+      const a = await vkAlbum((Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '')).catch(e => ({ map: {}, err: String(e) }));
+      return new Response(JSON.stringify(a), { headers: { 'Content-Type': 'application/json' } });
+    }
     const res = await vkDaily(db, d, brkOfDay(d), true, [0, 1, 2].includes(body.kind) ? body.kind : undefined).catch(e => `error: ${e}`);
     return new Response(JSON.stringify({ vk: res }), { headers: { 'Content-Type': 'application/json' } });
   }
