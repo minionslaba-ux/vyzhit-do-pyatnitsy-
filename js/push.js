@@ -61,7 +61,7 @@ const pushBtnHtml = (cls = 'btn-ghost btn-push') => {
 function pushRender() { const s = $('pushSlot'); if (s) s.innerHTML = pushBtnHtml(); }
 document.addEventListener('click', e => { const b = e.target.closest('[data-push]'); if (!b) return; b.dataset.push === 'off' ? pushDisable() : pushEnable(); });
 bus.on('weekEnd', x => {
-  if (!x.won || prefs.pushAsked || pushOn() || !pushCan()) return;
+  if (!x.won || prefs.pushAsked || pushOn() || pushCan() !== 'ok') return;  // iPhone в Safari — карточка js/remind.js (Telegram или установка)
   setTimeout(() => {
     const st = views.end.querySelector('.end-sheet .stack'); if (!st || views.end.hidden || st.querySelector('[data-push]')) return;
     prefs.pushAsked = 'shown'; store.set(KEY.prefs, prefs);
