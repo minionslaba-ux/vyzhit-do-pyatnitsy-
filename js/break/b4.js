@@ -181,13 +181,15 @@
 .bg36-board { padding: 8px; border-radius: 18px; }
 .bg36-grid { display: grid; gap: 2px; touch-action: none; --cs: min(34px, calc((100vw - 56px) / var(--n))); }
 .bg36-c { width: var(--cs); height: var(--cs); display: grid; place-items: center; font-weight: 800; font-size: calc(var(--cs) * .55); border-radius: 7px; color: #ece9ff; background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); transition: background .2s, transform .15s var(--ez), color .2s; }
-.bg36-c.f { background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 70%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
+.bg36-c.f { background: linear-gradient(180deg, var(--fc, #ff3bd4), var(--fc, #ff3bd4)); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); box-shadow: inset 0 1px 0 rgba(255,255,255,.3); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg36-c.f { background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 70%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); } }
 .bg36-c.f.new { animation: bg32-win .5s var(--ez) both; animation-delay: var(--d, 0s); }
 .bg36-c.s { background: linear-gradient(180deg, #a8fbff, var(--tl) 60%, var(--tl2)); color: #032a2c; text-shadow: none; box-shadow: 0 0 12px rgba(45,226,230,.7); transform: scale(1.08); z-index: 1; }
 .bg36-c.anchor { box-shadow: 0 0 0 2px var(--tl), 0 0 12px rgba(45,226,230,.7); }
 .bg36-words { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
 .bg36-words span { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12.5px; font-weight: 800; background: linear-gradient(180deg, rgba(var(--w-rgb),.08), rgba(var(--w-rgb),.02)); transition: all .25s; }
-.bg36-words span.f { text-decoration: line-through; color: #fff; border-color: transparent; background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 80%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); text-decoration-color: rgba(255,255,255,.7); }
+.bg36-words span.f { text-decoration: line-through; color: #fff; border-color: transparent; background: linear-gradient(180deg, var(--fc, #ff3bd4), var(--fc, #ff3bd4)); text-decoration-color: rgba(255,255,255,.7); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg36-words span.f { background: linear-gradient(180deg, color-mix(in srgb, var(--fc, #ff3bd4) 80%, #fff 0%), color-mix(in srgb, var(--fc, #ff3bd4) 55%, #120f20)); } }
 
 /* 37 — пословицы */
 .bg37-line { width: 100%; box-sizing: border-box; min-height: 100px; padding: 14px 14px 14px 28px; border-radius: 6px 18px 18px 6px; position: relative; color: #1f2a5a; font-size: 18px; font-weight: 800; line-height: 28px; text-align: center;
@@ -245,13 +247,15 @@
 /* 40 — повтори за боссом */
 .bg40-pad { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: min(84vw, 360px, calc(100vh - 330px)); padding: 12px; border-radius: 50%; background: radial-gradient(circle, #221d3a 60%, #13111f); box-shadow: 0 16px 36px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(255,255,255,.06); }
 .bg40-b { position: relative; aspect-ratio: 1; border: 0; font-size: clamp(30px, 10vw, 50px); cursor: pointer; display: grid; place-items: center; transition: transform .1s, box-shadow .15s, filter .15s;
-  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, #fff 0%), color-mix(in srgb, var(--c) 30%, #0d0b16) 70%);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -8px 16px rgba(0,0,0,.45), 0 5px 0 color-mix(in srgb, var(--c) 30%, #000); filter: saturate(.9) brightness(.92); }
+  background: radial-gradient(circle at 35% 30%, var(--c), var(--c) 70%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -8px 16px rgba(0,0,0,.45), 0 5px 0 var(--c); filter: saturate(.9) brightness(.92); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg40-b { background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, #fff 0%), color-mix(in srgb, var(--c) 30%, #0d0b16) 70%); box-shadow: inset 0 2px 0 rgba(255,255,255,.22), inset 0 -8px 16px rgba(0,0,0,.45), 0 5px 0 color-mix(in srgb, var(--c) 30%, #000); } }
 .bg40-b:nth-child(1) { border-radius: 100% 16px 16px 16px; } .bg40-b:nth-child(2) { border-radius: 16px 100% 16px 16px; }
 .bg40-b:nth-child(3) { border-radius: 16px 16px 16px 100%; } .bg40-b:nth-child(4) { border-radius: 16px 16px 100% 16px; }
 .bg40-b span { filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); transition: transform .15s var(--ez); }
 .bg40-b:nth-child(1) span { translate: 12% 12%; } .bg40-b:nth-child(2) span { translate: -12% 12%; } .bg40-b:nth-child(3) span { translate: 12% -12%; } .bg40-b:nth-child(4) span { translate: -12% -12%; }
-.bg40-b.lit { filter: none; background: radial-gradient(circle at 35% 30%, #fff, var(--c) 55%, color-mix(in srgb, var(--c) 70%, #000)); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 2px 0 color-mix(in srgb, var(--c) 30%, #000), 0 0 36px var(--c), 0 0 70px color-mix(in srgb, var(--c) 50%, transparent); transform: translateY(3px); }
+.bg40-b.lit { filter: none; background: radial-gradient(circle at 35% 30%, #fff, var(--c) 55%, var(--c)); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 2px 0 var(--c), 0 0 36px var(--c), 0 0 70px var(--c); transform: translateY(3px); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg40-b.lit { background: radial-gradient(circle at 35% 30%, #fff, var(--c) 55%, color-mix(in srgb, var(--c) 70%, #000)); box-shadow: inset 0 2px 0 rgba(255,255,255,.5), 0 2px 0 color-mix(in srgb, var(--c) 30%, #000), 0 0 36px var(--c), 0 0 70px color-mix(in srgb, var(--c) 50%, transparent); } }
 .bg40-b.lit span { transform: scale(1.15); }
 .bg40-b:disabled { cursor: default; }
 .bg40-hub { position: absolute; left: 50%; top: 50%; width: 34%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0;

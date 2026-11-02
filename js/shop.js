@@ -320,6 +320,8 @@ function seasonCard() {
 }
 
 // ---------- предложение дня ----------
+// Где у игры нет своей рекламы (приложение ВКонтакте) — «без рекламы» не продаём: ни раздел, ни предложение дня
+const noAdsSale = () => !window.VK_MINI;
 const DEALS = [
   { id: 'hints5', ico: '💡', base: 10, price: 6, t: () => L('5 подсказок', '5 hints') },
   { id: 'x2', ico: '⚡', base: X2_PRICE, price: 4, t: () => L('x2 у.е. за неделю', 'x2 $ for a week') },
@@ -329,7 +331,8 @@ const DEALS = [
 ];
 function dealToday() {
   const d = today(), h = [...d].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-  const x = { ...DEALS[h % DEALS.length] };
+  const list = noAdsSale() ? DEALS : DEALS.filter(x => x.id !== 'noads7');
+  const x = { ...list[h % list.length] };
   if (x.id === 'item') { const it = RARE_ITEMS[(h >> 3) % RARE_ITEMS.length]; Object.assign(x, { ico: it.ico, base: it.price, price: Math.round(it.price * 0.7), ref: it.id, t: () => goodText(it, shpHero()) }); }
   if (x.id === 'pet') { const p = RARE_PETS[(h >> 3) % RARE_PETS.length]; Object.assign(x, { ico: PET_KINDS[p.kind].ico, base: p.price, price: Math.round(p.price * 0.7), ref: p.id, t: () => p.t }); }
   return x;
@@ -442,16 +445,16 @@ function openStore(section = '', after) {
     m.innerHTML = `<div class="modal-box glass shp-box" role="dialog" aria-modal="true" aria-labelledby="shpTitle">
       <h2 id="shpTitle">🛒 ${L('Магазин', 'Shop')}</h2>
       <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank || 0)}</b>`, `Balance: <b>${money(C2.bank || 0)}</b>`) : L('У.е. тратятся в карьере — начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')} ${window.VDP_PLATFORM || window.VK_MINI && !Object.keys(vkPrices || {}).length ? '' : topupBtn(0, '')}</p>
-      <nav class="shp-nav">${[['shpDeal', L('🔥 Выгодно', '🔥 Deals')], ['shpNoads', L('🚫 Без рекламы', '🚫 Ad-free')], ['shpBoost', L('⚡ Бустеры', '⚡ Boosters')], ['shpRare', L('✨ Редкое', '✨ Rare')], ['shpSeason', L('🏆 Сезон', '🏆 Season')]].map(([id, t]) => `<button type="button" class="btn-chip" data-go="${id}">${t}</button>`).join('')}</nav>
+      <nav class="shp-nav">${[['shpDeal', L('🔥 Выгодно', '🔥 Deals')], ...(noAdsSale() ? [['shpNoads', L('🚫 Без рекламы', '🚫 Ad-free')]] : []), ['shpBoost', L('⚡ Бустеры', '⚡ Boosters')], ['shpRare', L('✨ Редкое', '✨ Rare')], ['shpSeason', L('🏆 Сезон', '🏆 Season')]].map(([id, t]) => `<button type="button" class="btn-chip" data-go="${id}">${t}</button>`).join('')}</nav>
       ${shopStarterHtml('shp')}
       <section id="shpDeal" class="shp-sec"><h3 class="hs-h">🔥 ${L('Предложение дня', 'Deal of the day')} <small class="shp-timer" id="shpTimer">${hhmmss(toMidnight())}</small></h3>
         <div class="shp-deal${dealBought() ? ' done' : ''}"><span class="gp-ico" aria-hidden="true">${deal.ico}</span><span class="gp-txt"><b>${esc(deal.t())}</b><small><s>${money(deal.base)}</s> → <b>${money(deal.price)}</b> · −${Math.round((1 - deal.price / deal.base) * 100)}%</small></span>
           ${dealBought() ? `<em class="gp-own">✓ ${L('куплено', 'bought')}</em>` : buyBtn(`data-deal="1"`, deal.price)}</div>
         ${(prefs.themeCoupons || 0) > 0 ? `<button type="button" class="btn-ghost" id="shpThemePick">🎨 ${L(`Выбрать тему по купону (${prefs.themeCoupons})`, `Pick a theme with your coupon (${prefs.themeCoupons})`)}</button>` : ''}</section>
-      <section id="shpNoads" class="shp-sec"><h3 class="hs-h">🚫 ${L('Без рекламы', 'Ad-free')}</h3>
+      <section id="shpNoads" class="shp-sec"${noAdsSale() ? '' : ' hidden'}><h3 class="hs-h">🚫 ${L('Без рекламы', 'Ad-free')}</h3>
         <p class="field-note">${noAdsOn() ? `<b class="shp-ok">✓ ${prefs.noAdsForever ? L('Реклама отключена навсегда', 'Ads are off forever') : L(`Реклама отключена: ещё ${pl(noAdsDays(), 'день', 'дня', 'дней', 'day', 'days')}`, `Ads are off: ${pl(noAdsDays(), '', '', '', 'more day', 'more days')}`)}</b> · ` : ''}${L('Ни обязательной рекламы между неделями и после разминок, ни всплывающих предложений. «Реклама за награду» остаётся — только если сами нажмёте.', 'No ads between weeks or after warm-ups and no ad pop-ups. Rewarded ads stay — only when you tap them.')}</p>
         ${prefs.noAdsForever ? '' : rows([['d30', '📅', L('30 дней без рекламы', '30 days ad-free'), NOADS.d30.price, L('продлевает текущий срок', 'extends your current period')], ['forever', '♾️', L('Навсегда', 'Forever'), NOADS.forever.price, L('один раз — и больше никакой рекламы', 'pay once — no more ads, ever')]],
-          ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}}
+          ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}
         ${prefs.noAdsForever || window.VDP_PLATFORM || window.VK_MINI ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
           <p>${L('Оплата картой или СБП, без трат у.е. Срок складывается с текущим.', 'Pay by card, no $ spent. Adds to your current period.')}</p>
           <label class="tu-agree"><input type="checkbox"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>

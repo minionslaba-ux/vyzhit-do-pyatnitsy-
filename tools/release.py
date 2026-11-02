@@ -73,6 +73,14 @@ def vk_market():
         problems.append((r.stdout or r.stderr).strip())
 
 
+def old_browsers():
+    # Старые встроенные браузеры (ВК, Telegram на старых телефонах): color-mix() и :has() без запасного варианта ломают вёрстку
+    for tool in ('tools/css-fallbacks.py', 'tools/has-fallbacks.py'):
+        r = subprocess.run([sys.executable, tool, '--check'], capture_output=True, text=True)
+        if r.returncode:
+            problems.append(f'{tool}: есть правила без запасного варианта для старых браузеров — запустите python3 {tool}\n' + r.stdout.strip()[-600:])
+
+
 def lists_check():
     idx = open('index.html', encoding='utf-8').read()
     en = open('en.html', encoding='utf-8').read()
@@ -129,6 +137,7 @@ def main():
     nj = json_check()
     ne = en_check()
     psy_check()
+    old_browsers()
     vk_market()
     ns = lists_check()
     print(f'Версия: v{v} · JS-файлов: {js} · JSON: {nj} · переводов карточек: {ne} · скриптов в index.html: {ns}')

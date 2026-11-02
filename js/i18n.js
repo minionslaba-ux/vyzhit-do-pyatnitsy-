@@ -2,7 +2,7 @@
 // и без оплаты в обход ВК (правила платформы); вход, рейтинг, офисы работают как на сайте. Мост с ВК — js/vk-mini.js
 window.VK_MINI = (() => { try { const q = location.search, on = /[?&]vk_app_id=\d+/.test(q) && /[?&]sign=/.test(q); if (on) sessionStorage.setItem('vdp-vk', '1'); return on || sessionStorage.getItem('vdp-vk') === '1'; } catch { return /[?&]vk_app_id=\d+/.test(location.search); } })();
 if (window.VK_MINI) document.documentElement.classList.add('vk-mini');
-window.APP_VER = 'v156';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v157';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');

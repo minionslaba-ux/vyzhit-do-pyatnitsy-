@@ -66,19 +66,23 @@
 .bg42-l.fly { transition: transform .22s ease-in, opacity .22s; opacity: 0; }
 .bg42-f { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; width: 100%; margin-top: 18px; }
 .bg42-f button { position: relative; padding: 10px 2px 8px; border-radius: 4px 12px 12px 12px; border: 0; border-top: 2px solid var(--fc); color: #fff; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; touch-action: manipulation;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--fc) 42%, #1a1a28), color-mix(in srgb, var(--fc) 18%, #12121d)); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 14px rgba(0,0,0,.45); transition: transform .15s ease-out, box-shadow .2s; }
-.bg42-f button::before { content: ''; position: absolute; left: 0; top: -9px; width: 46%; height: 9px; border-radius: 6px 8px 0 0; background: color-mix(in srgb, var(--fc) 55%, #1a1a28); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); }
+  background: linear-gradient(180deg, var(--fc), var(--fc)); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 14px rgba(0,0,0,.45); transition: transform .15s ease-out, box-shadow .2s; }
+@supports (color: color-mix(in srgb, red, blue)) { .bg42-f button { background: linear-gradient(180deg, color-mix(in srgb, var(--fc) 42%, #1a1a28), color-mix(in srgb, var(--fc) 18%, #12121d)); } }
+.bg42-f button::before { content: ''; position: absolute; left: 0; top: -9px; width: 46%; height: 9px; border-radius: 6px 8px 0 0; background: var(--fc); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg42-f button::before { background: color-mix(in srgb, var(--fc) 55%, #1a1a28); } }
 .bg42-f button span { display: block; font-size: 26px; filter: drop-shadow(0 3px 3px rgba(0,0,0,.45)); }
 .bg42-f button:active { transform: scale(.95); }
 .bg42-f button.ok { box-shadow: 0 0 22px var(--fc), inset 0 1px 0 rgba(255,255,255,.3); transform: scale(1.06); } .bg42-f button.bad { background: linear-gradient(180deg, #5a1e2e, #2a121a); border-top-color: #ff3b6b; }
 /* 43 */
 .bg43-card { width: 100%; margin: 4px 0 2px; padding: 8px 8px 4px; border-radius: 22px; border: 1px solid rgba(255,255,255,.1); background: radial-gradient(80% 100% at 50% 0%, rgba(255,255,255,.08), transparent 70%), linear-gradient(180deg, #1d1d30, #111120); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 12px 28px rgba(0,0,0,.45); }
 .bg43-word { min-height: 96px; display: grid; place-items: center; font-size: clamp(32px, 10.5vw, 56px); font-weight: 900; letter-spacing: .03em; font-family: var(--f-display); }
-.bg43-word span { display: inline-block; animation: bg43in .18s ease-out; text-shadow: 0 0 22px color-mix(in srgb, currentColor 45%, transparent), 0 3px 0 rgba(0,0,0,.45); }
+.bg43-word span { display: inline-block; animation: bg43in .18s ease-out; text-shadow: 0 0 22px currentColor, 0 3px 0 rgba(0,0,0,.45); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg43-word span { text-shadow: 0 0 22px color-mix(in srgb, currentColor 45%, transparent), 0 3px 0 rgba(0,0,0,.45); } }
 @keyframes bg43in { from { scale: .75; opacity: 0; } }
 .bg43-pad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin-top: 12px; }
 .bg43-pad button { padding: 18px 6px; border-radius: 16px; border: 0; color: #10101a; font: inherit; font-size: 15px; font-weight: 900; letter-spacing: .03em; cursor: pointer; touch-action: manipulation; transition: transform .1s ease-out;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--bc), #fff 28%), var(--bc) 55%, color-mix(in srgb, var(--bc), #000 15%)); box-shadow: inset 0 2px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.2), 0 6px 16px color-mix(in srgb, var(--bc) 35%, transparent); }
+  background: linear-gradient(180deg, var(--bc), var(--bc) 55%, var(--bc)); box-shadow: inset 0 2px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.2), 0 6px 16px var(--bc); }
+@supports (color: color-mix(in srgb, red, blue)) { .bg43-pad button { background: linear-gradient(180deg, color-mix(in srgb, var(--bc), #fff 28%), var(--bc) 55%, color-mix(in srgb, var(--bc), #000 15%)); box-shadow: inset 0 2px 0 rgba(255,255,255,.45), inset 0 -3px 0 rgba(0,0,0,.2), 0 6px 16px color-mix(in srgb, var(--bc) 35%, transparent); } }
 .bg43-pad button:active { transform: scale(.95); }
 .bg43-pad button:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .bg43-fb { height: 22px; font-weight: 800; text-align: center; font-size: 14px; }

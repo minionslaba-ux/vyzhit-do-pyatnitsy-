@@ -200,3 +200,27 @@ window.__errFlush = () => {
   }
 };
 window.__errFlush();
+
+// ---------- Замена :has() для старых встроенных браузеров (WebView Android < 105, iOS < 15.4 — ВК, Telegram на старых телефонах) ----------
+// Там правило с :has() выбрасывается целиком: ломалась прокрутка страницы (html.docscroll), подсветка выбора профессии и т. п.
+// Скрипт ставит обычные классы, а в css/style.css у каждого правила с :has() есть двойник на этих классах (tools/has-fallbacks.py).
+(() => {
+  if (window.CSS?.supports?.('selector(:has(a))')) return;  // :has() понимается — ничего не нужно
+  const H = document.documentElement;
+  const vis = el => !!el && !el.hidden;
+  let raf = 0;
+  const sync = () => {
+    raf = 0;
+    for (const [k, el] of Object.entries(views)) H.classList.toggle('v-' + k, vis(el));
+    H.classList.toggle('m-modal', vis($('modal')));
+    H.classList.toggle('m-prof', vis($('profSheet')));
+    const g = $('game');
+    if (g) { g.classList.toggle('live-on', vis(g.querySelector('.live-strip'))); g.classList.toggle('dl-on', vis($('dlBar'))); }
+    document.querySelectorAll('.card').forEach(c => c.classList.toggle('has-tools', !!c.querySelector('.card-tools')));
+    document.querySelectorAll('.prof, .ava').forEach(l => l.classList.toggle('sel', !!l.querySelector('input:checked')));
+  };
+  const later = () => { if (!raf) raf = requestAnimationFrame(sync); };
+  new MutationObserver(later).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden', 'class'] });
+  document.addEventListener('change', later, true);
+  sync();
+})();
