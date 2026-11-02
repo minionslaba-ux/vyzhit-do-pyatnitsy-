@@ -216,7 +216,10 @@ $('joinForm').onsubmit = async e => {
     $('joinErr').textContent = L('Введите имя — хотя бы 2 буквы. Его увидят коллеги в рейтинге.', 'Enter a name — at least 2 letters. Your coworkers will see it on the leaderboard.');
     $('joinName').setAttribute('aria-invalid', 'true'); $('joinName').focus(); return;
   }
-  prefs.name = name; prefs.dept = $('joinDept').value.trim().replace(/\s+/g, ' ');
+  const dept0 = $('joinDept').value.trim().replace(/\s+/g, ' ');
+  if (MOD.bad(name)) { $('joinErr').textContent = L('Такое имя не подойдёт: его видят все игроки. Давайте без грубостей и ссылок.', 'That name won’t work — everyone can see it. Please keep it clean, no links.'); $('joinName').setAttribute('aria-invalid', 'true'); $('joinName').focus(); return; }
+  if (MOD.bad(dept0)) { $('joinErr').textContent = L('Такой отдел не подойдёт: его видят все игроки. Напишите настоящий отдел или оставьте поле пустым.', 'That department won’t work — everyone can see it. Use a real one or leave it empty.'); $('joinDept').setAttribute('aria-invalid', 'true'); $('joinDept').focus(); return; }
+  prefs.name = name; prefs.dept = dept0;
   prefs.avatar = document.querySelector('input[name=ava]:checked').value;
   if (joinMode === 'register') {
     if (badMail(email)) { $('joinErr').textContent = L('Укажите почту — на неё придёт ссылка для входа.', 'Enter your email — we’ll send the sign-in link there.'); $('joinEmail').setAttribute('aria-invalid', 'true'); $('joinEmail').focus(); return; }
@@ -514,6 +517,7 @@ let inviteToOffice = async function (short, btn) {
   if (!team) {
     const name = await askOfficeName();
     if (!name) return;
+    if (MOD.bad(name)) { toast(L('Такое название офиса не подойдёт — давайте без грубостей', 'That office name won’t work — please keep it clean')); return; }
     try { await board.rpc('create_team', { p_id: prefs.playerId, p_name: name }); team = myTeamCache = (await board.rpc('my_team', { p_id: prefs.playerId }))[0]; }
     catch (err) { toast(err.message); return; }
   }
@@ -558,6 +562,7 @@ async function showOffice() {
     if (typeof ocRenderBox === 'function') ocRenderBox(null);
     $('mkForm').onsubmit = async e => { e.preventDefault(); const n = $('mkName').value.trim();
       if (n.length < 2) { $('ofErr').textContent = L('Название — хотя бы 2 символа.', 'The name needs at least 2 characters.'); return; }
+      if (MOD.bad(n)) { $('ofErr').textContent = L('Такое название офиса не подойдёт — давайте без грубостей.', 'That office name won’t work — please keep it clean.'); return; }
       try { await board.rpc('create_team', { p_id: prefs.playerId, p_name: n }); showOffice(); } catch (err) { $('ofErr').textContent = err.message; } };
     $('jnForm').onsubmit = async e => { e.preventDefault();
       try { const n = await board.rpc('join_team', { p_id: prefs.playerId, p_code: $('jnCode').value }); toast(L(`Вы в офисе «${n}»`, `You’re in the “${n}” office`)); showOffice(); } catch (err) { $('ofErr').textContent = err.message; } };
@@ -733,6 +738,7 @@ async function showChat(channel) {
   };
   $('chForm').onsubmit = async e => {
     e.preventDefault(); const t = $('chText').value.trim(); if (!t) return;
+    if (MOD.rude(t)) { toast(L('Сообщение не отправлено: давайте без грубостей', 'Message not sent: please keep it civil')); return; }
     try { await board.rpc('post_message', { p_id: prefs.playerId, p_channel: channel, p_text: t }); $('chText').value = ''; chatLast = ''; load(); }
     catch (err) { toast(err.message); }
   };
@@ -773,6 +779,7 @@ let openDm = async function (short, name) {
   };
   $('dmForm').onsubmit = async e => {
     e.preventDefault(); const t = $('dmText').value.trim(); if (!t) return;
+    if (MOD.rude(t)) { toast(L('Сообщение не отправлено: давайте без грубостей', 'Message not sent: please keep it civil')); return; }
     try { await board.rpc('send_dm', { p_id: prefs.playerId, p_to: short, p_text: t }); $('dmText').value = ''; sig = ''; load(); bus.emit('dm'); }
     catch (err) { toast(err.message); }
   };

@@ -224,3 +224,16 @@ window.__errFlush();
   document.addEventListener('change', later, true);
   sync();
 })();
+
+// Автомодерация уже сохранённого профиля (js/moder.js): грубое имя или отдел, введённые до появления фильтра,
+// база всё равно заменит — исправляем и у игрока, чтобы он видел то же, что и все
+(() => {
+  try {
+    if (prefs.dept && MOD.bad(prefs.dept)) { prefs.dept = ''; store.set(KEY.prefs, prefs); }
+    if (prefs.profCustom && MOD.bad(prefs.profCustom)) { prefs.profCustom = ''; store.set(KEY.prefs, prefs); }
+    if (prefs.name && MOD.bad(prefs.name)) {
+      prefs.name = ''; store.set(KEY.prefs, prefs);
+      setTimeout(() => { if (typeof renderJoin === 'function' && views.game.hidden) renderJoin(prefs.email ? 'profile' : 'guest', L('Придумайте другое имя — прежнее не прошло модерацию. Его видят все игроки.', 'Please pick another name — the previous one didn’t pass moderation. Everyone can see it.')); }, 1500);
+    }
+  } catch {}
+})();

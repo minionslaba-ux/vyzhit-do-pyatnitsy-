@@ -406,6 +406,7 @@ async function socSyncProf() {
   clearTimeout(profSyncT);
   const want = (prefs.profCustom || '').trim();
   if (!socOn() || (prefs.email && !prefs.session) || want === (prefs.profCustomSynced ?? '')) return;
+  if (want && MOD.bad(want)) { prefs.profCustom = ''; store.set(KEY.prefs, prefs); if ($('profOwn')) $('profOwn').value = ''; toast(L('Такое название профессии не подойдёт — давайте без грубостей', 'That job title won’t work — please keep it clean')); return; }
   try {
     const got = await board.rpc('set_prof_custom', { p_id: prefs.playerId, p_title: want || null });
     if (want && !got) {
