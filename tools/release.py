@@ -57,6 +57,15 @@ def en_check():
     return len(cards)
 
 
+def psy_check():
+    files = sorted(glob.glob('data/psy/*.json'))
+    if files:
+        r = subprocess.run([sys.executable, 'tools/check-psy.py', *files], capture_output=True, text=True)
+        if r.returncode:
+            problems.append('Советы и тесты Миры (tools/check-psy.py):\n' + r.stdout.strip()[-1500:])
+    return len(files)
+
+
 def lists_check():
     idx = open('index.html', encoding='utf-8').read()
     en = open('en.html', encoding='utf-8').read()
@@ -112,6 +121,7 @@ def main():
     js, js_ok = node_check(), None
     nj = json_check()
     ne = en_check()
+    psy_check()
     ns = lists_check()
     print(f'Версия: v{v} · JS-файлов: {js} · JSON: {nj} · переводов карточек: {ne} · скриптов в index.html: {ns}')
     if problems:

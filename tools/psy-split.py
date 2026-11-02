@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Раскладывает контент Миры по пачкам для игры: python3 tools/psy-split.py ПАПКА_С_ИСХОДНИКАМИ
 Берёт ПАПКА/tips_*.json и ПАПКА/tests_*.json (формат — tools/check-psy.py) и пишет
-data/psy/tips_1…6.json и data/psy/tests_1…5.json. Темы перемешиваются по кругу, чтобы в каждой пачке были все категории:
+data/psy/tips_1…6.json и data/psy/tests_1…10.json. Темы перемешиваются по кругу, чтобы в каждой пачке были все категории:
 игра грузит одну случайную пачку (js/psy.js, PSY_TIP_CHUNKS / PSY_TEST_CHUNKS), бот — тоже (tg-bot/admin.ts, PSY_CHUNKS)."""
 import glob, json, os, random, sys, collections
 
 src = sys.argv[1] if len(sys.argv) > 1 else '/home/user/psy-raw'
 OUT = 'data/psy'
-PLAN = {'tips': 6, 'tests': 5}
+PLAN = {'tips': 6, 'tests': 10}
 os.makedirs(OUT, exist_ok=True)
 for kind, n in PLAN.items():
     items = []

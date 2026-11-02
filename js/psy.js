@@ -1,10 +1,10 @@
 // Кабинет психолога Миры — персонаж игры с практическими советами против выгорания.
 // Контент: data/tips.json (основа: приветствия, 180 советов, короткий опрос) + data/psy/tips_1…6.json (≈3000 советов по темам)
-// и data/psy/tests_1…5.json (≈1500 тестов самопроверки: 3 вопроса → итог с советом). Пачки грузятся по одной случайной — так легче.
+// и data/psy/tests_1…10.json (≈1500 тестов самопроверки: 3 вопроса → итог с советом). Пачки грузятся по одной случайной — так легче.
 // Мира встроена в игру: после увольнения и проваленной недели, когда шкала почти на нуле, при серии неудач,
 // поздно ночью, после долгой игры, в понедельник и после удачной недели (js/psy.js, раздел «Ситуации»).
 // Без медицинских обещаний: внизу всегда «советы игры не заменяют специалиста». Бесплатно — забота о себе не за деньги.
-const PSY_TIP_CHUNKS = 6, PSY_TEST_CHUNKS = 5;
+const PSY_TIP_CHUNKS = 6, PSY_TEST_CHUNKS = 10;
 let PSY = null, PSY_TESTS = null, psyCtx = '';
 const psyChunk = (kind, n) => fetch(`data/psy/${kind}_${1 + Math.floor(Math.random() * n)}.json`).then(r => r.ok ? r.json() : []).catch(() => []);
 const psyLoad = () => PSY ? Promise.resolve(PSY) : Promise.all([fetch('data/tips.json').then(r => r.ok ? r.json() : null).catch(() => null), psyChunk('tips', PSY_TIP_CHUNKS)])
