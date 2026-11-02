@@ -2417,3 +2417,7 @@ html.light .btn-vkgroup { color: #0058cc; }
 
 /* Внутри мини-приложения ВКонтакте: без оплаты в обход ВК и без внешних «Мы во ВКонтакте» */
 html.vk-mini .shp-pay, html.vk-mini #vkGroup, html.vk-mini .vk-invite { display: none !important; }
+/* Шкала из 25 чёрточек во вступлении: сжимается под ширину окна, без горизонтальной прокрутки */
+.in-segs { min-width: 0; max-width: 100%; }
+.in-segs i { flex: 0 1 14px; min-width: 3px; }
+.intro-box { overflow-x: hidden; }
