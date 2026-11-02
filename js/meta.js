@@ -340,6 +340,13 @@ function addCash(n) {  // на счёт карьеры; нет карьеры �
   store.set(KEY.prefs, prefs);
   return !!C2;
 }
+// «Мы во ВКонтакте» — если в js/config.js указан адрес группы
+function vkGroup() {
+  const b = $('vkGroup'), g = window.SUPABASE_CONFIG?.vk?.group; if (!b || !g) return;
+  b.href = `https://vk.com/${g}`; b.hidden = false;
+  b.innerHTML = `<span class="vk-mark" aria-hidden="true">VK</span> ${L('Мы во ВКонтакте', 'We’re on VK')}`;
+  b.onclick = () => track('vk_group');
+}
 async function tgGroup() {
   const b = $('tgGroup'); if (!b) return;
   if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; addCash(n); }
@@ -421,7 +428,7 @@ function linkBonus() {
 
 // старт: после загрузки данных
 dataReady.then(() => eventsReady).then(() => {
-  todayQuests(); missYou(); syncDesk(); tgButton(); tgGroup(); setTimeout(linkBonus, 1500);
+  todayQuests(); missYou(); syncDesk(); tgButton(); tgGroup(); vkGroup(); setTimeout(linkBonus, 1500);
   if (!views.menu.hidden) { renderMeta(); setTimeout(whatsNew, 800); }
   setTimeout(rivals, 4000);
 });

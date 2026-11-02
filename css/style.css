@@ -2401,3 +2401,9 @@ html.light .psy-invite em { color: #0b7a45; }
 .psy-link { background: none; border: 0; padding: 0; color: #2de28a; font: inherit; font-weight: 800; cursor: pointer; text-decoration: underline; }
 html.light .psy-link { color: #0b7a45; }
 @media (prefers-reduced-motion: reduce) { .psy-invite, .psy-open.calls { animation: none; } }
+
+/* «Мы во ВКонтакте» в меню */
+.btn-vkgroup { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; border-color: #0077ff; color: #8fbfff; white-space: normal; line-height: 1.2; }
+.btn-vkgroup[hidden] { display: none; }
+.vk-mark { flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #0077ff; color: #fff; font-family: var(--f-display); font-size: 11px; }
+html.light .btn-vkgroup { color: #0058cc; }
