@@ -24,11 +24,12 @@ export async function vkAlbum(gid: string): Promise<{ map: Record<string, string
   if (items.length !== PACK.length) return { map: {}, err: `в альбоме ${items.length} фото, ожидалось ${PACK.length}`, n: items.length };
   return { map: Object.fromEntries(PACK.map((f, i) => [f, `photo${items[i].owner_id}_${items[i].id}`])), n: items.length };
 }
-// Номера фото альбома (владелец прислал ссылки: …020 — первое, …048 — последнее, всего 29 из 30 — какой нет, неизвестно).
-// Берём только заведомо верные: первые 6 — ситуации (ask), последние 5 — Мира. Разминки — когда будут сверены номера (VK_BRK).
-const VK_ASK = [20, 21, 22, 23, 24, 25].map(n => `photo-242860183_4572390${n}`);
-const VK_MIRA = [44, 45, 46, 47, 48].map(n => `photo-242860183_4572390${n}`);
-const VK_BRK: Record<number, string> = {};  // номер разминки → photo-242860183_…
+// Номера фото альбома «Для постов»: 29 из 30 (не загрузилась ask-07 или brk-05). Сверено владельцем: …027 — «Последняя печенька»,
+// …039 — Мира. Значит: …020–025 — ситуации (ask), …027–038 — разминки 6…49, …039–048 — Мира. «Пятнашки» (brk-05) — без картинки.
+const ph = (n: number) => `photo-242860183_457239${String(n).padStart(3, '0')}`;
+const VK_ASK = [20, 21, 22, 23, 24, 25].map(ph);
+const VK_MIRA = [39, 40, 41, 42, 43, 44, 45, 46, 47, 48].map(ph);
+const VK_BRK: Record<number, string> = Object.fromEntries([6, 22, 24, 28, 30, 34, 39, 41, 43, 44, 45, 49].map((id, i) => [id, ph(27 + i)]));  // номер разминки → фото
 const picStatic = (kind: number, brkId: number) => kind === 0 ? pick(VK_MIRA) : kind === 2 ? pick(VK_ASK) : VK_BRK[brkId] || '';
 const picFor = (map: Record<string, string>, kind: number, brkId: number) => {
   const keys = Object.keys(map), want = kind === 0 ? keys.filter(k => k.startsWith('mira')) : kind === 1 ? [`brk-${String(brkId).padStart(2, '0')}`] : keys.filter(k => k.startsWith('ask'));
