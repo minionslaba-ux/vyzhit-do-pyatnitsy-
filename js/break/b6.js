@@ -88,7 +88,7 @@
   // =====================================================================
   B[52] = (root, api) => {
     const { L } = api; css();
-    const DUR = 60, ROWS = 7, CUPS = 3, REFILL = 15, SHAKE = 4;
+    const DUR = 60, ROWS = 7, CUPS = 3, REFILL = 18, SHAKE = 4;  // баланс: бот с 2 тапами/с выигрывает ~90%, с 1,5 — ~30%
     const TASKS = [['📄', 'Отчёт', 'Report'], ['📊', 'Таблица', 'Sheet'], ['✉️', 'Письмо', 'Email'], ['📞', 'Звонок', 'Call'], ['🗂️', 'Архив', 'Archive'], ['📝', 'Протокол', 'Minutes'], ['🧾', 'Счёт', 'Invoice'], ['📎', 'Справка', 'Memo']];
     const wrap = el('div', 'bg52-wrap'), hud = el('div', 'bg6-hud'), board = el('div', 'bg52-board');
     wrap.append(board); root.append(hud, wrap);
@@ -134,14 +134,14 @@
     };
     intro(api, wrap, '☕', L('Кофе против завала', 'Coffee vs the pile-up'), [
       L('Задачи сыплются в четыре стопки. <b>Тапайте</b> по задаче — она сделана. Срочное от босса 👔 — в два тапа, но даёт +3.', 'Tasks drop into four piles. <b>Tap</b> a task to get it done. Urgent ones from the boss 👔 take two taps but give +3.'),
-      L('<b>☕ Кофе</b> сносит два нижних ряда во всех стопках. Чашек три, новая — каждые 15 секунд. Две чашки за 8 секунд — руки трясутся, тапы промахиваются.', '<b>☕ Coffee</b> clears the two bottom rows of every pile. You have three cups, one refills every 15 s. Two cups within 8 s — shaky hands, taps miss.'),
+      L('<b>☕ Кофе</b> сносит два нижних ряда во всех стопках. Чашек три, новая — каждые 18 секунд. Две чашки за 8 секунд — руки трясутся, тапы промахиваются.', '<b>☕ Coffee</b> clears the two bottom rows of every pile. You have three cups, one refills every 18 s. Two cups within 8 s — shaky hands, taps miss.'),
       L('Продержитесь <b>60 секунд</b>, чтобы ни одна стопка не упёрлась в потолок.', 'Last <b>60 seconds</b> without any pile hitting the ceiling.'),
     ], () => { state = 'run'; api.sfx.sms?.(); upd(); });
     loop(api, dt => {
       if (state !== 'run') return;
       t += dt; spawn -= dt; if (shakyT > 0) { shakyT -= dt; wrap.classList.add('bg52-shaky'); } else wrap.classList.remove('bg52-shaky');
       if (cups < CUPS) { refill -= dt; if (refill <= 0) { cups++; refill = REFILL; api.sfx.pop?.(); } } else refill = REFILL;
-      if (spawn <= 0) { add(); spawn = Math.max(0.42, 1.15 - t * 0.012); }
+      if (spawn <= 0) { add(); spawn = Math.max(0.28, 0.85 - t * 0.011); }
       if (t >= DUR) return finish(true);
       upd();
     });
@@ -241,7 +241,7 @@
       if (L0.map[ny][nx] === 'E') {
         api.sfx.coins?.(); tap(api, 'item');
         if (lv === 2) { state = 'over'; upd(); draw(); return api.end({ score: Math.max(300, 600 - moves * 3), won: true, text: L(`До кухни незамеченными — три этажа подряд! Шагов: ${moves}.`, `Reached the kitchen unseen — three floors in a row! Steps: ${moves}.`) }); }
-        lv++; load(); upd(); draw(); return;
+        lv++; lives = Math.min(3, lives + 1); load(); upd(); draw(); api.toast(L('Этаж пройден! +1 попытка', 'Floor cleared! +1 try')); return;
       }
       step++;
       k = routes.findIndex((_, j) => { const [x, y] = npcAt(j), [bx, by] = before[j]; return x === me[0] && y === me[1] || (bx === nx && by === ny && x === me[0] - dx && y === me[1] - dy); });
@@ -258,7 +258,7 @@
     intro(api, wrap, '🫣', L('Прятки от коллег', 'Hide from coworkers'), [
       L('Доберитесь до кухни <b>☕</b>. По опенспейсу ходят коллеги с «есть минутка?» — <b>красные клетки</b> они видят.', 'Get to the kitchen <b>☕</b>. Coworkers with “got a minute?” roam the open space — they see the <b>red cells</b>.'),
       L('Вы ходите — они шагают. За <b>🪴 фикусом</b> вас не видно, столы закрывают обзор. Можно <b>переждать</b> на месте.', 'You move — they step. Behind a <b>🪴 plant</b> you’re invisible, desks block the view. You can also <b>wait</b>.'),
-      L('Ходите кнопками, стрелками или тапом по полю. Три этажа, три попытки.', 'Move with the buttons, arrow keys or by tapping the floor. Three floors, three tries.'),
+      L('Ходите кнопками, стрелками или тапом по полю. Три этажа, три попытки, за каждый этаж +1.', 'Move with the buttons, arrow keys or by tapping the floor. Three floors, three tries, +1 per floor.'),
     ], () => { state = 'run'; upd(); draw(); });
   };
   B[53].levels = LEVELS53; B[53].route = route53; B[53].sees = sees53;  // для проверки проходимости (tools)
@@ -320,7 +320,7 @@
     loop(api, dt => {
       if (state !== 'run') return;
       t += dt; awake = Math.max(0, awake - dt * (4.2 + t * 0.03));
-      if (awake <= 0) return finish(false, L(`Вы уснули на созвоне 😴 Удачных реакций: ${ok}.`, `You fell asleep on the call 😴 Good reactions: ${ok}.`));
+      if (awake <= 0) { awake = 40; strike(L('Задремали 😴', 'Dozed off 😴')); if (state !== 'run') return; }
       if (cur) {
         cur.life -= dt; say.querySelector('i').style.transform = `scaleX(${Math.max(0, cur.life / cur.max)})`;
         if (cur.life <= 0) { const trap = cur.k === 'trap'; clear(); gap = 0.7 + api.rng() * 0.7; if (trap) good(L('Промолчали — умно', 'Silence — smart move')); else strike(L('Не успели!', 'Too slow!')); }
