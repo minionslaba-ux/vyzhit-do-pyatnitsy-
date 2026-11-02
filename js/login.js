@@ -109,7 +109,7 @@ async function finishSocial() {
 // Кнопки «Войти через Telegram / VK» — на стартовом экране и в форме входа
 function socialButtons(box) {
   if (!box) return;
-  const on = board.online && !window.VDP_PLATFORM;
+  const on = board.online && !window.VDP_PLATFORM && !window.VK_MINI;  // в ВК вход сам, по параметрам запуска (js/vk-mini.js)
   box.hidden = !on; if (!on) return;
   box.innerHTML = `<button class="btn-main btn-tg" type="button">✈️ ${L('Войти через Telegram', 'Sign in with Telegram')}</button>`
     + (VK_APP ? `<button class="btn-main btn-vk" type="button">VK ${L('Войти через VK ID', 'Sign in with VK ID')}</button>` : '')

@@ -825,12 +825,15 @@ async function referralLink(kind) {
   let team = null;
   if (kind === 'team' && registered()) team = myTeamCache || (await board.rpc('my_team', { p_id: prefs.playerId }).catch(() => []))[0] || null;
   const tg = window.SUPABASE_CONFIG?.telegram;
+  // в приложении ВКонтакте — ссылка на само приложение: всё после # ВК передаёт игре (js/vk-mini.js разбирает ref/join/ch)
+  if (window.VK_MINI && window.VK_APP_ID) return { url: `https://vk.com/app${VK_APP_ID}#ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
   if (tg?.bot) return { url: `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=ref-${ref}${team ? `_join-${team.code}` : ''}`, team };
   return { url: `${gameUrl()}?ref=${ref}${team ? `&join=${team.code}` : ''}`, team };
 }
 // Ссылка-вызов: та же неделя дня и результат, по которому сравнят; в Telegram — через мини-приложение
 async function challengeLink(code) {
   const ref = shortId(await myTag), tg = window.SUPABASE_CONFIG?.telegram;
+  if (window.VK_MINI && window.VK_APP_ID) return `https://vk.com/app${VK_APP_ID}#ref-${ref}_ch-${code}`;
   if (tg?.bot) return `https://t.me/${tg.bot}${tg.app ? `/${tg.app}` : ''}?startapp=ref-${ref}_ch-${code}`;
   return `${gameUrl()}?ref=${ref}&ch=${code}&by=${encodeURIComponent(prefs.name.slice(0, 24))}`;
 }
@@ -920,7 +923,7 @@ async function openShare(kind) {
       <button id="shCopy" data-via="copy">${L('Скопировать ссылку', 'Copy link')}</button>
     </div>
     <p class="share-count" id="shCount"></p>
-    <p class="field-note">${L(`Награды: Telegram и VK — по +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — ещё +${money(REF_CASH)} и +1 предмет на неделю.`,
+    <p class="field-note">${window.VK_MINI ? L(`Награда за отправку в VK — +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — +${money(REF_CASH)} и +1 предмет на неделю.`, `VK share reward — +${money(SHARE_ONCE)} (once), any other share — +${money(SHARE_DAILY)} once a day. Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`) : ''}${window.VK_MINI ? '' : L(`Награды: Telegram и VK — по +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — ещё +${money(REF_CASH)} и +1 предмет на неделю.`,
       `Rewards: Telegram and VK — +${money(SHARE_ONCE)} each (once), any other share — +${money(SHARE_DAILY)} once a day. Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`)}</p>
     <button class="btn-ghost" id="shClose">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;

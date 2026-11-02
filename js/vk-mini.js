@@ -23,6 +23,14 @@
   };
   window.addEventListener('VKWebAppEvent', onEvent);  // нативные приложения ВК присылают ответы событием
   window.addEventListener('message', e => { const d = e.data; if (d && d.type === 'vk-connect') onEvent({ detail: d.detail || { data: d.data } }); });
+  // Приглашения внутри ВК: vk.com/app<ID>#ref-XXXXXX_join-КОД_ch-… — ВК отдаёт часть после # игре (как start_param в Telegram, js/app.js)
+  try {
+    const h = decodeURIComponent(location.hash.slice(1)), ref = h.match(/ref-([A-Z0-9]{6})/i), join = h.match(/join-([A-Z0-9]{6})/i), ch = h.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
+    if (ref && !prefs.refClaimed) prefs.refBy = ref[1].toUpperCase();
+    if (join) prefs.pendingJoin = join[1].toUpperCase();
+    if (ref || join) store.set(KEY.prefs, prefs);
+    if (ch && typeof rememberChallenge === 'function') rememberChallenge(ch[1], '', ref?.[1]);
+  } catch {}
   vkBridge('VKWebAppInit');
   vkBridge('VKWebAppSetViewSettings', { status_bar_style: 'light', action_bar_color: '#07070d', navigation_bar_color: '#07070d' });
   // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию

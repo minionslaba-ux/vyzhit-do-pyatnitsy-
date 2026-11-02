@@ -2426,3 +2426,6 @@ html.vk-mini .shp-pay, html.vk-mini #vkGroup, html.vk-mini .vk-invite { display:
   .exit-btn { font-size: 0; width: 38px; height: 38px; min-height: 38px; padding: 0; display: grid; place-items: center; }
   .exit-btn::before { content: '←'; font-size: 19px; line-height: 1; }
 }
+/* Приложение ВКонтакте: без ссылок и кнопок Telegram (правила ВК — не продвигать другие площадки) */
+html.vk-mini .btn-tg, html.vk-mini #shTgLink, html.vk-mini [data-sh="tg"], html.vk-mini #tgRemind, html.vk-mini #tgGroup, html.vk-mini #psGroup,
+html.vk-mini a[href^="https://t.me/"], html.vk-mini [data-a="tg"] { display: none !important; }
