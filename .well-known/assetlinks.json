@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.survivefriday.twa",
+        "sha256_cert_fingerprints": ["C2:7A:63:B0:96:FD:79:4F:91:A7:2A:17:DA:8A:6B:64:A7:54:30:80:7E:21:18:84:89:1D:45:66:18:14:99:7F"]
+      }
+    }]

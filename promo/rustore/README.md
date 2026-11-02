@@ -6,7 +6,7 @@
 ## 1. Сборка на pwabuilder.com
 1. pwabuilder.com → адрес `https://survivefriday.com` → **Package For Stores** → **Android** → **Generate Package**.
 2. В **All Settings / Options** поменять:
-   - **Package ID:** `com.survivefriday.game`
+   - **Package ID:** `com.survivefriday.twa` (так собрана первая версия — менять нельзя)
    - **App name:** `Выжить до пятницы`, **Launcher name:** `Выжить до пт`
    - **Start URL:** `/?src=rustore&utm_source=rustore` ← обязательно: по нему игра понимает, что она в RuStore (без покупок)
    - **Display mode:** Standalone, **Orientation:** Portrait (или Default)
