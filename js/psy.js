@@ -113,6 +113,7 @@ const psyTipHtml = (t, head) => `<small class="psy-kick">${head}</small><p class
 async function openPsy(source = 'menu', cat = '') {
   if (!(await psyLoad())) { toast(L('Кабинет Миры сейчас не открывается — проверьте интернет', 'Mira’s office won’t open — check your connection')); return; }
   track('psy', { detail: cat ? `${source}:${cat}` : source });
+  bus.emit('psy', { source, cat });  // перегрев карьеры остывает — js/burnout.js
   if (!cat && prefs.psyCall?.d === today()) cat = prefs.psyCall.cat;  // Мира звала — разговор о том же
   if (prefs.psyCall) { delete prefs.psyCall; store.set(KEY.prefs, prefs); renderPsyBtn(); }
   psyCtx = cat;
