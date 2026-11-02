@@ -134,7 +134,7 @@ async function playBreak(n, opts = {}) {
       r.innerHTML = `<b>${won ? (rec ? L('🏆 Новый рекорд!', '🏆 New record!') : L('✅ Готово!', '✅ Done!')) : L('Не получилось', 'Not this time')}</b>
         ${text ? `<p>${text}</p>` : ''}${score != null ? `<p>${L('Результат', 'Score')}: <b>${esc(String(score))}</b></p>` : ''}${reward ? `<p class="brk-reward">🎁 ${reward}</p>` : won ? `<p class="brk-note">${L('Награды на сегодня собраны — играйте для рекордов', 'Today’s rewards are collected — play for records')}</p>` : ''}
         ${then ? `<button class="btn-main" type="button" id="brkGo">${L('За работу →', 'Back to work →')}</button>`
-          : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}}
+          : `<div class="row2"><button class="btn-main" type="button" id="brkAgain">${L('Ещё раз', 'Again')}</button><button class="btn-ghost" type="button" id="brkList">${L('Другие разминки', 'Other games')}</button></div>`}
         ${won && n !== 51 ? `<div class="brk-share" aria-label="${L('Поделиться результатом', 'Share your score')}"><span aria-hidden="true">📣</span><button type="button" data-sh="tg">Telegram</button><button type="button" data-sh="vk" class="sh-vk">${L('ВКонтакте', 'VK')}</button><button type="button" data-sh="more">${L('Ещё…', 'More…')}</button></div>` : ''}`;
       r.hidden = false; r.classList.toggle('brk-win', !!won);
       r.querySelectorAll('[data-sh]').forEach(btn => btn.onclick = () => brkShare(n, score, rec, btn.dataset.sh));
