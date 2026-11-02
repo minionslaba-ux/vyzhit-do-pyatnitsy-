@@ -133,6 +133,14 @@ Deno.serve(async req => {
   const body = await req.json().catch(() => ({}));
   if (typeof body.test === 'string') return testGroup(db, token, body.test);
   if (typeof body.announce === 'string') return announceEn(db, token, body.announce);
+  // пробный пост в ВК: { vk_test: одноразовый код из bot_test_tokens, kind?: 0|1|2 } — больше ничего не рассылает
+  if (typeof body.vk_test === 'string') {
+    const { data: t } = await db.from('bot_test_tokens').delete().eq('token', body.vk_test).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
+    if (!t?.length) return new Response('forbidden', { status: 403 });
+    const d = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+    const res = await vkDaily(db, d, brkOfDay(d), true, [0, 1, 2].includes(body.kind) ? body.kind : undefined).catch(e => `error: ${e}`);
+    return new Response(JSON.stringify({ vk: res }), { headers: { 'Content-Type': 'application/json' } });
+  }
   const today = new Date().toISOString().slice(0, 10), day = Math.floor(Date.now() / 864e5);
   const send = (body: Record<string, unknown>) => fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });

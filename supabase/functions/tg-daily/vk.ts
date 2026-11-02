@@ -9,12 +9,15 @@ const POOLS = ['pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool
 const getJson = (f: string) => fetch(SITE + f).then(r => r.ok ? r.json() : null).catch(() => null);
 const pick = <T>(a: T[]) => a[Math.floor(Math.random() * a.length)];
 
-export async function vkDaily(db: any, mskDate: string, brk: [number, string, string, string]): Promise<string> {
+// test: пробный пост по одноразовому коду (index.ts, body.vk_test) — без записи в vk_posts, ежедневный пост не блокирует; kind — 0 Мира, 1 разминка, 2 ситуация
+export async function vkDaily(db: any, mskDate: string, brk: [number, string, string, string], test = false, kindArg?: number): Promise<string> {
   const token = Deno.env.get('VK_GROUP_TOKEN'), gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
   if (!token || !gid) return 'off';
-  const { error: dup } = await db.from('vk_posts').insert({ day: mskDate });
-  if (dup) return 'already';
-  const kind = Math.floor(Date.parse(mskDate) / 864e5) % 3;
+  if (!test) {
+    const { error: dup } = await db.from('vk_posts').insert({ day: mskDate });
+    if (dup) return dup.code === '23505' ? 'already' : `error: ${dup.message}`;
+  }
+  const kind = kindArg ?? Math.floor(Date.parse(mskDate) / 864e5) % 3;
   const link = (q = '') => `${SITE}?utm_source=vk${q}`;
   let message = '', url = link();
   if (kind === 0) {
@@ -32,9 +35,11 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
     message = c ? `🤔 Что бы вы выбрали?\n\n${c.who ? c.who + ': ' : ''}${c.text}\n\n⬅ ${c.answers.left.label}\n➡ ${c.answers.right.label}\n\nПишите в комментариях! А чем кончится неделя — узнаете в игре 👇`
       : '🗓 Новая неделя в офисе уже началась. Доживёте до пятницы 18:00? 👇';
   }
-  const body = new URLSearchParams({ owner_id: `-${gid}`, from_group: '1', message, attachments: url, access_token: token, v: '5.199' });
+  // ссылка — в тексте: вложение-ссылку без картинки ключ сообщества публиковать не может (link_photo_sizing_rule)
+  const body = new URLSearchParams({ owner_id: `-${gid}`, from_group: '1', message: `${message}\n\n${url}`, access_token: token, v: '5.199' });
   const r = await fetch('https://api.vk.com/method/wall.post', { method: 'POST', body }).then(x => x.json()).catch(e => ({ error: { error_msg: String(e) } }));
-  if (r.error) { await db.from('vk_posts').delete().eq('day', mskDate); return `error: ${r.error.error_msg || r.error.error_code}`; }  // попробуем при следующем вызове
+  if (r.error) { if (!test) await db.from('vk_posts').delete().eq('day', mskDate); return `error: ${r.error.error_msg || r.error.error_code}`; }  // попробуем при следующем вызове
+  if (test) return `posted ${r.response?.post_id}`;
   await db.from('vk_posts').update({ post_id: r.response?.post_id ?? null }).eq('day', mskDate);
   return `posted ${r.response?.post_id}`;
 }
