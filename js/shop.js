@@ -112,7 +112,7 @@ function themeCouponPick(back) {
 }
 
 // ---------- Стартовый набор ----------
-const starterOn = () => !window.VDP_PLATFORM && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
+const starterOn = () => !window.VDP_PLATFORM && !window.VK_MINI && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
 // where: 'tu' — в окне пополнения (там своё согласие с офертой), 'shp' — в магазине
 function shopStarterHtml(where = 'shp') {
   if (!starterOn()) return '';
@@ -137,6 +137,7 @@ async function productPay(btn) {
   const agree = card?.querySelector('input[type=checkbox]') || box.querySelector('#tuAgree'), err = card?.querySelector('.join-err') || box.querySelector('#tuErr');
   const say = t => { if (err) err.textContent = t; else toast(t); };
   if (agree && !agree.checked) return say(L('Отметьте согласие с офертой.', 'Please accept the public offer.'));
+  if (window.VK_MINI) return toast(L('Покупки в приложении ВКонтакте пока недоступны — играть можно бесплатно', 'Purchases aren’t available in the VK app yet — the game is free to play'));
   if (window.VDP_PLATFORM) return toast(L('Покупка доступна на сайте survivefriday.com', 'Purchases are available on survivefriday.com'));
   if (!(typeof registered === 'function' && registered())) {
     $('modal').hidden = true; $('profSheet') && ($('profSheet').hidden = true);
@@ -161,7 +162,7 @@ async function productPay(btn) {
 
 // ---------- «☕ Кофе разработчикам»: цифровой товар за 100 ₽ (не пожертвование) — значок «☕ Меценат ×N» в профиле и +10 у.е. ----------
 const coffeeBadge = () => (prefs.coffeeN || 0) > 0 ? `<span class="shp-maecenas" title="${L('Купил кофе разработчикам', 'Bought the devs a coffee')}">☕ ${L('Меценат', 'Patron')}${prefs.coffeeN > 1 ? ` ×${prefs.coffeeN}` : ''}</span>` : '';
-const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM ? '' : `<div class="shp-coffee shp-pay">
+const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM || window.VK_MINI ? '' : `<div class="shp-coffee shp-pay">
   <b>☕ ${L('Кофе разработчикам', 'A coffee for the devs')} — 100 ₽</b>
   <p>${L('Игру делает один человек по вечерам. Угостите разработчика кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Treat the developer to a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
   ${coffeeBadge() ? `<p class="shp-ok">${L('Ваш значок:', 'Your badge:')} ${coffeeBadge()} — ${L('спасибо!', 'thank you!')}</p>` : ''}
@@ -427,7 +428,7 @@ function openStore(section = '', after) {
     const buyBtn = (attr, price, label) => `<button type="button" class="btn-chip${!C2 || (C2.bank || 0) < price ? ' tu-btn' : ''}" ${attr}>${label || ''}${shpPrice(price)}</button>`;
     m.innerHTML = `<div class="modal-box glass shp-box" role="dialog" aria-modal="true" aria-labelledby="shpTitle">
       <h2 id="shpTitle">🛒 ${L('Магазин', 'Shop')}</h2>
-      <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank || 0)}</b>`, `Balance: <b>${money(C2.bank || 0)}</b>`) : L('У.е. тратятся в карьере — начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')} ${window.VDP_PLATFORM ? '' : topupBtn(0, '')}</p>
+      <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank || 0)}</b>`, `Balance: <b>${money(C2.bank || 0)}</b>`) : L('У.е. тратятся в карьере — начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')} ${window.VDP_PLATFORM || window.VK_MINI ? '' : topupBtn(0, '')}</p>
       <nav class="shp-nav">${[['shpDeal', L('🔥 Выгодно', '🔥 Deals')], ['shpNoads', L('🚫 Без рекламы', '🚫 Ad-free')], ['shpBoost', L('⚡ Бустеры', '⚡ Boosters')], ['shpRare', L('✨ Редкое', '✨ Rare')], ['shpSeason', L('🏆 Сезон', '🏆 Season')]].map(([id, t]) => `<button type="button" class="btn-chip" data-go="${id}">${t}</button>`).join('')}</nav>
       ${shopStarterHtml('shp')}
       <section id="shpDeal" class="shp-sec"><h3 class="hs-h">🔥 ${L('Предложение дня', 'Deal of the day')} <small class="shp-timer" id="shpTimer">${hhmmss(toMidnight())}</small></h3>
@@ -438,7 +439,7 @@ function openStore(section = '', after) {
         <p class="field-note">${noAdsOn() ? `<b class="shp-ok">✓ ${prefs.noAdsForever ? L('Реклама отключена навсегда', 'Ads are off forever') : L(`Реклама отключена: ещё ${pl(noAdsDays(), 'день', 'дня', 'дней', 'day', 'days')}`, `Ads are off: ${pl(noAdsDays(), '', '', '', 'more day', 'more days')}`)}</b> · ` : ''}${L('Ни обязательной рекламы между неделями и после разминок, ни всплывающих предложений. «Реклама за награду» остаётся — только если сами нажмёте.', 'No ads between weeks or after warm-ups and no ad pop-ups. Rewarded ads stay — only when you tap them.')}</p>
         ${prefs.noAdsForever ? '' : rows([['d30', '📅', L('30 дней без рекламы', '30 days ad-free'), NOADS.d30.price, L('продлевает текущий срок', 'extends your current period')], ['forever', '♾️', L('Навсегда', 'Forever'), NOADS.forever.price, L('один раз — и больше никакой рекламы', 'pay once — no more ads, ever')]],
           ([id, ico, t, price, sub]) => `<div class="gp-item${id === 'forever' ? ' shp-best' : ''}"><span class="gp-ico" aria-hidden="true">${ico}</span><span class="gp-txt"><b>${t}</b><small>${sub}</small></span>${buyBtn(`data-noads="${id}"`, price)}</div>`)}}
-        ${prefs.noAdsForever || window.VDP_PLATFORM ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
+        ${prefs.noAdsForever || window.VDP_PLATFORM || window.VK_MINI ? '' : `<div class="shp-coffee shp-pay"><b>💳 ${L('30 дней без рекламы — 99 ₽', '30 ad-free days — 99 ₽')}</b>
           <p>${L('Оплата картой или СБП, без трат у.е. Срок складывается с текущим.', 'Pay by card, no $ spent. Adds to your current period.')}</p>
           <label class="tu-agree"><input type="checkbox"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>
           <p class="join-err" role="alert"></p>

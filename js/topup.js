@@ -18,6 +18,7 @@ const firstBonusOn = () => !prefs.paidUser;
 const lackOf = price => { const C2 = careerNow(); return C2 ? Math.max(0, price - Math.max(0, C2.bank)) : price; };
 
 function openTopup({ need = 0, why = '', then } = {}) {
+  if (window.VK_MINI) return toast(L('Покупки в приложении ВКонтакте пока недоступны — играть можно бесплатно', 'Purchases aren’t available in the VK app yet — the game is free to play'));
   if (window.VDP_PLATFORM) return toast(L('Покупка у.е. доступна на сайте survivefriday.com', 'Buying $ is available on survivefriday.com'));
   const m = $('modal'), C2 = careerNow();
   let n = Math.max(need, need ? need : 10);

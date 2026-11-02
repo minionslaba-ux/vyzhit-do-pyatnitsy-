@@ -2414,3 +2414,6 @@ html.light .btn-vkgroup { color: #0058cc; }
 @media (prefers-reduced-motion: reduce) { .vk-invite { animation: none; } }
 .vk-invite, .psy-invite { text-align: left; }
 .vk-invite > span:last-child, .psy-invite > span:last-child { min-width: 0; }
+
+/* Внутри мини-приложения ВКонтакте: без оплаты в обход ВК и без внешних «Мы во ВКонтакте» */
+html.vk-mini .shp-pay, html.vk-mini #vkGroup, html.vk-mini .vk-invite { display: none !important; }

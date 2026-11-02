@@ -9,7 +9,7 @@ const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstar
 const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().blockId; return typeof b === 'string' ? { id: b, type: adCfg().type || 'fullscreen' } : b || {}; };
 // adOff — Яндекс ответил, что площадка не включена (PAGE_DISABLED: сайт ещё не прошёл модерацию РСЯ) — до перезагрузки не пробуем
 let adOff = '';
-const adOn = () => !!adBlock().id && !window.VDP_PLATFORM && !adOff;  // нет блока для этого устройства — нет и кнопки
+const adOn = () => !!adBlock().id && !window.VDP_PLATFORM && !window.VK_MINI && !adOff;  // нет блока для этого устройства — нет и кнопки
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь

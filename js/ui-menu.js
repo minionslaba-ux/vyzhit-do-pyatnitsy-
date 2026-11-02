@@ -883,6 +883,7 @@ function dropShareBadge(via) { const b = document.querySelector(`.share-big [dat
 function bindShare(root) { root.querySelectorAll('[data-share]').forEach(b => b.onclick = () => { snoozeViral(7); openShare(b.dataset.share); }); }
 // Поделиться ВКонтакте — одна функция для всех мест (результат недели, цитата, приглашение)
 function vkShare(url, title, what = '') {
+  if (window.VK_MINI && window.vkBridge) { vkBridge('VKWebAppShare', { link: url.replace(/^https:\/\/t\.me\/.*/, 'https://vk.com/app' + (window.VK_APP_ID || '')) }); track('share', { detail: `vk_app:${what}` }); return; }  // внутри ВК — родное окно «Поделиться»
   // в VK многие без Telegram: ссылку на мини-приложение превращаем в ссылку на сайт с тем же приглашением/вызовом
   if (/^https:\/\/t\.me\//.test(url)) {
     const sp = new URL(url).searchParams.get('startapp') || '', q = new URLSearchParams();

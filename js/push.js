@@ -7,7 +7,7 @@ const pushIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platf
 const pushStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 // 'ok' — можно включить; 'ios' — iPhone в обычной вкладке (нужно добавить на экран «Домой»); '' — недоступно
 const pushCan = () => {
-  if (window.VDP_PLATFORM || window.Telegram?.WebApp?.initData || !window.SUPABASE_CONFIG?.push?.pub) return '';
+  if (window.VDP_PLATFORM || window.VK_MINI || window.Telegram?.WebApp?.initData || !window.SUPABASE_CONFIG?.push?.pub) return '';
   if (pushIOS && !pushStandalone()) return 'ios';
   return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window ? 'ok' : '';
 };

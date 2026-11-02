@@ -52,7 +52,8 @@
 <!-- Yandex.RTB: загрузчик Рекламной сети Яндекса (асинхронно, не тормозит игру). Ролик показывается только по кнопке
      «Посмотреть рекламу» (js/ads.js), блок R-A-20310847-1 -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
+<!-- РСЯ: на сайте — как всегда; внутри мини-приложения ВКонтакте (vk_app_id в адресе) не грузим: там своя реклама и свои правила -->
+<script>(function(){var vk=/[?&]vk_app_id=\d+/.test(location.search);try{vk=vk||sessionStorage.getItem("vdp-vk")==="1"}catch(e){}if(!vk){var s=document.createElement("script");s.src="https://yandex.ru/ads/system/context.js";s.async=true;document.head.appendChild(s)}})()</script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -374,5 +375,6 @@
 <script src="js/topup.js"></script>
 <script src="js/login.js"></script>
 <script src="js/app.js"></script>
+<script src="js/vk-mini.js"></script>
 </body>
 </html>
