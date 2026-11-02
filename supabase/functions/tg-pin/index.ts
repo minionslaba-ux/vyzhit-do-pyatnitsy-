@@ -14,7 +14,7 @@ const KB = { inline_keyboard: [
   [{ text: '📅 Неделя дня · Daily', url: `${BOT}=go-daily` }, { text: '☕ Разминка · Breaks', url: `${BOT}=go-breaks` }],
   [{ text: '🛒 Магазин · Shop', url: `${BOT}=go-shop` }, { text: '📰 Лента · Feed', url: `${BOT}=go-feed` }],
   [{ text: '🏆 Рейтинг · Top', url: `${BOT}=go-top` }, { text: '😺 Стикеры · Stickers', url: 'https://t.me/addstickers/office_friday_by_Survivefridaybot' }],
-  [{ text: '🌐 Сайт · Web', url: 'https://survivefriday.com' }],
+  [{ text: '🌐 Сайт · Web', url: 'https://survivefriday.com' }, { text: '📣 ВКонтакте · VK', url: 'https://vk.ru/survivefriday' }],
 ] };
 
 Deno.serve(async req => {

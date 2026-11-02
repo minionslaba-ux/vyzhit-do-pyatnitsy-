@@ -347,6 +347,16 @@ function vkGroup() {
   b.innerHTML = `<span class="vk-mark" aria-hidden="true">VK</span> ${L('Мы во ВКонтакте', 'We’re on VK')}`;
   b.onclick = () => track('vk_group');
 }
+// После победы в пятницу — приглашение в группу ВК: не чаще раза в неделю, только по-русски, пока игрок не перешёл по ссылке
+bus.on('weekEnd', x => {
+  const g = window.SUPABASE_CONFIG?.vk?.group, wk = Math.floor(Date.now() / 6048e5);
+  if (!x.won || EN || !g || prefs.vkJoined || store.get('vdp-vk-ask', 0) === wk) return;
+  const at = views.end.querySelector('.end-sheet .stack'); if (!at) return;
+  store.set('vdp-vk-ask', wk);
+  at.insertAdjacentHTML('beforebegin', `<a class="vk-invite" id="vkInvite" href="https://vk.ru/${g}?utm_source=game_win" target="_blank" rel="noopener">
+    <span class="vk-mark" aria-hidden="true">VK</span><span><b>Мы во ВКонтакте</b><small>Разминка дня, советы Миры и «Что бы вы выбрали?» — подпишитесь, чтобы не пропустить</small></span></a>`);
+  $('vkInvite').onclick = () => { prefs.vkJoined = 1; store.set(KEY.prefs, prefs); track('vk_group', { detail: 'win' }); };
+});
 async function tgGroup() {
   const b = $('tgGroup'); if (!b) return;
   if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; addCash(n); }

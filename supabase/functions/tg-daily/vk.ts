@@ -4,6 +4,7 @@
 //   VK_GROUP_ID — числовой id группы (без минуса).
 // Нет секретов — ничего не делает. Второй пост в тот же день не уходит (таблица vk_posts, ключ — дата по Москве).
 // Чередование по дням: совет Миры → разминка дня → ситуация «Что бы вы выбрали?» из карточек игры.
+import { mskDay } from './report.ts';
 const SITE = 'https://survivefriday.com/';
 const POOLS = ['pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool_l3a'];
 const getJson = (f: string) => fetch(SITE + f).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -30,11 +31,29 @@ const ph = (n: number) => `photo-242860183_457239${String(n).padStart(3, '0')}`;
 const VK_ASK = [20, 21, 22, 23, 24, 25].map(ph);
 const VK_MIRA = [39, 40, 41, 42, 43, 44, 45, 46, 47, 48].map(ph);
 const VK_BRK: Record<number, string> = Object.fromEntries([6, 22, 24, 28, 30, 34, 39, 41, 43, 44, 45, 49].map((id, i) => [id, ph(27 + i)]));  // номер разминки → фото
-const picStatic = (kind: number, brkId: number) => kind === 0 ? pick(VK_MIRA) : kind === 2 ? pick(VK_ASK) : VK_BRK[brkId] || '';
+const picStatic = (kind: number, brkId: number) => kind === 0 ? pick(VK_MIRA) : kind === 1 ? VK_BRK[brkId] || '' : pick(VK_ASK);
 const picFor = (map: Record<string, string>, kind: number, brkId: number) => {
   const keys = Object.keys(map), want = kind === 0 ? keys.filter(k => k.startsWith('mira')) : kind === 1 ? [`brk-${String(brkId).padStart(2, '0')}`] : keys.filter(k => k.startsWith('ask'));
   const ok = want.filter(k => map[k]); return ok.length ? map[pick(ok)] : '';
 };
+
+// Итоги недели (по понедельникам): только общие цифры — имена игроков в соцсеть не выносим
+const DEATH: Record<string, string> = { psyche: 'Кукуха', energy: 'Энергия', boss: 'Босс', colleagues: 'Коллеги' };
+async function weekRecap(db: any): Promise<string> {
+  const r = (await db.rpc('dev_report', { p_from: mskDay(-7).toISOString(), p_to: mskDay(0).toISOString() })).data || {};
+  if (!r.weeks) return '';
+  const from = new Date(mskDay(-7).getTime() + 3 * 3600e3).toISOString().slice(0, 10), to = new Date(mskDay(-1).getTime() + 3 * 3600e3).toISOString().slice(0, 10);
+  const { data: best } = await db.from('daily_leaderboard').select('won, step, total').gte('day', from).lte('day', to)
+    .order('won', { ascending: false }).order('step', { ascending: false }).order('total', { ascending: false }).limit(1);
+  const b = best?.[0], d = r.deaths?.[0];
+  const pct = Math.round(100 * (r.won || 0) / r.weeks);
+  return ['📊 Итоги недели в «Выжить до пятницы»', '',
+    `🗓 Сыграно недель: ${r.weeks} · до пятницы дожили: ${r.won || 0} (${pct}%)`,
+    r.avg_step ? `⏱ В среднем продержались ${r.avg_step} из 25 решений` : '',
+    d ? `💀 Чаще всего неделю заканчивала шкала «${DEATH[d.death] || d.death}»` : '',
+    b ? `🏆 Лучший результат недели дня: ${b.won ? `до пятницы, ${b.total} очков` : `${b.step} из 25 решений`}` : '',
+    '', 'Себя ищите в рейтинге игры. А на этой неделе — доживёте до пятницы? 👇'].filter((x, i, a) => x || a[i - 1]).join('\n');
+}
 
 export async function vkDaily(db: any, mskDate: string, brk: [number, string, string, string], test = false, kindArg?: number): Promise<string> {
   const token = Deno.env.get('VK_GROUP_TOKEN'), gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
@@ -43,7 +62,8 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
     const { error: dup } = await db.from('vk_posts').insert({ day: mskDate });
     if (dup) return dup.code === '23505' ? 'already' : `error: ${dup.message}`;
   }
-  const kind = kindArg ?? Math.floor(Date.parse(mskDate) / 864e5) % 3;
+  // по понедельникам — итоги недели (kind 3); в остальные дни по кругу 0 Мира, 1 разминка, 2 ситуация
+  const kind = kindArg ?? (new Date(mskDate).getUTCDay() === 1 ? 3 : Math.floor(Date.parse(mskDate) / 864e5) % 3);
   const link = (q = '') => `${SITE}?utm_source=vk${q}`;
   let message = '', url = link();
   if (kind === 0) {
@@ -55,6 +75,7 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
     message = `☕ Разминка дня: ${brk[1]} ${brk[2]}\n\nМинута, чтобы переключиться между задачами. Без регистрации, прямо в браузере 👇`;
     url = link(`&brk=${brk[0]}`);
   }
+  if (kind === 3) message = await weekRecap(db).catch(() => '');
   if (!message) {
     const cards = (await getJson(`data/${pick(POOLS)}.json`)) || [];
     const c = pick(cards as any[]);

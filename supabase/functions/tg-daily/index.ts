@@ -142,7 +142,7 @@ Deno.serve(async req => {
       const a = await vkAlbum((Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '')).catch(e => ({ map: {}, err: String(e) }));
       return new Response(JSON.stringify(a), { headers: { 'Content-Type': 'application/json' } });
     }
-    const res = await vkDaily(db, d, brkOfDay(d), true, [0, 1, 2].includes(body.kind) ? body.kind : undefined).catch(e => `error: ${e}`);
+    const res = await vkDaily(db, d, brkOfDay(d), true, [0, 1, 2, 3].includes(body.kind) ? body.kind : undefined).catch(e => `error: ${e}`);
     return new Response(JSON.stringify({ vk: res }), { headers: { 'Content-Type': 'application/json' } });
   }
   const today = new Date().toISOString().slice(0, 10), day = Math.floor(Date.now() / 864e5);

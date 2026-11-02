@@ -35,7 +35,7 @@ const T = {
     off: '🔕 Напоминания в этой группе выключены. Включить снова — /remind',
     admin: 'Включать и выключать напоминания могут только админы группы.',
     play: '🏢 «Выжить до пятницы» — офисная игра: 25 решений до пятницы, 18:00. Каждый день — новая неделя дня, одна на всех.',
-    start: '🏢 «Выжить до пятницы» — офисная игра: 25 решений до пятницы, 18:00.\n\nЧтобы получать напоминания о неделе дня, откройте игру и нажмите в меню «🔔 Напоминать в Telegram».\nХотите напоминания для своей группы? Добавьте меня в группу и напишите там /remind.',
+    start: '🏢 «Выжить до пятницы» — офисная игра: 25 решений до пятницы, 18:00.\n\nЧтобы получать напоминания о неделе дня, откройте игру и нажмите в меню «🔔 Напоминать в Telegram».\nХотите напоминания для своей группы? Добавьте меня в группу и напишите там /remind.\n\n📣 Мы во ВКонтакте: vk.ru/survivefriday — советы Миры, разминки, «Что бы вы выбрали?»',
     btn: '▶ Играть',
   },
   en: {
@@ -119,7 +119,7 @@ async function onMessage(msg: any) {
     }
     if (arg.startsWith('maf_')) return mafiaJoin({ db, api }, msg, arg);  // кнопка «Присоединиться» к игре «Крот в офисе»
     const l = langOf(msg.from?.language_code);
-    await api('sendMessage', { chat_id: chat.id, text: T[l].start, reply_markup: { inline_keyboard: [[{ text: T[l].btn, web_app: { url: SITE + (l === 'en' ? 'en.html' : '') } }]] } });
+    await api('sendMessage', { chat_id: chat.id, text: T[l].start, reply_markup: { inline_keyboard: [[{ text: T[l].btn, web_app: { url: SITE + (l === 'en' ? 'en.html' : '') } }], ...(l === 'en' ? [] : [[{ text: '📣 Группа ВКонтакте', url: 'https://vk.ru/survivefriday' }]])] } });
     return;
   }
   const { data: g } = await db.from('tg_groups').select('lang').eq('chat_id', chat.id).maybeSingle();

@@ -2407,3 +2407,8 @@ html.light .psy-link { color: #0b7a45; }
 .btn-vkgroup[hidden] { display: none; }
 .vk-mark { flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #0077ff; color: #fff; font-family: var(--f-display); font-size: 11px; }
 html.light .btn-vkgroup { color: #0058cc; }
+.vk-invite { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; margin: 10px 0 4px; padding: 12px 14px; border-radius: 18px; text-decoration: none; color: var(--text);
+  background: rgba(0,119,255,.12); border: 1px solid rgba(0,119,255,.55); animation: psIn .5s .6s ease both; }
+.vk-invite b { display: block; font-size: 14.5px; } .vk-invite small { display: block; font-size: 13px; line-height: 1.35; color: var(--text-2); margin-top: 2px; }
+.vk-invite .vk-mark { width: 40px; height: 40px; border-radius: 12px; font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .vk-invite { animation: none; } }
