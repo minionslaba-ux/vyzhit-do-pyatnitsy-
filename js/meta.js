@@ -343,7 +343,7 @@ function addCash(n) {  // на счёт карьеры; нет карьеры �
 // «Мы во ВКонтакте» — если в js/config.js указан адрес группы
 function vkGroup() {
   const b = $('vkGroup'), g = window.SUPABASE_CONFIG?.vk?.group; if (!b || !g) return;
-  b.href = `https://vk.com/${g}`; b.hidden = false;
+  b.href = `https://vk.ru/${g}`; b.hidden = false;
   b.innerHTML = `<span class="vk-mark" aria-hidden="true">VK</span> ${L('Мы во ВКонтакте', 'We’re on VK')}`;
   b.onclick = () => track('vk_group');
 }
