@@ -1,4 +1,4 @@
-// «☕ Разминка»: 50 мини-игр в перерыве между рабочими неделями — логика, пазлы, аркады, слова, память, расслабление.
+// «☕ Разминка»: 54 мини-игры в перерыве между рабочими неделями — логика, пазлы, аркады, слова, память, расслабление.
 // Витрина и рекорды — здесь; сами игры — js/break/b1.js … b5.js (по 10), грузятся только при первом открытии.
 // Награда — до 3 раз в день: +1 у.е. в карьеру и «бодрость» на следующую неделю (+5 к Энергии и Кукухе, копится до +15).
 // Контракт игры: BREAK_IMPL[id] = (root, api) => { … }; api.end({ score, won, text }) — конец партии; api.onExit(fn) — уборка.
@@ -58,6 +58,10 @@ const BREAKS = [
   [48, 'relax', '🐈', L('Погладь кота', 'Pet the cat'), L('Ваш питомец мурчит и радуется', 'Your pet purrs with joy')],
   [49, 'relax', '🫧', L('Пупырка', 'Bubble wrap'), L('Лопайте пузырики — просто так', 'Pop the bubbles — just because')],
   [50, 'relax', '🏯', L('Дзен-сад', 'Zen garden'), L('Рисуйте граблями узоры на песке', 'Rake patterns in the sand')],
+  // 51 — «Минута дыхания» (js/pause.js); 52–54 — js/break/b6.js
+  [52, 'arcade', '🗄️', L('Кофе против завала', 'Coffee vs the pile-up'), L('Разгребайте падающие задачи, а кофе — на крайний случай', 'Clear the falling tasks — coffee is your last resort')],
+  [53, 'logic', '🫣', L('Прятки от коллег', 'Hide from coworkers'), L('Проберитесь на кухню, не попавшись на «есть минутка?»', 'Sneak to the kitchen without a “got a minute?”')],
+  [54, 'memory', '🧐', L('Умный вид на созвоне', 'Look smart on the call'), L('Кивайте вовремя, не засыпайте и не вызывайтесь добровольцем', 'Nod on cue, stay awake, never volunteer')],
 ];
 window.BREAK_IMPL = window.BREAK_IMPL || {};
 const BREAK_FILE = n => `js/break/b${Math.ceil(n / 10)}.js`;
