@@ -8,8 +8,9 @@ window.RUSTORE = (() => { try { const on = /[?&]src=rustore\b/.test(location.sea
 // itch.io: игра открыта в окне на странице itch (dist/itch.zip — оболочка с адресом ?src=itch) — тоже без оплаты
 window.ITCH = (() => { try { const on = /[?&]src=itch\b/.test(location.search); if (on) sessionStorage.setItem('vdp-itch', '1'); return on || sessionStorage.getItem('vdp-itch') === '1'; } catch { return /[?&]src=itch\b/.test(location.search); } })();
 window.NO_PAY = !!(window.RUSTORE || window.ITCH);
+if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v169';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v170';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');

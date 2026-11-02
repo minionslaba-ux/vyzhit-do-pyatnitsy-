@@ -2484,3 +2484,6 @@ html.light .heat-top em.up { color: #c2410c; } html.light .heat-top em.down { co
 
 /* RuStore (html.no-pay, js/i18n.js): без покупок за рубли — прячем ссылки на цены и карточки оплаты */
 html.no-pay a[href$="tseny.html"], html.no-pay .shp-pay, html.no-pay .tu-btn, html.no-pay #afOff { display: none !important; }
+
+/* ссылка на страницу itch.io — не внутри самого itch и не в ВК */
+html.itch .lnk-itch, html.vk-mini .lnk-itch { display: none !important; }
