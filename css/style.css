@@ -2421,3 +2421,8 @@ html.vk-mini .shp-pay, html.vk-mini #vkGroup, html.vk-mini .vk-invite { display:
 .in-segs { min-width: 0; max-width: 100%; }
 .in-segs i { flex: 0 1 14px; min-width: 3px; }
 .intro-box { overflow-x: hidden; }
+/* Узкие телефоны: «← Выйти» наезжал на часы 09:00 — оставляем круглую кнопку со стрелкой (подпись — в aria-label) */
+@media (max-width: 420px) {
+  .exit-btn { font-size: 0; width: 38px; height: 38px; min-height: 38px; padding: 0; display: grid; place-items: center; }
+  .exit-btn::before { content: '←'; font-size: 19px; line-height: 1; }
+}
