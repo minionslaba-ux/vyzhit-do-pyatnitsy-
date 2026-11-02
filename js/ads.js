@@ -9,7 +9,9 @@ const adPlatform = () => matchMedia('(pointer: coarse)').matches || 'ontouchstar
 const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().blockId; return typeof b === 'string' ? { id: b, type: adCfg().type || 'fullscreen' } : b || {}; };
 // adOff — Яндекс ответил, что площадка не включена (PAGE_DISABLED: сайт ещё не прошёл модерацию РСЯ) — до перезагрузки не пробуем
 let adOff = '';
-const adOn = () => !!adBlock().id && !window.VDP_PLATFORM && !window.VK_MINI && !adOff;  // нет блока для этого устройства — нет и кнопки
+// Яндекс Игры: реклама только через SDK площадки (js/platform-yandex.js); на сайте — РСЯ; в ВК и других каталогах — без рекламы
+const adSdk = () => window.VDP_PLATFORM?.sdk?.adv || null;
+const adOn = () => !adOff && (window.VDP_PLATFORM ? !!adSdk() : !!adBlock().id && !window.VK_MINI);  // нет блока для этого устройства — нет и кнопки
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
@@ -34,23 +36,50 @@ function vdpPause(on) {
 // Показать ролик. done(true) — награда начислена.
 // opts.give — своя награда вместо +1 у.е. (возвращает текст для всплывашки); opts.why — для статистики (где предложили);
 // opts.forced — обязательная реклама между неделями: без награды, без 20-минутного ограничения, при отказе — просто дальше
+// Награда за досмотренный ролик (общая для РСЯ и SDK Яндекс Игр)
+function adGive(opts, kind) {
+  prefs.adAt = Date.now(); store.set(KEY.prefs, prefs);
+  sfx.coins?.();
+  toast(opts.give ? opts.give() : (addCash(AD_REWARD), L(`🎬 Спасибо за просмотр! +${money(AD_REWARD)} на счёт`, `🎬 Thanks for watching! +${money(AD_REWARD)}`)));
+  track('ad_reward', { detail: `${kind}:${opts.why || 'cash'}` });
+  if (!views.menu.hidden) renderMenu();
+  if (typeof S !== 'undefined' && S && !views.game.hidden) renderBars?.();
+}
+// Яндекс Игры: ролик за награду — showRewardedVideo (награда только по onRewarded), обязательная — showFullscreenAdv.
+// Пока идёт реклама — игра и звук на паузе (vdpPause); частоту полноэкранной рекламы дополнительно ограничивает сам Яндекс.
+function adWatchSdk(adv, done, opts) {
+  let settled = false, rewarded = false;
+  const kind = opts.forced ? 'ya_full' : 'ya_rew';
+  const end = (ok, why = '') => {
+    if (settled) return; settled = true; vdpPause(false);
+    if (opts.forced) { prefs.adForcedAt = Date.now(); prefs.adWeeks = 0; store.set(KEY.prefs, prefs); track(ok ? 'ad_forced' : 'ad_fail', { detail: `${kind}:${why}`.slice(0, 60) }); return done?.(ok); }
+    if (ok) adGive(opts, kind);
+    else {
+      track('ad_fail', { detail: `${kind}:${why}`.slice(0, 60) });
+      toast(why === 'close' ? L('Реклама закрыта раньше времени — награда только за полный просмотр', 'The ad was closed early — the reward is for watching to the end')
+        : L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
+    }
+    done?.(ok);
+  };
+  track('ad_open', { detail: kind });
+  vdpPause(true);
+  try {
+    if (opts.forced) adv.showFullscreenAdv({ callbacks: { onClose: shown => end(!!shown, shown ? 'shown' : 'noshow'), onError: e => end(false, `err:${e?.message || ''}`) } });
+    else adv.showRewardedVideo({ callbacks: { onRewarded: () => { rewarded = true; }, onClose: () => end(rewarded, rewarded ? '' : 'close'), onError: e => end(false, `err:${e?.message || ''}`) } });
+  } catch (e) { end(false, `ex:${e?.message || ''}`); }
+}
 function adWatch(done, opts = {}) {
   if (!adOn()) return done?.(false);
   if (!opts.forced && adLeft()) { toast(L(`Следующий ролик за награду — через ${adMins()} мин.`, `Next rewarded video in ${adMins()} min`)); return done?.(false); }
+  if (adSdk()) return adWatchSdk(adSdk(), done, opts);
   const c = adBlock(), t0 = Date.now(); let settled = false;
   // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
   const finish = (ok, why = '') => {
     if (settled) return; settled = true; clearTimeout(guard); clearTimeout(noShow); clearInterval(pillT); pill?.remove(); loading?.remove(); obs?.disconnect(); vdpPause(false);
     if (/PAGE_DISABLED|BLOCK_DISABLED|PAGE_NOT_FOUND/i.test(why)) adOff = why;
     if (opts.forced) { prefs.adForcedAt = Date.now(); prefs.adWeeks = 0; store.set(KEY.prefs, prefs); track(ok ? 'ad_forced' : 'ad_fail', { detail: `forced:${c.type}:${why}`.slice(0, 60) }); return done?.(ok); }
-    if (ok) {
-      prefs.adAt = Date.now(); store.set(KEY.prefs, prefs);
-      sfx.coins?.();
-      toast(opts.give ? opts.give() : (addCash(AD_REWARD), L(`🎬 Спасибо за просмотр! +${money(AD_REWARD)} на счёт`, `🎬 Thanks for watching! +${money(AD_REWARD)}`)));
-      track('ad_reward', { detail: `${c.type}:${opts.why || 'cash'}` });
-      if (!views.menu.hidden) renderMenu();
-      if (typeof S !== 'undefined' && S && !views.game.hidden) renderBars?.();
-    } else {
+    if (ok) adGive(opts, c.type);
+    else {
       track('ad_fail', { detail: `${c.type}:${why}`.slice(0, 60) });
       toast(adOff ? L('Реклама пока недоступна: сайт ещё на проверке у Яндекса', 'Ads aren’t available yet: the site is still under review')
         : why === 'cancel' ? L('Показ рекламы отменён', 'Ad cancelled')
