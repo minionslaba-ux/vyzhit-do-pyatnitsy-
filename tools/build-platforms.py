@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Архивы для каталогов браузерных игр: dist/itch.zip и dist/yandex.zip.
 
+itch.zip — не копия игры, а оболочка: страница с окном на https://survivefriday.com/?src=itch — игра на itch
+обновляется сама вместе с сайтом, перезаливать архив не нужно. Внутри — режим без оплаты (window.ITCH, js/i18n.js).
+
 Запуск: python3 tools/build-platforms.py
 - itch.io: загрузите dist/itch.zip как HTML-проект (Kind of project: HTML, «This file will be played in the browser»).
 - Яндекс Игры: загрузите dist/yandex.zip в консоли разработчика. В сборку добавлены SDK (/sdk.js) и js/platform-yandex.js.
@@ -49,5 +52,21 @@ def yandex(html):
     return no_rtb(html[:start] + '<script src="/sdk.js"></script>\n<script src="js/platform-yandex.js"></script>' + html[end:])
 
 
-build('itch.zip', no_rtb)
+ITCH_HTML = '''<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Survive till Friday / Выжить до пятницы</title>
+<style>html,body{margin:0;height:100%;background:#07070d;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block}</style></head>
+<body><iframe src="https://survivefriday.com/?src=itch&amp;utm_source=itch" allow="autoplay; fullscreen; clipboard-write; web-share" title="Survive till Friday"></iframe></body></html>
+'''
+
+
+def build_itch():
+    os.makedirs(os.path.join(ROOT, 'dist'), exist_ok=True)
+    path = os.path.join(ROOT, 'dist', 'itch.zip')
+    with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as z:
+        z.writestr('index.html', ITCH_HTML)
+    print(f'{path}: оболочка ({os.path.getsize(path)} байт)')
+
+
+build_itch()
 build('yandex.zip', yandex, extra=['js/platform-yandex.js'])
