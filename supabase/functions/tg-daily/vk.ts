@@ -24,6 +24,12 @@ export async function vkAlbum(gid: string): Promise<{ map: Record<string, string
   if (items.length !== PACK.length) return { map: {}, err: `в альбоме ${items.length} фото, ожидалось ${PACK.length}`, n: items.length };
   return { map: Object.fromEntries(PACK.map((f, i) => [f, `photo${items[i].owner_id}_${items[i].id}`])), n: items.length };
 }
+// Номера фото альбома (владелец прислал ссылки: …020 — первое, …048 — последнее, всего 29 из 30 — какой нет, неизвестно).
+// Берём только заведомо верные: первые 6 — ситуации (ask), последние 5 — Мира. Разминки — когда будут сверены номера (VK_BRK).
+const VK_ASK = [20, 21, 22, 23, 24, 25].map(n => `photo-242860183_4572390${n}`);
+const VK_MIRA = [44, 45, 46, 47, 48].map(n => `photo-242860183_4572390${n}`);
+const VK_BRK: Record<number, string> = {};  // номер разминки → photo-242860183_…
+const picStatic = (kind: number, brkId: number) => kind === 0 ? pick(VK_MIRA) : kind === 2 ? pick(VK_ASK) : VK_BRK[brkId] || '';
 const picFor = (map: Record<string, string>, kind: number, brkId: number) => {
   const keys = Object.keys(map), want = kind === 0 ? keys.filter(k => k.startsWith('mira')) : kind === 1 ? [`brk-${String(brkId).padStart(2, '0')}`] : keys.filter(k => k.startsWith('ask'));
   const ok = want.filter(k => map[k]); return ok.length ? map[pick(ok)] : '';
@@ -56,9 +62,7 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   }
   // ссылка — в тексте: вложение-ссылку без картинки ключ сообщества публиковать не может (link_photo_sizing_rule)
   const log: string[] = [];
-  const album = await vkAlbum(gid);
-  if (album.err) log.push(`album: ${album.err}`);
-  const pic = picFor(album.map, kind, brk[0]);
+  const pic = picStatic(kind, brk[0]);
   let r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: `${message}\n\n${url}`, ...(pic ? { attachments: pic } : {}) }, token);
   if (r.error && pic) { log.push(`post with pic: ${r.error.error_msg}`); r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: `${message}\n\n${url}` }, token); }
   const note = pic && !log.length ? ' +pic' : log.length ? ` (${log.join('; ')})` : '';
