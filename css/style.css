@@ -1539,7 +1539,7 @@ body.ad-pause .app { pointer-events: none; }
 .brk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 9px; margin-bottom: 6px; }
 .brk-card { --cc: 45,226,230; position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px 10px; border-radius: 16px; overflow: hidden;
   border: 1px solid rgba(var(--cc),.28); background: radial-gradient(120% 80% at 50% 0%, rgba(var(--cc),.20), transparent 60%), linear-gradient(180deg, #1a1a2c, #11111c);
-  box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06); color: var(--text); font: inherit; font-size: 12px; line-height: 1.2; cursor: pointer; text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06); color: #f2f0ff; font: inherit; font-size: 12px;  /* плитка всегда тёмная — текст всегда светлый (и в светлой теме) */ line-height: 1.2; cursor: pointer; text-align: center;
   transition: transform .15s ease-out, box-shadow .15s, border-color .15s; animation: brkIn .35s ease-out backwards; }
 .brk-card:hover { border-color: rgba(var(--cc),.7); box-shadow: 0 8px 22px rgba(var(--cc),.22), inset 0 1px 0 rgba(255,255,255,.08); transform: translateY(-2px); }
 .brk-card:active { transform: scale(.96); }
@@ -2460,3 +2460,6 @@ html.vk-mini a[href^="https://t.me/"], html.vk-mini [data-a="tg"] { display: non
 /* Разминки всегда на тёмном фоне — в светлой теме возвращаем им тёмные токены, иначе заголовок и счёт сливаются с фоном */
 html.light .brk-over { color-scheme: dark; --panel: #12121d; --text: #f2f0ff; --text-2: #b9b4d6; --text-3: #d6d2ef; --up: #d4ff3a; --down: #ff3b6b;
   --glass: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); --line: rgba(255,255,255,.14); color: var(--text); }
+/* Светлая тема: плашка «Вместе веселее» всегда на тёмном фоне — текст светлый; «Быстрая смена» — тёмно-оранжевая, читаемая на светлом */
+html.light .viral-pop b { color: #fff; } html.light .viral-pop span { color: #d6d2ef; }
+html.light .btn-quick { color: #9a4d00; border-color: rgba(200,120,0,.6); }

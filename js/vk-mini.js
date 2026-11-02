@@ -31,6 +31,9 @@
     if (ref || join) store.set(KEY.prefs, prefs);
     if (ch && typeof rememberChallenge === 'function') rememberChallenge(ch[1], '', ref?.[1]);
   } catch {}
+  // Плашка «Вместе веселее» на сайте зовёт рассказать «в Telegram или VK» — в приложении ВК только про ВК
+  const vs = document.querySelector('#viralPop span');
+  if (vs) vs.textContent = L('Расскажите об игре во ВКонтакте — +10 у.е. За каждого, кто придёт по вашей ссылке, — +15 у.е. и +1 предмет на неделю.', 'Share the game on VK — +$10. Every newcomer via your link — +$15 and +1 item for the week.');
   vkBridge('VKWebAppInit');
   vkBridge('VKWebAppSetViewSettings', { status_bar_style: 'light', action_bar_color: '#07070d', navigation_bar_color: '#07070d' });
   // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию
