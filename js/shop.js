@@ -112,10 +112,17 @@ function themeCouponPick(back) {
 }
 
 // ---------- Стартовый набор ----------
-const starterOn = () => !window.VDP_PLATFORM && !window.VK_MINI && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
+// В ВК — только если включена оплата голосами и владелец назначил цену набора (vkPrice, js/topup.js)
+const starterOn = () => !window.VDP_PLATFORM && (!window.VK_MINI || vkPrice('starter') > 0) && !prefs.paidUser && !prefs.starterDone && (shpCareer()?.week || 0) >= 2;
 // where: 'tu' — в окне пополнения (там своё согласие с офертой), 'shp' — в магазине
 function shopStarterHtml(where = 'shp') {
   if (!starterOn()) return '';
+  if (window.VK_MINI) return `<div class="shp-starter shp-vk">
+    <b class="shp-st-t">🎁 ${L('Стартовый набор', 'Starter pack')}</b>
+    <ul class="shp-st-list"><li>💰 <b>${money(STARTER.ue)}</b> ${L('на счёт', 'to your balance')}</li><li>🎨 ${L('премиум-тема оформления на выбор', 'a premium theme of your choice')}</li>
+      <li>✨ ${L('купон на редкого питомца', 'a rare pet coupon')}</li><li>💡 ${L(`${STARTER.hints} бесплатные подсказки`, `${STARTER.hints} free hints`)}</li></ul>
+    <p class="shp-st-p"><b>${votesStr(vkPrice('starter'))}</b> <small>${L('один раз', 'one time only')}</small></p>
+    <button class="btn-main" type="button" data-vkitem="starter">${L(`Купить за ${votesStr(vkPrice('starter'))}`, `Buy for ${votesStr(vkPrice('starter'))}`)}</button></div>`;
   const off = Math.floor((1 - STARTER.rub / STARTER_WAS) * 10) * 10;
   return `<div class="shp-starter shp-pay">
     <span class="shp-badge">−${off}%</span>
@@ -162,13 +169,19 @@ async function productPay(btn) {
 
 // ---------- «☕ Кофе разработчикам»: цифровой товар за 100 ₽ (не пожертвование) — значок «☕ Меценат ×N» в профиле и +10 у.е. ----------
 const coffeeBadge = () => (prefs.coffeeN || 0) > 0 ? `<span class="shp-maecenas" title="${L('Купил кофе разработчикам', 'Bought the devs a coffee')}">☕ ${L('Меценат', 'Patron')}${prefs.coffeeN > 1 ? ` ×${prefs.coffeeN}` : ''}</span>` : '';
-const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM || window.VK_MINI ? '' : `<div class="shp-coffee shp-pay">
+const coffeeHtml = (id = 'shp') => window.VDP_PLATFORM ? '' : window.VK_MINI ? coffeeVkHtml() : `<div class="shp-coffee shp-pay">
   <b>☕ ${L('Кофе разработчикам', 'A coffee for the devs')} — 100 ₽</b>
   <p>${L('Игру делает один человек по вечерам. Угостите разработчика кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Treat the developer to a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
   ${coffeeBadge() ? `<p class="shp-ok">${L('Ваш значок:', 'Your badge:')} ${coffeeBadge()} — ${L('спасибо!', 'thank you!')}</p>` : ''}
   <label class="tu-agree"><input type="checkbox" id="${id}CofAgree"> <span>${L('Согласен с <a href="oferta.html" target="_blank" rel="noopener">офертой</a>', 'I accept the <a href="oferta.html" target="_blank" rel="noopener">public offer</a>')}</span></label>
   <p class="join-err" role="alert"></p>
   <button class="btn-ghost" type="button" data-product="coffee">☕ ${L('Купить кофе — 100 ₽', 'Buy a coffee — 100 ₽')}</button></div>`;
+// То же внутри ВК — за голоса (цена с сервера vk-pay; нет цены — нет и карточки)
+const coffeeVkHtml = () => !(vkPrice('coffee') > 0) ? '' : `<div class="shp-coffee shp-vk">
+  <b>☕ ${L('Кофе разработчикам', 'A coffee for the devs')} — ${votesStr(vkPrice('coffee'))}</b>
+  <p>${L('Игру делает один человек по вечерам. Угостите разработчика кофе — и получите значок «☕ Меценат» в профиле (навсегда, со счётчиком) и +10 у.е. на счёт.', 'One person makes this game in the evenings. Treat the developer to a coffee and get a permanent “☕ Patron” profile badge (with a counter) and +$10.')}</p>
+  ${coffeeBadge() ? `<p class="shp-ok">${L('Ваш значок:', 'Your badge:')} ${coffeeBadge()} — ${L('спасибо!', 'thank you!')}</p>` : ''}
+  <button class="btn-ghost" type="button" data-vkitem="coffee">☕ ${L(`Купить кофе — ${votesStr(vkPrice('coffee'))}`, `Buy a coffee — ${votesStr(vkPrice('coffee'))}`)}</button></div>`;
 function coffeeThanks() {
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="shpCfT"><span class="lvl-ico" aria-hidden="true">☕</span>
@@ -428,7 +441,7 @@ function openStore(section = '', after) {
     const buyBtn = (attr, price, label) => `<button type="button" class="btn-chip${!C2 || (C2.bank || 0) < price ? ' tu-btn' : ''}" ${attr}>${label || ''}${shpPrice(price)}</button>`;
     m.innerHTML = `<div class="modal-box glass shp-box" role="dialog" aria-modal="true" aria-labelledby="shpTitle">
       <h2 id="shpTitle">🛒 ${L('Магазин', 'Shop')}</h2>
-      <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank || 0)}</b>`, `Balance: <b>${money(C2.bank || 0)}</b>`) : L('У.е. тратятся в карьере — начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')} ${window.VDP_PLATFORM || window.VK_MINI ? '' : topupBtn(0, '')}</p>
+      <p class="shop-bal">${C2 ? L(`На счёте: <b>${money(C2.bank || 0)}</b>`, `Balance: <b>${money(C2.bank || 0)}</b>`) : L('У.е. тратятся в карьере — начните её кнопкой «Играть».', 'Spend $ in your career — start one with “Play”.')} ${window.VDP_PLATFORM || window.VK_MINI && !Object.keys(vkPrices || {}).length ? '' : topupBtn(0, '')}</p>
       <nav class="shp-nav">${[['shpDeal', L('🔥 Выгодно', '🔥 Deals')], ['shpNoads', L('🚫 Без рекламы', '🚫 Ad-free')], ['shpBoost', L('⚡ Бустеры', '⚡ Boosters')], ['shpRare', L('✨ Редкое', '✨ Rare')], ['shpSeason', L('🏆 Сезон', '🏆 Season')]].map(([id, t]) => `<button type="button" class="btn-chip" data-go="${id}">${t}</button>`).join('')}</nav>
       ${shopStarterHtml('shp')}
       <section id="shpDeal" class="shp-sec"><h3 class="hs-h">🔥 ${L('Предложение дня', 'Deal of the day')} <small class="shp-timer" id="shpTimer">${hhmmss(toMidnight())}</small></h3>
@@ -503,7 +516,7 @@ bus.on('menu', () => {
   if (b) {
     b.hidden = !!window.VDP_PLATFORM && !shpCareer();
     const st = seasonState(), hot = starterOn() || seasonClaimable(st) > 0 || (shpCareer() && !dealBought());
-    b.innerHTML = `🛒 ${L('Магазин', 'Shop')}${starterOn() ? ` <em class="shp-pill">🎁 ${L('набор −90%', 'pack −90%')}</em>` : seasonClaimable(st) ? ` <em class="shp-pill">🏆 ${seasonClaimable(st)}</em>` : ''}${hot ? '<i class="shp-hot" aria-hidden="true"></i>' : ''}`;
+    b.innerHTML = `🛒 ${L('Магазин', 'Shop')}${starterOn() ? ` <em class="shp-pill">🎁 ${window.VK_MINI ? L('набор', 'pack') : L('набор −90%', 'pack −90%')}</em>` : seasonClaimable(st) ? ` <em class="shp-pill">🏆 ${seasonClaimable(st)}</em>` : ''}${hot ? '<i class="shp-hot" aria-hidden="true"></i>' : ''}`;
     b.onclick = () => openStore();
   }
   seasonCard();
