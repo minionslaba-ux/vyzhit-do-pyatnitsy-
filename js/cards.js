@@ -23,7 +23,7 @@ const CARDS_JSON = [
         "effects": {
           "psyche": -15,
           "energy": -20,
-          "boss": 25,
+          "boss": 20,
           "colleagues": 5
         }
       }
@@ -76,7 +76,7 @@ const CARDS_JSON = [
           "psyche": -15,
           "energy": -15,
           "boss": 5,
-          "colleagues": 25
+          "colleagues": 20
         }
       }
     }
@@ -116,7 +116,7 @@ const CARDS_JSON = [
       "left": {
         "label": L("Принять как есть и страдать", "Accept it as is and suffer"),
         "effects": {
-          "psyche": -25,
+          "psyche": -20,
           "energy": -10,
           "boss": 15,
           "colleagues": 0
@@ -169,7 +169,7 @@ const CARDS_JSON = [
         "label": L("Пойти (минус 300 рублей и 15 минут)", "Go (minus $6 and 15 minutes)"),
         "effects": {
           "psyche": 20,
-          "energy": 25,
+          "energy": 20,
           "boss": -5,
           "colleagues": 0
         }
@@ -221,8 +221,8 @@ const CARDS_JSON = [
         "label": L("Поставить смайлик «👍»", "React with a 👍"),
         "effects": {
           "psyche": -10,
-          "energy": -25,
-          "boss": 25,
+          "energy": -20,
+          "boss": 20,
           "colleagues": 10
         }
       },
@@ -284,7 +284,7 @@ const CARDS_JSON = [
           "psyche": 15,
           "energy": -15,
           "boss": 15,
-          "colleagues": -25
+          "colleagues": -20
         }
       }
     }
@@ -298,18 +298,18 @@ const CARDS_JSON = [
       "left": {
         "label": L("Пойти и заказать два пива сразу", "Go and order two beers at once"),
         "effects": {
-          "psyche": 25,
+          "psyche": 20,
           "energy": -20,
           "boss": -15,
-          "colleagues": 25
+          "colleagues": 20
         }
       },
       "right": {
         "label": L("Остаться в пустом темном офисе", "Stay in the dark, empty office"),
         "effects": {
-          "psyche": -25,
+          "psyche": -20,
           "energy": 5,
-          "boss": 25,
+          "boss": 20,
           "colleagues": -15
         }
       }
@@ -326,7 +326,7 @@ const CARDS_JSON = [
         "effects": {
           "psyche": -20,
           "energy": -15,
-          "boss": 25,
+          "boss": 20,
           "colleagues": 0
         }
       },
@@ -350,7 +350,7 @@ const CARDS_JSON = [
       "left": {
         "label": L("Чинить/Писать клиентам вручную", "Fix stuff / email clients by hand"),
         "effects": {
-          "psyche": -25,
+          "psyche": -20,
           "energy": -20,
           "boss": 20,
           "colleagues": 10
@@ -359,7 +359,7 @@ const CARDS_JSON = [
       "right": {
         "label": L("Легально залипать в мемы (Ждать)", "Legally scroll memes (wait it out)"),
         "effects": {
-          "psyche": 25,
+          "psyche": 20,
           "energy": 15,
           "boss": -15,
           "colleagues": 10
@@ -376,18 +376,18 @@ const CARDS_JSON = [
       "left": {
         "label": L("«Да, конечно, сейчас сделаю»", "\"Sure thing, on it!\""),
         "effects": {
-          "psyche": -30,
+          "psyche": -20,
           "energy": -20,
-          "boss": 30,
+          "boss": 20,
           "colleagues": 0
         }
       },
       "right": {
         "label": L("«Я уже в лифте, связь плохая, пока!»", "\"I'm in the elevator, bad signal, bye-e-e!\""),
         "effects": {
-          "psyche": 30,
+          "psyche": 20,
           "energy": 20,
-          "boss": -30,
+          "boss": -20,
           "colleagues": 0
         }
       }

@@ -639,6 +639,10 @@ function effectsOf(side) {
     if (r.k === 'psyche' && v < 0 && rules.psycheNegMul) v = Math.round(v * rules.psycheNegMul / 5) * 5;
     // 1-й уровень заметно мягче: минусы ×0,75 и не больше −15 за карточку (жалобы «увольняют слишком быстро»)
     if (D && v < 0) { const LV = LEVELS[S.lvl || 1] || {}; v = Math.max(Math.max(D.cap, LV.cap ?? -30), Math.round(v * D.neg * (LV.neg || 1))); }  // стадия карьеры: новичкам мягче, руководителям жёстче
+    // 1-я ступень: плюсы тоже мягче (×0,8, не больше +15) — половина увольнений новичков была «шкала улетела в 100%» (данные 2026-11)
+    if (D && v > 0) { const LV = LEVELS[S.lvl || 1] || {}; if (LV.posCap) v = Math.min(LV.posCap, Math.round(v * (LV.pos || 1))); }
+    // новичок: у края шкала движется вдвое медленнее — есть время заметить и исправить
+    if (D?.edge && v && (S.res[r.k] + v >= 85 || S.res[r.k] + v <= 15)) v = Math.round(v / 2);
     const item = v <= -10 && free.find(i => ITEMS[i].stat === r.k && !blocked.some(b => b.item === i));
     if (item) blocked.push({ item, stat: r.k, v });
     eff[r.k] = item ? 0 : v;

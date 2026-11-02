@@ -98,7 +98,7 @@ const POOL_BOOST = { down: 1.5, up: { psyche: 1.2, energy: 1.5, boss: 1.2, colle
 // как в аналитике: до правки ~21% закрытых недель) закрывает ~60% недель; внимательный руководитель — ~35–42%
 // DIFF:start
 const DIFF = [
-  { name: L('Новичок', 'Rookie'),           neg: .9,   cap: -20, save: true },  // первые 3 недели, должность не выше младшего
+  { name: L('Новичок', 'Rookie'),           neg: .9,   cap: -20, save: true, edge: true },  // edge: у края (≤15 / ≥85) шкала движется вдвое медленнее  // первые 3 недели, должность не выше младшего
   { name: L('Освоился', 'Settling in'),     neg: .95,  cap: -25 },              // стажёр и младший специалист
   { name: L('Специалист', 'Specialist'),    neg: 1.08, cap: -30 },              // специалист … ведущий
   { name: L('Руководитель', 'Management'),  neg: 1.18, cap: -30 },              // тимлид и выше
@@ -106,7 +106,7 @@ const DIFF = [
 // DIFF:end
 // Три уровня карьеры по 52 недели: свои карточки (lvl) и чуть жёстче минусы на каждом следующем
 const LEVELS = [null,
-  { name: L('Офисный планктон', 'Office plankton'), ico: '🐟', neg: .75, cap: -15, save: true,    desc: L('Первый год: дедлайны, кулер и «есть минутка?»', 'Year one: deadlines, the water cooler and “got a minute?”') },
+  { name: L('Офисный планктон', 'Office plankton'), ico: '🐟', neg: .75, cap: -15, pos: .8, posCap: 15, save: true,    desc: L('Первый год: дедлайны, кулер и «есть минутка?»', 'Year one: deadlines, the water cooler and “got a minute?”') },
   { name: L('Средний менеджмент', 'Middle management'), ico: '📊', neg: 1.06, desc: L('Второй год: новые люди, новые интриги, новые ситуации', 'Year two: new people, new intrigue, new situations') },
   { name: L('Топ-менеджмент', 'Top management'), ico: '👑', neg: 1.12, desc: L('Третий год: самые сложные решения и самые высокие ставки', 'Year three: the hardest calls and the highest stakes') },
   // уровни 4–13: по 1000 своих карточек (data/pool_lN.json), грузятся только когда игрок до них дошёл (loadLevel ниже)
