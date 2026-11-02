@@ -7,7 +7,7 @@ if (window.VK_MINI) document.documentElement.classList.add('vk-mini');
 window.RUSTORE = (() => { try { const on = /[?&]src=rustore\b/.test(location.search) || /^android-app:\/\//.test(document.referrer); if (on) sessionStorage.setItem('vdp-rustore', '1'); return on || sessionStorage.getItem('vdp-rustore') === '1'; } catch { return /[?&]src=rustore\b/.test(location.search); } })();
 window.NO_PAY = !!window.RUSTORE;
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v167';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v168';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');

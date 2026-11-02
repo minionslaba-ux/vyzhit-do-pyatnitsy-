@@ -330,6 +330,7 @@
     if (tg) document.write('<script src="https://telegram.org/js/telegram-web-app.js"><\/script>');
   })();
 </script>
+<script>/* ранняя регистрация офлайн-режима — только на сайте (каталоги игр и ВК без него; основная логика — js/app.js) */if("serviceWorker"in navigator&&/(^|\.)survivefriday\.com$/.test(location.hostname)&&!/[?&]vk_app_id=/.test(location.search))navigator.serviceWorker.register("sw.js").catch(function(){});</script>
 <script src="js/i18n.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>
