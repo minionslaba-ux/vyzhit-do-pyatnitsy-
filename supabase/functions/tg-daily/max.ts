@@ -38,8 +38,10 @@ export async function maxBroadcast(db: any, text: string, url = 'https://survive
 export const MAX_BOT = 'se14877440_bot';
 const kb = (button: Record<string, string>) => [{ type: 'inline_keyboard', payload: { buttons: [[button]] } }];
 // Сообщение с кнопкой «▶ Играть» (open_app); не принял — запасная кнопка-ссылка на сайт
-export async function maxSend(chatId: number | string, text: string, url = 'https://survivefriday.com/?utm_source=max', start = 'channel'): Promise<any> {
-  const send = (attachments: any) => maxApi(`/messages?chat_id=${chatId}`, { method: 'POST', body: JSON.stringify({ text: text.slice(0, 3900), attachments }) });
+// to — chat_id канала/чата или { user: id } — личное сообщение игроку (напоминания, tg-daily/remind.ts)
+export async function maxSend(chatId: number | string | { user: number }, text: string, url = 'https://survivefriday.com/?utm_source=max', start = 'channel'): Promise<any> {
+  const to = typeof chatId === 'object' ? `user_id=${chatId.user}` : `chat_id=${chatId}`;
+  const send = (attachments: any) => maxApi(`/messages?${to}`, { method: 'POST', body: JSON.stringify({ text: text.slice(0, 3900), attachments }) });
   let r = await send(kb({ type: 'open_app', text: '▶ Играть', web_app: MAX_BOT, payload: start }));
   if (r?.error) r = await send(kb({ type: 'link', text: '▶ Играть', url }));
   return r;

@@ -2455,7 +2455,7 @@ html.vk-mini .shp-pay, html.vk-mini #vkGroup, html.vk-mini .vk-invite { display:
   .exit-btn::before { content: '←'; font-size: 19px; line-height: 1; }
 }
 /* Приложение ВКонтакте: без ссылок и кнопок Telegram (правила ВК — не продвигать другие площадки) */
-html.vk-mini .btn-tg, html.vk-mini #shTgLink, html.vk-mini [data-sh="tg"], html.vk-mini #tgRemind, html.vk-mini #tgGroup, html.vk-mini #psGroup,
+html.vk-mini .btn-tg, html.vk-mini #shTgLink, html.vk-mini [data-sh="tg"], html.vk-mini #tgGroup, html.vk-mini #psGroup,
 html.vk-mini a[href^="https://t.me/"], html.vk-mini [data-a="tg"] { display: none !important; }
 /* Разминки всегда на тёмном фоне — в светлой теме возвращаем им тёмные токены, иначе заголовок и счёт сливаются с фоном */
 html.light .brk-over { color-scheme: dark; --panel: #12121d; --text: #f2f0ff; --text-2: #b9b4d6; --text-3: #d6d2ef; --up: #d4ff3a; --down: #ff3b6b;
@@ -2496,7 +2496,7 @@ html.itch .lnk-itch, html.vk-mini .lnk-itch { display: none !important; }
 html.light .remind-card { background: rgba(0,140,160,.06); border-color: rgba(0,140,160,.3); }
 
 /* MAX (html.max-app, js/i18n.js): без зазывания в Telegram и ВК-группу */
-html.max-app #tgRemind, html.max-app #vkGroup, html.max-app .vk-invite, html.max-app .lnk-itch { display: none !important; }
+html.max-app #vkGroup, html.max-app .vk-invite, html.max-app .lnk-itch { display: none !important; }
 
 /* Канал игры в MAX — кнопка в меню (index.html #maxChannel) */
 html.vk-mini #maxChannel, html[lang="en"] #maxChannel { display: none !important; }

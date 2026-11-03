@@ -318,7 +318,16 @@ async function tgCall(enable) {
 }
 async function tgButton() {
   const b = $('tgRemind'); if (!b) return;
-  if (window.VDP_PLATFORM || window.VK_MINI || window.MAX_APP || !board.online) { b.hidden = true; return; }
+  if (window.VDP_PLATFORM || !board.online) { b.hidden = true; return; }
+  // ВК и MAX: переключатель напоминаний площадки (js/remind.js, msgRemindSet) — в ВК отключить уведомления можно прямо в игре (правила 2.7.3)
+  if (window.VK_MINI || window.MAX_APP) {
+    const k = window.VK_MINI ? 'vkRemind' : 'maxRemind', where = window.VK_MINI ? L('во ВКонтакте', 'on VK') : L('в MAX', 'in MAX');
+    const label = on => on ? L(`🔕 Выключить напоминания ${where}`, `🔕 Turn off reminders ${where}`) : L(`🔔 Напоминать ${where} о неделе дня`, `🔔 Daily reminder ${where}`);
+    b.hidden = false; b.textContent = label(!!prefs[k]);
+    if (typeof msgRemindCall === 'function') msgRemindCall(undefined).then(v => { prefs[k] = v; store.set(KEY.prefs, prefs); b.textContent = label(v); }).catch(() => {});
+    b.onclick = async () => { await msgRemindSet(!prefs[k]); b.textContent = label(!!prefs[k]); };
+    return;
+  }
   const label = on => on ? L('🔕 Выключить напоминания в Telegram', '🔕 Turn off Telegram reminders') : L('🔔 Напоминать в Telegram о неделе дня', '🔔 Daily reminder in Telegram');
   if (!TG && !tgOnSite()) {
     b.textContent = label(false);

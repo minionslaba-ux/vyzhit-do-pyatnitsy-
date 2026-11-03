@@ -10,6 +10,7 @@ import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
 import { vkAlbum, vkDaily } from './vk.ts';
 import { maxBroadcast } from './max.ts';
 import { maxPromo } from './promo.ts';
+import { msgReminders } from './remind.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -173,6 +174,9 @@ Deno.serve(async req => {
     await pause();
   }
 
+  // напоминания в ВК (уведомления мини-приложения) и MAX (сообщение бота) — для тех, кто включил их в игре (msg_remind)
+  const msg = await msgReminders(db, msk.toISOString().slice(0, 10), en => { const l = en ? TEXT.en : TEXT.ru; return l[day % l.length] + brkLine(en); }, brk[0]).catch(e => `error: ${e}`);
+
   // группы: поровну — позвать играть (с итогами вчерашней недели дня: сколько сыграло, лучший результат) или привлечь игроков
   const { data: gs } = await db.from('tg_groups').select('chat_id, lang').eq('enabled', true).or(`last_sent.is.null,last_sent.lt.${today}`).limit(1000);
   if (gs?.length) {
@@ -234,5 +238,5 @@ Deno.serve(async req => {
       await pause();
     }
   }
-  return new Response(JSON.stringify({ sent, groups, reports, vk, max, promo }), { headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ sent, groups, reports, vk, max, promo, msg }), { headers: { 'Content-Type': 'application/json' } });
 });
