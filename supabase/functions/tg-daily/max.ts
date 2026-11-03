@@ -22,11 +22,21 @@ export async function maxBroadcast(db: any, text: string, url = 'https://survive
   if (!(Deno.env.get('MAX_BOT_TOKEN') || '').trim()) return 'max: off';
   const { data: chats } = await db.from('max_chats').select('chat_id').eq('enabled', true).eq('is_channel', true).limit(10);
   if (!chats?.length) return 'max: no channels (/maxsetup)';
-  const body = { text: text.slice(0, 3900), attachments: [{ type: 'inline_keyboard', payload: { buttons: [[{ type: 'link', text: '▶ Играть', url }]] } }] };
   const out: string[] = [];
   for (const c of chats) {
-    const r = await maxApi(`/messages?chat_id=${c.chat_id}`, { method: 'POST', body: JSON.stringify(body) });
+    const r = await maxSend(c.chat_id, text, url);
     if (r?.error) out.push(`${c.chat_id}: ${r.error}`); else { out.push(`${c.chat_id}: ok`); await db.from('max_chats').update({ last_post: new Date().toISOString() }).eq('chat_id', c.chat_id); }
   }
   return 'max: ' + out.join(', ');
+}
+
+// Бот игры в MAX — кнопка «Играть» открывает мини-приложение прямо в MAX (вход без регистрации)
+export const MAX_BOT = 'se14877440_bot';
+const kb = (button: Record<string, string>) => [{ type: 'inline_keyboard', payload: { buttons: [[button]] } }];
+// Сообщение с кнопкой «▶ Играть» (open_app); не принял — запасная кнопка-ссылка на сайт
+export async function maxSend(chatId: number | string, text: string, url = 'https://survivefriday.com/?utm_source=max', start = 'channel'): Promise<any> {
+  const send = (attachments: any) => maxApi(`/messages?chat_id=${chatId}`, { method: 'POST', body: JSON.stringify({ text: text.slice(0, 3900), attachments }) });
+  let r = await send(kb({ type: 'open_app', text: '▶ Играть', web_app: MAX_BOT, payload: start }));
+  if (r?.error) r = await send(kb({ type: 'link', text: '▶ Играть', url }));
+  return r;
 }

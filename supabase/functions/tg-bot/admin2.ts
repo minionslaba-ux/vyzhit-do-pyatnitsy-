@@ -31,6 +31,7 @@ export const ADMIN_COMMANDS2 = [
   { command: 'vkpost', description: 'Пост в группу ВК: /vkpost текст' },
   { command: 'vkqueue', description: 'Очередь постов ВК' },
   { command: 'maxsetup', description: 'Найти канал MAX для автопостов' },
+  { command: 'maxwelcome', description: 'Приветствие с кнопкой «Играть» в канал MAX (закрепить)' },
 ];
 export const HELP2 = `
 
@@ -57,7 +58,8 @@ export const HELP2 = `
 /vkqueue — что в очереди · /vkdel номер — убрать из очереди
 
 💬 <b>MAX</b>
-/maxsetup — найти канал MAX, куда добавлен бот (после этого ежедневный пост уходит и туда)`;
+/maxsetup — найти канал MAX, куда добавлен бот (после этого ежедневный пост уходит и туда)
+/maxwelcome — опубликовать в канале MAX приветствие с кнопкой «▶ Играть» и закрепить его`;
 
 type Ctx = { db: any; api: (m: string, b?: Record<string, unknown>) => Promise<any>; token: string };
 
@@ -101,6 +103,25 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
       const list = (rows || []).map((r: any) => `${r.enabled ? '🟢' : '⚪️'} ${r.is_channel ? 'канал' : 'чат'} «${esc(r.title || r.chat_id)}»${r.last_post ? ` · пост ${msk(r.last_post).slice(5)}` : ''}`);
       await say(`💬 <b>MAX</b> · бот: ${esc(me?.name || me?.username || me?.error || '?')}\nСобытий «бота добавили»: ${added}${up?.error ? ` (ошибка: ${esc(up.error)})` : ''}\n\n${list.length ? list.join('\n') + '\n\nВ каналы 🟢 ежедневный пост уходит вместе с ВК (12:31).' : 'Каналов пока нет. Удалите бота из канала MAX и добавьте снова администратором (с правом публиковать), потом повторите /maxsetup.'}`);
       return true;
+    }
+    case 'maxwelcome': {
+      const token = (Deno.env.get('MAX_BOT_TOKEN') || '').trim();
+      if (!token) { await say('Нет токена бота MAX (MAX_BOT_TOKEN).'); return true; }
+      const { data: chats } = await db.from('max_chats').select('chat_id, title').eq('enabled', true).eq('is_channel', true);
+      if (!chats?.length) { await say('Канал MAX не найден — сначала /maxsetup.'); return true; }
+      const api = async (path: string, init: RequestInit = {}) => { for (const h of ['https://platform-api.max.ru', 'https://platform-api2.max.ru']) { try { const r = await fetch(h + path, { ...init, headers: { Authorization: token, 'Content-Type': 'application/json' } }); return await r.json(); } catch {} } return { message: 'network' }; };
+      const text = '🏢 «Выжить до пятницы» — офисная игра от выгорания\n\n25 решений с понедельника 9:00 до пятницы 18:00: свайп влево или вправо — и держите в балансе Кукуху, Энергию, Босса и Коллег.\n\n☕ 54 мини-игры для перерыва · 🛋️ психолог Мира · 📅 неделя дня — одна на всех\n\nИграть прямо здесь, в MAX, без регистрации — кнопка ниже 👇\n\n🤖 Все персонажи игры вымышлены.';
+      const out: string[] = [];
+      for (const c of chats) {
+        const send = (btn: any) => api(`/messages?chat_id=${c.chat_id}`, { method: 'POST', body: JSON.stringify({ text, attachments: [{ type: 'inline_keyboard', payload: { buttons: [[btn]] } }] }) });
+        let r = await send({ type: 'open_app', text: '▶ Играть', web_app: 'se14877440_bot', payload: 'welcome' });
+        if (!r?.message?.body?.mid) r = await send({ type: 'link', text: '▶ Играть', url: 'https://survivefriday.com/?utm_source=max' });
+        const mid = r?.message?.body?.mid;
+        if (!mid) { out.push(`«${esc(c.title || c.chat_id)}»: ❌ ${esc(r?.message || r?.code || 'ошибка')}`); continue; }
+        const pin = await api(`/chats/${c.chat_id}/pin`, { method: 'PUT', body: JSON.stringify({ message_id: mid, notify: false }) });
+        out.push(`«${esc(c.title || c.chat_id)}»: ✅ опубликовано${pin?.success ? ', закреплено' : ` (закрепить не вышло: ${esc(pin?.message || '')} — закрепите вручную)`}`);
+      }
+      await say(`💬 <b>Приветствие в MAX</b>\n${out.join('\n')}`); return true;
     }
     case 'vkpost': {
       const raw = rest.trim();
