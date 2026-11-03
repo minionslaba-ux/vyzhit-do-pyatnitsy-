@@ -100,14 +100,15 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   return `posted ${r.response?.post_id}${note}`;
 }
 
-// Ссылки в группе ВК — только в мини-приложение (правила VK Mini Apps 4.1.8: не уводить аудиторию игры из ВК).
-// Раздел — после # (игра читает brk-N и psy, js/app.js); ссылки на сайт в тексте очереди переписываем так же.
-export const VK_APP = 'https://vk.com/app54871699';
-export const vkAppLink = (hash = '') => VK_APP + (hash ? '#' + hash : '');
-export const vkLinks = (text: string) => text.replace(/https?:\/\/(?:www\.)?survivefriday\.com\/?[^\s]*/g, m => {
-  const b = m.match(/[?&]brk=(\d{1,2})/), p = /[?&]psy=1/.test(m);
-  return vkAppLink(b ? `brk-${b[1]}` : p ? 'psy' : '');
-});
+// В постах группы ВК — без ссылок: игра открывается кнопкой действия в шапке сообщества (решение владельца 03.11.2026;
+// правила VK Mini Apps 4.1.8 — не уводить аудиторию игры из ВК). Ссылки на сайт в тексте очереди заменяем тем же призывом.
+const CTA = '👉 Играть — кнопка «Открыть приложение» в шапке сообщества';
+export const vkAppLink = (hash = '') => hash.startsWith('brk') ? `${CTA}, раздел «Разминки» ☕` : hash === 'psy' ? `${CTA}, кабинет Миры 🛋️` : CTA;
+export const vkLinks = (text: string) => text
+  .replace(/(?:Играть:\s*)?(?:https?:\/\/)?(?:www\.)?survivefriday\.com\/?[^\s]*/g, m => {
+    const b = m.match(/[?&]brk=(\d{1,2})/), p = /[?&]psy=1/.test(m);
+    return vkAppLink(b ? `brk-${b[1]}` : p ? 'psy' : '');
+  });
 // Опубликовать первый пост из очереди vk_queue. null — очередь пуста; { result } — что получилось
 export async function vkQueuePost(db: any, gid: string, token: string, test = false, id?: number): Promise<{ result: string; post_id?: number; error?: boolean } | null> {
   let qb = db.from('vk_queue').select('id, text, photo').is('posted_at', null).order('id', { ascending: true }).limit(1);

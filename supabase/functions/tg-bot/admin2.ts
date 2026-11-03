@@ -137,7 +137,7 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
     }
     case 'vkpost': {
       const raw = rest.trim();
-      if (raw.length < 5) { await say('Формат: <code>/vkpost текст поста</code>\nСсылку на игру добавьте в текст. Картинка — ссылка на фото из группы: vk.com/photo-242860183_457239039'); return true; }
+      if (raw.length < 5) { await say('Формат: <code>/vkpost текст поста</code>\nСсылки на сайт не нужны: в ВК бот сам допишет «Играть — кнопка в шапке сообщества». Картинка — ссылка на фото из группы: vk.com/photo-242860183_457239039'); return true; }
       const m = raw.match(/(?:https?:\/\/)?(?:m\.)?vk\.(?:com|ru)\/photo(-?\d+_\d+)/);
       const photo = m ? `photo${m[1]}` : null, text = (m ? raw.replace(m[0], '') : raw).trim().slice(0, 4000);
       const { data: d } = await db.from('admin_drafts').insert({ tg_id: tg, kind: 'vkpost', payload: { text, photo } }).select('id').single();
@@ -363,7 +363,10 @@ export async function adminCallback2(ctx: Ctx, d: any, act: string, done: (t: st
     if (act === 'now') {
       const token = Deno.env.get('VK_GROUP_TOKEN') || '', gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
       if (!token || !gid) { await done('❌ Нет ключа группы ВК (VK_GROUP_TOKEN / VK_GROUP_ID в секретах).'); return true; }
-      const post = (extra: Record<string, string>) => fetch('https://api.vk.com/method/wall.post', { method: 'POST', body: new URLSearchParams({ owner_id: `-${gid}`, from_group: '1', message: p.text, ...extra, access_token: token, v: '5.199' }) }).then(x => x.json()).catch(e => ({ error: { error_msg: String(e) } }));
+      // без ссылок на сайт: в группе ВК игра открывается кнопкой действия (как в tg-daily/vk.ts, vkLinks)
+      const CTA = '👉 Играть — кнопка «Открыть приложение» в шапке сообщества';
+      const vkText = String(p.text).replace(/(?:Играть:\s*)?(?:https?:\/\/)?(?:www\.)?survivefriday\.com\/?[^\s]*/g, m => /[?&]brk=\d/.test(m) ? `${CTA}, раздел «Разминки» ☕` : /[?&]psy=1/.test(m) ? `${CTA}, кабинет Миры 🛋️` : CTA);
+      const post = (extra: Record<string, string>) => fetch('https://api.vk.com/method/wall.post', { method: 'POST', body: new URLSearchParams({ owner_id: `-${gid}`, from_group: '1', message: vkText, ...extra, access_token: token, v: '5.199' }) }).then(x => x.json()).catch(e => ({ error: { error_msg: String(e) } }));
       let r = await post(p.photo ? { attachments: p.photo } : {});
       if (r.error && p.photo) r = await post({});
       if (r.error) { await done(`❌ ВК: ${esc(r.error.error_msg || r.error.error_code)}`); return true; }
