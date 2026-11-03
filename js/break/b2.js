@@ -626,7 +626,7 @@
     ['🎧', 'наушники', 'headphones'], ['🕶️', 'очки', 'sunglasses'], ['🍪', 'печеньку', 'cookie'], ['🍩', 'пончик', 'donut'], ['💡', 'лампочку', 'light bulb'], ['🔌', 'вилку', 'plug'],
     ['🖱️', 'мышку', 'mouse'], ['📒', 'блокнот', 'notebook'], ['✏️', 'карандаш', 'pencil'], ['🗂️', 'картотеку', 'card index'], ['🍌', 'банан', 'banana'], ['⏰', 'будильник', 'alarm clock'],
     ['📦', 'коробку', 'box'], ['🧲', 'магнит', 'magnet'], ['🍎', 'яблоко', 'apple'], ['💼', 'портфель', 'briefcase'], ['🧾', 'чек', 'receipt'], ['🏷️', 'ценник', 'price tag'],
-    ['🖇️', 'сцепку скрепок', 'linked clips'], ['🪴', 'фикус', 'potted plant'], ['🧸', 'мишку', 'teddy bear'], ['🔦', 'фонарик', 'flashlight'], ['🗝️', 'старый ключ', 'old key'], ['🥤', 'газировку', 'soda'],
+    ['🖇️', 'сцепку скрепок', 'linked clips'], ['🌿', 'фикус', 'potted plant'], ['🧸', 'мишку', 'teddy bear'], ['🔦', 'фонарик', 'flashlight'], ['🗝️', 'старый ключ', 'old key'], ['🥤', 'газировку', 'soda'],
   ];
   reg(14, (root, api) => {
     const W = widthOf(root), Hf = Math.round(Math.min(W * 1.15, Math.max(330, (window.innerHeight || 800) - 210)));

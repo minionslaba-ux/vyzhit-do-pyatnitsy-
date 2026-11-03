@@ -982,14 +982,14 @@
     ['🧮', 'Главбух', 'Chief Accountant'], ['📎', 'Хранитель скрепок', 'Keeper of Clips'], ['☕', 'Директор по кофе', 'Coffee Director'], ['🖨️', 'Укротитель принтера', 'Printer Tamer'],
     ['📊', 'Гуру таблиц', 'Spreadsheet Guru'], ['📞', 'Повелитель звонков', 'Call Wrangler'], ['🧯', 'Пожарный проектов', 'Project Firefighter'], ['🌿', 'Смотритель фикуса', 'Ficus Keeper'],
     ['🗂️', 'Архивариус', 'Archivist'], ['💻', 'Сисадмин', 'Sysadmin'], ['🎯', 'Ловец KPI', 'KPI Hunter'], ['📣', 'Голос планёрки', 'Voice of Standups'],
-    ['🍩', 'Министр пончиков', 'Donut Minister'], ['🛗', 'Инспектор лифтов', 'Elevator Inspector'], ['🧘', 'Коуч по спокойствию', 'Calm Coach'], ['🚀', 'Стартап-мечтатель', 'Startup Dreamer'],
+    ['🍩', 'Министр пончиков', 'Donut Minister'], ['🔼', 'Инспектор лифтов', 'Elevator Inspector'], ['🧘', 'Коуч по спокойствию', 'Calm Coach'], ['🚀', 'Стартап-мечтатель', 'Startup Dreamer'],
     ['🔑', 'Хранитель ключей', 'Key Keeper'], ['📅', 'Владыка календаря', 'Calendar Overlord'],
   ];
   B[39] = (root, api) => {
     css();
     const { L } = api, T = timers(api);
     const w = mk('div', 'bgq4-wrap'); root.append(w);
-    w.innerHTML = `<p class="bgq4-big">🪪 ${L('Выберите размер стола:', 'Pick the table size:')}</p>`;
+    w.innerHTML = `<p class="bgq4-big">📇 ${L('Выберите размер стола:', 'Pick the table size:')}</p>`;
     const row = mk('div', 'bgq4-opts');
     [[4, 4, L('Легко', 'Easy')], [4, 5, L('Средне', 'Medium')], [6, 6, L('Сложно', 'Hard')]].forEach(([c, r, lv]) => row.append(Object.assign(mk('button', 'bgq4-opt' + (c * r === 20 ? ' rec' : ''),
       `<span class="ic" style="grid-template-columns:repeat(${c},1fr)">${'<i></i>'.repeat(c * r)}</span><b>${c}×${r}</b><small>${L(`${c * r / 2} пар`, `${c * r / 2} pairs`)}</small><em>${lv}</em>`), { type: 'button', onclick: () => play(c, r) })));

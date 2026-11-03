@@ -223,7 +223,7 @@ const store = {
 const KEY = { save: 'vdp-save', best: 'vdp-best', prefs: 'vdp-prefs', career: 'vdp-career', endings: 'vdp-endings', daily: 'vdp-daily', seen: 'vdp-seen', qseen: 'vdp-quiz-seen', ivseen: 'vdp-iv-seen' };
 const YEAR = 52;
 const prefs = Object.assign({ name: '', dept: '', avatar: '😎', prof: 'marketer', trait: 'workaholic', sound: true }, store.get(KEY.prefs, {}));
-const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🥸', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
+const AVATARS = ['😎', '🤓', '🧐', '😴', '🤠', '🤡', '🤖', '🦄', '🐱', '🐶', '🦊', '🐼'];
 if (!prefs.playerId) {
   prefs.playerId = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
   store.set(KEY.prefs, prefs);

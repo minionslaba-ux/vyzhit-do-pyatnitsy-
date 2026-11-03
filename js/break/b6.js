@@ -100,7 +100,7 @@
     let state = 'ready', t = 0, spawn = 0.4, done = 0, cups = CUPS, refill = REFILL, lastCup = -99, shakyT = 0;
     const upd = () => {
       const left = Math.max(0, Math.ceil(DUR - t));
-      hud.innerHTML = pill('⏱', `<b>${left}</b><small>${L('с', 's')}</small>`, left <= 10 && state === 'run' ? 'hot' : '') + (shakyT > 0 ? pill('🫨', `<small>${L('руки трясутся', 'shaky hands')}</small>`, 'bad') : '') + pill('✅', `<small>${L('Сделано', 'Done')}</small><b>${done}</b>`);
+      hud.innerHTML = pill('⏱', `<b>${left}</b><small>${L('с', 's')}</small>`, left <= 10 && state === 'run' ? 'hot' : '') + (shakyT > 0 ? pill('😬', `<small>${L('руки трясутся', 'shaky hands')}</small>`, 'bad') : '') + pill('✅', `<small>${L('Сделано', 'Done')}</small><b>${done}</b>`);
       cupBtn.innerHTML = `☕ ×${cups}`; cupBtn.disabled = state !== 'run' || !cups; cupBtn.classList.toggle('ready', cups > 0);
       cols.forEach(c => c.classList.toggle('warn', c.querySelectorAll('.bg52-t:not(.done)').length >= ROWS - 2));
     };
@@ -150,7 +150,7 @@
 
   // =====================================================================
   // 53. Прятки от коллег — пошаговый «стелс» по опенспейсу: доберитесь до кухни ☕, не попав в поле зрения
-  //     коллег с «есть минутка?». 🪴 — укрытие. Три этажа, три попытки.
+  //     коллег с «есть минутка?». 🌿 — укрытие. Три этажа, три попытки.
   // =====================================================================
   // Карты 7×10: # — стол/стена, P — фикус (укрытие), S — старт, E — кухня. Маршруты коллег ходят туда-обратно.
   const LEVELS53 = [
@@ -206,7 +206,7 @@
         const px = x * cell, py = y * cell;
         g.fillStyle = (x + y) % 2 ? '#141629' : '#181a30'; g.fillRect(px, py, cell, cell);
         if (ch === '#') { g.fillStyle = '#5a3d2b'; g.fillRect(px + 2, py + 2, cell - 4, cell - 4); g.fillStyle = '#6e4c36'; g.fillRect(px + 2, py + 2, cell - 4, cell * .3); emo('🖥️', px + cell / 2, py + cell * .58, cell * .5); }
-        if (ch === 'P') emo('🪴', px + cell / 2, py + cell / 2, cell * .7);
+        if (ch === 'P') emo('🌿', px + cell / 2, py + cell / 2, cell * .7);
         if (ch === 'E') { g.fillStyle = 'rgba(45,226,138,.18)'; g.fillRect(px, py, cell, cell); emo('☕', px + cell / 2, py + cell / 2, cell * .62); }
       }));
       if (state !== 'ready') {
@@ -215,7 +215,7 @@
       }
       routes.forEach((_, k) => { const [x, y] = npcAt(k); emo(WHO53[L0.npc[k].i % WHO53.length][0], x * cell + cell / 2, y * cell + cell / 2, cell * .7); });
       const hid = L0.map[me[1]][me[0]] === 'P';
-      g.save(); g.globalAlpha = hid ? .55 : 1; emo(caughtBy >= 0 ? '😳' : hid ? '🫣' : '🙂', me[0] * cell + cell / 2, me[1] * cell + cell / 2, cell * .66); g.restore();
+      g.save(); g.globalAlpha = hid ? .55 : 1; emo(caughtBy >= 0 ? '😳' : hid ? '🙈' : '🙂', me[0] * cell + cell / 2, me[1] * cell + cell / 2, cell * .66); g.restore();
       if (caughtBy >= 0) {
         const [x, y] = npcAt(caughtBy), s = L('«Есть минутка?»', '“Got a minute?”');
         g.font = `900 ${Math.round(cell * .32)}px Nunito, sans-serif`; const w = g.measureText(s).width + 14, bx = clamp(x * cell + cell / 2 - w / 2, 2, CW - w - 2), by = Math.max(2, y * cell - cell * .5);
@@ -255,9 +255,9 @@
     });
     on(api, document, 'keydown', e => { const m = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1], ' ': [0, 0] }[e.key]; if (m && state === 'run') { e.preventDefault(); move(...m); } });
     load(); upd(); draw();
-    intro(api, wrap, '🫣', L('Прятки от коллег', 'Hide from coworkers'), [
+    intro(api, wrap, '🙈', L('Прятки от коллег', 'Hide from coworkers'), [
       L('Доберитесь до кухни <b>☕</b>. По опенспейсу ходят коллеги с «есть минутка?» — <b>красные клетки</b> они видят.', 'Get to the kitchen <b>☕</b>. Coworkers with “got a minute?” roam the open space — they see the <b>red cells</b>.'),
-      L('Вы ходите — они шагают. За <b>🪴 фикусом</b> вас не видно, столы закрывают обзор. Можно <b>переждать</b> на месте.', 'You move — they step. Behind a <b>🪴 plant</b> you’re invisible, desks block the view. You can also <b>wait</b>.'),
+      L('Вы ходите — они шагают. За <b>🌿 фикусом</b> вас не видно, столы закрывают обзор. Можно <b>переждать</b> на месте.', 'You move — they step. Behind a <b>🌿 plant</b> you’re invisible, desks block the view. You can also <b>wait</b>.'),
       L('Ходите кнопками, стрелками или тапом по полю. Три этажа, три попытки, за каждый этаж +1.', 'Move with the buttons, arrow keys or by tapping the floor. Three floors, three tries, +1 per floor.'),
     ], () => { state = 'run'; upd(); draw(); });
   };

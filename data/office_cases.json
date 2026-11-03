@@ -1605,7 +1605,7 @@
   },
   {
    "id": "elevator",
-   "ico": "🛗",
+   "ico": "🔼",
    "title": {
     "ru": "Кто нажал все кнопки в лифте?",
     "en": "Who pressed every button in the elevator?"
@@ -2958,7 +2958,7 @@
   },
   {
    "id": "slippers",
-   "ico": "🩴",
+   "ico": "👡",
    "title": {
     "ru": "Чьи тапочки с зайцами стоят под столом?",
     "en": "Whose bunny slippers are under the desk?"

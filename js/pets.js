@@ -42,9 +42,9 @@ const PET_GOODS = [
   { id: 'p_treat', ico: '🍖', price: 1, mood: 6, toon: 'feed', for: ['cat', 'dog'], t: L('Лакомство', 'Treat') },
   { id: 'p_seeds', ico: '🌻', price: 1, mood: 6, toon: 'feed', for: ['parrot'], t: L('Семечки и фрукты', 'Seeds and fruit') },
   { id: 'p_mouse', ico: '🐭', price: 2, mood: 9, toon: 'play', for: ['cat'], t: L('Игрушечная мышка', 'Toy mouse') },
-  { id: 'p_teaser', ico: '🪶', price: 3, mood: 10, toon: 'play', for: ['cat'], t: L('Удочка-дразнилка', 'Feather teaser') },
-  { id: 'p_scratch', ico: '🪵', price: 4, mood: 10, own: true, toon: 'play', for: ['cat'], t: L('Когтеточка', 'Scratching post') },
-  { id: 'p_litter', ico: '🪣', price: 2, mood: 5, every: 2, toon: 'groom', for: ['cat'], t: L('Наполнитель для лотка', 'Cat litter') },
+  { id: 'p_teaser', ico: '🍃', price: 3, mood: 10, toon: 'play', for: ['cat'], t: L('Удочка-дразнилка', 'Feather teaser') },
+  { id: 'p_scratch', ico: '🌲', price: 4, mood: 10, own: true, toon: 'play', for: ['cat'], t: L('Когтеточка', 'Scratching post') },
+  { id: 'p_litter', ico: '🧺', price: 2, mood: 5, every: 2, toon: 'groom', for: ['cat'], t: L('Наполнитель для лотка', 'Cat litter') },
   { id: 'p_ball', ico: '🎾', price: 2, mood: 10, toon: 'play', for: ['dog'], t: L('Мячик', 'Ball') },
   { id: 'p_bone', ico: '🦴', price: 2, mood: 9, toon: 'play', for: ['dog'], t: L('Косточка', 'Chew bone') },
   { id: 'p_leash', ico: '🦮', price: 4, mood: 12, own: true, toon: 'play', for: ['dog'], t: L('Поводок и прогулка в парке', 'Leash and a walk in the park') },
@@ -53,7 +53,7 @@ const PET_GOODS = [
   { id: 'p_bell', ico: '🔔', price: 2, mood: 9, toon: 'play', for: ['parrot'], t: L('Колокольчик и зеркальце', 'Bell and mirror') },
   { id: 'p_cage', ico: '🏠', price: 10, mood: 16, own: true, toon: 'play', for: ['parrot'], t: L('Просторная клетка', 'A bigger cage') },
   { id: 'p_castle', ico: '🏰', price: 3, mood: 9, own: true, toon: 'play', for: ['fish'], t: L('Замок для аквариума', 'Aquarium castle') },
-  { id: 'p_tank', ico: '🫧', price: 12, mood: 16, own: true, toon: 'play', for: ['fish'], t: L('Аквариум побольше с фильтром', 'Bigger tank with a filter') },
+  { id: 'p_tank', ico: '🧼', price: 12, mood: 16, own: true, toon: 'play', for: ['fish'], t: L('Аквариум побольше с фильтром', 'Bigger tank with a filter') },
   { id: 'p_vet', ico: '🩺', price: 6, mood: 8, every: 8, toon: 'vet', t: L('Осмотр у ветеринара', 'Vet check-up') },
   { id: 'p_vaccine', ico: '💉', price: 5, mood: 4, every: 26, toon: 'vet', for: ['cat', 'dog'], t: L('Прививка', 'Vaccination') },
 ];
@@ -165,7 +165,7 @@ function petToon(kind, p, x, after) {
     vet: [L('Ветеринарная клиника', 'The vet clinic'), L('Немножко страшно… но доктор добрый', 'A little scary… but the vet is kind'), L(`${nm} здоров!`, `${nm} is healthy!`)],
     groom: [L('Салон для питомцев', 'Pet salon'), L('Пена, шампунь, расчёска…', 'Foam, shampoo, comb…'), L('Красавец!', 'Gorgeous!')],
   }[kind];
-  const deco = { adopt: '🎀', feed: '🥣', play: '✨', vet: '🩺', groom: '🫧' }[kind];
+  const deco = { adopt: '🎀', feed: '🥣', play: '✨', vet: '🩺', groom: '🧼' }[kind];
   m.innerHTML = `<div class="modal-box glass toon-box" role="dialog" aria-modal="true" aria-label="${L('Мультик', 'Cartoon')}">
     <div class="toon toon-pet pet-${kind}" style="--dur:${D}ms">${kind === 'vet' ? '<span class="tn-cross">✚</span>' : ''}${Array.from({ length: 8 }, (_, i) => `<span class="tn-rain" style="--i:${i}">${deco}</span>`).join('')}<canvas class="toon-cv"></canvas><div class="tn-hearts"></div>
       <p class="tn-cap" aria-live="polite">${caps[0]}</p><p class="tn-say" hidden></p><div class="tn-bar"><i></i></div></div>

@@ -79,7 +79,7 @@ bus.on('deck', S2 => {
 // Остываем: разминки, дыхание, Мира, отпуск
 bus.on('breakEnd', e => {
   if (!careerNow()) return;
-  if (e.n === 51) return heatAdd(-6, L('🫁 Дыхание', '🫁 Breathing'));
+  if (e.n === 51) return heatAdd(-6, L('🌬️ Дыхание', '🌬️ Breathing'));
   const t = prefs.heatBrk?.d === today() ? prefs.heatBrk : { d: today(), n: 0 };
   if (t.n >= 3) return;
   t.n++; prefs.heatBrk = t; store.set(KEY.prefs, prefs);

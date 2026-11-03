@@ -64,7 +64,7 @@ function renderPauseRow() {
       <span class="pz-chip" title="${L('Открыто разминок', 'Breaks discovered')}">🧩 <b>${tried}/${BREAKS.length}</b></span>
     </div>
     ${n && !playedToday ? `<p class="pz-warn">${L('Сегодня ещё без паузы — серия ждёт одной разминки', 'No break yet today — your streak needs just one')}</p>` : ''}
-    <button type="button" class="btn-ghost pz-breath" id="pzBreath">🫁 ${L('Минута дыхания', 'One-minute breathing')}</button>`;
+    <button type="button" class="btn-ghost pz-breath" id="pzBreath">🌬️ ${L('Минута дыхания', 'One-minute breathing')}</button>`;
   $('pzBreath').onclick = () => { track('pause_breath'); playBreak(51); };
 }
 bus.on('menu', renderPauseRow);
@@ -99,7 +99,7 @@ bus.on('answer', () => {
     m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="pzTitle"><span class="lvl-ico" aria-hidden="true">😮‍💨</span>
       <h2 id="pzTitle">${L('Тяжёлый день. Пауза?', 'Rough day. Take a break?')}</h2>
       <p>${L(`«${esc(low.name)}» на ${S.res[low.k]}%. Минутка на разминку — и сразу +${PAUSE_MID_BOOST} к Энергии и Кукухе в этой неделе.`, `${esc(low.name)} is at ${S.res[low.k]}%. A one-minute break gives +${PAUSE_MID_BOOST} Energy and Sanity right now.`)}</p>
-      <p class="pz-sub">${L('Сегодня:', 'Today:')} <b>${esc(brkTitle(n))}</b> ${L('или', 'or')} <button type="button" class="btn-link" id="pzMidBreath">🫁 ${L('минута дыхания', 'one-minute breathing')}</button></p>
+      <p class="pz-sub">${L('Сегодня:', 'Today:')} <b>${esc(brkTitle(n))}</b> ${L('или', 'or')} <button type="button" class="btn-link" id="pzMidBreath">🌬️ ${L('минута дыхания', 'one-minute breathing')}</button></p>
       <button class="btn-main" type="button" id="pzMidGo">☕ ${L('Сделать паузу', 'Take a break')}</button>
       <button class="btn-link" type="button" id="pzMidNo">${L('Работать дальше', 'Keep working')}</button></div>`;
     m.hidden = false; track('pause_mid_offer', { detail: low.k });
@@ -119,7 +119,7 @@ bus.on('breakEnd', e => {
 });
 
 // ---------- № 51 «Минута дыхания» ----------
-BREAKS.push([51, 'relax', '🫁', L('Минута дыхания', 'One-minute breathing'), L('Вдох 4 секунды, пауза 2, выдох 6 — пять кругов. Просто следуйте за кругом', 'Breathe in 4 s, hold 2, out 6 — five rounds. Just follow the circle')]);
+BREAKS.push([51, 'relax', '🌬️', L('Минута дыхания', 'One-minute breathing'), L('Вдох 4 секунды, пауза 2, выдох 6 — пять кругов. Просто следуйте за кругом', 'Breathe in 4 s, hold 2, out 6 — five rounds. Just follow the circle')]);
 window.BREAK_IMPL[51] = (root, api) => {
   const { L } = api, ROUNDS = 5, PH = [['in', 4, L('Вдох', 'Breathe in')], ['hold', 2, L('Пауза', 'Hold')], ['out', 6, L('Выдох', 'Breathe out')]];
   root.innerHTML = `<div class="br-wrap"><div class="br-ring"><div class="br-ball" id="brBall"></div><b class="br-word" id="brWord">${L('Готовы?', 'Ready?')}</b><small class="br-sec" id="brSec"></small></div>

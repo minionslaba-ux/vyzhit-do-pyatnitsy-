@@ -240,7 +240,7 @@
   const offCv = (w, h) => { const d = DPR(), cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(w * d)); cv.height = Math.max(1, Math.round(h * d)); const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); return [cv, c]; };
 
   // ================= 41. Запомни стол =================
-  const DESK = ['📎', '✏️', '🖊️', '📏', '📐', '📌', '🗂️', '📁', '📒', '🧮', '☕', '🍪', '🖥️', '⌨️', '🖱️', '📱', '🎧', '💡', '🪴', '🔑', '✂️', '🗓️', '📦', '🍎', '🧾', '🖨️', '⏰', '🏆', '🧸', '🕶️', '🍩', '🧃', '📷', '🔦', '🧲', '🍌'];
+  const DESK = ['📎', '✏️', '🖊️', '📏', '📐', '📌', '🗂️', '📁', '📒', '🧮', '☕', '🍪', '🖥️', '⌨️', '🖱️', '📱', '🎧', '💡', '🌿', '🔑', '✂️', '🗓️', '📦', '🍎', '🧾', '🖨️', '⏰', '🏆', '🧸', '🕶️', '🍩', '🧃', '📷', '🔦', '🧲', '🍌'];
   IMPL[41] = (root, api) => {
     prep(root); const K = kit(api), L = api.L;
     const PLAN = [[8, 1], [9, 1], [10, 's'], [11, 2], [12, 2]];
@@ -459,7 +459,7 @@
     ['2️⃣ 4️⃣ 8️⃣ | 6️⃣', 'Степени двойки: 2, 4, 8. А 6 — нет', 'Powers of two: 2, 4, 8. Six is not'],
     ['🐝 🦋 🐞 | 🐦', 'Насекомые, а воробей — птица', 'Insects; the bird is a bird'],
     ['🦅 🦉 🦜 | 🦇', 'Птицы. Летучая мышь летает, но она зверь', 'Birds. The bat flies but is a mammal'],
-    ['🐬 🐳 🦭 | 🦈', 'Морские млекопитающие, а акула — рыба', 'Marine mammals; the shark is a fish'],
+    ['🐬 🐳 🐳 | 🦈', 'Морские млекопитающие, а акула — рыба', 'Marine mammals; the shark is a fish'],
     ['💵 💶 💷 | 💳', 'Наличные, а карта — безнал', 'Cash; the card is cashless'],
     ['🏆 🥇 🎖️ | 🧯', 'Награды. Огнетушитель — за безопасность, а не за KPI', 'Awards. The extinguisher is for safety, not KPIs'],
     ['🖨️ 📠 🖥️ | 🪑', 'Офисная техника, а стул — мебель', 'Office machines; the chair is furniture'],
@@ -472,7 +472,7 @@
     ['🍅 🍓 🍒 | 🍇', 'Всё красное, а виноград — нет', 'All red; the grapes are not'],
     ['🚀 ✈️ 🚁 | 🚢', 'Летают, а корабль плавает', 'They fly; the ship sails'],
     ['🚢 ⛵ 🚤 | 🚂', 'Ходят по воде, а поезд — по рельсам', 'They travel on water; the train runs on rails'],
-    ['🔨 🔧 🪚 | 🎻', 'Слесарные инструменты. Скрипка — тоже инструмент, но музыкальный', 'Workshop tools. The violin is an instrument too — a musical one'],
+    ['🔨 🔧 🔨 | 🎻', 'Слесарные инструменты. Скрипка — тоже инструмент, но музыкальный', 'Workshop tools. The violin is an instrument too — a musical one'],
     ['📕 📗 📘 | 📰', 'Книги, а это газета', 'Books; that one is a newspaper'],
     ['♠️ ♥️ ♦️ | ⭐', 'Карточные масти, а звезда — нет', 'Card suits; the star is not'],
     ['♟️ 🎲 🃏 | 🏓', 'Настольные игры, а пинг-понг — спорт', 'Tabletop games; ping-pong is a sport'],
@@ -484,7 +484,7 @@
     ['🎧 🎤 📻 | 📷', 'Всё про звук, а фотоаппарат — про картинку', 'All about sound; the camera is about pictures'],
     ['💊 🩺 🩹 | 🎉', 'Медицина и больничный, а это — вечеринка', 'Medicine and sick leave; that one is a party'],
     ['🎂 🎁 🎉 | 📑', 'Праздник, а это — квартальный отчёт', 'Celebration; that one is a quarterly report'],
-    ['🧹 🧽 🪣 | 📚', 'Уборка, а книги — для чтения', 'Cleaning; books are for reading'],
+    ['🧹 🧽 🧺 | 📚', 'Уборка, а книги — для чтения', 'Cleaning; books are for reading'],
     ['👑 💍 💎 | 🧻', 'Драгоценности, а рулон бумаги — нет (хотя в офисе бывает дефицит)', 'Jewels; the paper roll isn’t (though it can be scarce at work)'],
     ['🌧️ ☂️ 💧 | 🕶️', 'Всё про дождь, а очки — от солнца', 'All about rain; sunglasses are for sun'],
     ['🐌 🐢 🦥 | 🐆', 'Медленные, как согласование бюджета. Гепард — быстрый', 'Slow as budget approval. The cheetah is fast'],
@@ -1059,7 +1059,7 @@
     const w = W(root), cols = Math.max(6, Math.min(10, Math.floor((w - 20) / 44))), gap = 6, sz = Math.floor((w - 20 - gap * cols - (gap + 1) / 2) / (cols + .5));
     const rows = Math.max(6, Math.min(10, Math.floor((Math.max(380, innerHeight - 330)) / (sz + gap))));
     let popped = 0, sheets = 0, left = 0, down = false;
-    root.innerHTML = `<div class="bgs5-hud bg49-hud"><span>🫧 ${L('Лопнуто', 'Popped')}: <span class="bg49-cnt">0</span></span><button type="button" class="bgs5-btn nw">🔄 ${L('Новый лист', 'New sheet')}</button></div>
+    root.innerHTML = `<div class="bgs5-hud bg49-hud"><span>🧼 ${L('Лопнуто', 'Popped')}: <span class="bg49-cnt">0</span></span><button type="button" class="bgs5-btn nw">🔄 ${L('Новый лист', 'New sheet')}</button></div>
       <div class="bg49-sheet" style="--s:${sz}px;--g:${gap}px"></div><p class="bgs5-msg">${L('Тапайте или ведите пальцем по пузырькам', 'Tap or swipe across the bubbles')}</p>
       <div class="bgs5-row"><button type="button" class="btn-main bgs5-done">${L('Готово', 'Done')}</button></div>`;
     const q = s => root.querySelector(s), sheet = q('.bg49-sheet'), cnt = q('.bg49-cnt'), msg = q('.bgs5-msg'), nw = q('.nw');
@@ -1093,7 +1093,7 @@
     root.classList.add('bgs5-calm');
     const w = W(root) - 12, h = Math.round(Math.min(w * 1.15, Math.max(280, innerHeight - 356), 560));
     let tool = 'rake', tines = 4, stones = [], strokes = 0, last = null, dir = null;
-    root.innerHTML = `<div class="bgs5-row bg50-tools"><button type="button" class="bgs5-btn on" data-t="rake"><span>🪮</span>${L('Грабли', 'Rake')}</button><button type="button" class="bgs5-btn" data-t="stone"><span>🪨</span>${L('Камень', 'Stone')}</button>
+    root.innerHTML = `<div class="bgs5-row bg50-tools"><button type="button" class="bgs5-btn on" data-t="rake"><span>💇</span>${L('Грабли', 'Rake')}</button><button type="button" class="bgs5-btn" data-t="stone"><span>🗿</span>${L('Камень', 'Stone')}</button>
       <button type="button" class="bgs5-btn tn"></button><button type="button" class="bgs5-btn clr"><span>〰️</span>${L('Разровнять', 'Smooth')}</button></div>
       <div class="bg50-wrap" style="width:${w + 12}px;height:${h + 12}px"><canvas></canvas><canvas></canvas></div>
       <p class="bgs5-msg">${L('Ведите пальцем — грабли оставляют борозды. Камни кладутся касанием.', 'Drag to rake grooves. Tap to place stones.')}</p>

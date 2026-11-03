@@ -81,7 +81,7 @@ function psyModal(inner, mood = 'happy', opts) {
     m.innerHTML = `<div class="modal-box glass psy-box" role="dialog" aria-modal="true" aria-labelledby="psyTitle">
       <div class="psy-scene" data-mood="happy">${psySceneSvg()}</div><div class="psy-name"><b id="psyTitle">${L('Кабинет Миры', 'Mira’s office')}</b><small>${L('психолог офиса · 🤖 персонаж игры', 'office psychologist · 🤖 game character')}</small></div>
       <div class="psy-body" aria-live="polite"></div>
-      <div class="psy-acts"><button class="btn-ghost" type="button" data-psy="more">💡 ${L('Ещё совет', 'Another tip')}</button><button class="btn-ghost" type="button" data-psy="quiz">📝 ${L('Самопроверка', 'Self-check')}</button><button class="btn-ghost" type="button" data-psy="breath">🫁 ${L('Минута дыхания', 'Breathing minute')}</button></div>
+      <div class="psy-acts"><button class="btn-ghost" type="button" data-psy="more">💡 ${L('Ещё совет', 'Another tip')}</button><button class="btn-ghost" type="button" data-psy="quiz">📝 ${L('Самопроверка', 'Self-check')}</button><button class="btn-ghost" type="button" data-psy="breath">🌬️ ${L('Минута дыхания', 'Breathing minute')}</button></div>
       <p class="psy-note">${PSY_NOTE()}</p>
       <button class="btn-main" type="button" data-psy="close">${L('Спасибо, Мира', 'Thanks, Mira')}</button></div>`;
     m.hidden = false;

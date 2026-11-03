@@ -934,7 +934,7 @@
     ].map(([x, y], i) => ({ x, y, i, angry: 0, face: Math.atan2(H / 2 - y, W / 2 - x) }));
     let state = 'ready', t = 0, lives = 3, killed = 0, fly = null, respawn = 0, swats = [], splats = [], pops = [];
     const fx = parts(), rings = [];
-    const upd = () => S.hudSet(pill('🪰', `<b>${killed}</b><small>/${TOTAL}</small>`) + pill('⏱', `<b>${t.toFixed(1)}</b><small>${L('с', 's')}</small>`) + hearts(lives));
+    const upd = () => S.hudSet(pill('🦟', `<b>${killed}</b><small>/${TOTAL}</small>`) + pill('⏱', `<b>${t.toFixed(1)}</b><small>${L('с', 's')}</small>`) + hearts(lives));
     const newFly = () => {
       const side = Math.floor(api.rng() * 4), m = 10;
       const x = side === 0 ? m : side === 1 ? W - m : api.rng() * W, y = side === 2 ? m : side === 3 ? H - m : api.rng() * H;
@@ -1115,7 +1115,7 @@
       }
       fx.draw(g, dt);
       popsDraw(g, pops, dt, 18 * u);
-      if (state === 'ready') veil(g, W, H, L('Коснитесь, чтобы начать', 'Tap to start'), L(`Прихлопните ${TOTAL} мух. Коллеги — не мухи!`, `Swat ${TOTAL} flies. Coworkers aren’t flies!`), '🪰');
+      if (state === 'ready') veil(g, W, H, L('Коснитесь, чтобы начать', 'Tap to start'), L(`Прихлопните ${TOTAL} мух. Коллеги — не мухи!`, `Swat ${TOTAL} flies. Coworkers aren’t flies!`), '🦟');
     });
     upd();
   };

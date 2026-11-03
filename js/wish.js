@@ -284,7 +284,7 @@ function buyGoods(cat, list, price, mood, after) {
 // fish — удочка в руках, поплавок, клёв; salon — салон красоты; game — приставка; kid — мультик с ребёнком
 const TOON_LEN = { market: n => Math.min(15000, 6500 + n * 750), delivery: () => 7500, phone: () => 6500, wear: () => 8500, outing: () => 7500, need: () => 8000,
   ride: () => 11000, fish: () => 9500, salon: () => 8500, game: () => 8000 };
-const OUTING_FX = { latte: '☕', book: '📖', cinema: '🍿', dinner: '🕯️', spa: '🫧', concert: '🎶', tent: '🌲', workshop: '🎨', camp: '🌲', music: '🎵', party: '🎈', ball: '⚽' };
+const OUTING_FX = { latte: '☕', book: '📖', cinema: '🍿', dinner: '🕯️', spa: '🧼', concert: '🎶', tent: '⛺', workshop: '🎨', camp: '🌲', music: '🎵', party: '🎈', ball: '⚽' };
 const RIDE_BG = { boat: 'water', car: 'city', moto: 'city', bike: 'park', scooter: 'park', skate: 'park' };
 function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after) {
   voiceUnlock();  // мультик запускается по нажатию «Купить» — разрешаем речь сейчас, реплика прозвучит в кульминации (iOS)
@@ -301,12 +301,12 @@ function playToon({ kind, prop, cat, list = [], mood = 0, h, need, kid }, after)
       <div class="tn-receipt"><b>${L('Касса', 'Checkout')}</b>${list.length} ${L('шт.', 'items')} · ${money(list.reduce((s, it) => s + it.price, 0))}</div>`,
     delivery: `<div class="tn-door">🚪</div><span class="tn-bell">🔔 ${L('Дзинь-дзинь!', 'Ding-dong!')}</span><div class="tn-box">📦</div>`,
     phone: kid ? '' : `<div class="tn-phone"><div class="tn-scr"><b>${kid ? `📱 ${L('Новый телефон!', 'New phone!')}` : `📶 ${L('Баланс пополнен', 'Top-up done')}`}</b><i></i><span>${kid ? '🤳' : `+${x?.price || 0} ${L('у.е.', '$')}`}</span></div></div>${['💬', '❤️', '😂', '📸'].map((e, i) => `<span class="tn-ping" style="--i:${i}">${e}</span>`).join('')}`,
-    wear: `<div class="tn-curtain l"></div><div class="tn-curtain r"></div><div class="tn-mirror">🪞</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '👗'} ${esc(title)}</span>`,
+    wear: `<div class="tn-curtain l"></div><div class="tn-curtain r"></div><div class="tn-mirror">🖼️</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '👗'} ${esc(title)}</span>`,
     outing: `${rain(10, OUTING_FX[x?.id] || '✨')}<span class="tn-big">${x?.ico || '🎟️'}</span>`,
     need: `<span class="tn-big need">${need?.ico || x?.ico || '🎉'}</span>${rain(12, ['🎉', '✨', '💖'])}`,
     ride: `<div class="tn-ground"></div><div class="tn-lane"></div><span class="tn-tag">${x?.ico || need?.ico || '🚗'} ${esc(title)}</span>`,
     fish: `<div class="tn-lake"></div><span class="tn-fish">🐟</span><span class="tn-catch">🐟</span><span class="tn-reed l">🌾</span><span class="tn-reed r">🌾</span>`,
-    salon: `<div class="tn-mirror big">🪞</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '💅'} ${esc(title)}</span>`,
+    salon: `<div class="tn-mirror big">🖼️</div>${Array.from({ length: 6 }, (_, i) => `<span class="tn-spark" style="--i:${i}">✨</span>`).join('')}<span class="tn-tag">${x?.ico || '💅'} ${esc(title)}</span>`,
     game: `<div class="tn-tv"><div class="tn-px">${Array.from({ length: 6 }, (_, i) => `<i style="--i:${i}"></i>`).join('')}</div></div><span class="tn-tag">🎮 ${esc(title)}</span>`,
   }[kind];
   const word = {
