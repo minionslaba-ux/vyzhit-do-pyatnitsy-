@@ -257,8 +257,13 @@ const AD_FORCED_WEEKS = 3, AD_FORCED_GAP = 30 * 60 * 1000;
 bus.on('weekEnd', x => { if (x.mode === 'career') { prefs.adWeeks = (prefs.adWeeks || 0) + 1; store.set(KEY.prefs, prefs); } });
 const adForcedDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
   && Date.now() - (prefs.adForcedAt || 0) > AD_FORCED_GAP && Date.now() - (prefs.adAt || 0) > AD_FORCED_GAP;
-function adForced(go) {
-  if (views.end.hidden || !adForcedDue()) return go();
+// Без карьеры (обычная игра, быстрая смена, неделя дня): реклама перед каждой следующей неделей с экрана итогов.
+// Только чтобы не подряд: не раньше чем через 2 минуты после прошлого ролика.
+const AD_EACH_GAP = 2 * 60 * 1000;
+const adEachDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4
+  && Date.now() - (prefs.adForcedAt || 0) > AD_EACH_GAP && Date.now() - (prefs.adAt || 0) > AD_EACH_GAP;
+function adForced(go, each = false) {
+  if (views.end.hidden || !(each ? adEachDue() : adForcedDue())) return go();
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="afTitle"><span class="lvl-ico" aria-hidden="true">📺</span>
     <h2 id="afTitle">${L('Короткая реклама', 'A short ad')}</h2>
@@ -271,6 +276,14 @@ function adForced(go) {
   const t = setInterval(() => { n--; if ($('afT')) $('afT').textContent = n; if (n <= 0) run(); }, 1000);
   $('afGo').onclick = run;
   if (window.NO_PAY && $('afOff')) $('afOff').hidden = true;
-  $('afOff').onclick = () => { fired = true; clearInterval(t); if (typeof openShopNoAds === 'function') return openShopNoAds(() => adForced(go)); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go) }); };
+  $('afOff').onclick = () => { fired = true; clearInterval(t); if (typeof openShopNoAds === 'function') return openShopNoAds(() => adForced(go, each)); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go, each) }); };
 }
 if (typeof window.startWeek === 'function') { const sw0 = window.startWeek; window.startWeek = function (...a) { return adForced(() => sw0.apply(this, a)); }; }
+// «Следующая неделя» вне карьеры (кнопка на экране итогов, js/game.js $('next')): startPack / startQuick / startDaily
+// startQuick объявлен в js/hooks.js (после этого файла) — оборачиваем, когда загружены все скрипты
+document.addEventListener('DOMContentLoaded', () => {
+  for (const fn of ['startPack', 'startQuick', 'startDaily']) {
+    const f0 = window[fn]; if (typeof f0 !== 'function') continue;
+    window[fn] = function (...a) { return S?.mode && S.mode !== 'career' && S.mode !== 'tour' ? adForced(() => f0.apply(this, a), true) : f0.apply(this, a); };
+  }
+});
