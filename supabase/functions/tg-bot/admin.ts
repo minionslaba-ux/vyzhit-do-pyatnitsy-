@@ -1,6 +1,7 @@
 // Команды разработчика в личке бота (только dev_admins). Всё, что уходит людям, сначала показывается превью с кнопками
 // «Отправить» / «Отмена» — черновик хранится в admin_drafts. Список команд — /help.
 import { ADMIN_COMMANDS2, HELP2, adminCallback2, adminCommand2 } from './admin2.ts';
+import { maxBroadcast } from './max.ts';
 const SITE = 'https://survivefriday.com/';
 const APP = 'https://t.me/Survivefridaybot?startapp';
 const POOLS = ['pool', 'pool2', 'pool3', 'pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool_l3a', 'pool_l3b', 'pool_l3c'];
@@ -42,7 +43,7 @@ const HELP = `🛠 <b>Команды разработчика</b>
 📣 <b>Рассылки</b> (сначала превью, потом кнопка «Отправить»)
 /push Заголовок | Текст — пуш-уведомление всем подписчикам (или только себе для проверки)
 /rpush — случайный мотивирующий пуш из 1000 готовых (русский + английский), можно перебрать «🎲 Другой»
-/news текст — новость в Telegram-группы и/или в общий чат игры
+/news текст — новость в Telegram-группы и канал MAX и/или в общий чат игры
 /event — случайная офисная ситуация из игры как опрос в группы
 /psy — случайный совет психолога Миры в группы (русский + английский). Можно с темой: /psy fired · tired · stress · sleep · boss · team · friday …
 /broadcast текст — личное сообщение всем, кто включил напоминания в боте
@@ -135,7 +136,7 @@ export async function adminCommand(ctx: Ctx, cmd: string, rest: string, chatId: 
     case 'news': {
       if (!rest.trim()) { await say('Формат: <code>/news текст новости</code>'); return true; }
       const id = await draft(ctx, tg, 'news', { text: rest.trim().slice(0, 3500) });
-      await say(`📰 <b>Превью новости</b>\n\n${esc(rest.trim())}`, { reply_markup: kb([[['📢 В группы', `adm:${id}:groups`], ['💬 В чат игры', `adm:${id}:game`]], [['📢 + 💬 Везде', `adm:${id}:both`], ['✖ Отмена', `adm:${id}:no`]]]) });
+      await say(`📰 <b>Превью новости</b>\n\n${esc(rest.trim())}`, { reply_markup: kb([[['📢 Группы + MAX', `adm:${id}:groups`], ['💬 В чат игры', `adm:${id}:game`]], [['📢 + 💬 Везде', `adm:${id}:both`], ['✖ Отмена', `adm:${id}:no`]]]) });
       return true;
     }
     case 'event': {
@@ -228,7 +229,9 @@ export async function adminCallback(ctx: Ctx, cq: any) {
       if (!acc) game = ' В чат игры не отправлено: ваш Telegram не привязан к аккаунту игры.';
       else { const { error } = await db.from('messages').insert({ channel: 'global', player_id: acc.user_id, text: ('📢 ' + p.text).slice(0, 300) }); game = error ? ` Чат игры: ошибка ${esc(error.message)}.` : ' В общий чат игры отправлено.'; }
     }
-    return done(`✅ Новость: групп — ${g}.${game}`);
+    let mx = '';  // те же новости — в канал MAX (кнопка «Играть» открывает игру прямо в MAX)
+    if (act === 'groups' || act === 'both') { const r = await maxBroadcast(db, p.text); const ok = (r.match(/: ok/g) || []).length; mx = ok ? ` Канал MAX — ${ok}.` : ` MAX: ${esc(r.replace(/^max: /, ''))}.`; }
+    return done(`✅ Новость: групп — ${g}.${mx}${game}`);
   }
   if (d.kind === 'event' && act === 'poll') {
     let g = 0;
