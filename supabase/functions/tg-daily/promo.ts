@@ -1,4 +1,4 @@
-// Посты о канале игры в MAX: раз в 3 дня до даты until (data/bot/max_promo.json), в русские группы Telegram и группу ВК.
+// Посты о канале игры в MAX: раз в 3 дня до даты until (data/bot/max_promo.json), в русские группы Telegram (в группу ВК — нет, см. ниже).
 // Тексты — по кругу; день отмечается в max_promo_posts (повторный вызов не задвоит).
 const SITE = 'https://survivefriday.com/';
 const MAX_CHANNEL = 'https://max.ru/se14877440_biz';
@@ -28,7 +28,7 @@ export async function maxPromo(db: any, tgToken: string, mskDate: string): Promi
   // ВК: ссылка в тексте (ключ сообщества не публикует вложение-ссылку без картинки)
   let vk = 'off', postId: number | null = null;
   const token = Deno.env.get('VK_GROUP_TOKEN'), gid = (Deno.env.get('VK_GROUP_ID') || '').replace(/^-/, '');
-  if (token && gid) {
+  if (false && token && gid) {  // в группе ВК не публикуем: правила VK Mini Apps 4.1.8 (не уводить аудиторию игры из ВК) — решение владельца 03.11.2026
     const r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: `${text}\n\nКанал: ${MAX_CHANNEL}` }, token);
     postId = r.response?.post_id ?? null;
     vk = r.error ? `error: ${r.error.error_msg || r.error.error_code}` : `posted ${postId}`;
