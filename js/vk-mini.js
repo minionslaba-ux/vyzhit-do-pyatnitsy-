@@ -7,14 +7,14 @@
   const q = new URLSearchParams(location.search);
   window.VK_APP_ID = q.get('vk_app_id') || (() => { try { return sessionStorage.getItem('vdp-vk-app') || ''; } catch { return ''; } })();
   try { if (q.get('vk_app_id')) sessionStorage.setItem('vdp-vk-app', q.get('vk_app_id')); } catch {}
-  let seq = 0; const wait = {};
+  let seq = 0, webFrameId; const wait = {};  // webFrameId — номер окна игры у ВК (сообщение VKWebAppSettings); без него браузерный ВК не отвечает
   window.vkBridge = (method, params = {}, ms = 8000) => new Promise(ok => {  // ms — сколько ждать ответа (окно оплаты — дольше)
     const request_id = `vdp${++seq}`, data = { ...params, request_id };
     wait[request_id] = ok; setTimeout(() => { if (wait[request_id]) { delete wait[request_id]; ok(null); } }, ms);
     try {
       if (window.AndroidBridge?.[method]) window.AndroidBridge[method](JSON.stringify(data));
       else if (window.webkit?.messageHandlers?.[method]) window.webkit.messageHandlers[method].postMessage(data);
-      else window.parent.postMessage({ handler: method, params: data, type: 'vk-connect' }, '*');
+      else window.parent.postMessage({ handler: method, params: data, type: 'vk-connect', webFrameId, connectVersion: '2.15.0' }, '*');  // как в @vkontakte/vk-bridge 2.15
     } catch { ok(null); }
   });
   // Приложение свернули/закрыли в мобильном ВК — звук и голоса выключаем, вернулись — включаем (правила VK Mini Apps 2.2.5)
@@ -31,7 +31,15 @@
     if (rid && wait[rid]) { wait[rid](d); delete wait[rid]; }
   };
   window.addEventListener('VKWebAppEvent', onEvent);  // нативные приложения ВК присылают ответы событием
-  window.addEventListener('message', e => { const d = e.data; if (d && d.type === 'vk-connect') onEvent({ detail: d.detail || { data: d.data } }); });
+  // в браузерной версии ВК ответы приходят сообщением от родительского окна; форматы бывают разные:
+  // { type: 'vk-connect', detail: { type, data } }, { type: 'VKWebAppEvent', data: { type, data } } или сразу { type: 'VKWebApp…Result', data }
+  window.addEventListener('message', e => {
+    let d = e.data; if (typeof d === 'string') try { d = JSON.parse(d); } catch { return; }
+    if (!d || typeof d !== 'object') return;
+    if (d.type === 'vk-connect' || d.type === 'VKWebAppEvent') d = d.detail || d.data || d;
+    if (d?.type === 'VKWebAppSettings') { webFrameId = d.frameId; return; }
+    if (d && typeof d.type === 'string' && /^VKWebApp/.test(d.type)) onEvent({ detail: d });
+  });
   // Приглашения внутри ВК: vk.com/app<ID>#ref-XXXXXX_join-КОД_ch-… — ВК отдаёт часть после # игре (как start_param в Telegram, js/app.js)
   try {
     const h = decodeURIComponent(location.hash.slice(1)), ref = h.match(/ref-([A-Z0-9]{6})/i), join = h.match(/join-([A-Z0-9]{6})/i), ch = h.match(/ch-(\d{8}[wl]\d{3}[pebc]\d{1,3})/);
