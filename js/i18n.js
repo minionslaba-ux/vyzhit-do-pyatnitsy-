@@ -7,10 +7,18 @@ if (window.VK_MINI) document.documentElement.classList.add('vk-mini');
 window.RUSTORE = (() => { try { const on = /[?&]src=rustore\b/.test(location.search) || /^android-app:\/\//.test(document.referrer); if (on) sessionStorage.setItem('vdp-rustore', '1'); return on || sessionStorage.getItem('vdp-rustore') === '1'; } catch { return /[?&]src=rustore\b/.test(location.search); } })();
 // itch.io: игра открыта в окне на странице itch (dist/itch.zip — оболочка с адресом ?src=itch) — тоже без оплаты
 window.ITCH = (() => { try { const on = /[?&]src=itch\b/.test(location.search); if (on) sessionStorage.setItem('vdp-itch', '1'); return on || sessionStorage.getItem('vdp-itch') === '1'; } catch { return /[?&]src=itch\b/.test(location.search); } })();
-window.NO_PAY = !!(window.RUSTORE || window.ITCH);
+// MAX (мессенджер VK): мини-приложение бота открывает https://survivefriday.com/?src=max — мост MAX (window.WebApp), без оплаты и без Telegram
+window.MAX_APP = (() => { try { const on = /[?&]src=max\b/.test(location.search); if (on) sessionStorage.setItem('vdp-max', '1'); return on || sessionStorage.getItem('vdp-max') === '1'; } catch { return /[?&]src=max\b/.test(location.search); } })();
+if (window.MAX_APP) {
+  document.documentElement.classList.add('max-app');
+  const s = document.createElement('script'); s.src = 'https://st.max.ru/js/max-web-app.js'; s.async = true;
+  s.onload = () => { try { window.WebApp?.ready?.(); window.WebApp?.expand?.(); } catch {} };
+  document.head.append(s);
+}
+window.NO_PAY = !!(window.RUSTORE || window.ITCH || window.MAX_APP);
 if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v173';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v174';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');

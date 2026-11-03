@@ -2494,3 +2494,6 @@ html.itch .lnk-itch, html.vk-mini .lnk-itch { display: none !important; }
 .remind-card small { color: var(--text-2); font-size: 12.5px; line-height: 1.35; }
 .remind-card .remind-alt { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 html.light .remind-card { background: rgba(0,140,160,.06); border-color: rgba(0,140,160,.3); }
+
+/* MAX (html.max-app, js/i18n.js): без зазывания в Telegram и ВК-группу */
+html.max-app #tgRemind, html.max-app #vkGroup, html.max-app .vk-invite, html.max-app .lnk-itch { display: none !important; }

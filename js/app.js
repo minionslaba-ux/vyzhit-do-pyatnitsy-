@@ -92,7 +92,7 @@ let installEvt = null, tgGo = (location.search.match(/[?&]brk=(\d{1,2})/) || [, 
 // ?buy=10|25|50|100 — сразу окно пополнения на столько у.е.; ?buy=starter|coffee|shop — магазин (товары группы ВК, promo/vk/market.md)
 { const b = location.search.match(/[?&]buy=(\d{1,3}|starter|coffee|shop)\b/); if (b) tgGo = 'buy:' + b[1]; }
 // Установить можно: браузер дал событие установки, или это телефон (покажем, как добавить вручную); не в Telegram, не в каталогах
-const canInstall = () => !standalone && !TG && !window.VDP_PLATFORM && !window.VK_MINI && !window.POOL_JSON && (installEvt || isMobile);
+const canInstall = () => !standalone && !TG && !window.VDP_PLATFORM && !window.VK_MINI && !window.MAX_APP && !window.POOL_JSON && (installEvt || isMobile);
 function installUi() {
   $('installApp').hidden = !canInstall();
   $('installCta').hidden = !canInstall() || Date.now() < (prefs.installSnooze || 0);

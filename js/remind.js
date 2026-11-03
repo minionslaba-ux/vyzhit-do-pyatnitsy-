@@ -6,7 +6,7 @@
 //  • ?startapp=remind в Telegram — включить сразу (js/app.js → remindTgOn).
 const REMIND_BONUS = 5, REMIND_GAP = 2 * 864e5;
 const remindActive = () => (typeof pushOn === 'function' && pushOn()) || !!prefs.tgRemind;
-const remindAllowed = () => !window.VDP_PLATFORM && !window.VK_MINI && board.online && !!prefs.name;
+const remindAllowed = () => !window.VDP_PLATFORM && !window.VK_MINI && !window.MAX_APP && board.online && !!prefs.name;
 function remindGrant() {
   if (prefs.remindBonus || !remindActive()) return;
   prefs.remindBonus = 1; store.set(KEY.prefs, prefs);

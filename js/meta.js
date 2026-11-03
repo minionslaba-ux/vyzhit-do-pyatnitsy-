@@ -313,7 +313,7 @@ async function tgCall(enable) {
 }
 async function tgButton() {
   const b = $('tgRemind'); if (!b) return;
-  if (window.VDP_PLATFORM || window.VK_MINI || !board.online) { b.hidden = true; return; }
+  if (window.VDP_PLATFORM || window.VK_MINI || window.MAX_APP || !board.online) { b.hidden = true; return; }
   const label = on => on ? L('🔕 Выключить напоминания в Telegram', '🔕 Turn off Telegram reminders') : L('🔔 Напоминать в Telegram о неделе дня', '🔔 Daily reminder in Telegram');
   if (!TG && !tgOnSite()) {
     b.textContent = label(false);
@@ -360,7 +360,7 @@ bus.on('weekEnd', x => {
 async function tgGroup() {
   const b = $('tgGroup'); if (!b) return;
   if (prefs.pendingCash && careerNow()) { const n = prefs.pendingCash; prefs.pendingCash = 0; addCash(n); }
-  if (window.VDP_PLATFORM || window.VK_MINI || !board.online) return;  // в приложении ВКонтакте — без зазывания в Telegram (правила ВК)
+  if (window.VDP_PLATFORM || window.VK_MINI || window.MAX_APP || !board.online) return;  // в приложении ВКонтакте и в MAX — без зазывания в Telegram (правила ВК)
   const r = await fetch(tgFn(), { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: window.SUPABASE_CONFIG?.anonKey || '' },
     body: JSON.stringify({ action: 'group_link' }) }).then(r => r.json()).catch(() => ({}));
   const link = r.link; if (!link) return;
