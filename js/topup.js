@@ -193,3 +193,10 @@ async function claimPaid(again = 0) {
   const pend = store.get('vdp-pay-pending', null);
   setTimeout(() => claimPaid(pay === 'ok' || (pend && Date.now() - pend.at < 3600e3) ? 5 : 0), 2500);
 })();
+
+// «💰 Пополнить» под плашкой профиля: там, где есть оплата (сайт, Telegram — Робокасса; ВК — голоса). В MAX, RuStore, itch и на игровых площадках — нет
+bus.on('menu', () => {
+  const b = $('meTopup'); if (!b) return;
+  b.hidden = !!(window.NO_PAY || window.VDP_PLATFORM || (window.VK_MINI && !vkPayOn()) || !board.online);
+  b.onclick = () => { track('topup_open', { detail: 'top' }); openTopup({}); };
+});

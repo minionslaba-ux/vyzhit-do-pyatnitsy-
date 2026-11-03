@@ -92,3 +92,31 @@ bus.on('menu', () => {
   remindGrant();
   if (typeof pushAskOnEntry === 'function') setTimeout(pushAskOnEntry, 2500);
 });
+
+// Второй мессенджер для напоминаний: в Telegram — «Напоминать в MAX», в MAX — «Напоминать в Telegram».
+// Кнопка открывает игру в другом мессенджере с меткой remind — там напоминание включается само (Telegram: js/app.js → remindTgOn; MAX: ниже)
+const REMIND2 = { max: 'https://max.ru/se14877440_bot?startapp=remind', tg: 'https://t.me/Survivefridaybot?startapp=remind' };
+bus.on('menu', () => {
+  const b = $('remind2'); if (!b) return;
+  const to = TG ? 'max' : window.MAX_APP ? 'tg' : '';
+  b.hidden = !to || EN || !board.online; if (b.hidden) return;
+  b.textContent = to === 'max' ? L('🔔 Напоминать в MAX', '🔔 Remind me in MAX') : L('🔔 Напоминать в Telegram', '🔔 Remind me in Telegram');
+  b.onclick = () => {
+    track('remind_click', { detail: 'other-' + to });
+    toast(to === 'max' ? L('Откроем игру в MAX — напоминание включится само', 'Opening the game in MAX — the reminder turns on by itself') : L('Откроем игру в Telegram — напоминание включится само', 'Opening the game in Telegram — the reminder turns on by itself'));
+    setTimeout(() => {
+      if (TG?.openLink) TG.openLink(REMIND2[to]);
+      else if (window.WebApp?.openLink) window.WebApp.openLink(REMIND2[to]);
+      else location.href = REMIND2[to];
+    }, 700);
+  };
+});
+// MAX, открытый по ссылке с меткой remind: включить напоминания в MAX, как только игрок вошёл (один раз за запуск)
+if (window.MAX_APP) dataReady.then(() => setTimeout(() => {
+  let sp = ''; try { sp = window.WebApp?.initDataUnsafe?.start_param || new URLSearchParams(window.WebApp?.initData || window.MAX_INIT || '').get('start_param') || ''; } catch {}
+  if (!/(^|_)remind/.test(sp) || prefs.maxRemind || !board.online) return;
+  try { if (sessionStorage.getItem('vdp-max-remind')) return; } catch {}
+  if (!(typeof registered === 'function' && registered())) return;  // вход ещё идёт — после перезагрузки попробуем снова
+  try { sessionStorage.setItem('vdp-max-remind', '1'); } catch {}
+  msgRemindSet(true);
+}, 3500));

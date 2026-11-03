@@ -2523,3 +2523,14 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
 .btn-codein { display: block; margin: 6px auto 2px; font-size: 13px; }
 .acct-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin-top: 4px; }
 .acct-links .btn-link { font-size: 12px; }
+/* «Пополнить» под плашкой профиля (index.html #meTopup, js/topup.js) */
+.me-topup { position: absolute; top: calc(100% + 6px); right: 0; padding: 6px 12px; border-radius: 999px; border: 1.5px solid rgba(255,200,60,.65); background: rgba(var(--bg-rgb),.82);
+  color: #ffd56a; font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; white-space: nowrap; backdrop-filter: blur(8px); box-shadow: 0 0 14px rgba(255,200,60,.25); }
+.me-topup:hover { background: rgba(255,200,60,.15); }
+.me-topup[hidden] { display: none; }
+/* Узкий экран: «Пополнить» в один ряд с профилем, меню начинается ниже плашек, чтобы они не наезжали на заголовок */
+@media (max-width: 600px) {
+  .me-topup { position: static; padding: 9px 12px; }
+  .me-top { flex-direction: row-reverse; }
+  #menu { padding-top: calc(58px + env(safe-area-inset-top, 0px)); }
+}
