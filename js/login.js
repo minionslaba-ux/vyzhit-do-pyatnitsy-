@@ -12,7 +12,7 @@ async function fnPost(name, body) {
   return j;
 }
 // Аккаунт без почты (вошли через Telegram или VK) — служебный адрес, показываем название сервиса
-const socialVia = () => (prefs.email || '').match(/@(tg|vk)\.survivefriday\.com$/)?.[1] || '';
+const socialVia = () => (prefs.email || '').match(/@(tg|vk|max)\.survivefriday\.com$/)?.[1] || '';
 const viaName = v => v === 'vk' ? 'VK' : v === 'max' ? 'MAX' : 'Telegram';
 const acctLabel = () => socialVia() ? viaName(socialVia()) + (prefs.acctName ? ' · ' + prefs.acctName : '') : prefs.email || '';
 const hasTg = () => socialVia() === 'tg' || !!prefs.tgLinked;
@@ -42,10 +42,12 @@ function socialError(err, via) {
   const n = viaName(via);
   return ({
     linked_elsewhere: L(`Этот ${n} уже привязан к другому аккаунту игры. Выйдите и войдите через ${n}.`, `This ${n} account is linked to another game account. Log out and sign in with ${n}.`),
-    already_linked: L(`К вашему аккаунту уже привязан другой ${n}.`, `Your account already has a different ${n} linked.`),
+    already_linked: L(`К этому аккаунту уже привязан другой профиль ${n}.`, `That account already has a different ${n} profile linked.`),
     bad_signature: L('Telegram не подтвердил вход — попробуйте ещё раз.', 'Telegram didn’t confirm the sign-in — please try again.'),
     vk_failed: L('VK не подтвердил вход — попробуйте ещё раз.', 'VK didn’t confirm the sign-in — please try again.'),
     not_configured: L('Вход через Telegram ещё настраивается.', 'Telegram sign-in isn’t set up yet.'),
+    bad_code: L('Код не подошёл: он неверный, уже использован или прошло больше 10 минут. Получите новый.', 'That code didn’t work: it’s wrong, already used or older than 10 minutes. Get a new one.'),
+    too_often: L('Слишком много кодов за час — попробуйте позже.', 'Too many codes this hour — try again later.'),
   })[err.code] || L(`Вход не удался: ${err.message}`, `Sign-in failed: ${err.message}`);
 }
 async function socialDone(j, via) {
@@ -124,6 +126,7 @@ function socialButtons(box) {
     // MAX: вход только внутри мессенджера (initData, js/max-app.js) — кнопка открывает игру в MAX, там вход сам
     + (!EN && !TG && !window.MAX_APP ? `<a class="btn-main btn-max btn-maxlogin" href="https://max.ru/se14877440_bot?startapp=login" target="_blank" rel="noopener"><img src="icons/max.png" alt="" width="22" height="22"> ${L('Войти через MAX', 'Sign in with MAX')}</a>`
       + `<span class="maxlogin-note">${L('Игра откроется в MAX, вход — автоматически', 'The game opens in MAX and signs you in')}</span>` : '')
+    + `<button class="btn-link btn-codein" type="button" data-codein>🔑 ${L('У меня уже есть аккаунт — войти по коду', 'I already have an account — sign in with a code')}</button>`
     + `<span class="or-line">${L('или по почте', 'or with email')}</span>`;
   box.querySelector('.btn-maxlogin')?.addEventListener('click', () => track('max_login_site'));
   box.querySelector('.btn-tg').onclick = () => tgLogin();
@@ -139,9 +142,56 @@ function renderAcctBox() {
   if (!socialVia()) btns.push(`<button class="btn-ghost" type="button" data-a="pass">🔑 ${prefs.hasPass ? L('Сменить пароль', 'Change password') : L('Задать пароль для входа', 'Set a sign-in password')}</button>`);
   if (!hasTg()) btns.push(`<button class="btn-ghost" type="button" data-a="tg">✈️ ${L('Привязать Telegram', 'Link Telegram')}</button>`);
   if (VK_APP && !(socialVia() === 'vk' || prefs.vkLinked)) btns.push(`<button class="btn-ghost" type="button" data-a="vk">VK ${L('Привязать VK', 'Link VK')}</button>`);
+  if (!window.VK_MINI) btns.push(`<button class="btn-ghost" type="button" data-a="codeout">📲 ${L('Войти в этот аккаунт на другом устройстве', 'Sign in to this account on another device')}</button>`);
+  btns.push(`<button class="btn-ghost" type="button" data-codein>🔑 ${L('У меня есть другой аккаунт — войти по коду', 'I have another account — sign in with a code')}</button>`);
   box.innerHTML = btns.join(''); box.hidden = !btns.length;
-  box.onclick = e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a === 'pass') passModal(); if (a === 'tg') tgLogin(); if (a === 'vk') vkLogin(); };
+  box.onclick = e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a === 'pass') passModal(); if (a === 'tg') tgLogin(); if (a === 'vk') vkLogin(); if (a === 'codeout') codeOut(); };
 }
+// ---------- один аккаунт на всех площадках: вход кодом (сервер tg-login: action link_code / code) ----------
+// Код живёт 10 минут и действует один раз. На площадке, где его ввели (Telegram, ВК, MAX), вход дальше — автоматически в этот аккаунт;
+// прогресс подтянется из облака (js/cloud.js). В ВК код можно только ввести — выдавать его там не нужно (правила VK Mini Apps 4.1.8).
+async function codeOut() {
+  try {
+    const j = await fnPost('tg-login', { action: 'link_code', access_token: await board.accessToken() });
+    const c = String(j.code || ''), m = $('modal');
+    m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="coTitle"><span class="lvl-ico" aria-hidden="true">📲</span>
+      <h2 id="coTitle">${L('Код для входа', 'Sign-in code')}</h2>
+      <p class="code-big" aria-label="${esc(c)}">${esc(c.slice(0, 4))}-${esc(c.slice(4))}</p>
+      <p>${L('Откройте игру на другом устройстве или в другом приложении → профиль → «У меня есть другой аккаунт — войти по коду» и введите код. Действует 10 минут, один раз. Карьера и покупки подтянутся из этого аккаунта.', 'Open the game on another device or app → profile → “I have another account — sign in with a code” and enter it. Valid for 10 minutes, once. Your career and purchases will come from this account.')}</p>
+      <button class="btn-ghost" type="button" id="coOk">${L('Готово', 'Done')}</button></div>`;
+    m.hidden = false; $('coOk').onclick = () => { m.hidden = true; };
+    track('code_out');
+  } catch (err) { toast(socialError(err, 'tg')); }
+}
+function codeIn() {
+  const m = $('modal');
+  m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="ciTitle"><span class="lvl-ico" aria-hidden="true">🔑</span>
+    <h2 id="ciTitle">${L('Войти по коду', 'Sign in with a code')}</h2>
+    <p>${L('Возьмите код в игре там, где у вас основной аккаунт: профиль → «Войти в этот аккаунт на другом устройстве». После входа здесь будет та же карьера, у.е. и покупки, а дальше вход — автоматически.', 'Get the code where your main account is: profile → “Sign in to this account on another device”. After that you’ll have the same career, $ and purchases here, and future sign-ins are automatic.')}</p>
+    <form id="ciForm"><input id="ciCode" class="code-in" maxlength="9" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX" aria-label="${L('Код', 'Code')}">
+    <p class="join-err" id="ciErr" role="alert"></p>
+    <button class="btn-main" type="submit" id="ciGo">${L('Войти', 'Sign in')}</button></form>
+    <button class="btn-ghost" type="button" id="ciNo">${L('Отмена', 'Cancel')}</button></div>`;
+  m.hidden = false; $('ciCode').focus();
+  $('ciNo').onclick = () => { m.hidden = true; };
+  $('ciForm').onsubmit = async e => {
+    e.preventDefault();
+    const code = $('ciCode').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (code.length !== 8) { $('ciErr').textContent = L('В коде 8 символов', 'The code has 8 characters'); return; }
+    $('ciGo').disabled = true;
+    try {
+      let proof = {}, via = '';
+      if (TG?.initData) { proof = { initData: TG.initData }; via = 'tg'; }
+      else if (window.VK_MINI) { const info = await vkBridge('VKWebAppGetUserInfo'); proof = { vk_launch: { params: location.search, name: [info?.first_name, info?.last_name].filter(Boolean).join(' ') } }; via = 'vk'; }
+      else if (window.MAX_APP && (window.WebApp?.initData || window.MAX_INIT)) { proof = { max_init: window.WebApp?.initData || window.MAX_INIT }; via = 'max'; }
+      const j = await fnPost('tg-login', { ...proof, code });
+      track('code_in', { detail: via || 'site' });
+      delete prefs.cloudAt;  // прогресс — из облака нового аккаунта (js/cloud.js сравнит и при необходимости спросит)
+      await applySession(sessOf(j), j.user, { name: j.name, via: via || undefined });
+    } catch (err) { $('ciGo').disabled = false; $('ciErr').textContent = socialError(err, 'tg'); }
+  };
+}
+document.addEventListener('click', e => { if (e.target.closest?.('[data-codein]')) codeIn(); });
 // Проверка по базе утёкших паролей HaveIBeenPwned (бесплатно, k-anonymity): уходят только первые 5 символов SHA-1,
 // сам пароль и его полный хеш никуда не отправляются. Нет связи — не мешаем сохранить пароль.
 async function pwLeaked(pw) {
@@ -205,6 +255,11 @@ function askDelete() {
       await delCall('request');
       if (via === 'tg') return tgLogin('delete');
       if (via === 'vk') return vkLogin('delete');
+      if (via === 'max') {  // MAX: новый вход по подписанным данным мини-приложения (как js/max-app.js)
+        const d = window.WebApp?.initData || window.MAX_INIT || '';
+        if (!d) { $('modal').hidden = true; return toast(L('Откройте игру в MAX, чтобы подтвердить удаление', 'Open the game in MAX to confirm the deletion')); }
+        return await socialDone(await fnPost('tg-login', { max_init: d }), 'max');
+      }
       delModal(`<h2 id="delTitle">${L('Проверьте почту', 'Check your email')}</h2>
         <p>${L(`Письмо отправлено на <b>${esc(prefs.email)}</b>. Это письмо со ссылкой для входа: откройте её — и игра попросит окончательно подтвердить удаление. Запрос действует сутки.`, `We emailed <b>${esc(prefs.email)}</b>. It’s a sign-in link: open it and the game will ask you to confirm the deletion. The request is valid for 24 hours.`)}</p>
         <button class="btn-ghost" type="button" id="delOk">${L('Понятно', 'Got it')}</button>`);

@@ -6,6 +6,10 @@
 // У аккаунта без почты служебный адрес tg<id>@tg.survivefriday.com / vk<id>@vk.survivefriday.com — писем на него не шлём.
 // MAX — мини-приложение бота MAX: initData (WebAppData) подписан токеном бота MAX_BOT_TOKEN тем же способом, что в Telegram (dev.max.ru/docs/webapps/validation).
 // action 'bot_id' — номер бота для кнопки входа (не секрет).
+// Вход в свой аккаунт кодом (одна игра — один аккаунт на всех площадках):
+//   action 'link_code' + access_token — выдать одноразовый код (8 символов, 10 минут) для входа в этот аккаунт на другом устройстве;
+//   code + подтверждение площадки (initData / tgAuth / vk / vk_launch / max_init) — эта площадка навсегда привязывается к аккаунту кода;
+//   code без площадки (сайт) — просто вход в аккаунт кода. Таблица link_codes (supabase/update-2026-11-03-cloud-save.sql).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, apikey, content-type', 'Access-Control-Allow-Methods': 'POST, OPTIONS' };
@@ -69,10 +73,55 @@ async function vkLaunchUser(v: any) {
   return id > 0 ? { id, first_name: String(v.name || '').replace(/[<>]/g, '').slice(0, 24) } : no('no_user');
 }
 
+const CODE_ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const newCode = () => [...crypto.getRandomValues(new Uint8Array(8))].map(x => CODE_ABC[x % CODE_ABC.length]).join('');
+// Обычная сессия Supabase для аккаунта uid (как после входа по ссылке из письма)
+async function sessionFor(db: any, url: string, opts: any, uid: string, name: string) {
+  const email = (await db.auth.admin.getUserById(uid)).data.user?.email || '';
+  if (!email) return json({ error: 'no_account' }, 404);
+  const gl = await db.auth.admin.generateLink({ type: 'magiclink', email });
+  if (gl.error) return json({ error: gl.error.message }, 500);
+  const auth = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, opts);
+  const { data: s, error } = await auth.auth.verifyOtp({ type: 'magiclink', token_hash: gl.data.properties.hashed_token });
+  if (error || !s.session) return json({ error: error?.message || 'no_session' }, 500);
+  return json({ access_token: s.session.access_token, refresh_token: s.session.refresh_token, expires_at: s.session.expires_at,
+    user: { id: s.user!.id, email: s.user!.email, created_at: s.user!.created_at }, name });
+}
+// Одноразовый код → аккаунт (или null). Использованный, просроченный (10 мин) или чужой код не подходит
+async function useCode(db: any, code: string): Promise<string | null> {
+  if (!/^[A-Z0-9]{8}$/.test(code)) return null;
+  const since = new Date(Date.now() - 600e3).toISOString();
+  const { data } = await db.from('link_codes').update({ used_at: new Date().toISOString() }).eq('code', code).is('used_at', null).gt('created_at', since).select('user_id');
+  return data?.[0]?.user_id || null;
+}
+
 Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
     const body = await req.json();
+    const url0 = Deno.env.get('SUPABASE_URL')!, opts0 = { auth: { persistSession: false, autoRefreshToken: false } };
+    // Код для входа на другом устройстве: только для того, кто уже вошёл
+    if (body.action === 'link_code') {
+      const db = createClient(url0, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, opts0);
+      const { data: { user: cur } } = await db.auth.getUser(String(body.access_token || ''));
+      if (!cur) return json({ error: 'bad_session' }, 401);
+      const { count } = await db.from('link_codes').select('code', { count: 'exact', head: true }).eq('user_id', cur.id).gt('created_at', new Date(Date.now() - 3600e3).toISOString());
+      if ((count || 0) >= 10) return json({ error: 'too_often' }, 429);
+      for (let i = 0; i < 5; i++) {
+        const code = newCode();
+        const { error } = await db.from('link_codes').insert({ code, user_id: cur.id });
+        if (!error) return json({ code, expires_in: 600 });
+      }
+      return json({ error: 'code_failed' }, 500);
+    }
+    const code = typeof body.code === 'string' ? body.code.toUpperCase().replace(/[^A-Z0-9]/g, '') : '';
+    const proof = (typeof body.max_init === 'string' && body.max_init) || body.vk_launch || body.vk || (typeof body.initData === 'string' && body.initData) || body.tgAuth;
+    if (code && !proof) {  // сайт: просто вход в аккаунт кода
+      const db = createClient(url0, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, opts0);
+      const target = await useCode(db, code);
+      if (!target) return json({ error: 'bad_code' }, 403);
+      return await sessionFor(db, url0, opts0, target, '');
+    }
     const vkl = !!body.vk_launch, vk = !!body.vk || vkl, max = typeof body.max_init === 'string' && !!body.max_init;
     const token = max ? (Deno.env.get('MAX_BOT_TOKEN') || '').trim() : Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
     if (!vk && !token) return json({ error: 'not_configured' }, 503);
@@ -85,6 +134,13 @@ Deno.serve(async req => {
     const db = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, opts);
     const { data: link } = await db.from(T.table).select('user_id').eq(T.key, u.id).maybeSingle();
     const extra = vk ? {} : { username: String((u as any).username || '').slice(0, 64) };  // логин Telegram — для выгрузки разработчику
+    if (code) {  // эта площадка теперь входит в аккаунт кода (прежний автоматический аккаунт площадки остаётся пустым)
+      const target = await useCode(db, code);
+      if (!target) return json({ error: 'bad_code' }, 403);
+      const { error } = await db.from(T.table).upsert({ [T.key]: u.id, user_id: target, name, ...extra });
+      if (error) return json({ error: 'already_linked' }, 409);  // к аккаунту кода уже привязан другой профиль этой площадки
+      return await sessionFor(db, url, opts, target, name);
+    }
     if (link && !vk) await db.from(T.table).update({ name, ...extra }).eq(T.key, u.id);
 
     if (body.access_token) {  // привязать к аккаунту, под которым уже вошли
