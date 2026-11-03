@@ -298,7 +298,7 @@ function whatsNew() {
   prefs.whatsNew = WHATS_NEW.v; store.set(KEY.prefs, prefs);
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="wnTitle"><span class="lvl-ico" aria-hidden="true">🆕</span>
-    <h2 id="wnTitle">${L('Что нового', 'What’s new')}</h2><ul class="lw-list">${WHATS_NEW.items.map(x => `<li>${x}</li>`).join('')}</ul>
+    <h2 id="wnTitle">${L('Что нового', 'What’s new')}</h2><ul class="lw-list">${WHATS_NEW.items.filter(x => !(window.VK_MINI && /^🔒/.test(x))).map(x => `<li>${x}</li>`).join('')}</ul>
     <button class="btn-main" type="button" id="wnOk">${L('Играть', 'Play')}</button></div>`;
   m.hidden = false; $('wnOk').onclick = () => { m.hidden = true; };
 }

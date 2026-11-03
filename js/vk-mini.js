@@ -51,6 +51,12 @@
   // Плашка «Вместе веселее» на сайте зовёт рассказать «в Telegram или VK» — в приложении ВК только про ВК
   const vs = document.querySelector('#viralPop span');
   if (vs) vs.textContent = L('Позовите коллег в игру: за каждого, кто придёт по вашей ссылке, — +15 у.е. и +1 предмет на неделю.', 'Invite coworkers: every newcomer via your link — +$15 and +1 item for the week.');
+  // Меню: кнопки «Играть», «Неделя дня», «Быстрая смена» — сразу под заголовком, над карточкой персонажа:
+  // в окне ВК на компьютере карточка занимала весь первый экран, и меню не было видно (правила VK Mini Apps 4.2.10)
+  try {
+    const hero = document.getElementById('heroCard'), play = document.querySelector('#menu .play2'), quick = document.getElementById('startQuick');
+    if (hero && play) { hero.before(play); if (quick) play.after(quick); document.documentElement.classList.add('vk-play-top'); }
+  } catch {}
   vkBridge('VKWebAppInit');
   vkBridge('VKWebAppSetViewSettings', { status_bar_style: 'light', action_bar_color: '#07070d', navigation_bar_color: '#07070d' });
   // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию
