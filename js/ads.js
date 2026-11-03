@@ -11,7 +11,25 @@ const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().bloc
 let adOff = '';
 // Яндекс Игры: реклама только через SDK площадки (js/platform-yandex.js); на сайте — РСЯ; в ВК и других каталогах — без рекламы
 const adSdk = () => window.VDP_PLATFORM?.sdk?.adv || null;
-const adOn = () => !adOff && (window.VDP_PLATFORM ? !!adSdk() : !!adBlock().id && !window.VK_MINI);  // нет блока для этого устройства — нет и кнопки
+// ВКонтакте: только реклама ВК за награду (VKWebAppShowNativeAds, format reward) — по нажатию игрока; РСЯ и обязательная реклама там запрещены
+// (правила VK Mini Apps 5.1.2, 5.1.5). Показы включаются, когда владелец принял рекламную оферту в настройках приложения ВК.
+const adOn = () => !adOff && (window.VK_MINI ? !!window.vkBridge : window.VDP_PLATFORM ? !!adSdk() : !!adBlock().id);  // нет блока для этого устройства — нет и кнопки
+async function adWatchVk(done, opts) {
+  if (opts.forced) return done?.(false);  // в ВК без обязательной рекламы
+  track('ad_open', { detail: 'vk_rew' });
+  vdpPause(true);
+  const r = await vkBridge('VKWebAppShowNativeAds', { ad_format: 'reward' }, 90000);
+  vdpPause(false);
+  const ok = r?.result === true;
+  if (ok) adGive(opts, 'vk_rew');
+  else {
+    const why = r?.error_data?.error_reason || r?.error_data?.error_code || (r ? 'no_ad' : 'timeout');
+    if (/not ?supported|unsupported/i.test(String(why))) adOff = String(why);
+    track('ad_fail', { detail: `vk_rew:${why}`.slice(0, 60) });
+    toast(L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
+  }
+  done?.(ok);
+}
 const adLeft = () => Math.max(0, (prefs.adAt || 0) + AD_COOLDOWN - Date.now());  // сколько ждать до следующего ролика
 const adMins = () => Math.ceil(adLeft() / 60000);
 // Загрузчик РСЯ стоит в <head> (async, как требует Яндекс); если его не было или он не загрузился — подгружаем здесь
@@ -71,6 +89,7 @@ function adWatchSdk(adv, done, opts) {
 function adWatch(done, opts = {}) {
   if (!adOn()) return done?.(false);
   if (!opts.forced && adLeft()) { toast(L(`Следующий ролик за награду — через ${adMins()} мин.`, `Next rewarded video in ${adMins()} min`)); return done?.(false); }
+  if (window.VK_MINI) return adWatchVk(done, opts);
   if (adSdk()) return adWatchSdk(adSdk(), done, opts);
   const c = adBlock(), t0 = Date.now(); let settled = false;
   // why — причина отказа (пишем в статистику: по ней видно, нет ли показов, не заблокирован ли скрипт, не закрыт ли ролик сразу)
@@ -255,12 +274,12 @@ document.addEventListener('click', e => {
 // не тем, кто покупал у.е. картой (prefs.paidUser), и не тем, кто сам смотрел рекламу за награду в последние 30 минут
 const AD_FORCED_WEEKS = 3, AD_FORCED_GAP = 30 * 60 * 1000;
 bus.on('weekEnd', x => { if (x.mode === 'career') { prefs.adWeeks = (prefs.adWeeks || 0) + 1; store.set(KEY.prefs, prefs); } });
-const adForcedDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
+const adForcedDue = () => !window.VK_MINI && adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
   && Date.now() - (prefs.adForcedAt || 0) > AD_FORCED_GAP && Date.now() - (prefs.adAt || 0) > AD_FORCED_GAP;
 // Без карьеры (обычная игра, быстрая смена, неделя дня): реклама перед каждой следующей неделей с экрана итогов.
 // Только чтобы не подряд: не раньше чем через 2 минуты после прошлого ролика.
 const AD_EACH_GAP = 2 * 60 * 1000;
-const adEachDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4
+const adEachDue = () => !window.VK_MINI && adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4
   && Date.now() - (prefs.adForcedAt || 0) > AD_EACH_GAP && Date.now() - (prefs.adAt || 0) > AD_EACH_GAP;
 function adForced(go, each = false) {
   if (views.end.hidden || !(each ? adEachDue() : adForcedDue())) return go();

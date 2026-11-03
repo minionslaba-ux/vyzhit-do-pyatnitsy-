@@ -134,6 +134,8 @@ function renderWelcome() {
   joinPanel('welcome');
 }
 function renderJoin(mode, lead) {
+  // Мини-приложение ВК: без форм почты и пароля (правила VK Mini Apps 4.2.3) — вход по подписанным параметрам запуска
+  if (window.VK_MINI && (mode === 'login' || mode === 'register') && typeof vkLogin === 'function' && board.online) { toast(L('Входим через ВКонтакте…', 'Signing in with VK…')); return vkLogin(); }
   joinMode = mode;
   const reg = mode === 'register', login = mode === 'login', edit = mode === 'edit';
   $('joinTitle').textContent = (EN ? { register: 'Sign up', login: 'Sign in', guest: 'Guest pass', edit: 'Office badge', profile: 'Your profile' } : { register: 'Регистрация', login: 'Вход', guest: 'Пропуск гостя', edit: 'Пропуск в офис', profile: 'Ваш профиль' })[mode];
