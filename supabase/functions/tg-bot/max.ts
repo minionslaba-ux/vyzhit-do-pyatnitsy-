@@ -18,14 +18,18 @@ export async function maxApi(path: string, init: RequestInit = {}): Promise<any>
   return last || { error: 'unknown' };
 }
 // Отправить пост во все включённые каналы MAX. Возвращает краткий итог для лога.
-export async function maxBroadcast(db: any, text: string, url = 'https://survivefriday.com/?utm_source=max'): Promise<string> {
+// daily = ежедневный пост: каналы, куда сегодня (по Москве) уже был пост, пропускаем — повторный вызов не задвоит
+export async function maxBroadcast(db: any, text: string, url = 'https://survivefriday.com/?utm_source=max', daily = false): Promise<string> {
   if (!(Deno.env.get('MAX_BOT_TOKEN') || '').trim()) return 'max: off';
-  const { data: chats } = await db.from('max_chats').select('chat_id').eq('enabled', true).eq('is_channel', true).limit(10);
-  if (!chats?.length) return 'max: no channels (/maxsetup)';
+  const { data: all } = await db.from('max_chats').select('chat_id, last_post').eq('enabled', true).eq('is_channel', true).limit(10);
+  const mskDate = (t: number) => new Date(t + 3 * 3600e3).toISOString().slice(0, 10);
+  const chats = (all || []).filter((c: any) => !daily || !c.last_post || mskDate(Date.parse(c.last_post)) < mskDate(Date.now()));
+  if (!all?.length) return 'max: no channels (/maxsetup)';
+  if (!chats.length) return 'max: already';
   const out: string[] = [];
   for (const c of chats) {
     const r = await maxSend(c.chat_id, text, url);
-    if (r?.error) out.push(`${c.chat_id}: ${r.error}`); else { out.push(`${c.chat_id}: ok`); await db.from('max_chats').update({ last_post: new Date().toISOString() }).eq('chat_id', c.chat_id); }
+    if (r?.error) out.push(`${c.chat_id}: ${r.error}`); else { out.push(`${c.chat_id}: ok`); if (daily) await db.from('max_chats').update({ last_post: new Date().toISOString() }).eq('chat_id', c.chat_id); }
   }
   return 'max: ' + out.join(', ');
 }

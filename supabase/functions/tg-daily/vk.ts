@@ -5,7 +5,6 @@
 // Нет секретов — ничего не делает. Второй пост в тот же день не уходит (таблица vk_posts, ключ — дата по Москве).
 // Чередование по дням: совет Миры → разминка дня → ситуация «Что бы вы выбрали?» из карточек игры.
 import { mskDay } from './report.ts';
-import { maxBroadcast } from './max.ts';
 const SITE = 'https://survivefriday.com/';
 const POOLS = ['pool_l1a', 'pool_l1b', 'pool_l1c', 'pool_l1d', 'pool_l2a', 'pool_l3a'];
 const getJson = (f: string) => fetch(SITE + f).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -70,8 +69,7 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
     const q = await vkQueuePost(db, gid, token, test);
     if (q && !q.error) {
       if (!test && q.post_id) await db.from('vk_posts').update({ post_id: q.post_id }).eq('day', mskDate);
-      const m = test ? '' : await maxBroadcast(db, q.text).catch(e => `max: ${e}`);  // тот же анонс — в канал MAX
-      return `${q.result}${m ? '; ' + m : ''}`;
+      return q.result;
     }  // ошибка — выйдет обычный пост
   }
   const link = (q = '') => `${SITE}?utm_source=vk${q}`;
@@ -100,8 +98,7 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   const note = pic && !log.length ? ' +pic' : log.length ? ` (${log.join('; ')})` : '';
   if (r.error) { if (!test) await db.from('vk_posts').delete().eq('day', mskDate); return `error: ${r.error.error_msg || r.error.error_code}${note}`; }  // попробуем при следующем вызове
   if (!test) await db.from('vk_posts').update({ post_id: r.response?.post_id ?? null }).eq('day', mskDate);
-  const m = test ? '' : await maxBroadcast(db, `${message}\n\n${url.replace('utm_source=vk', 'utm_source=max')}`, url.replace('utm_source=vk', 'utm_source=max')).catch(e => `max: ${e}`);
-  return `posted ${r.response?.post_id}${note}${m ? '; ' + m : ''}`;
+  return `posted ${r.response?.post_id}${note}`;
 }
 
 // Опубликовать первый пост из очереди vk_queue. null — очередь пуста; { result } — что получилось

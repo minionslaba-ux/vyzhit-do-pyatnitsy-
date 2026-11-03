@@ -8,6 +8,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
 import { vkAlbum, vkDaily } from './vk.ts';
+import { maxBroadcast } from './max.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -204,6 +205,19 @@ Deno.serve(async req => {
       await pause();
     }
   }
+  // канал MAX — как группы Telegram: «позвать играть» по дню недели + итоги вчерашней недели дня + разминка дня (только по-русски)
+  let max = '';
+  {
+    const yday = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+    const { count } = await db.from('daily_leaderboard').select('tag', { count: 'exact', head: true }).eq('day', yday);
+    const { data: top } = await db.from('daily_leaderboard').select('name, won, step, total').eq('day', yday)
+      .order('won', { ascending: false }).order('step', { ascending: false }).order('total', { ascending: false }).order('created_at', { ascending: true }).limit(1);
+    const best = top?.[0];
+    const recap = !count || !best ? '' : `\n\nВчера сыграли: ${count}. Лучший — ${best.name}: ${best.won ? `дожил(а) до пятницы, ${best.total} очков` : `${best.step} из 25 решений`}.`;
+    const week = Math.floor((day + 3) / 7);
+    const text = groupText({ recruit: null, play: await getJson('play_ru.json') }, false, false, dow, day, week) + recap + brkLine(false);
+    max = await maxBroadcast(db, text, 'https://survivefriday.com/?utm_source=max', true).catch(e => `max: ${e}`);
+  }
   // группа ВКонтакте (если заданы секреты VK_GROUP_TOKEN и VK_GROUP_ID)
   const vk = await vkDaily(db, msk.toISOString().slice(0, 10), brk).catch(e => `error: ${e}`);
   // отчёт разработчику за вчера (по Москве), со сравнением с позавчера
@@ -217,5 +231,5 @@ Deno.serve(async req => {
       await pause();
     }
   }
-  return new Response(JSON.stringify({ sent, groups, reports, vk }), { headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ sent, groups, reports, vk, max }), { headers: { 'Content-Type': 'application/json' } });
 });
