@@ -211,6 +211,7 @@ window.__errFlush();
 (() => {
   if (window.CSS?.supports?.('selector(:has(a))')) return;  // :has() понимается — ничего не нужно
   const H = document.documentElement;
+  H.classList.add('nohas');  // правила-двойники с «не …» (html.nohas:not(.v-menu)) — только здесь, иначе в новых браузерах прятали кнопку профиля
   const vis = el => !!el && !el.hidden;
   let raf = 0;
   const sync = () => {

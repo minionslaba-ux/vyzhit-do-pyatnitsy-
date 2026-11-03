@@ -1157,7 +1157,7 @@ a.btn-link { display: block; text-align: center; }
 .me-badge .mb-caret { font-size: 11px; opacity: .7; }
 .me-badge.guest { border-color: rgba(var(--m-rgb),.6); box-shadow: 0 0 16px rgba(var(--m-rgb),.3); }
 body:has(#menu[hidden]) .me-top { display: none; }
-/* без :has */ html:not(.v-menu) body .me-top { display: none; }
+/* без :has */ html.nohas:not(.v-menu) body .me-top { display: none; }
 .prof-sheet { position: fixed; inset: 0; z-index: 28; background: rgba(var(--bg-rgb),.55); backdrop-filter: blur(3px); display: flex; justify-content: flex-end; align-items: flex-start;
   padding: calc(8px + env(safe-area-inset-top, 0px)) 8px 8px; }
 .prof-sheet[hidden] { display: none; }
@@ -2172,13 +2172,13 @@ html.light .rnd-tag.ret-mtag { color: #8a5a00; }
 /* Прокрутка всей страницей в обычном браузере (класс docscroll ставит js/i18n.js) — для всех экранов, кроме недели игры.
    Неделя игры остаётся «один экран без прокрутки», как раньше. */
 html.docscroll:has(#game[hidden]), html.docscroll:has(#game[hidden]) body { height: auto; min-height: var(--app-h, 100dvh); }
-/* без :has */ html.docscroll:not(.v-game), html.docscroll:not(.v-game) body { height: auto; min-height: var(--app-h, 100dvh); }
+/* без :has */ html.nohas.docscroll:not(.v-game), html.nohas.docscroll:not(.v-game) body { height: auto; min-height: var(--app-h, 100dvh); }
 html.docscroll:has(#game[hidden]) body { overflow-x: hidden; overflow-y: visible; }
-/* без :has */ html.docscroll:not(.v-game) body { overflow-x: hidden; overflow-y: visible; }
+/* без :has */ html.nohas.docscroll:not(.v-game) body { overflow-x: hidden; overflow-y: visible; }
 html.docscroll:has(#game[hidden]) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
-/* без :has */ html.docscroll:not(.v-game) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
+/* без :has */ html.nohas.docscroll:not(.v-game) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
 html.docscroll:has(#game[hidden]) .view.menu, html.docscroll:has(#game[hidden]) .view.join, html.docscroll:has(#game[hidden]) .view.end { flex: none; overflow: visible; }
-/* без :has */ html.docscroll:not(.v-game) .view.menu, html.docscroll:not(.v-game) .view.join, html.docscroll:not(.v-game) .view.end { flex: none; overflow: visible; }
+/* без :has */ html.nohas.docscroll:not(.v-game) .view.menu, html.nohas.docscroll:not(.v-game) .view.join, html.nohas.docscroll:not(.v-game) .view.end { flex: none; overflow: visible; }
 
 /* Мобильные браузеры (Яндекс Браузер, Chrome на Android): не раздувать шрифты самостоятельно — иначе блоки вылезают за экран */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }

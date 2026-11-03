@@ -5,10 +5,10 @@
 Повторный запуск ничего не дублирует. --check — только проверить (код 1, если есть :has без двойника)."""
 import re, sys
 MAP = [  # что заменить → на что (порядок важен: длинные раньше)
-    ('html.docscroll:has(#game[hidden])', 'html.docscroll:not(.v-game)'),
+    ('html.docscroll:has(#game[hidden])', 'html.nohas.docscroll:not(.v-game)'),  # «не» — только там, где скрипт ставит классы (html.nohas), иначе правило срабатывает везде
     ('body:has(#game:not([hidden]))', 'html.v-game body'),
     ('body:has(#menu:not([hidden]))', 'html.v-menu body'),
-    ('body:has(#menu[hidden])', 'html:not(.v-menu) body'),
+    ('body:has(#menu[hidden])', 'html.nohas:not(.v-menu) body'),
     ('body:has(#profSheet:not([hidden]))', 'html.m-prof body'),
     ('body:has(#modal:not([hidden]))', 'html.m-modal body'),
     ('.app:has(#game:not([hidden]))', 'html.v-game .app'),
