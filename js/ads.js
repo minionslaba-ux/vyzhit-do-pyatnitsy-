@@ -18,7 +18,7 @@ async function adWatchVk(done, opts) {
   if (opts.forced) return done?.(false);  // в ВК без обязательной рекламы
   track('ad_open', { detail: 'vk_rew' });
   vdpPause(true);
-  const r = await vkBridge('VKWebAppShowNativeAds', { ad_format: 'reward' }, 90000);
+  const r = await vkBridge('VKWebAppShowNativeAds', { ad_format: 'reward' }, 180000)  // ролик + время до крестика: 90 с не хватало (03.11);
   vdpPause(false);
   const ok = r?.result === true;
   if (ok) adGive(opts, 'vk_rew');
