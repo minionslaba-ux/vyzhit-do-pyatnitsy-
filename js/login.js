@@ -140,12 +140,20 @@ function renderAcctBox() {
   box.hidden = !reg || !!window.VDP_PLATFORM; if (box.hidden) return;
   const btns = [];
   if (!socialVia()) btns.push(`<button class="btn-ghost" type="button" data-a="pass">🔑 ${prefs.hasPass ? L('Сменить пароль', 'Change password') : L('Задать пароль для входа', 'Set a sign-in password')}</button>`);
-  if (!hasTg()) btns.push(`<button class="btn-ghost" type="button" data-a="tg">✈️ ${L('Привязать Telegram', 'Link Telegram')}</button>`);
-  if (VK_APP && !(socialVia() === 'vk' || prefs.vkLinked)) btns.push(`<button class="btn-ghost" type="button" data-a="vk">VK ${L('Привязать VK', 'Link VK')}</button>`);
-  if (!window.VK_MINI) btns.push(`<button class="btn-ghost" type="button" data-a="codeout">📲 ${L('Войти в этот аккаунт на другом устройстве', 'Sign in to this account on another device')}</button>`);
-  btns.push(`<button class="btn-ghost" type="button" data-codein>🔑 ${L('У меня есть другой аккаунт — войти по коду', 'I have another account — sign in with a code')}</button>`);
+  // «Привязать Telegram / VK» — только в английской версии; в русской их заменяют «Продолжить в …» ниже (привязка + переход в одно нажатие)
+  if (EN && !hasTg()) btns.push(`<button class="btn-ghost" type="button" data-a="tg">✈️ ${L('Привязать Telegram', 'Link Telegram')}</button>`);
+  if (EN && VK_APP && !(socialVia() === 'vk' || prefs.vkLinked)) btns.push(`<button class="btn-ghost" type="button" data-a="vk">VK ${L('Привязать VK', 'Link VK')}</button>`);
+  // Продолжить в другом мессенджере с этим же аккаунтом — одно нажатие: код зашит в ссылку, там вход сам (во ВКонтакте не зовём наружу — правила 4.1.8)
+  if (!window.VK_MINI && !EN) {
+    const go = [];
+    if (!TG) go.push(['tg', '✈️', 'Telegram']);
+    if (!window.MAX_APP) go.push(['max', '💬', 'MAX']);
+    go.push(['vk', '🟦', L('ВКонтакте', 'VK')]);
+    for (const [k, ico, n] of go) btns.push(`<button class="btn-ghost" type="button" data-a="go-${k}">${ico} ${L(`Продолжить в ${n}`, `Continue in ${n}`)}</button>`);
+  }
+  btns.push(`<span class="acct-links">${window.VK_MINI ? '' : `<button class="btn-link" type="button" data-a="codeout">${L('Код для другого устройства', 'Code for another device')}</button>`}<button class="btn-link" type="button" data-codein>${L('Уже играли в другом месте? Войти по коду', 'Played somewhere else? Sign in with a code')}</button></span>`);
   box.innerHTML = btns.join(''); box.hidden = !btns.length;
-  box.onclick = e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a === 'pass') passModal(); if (a === 'tg') tgLogin(); if (a === 'vk') vkLogin(); if (a === 'codeout') codeOut(); };
+  box.onclick = e => { const a = e.target.closest('[data-a]')?.dataset.a; if (a === 'pass') passModal(); if (a === 'tg') tgLogin(); if (a === 'vk') vkLogin(); if (a === 'codeout') codeOut(); if (a?.startsWith('go-')) continueIn(a.slice(3)); };
 }
 // ---------- один аккаунт на всех площадках: вход кодом (сервер tg-login: action link_code / code) ----------
 // Код живёт 10 минут и действует один раз. На площадке, где его ввели (Telegram, ВК, MAX), вход дальше — автоматически в этот аккаунт;
@@ -180,17 +188,59 @@ function codeIn() {
     if (code.length !== 8) { $('ciErr').textContent = L('В коде 8 символов', 'The code has 8 characters'); return; }
     $('ciGo').disabled = true;
     try {
-      let proof = {}, via = '';
-      if (TG?.initData) { proof = { initData: TG.initData }; via = 'tg'; }
-      else if (window.VK_MINI) { const info = await vkBridge('VKWebAppGetUserInfo'); proof = { vk_launch: { params: location.search, name: [info?.first_name, info?.last_name].filter(Boolean).join(' ') } }; via = 'vk'; }
-      else if (window.MAX_APP && (window.WebApp?.initData || window.MAX_INIT)) { proof = { max_init: window.WebApp?.initData || window.MAX_INIT }; via = 'max'; }
-      const j = await fnPost('tg-login', { ...proof, code });
-      track('code_in', { detail: via || 'site' });
-      delete prefs.cloudAt;  // прогресс — из облака нового аккаунта (js/cloud.js сравнит и при необходимости спросит)
-      await applySession(sessOf(j), j.user, { name: j.name, via: via || undefined });
+      await codeLogin(code, 'typed');
     } catch (err) { $('ciGo').disabled = false; $('ciErr').textContent = socialError(err, 'tg'); }
   };
 }
+// Вход кодом с подтверждением площадки, где игра открыта сейчас (эта площадка привязывается к аккаунту кода)
+async function codeLogin(code, how) {
+  let proof = {}, via = '';
+  if (TG?.initData) { proof = { initData: TG.initData }; via = 'tg'; }
+  else if (window.VK_MINI) { const info = await vkBridge('VKWebAppGetUserInfo'); proof = { vk_launch: { params: location.search, name: [info?.first_name, info?.last_name].filter(Boolean).join(' ') } }; via = 'vk'; }
+  else if (window.MAX_APP && (window.WebApp?.initData || window.MAX_INIT)) { proof = { max_init: window.WebApp?.initData || window.MAX_INIT }; via = 'max'; }
+  const j = await fnPost('tg-login', { ...proof, code });
+  track('code_in', { detail: `${via || 'site'}:${how}` });
+  delete prefs.cloudAt;  // прогресс — из облака аккаунта (js/cloud.js сравнит и при необходимости спросит)
+  await applySession(sessOf(j), j.user, { name: j.name, via: via || undefined });
+}
+// «Продолжить в …»: код на 10 минут → ссылка, которая открывает игру там и сразу входит в этот аккаунт
+const GO_LINK = { tg: c => `https://t.me/Survivefridaybot?startapp=code-${c}`, max: c => `https://max.ru/se14877440_bot?startapp=code-${c}`, vk: c => `https://vk.com/app54871699#code-${c}` };
+async function continueIn(where) {
+  try {
+    const j = await fnPost('tg-login', { action: 'link_code', access_token: await board.accessToken() });
+    const url = GO_LINK[where](j.code);
+    track('code_go', { detail: where });
+    toast(L('Открываем игру — вход в ваш аккаунт произойдёт сам', 'Opening the game — you’ll be signed in automatically'));
+    setTimeout(() => {
+      if (TG?.openTelegramLink && where === 'tg') TG.openTelegramLink(url);
+      else if (TG?.openLink) TG.openLink(url);
+      else if (window.MAX_APP && window.WebApp?.openLink) window.WebApp.openLink(url);
+      else window.open(url, '_blank', 'noopener') || (location.href = url);
+    }, 600);
+  } catch (err) { toast(socialError(err, 'tg')); }
+}
+// Код в ссылке запуска (startapp=code-…, #code-…, ?code=…) — войти автоматически, один раз
+function startCode() {
+  try {
+    const sp = TG?.initDataUnsafe?.start_param || window.WebApp?.initDataUnsafe?.start_param
+      || new URLSearchParams(window.WebApp?.initData || window.MAX_INIT || '').get('start_param') || '';
+    const m = (sp + ' ' + location.hash + ' ' + location.search).match(/code[-=]([A-Z0-9]{8})/i);
+    return m ? m[1].toUpperCase() : '';
+  } catch { return ''; }
+}
+window.vdpStartCode = startCode;
+dataReady.then(() => setTimeout(async () => {
+  const c = startCode(); if (!c || !board.online) return;
+  try { if (sessionStorage.getItem('vdp-code-used') === c) return; sessionStorage.setItem('vdp-code-used', c); } catch {}
+  toast(L('🔑 Входим в ваш аккаунт…', '🔑 Signing you in…'));
+  try { await codeLogin(c, 'link'); } catch (err) { toast(socialError(err, 'tg')); }
+}, 1300));
+// Новичкам в мессенджерах — одна строка под кнопками игры: «Уже играли в другом месте?»
+bus.on('menu', () => {
+  const p = document.querySelector('#menu .play2'); if (!p || document.getElementById('codeHint')) return;
+  if (!(TG || window.VK_MINI || window.MAX_APP) || (prefs.gamesPlayed || 0) >= 3 || EN || !board.online) return;
+  p.insertAdjacentHTML('afterend', `<button class="btn-link btn-codein" id="codeHint" type="button" data-codein>🔑 ${L('Уже играли в другом месте? Войти по коду', 'Played somewhere else? Sign in with a code')}</button>`);
+});
 document.addEventListener('click', e => { if (e.target.closest?.('[data-codein]')) codeIn(); });
 // Проверка по базе утёкших паролей HaveIBeenPwned (бесплатно, k-anonymity): уходят только первые 5 символов SHA-1,
 // сам пароль и его полный хеш никуда не отправляются. Нет связи — не мешаем сохранить пароль.

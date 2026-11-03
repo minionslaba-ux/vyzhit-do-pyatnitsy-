@@ -2521,3 +2521,5 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
 .code-big { font-family: var(--f-mono, monospace); font-size: 34px; font-weight: 800; letter-spacing: .12em; text-align: center; margin: 8px 0; color: var(--cyan-xl, #8ff); user-select: all; }
 .code-in { width: 100%; box-sizing: border-box; text-align: center; font-family: var(--f-mono, monospace); font-size: 24px; letter-spacing: .15em; text-transform: uppercase; padding: 12px; border-radius: 14px; }
 .btn-codein { display: block; margin: 6px auto 2px; font-size: 13px; }
+.acct-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin-top: 4px; }
+.acct-links .btn-link { font-size: 12px; }

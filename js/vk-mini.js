@@ -62,7 +62,7 @@
   // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию
   // того же аккаунта, что «Войти через VK ID» на сайте. Один раз за запуск; не вышло — играем гостем, как раньше.
   const autoLogin = async () => {
-    if (!q.get('sign') || typeof registered !== 'function' || registered() || !board.online) return;
+    if (!q.get('sign') || typeof registered !== 'function' || registered() || !board.online || window.vdpStartCode?.()) return;  // код в ссылке — вход им (js/login.js)
     try { if (sessionStorage.getItem('vdp-vk-login') === q.get('sign')) return; sessionStorage.setItem('vdp-vk-login', q.get('sign')); } catch {}  // раз на каждый запуск
     const info = await vkBridge('VKWebAppGetUserInfo');
     const name = [info?.first_name, info?.last_name].filter(Boolean).join(' ');

@@ -7,7 +7,7 @@
   const user = () => { try { return window.WebApp?.initDataUnsafe?.user || JSON.parse(new URLSearchParams(initData()).get('user') || 'null'); } catch { return null; } };
   const autoLogin = async () => {
     const d = initData();
-    if (!d || typeof registered !== 'function' || registered() || !board.online) return;
+    if (!d || typeof registered !== 'function' || registered() || !board.online || window.vdpStartCode?.()) return;  // код в ссылке — вход им (js/login.js)
     const mark = d.slice(-24);
     try { if (sessionStorage.getItem('vdp-max-login') === mark) return; sessionStorage.setItem('vdp-max-login', mark); } catch {}
     try { const j = await fnPost('tg-login', { max_init: d }); if (j?.access_token) await socialDone(j, 'max'); }
