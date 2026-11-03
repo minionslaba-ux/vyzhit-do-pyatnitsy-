@@ -342,7 +342,9 @@ function addCash(n) {  // на счёт карьеры; нет карьеры �
 }
 // «Мы во ВКонтакте» — если в js/config.js указан адрес группы
 // Канал игры в MAX: только по-русски и не в приложении ВК (правила ВК); внутри MAX — тоже показываем
-document.addEventListener('click', e => { if (e.target.closest?.('#maxChannel')) track('max_channel'); });
+document.addEventListener('click', e => { if (e.target.closest?.('#maxChannel')) track('max_channel'); if (e.target.closest?.('#maxPlay')) track('max_play'); });
+// «Играть в MAX» — только на сайте: не внутри Telegram, ВК и самого MAX (там своя игра)
+bus.on('menu', () => { const b = $('maxPlay'); if (b) b.hidden = !!(TG || window.VK_MINI || window.MAX_APP || window.VDP_PLATFORM); });
 function vkGroup() {
   const b = $('vkGroup'), g = window.SUPABASE_CONFIG?.vk?.group; if (!b || !g) return;
   b.href = `https://vk.ru/${g}`; b.hidden = false;

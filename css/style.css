@@ -2500,3 +2500,4 @@ html.max-app #tgRemind, html.max-app #vkGroup, html.max-app .vk-invite, html.max
 
 /* Канал игры в MAX — кнопка в меню (index.html #maxChannel) */
 html.vk-mini #maxChannel, html[lang="en"] #maxChannel { display: none !important; }
+html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display: none !important; }
