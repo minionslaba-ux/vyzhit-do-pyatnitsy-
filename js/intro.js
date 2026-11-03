@@ -40,6 +40,7 @@ function showIntro(done) {
   const render = () => {
     const s = INTRO[i], last = i === INTRO.length - 1;
     el.innerHTML = `<div class="intro-box glass" role="dialog" aria-modal="true" aria-labelledby="inTitle">
+      <span class="age-badge" title="${L('Возрастное ограничение', 'Age rating')}" aria-label="${L('Возрастное ограничение 12+', 'Age rating 12+')}">12+</span>
       <button class="intro-skip" type="button" id="inSkip">${last ? '' : L('Пропустить', 'Skip')}</button>
       <div class="intro-art" aria-hidden="true">${s.art()}</div>
       <span class="intro-step">${i + 1} ${L('из', 'of')} ${INTRO.length}</span>

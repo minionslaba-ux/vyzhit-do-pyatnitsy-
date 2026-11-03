@@ -2515,3 +2515,5 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
 .maxp-box .maxp-logo { width: 64px !important; height: 64px !important; max-width: none; object-fit: contain; }
 .btn-max img, .btn-maxlogin img { width: 22px !important; height: 22px !important; max-width: none; margin: 0; object-fit: contain; }
 .maxp-box .btn-max { display: flex; width: 100%; box-sizing: border-box; white-space: nowrap; font-size: 15px; padding: 14px 12px; }
+/* Возрастное ограничение на первом экране (правила VK Mini Apps 2.1.5), js/intro.js */
+.age-badge { position: absolute; top: 14px; left: 16px; padding: 2px 7px; border: 1.5px solid currentColor; border-radius: 6px; font-size: 12px; font-weight: 800; opacity: .75; line-height: 1.3; }
