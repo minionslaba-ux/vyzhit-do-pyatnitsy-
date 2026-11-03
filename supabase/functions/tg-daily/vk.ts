@@ -72,16 +72,15 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
       return q.result;
     }  // ошибка — выйдет обычный пост
   }
-  const link = (q = '') => `${SITE}?utm_source=vk${q}`;
-  let message = '', url = link();
+  let message = '', url = vkAppLink();
   if (kind === 0) {
     const tips = (await getJson(`data/psy/tips_${1 + Math.floor(Math.random() * 6)}.json`)) || (await getJson('data/tips.json'))?.tips || [];
     const t = pick((tips as any[]).filter(x => x.cat !== 'keep'));
     message = t ? `🛋️ Совет Миры, психолога офиса\n\n${t.ru}\n\nБольше советов и тест самопроверки — в кабинете Миры в игре 👇\n\n🤖 Мира — персонаж игры. Её советы не заменяют специалиста.` : '';
-    url = link('&psy=1');
+    url = vkAppLink('psy');
   } else if (kind === 1) {
     message = `☕ Разминка дня: ${brk[1]} ${brk[2]}\n\nМинута, чтобы переключиться между задачами. Без регистрации, прямо в браузере 👇`;
-    url = link(`&brk=${brk[0]}`);
+    url = vkAppLink(`brk-${brk[0]}`);
   }
   if (kind === 3) message = await weekRecap(db).catch(() => '');
   if (!message) {
@@ -101,6 +100,14 @@ export async function vkDaily(db: any, mskDate: string, brk: [number, string, st
   return `posted ${r.response?.post_id}${note}`;
 }
 
+// Ссылки в группе ВК — только в мини-приложение (правила VK Mini Apps 4.1.8: не уводить аудиторию игры из ВК).
+// Раздел — после # (игра читает brk-N и psy, js/app.js); ссылки на сайт в тексте очереди переписываем так же.
+export const VK_APP = 'https://vk.com/app54871699';
+export const vkAppLink = (hash = '') => VK_APP + (hash ? '#' + hash : '');
+export const vkLinks = (text: string) => text.replace(/https?:\/\/(?:www\.)?survivefriday\.com\/?[^\s]*/g, m => {
+  const b = m.match(/[?&]brk=(\d{1,2})/), p = /[?&]psy=1/.test(m);
+  return vkAppLink(b ? `brk-${b[1]}` : p ? 'psy' : '');
+});
 // Опубликовать первый пост из очереди vk_queue. null — очередь пуста; { result } — что получилось
 export async function vkQueuePost(db: any, gid: string, token: string, test = false, id?: number): Promise<{ result: string; post_id?: number; error?: boolean } | null> {
   let qb = db.from('vk_queue').select('id, text, photo').is('posted_at', null).order('id', { ascending: true }).limit(1);
@@ -108,8 +115,9 @@ export async function vkQueuePost(db: any, gid: string, token: string, test = fa
   const { data } = await qb;
   const q = data?.[0]; if (!q) return null;
   if (test) return { result: `queue #${q.id} (test, not posted)` };
-  let r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: q.text, ...(q.photo ? { attachments: q.photo } : {}) }, token);
-  if (r.error && q.photo) r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: q.text }, token);
+  const text = vkLinks(q.text);
+  let r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: text, ...(q.photo ? { attachments: q.photo } : {}) }, token);
+  if (r.error && q.photo) r = await vkApi('wall.post', { owner_id: `-${gid}`, from_group: '1', message: text }, token);
   if (r.error) return { result: `error: ${r.error.error_msg || r.error.error_code} (queue #${q.id})`, error: true };
   const post_id = r.response?.post_id ?? null;
   await db.from('vk_queue').update({ posted_at: new Date().toISOString(), post_id }).eq('id', q.id);

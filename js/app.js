@@ -88,7 +88,9 @@ const standalone = matchMedia('(display-mode: standalone)').matches || navigator
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isAndroid = /android/i.test(navigator.userAgent), isMobile = isIOS || isAndroid;
 // tgGo — куда перейти из быстрого меню Telegram-группы; ?brk=N — разминка дня из личного напоминания бота
-let installEvt = null, tgGo = (location.search.match(/[?&]brk=(\d{1,2})/) || [, ''])[1] ? 'brk' + location.search.match(/[?&]brk=(\d{1,2})/)[1] : /[?&]psy=1/.test(location.search) ? 'psy' : '';  // ?psy=1 — кабинет Миры (совет из группы)
+// ВК: те же разделы после # (vk.com/app<ID>#brk-53, #psy — ссылки из группы ВК и бота сообщений)
+const goQ = location.search + '&' + location.hash.replace(/^#/, '&').replace(/brk-(\d)/, 'brk=$1').replace(/(^|[&_])psy($|[&_])/, '$1psy=1$2');
+let installEvt = null, tgGo = (goQ.match(/[?&_]brk=(\d{1,2})/) || [, ''])[1] ? 'brk' + goQ.match(/[?&_]brk=(\d{1,2})/)[1] : /[?&_]psy=1/.test(goQ) ? 'psy' : '';  // ?psy=1 — кабинет Миры (совет из группы)
 // ?buy=10|25|50|100 — сразу окно пополнения на столько у.е.; ?buy=starter|coffee|shop — магазин (товары группы ВК, promo/vk/market.md)
 { const b = location.search.match(/[?&]buy=(\d{1,3}|starter|coffee|shop)\b/); if (b) tgGo = 'buy:' + b[1]; }
 // Установить можно: браузер дал событие установки, или это телефон (покажем, как добавить вручную); не в Telegram, не в каталогах

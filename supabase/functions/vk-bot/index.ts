@@ -9,7 +9,9 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 const SITE = 'https://survivefriday.com/';
-const PLAY = `${SITE}?utm_source=vk_bot`;
+// Ссылки бота группы — только в мини-приложение ВК (правила VK Mini Apps 4.1.8 и 5.2.2: не уводить из ВК и не звать платить на сайте)
+const APP = 'https://vk.com/app54871699';
+const PLAY = APP;
 const ok = () => new Response('ok');
 const pick = <T>(a: T[]) => a[Math.floor(Math.random() * a.length)];
 const getJson = (f: string) => fetch(SITE + f).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -39,14 +41,12 @@ const MENU = `👋 Это «Выжить до пятницы» — офисна�
 Если нужен живой человек — просто напишите вопрос, вам ответят здесь же.`;
 const PAY = `💰 Оплата и у.е.
 
-Покупки — на сайте survivefriday.com через Робокассу; у.е. начисляются на аккаунт игры сразу после оплаты.
+Покупки — прямо в игре во ВКонтакте, за голоса ВК: магазин и «Пополнить» в меню игры. У.е. начисляются на ваш аккаунт игры сразу после оплаты.
 
 Если оплатили, а у.е. не пришли:
-1. Откройте игру тем же аккаунтом (почта, Telegram или VK ID), которым платили.
-2. Подождите пару минут и обновите страницу.
-3. Не помогло — напишите сюда дату, сумму и имя в игре: проверим платёж и разберёмся.
-
-Цены: ${SITE}tseny.html · Оферта: ${SITE}oferta.html`;
+1. Закройте игру и откройте её заново во ВКонтакте: ${APP}
+2. Подождите пару минут.
+3. Не помогло — напишите сюда дату, товар и имя в игре: проверим платёж и разберёмся.`;
 
 async function send(token: string, peer: number, message: string, withKb = true) {
   const p = new URLSearchParams({ peer_id: String(peer), random_id: String(Math.floor(Math.random() * 2e9)), message, dont_parse_links: '0', access_token: token, v: '5.199' });
@@ -61,11 +61,11 @@ async function answer(text: string): Promise<string | null> {
   if (/совет|мир[аеуы]|психолог|выгоран|устал|тяжел/.test(t)) {
     const tips = (await getJson(`data/psy/tips_${1 + Math.floor(Math.random() * 6)}.json`)) || (await getJson('data/tips.json'))?.tips || [];
     const tip = pick((tips as any[]).filter(x => x.cat !== 'keep'));
-    return tip ? `🛋️ Совет Миры, психолога офиса\n\n${tip.ru}\n\nЕщё советы и тест самопроверки — в кабинете Миры: ${SITE}?psy=1&utm_source=vk_bot\n\n🤖 Мира — персонаж игры. Её советы не заменяют специалиста.` : null;
+    return tip ? `🛋️ Совет Миры, психолога офиса\n\n${tip.ru}\n\nЕщё советы и тест самопроверки — в кабинете Миры: ${APP}#psy\n\n🤖 Мира — персонаж игры. Её советы не заменяют специалиста.` : null;
   }
   if (/размин|перерыв|мини.?игр/.test(t)) {
     const b = brkOfDay();
-    return `☕ Разминка дня: ${b[1]} ${b[2]}\n\nМинута, чтобы переключиться. Играть: ${SITE}?brk=${b[0]}&utm_source=vk_bot\n\nВсе 51 разминка — в игре, раздел «Разминки».`;
+    return `☕ Разминка дня: ${b[1]} ${b[2]}\n\nМинута, чтобы переключиться. Играть: ${APP}#brk-${b[0]}\n\nВсе 54 разминки — в игре, раздел «Разминки».`;
   }
   if (/у\.?\s?е\b|оплат|купил|покупк|не приш|не начисл|деньг|возврат|чек|робокасс|цен[аы]/.test(t)) return PAY;
   if (/^(начать|старт|start|привет|здравствуй|здравствуйте|меню|играть|игра|помощь|help|\/start)/.test(t.trim())) return MENU;
