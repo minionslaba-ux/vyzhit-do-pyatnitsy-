@@ -341,6 +341,8 @@ function addCash(n) {  // на счёт карьеры; нет карьеры �
   return !!C2;
 }
 // «Мы во ВКонтакте» — если в js/config.js указан адрес группы
+// Канал игры в MAX: только по-русски и не в приложении ВК (правила ВК); внутри MAX — тоже показываем
+document.addEventListener('click', e => { if (e.target.closest?.('#maxChannel')) track('max_channel'); });
 function vkGroup() {
   const b = $('vkGroup'), g = window.SUPABASE_CONFIG?.vk?.group; if (!b || !g) return;
   b.href = `https://vk.ru/${g}`; b.hidden = false;
