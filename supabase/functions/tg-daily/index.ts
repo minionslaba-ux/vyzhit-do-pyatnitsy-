@@ -9,6 +9,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { buildReport, mskDay, reportMarkup, yesterdayTitle } from './report.ts';
 import { vkAlbum, vkDaily } from './vk.ts';
 import { maxBroadcast } from './max.ts';
+import { maxPromo } from './promo.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -220,6 +221,8 @@ Deno.serve(async req => {
   }
   // группа ВКонтакте (если заданы секреты VK_GROUP_TOKEN и VK_GROUP_ID)
   const vk = await vkDaily(db, msk.toISOString().slice(0, 10), brk).catch(e => `error: ${e}`);
+  // раз в 3 дня — пост о канале игры в MAX в русские группы Telegram и группу ВК (до даты из data/bot/max_promo.json)
+  const promo = await maxPromo(db, token || "", msk.toISOString().slice(0, 10)).catch(e => `error: ${e}`);
   // отчёт разработчику за вчера (по Москве), со сравнением с позавчера
   let reports = 0;
   const { data: admins } = await db.from('dev_admins').select('tg_id').or(`last_sent.is.null,last_sent.lt.${today}`);
@@ -231,5 +234,5 @@ Deno.serve(async req => {
       await pause();
     }
   }
-  return new Response(JSON.stringify({ sent, groups, reports, vk, max }), { headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify({ sent, groups, reports, vk, max, promo }), { headers: { 'Content-Type': 'application/json' } });
 });

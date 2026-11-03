@@ -2501,3 +2501,17 @@ html.max-app #tgRemind, html.max-app #vkGroup, html.max-app .vk-invite, html.max
 /* Канал игры в MAX — кнопка в меню (index.html #maxChannel) */
 html.vk-mini #maxChannel, html[lang="en"] #maxChannel { display: none !important; }
 html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display: none !important; }
+/* Логотип MAX на кнопках (index.html #maxPlay, #maxChannel) и окно «Канал игры в MAX» (js/max-promo.js) */
+#maxPlay, #maxChannel, .btn-max { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+#maxPlay::before, #maxChannel::before { content: ''; flex: none; width: 22px; height: 22px; border-radius: 6px; background: url(../icons/max.png) center / cover no-repeat; }
+.btn-max img { border-radius: 6px; flex: none; }
+.maxp-box { text-align: center; }
+.maxp-logo { display: block; margin: 0 auto 10px; border-radius: 16px; box-shadow: 0 6px 24px rgba(90,60,255,.35); }
+.maxp-box .btn-max { margin: 14px 0 8px; text-decoration: none; }
+.maxp-never { background: none; border: 0; color: var(--muted, #8aa); font-size: 12px; margin-top: 10px; text-decoration: underline; cursor: pointer; }
+.btn-main.btn-maxlogin { background: linear-gradient(135deg, #3d8bff, #7b3dff); border-color: #6a4dff; color: #fff; text-decoration: none; box-shadow: 0 0 18px rgba(106,77,255,.35); }
+.btn-main.btn-maxlogin:hover { filter: brightness(1.1); }
+.maxlogin-note { display: block; text-align: center; font-size: 11px; opacity: .7; margin: -4px 0 6px; }
+.maxp-box .maxp-logo { width: 64px !important; height: 64px !important; max-width: none; object-fit: contain; }
+.btn-max img, .btn-maxlogin img { width: 22px !important; height: 22px !important; max-width: none; margin: 0; object-fit: contain; }
+.maxp-box .btn-max { display: flex; width: 100%; box-sizing: border-box; white-space: nowrap; font-size: 15px; padding: 14px 12px; }

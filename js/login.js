@@ -113,7 +113,11 @@ function socialButtons(box) {
   box.hidden = !on; if (!on) return;
   box.innerHTML = `<button class="btn-main btn-tg" type="button">✈️ ${L('Войти через Telegram', 'Sign in with Telegram')}</button>`
     + (VK_APP ? `<button class="btn-main btn-vk" type="button">VK ${L('Войти через VK ID', 'Sign in with VK ID')}</button>` : '')
+    // MAX: вход только внутри мессенджера (initData, js/max-app.js) — кнопка открывает игру в MAX, там вход сам
+    + (!EN && !TG && !window.MAX_APP ? `<a class="btn-main btn-max btn-maxlogin" href="https://max.ru/se14877440_bot?startapp=login" target="_blank" rel="noopener"><img src="icons/max.png" alt="" width="22" height="22"> ${L('Войти через MAX', 'Sign in with MAX')}</a>`
+      + `<span class="maxlogin-note">${L('Игра откроется в MAX, вход — автоматически', 'The game opens in MAX and signs you in')}</span>` : '')
     + `<span class="or-line">${L('или по почте', 'or with email')}</span>`;
+  box.querySelector('.btn-maxlogin')?.addEventListener('click', () => track('max_login_site'));
   box.querySelector('.btn-tg').onclick = () => tgLogin();
   box.querySelector('.btn-vk')?.addEventListener('click', () => vkLogin());
 }
