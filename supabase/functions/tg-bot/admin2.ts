@@ -30,6 +30,7 @@ export const ADMIN_COMMANDS2 = [
   { command: 'vk', description: 'ВКонтакте: игроки и посты' },
   { command: 'vkpost', description: 'Пост в группу ВК: /vkpost текст' },
   { command: 'vkqueue', description: 'Очередь постов ВК' },
+  { command: 'maxsetup', description: 'Найти канал MAX для автопостов' },
 ];
 export const HELP2 = `
 
@@ -53,7 +54,10 @@ export const HELP2 = `
 
 📰 <b>Посты в группу ВК</b> (каждый день в 12:31 выходит пост из очереди, пусто — обычный: Мира, разминка, «Что бы вы выбрали?»; по понедельникам — итоги недели)
 /vkpost текст — превью и кнопки «В очередь» / «Сейчас». Картинка: вставьте в текст ссылку на фото из группы (vk.com/photo-242860183_…)
-/vkqueue — что в очереди · /vkdel номер — убрать из очереди`;
+/vkqueue — что в очереди · /vkdel номер — убрать из очереди
+
+💬 <b>MAX</b>
+/maxsetup — найти канал MAX, куда добавлен бот (после этого ежедневный пост уходит и туда)`;
 
 type Ctx = { db: any; api: (m: string, b?: Record<string, unknown>) => Promise<any>; token: string };
 
@@ -79,6 +83,25 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
   const { db, api } = ctx;
   const say = (text: string, extra: Record<string, unknown> = {}) => api('sendMessage', { chat_id: chatId, text: text.slice(0, 4000), parse_mode: 'HTML', disable_web_page_preview: true, ...extra });
   switch (cmd) {
+    case 'maxsetup': {
+      const token = (Deno.env.get('MAX_BOT_TOKEN') || '').trim();
+      if (!token) { await say('Нет токена бота MAX (MAX_BOT_TOKEN в секретах Supabase).'); return true; }
+      const call = async (path: string) => { for (const h of ['https://platform-api.max.ru', 'https://platform-api2.max.ru']) { try { const r = await fetch(h + path, { headers: { Authorization: token } }); return await r.json(); } catch {} } return { error: 'network' }; };
+      const me = await call('/me');
+      const up = await call('/updates?limit=100&timeout=0&marker=0&types=bot_added,bot_removed,chat_title_changed');
+      const ups: any[] = up?.updates || [];
+      let added = 0;
+      for (const u of ups) {
+        if (u.update_type === 'bot_added' && u.chat_id) { await db.from('max_chats').upsert({ chat_id: u.chat_id, is_channel: !!u.is_channel, enabled: true }); added++; }
+        if (u.update_type === 'bot_removed' && u.chat_id) await db.from('max_chats').update({ enabled: false }).eq('chat_id', u.chat_id);
+        if (u.update_type === 'chat_title_changed' && u.chat_id) await db.from('max_chats').update({ title: String(u.title || '').slice(0, 100) }).eq('chat_id', u.chat_id);
+      }
+      const { data: rows } = await db.from('max_chats').select('chat_id, is_channel, title, enabled, last_post').order('added_at');
+      for (const r of rows || []) if (!r.title) { const c = await call(`/chats/${r.chat_id}`); if (c?.title) { r.title = c.title; await db.from('max_chats').update({ title: String(c.title).slice(0, 100) }).eq('chat_id', r.chat_id); } }
+      const list = (rows || []).map((r: any) => `${r.enabled ? '🟢' : '⚪️'} ${r.is_channel ? 'канал' : 'чат'} «${esc(r.title || r.chat_id)}»${r.last_post ? ` · пост ${msk(r.last_post).slice(5)}` : ''}`);
+      await say(`💬 <b>MAX</b> · бот: ${esc(me?.name || me?.username || me?.error || '?')}\nСобытий «бота добавили»: ${added}${up?.error ? ` (ошибка: ${esc(up.error)})` : ''}\n\n${list.length ? list.join('\n') + '\n\nВ каналы 🟢 ежедневный пост уходит вместе с ВК (12:31).' : 'Каналов пока нет. Удалите бота из канала MAX и добавьте снова администратором (с правом публиковать), потом повторите /maxsetup.'}`);
+      return true;
+    }
     case 'vkpost': {
       const raw = rest.trim();
       if (raw.length < 5) { await say('Формат: <code>/vkpost текст поста</code>\nСсылку на игру добавьте в текст. Картинка — ссылка на фото из группы: vk.com/photo-242860183_457239039'); return true; }
