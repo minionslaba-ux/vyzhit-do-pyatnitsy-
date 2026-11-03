@@ -88,7 +88,7 @@ Deno.serve(async req => {
       const uid = await player();
       if (!uid) return fail(22, 'user not found');  // сначала игра должна войти в аккаунт (это делает сама при запуске)
       if (it.product === 'starter' && (await paidRows(uid)).some(r => r.product === 'starter')) return fail(21, 'starter already bought');
-      return json({ response: { item_id: item, title: it.title, photo_url: PHOTO, price: price(item), expiration: 3600 } });
+      return json({ response: { item_id: item, title: it.title, photo_url: PHOTO, price: price(item), expiration: it.product === 'starter' ? 0 : 3600 } });  // стартовый набор — без кэша у ВК: каждый раз проверяем, не куплен ли
     }
 
     if (type === 'order_status_change' || type === 'order_status_change_test') {
@@ -105,10 +105,13 @@ Deno.serve(async req => {
       if (!it) return fail(20, 'item not found');
       const uid = await player();
       if (!uid) return fail(22, 'user not found');
-      const bonus = !it.product && !(await paidRows(uid)).length ? Math.min(250, Math.ceil(it.ue * FIRST_BONUS)) : 0;
+      const paid = await paidRows(uid);
+      const bonus = !it.product && !paid.length ? Math.min(250, Math.ceil(it.ue * FIRST_BONUS)) : 0;
+      // стартовый набор уже был (ВК мог не спросить get_item) — голоса списаны, поэтому зачисляем у.е., но подарки набора второй раз не выдаём
+      const product = it.product === 'starter' && paid.some(r => r.product === 'starter') ? null : it.product;
       const votes = Math.floor(Number(p.get('item_price')) || price(item));
       const { data: row, error } = await db.from('purchases').insert({
-        player_id: uid, ue: it.ue, rub: null, bonus, product: it.product, status: 'paid', paid_at: new Date().toISOString(),
+        player_id: uid, ue: it.ue, rub: null, bonus, product, status: 'paid', paid_at: new Date().toISOString(),
         pay_via: test ? 'vk_test' : 'vk', vk_order_id: orderId, votes,
       }).select('inv_id').single();
       if (error) {
