@@ -98,10 +98,16 @@ export async function adminCommand2(ctx: Ctx, cmd: string, rest: string, chatId:
         if (u.update_type === 'bot_removed' && u.chat_id) await db.from('max_chats').update({ enabled: false }).eq('chat_id', u.chat_id);
         if (u.update_type === 'chat_title_changed' && u.chat_id) await db.from('max_chats').update({ title: String(u.title || '').slice(0, 100) }).eq('chat_id', u.chat_id);
       }
+      // Надёжнее событий: список чатов и каналов, где бот состоит (GET /chats) — события могли уйти в вебхук или устареть
+      const ch = await call('/chats?count=100');
+      const cl: any[] = ch?.chats || [];
+      for (const c of cl) if (c?.chat_id && c.status !== 'removed' && c.status !== 'left') {
+        await db.from('max_chats').upsert({ chat_id: c.chat_id, is_channel: c.type === 'channel', enabled: true, title: String(c.title || '').slice(0, 100) || null }); added++;
+      }
       const { data: rows } = await db.from('max_chats').select('chat_id, is_channel, title, enabled, last_post').order('added_at');
       for (const r of rows || []) if (!r.title) { const c = await call(`/chats/${r.chat_id}`); if (c?.title) { r.title = c.title; await db.from('max_chats').update({ title: String(c.title).slice(0, 100) }).eq('chat_id', r.chat_id); } }
       const list = (rows || []).map((r: any) => `${r.enabled ? '🟢' : '⚪️'} ${r.is_channel ? 'канал' : 'чат'} «${esc(r.title || r.chat_id)}»${r.last_post ? ` · пост ${msk(r.last_post).slice(5)}` : ''}`);
-      await say(`💬 <b>MAX</b> · бот: ${esc(me?.name || me?.username || me?.error || '?')}\nСобытий «бота добавили»: ${added}${up?.error ? ` (ошибка: ${esc(up.error)})` : ''}\n\n${list.length ? list.join('\n') + '\n\nВ каналы 🟢 ежедневный пост уходит вместе с ВК (12:31).' : 'Каналов пока нет. Удалите бота из канала MAX и добавьте снова администратором (с правом публиковать), потом повторите /maxsetup.'}`);
+      await say(`💬 <b>MAX</b> · бот: ${esc(me?.name || me?.username || me?.error || '?')}\nСобытий: ${ups.length}, чатов у бота: ${cl.length}${up?.error || up?.message ? ` (updates: ${esc(up.error || up.message)})` : ''}${ch?.error || ch?.message ? ` (chats: ${esc(ch.error || ch.message)})` : ''}\n\n${list.length ? list.join('\n') + '\n\nВ каналы 🟢 ежедневный пост уходит вместе с ВК (12:31).' : 'Каналов пока нет. Удалите бота из канала MAX и добавьте снова администратором (с правом публиковать), потом повторите /maxsetup.'}`);
       return true;
     }
     case 'maxwelcome': {
