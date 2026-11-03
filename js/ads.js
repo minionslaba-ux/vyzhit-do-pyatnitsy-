@@ -11,21 +11,29 @@ const adBlock = () => { const b = adCfg().blocks?.[adPlatform()] || adCfg().bloc
 let adOff = '';
 // Яндекс Игры: реклама только через SDK площадки (js/platform-yandex.js); на сайте — РСЯ; в ВК и других каталогах — без рекламы
 const adSdk = () => window.VDP_PLATFORM?.sdk?.adv || null;
-// ВКонтакте: только реклама ВК за награду (VKWebAppShowNativeAds, format reward) — по нажатию игрока; РСЯ и обязательная реклама там запрещены
-// (правила VK Mini Apps 5.1.2, 5.1.5). Показы включаются, когда владелец принял рекламную оферту в настройках приложения ВК.
+// ВКонтакте — только реклама ВК (VKWebAppShowNativeAds), РСЯ там запрещена (правила VK Mini Apps 5.1.2):
+//  • за награду (reward) — по нажатию игрока, с явной наградой;
+//  • между экранами (interstitial, до 5 с) — при переходе к следующей неделе, с окном «Короткая реклама» (как обязательная реклама на сайте):
+//    не при запуске, не чаще раза в 2 минуты (правила 5.1.5: не чаще раза в 30 с, только при переходе между экранами).
 const adOn = () => !adOff && (window.VK_MINI ? !!window.vkBridge : window.VDP_PLATFORM ? !!adSdk() : !!adBlock().id);  // нет блока для этого устройства — нет и кнопки
 async function adWatchVk(done, opts) {
-  if (opts.forced) return done?.(false);  // в ВК без обязательной рекламы
-  track('ad_open', { detail: 'vk_rew' });
+  const kind = opts.forced ? 'vk_full' : 'vk_rew';
+  track('ad_open', { detail: kind });
   vdpPause(true);
-  const r = await vkBridge('VKWebAppShowNativeAds', { ad_format: 'reward' }, 180000)  // ролик + время до крестика: 90 с не хватало (03.11);
+  // ролик + время до крестика: 90 с не хватало (03.11); между экранами — до 5 с, ждём меньше
+  const r = await vkBridge('VKWebAppShowNativeAds', { ad_format: opts.forced ? 'interstitial' : 'reward' }, opts.forced ? 60000 : 180000);
   vdpPause(false);
   const ok = r?.result === true;
-  if (ok) adGive(opts, 'vk_rew');
+  const why = ok ? 'shown' : r?.error_data?.error_reason || r?.error_data?.error_code || (r ? 'no_ad' : 'timeout');
+  if (opts.forced) {  // без награды и без сообщений: не показалась — просто дальше
+    prefs.adForcedAt = Date.now(); prefs.adWeeks = 0; store.set(KEY.prefs, prefs);
+    track(ok ? 'ad_forced' : 'ad_fail', { detail: `${kind}:${why}`.slice(0, 60) });
+    return done?.(ok);
+  }
+  if (ok) adGive(opts, kind);
   else {
-    const why = r?.error_data?.error_reason || r?.error_data?.error_code || (r ? 'no_ad' : 'timeout');
     if (/not ?supported|unsupported/i.test(String(why))) adOff = String(why);
-    track('ad_fail', { detail: `vk_rew:${why}`.slice(0, 60) });
+    track('ad_fail', { detail: `${kind}:${why}`.slice(0, 60) });
     toast(L('Сейчас нет рекламы для показа — попробуйте чуть позже', 'No ad to show right now — try again a bit later'));
   }
   done?.(ok);
@@ -274,12 +282,12 @@ document.addEventListener('click', e => {
 // не тем, кто покупал у.е. картой (prefs.paidUser), и не тем, кто сам смотрел рекламу за награду в последние 30 минут
 const AD_FORCED_WEEKS = 3, AD_FORCED_GAP = 30 * 60 * 1000;
 bus.on('weekEnd', x => { if (x.mode === 'career') { prefs.adWeeks = (prefs.adWeeks || 0) + 1; store.set(KEY.prefs, prefs); } });
-const adForcedDue = () => !window.VK_MINI && adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
+const adForcedDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4 && (prefs.adWeeks || 0) >= AD_FORCED_WEEKS
   && Date.now() - (prefs.adForcedAt || 0) > AD_FORCED_GAP && Date.now() - (prefs.adAt || 0) > AD_FORCED_GAP;
 // Без карьеры (обычная игра, быстрая смена, неделя дня): реклама перед каждой следующей неделей с экрана итогов.
 // Только чтобы не подряд: не раньше чем через 2 минуты после прошлого ролика.
 const AD_EACH_GAP = 2 * 60 * 1000;
-const adEachDue = () => !window.VK_MINI && adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4
+const adEachDue = () => adOn() && !prefs.paidUser && !adQuiet() && !(typeof guestLocked === 'function' && guestLocked()) && (prefs.gamesPlayed || 0) >= 4
   && Date.now() - (prefs.adForcedAt || 0) > AD_EACH_GAP && Date.now() - (prefs.adAt || 0) > AD_EACH_GAP;
 function adForced(go, each = false) {
   if (views.end.hidden || !(each ? adEachDue() : adForcedDue())) return go();
@@ -294,7 +302,7 @@ function adForced(go, each = false) {
   const run = () => { if (fired) return; fired = true; clearInterval(t); m.hidden = true; adWatch(() => go(), { forced: true }); };
   const t = setInterval(() => { n--; if ($('afT')) $('afT').textContent = n; if (n <= 0) run(); }, 1000);
   $('afGo').onclick = run;
-  if (window.NO_PAY && $('afOff')) $('afOff').hidden = true;
+  if ((window.NO_PAY || window.VK_MINI) && $('afOff')) $('afOff').hidden = true;  // в ВК «без рекламы» не продаём
   $('afOff').onclick = () => { fired = true; clearInterval(t); if (typeof openShopNoAds === 'function') return openShopNoAds(() => adForced(go, each)); openTopup({ need: 10, why: L('Купите у.е. картой — и обязательной рекламы между неделями больше не будет.', 'Buy $ by card — and there will be no more ads between weeks.'), then: () => adForced(go, each) }); };
 }
 if (typeof window.startWeek === 'function') { const sw0 = window.startWeek; window.startWeek = function (...a) { return adForced(() => sw0.apply(this, a)); }; }
@@ -306,3 +314,4 @@ document.addEventListener('DOMContentLoaded', () => {
     window[fn] = function (...a) { return S?.mode && S.mode !== 'career' && S.mode !== 'tour' ? adForced(() => f0.apply(this, a), true) : f0.apply(this, a); };
   }
 });
+
