@@ -69,13 +69,18 @@ const QUESTS = [
   { id: 'hint', need: 1, text: L('Купите подсказку', 'Buy a hint'), on: { hint: () => true } },
   { id: 'shop', need: 1, text: L('Купите предмет в магазине', 'Buy an item in the shop'), on: { buy: () => true } },
   { id: 'dm', need: 1, text: L('Напишите кому-нибудь из ленты «в игре»', 'Message someone from the live strip'), on: { dm: () => true } },
+  // «Остынь»: снизить перегрев персонажа (js/burnout.js шлёт 'cool' при разминке, дыхании, разговоре с Мирой, отпуске).
+  // Только когда перегрев есть (от 10%); от 30% — задание дня обязательно среди трёх
+  { id: 'cool', need: 1, text: L('Остынь: снизьте перегрев — разминка, «Минута дыхания» или Мира', 'Cool down: lower your overheat — a break, One-minute breathing or Mira'), on: { cool: () => true },
+    when: () => (typeof heatNow === 'function' ? heatNow() || 0 : 0) >= 10, must: () => (typeof heatNow === 'function' ? heatNow() || 0 : 0) >= 30 },
 ];
 function todayQuests() {
   const day = today(), q = prefs.quests;
   if (q?.day === day) return q;
-  const rnd = seeded('quests-' + day + prefs.playerId), ids = shuffle(QUESTS.map(x => x.id), rnd);
-  // одно задание «на неделю», два — на ответы или действия
-  const weekQ = ids.find(id => QUESTS.find(x => x.id === id).on.weekEnd), rest = ids.filter(id => !QUESTS.find(x => x.id === id).on.weekEnd).slice(0, 2);
+  const rnd = seeded('quests-' + day + prefs.playerId), ids = shuffle(QUESTS.filter(x => !x.when || x.when()).map(x => x.id), rnd);
+  // одно задание «на неделю», два — на ответы или действия; «обязательное» (must) — первым из двух
+  const must = QUESTS.filter(x => x.must?.() && ids.includes(x.id)).map(x => x.id);
+  const weekQ = ids.find(id => QUESTS.find(x => x.id === id).on.weekEnd), rest = [...must, ...ids.filter(id => !must.includes(id) && !QUESTS.find(x => x.id === id).on.weekEnd)].slice(0, 2);
   prefs.quests = { day, list: [weekQ, ...rest].map(id => ({ id, got: 0 })), bonus: false };
   store.set(KEY.prefs, prefs);
   return prefs.quests;
@@ -102,7 +107,7 @@ function questEvent(kind, x) {
   }
   if (changed) store.set(KEY.prefs, prefs);
 }
-for (const k of ['answer', 'weekEnd', 'deadlineDone', 'hint', 'buy', 'dm']) bus.on(k, x => questEvent(k, x));
+for (const k of ['answer', 'weekEnd', 'deadlineDone', 'hint', 'buy', 'dm', 'cool']) bus.on(k, x => questEvent(k, x));
 bus.on('answer', () => addXp(1));
 bus.on('deadlineDone', () => addXp(15));
 bus.on('weekEnd', x => addXp(x.won ? 20 : 5, 'week'));

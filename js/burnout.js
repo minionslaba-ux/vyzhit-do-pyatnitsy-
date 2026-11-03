@@ -20,6 +20,7 @@ function heatAdd(d, why) {
   const C2 = careerNow(); if (!C2 || !d) return 0;
   const was = C2.heat || 0; C2.heat = Math.max(0, Math.min(100, was + d)); careerSave(C2);
   const real = C2.heat - was;
+  if (real < 0 && why) bus.emit('cool', { by: why, d: real });  // активный отдых — задание дня «Остынь» (js/meta.js)
   if (real < 0 && why) setTimeout(() => toast(L(`${why}: перегрев −${Math.abs(real)}% → ${Math.round(C2.heat)}%`, `${why}: overheat −${Math.abs(real)}% → ${Math.round(C2.heat)}%`)), 900);
   return real;
 }
@@ -91,7 +92,7 @@ bus.on('psy', () => {
 });
 if (typeof takeVacation === 'function') {
   const tv0 = takeVacation;
-  takeVacation = function () { const w = C?.week; tv0(); if (C && C.week !== w) { heatAdd(-30); const s = views.end.querySelector('.end-sheet > .stack'); if (s) s.insertAdjacentHTML('beforebegin', heatHtml(heatNow(), -30)); } };
+  takeVacation = function () { const w = C?.week; tv0(); if (C && C.week !== w) { heatAdd(-30, L('🏖️ Отпуск', '🏖️ Vacation')); const s = views.end.querySelector('.end-sheet > .stack'); if (s) s.insertAdjacentHTML('beforebegin', heatHtml(heatNow(), -30)); } };
 }
 // Меню: перегрев в карточке карьеры
 bus.on('menu', () => {
