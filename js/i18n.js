@@ -19,7 +19,7 @@ if (window.MAX_APP) {
 window.NO_PAY = !!(window.RUSTORE || window.ITCH || window.MAX_APP);
 if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v180';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v181';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');
@@ -52,6 +52,9 @@ const LANG = (() => {
   try {
     const q = new URLSearchParams(location.search).get('lang');
     if (q === 'en' || q === 'ru') { localStorage.setItem('vdp-lang', q); return q; }
+    // Мини-приложение ВК: язык из настроек ВКонтакте (vk_language); перевода нет — русский (правила VK Mini Apps 3.1.2)
+    const vl = new URLSearchParams(location.search).get('vk_language');
+    if (vl && /[?&]vk_app_id=\d+/.test(location.search)) { const l = vl === 'en' ? 'en' : 'ru'; localStorage.setItem('vdp-lang', l); return l; }
     const s = localStorage.getItem('vdp-lang');
     if (s === 'en' || s === 'ru') return s;
     if (localStorage.getItem('vdp-prefs')) return 'ru';  // кто уже играл до английской версии — остаётся на русском

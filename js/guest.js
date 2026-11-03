@@ -2,7 +2,7 @@
 // или платная игра без аккаунта: 0,5 у.е. за каждую новую неделю с игрового счёта карьеры.
 // Продолжение уже начатой недели не списывает. На игровых платформах (Яндекс Игры и т. п.) не действует.
 const GUEST_FREE = 4, GUEST_PRICE = 0.5;
-const guestLocked = () => !window.VDP_PLATFORM && !registered() && (prefs.gamesPlayed || 0) >= GUEST_FREE;
+const guestLocked = () => !window.VDP_PLATFORM && !window.VK_MINI && !registered() && (prefs.gamesPlayed || 0) >= GUEST_FREE;  // в ВК вход сам по параметрам запуска — без регистрации по почте (правила VK Mini Apps 4.2.3)
 function guestGate(go) {
   if (!guestLocked()) return go();
   const C2 = careerNow(), bank = C2?.bank ?? 0, can = bank >= GUEST_PRICE, m = $('modal');
@@ -43,6 +43,8 @@ const REG_WHAT = {
 };
 function needReg(feature) {
   if (window.VDP_PLATFORM || !board.online || registered()) return true;
+  // ВК: никаких почты и Telegram — входим по подписанным параметрам запуска (после входа игра перезагрузится)
+  if (window.VK_MINI) { toast(L('Входим через ВКонтакте…', 'Signing in with VK…')); if (typeof vkLogin === 'function') vkLogin(); return false; }
   track('reg_gate', { detail: feature });
   const m = $('modal');
   m.innerHTML = `<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="rgTitle"><span class="lvl-ico" aria-hidden="true">🔐</span>

@@ -879,6 +879,7 @@ function shareText(kind, team) {
 // поэтому суммы скромные; за пришедшего по ссылке игрока, которого засчитывает сервер, — больше)
 const SHARE_ONCE = 10, SHARE_DAILY = 5, REF_CASH = 15;
 function shareReward(via) {
+  if (window.VK_MINI) return;  // правила VK Mini Apps 2.6.2: бонус — только за друзей, пришедших по ссылке, не за саму публикацию
   const once = via === 'tg' || via === 'vk', today = new Date().toISOString().slice(0, 10);
   prefs.shared ||= {};
   let n = 0;
@@ -921,7 +922,7 @@ async function openShare(kind) {
     <p class="share-text" id="shText">${esc(full)}</p>
     <div class="share-big">
       <a class="btn-main btn-tg" data-via="tg" href="https://t.me/share/url?url=${enc(url)}&text=${enc(text)}" target="_blank" rel="noopener">${L('Отправить в Telegram', 'Send on Telegram')}${prefs.shared?.tg ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
-      <a class="btn-main btn-vk" data-via="vk" href="https://vk.com/share.php?url=${enc(url)}" target="_blank" rel="noopener">${L('Рассказать в VK', 'Post on VK')}${prefs.shared?.vk ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
+      <a class="btn-main btn-vk" data-via="vk" href="https://vk.com/share.php?url=${enc(url)}" target="_blank" rel="noopener">${L('Рассказать в VK', 'Post on VK')}${prefs.shared?.vk || window.VK_MINI ? '' : ` <b>+${money(SHARE_ONCE)}</b>`}</a>
     </div>
     <div class="share-grid">
       ${!TG && navigator.share ? `<button id="shNative" data-via="native">${L('Отправить…', 'Share…')}</button>` : ''}
@@ -930,7 +931,7 @@ async function openShare(kind) {
       <button id="shCopy" data-via="copy">${L('Скопировать ссылку', 'Copy link')}</button>
     </div>
     <p class="share-count" id="shCount"></p>
-    <p class="field-note">${window.VK_MINI ? L(`Награда за отправку в VK — +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — +${money(REF_CASH)} и +1 предмет на неделю.`, `VK share reward — +${money(SHARE_ONCE)} (once), any other share — +${money(SHARE_DAILY)} once a day. Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`) : ''}${window.VK_MINI ? '' : L(`Награды: Telegram и VK — по +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — ещё +${money(REF_CASH)} и +1 предмет на неделю.`,
+    <p class="field-note">${window.VK_MINI ? L(`За каждого, кто впервые придёт по вашей ссылке, — +${money(REF_CASH)} и +1 предмет на неделю.`, `Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`) : ''}${window.VK_MINI ? '' : L(`Награды: Telegram и VK — по +${money(SHARE_ONCE)} (один раз), любая другая отправка — +${money(SHARE_DAILY)} раз в день. За каждого, кто впервые придёт по вашей ссылке, — ещё +${money(REF_CASH)} и +1 предмет на неделю.`,
       `Rewards: Telegram and VK — +${money(SHARE_ONCE)} each (once), any other share — +${money(SHARE_DAILY)} once a day. Each new player who joins via your link — +${money(REF_CASH)} and +1 item for the week.`)}</p>
     <button class="btn-ghost" id="shClose">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;

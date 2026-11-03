@@ -75,6 +75,14 @@ async function tgLogin(after) {
 const b64url = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 const randStr = n => b64url(crypto.getRandomValues(new Uint8Array(n))).slice(0, n);
 async function vkLogin(after) {
+  // Внутри мини-приложения ВК окно VK ID не открыть: новый вход — по подписанным параметрам запуска (как автовход, js/vk-mini.js).
+  // Так работает и подтверждение удаления аккаунта (правила VK Mini Apps, п. 1.1.10: удалить аккаунт — свободно, из приложения)
+  if (window.VK_MINI) {
+    try {
+      const info = await vkBridge('VKWebAppGetUserInfo'), name = [info?.first_name, info?.last_name].filter(Boolean).join(' ');
+      return await socialDone(await fnPost('tg-login', { vk_launch: { params: location.search, name }, access_token: after === 'delete' ? undefined : await linkToken() }), 'vk');
+    } catch (err) { return toast(socialError(err, 'vk')); }
+  }
   if (!VK_APP) return;
   const verifier = randStr(64), state = randStr(24);
   const challenge = b64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));

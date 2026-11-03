@@ -4,7 +4,7 @@
 const MAX_CH = 'https://max.ru/se14877440_biz';
 const MAXP_GAP = 5 * 864e5, MAXP_MAX = 3;
 function maxPromoDue() {
-  if (EN || window.MAX_APP || TG || window.VDP_PLATFORM) return false;
+  if (EN || window.MAX_APP || TG || window.VDP_PLATFORM || window.VK_MINI) return false;  // ВК: правила VK Mini Apps 4.1.8 / 4.2.6 — без других платформ
   if ((prefs.gamesPlayed || 0) < 3 || (typeof guestLocked === 'function' && guestLocked())) return false;
   const p = prefs.maxPromo || {};
   return !p.done && (p.n || 0) < MAXP_MAX && Date.now() - (p.last || 0) > MAXP_GAP;

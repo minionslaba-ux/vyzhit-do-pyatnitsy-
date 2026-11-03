@@ -17,7 +17,16 @@
       else window.parent.postMessage({ handler: method, params: data, type: 'vk-connect' }, '*');
     } catch { ok(null); }
   });
+  // Приложение свернули/закрыли в мобильном ВК — звук и голоса выключаем, вернулись — включаем (правила VK Mini Apps 2.2.5)
+  let hidPaused = false;
+  const viewHide = hide => {
+    if (typeof vdpPause !== 'function') return;
+    if (hide && !window.vdpPaused) { hidPaused = true; vdpPause(true); }
+    else if (!hide && hidPaused) { hidPaused = false; vdpPause(false); }
+  };
   const onEvent = e => {
+    const t = e?.detail?.type;
+    if (t === 'VKWebAppViewHide') viewHide(true); else if (t === 'VKWebAppViewRestore') viewHide(false);
     const d = e?.detail?.data, rid = d?.request_id;
     if (rid && wait[rid]) { wait[rid](d); delete wait[rid]; }
   };
@@ -33,7 +42,7 @@
   } catch {}
   // Плашка «Вместе веселее» на сайте зовёт рассказать «в Telegram или VK» — в приложении ВК только про ВК
   const vs = document.querySelector('#viralPop span');
-  if (vs) vs.textContent = L('Расскажите об игре во ВКонтакте — +10 у.е. За каждого, кто придёт по вашей ссылке, — +15 у.е. и +1 предмет на неделю.', 'Share the game on VK — +$10. Every newcomer via your link — +$15 and +1 item for the week.');
+  if (vs) vs.textContent = L('Позовите коллег в игру: за каждого, кто придёт по вашей ссылке, — +15 у.е. и +1 предмет на неделю.', 'Invite coworkers: every newcomer via your link — +$15 and +1 item for the week.');
   vkBridge('VKWebAppInit');
   vkBridge('VKWebAppSetViewSettings', { status_bar_style: 'light', action_bar_color: '#07070d', navigation_bar_color: '#07070d' });
   // Вход без окна авторизации: параметры запуска подписаны ВК, сервер (tg-login, vk_launch) проверяет подпись и выдаёт сессию
