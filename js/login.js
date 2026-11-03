@@ -13,7 +13,7 @@ async function fnPost(name, body) {
 }
 // Аккаунт без почты (вошли через Telegram или VK) — служебный адрес, показываем название сервиса
 const socialVia = () => (prefs.email || '').match(/@(tg|vk)\.survivefriday\.com$/)?.[1] || '';
-const viaName = v => v === 'vk' ? 'VK' : 'Telegram';
+const viaName = v => v === 'vk' ? 'VK' : v === 'max' ? 'MAX' : 'Telegram';
 const acctLabel = () => socialVia() ? viaName(socialVia()) + (prefs.acctName ? ' · ' + prefs.acctName : '') : prefs.email || '';
 const hasTg = () => socialVia() === 'tg' || !!prefs.tgLinked;
 
@@ -50,7 +50,7 @@ function socialError(err, via) {
 }
 async function socialDone(j, via) {
   if (j.linked) {
-    if (via === 'tg') prefs.tgLinked = true; else prefs.vkLinked = true;
+    if (via === 'tg') prefs.tgLinked = true; else if (via === 'max') prefs.maxLinked = true; else prefs.vkLinked = true;
     store.set(KEY.prefs, prefs);
     toast(L(`✅ ${viaName(via)} привязан: теперь можно входить и через него`, `✅ ${viaName(via)} linked: you can now sign in with it too`));
     if (typeof renderMenu === 'function' && prefs.name) renderMenu();

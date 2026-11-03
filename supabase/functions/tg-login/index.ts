@@ -4,6 +4,7 @@
 // Аккаунт привязан к пользователю Supabase Auth (tg_accounts / vk_accounts); выдаём обычную сессию — как после входа по ссылке из письма.
 // Уже вошли (access_token) — Telegram или VK привязывается к этому же аккаунту.
 // У аккаунта без почты служебный адрес tg<id>@tg.survivefriday.com / vk<id>@vk.survivefriday.com — писем на него не шлём.
+// MAX — мини-приложение бота MAX: initData (WebAppData) подписан токеном бота MAX_BOT_TOKEN тем же способом, что в Telegram (dev.max.ru/docs/webapps/validation).
 // action 'bot_id' — номер бота для кнопки входа (не секрет).
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 
@@ -72,14 +73,14 @@ Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
     const body = await req.json();
-    const vkl = !!body.vk_launch, vk = !!body.vk || vkl;
-    const token = Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
+    const vkl = !!body.vk_launch, vk = !!body.vk || vkl, max = typeof body.max_init === 'string' && !!body.max_init;
+    const token = max ? (Deno.env.get('MAX_BOT_TOKEN') || '').trim() : Deno.env.get('TELEGRAM_BOT_TOKEN') || '';
     if (!vk && !token) return json({ error: 'not_configured' }, 503);
     if (body.action === 'bot_id') return json({ bot_id: Number(token.split(':')[0]) });
-    const u = vkl ? await vkLaunchUser(body.vk_launch) : vk ? await vkUser(body.vk) : await verify(token, body);
+    const u = max ? await verify(token, { initData: body.max_init }) : vkl ? await vkLaunchUser(body.vk_launch) : vk ? await vkUser(body.vk) : await verify(token, body);
     if (!u?.id) return json({ error: vk ? 'vk_failed' : 'bad_signature', why: (u as any)?.why ? String((u as any).why).split(' ')[0] : undefined }, 403);
-    const T = vk ? { table: 'vk_accounts', key: 'vk_id', mail: 'vk' } : { table: 'tg_accounts', key: 'tg_id', mail: 'tg' };
-    const name = [u.first_name, u.last_name].filter(Boolean).join(' ').slice(0, 24) || (u as any).username || (vk ? 'VK' : 'Telegram');
+    const T = max ? { table: 'max_accounts', key: 'max_id', mail: 'max' } : vk ? { table: 'vk_accounts', key: 'vk_id', mail: 'vk' } : { table: 'tg_accounts', key: 'tg_id', mail: 'tg' };
+    const name = [u.first_name, u.last_name].filter(Boolean).join(' ').slice(0, 24) || (u as any).username || (max ? 'MAX' : vk ? 'VK' : 'Telegram');
     const url = Deno.env.get('SUPABASE_URL')!, opts = { auth: { persistSession: false, autoRefreshToken: false } };
     const db = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, opts);
     const { data: link } = await db.from(T.table).select('user_id').eq(T.key, u.id).maybeSingle();
