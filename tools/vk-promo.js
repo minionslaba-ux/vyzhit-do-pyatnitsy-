@@ -55,15 +55,18 @@ const bars = (vals = [38, 62, 85, 48], h = 230) => `<div class="vbars">${[['Ку
     console.log('✓', name);
   };
 
-  // Обложка 1920×768: всё важное — в центре (на телефоне ВК показывает середину), сверху не ближе 140px
+  // Обложка 1920×768: всё важное — в центре (на телефоне ВК показывает середину), сверху не ближе 140px.
+  // Без адреса сайта (правила VK Mini Apps 4.1.8): игра запускается из меню группы / кнопкой действия
   await shot('cover-1920x768.png', 1920, 768, `
     <div style="position:absolute;left:330px;top:140px;width:820px">
       <div class="kick" style="font-size:22px;margin-bottom:22px">офисная игра от выгорания</div>
       <div class="t1" style="font-size:84px">Выжить</div><div class="t2" style="font-size:84px;margin-top:8px;white-space:nowrap">до пятницы</div>
       <p class="sub" style="font-size:29px;margin-top:28px">25 решений с понедельника 9:00 до пятницы 18:00.<br>Держите Кукуху, Энергию, Босса и Коллег в балансе.</p>
-      <div class="url" style="font-size:30px;margin-top:28px">survivefriday.com</div>
+      <div style="display:inline-block;margin-top:30px;padding:14px 34px;border-radius:999px;background:#d4ff3a;color:#111;font-family:Unbounded,sans-serif;font-size:28px;box-shadow:0 0 28px rgba(212,255,58,.55)">▶ ИГРАТЬ — В МЕНЮ ГРУППЫ</div>
     </div>
     <div style="position:absolute;left:1210px;top:180px">${bars([38, 62, 85, 48], 330)}</div>`);
+
+  if (process.argv[2] === 'cover') { await b.close(); return; }  // node tools/vk-promo.js cover — только обложка
 
   // Аватар 800×800 (ВК обрежет в круг): значок игры с запасом от краёв
   await shot('avatar-800.png', 800, 800, `
