@@ -1,0 +1,6 @@
+{
+  "name": "vdp-tools",
+  "private": true,
+  "description": "Инструменты сборки: esbuild — копия игры для старых браузеров (tools/make-legacy.js)",
+  "devDependencies": { "esbuild": "0.21.5" }
+}

@@ -1,0 +1,359 @@
+/* сгенерировано tools/make-legacy.js из js/break.js — не править */
+const BREAK_CATS = [
+  ["logic", "♟️", L("Логика и настольные", "Logic & board")],
+  ["puzzle", "🧩", L("Пазлы и картинки", "Puzzles")],
+  ["arcade", "🕹️", L("Аркады и реакция", "Arcade")],
+  ["words", "🔤", L("Слова и знания", "Words & trivia")],
+  ["memory", "🧠", L("Память и внимание", "Memory & focus")],
+  ["relax", "🌿", L("Расслабление", "Relax")]
+];
+const BREAKS = [
+  [1, "logic", "⛀", L("Шашки против Босса", "Checkers vs the Boss"), L("Русские шашки с ИИ: стажёр, мидл, директор", "Checkers with an AI: intern, mid, director")],
+  [2, "logic", "🔺", L("Уголки с коллегой", "Corners"), L("Переставьте фишки в противоположный угол быстрее соперника", "Move your pieces to the opposite corner first")],
+  [3, "logic", "❌", L("5 в ряд с Бухгалтером", "Five in a row"), L("Крестики-нолики на большом поле до пяти в ряд", "Tic-tac-toe on a big board, five in a row")],
+  [4, "logic", "📎", L("Офисное судоку", "Office sudoku"), L("Судоку 4×4 и 6×6 с офисными значками", "4×4 and 6×6 sudoku with office icons")],
+  [5, "logic", "🗂️", L("Пятнашки «Разобрать стол»", "Sliding desk"), L("Расставьте документы по порядку", "Put the documents in order")],
+  [6, "logic", "🍪", L("Последняя печенька", "The last cookie"), L("Берите печенье по очереди — последнее забирает проигравший", "Take turns — whoever takes the last cookie loses")],
+  [7, "logic", "🪑", L("Захват переговорки", "Meeting room takeover"), L("Перекрашивайте стулья в свой цвет, окружая чужие", "Flip chairs to your colour by flanking them")],
+  [8, "logic", "✍️", L("Согласование", "Approval chain"), L("Проведите документ через цепочку подписей", "Route the document through the signatures")],
+  [9, "logic", "🚰", L("Путь к кулеру", "Path to the cooler"), L("Лабиринт — новый каждый день", "A new maze every day")],
+  [10, "logic", "📚", L("Стопки отчётов", "Report stacks"), L("Переложите стопку: большая папка не ложится на маленькую", "Move the stack: never a big folder on a small one")],
+  [11, "puzzle", "🧩", L("Пазл «Корпоратив»", "Office party puzzle"), L("Соберите офисную сцену из 9, 16 или 25 кусочков", "Assemble an office scene from 9, 16 or 25 pieces")],
+  [12, "puzzle", "🧍", L("Пазл с вашим персонажем", "Your character puzzle"), L("Портрет вашего персонажа рассыпался на кусочки", "Your character’s portrait is in pieces")],
+  [13, "puzzle", "🔍", L("Найди 10 отличий", "Spot the difference"), L("Два снимка одного кабинета — найдите отличия", "Two pictures of an office — find the differences")],
+  [14, "puzzle", "📎", L("Где степлер?", "Where’s the stapler?"), L("Найдите предмет в захламлённом опенспейсе", "Find the item in a cluttered open space")],
+  [15, "puzzle", "🔌", L("Собери кабель", "Wire it up"), L("Поверните плитки, чтобы ток дошёл до принтера", "Rotate tiles so power reaches the printer")],
+  [16, "puzzle", "🚿", L("Трубы кулера", "Cooler pipes"), L("Соедините трубы от бутыли к стаканам", "Connect the pipes from the bottle to the cups")],
+  [17, "puzzle", "🔷", L("Танграм «Логотип»", "Logo tangram"), L("Сложите силуэт из семи фигур", "Make the silhouette from seven pieces")],
+  [18, "puzzle", "🎨", L("Раскраска по номерам", "Paint by numbers"), L("Раскрасьте пиксельный портрет начальника", "Colour the pixel portrait of the boss")],
+  [19, "puzzle", "🟨", L("Сложи стикеры", "Sticky notes fit"), L("Заполните доску стикерами разной формы без зазоров", "Fill the board with sticky notes, no gaps")],
+  [20, "puzzle", "▦", L("Разбей таблицу", "Split the table"), L("Разделите поле на прямоугольники по числам", "Split the grid into rectangles by the numbers")],
+  [21, "arcade", "📦", L("Склад: уложи коробки", "Warehouse packing"), L("Коробки с конвейера — в кузов; полный ряд — фура уезжает", "Pack boxes into the truck; a full row ships")],
+  [22, "arcade", "☕", L("Поймай кофе", "Catch the coffee"), L("Ловите падающие чашки подносом", "Catch falling cups with a tray")],
+  [23, "arcade", "🏃", L("Увернись от дедлайнов", "Dodge the deadlines"), L("Бегите по коридору, перепрыгивая папки", "Run the corridor, jump over folders")],
+  [24, "arcade", "📧", L("Отбей спам", "Spam swatter"), L("Тапайте только по спаму", "Tap only the spam")],
+  [25, "arcade", "🦟", L("Муха на совещании", "Meeting fly"), L("Прихлопните муху, не задев коллег", "Swat the fly, not your coworkers")],
+  [26, "arcade", "💺", L("Прыжки по креслам", "Chair jump"), L("Бесконечный подъём по офисным креслам", "An endless climb up office chairs")],
+  [27, "arcade", "✈️", L("Бумажный самолётик", "Paper plane"), L("Пролетите между лампами опенспейса", "Fly between the open-space lamps")],
+  [28, "arcade", "🗑️", L("Баскетбол в мусорку", "Bin basketball"), L("Закиньте бумажку с поправкой на кондиционер", "Throw paper balls, mind the air conditioner")],
+  [29, "arcade", "🎳", L("Офисный боулинг", "Office bowling"), L("Бутылкой — по кеглям из стаканчиков", "Knock down cup pins with a bottle")],
+  [30, "arcade", "⏱️", L("Ровно в 18:00", "Exactly 6 PM"), L("Остановите полоску ровно на 18:00", "Stop the bar exactly at 6 PM")],
+  [31, "words", "⌨️", L("Офисные слова", "Office words"), L("Составьте слова из данных букв", "Make words from the given letters")],
+  [32, "words", "🟩", L("Слово дня", "Word of the day"), L("Угадайте слово за 6 попыток — одно для всех", "Guess the word in 6 tries — same for everyone")],
+  [33, "words", "✏️", L("Кроссворд «Жаргон»", "Jargon crossword"), L("Мини-кроссворд из офисного сленга", "A mini crossword of office slang")],
+  [34, "words", "🔀", L("Анаграммы профессий", "Job anagrams"), L("ЕЛЕТКРИ → электрик", "Unscramble the profession")],
+  [35, "words", "📝", L("Письмо босса", "Boss’s email"), L("Восстановите фразу по пропущенным буквам", "Restore the phrase from missing letters")],
+  [36, "words", "🔠", L("Найди слова", "Word search"), L("Офисные слова в сетке букв", "Office words hidden in a letter grid")],
+  [37, "words", "💬", L("Собери пословицу", "Proverb builder"), L("Соберите офисную пословицу из перемешанных слов", "Rebuild an office proverb")],
+  [38, "words", "❓", L("Блиц-викторина", "Blitz quiz"), L("10 вопросов за 60 секунд", "10 questions in 60 seconds")],
+  [39, "memory", "📇", L("Мемори «Визитки»", "Business card memory"), L("Найдите пары одинаковых визиток", "Find matching business cards")],
+  [40, "memory", "🔁", L("Повтори за боссом", "Simon says Boss"), L("Повторите растущую последовательность", "Repeat the growing sequence")],
+  [41, "memory", "🖥️", L("Запомни стол", "Remember the desk"), L("Что исчезло со стола?", "What vanished from the desk?")],
+  [42, "memory", "📮", L("Сортировка почты", "Mail sorting"), L("Раскладывайте письма по папкам на время", "Sort the mail into folders against the clock")],
+  [43, "memory", "🎨", L("Цветная путаница", "Colour clash"), L("Нажмите цвет надписи, а не слово", "Tap the ink colour, not the word")],
+  [44, "memory", "🧮", L("Бухгалтерия в уме", "Mental accounting"), L("Примеры на время, сложность растёт", "Quick sums, growing harder")],
+  [45, "memory", "🙃", L("Кто лишний", "Odd one out"), L("Из четырёх предметов найдите неподходящий", "Find the one that doesn’t belong")],
+  [46, "relax", "🌬️", L("Дыхание перед планёркой", "Breathing break"), L("Минута спокойного дыхания", "A minute of calm breathing")],
+  [47, "relax", "🌿", L("Цветок на подоконнике", "Window plant"), L("Поливайте — растёт с каждым днём", "Water it — it grows every day")],
+  [48, "relax", "🐈", L("Погладь кота", "Pet the cat"), L("Ваш питомец мурчит и радуется", "Your pet purrs with joy")],
+  [49, "relax", "🧼", L("Пупырка", "Bubble wrap"), L("Лопайте пузырики — просто так", "Pop the bubbles — just because")],
+  [50, "relax", "🏯", L("Дзен-сад", "Zen garden"), L("Рисуйте граблями узоры на песке", "Rake patterns in the sand")],
+  // 51 — «Минута дыхания» (js/pause.js); 52–54 — js/break/b6.js
+  [52, "arcade", "🗄️", L("Кофе против завала", "Coffee vs the pile-up"), L("Разгребайте падающие задачи, а кофе — на крайний случай", "Clear the falling tasks — coffee is your last resort")],
+  [53, "logic", "🙈", L("Прятки от коллег", "Hide from coworkers"), L("Проберитесь на кухню, не попавшись на «есть минутка?»", "Sneak to the kitchen without a “got a minute?”")],
+  [54, "memory", "🧐", L("Умный вид на созвоне", "Look smart on the call"), L("Кивайте вовремя, не засыпайте и не вызывайтесь добровольцем", "Nod on cue, stay awake, never volunteer")]
+];
+window.BREAK_IMPL = window.BREAK_IMPL || {};
+const BREAK_FILE = (n) => "js/break/b".concat(Math.ceil(n / 10), ".js");
+const BREAK_DAY_REWARDS = 3, BREAK_BUFF = 5, BREAK_BUFF_MAX = 15;
+const brkBest = () => store.get("vdp-break-best", {});
+const brkToday = () => {
+  const t = store.get("vdp-break-day", {});
+  return t.day === today() ? t : { day: today(), n: 0 };
+};
+const brkLoaded = {};
+const brkLoad = (n) => {
+  const f = BREAK_FILE(n);
+  return brkLoaded[f] || (brkLoaded[f] = new Promise((ok, fail) => {
+    const s = Object.assign(document.createElement("script"), { src: f });
+    s.onload = ok;
+    s.onerror = () => {
+      delete brkLoaded[f];
+      fail(new Error("load"));
+    };
+    document.head.append(s);
+  }));
+};
+function openBreaks() {
+  const m = $("modal"), best = brkBest(), t = brkToday();
+  m.innerHTML = '<div class="modal-box glass brk-box" role="dialog" aria-modal="true" aria-labelledby="brkTitle">\n    <h2 id="brkTitle">☕ '.concat(L("Разминка", "Break time"), '</h2>\n    <p class="hero-lead">').concat(L("Мини-игры для перерыва. Награда — ещё ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " из ").concat(BREAK_DAY_REWARDS, " сегодня: +1 у.е. и бодрость на следующую неделю (+").concat(BREAK_BUFF, " к Энергии и Кукухе)."), "Mini-games for your break. Rewards left today: ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " of ").concat(BREAK_DAY_REWARDS, " — +$1 and a boost for next week (+").concat(BREAK_BUFF, " Energy and Sanity)."))).concat(prefs.breakBuff ? " <b>".concat(L("Бодрость: +".concat(prefs.breakBuff), "Boost: +".concat(prefs.breakBuff)), "</b>") : "", "</p>\n    ").concat(BREAK_CATS.map(([c, ico, name]) => '<h3 class="hs-h">'.concat(ico, " ").concat(esc(name), '</h3><div class="brk-grid">').concat(BREAKS.filter((b) => b[1] === c).map(([n, , i, title]) => '<button type="button" class="brk-card brk-c-'.concat(c, '" data-brk="').concat(n, '" style="animation-delay:').concat(n % 10 * 25, 'ms"><span class="brk-ico" aria-hidden="true">').concat(i, "</span><b>").concat(esc(title), "</b>").concat(best[n] != null ? "<small>🏆 ".concat(esc(String(best[n])), "</small>") : "", "</button>")).join(""), "</div>")).join(""), '\n    <button class="btn-ghost" type="button" id="brkClose">').concat(L("Закрыть", "Close"), "</button></div>");
+  m.hidden = false;
+  m.querySelectorAll("[data-brk]").forEach((b) => b.onclick = () => {
+    m.hidden = true;
+    playBreak(+b.dataset.brk);
+  });
+  $("brkClose").onclick = () => {
+    m.hidden = true;
+  };
+  track("break_open");
+}
+async function playBreak(n, opts = {}) {
+  var _a;
+  const meta = BREAKS.find((b) => b[0] === n);
+  if (!meta) return;
+  const over = Object.assign(document.createElement("div"), { className: "brk-over", role: "dialog" });
+  over.innerHTML = '<div class="brk-head"><button type="button" class="btn-chip" id="brkBack">← '.concat(L("Разминка", "Breaks"), "</button><b>").concat(meta[2], " ").concat(esc(meta[3]), '</b><span class="brk-best" id="brkBest"></span></div>\n    <p class="brk-desc">').concat(esc(meta[4]), '</p><div class="brk-root" id="brkRoot"><p class="brk-load">').concat(L("Загружаю…", "Loading…"), '</p></div><div class="brk-result" id="brkResult" hidden></div>');
+  document.body.append(over);
+  const cleanups = [];
+  let ended = false;
+  const close = () => {
+    cleanups.splice(0).forEach((f) => {
+      try {
+        f();
+      } catch (e) {
+      }
+    });
+    over.remove();
+  };
+  const then = opts.then;
+  if (then) over.querySelector("#brkBack").innerHTML = L("Пропустить →", "Skip →");
+  over.querySelector("#brkBack").onclick = () => {
+    close();
+    then ? then() : openBreaks();
+  };
+  const best = brkBest()[n];
+  over.querySelector("#brkBest").textContent = best != null ? "🏆 ".concat(best) : "";
+  try {
+    if (!window.BREAK_IMPL[n]) await brkLoad(n);
+  } catch (e) {
+    over.querySelector("#brkRoot").innerHTML = '<p class="brk-load">'.concat(L("Не удалось загрузить — проверьте интернет", "Couldn’t load — check your connection"), "</p>");
+    return;
+  }
+  const impl = window.BREAK_IMPL[n];
+  if (!impl) {
+    over.querySelector("#brkRoot").innerHTML = '<p class="brk-load">'.concat(L("Скоро будет!", "Coming soon!"), "</p>");
+    return;
+  }
+  const root = over.querySelector("#brkRoot");
+  root.innerHTML = "";
+  track("break_play", { detail: String(n) });
+  const api = {
+    L,
+    esc,
+    sfx,
+    buzz,
+    rnd,
+    shuffle,
+    EN,
+    toast,
+    rng: Math.random,
+    daySeed: (salt = "") => seeded("brk-".concat(n, "-").concat(today(), "-").concat(salt)),
+    // одинаковая задача дня для всех
+    best,
+    // прежний рекорд (или undefined)
+    hero: ((_a = careerNow()) == null ? void 0 : _a.hero) || null,
+    // персонаж, его питомцы и дети — для игр 12, 48
+    onExit: (fn) => cleanups.push(fn),
+    // Конец партии. score — число очков (больше — лучше) или null; lowerBetter — рекорд по минимуму (время, ходы)
+    end({ score = null, won = true, text = "", lowerBetter = false } = {}) {
+      if (ended) return;
+      ended = true;
+      cleanups.splice(0).forEach((f) => {
+        try {
+          f();
+        } catch (e) {
+        }
+      });
+      const b = brkBest(), had = b[n] != null;
+      let rec = false;
+      if (score != null && won && (b[n] == null || (lowerBetter ? score < b[n] : score > b[n]))) {
+        b[n] = score;
+        store.set("vdp-break-best", b);
+        rec = true;
+      }
+      const t = brkToday();
+      let reward = "";
+      if (won && t.n < BREAK_DAY_REWARDS) {
+        t.n++;
+        store.set("vdp-break-day", t);
+        prefs.breakBuff = Math.min(BREAK_BUFF_MAX, (prefs.breakBuff || 0) + BREAK_BUFF);
+        store.set(KEY.prefs, prefs);
+        const now = addCash(1);
+        renderBreakDay();
+        reward = L("+1 у.е.".concat(now ? "" : " (придут в карьеру)", " · бодрость +").concat(BREAK_BUFF, " на следующую неделю"), "+$1".concat(now ? "" : " (goes to your career)", " · +").concat(BREAK_BUFF, " boost for next week"));
+      }
+      track("break_end", { detail: "".concat(n, ":").concat(won ? 1 : 0, ":").concat(score != null ? score : "") });
+      bus.emit("breakEnd", { n, won, rewarded: !!reward, rec, mid: !!opts.mid });
+      if (rec && had) track("break_record", { detail: "".concat(n, ":").concat(score) });
+      const show = () => {
+        var _a2, _b;
+        won ? (_a2 = sfx.win) == null ? void 0 : _a2.call(sfx) : (_b = sfx.lose) == null ? void 0 : _b.call(sfx);
+        const r = over.querySelector("#brkResult");
+        r.innerHTML = "<b>".concat(won ? rec ? L("🏆 Новый рекорд!", "🏆 New record!") : L("✅ Готово!", "✅ Done!") : L("Не получилось", "Not this time"), "</b>\n        ").concat(text ? "<p>".concat(text, "</p>") : "").concat(score != null ? "<p>".concat(L("Результат", "Score"), ": <b>").concat(esc(String(score)), "</b></p>") : "").concat(reward ? '<p class="brk-reward">🎁 '.concat(reward, "</p>") : won ? '<p class="brk-note">'.concat(L("Награды на сегодня собраны — играйте для рекордов", "Today’s rewards are collected — play for records"), "</p>") : "", "\n        ").concat(then ? '<button class="btn-main" type="button" id="brkGo">'.concat(L("За работу →", "Back to work →"), "</button>") : '<div class="row2"><button class="btn-main" type="button" id="brkAgain">'.concat(L("Ещё раз", "Again"), '</button><button class="btn-ghost" type="button" id="brkList">').concat(L("Другие разминки", "Other games"), "</button></div>"), "\n        ").concat(won && n !== 51 ? '<div class="brk-share" aria-label="'.concat(L("Поделиться результатом", "Share your score"), '"><span aria-hidden="true">📣</span><button type="button" data-sh="tg">Telegram</button><button type="button" data-sh="vk" class="sh-vk">').concat(L("ВКонтакте", "VK"), '</button><button type="button" data-sh="more">').concat(L("Ещё…", "More…"), "</button></div>") : "");
+        r.hidden = false;
+        r.classList.toggle("brk-win", !!won);
+        r.querySelectorAll("[data-sh]").forEach((btn) => btn.onclick = () => brkShare(n, score, rec, btn.dataset.sh));
+        if (won && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const cf = Object.assign(document.createElement("div"), { className: "brk-conf" }), cols = ["#ff3bd4", "#2de2e6", "#d4ff3a", "#ffaa28", "#b26bff"];
+          for (let i = 0; i < 40; i++) {
+            const e = document.createElement("i");
+            e.style.cssText = "left:".concat(Math.random() * 100, "%;background:").concat(cols[i % 5], ";animation-duration:").concat(1.4 + Math.random() * 1.4, "s;animation-delay:").concat(Math.random() * 0.4, "s");
+            cf.append(e);
+          }
+          over.append(cf);
+          setTimeout(() => cf.remove(), 3400);
+        }
+        if (then) {
+          r.querySelector("#brkGo").onclick = () => {
+            close();
+            then();
+          };
+          return;
+        }
+        r.querySelector("#brkAgain").onclick = () => {
+          close();
+          playBreak(n);
+        };
+        r.querySelector("#brkList").onclick = () => {
+          close();
+          openBreaks();
+        };
+      };
+      if (typeof adWatch === "function" && adOn() && !window.VK_MINI && !prefs.paidUser && !(typeof noAdsOn === "function" && noAdsOn())) setTimeout(() => adWatch(() => show(), { forced: true, why: "break" }), 700);
+      else show();
+    }
+  };
+  try {
+    impl(root, api);
+  } catch (e) {
+    root.innerHTML = '<p class="brk-load">'.concat(L("Ошибка игры", "Game error"), "</p>");
+    console.error(e);
+  }
+}
+async function brkShare(n, score, rec, via) {
+  var _a, _b;
+  const meta = BREAKS.find((b) => b[0] === n);
+  if (!meta) return;
+  const title = "".concat(meta[2], " ").concat(meta[3]);
+  const text = score != null ? L("".concat(rec ? "Новый рекорд" : "Мой результат", " в «").concat(title, "» — ").concat(score, "! Сможешь лучше? Мини-игра для перерыва в «Выжить до пятницы»:"), "".concat(rec ? "New record" : "My score", " in “").concat(title, "”: ").concat(score, "! Can you beat it? A break-time mini-game in Survive till Friday:")) : L("Прошёл(а) «".concat(title, "» — попробуй и ты! Мини-игра для перерыва в «Выжить до пятницы»:"), "Beat “".concat(title, "” — your turn! A break-time mini-game in Survive till Friday:"));
+  const ref = typeof myTag !== "undefined" && typeof shortId === "function" ? shortId(await myTag) : "";
+  const tg = (_a = window.SUPABASE_CONFIG) == null ? void 0 : _a.telegram;
+  const tgLink = (tg == null ? void 0 : tg.bot) ? "https://t.me/".concat(tg.bot).concat(tg.app ? "/".concat(tg.app) : "", "?startapp=brk-").concat(n).concat(ref ? "_ref-".concat(ref) : "") : "";
+  const site = "".concat(typeof gameUrl === "function" ? gameUrl() : "https://survivefriday.com/", "?brk=").concat(n).concat(ref ? "&ref=".concat(ref) : "");
+  track("share", { detail: "break:".concat(n, ":").concat(via) });
+  const enc = encodeURIComponent;
+  if (via === "tg") {
+    const u = "https://t.me/share/url?url=".concat(enc(tgLink || site), "&text=").concat(enc(text));
+    (TG == null ? void 0 : TG.openTelegramLink) ? TG.openTelegramLink(u) : window.open(u, "_blank", "noopener");
+  } else if (via === "vk") vkShare(site, text, "break");
+  else if (navigator.share && !TG) navigator.share({ title: L("Выжить до пятницы", "Survive till Friday"), text, url: site }).catch(() => {
+  });
+  else (_b = navigator.clipboard) == null ? void 0 : _b.writeText("".concat(text, " ").concat(tgLink || site)).then(() => toast(L("Ссылка скопирована — вставьте её в чат", "Link copied — paste it into a chat")), () => toast("".concat(text, " ").concat(site)));
+}
+bus.on("deck", (S2) => {
+  if (S2.mode !== "career" || !prefs.breakBuff) return;
+  const b = prefs.breakBuff;
+  prefs.breakBuff = 0;
+  store.set(KEY.prefs, prefs);
+  S2.res.energy = Math.min(95, S2.res.energy + b);
+  S2.res.psyche = Math.min(95, S2.res.psyche + b);
+  setTimeout(() => toast(L("☕ Бодрость после разминок: Энергия и Кукуха +".concat(b), "☕ Break boost: Energy and Sanity +".concat(b))), 1600);
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const b = $("openBreaks");
+  if (b) b.onclick = openBreaks;
+});
+if (document.readyState !== "loading") {
+  const b = $("openBreaks");
+  if (b) b.onclick = openBreaks;
+}
+const BREAK_QUICK = [5, 6, 22, 24, 28, 30, 34, 39, 41, 43, 44, 45, 49];
+const brkPick = () => {
+  const left = BREAK_QUICK.filter((n2) => n2 !== prefs.brkLast);
+  const n = left[Math.floor(Math.random() * left.length)];
+  prefs.brkLast = n;
+  store.set(KEY.prefs, prefs);
+  return n;
+};
+const brkTitle = (n) => {
+  const b = BREAKS.find((x) => x[0] === n);
+  return "".concat(b[2], " ").concat(b[3]);
+};
+function breakBeforeWeek(go) {
+  if (views.end.hidden || (prefs.gamesPlayed || 0) < 2 || typeof guestLocked === "function" && guestLocked()) return go();
+  prefs.brkWeeks = (prefs.brkWeeks || 0) + 1;
+  store.set(KEY.prefs, prefs);
+  if (prefs.brkWeeks % 3) return go();
+  const n = brkPick(), m = $("modal");
+  m.innerHTML = '<div class="modal-box glass cert-box" role="dialog" aria-modal="true" aria-labelledby="bwTitle"><span class="lvl-ico" aria-hidden="true">☕</span>\n    <h2 id="bwTitle">'.concat(L("Разминка перед неделей", "Warm-up before the week"), "</h2>\n    <p>").concat(L("Минутка на перерыв — и за работу. Сегодня:", "A quick break, then back to work. Today:"), " <b>").concat(esc(brkTitle(n)), '</b></p>\n    <button class="btn-main" type="button" id="bwGo">').concat(L("Начать", "Start"), ' <small id="bwT">3</small></button>\n    <button class="btn-link" type="button" id="bwSkip">').concat(L("Пропустить", "Skip"), "</button></div>");
+  m.hidden = false;
+  let k = 3, fired = false;
+  const run = () => {
+    if (fired) return;
+    fired = true;
+    clearInterval(t);
+    m.hidden = true;
+    track("break_week", { detail: String(n) });
+    playBreak(n, { then: go });
+  };
+  const t = setInterval(() => {
+    k--;
+    if ($("bwT")) $("bwT").textContent = k;
+    if (k <= 0) run();
+  }, 1e3);
+  $("bwGo").onclick = run;
+  $("bwSkip").onclick = () => {
+    fired = true;
+    clearInterval(t);
+    m.hidden = true;
+    track("break_week_skip");
+    go();
+  };
+}
+if (typeof window.startWeek === "function") {
+  const sw1 = window.startWeek;
+  window.startWeek = function(...a) {
+    return breakBeforeWeek(() => sw1.apply(this, a));
+  };
+}
+bus.on("weekEnd", (x) => {
+  if (x.mode !== "career" || prefs.brkNoAsk || brkToday().n >= BREAK_DAY_REWARDS) return;
+  const d = store.get("vdp-break-ask", {}), td = today();
+  if (Date.now() - (d.at || 0) < 20 * 60 * 1e3 || d.day === td && d.n >= 3) return;
+  setTimeout(() => {
+    const st = views.end.querySelector(".end-sheet .stack");
+    if (!st || views.end.hidden || st.querySelector(".brk-offer")) return;
+    store.set("vdp-break-ask", { at: Date.now(), day: td, n: d.day === td ? (d.n || 0) + 1 : 1 });
+    const n = brkPick(), tired = x.res && (x.res.energy < 30 || x.res.psyche < 30);
+    st.insertAdjacentHTML("afterbegin", '<div class="brk-offer"><button class="btn-ghost btn-break" type="button" data-brk-go="'.concat(n, '">').concat(tired ? L("😮‍💨 Вы на нуле — разомнитесь: ".concat(esc(brkTitle(n)), " (+").concat(BREAK_BUFF, " бодрости)"), "😮‍💨 Running on empty — take a break: ".concat(esc(brkTitle(n)), " (+").concat(BREAK_BUFF, " boost)")) : L("☕ Перерыв? ".concat(esc(brkTitle(n)), " — +1 у.е."), "☕ Break? ".concat(esc(brkTitle(n)), " — +$1")), '</button><button class="brk-x" type="button" aria-label="').concat(L("Не предлагать", "Don’t offer"), '" title="').concat(L("Больше не предлагать", "Don’t offer again"), '">×</button></div>'));
+    const o = st.querySelector(".brk-offer");
+    o.querySelector("[data-brk-go]").onclick = () => {
+      o.remove();
+      track("break_offer_go", { detail: String(n) });
+      playBreak(n);
+    };
+    o.querySelector(".brk-x").onclick = () => {
+      o.remove();
+      prefs.brkNoAsk = true;
+      store.set(KEY.prefs, prefs);
+      toast(L("Хорошо, не будем предлагать. Разминка — в меню.", "Okay, no more offers. Breaks are in the menu."));
+    };
+  }, 1800);
+});
+const brkOfDay = () => BREAK_QUICK[Math.floor(seeded("brk-day-".concat(today()))() * BREAK_QUICK.length)];
+function renderBreakDay() {
+  const box = $("brkDay");
+  if (!box) return;
+  const n = brkOfDay(), b = BREAKS.find((x) => x[0] === n);
+  if (!b) return;
+  const left = BREAK_DAY_REWARDS - brkToday().n, best = brkBest()[n], cat = BREAK_CATS.find((c) => c[0] === b[1]);
+  const badge = left > 0 ? '<span class="bd-badge">'.concat(L("🎁 +1 у.е. · ⚡ бодрость", "🎁 +$1 · ⚡ boost"), "</span>") : best != null ? '<span class="bd-badge bd-rec">🏆 '.concat(esc(String(best)), "</span>") : "";
+  box.innerHTML = '<button type="button" class="bd-card brk-c-'.concat(b[1], '" id="brkDayGo">\n      <span class="bd-ico" aria-hidden="true">').concat(b[2], '</span>\n      <span class="bd-txt"><small class="bd-kick">☕ ').concat(L("Разминка дня", "Break of the day")).concat(cat ? " · ".concat(esc(cat[2])) : "", "</small><b>").concat(esc(b[3]), '</b><span class="bd-desc">').concat(esc(b[4]), "</span></span>\n      ").concat(badge, '<span class="bd-play" aria-hidden="true">▶</span></button>\n    <button type="button" class="btn-link bd-all" id="openBreaks">').concat(L("Все ".concat(BREAKS.length, " разминок →"), "All ".concat(BREAKS.length, " breaks →")), "</button>");
+  $("brkDayGo").onclick = () => {
+    track("break_day", { detail: String(n) });
+    playBreak(n);
+  };
+  $("openBreaks").onclick = openBreaks;
+}
+bus.on("menu", renderBreakDay);
+renderBreakDay();

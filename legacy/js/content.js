@@ -1,0 +1,952 @@
+/* сгенерировано tools/make-legacy.js из js/content.js — не править */
+const DEATH_HIGH = {
+  psyche: { title: L("Кукуха 100%", "Sanity 100%"), text: L("Вы достигли просветления: перестали отвечать на письма, повесили табличку «Не беспокоить, я в моменте» и ушли медитировать в переговорку. Навсегда.", "You've reached enlightenment: stopped answering emails, hung a \"Do not disturb, I'm in the moment\" sign and went to meditate in the conference room. Forever.") },
+  energy: { title: L("Энергия 100%", "Energy 100%"), text: L("Гиперактивность. Вы переделали работу всего отдела, сломали кофемашину и заставили всех делать зарядку. Вас попросили отдохнуть — на другой работе.", "Hyperactivity. You redid the whole department's work, broke the coffee machine and made everyone do morning stretches. You were asked to take a rest — at another company.") },
+  boss: { title: L("Босс 100%", "Boss 100%"), text: L("Босс в таком восторге, что назначил вас ответственным за всё. Теперь у вас 14 проектов, три отдела и ни одного выходного. Это хуже увольнения.", "The Boss is so thrilled they put you in charge of everything. Now you have 14 projects, three departments and zero weekends. That's worse than getting fired.") },
+  colleagues: { title: L("Коллеги 100%", "Team 100%"), text: L("Вы стали душой компании и теперь возглавляете все корпоративы, дни рождения и тимбилдинги. На работу времени не осталось — её отдали другому.", "You became the life of the office and now run every party, birthday and team-building event. No time left for actual work — so they gave it to someone else.") }
+};
+const CHAINS = [
+  {
+    from: "mon_morning",
+    side: "right",
+    at: { day: "Четверг", phase: "День" },
+    origin: L("Понедельник: «Я возьмусь!»", 'Monday: "I\'ll take it!"'),
+    card: {
+      id: "chain_hot_deadline",
+      who: L("Босс", "Boss"),
+      text: L("Помните «горящую» задачу коллеги, которую вы героически взяли в понедельник? Её дедлайн — сегодня. Готово процентов тридцать.", "Remember that colleague's \"urgent\" task you heroically grabbed on Monday? It's due today. It's about thirty percent done."),
+      answers: {
+        left: { label: L("Честно попросить перенос", "Honestly ask for an extension"), effects: { psyche: 5, energy: 5, boss: -15, colleagues: 0 } },
+        right: { label: L("Сидеть до ночи, но сдать", "Pull an all-nighter and ship it"), effects: { psyche: -10, energy: -20, boss: 20, colleagues: 5 } }
+      }
+    }
+  },
+  {
+    from: "mon_day",
+    side: "left",
+    at: { day: "Вторник", phase: "День" },
+    origin: L("Понедельник: пицца с именинником", "Monday: birthday pizza"),
+    card: {
+      id: "chain_cake",
+      who: L("Коллега", "Colleague"),
+      text: L("Вчерашний именинник запомнил, как вы его поздравили, и принёс вам лично последний кусок торта.", "Yesterday's birthday guy remembered your kind words and brought you the last slice of cake. Personally."),
+      answers: {
+        left: { label: L("Отказаться, я на диете", "No thanks, I'm on a diet"), effects: { psyche: -5, energy: 0, boss: 0, colleagues: -5 } },
+        right: { label: L("Съесть с благодарностью", "Eat it gratefully"), effects: { psyche: 10, energy: 10, boss: -5, colleagues: 10 } }
+      }
+    }
+  },
+  {
+    from: "tue_day",
+    side: "right",
+    at: { day: "Пятница", phase: "Утро" },
+    origin: L("Вторник: спор с клиентом", "Tuesday: arguing with a client"),
+    card: {
+      id: "chain_client_complaint",
+      who: L("Клиент", "Client"),
+      text: L("Клиент, которого вы во вторник размотали аргументами, пожаловался генеральному директору. Письмо в копии у всего отдела.", "The client you demolished with arguments on Tuesday complained to the CEO. The whole department is cc'd."),
+      answers: {
+        left: { label: L("Извиниться и сгладить", "Apologize and smooth it over"), effects: { psyche: -15, energy: -5, boss: 10, colleagues: 0 } },
+        right: { label: L("Стоять на своём", "Stand your ground"), effects: { psyche: 10, energy: 0, boss: -20, colleagues: 10 } }
+      }
+    }
+  },
+  {
+    from: "wed_evening",
+    side: "left",
+    at: { day: "Четверг", phase: "Утро" },
+    origin: L("Среда: разгрузка склада", "Wednesday: unloading the warehouse"),
+    card: {
+      id: "chain_back",
+      who: L("Спина", "Back"),
+      text: L("После вечерней разгрузки склада спина не разгибается. А в девять утра уже планёрка.", "After last night's warehouse unloading, your back won't straighten. And stand-up is at 9 a.m."),
+      answers: {
+        left: { label: L("Работать стоя и терпеть", "Work standing and suffer"), effects: { psyche: -5, energy: -15, boss: 5, colleagues: 0 } },
+        right: { label: L("Отгул до обеда", "Take the morning off"), effects: { psyche: 5, energy: 15, boss: -15, colleagues: 0 } }
+      }
+    }
+  },
+  {
+    from: "thu_evening",
+    side: "left",
+    at: { day: "Пятница", phase: "Утро" },
+    origin: L("Четверг: бар с коллегами", "Thursday: drinks with the team"),
+    card: {
+      id: "chain_hangover",
+      who: L("Утро после бара", "Morning after the bar"),
+      text: L("Голова гудит после вчерашних «двух пив сразу», а в 9:00 стратегическая сессия у босса.", 'Your head is still pounding from last night\'s "just one more round", and the Boss has a strategy session at 9:00.'),
+      answers: {
+        left: { label: L("Прийти и молча кивать", "Show up and nod silently"), effects: { psyche: -10, energy: -15, boss: 5, colleagues: 5 } },
+        right: { label: L("Работать сегодня из дома", "Work from home today"), effects: { psyche: 5, energy: 10, boss: -15, colleagues: 0 } }
+      }
+    }
+  }
+];
+const WEEK_TYPES = {
+  normal: { title: L("Обычная неделя", "Regular week"), rule: L("Ничего особенного. Ну, почти.", "Nothing special. Well, almost."), rules: {} },
+  reports: {
+    title: L("Неделя отчётов", "Report week"),
+    rule: L("Конец квартала: всё про Босса весит в полтора раза больше, а на случайности нет времени.", "End of quarter: everything Boss-related weighs 1.5x more, and there's no time for random events."),
+    rules: { bossMul: 1.5, randomChance: 0 },
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "rep_template",
+        who: L("Босс", "Boss"),
+        text: L("Квартальный отчёт нужен к пятнице. Шаблон снова поменяли — теперь 40 вкладок.", "The quarterly report is due Friday. They changed the template again — it now has 40 tabs."),
+        answers: {
+          left: { label: L("Сделать в старом шаблоне", "Use the old template"), effects: { psyche: 5, energy: 5, boss: -15, colleagues: 0 } },
+          right: { label: L("Переделать в новом", "Redo it in the new one"), effects: { psyche: -5, energy: -15, boss: 15, colleagues: 0 } }
+        }
+      },
+      {
+        day: "Вторник",
+        phase: "Вечер",
+        id: "rep_kopeyki",
+        who: L("Бухгалтерия", "Accounting"),
+        text: L("Цифры в отчёте не сходятся на три копейки. Бухгалтерия не уйдёт домой, пока не найдёт их.", "The report is off by three cents. Accounting isn't going home until they find them."),
+        answers: {
+          left: { label: L("Округлить и забыть", "Round it and move on"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: -5 } },
+          right: { label: L("Искать копейки до ночи", "Hunt for cents all night"), effects: { psyche: -5, energy: -20, boss: 10, colleagues: 10 } }
+        }
+      },
+      {
+        day: "Четверг",
+        phase: "День",
+        id: "rep_copy",
+        who: L("Коллега", "Colleague"),
+        text: L("Коллега просит скопировать ваш раздел отчёта себе. «Мы же одна команда!»", 'A colleague asks to copy your section of the report into theirs. "We\'re one team, right?"'),
+        answers: {
+          left: { label: L("Нет, это моя работа", "No, that's my work"), effects: { psyche: 5, energy: 0, boss: 5, colleagues: -15 } },
+          right: { label: L("Бери, не жалко", "Take it, I don't mind"), effects: { psyche: -5, energy: 0, boss: -10, colleagues: 15 } }
+        }
+      },
+      {
+        day: "Пятница",
+        phase: "День",
+        id: "rep_slides",
+        who: L("Босс", "Boss"),
+        text: L("Отчёт сдан! Босс просит «пару слайдов» к нему для совета директоров. К понедельнику.", 'Report submitted! The Boss wants "a couple of slides" on it for the board. By Monday.'),
+        answers: {
+          left: { label: L("Сделаю в понедельник", "I'll do it on Monday"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: 0 } },
+          right: { label: L("Сделаю прямо сейчас", "I'll do it right now"), effects: { psyche: -10, energy: -15, boss: 15, colleagues: 0 } }
+        }
+      }
+    ]
+  },
+  vacation: {
+    title: L("Неделя перед отпуском", "Pre-vacation week"),
+    rule: L("Мысли уже на пляже: Энергия +10 на старте, минусы по Кукухе вдвое слабее, но случайностей больше.", "Your mind is already on the beach: +10 Energy at the start, Sanity hits are halved, but expect more random events."),
+    rules: { psycheNegMul: 0.5, randomChance: 30, start: { energy: 10 }, items: 2 },
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "vac_signed",
+        who: "HR",
+        text: L("Заявление на отпуск подписано! До свободы пять рабочих дней.", "Your vacation request is signed! Five workdays until freedom."),
+        answers: {
+          left: { label: L("Работать как обычно", "Work as usual"), effects: { psyche: -5, energy: 0, boss: 5, colleagues: 0 } },
+          right: { label: L("Мысленно уже на пляже", "Mentally on the beach"), effects: { psyche: 15, energy: 0, boss: -10, colleagues: 0 } }
+        }
+      },
+      {
+        day: "Среда",
+        phase: "День",
+        id: "vac_tails",
+        who: L("Босс", "Boss"),
+        text: L("«Перед отпуском закрой, пожалуйста, все хвосты». Хвостов — двадцать три.", '"Before you go, please tie up all the loose ends." There are twenty-three loose ends.'),
+        answers: {
+          left: { label: L("Закрыть самые важные", "Close the important ones"), effects: { psyche: 0, energy: -10, boss: 5, colleagues: 0 } },
+          right: { label: L("Закрыть все до одного", "Close every single one"), effects: { psyche: -10, energy: -25, boss: 20, colleagues: 0 } }
+        }
+      },
+      {
+        day: "Четверг",
+        phase: "Вечер",
+        id: "vac_souvenirs",
+        who: L("Коллеги", "Team"),
+        text: L("Коллеги просят привезти сувениры из отпуска. Всем. И чтобы не магнитики.", "The team wants souvenirs from your trip. For everyone. And no fridge magnets."),
+        answers: {
+          left: { label: L("Только магнитики", "Magnets only"), effects: { psyche: 5, energy: 0, boss: 0, colleagues: -5 } },
+          right: { label: L("Завести таблицу заказов", "Start an order spreadsheet"), effects: { psyche: -10, energy: -5, boss: 0, colleagues: 15 } }
+        }
+      },
+      {
+        day: "Пятница",
+        phase: "Вечер",
+        id: "vac_autoreply",
+        time: "17:30",
+        who: L("Почта", "Inbox"),
+        text: L("17:30. Последний час перед отпуском. Включить автоответ?", "5:30 p.m. The last hour before vacation. Turn on the out-of-office?"),
+        answers: {
+          left: { label: L("Ещё разок проверю почту", "Check email one more time"), effects: { psyche: -15, energy: -5, boss: 10, colleagues: 0 } },
+          right: { label: L("Автоответ и бегом", "Out-of-office and run"), effects: { psyche: 20, energy: 10, boss: -10, colleagues: 0 } }
+        }
+      }
+    ]
+  },
+  newboss: {
+    title: L("Неделя с новым боссом", "New boss week"),
+    rule: L("Новый босс непредсказуем: подсказки по шкале «Босс» скрыты, а сама шкала начинает с 50%.", "The new boss is unpredictable: Boss hints are hidden, and the Boss meter starts at 50%."),
+    rules: { hideBoss: true, bossStart: 50 },
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "nb_intro",
+        who: L("Новый босс", "New boss"),
+        text: L("Новый босс собирает всех и просит рассказать, «чем вы тут вообще занимаетесь».", 'The new boss gathers everyone and asks you to explain "what exactly you all do here".'),
+        answers: {
+          left: { label: L("Скромно, в двух словах", "Modestly, in two words"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 0 } },
+          right: { label: L("Презентация на 20 слайдов", "A 20-slide presentation"), effects: { psyche: 0, energy: -15, boss: 15, colleagues: -5 } }
+        }
+      },
+      {
+        day: "Вторник",
+        phase: "День",
+        id: "nb_process",
+        who: L("Новый босс", "New boss"),
+        text: L("Новый босс отменил все ваши процессы и ввёл свои. С понедельника.", "The new boss scrapped all your processes and introduced their own. Starting Monday."),
+        answers: {
+          left: { label: L("Тихо работать по-старому", "Quietly keep the old ways"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 0 } },
+          right: { label: L("Перестроиться", "Adapt"), effects: { psyche: -10, energy: -15, boss: 15, colleagues: 0 } }
+        }
+      },
+      {
+        day: "Среда",
+        phase: "Вечер",
+        id: "nb_gossip",
+        who: L("Коллеги", "Team"),
+        text: L("Коллеги на кухне обсуждают нового босса. Зовут вас присоединиться.", "The team is gossiping about the new boss in the kitchen. They invite you to join."),
+        answers: {
+          left: { label: L("Не участвовать", "Stay out of it"), effects: { psyche: 0, energy: 0, boss: 5, colleagues: -10 } },
+          right: { label: L("Поддержать разговор", "Join the conversation"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 15 } }
+        }
+      },
+      {
+        day: "Четверг",
+        phase: "Утро",
+        id: "nb_report",
+        who: L("Новый босс", "New boss"),
+        text: L("Новый босс хочет ежедневный отчёт о проделанной работе. В 8:30.", "The new boss wants a daily progress report. At 8:30 a.m."),
+        answers: {
+          left: { label: L("Предложить раз в неделю", "Suggest once a week"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: 5 } },
+          right: { label: L("Согласиться", "Agree"), effects: { psyche: -5, energy: -15, boss: 10, colleagues: 0 } }
+        }
+      }
+    ]
+  }
+};
+const PROF_CARDS = {
+  marketer: [
+    {
+      id: "pm_viral",
+      who: L("Босс", "Boss"),
+      text: L("Нужен вирусный ролик к утру. Бюджет — 0 ₽, но «вы же креативные».", 'We need a viral video by morning. Budget: $0, but "you\'re the creative ones".'),
+      answers: { left: { label: L("Без бюджета не взлетит", "No budget, no lift-off"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 0 } }, right: { label: L("Сниму на телефон", "Shoot it on my phone"), effects: { psyche: 0, energy: -15, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "pm_likes",
+      who: L("Соцсети", "Social media"),
+      text: L("Пост компании набрал три лайка. Один — от вашей мамы.", "The company post got three likes. One is from your mom."),
+      answers: { left: { label: L("Это органика, так и надо", "It's organic, that's the point"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: 0 } }, right: { label: L("Запустить рекламу за свои", "Boost it with my own money"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 0 } } }
+    },
+    {
+      id: "pm_apple",
+      who: L("Директор", "Director"),
+      text: L("Директор хочет сайт «как у Apple, но дешевле и вчера».", 'The director wants a website "like Apple\'s, but cheaper and by yesterday".'),
+      answers: { left: { label: L("Объяснить, что так не бывает", "Explain that's not a thing"), effects: { psyche: 0, energy: 0, boss: -10, colleagues: 5 } }, right: { label: L("Сделать «как у Apple»", 'Make it "like Apple\'s"'), effects: { psyche: -5, energy: -20, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "pm_leads",
+      who: L("Отдел продаж", "Sales team"),
+      text: L("Продажники говорят, что лиды плохие и это ваша вина.", "Sales says the leads are garbage and it's your fault."),
+      answers: { left: { label: L("Это вы плохо продаёте", "You just can't sell"), effects: { psyche: 10, energy: 0, boss: 0, colleagues: -15 } }, right: { label: L("Провести общую встречу", "Call an all-hands meeting"), effects: { psyche: 0, energy: -10, boss: 5, colleagues: 10 } } }
+    }
+  ],
+  accountant: [
+    {
+      id: "pa_taxi",
+      who: L("Отдел продаж", "Sales team"),
+      text: L("Продажники принесли чеки за такси на 40 000 ₽ «на переговоры». Ни одной подписи.", 'Sales brought in $600 of cab receipts "for client meetings". Not a single signature.'),
+      answers: { left: { label: L("Вернуть на доработку", "Send them back"), effects: { psyche: 0, energy: 0, boss: 10, colleagues: -15 } }, right: { label: L("Провести как есть", "Book them as is"), effects: { psyche: -10, energy: 0, boss: -10, colleagues: 15 } } }
+    },
+    {
+      id: "pa_tax",
+      who: L("Налоговая", "IRS"),
+      text: L("Налоговая прислала требование. Срок ответа — вчера.", "The IRS sent a notice. Response due: yesterday."),
+      answers: { left: { label: L("Позвонить и договориться", "Call and negotiate"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 0 } }, right: { label: L("Паниковать вместе с отделом", "Panic with the whole team"), effects: { psyche: -20, energy: -5, boss: 0, colleagues: 10 } } }
+    },
+    {
+      id: "pa_1c",
+      who: L("1С", "QuickBooks"),
+      text: L("1С обновилась сама. Ни один отчёт не открывается.", "QuickBooks updated itself. Not a single report will open."),
+      answers: { left: { label: L("Ждать сисадмина", "Wait for IT"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 0 } }, right: { label: L("Чинить самостоятельно", "Fix it yourself"), effects: { psyche: -5, energy: -15, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "pa_advance",
+      who: L("Коллега", "Colleague"),
+      text: L("Коллега просит аванс «до пятницы». Пятница в следующем месяце.", 'A colleague asks for a salary advance "till Friday". Friday is next month.'),
+      answers: { left: { label: L("Только по заявлению", "Only with a written request"), effects: { psyche: 0, energy: 0, boss: 10, colleagues: -10 } }, right: { label: L("Пойти навстречу", "Help them out"), effects: { psyche: 0, energy: 0, boss: -10, colleagues: 15 } } }
+    }
+  ],
+  dev: [
+    {
+      id: "pd_button",
+      who: L("Продакт", "Product manager"),
+      text: L("Продакт просит «маленькую кнопку». В приложенном ТЗ 40 страниц.", 'The PM asks for "a tiny button". The attached spec is 40 pages long.'),
+      answers: { left: { label: L("Оценить в три месяца", "Estimate three months"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: 0 } }, right: { label: L("Сделаю к пятнице", "I'll have it by Friday"), effects: { psyche: 0, energy: -20, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "pd_prod",
+      who: L("Мониторинг", "Monitoring"),
+      text: L("Упал прод, а вы на обеде. Телефон вибрирует без остановки.", "Prod is down and you're at lunch. Your phone won't stop buzzing."),
+      answers: { left: { label: L("Доесть обед", "Finish lunch"), effects: { psyche: 10, energy: 5, boss: -15, colleagues: 0 } }, right: { label: L("Чинить с телефона", "Fix it from my phone"), effects: { psyche: -10, energy: -10, boss: 10, colleagues: 5 } } }
+    },
+    {
+      id: "pd_junior",
+      who: L("Джун", "Junior dev"),
+      text: L("Джун спрашивает, почему ваш код работает. Вы не знаете.", "A junior asks why your code works. You have no idea."),
+      answers: { left: { label: L("«Это магия» — и уйти", '"It\'s magic" — and walk away'), effects: { psyche: 5, energy: 0, boss: 0, colleagues: -10 } }, right: { label: L("Разобраться вместе", "Figure it out together"), effects: { psyche: 0, energy: -10, boss: 0, colleagues: 15 } } }
+    },
+    {
+      id: "pd_review",
+      who: L("Код-ревью", "Code review"),
+      text: L("К вашему пул-реквесту 148 комментариев. Половина — про пробелы.", "Your pull request has 148 comments. Half of them are about whitespace."),
+      answers: { left: { label: L("Ответить «ок» на все", 'Reply "ok" to all of them'), effects: { psyche: 10, energy: 0, boss: -5, colleagues: -10 } }, right: { label: L("Исправить всё", "Fix everything"), effects: { psyche: -5, energy: -20, boss: 0, colleagues: 10 } } }
+    }
+  ],
+  sales: [
+    {
+      id: "ps_feature",
+      who: L("Клиент", "Client"),
+      text: L("Клиент подпишет договор прямо сейчас, если пообещать функцию, которой нет.", "The client will sign right now if you promise a feature that doesn't exist."),
+      answers: { left: { label: L("Честно отказать", "Honestly say no"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 0 } }, right: { label: L("Пообещать", "Promise it"), effects: { psyche: -5, energy: 0, boss: 20, colleagues: -15 } } }
+    },
+    {
+      id: "ps_plan",
+      who: L("Босс", "Boss"),
+      text: L("План продаж подняли на 30% в середине месяца. «Вы же справитесь».", 'The sales quota went up 30% mid-month. "You\'ve got this."'),
+      answers: { left: { label: L("Возмутиться", "Push back"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: 5 } }, right: { label: L("Обзвонить всю базу", "Cold-call the whole database"), effects: { psyche: -5, energy: -20, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "ps_silent",
+      who: L("Клиент", "Client"),
+      text: L("Клиент не отвечает уже неделю. Написать в восьмой раз?", "The client has ghosted you for a week. Email for the eighth time?"),
+      answers: { left: { label: L("Отпустить", "Let it go"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: 0 } }, right: { label: L("Позвонить с чужого номера", "Call from a burner number"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 0 } } }
+    },
+    {
+      id: "ps_stolen",
+      who: L("Коллега", "Colleague"),
+      text: L("Коллега из соседнего отдела увёл вашего клиента.", "A colleague from the next department poached your client."),
+      answers: { left: { label: L("Промолчать", "Say nothing"), effects: { psyche: -15, energy: 0, boss: 0, colleagues: 5 } }, right: { label: L("Разобраться при всех", "Have it out in public"), effects: { psyche: 10, energy: -5, boss: 5, colleagues: -15 } } }
+    }
+  ],
+  hr: [
+    // HR-менеджер
+    {
+      id: "ph_noshow",
+      who: L("Календарь", "Calendar"),
+      text: L("Третий кандидат за день не пришёл на собеседование. Четвёртый вместо себя прислал маму.", "Third candidate today didn't show up to the interview. The fourth sent his mom instead."),
+      answers: { left: { label: L("Собеседовать маму", "Interview the mom"), effects: { psyche: 10, energy: -5, boss: -10, colleagues: 0 } }, right: { label: L("Закрыть ноутбук и выдохнуть", "Close laptop and exhale"), effects: { psyche: 5, energy: 10, boss: -10, colleagues: -5 } } }
+    },
+    {
+      id: "ph_stars",
+      who: L("Босс", "Boss"),
+      text: L("Босс хочет «звёзд за копейки»: сеньора с десятилетним опытом, согласного на печеньки и «интересные задачи».", 'The Boss wants "rockstars on a budget": a senior with ten years of experience who\'ll work for snacks and "exciting challenges".'),
+      answers: { left: { label: L("Показать цифры рынка", "Show market salary data"), effects: { psyche: 0, energy: -5, boss: -15, colleagues: 5 } }, right: { label: L("Искать единорога", "Hunt for a unicorn"), effects: { psyche: -10, energy: -10, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "ph_enps",
+      who: L("Опрос eNPS", "eNPS survey"),
+      text: L("Результат eNPS: минус сорок. Босс спрашивает, нельзя ли «убрать недовольных из выборки».", 'eNPS result: minus forty. The Boss asks if you could "remove the unhappy people from the sample".'),
+      answers: { left: { label: L("Показать как есть", "Report it as is"), effects: { psyche: 5, energy: 0, boss: -15, colleagues: 10 } }, right: { label: L("Пересчитать творчески", "Get creative with the math"), effects: { psyche: -15, energy: 0, boss: 15, colleagues: -10 } } }
+    },
+    {
+      id: "ph_party",
+      who: L("Корпоратив", "Office party"),
+      text: L("До корпоратива неделя. Бюджет — как на пиццу, ожидания — как на вручение «Оскара».", "The company party is in a week. The budget is pizza money, the expectations are Oscar night."),
+      answers: { left: { label: L("Заказать пиццу", "Order pizza"), effects: { psyche: 5, energy: 5, boss: -5, colleagues: -10 } }, right: { label: L("Устроить шоу своими силами", "Put on a show yourselves"), effects: { psyche: -5, energy: -20, boss: 10, colleagues: 10 } } }
+    },
+    {
+      id: "ph_teambuild",
+      who: L("Тимбилдинг", "Team building"),
+      text: L("Вы запланировали верёвочный парк на субботу. Половина команды внезапно и одновременно заболела.", "You booked a ropes course for Saturday. Half the team suddenly and simultaneously got sick."),
+      answers: { left: { label: L("Перенести на будний день", "Move it to a weekday"), effects: { psyche: 0, energy: -5, boss: -10, colleagues: 15 } }, right: { label: L("Провести с теми, кто есть", "Go with whoever showed up"), effects: { psyche: -5, energy: -10, boss: 10, colleagues: -5 } } }
+    },
+    {
+      id: "ph_complaint",
+      who: L("Жалоба", "Complaint"),
+      text: L("Бухгалтер жалуется, что маркетолог громко ест яблоки. Маркетолог — что бухгалтер громко вздыхает.", "The accountant complains the marketer eats apples too loudly. The marketer complains the accountant sighs too loudly."),
+      answers: { left: { label: L("Провести медиацию", "Mediate"), effects: { psyche: -10, energy: -10, boss: 0, colleagues: 15 } }, right: { label: L("Выдать обоим наушники", "Give both of them headphones"), effects: { psyche: 5, energy: 5, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "ph_exit",
+      who: L("Exit-интервью", "Exit interview"),
+      text: L("На exit-интервью сотрудник наконец говорит правду. Про всех. Включая Босса. Особенно про Босса.", "At the exit interview, the employee finally tells the truth. About everyone. Including the Boss. Especially the Boss."),
+      answers: { left: { label: L("Записать всё в отчёт", "Put it all in the report"), effects: { psyche: 5, energy: -5, boss: -15, colleagues: 10 } }, right: { label: L("Записать «ушёл за ростом»", 'Write "left for growth"'), effects: { psyche: -10, energy: 5, boss: 10, colleagues: -5 } } }
+    },
+    {
+      id: "ph_vacancy",
+      who: L("Тимлид", "Team lead"),
+      text: L("Тимлид в пятый раз меняет требования к вакансии. Теперь кандидат должен знать ещё и китайский.", "The team lead changes the job requirements for the fifth time. Now the candidate also has to speak Mandarin."),
+      answers: { left: { label: L("Переписать вакансию", "Rewrite the job post"), effects: { psyche: -5, energy: -10, boss: 5, colleagues: 5 } }, right: { label: L("Спросить, зачем китайский", "Ask why Mandarin"), effects: { psyche: 10, energy: 0, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "ph_onboard",
+      who: L("Новичок", "New hire"),
+      text: L("Первый день новичка. Ноутбука нет, пропуска нет, наставник в отпуске. Новичок улыбается всё напряжённее.", "New hire's first day. No laptop, no badge, buddy on vacation. The new hire's smile gets tenser by the minute."),
+      answers: { left: { label: L("Выбить ноутбук у ИТ", "Wrestle a laptop out of IT"), effects: { psyche: -5, energy: -15, boss: 0, colleagues: 15 } }, right: { label: L("Дать почитать регламенты", "Hand them the handbook"), effects: { psyche: 5, energy: 10, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "ph_layoff",
+      who: L("Финдиректор", "CFO"),
+      text: L("Финдиректор просит «аккуратно оптимизировать штат» — так, чтобы никто ничего не заметил.", 'The CFO asks you to "gently right-size the headcount" — so that nobody notices anything.'),
+      answers: { left: { label: L("Сделать всё по закону", "Do it by the book"), effects: { psyche: 5, energy: -15, boss: -5, colleagues: 10 } }, right: { label: L("Тянуть до нового года", "Stall until New Year"), effects: { psyche: -10, energy: 10, boss: -15, colleagues: 5 } } }
+    },
+    {
+      id: "ph_benefit",
+      who: L("Соцпакет", "Benefits"),
+      text: L("Босс предлагает новую льготу для сотрудников — бесплатный чай. Вместо ДМС.", "The Boss proposes a new employee perk: free tea. Instead of health insurance."),
+      answers: { left: { label: L("Защищать ДМС", "Defend health insurance"), effects: { psyche: 0, energy: -10, boss: -10, colleagues: 15 } }, right: { label: L("Анонсировать чай с восторгом", "Announce the tea with joy"), effects: { psyche: -10, energy: 5, boss: 15, colleagues: -15 } } }
+    },
+    {
+      id: "ph_mood",
+      who: L("Опрос настроения", "Pulse survey"),
+      text: L("Анонимный опрос настроения. Босс спрашивает, кто именно поставил смайлик с черепом.", "Anonymous pulse survey. The Boss asks who exactly gave the skull emoji."),
+      answers: { left: { label: L("Анонимность есть анонимность", "Anonymous means anonymous"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 10 } }, right: { label: L("Намекнуть на отдел продаж", "Hint at the sales team"), effects: { psyche: -10, energy: 0, boss: 10, colleagues: -15 } } }
+    }
+  ],
+  designer: [
+    // Дизайнер
+    {
+      id: "pz_logo",
+      who: L("Клиент", "Client"),
+      text: L("Клиент просит сделать логотип побольше. Логотип уже занимает половину макета, но клиент уверен, что место ещё есть.", "The client wants the logo bigger. The logo already takes up half the layout, but the client is sure there's still room."),
+      answers: { left: { label: L("Сделать ещё больше", "Make it even bigger"), effects: { psyche: -15, energy: -5, boss: 10, colleagues: 0 } }, right: { label: L("Объяснить про воздух", "Explain white space"), effects: { psyche: 10, energy: -5, boss: -10, colleagues: 0 } } }
+    },
+    {
+      id: "pz_fonts",
+      who: L("Заказчик", "Client"),
+      text: L("«Поиграйте со шрифтами». На вопрос, с какими именно и зачем, заказчик отвечает: «Ну вы же дизайнер».", '"Play around with the fonts." Asked which fonts and why, the client says: "Well, you\'re the designer."'),
+      answers: { left: { label: L("Прислать 40 вариантов", "Send 40 options"), effects: { psyche: -5, energy: -15, boss: 10, colleagues: 0 } }, right: { label: L("Уточнить задачу письменно", "Clarify the brief in writing"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 0 } } }
+    },
+    {
+      id: "pz_edits",
+      who: L("Почта", "Inbox"),
+      text: L("Пришли правки к макету. Это 27-й круг. В правках просят вернуть вариант из первого круга.", "Feedback on the mockup is in. This is round 27. They want the version from round one back."),
+      answers: { left: { label: L("Молча вернуть первый", "Silently restore round one"), effects: { psyche: -10, energy: 5, boss: 5, colleagues: 0 } }, right: { label: L("Выставить счёт за круги", "Bill them for the rounds"), effects: { psyche: 15, energy: 0, boss: -15, colleagues: -5 } } }
+    },
+    {
+      id: "pz_paint",
+      who: L("Клиент", "Client"),
+      text: L("Клиент приносит эскиз из Paint: «Я тут набросал, осталось просто сделать красиво». На эскизе кривой круг и надпись Comic Sans.", 'The client brings a sketch made in Paint: "I roughed it out, you just make it pretty." It\'s a wonky circle and some Comic Sans.'),
+      answers: { left: { label: L("Сделать красиво круг", "Make the circle pretty"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 0 } }, right: { label: L("Предложить свою идею", "Pitch your own idea"), effects: { psyche: 10, energy: -10, boss: -5, colleagues: 0 } } }
+    },
+    {
+      id: "pz_wow",
+      who: L("Маркетолог", "Marketer"),
+      text: L("Маркетолог просит: «Нужно вау! Но как у конкурентов. И чтобы никто не заметил, что как у конкурентов».", "The marketer says: \"We need a wow! But like the competitors'. And nobody should notice it's like the competitors'.\""),
+      answers: { left: { label: L("Сделать настоящее вау", "Make a real wow"), effects: { psyche: 5, energy: -20, boss: 10, colleagues: 0 } }, right: { label: L("Сделать как у конкурентов", "Copy the competitors"), effects: { psyche: -10, energy: 10, boss: 5, colleagues: -5 } } }
+    },
+    {
+      id: "pz_license",
+      who: L("Юрист", "Lawyer"),
+      text: L("Юрист спрашивает, есть ли лицензия на шрифт с баннера. Шрифт скачан с сайта «шрифты-бесплатно-без-смс».", 'Legal asks if we have a license for the font on the banner. The font came from "free-fonts-no-signup-totally-legit.biz".'),
+      answers: { left: { label: L("Срочно заменить шрифт", "Swap the font ASAP"), effects: { psyche: -5, energy: -15, boss: 10, colleagues: 0 } }, right: { label: L("Сказать, что это Arial", "Say it's Arial"), effects: { psyche: 5, energy: 5, boss: -15, colleagues: 0 } } }
+    },
+    {
+      id: "pz_nephew",
+      who: L("Босс", "Boss"),
+      text: L("Босс показывает логотип своего племянника: «Он тоже рисует. Может, возьмём его вариант? Там солнышко».", 'The Boss shows you a logo by his nephew: "He draws too. Maybe we use his version? It has a little sun."'),
+      answers: { left: { label: L("Похвалить солнышко", "Praise the little sun"), effects: { psyche: -15, energy: 5, boss: 15, colleagues: -5 } }, right: { label: L("Честно разобрать работу", "Give an honest critique"), effects: { psyche: 10, energy: -5, boss: -15, colleagues: 5 } } }
+    },
+    {
+      id: "pz_final",
+      who: L("Папка проекта", "Project folder"),
+      text: L("В папке: final.psd, final_final.psd, final_final_v3.psd и НЕ_ТРОГАТЬ_2.psd. Клиент просит прислать исходник.", "In the folder: final.psd, final_final.psd, final_final_v3.psd and DO_NOT_TOUCH_2.psd. The client wants the source file."),
+      answers: { left: { label: L("Отправить все четыре", "Send all four"), effects: { psyche: 5, energy: 5, boss: -10, colleagues: -10 } }, right: { label: L("Навести порядок", "Clean things up"), effects: { psyche: 5, energy: -15, boss: 5, colleagues: 0 } } }
+    },
+    {
+      id: "pz_pixel",
+      who: L("Менеджер проекта", "Project manager"),
+      text: L("Кнопка съехала на один пиксель. Релиз через час. Кроме вас, этого никто не видит. Пока что.", "A button is off by one pixel. Release in an hour. Nobody but you can see it. Yet."),
+      answers: { left: { label: L("Пусть едет так", "Ship it as is"), effects: { psyche: -15, energy: 5, boss: 5, colleagues: 0 } }, right: { label: L("Переверстать до релиза", "Fix it before release"), effects: { psyche: 10, energy: -10, boss: 0, colleagues: -10 } } }
+    },
+    {
+      id: "pz_concepts",
+      who: L("Презентация", "Presentation"),
+      text: L("Вы показываете клиенту три концепции. Клиент уверенно выбирает ту, что была сделана «для количества».", 'You show the client three concepts. The client confidently picks the one you made "to pad the deck".'),
+      answers: { left: { label: L("Похвалить его вкус", "Praise their taste"), effects: { psyche: -10, energy: 5, boss: 10, colleagues: 0 } }, right: { label: L("Отстаивать любимую", "Fight for your favorite"), effects: { psyche: 10, energy: -10, boss: -10, colleagues: 0 } } }
+    },
+    {
+      id: "pz_ai",
+      who: L("Коллега", "Colleague"),
+      text: L("Коллега сгенерировал баннер нейросетью за минуту. У человека на картинке шесть пальцев, а босс в восторге.", "A colleague made a banner with AI in a minute. The person in it has six fingers, and the Boss loves it."),
+      answers: { left: { label: L("Тихо дорисовать пальцы", "Quietly fix the fingers"), effects: { psyche: -5, energy: -10, boss: 10, colleagues: 5 } }, right: { label: L("Посчитать пальцы при всех", "Count fingers out loud"), effects: { psyche: 10, energy: 0, boss: -5, colleagues: -15 } } }
+    },
+    {
+      id: "pz_white",
+      who: L("Клиент", "Client"),
+      text: L("Клиент просит сделать белый фон «ещё белее». Фон уже #FFFFFF. Белее не бывает, но клиент верит в вас.", "The client wants the white background \"whiter\". It's already #FFFFFF. It can't get whiter, but the client believes in you."),
+      answers: { left: { label: L("Прислать тот же файл", "Send the same file"), effects: { psyche: 10, energy: 5, boss: -5, colleagues: 0 } }, right: { label: L("Объяснить про белый", "Explain how white works"), effects: { psyche: -10, energy: -5, boss: 5, colleagues: 0 } } }
+    }
+  ],
+  sysadmin: [
+    // Сисадмин
+    {
+      id: "ps_unplugged",
+      who: L("Бухгалтерия", "Accounting"),
+      text: L("«У меня ничего не работает!» — кричат на весь этаж. Вы приходите: компьютер просто выключен из розетки.", '"Nothing works!" someone yells across the floor. You come over: the computer is just unplugged.'),
+      answers: { left: { label: L("Молча включить", "Silently plug it in"), effects: { psyche: -5, energy: -5, boss: 0, colleagues: 10 } }, right: { label: L("Прочитать лекцию о розетках", "Lecture them on outlets"), effects: { psyche: 10, energy: -5, boss: 0, colleagues: -15 } } }
+    },
+    {
+      id: "ps_printer",
+      who: L("Принтер", "Printer"),
+      text: L("Принтер зажевал годовой отчёт и мигает оранжевым. Очередь из пяти человек смотрит на вас с надеждой.", "The printer ate the annual report and is blinking orange. A line of five people looks at you with hope."),
+      answers: { left: { label: L("Разобрать до винтика", "Take it apart to the screw"), effects: { psyche: -5, energy: -15, boss: 0, colleagues: 15 } }, right: { label: L("Повесить «Не работает»", 'Hang an "Out of order" sign'), effects: { psyche: 10, energy: 5, boss: -5, colleagues: -15 } } }
+    },
+    {
+      id: "ps_laptop",
+      who: L("Босс", "Boss"),
+      text: L("Босс приносит личный ноутбук: «Тут что-то скачали, теперь везде реклама. Глянете по-быстрому?»", 'The Boss brings his personal laptop: "We downloaded something, now there are ads everywhere. Can you take a quick look?"'),
+      answers: { left: { label: L("Конечно, сегодня же", "Of course, today"), effects: { psyche: -10, energy: -10, boss: 15, colleagues: 0 } }, right: { label: L("Это не по регламенту", "That's against policy"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 0 } } }
+    },
+    {
+      id: "ps_wifi",
+      who: L("Новенький", "New guy"),
+      text: L("Третий раз за день спрашивают пароль от Wi‑Fi. Он висит на стене крупным шрифтом — прямо за спиной спрашивающего.", "Third time today someone asks for the Wi‑Fi password. It's on the wall in huge letters — right behind the person asking."),
+      answers: { left: { label: L("Продиктовать по буквам", "Spell it out letter by letter"), effects: { psyche: -10, energy: -5, boss: 0, colleagues: 10 } }, right: { label: L("Молча показать на стену", "Silently point at the wall"), effects: { psyche: 10, energy: 0, boss: 0, colleagues: -10 } } }
+    },
+    {
+      id: "ps_backup",
+      who: L("Бэкапы", "Backups"),
+      text: L("Бэкап не проверяли с весны. Тестовое восстановление займёт всю ночь, иначе остаётся только надеяться на удачу.", "Nobody has tested the backup since spring. A test restore will take all night — otherwise, just hope for the best."),
+      answers: { left: { label: L("Проверить этой ночью", "Test it tonight"), effects: { psyche: 10, energy: -20, boss: 5, colleagues: 0 } }, right: { label: L("Верить в лучшее", "Hope for the best"), effects: { psyche: -15, energy: 10, boss: 0, colleagues: 0 } } }
+    },
+    {
+      id: "ps_phishing",
+      who: L("Почта", "Inbox"),
+      text: L("Менеджер кликнул по письму «Вы выиграли айфон» и ввёл пароль. Дважды: в первый раз «не сработало».", 'A manager clicked a "You won an iPhone!" email and entered his password. Twice: the first time it "didn\'t work".'),
+      answers: { left: { label: L("Устроить всем тренинг", "Training for everyone"), effects: { psyche: 5, energy: -10, boss: 10, colleagues: -15 } }, right: { label: L("Тихо сменить пароли", "Quietly reset passwords"), effects: { psyche: -5, energy: -10, boss: 0, colleagues: 10 } } }
+    },
+    {
+      id: "ps_heat",
+      who: L("Серверная", "Server room"),
+      text: L("Кондиционер в серверной сломался. Там +38, и бухгалтерия уже заходит туда погреться.", "The server room AC died. It's 100°F in there, and Accounting is already stopping by to warm up."),
+      answers: { left: { label: L("Поставить вентилятор", "Bring in a fan"), effects: { psyche: -5, energy: -5, boss: 10, colleagues: 0 } }, right: { label: L("Требовать новый кондиционер", "Demand a new AC"), effects: { psyche: 10, energy: -5, boss: -10, colleagues: 0 } } }
+    },
+    {
+      id: "ps_cables",
+      who: L("Под столом", "Under the desk"),
+      text: L("Под столами отдела продаж клубок проводов. Кто-то задел его ногой — и интернет пропал на всём этаже.", "There's a nest of cables under the sales team's desks. Someone kicked it — and the whole floor lost internet."),
+      answers: { left: { label: L("Разобрать всё в субботу", "Sort it all out on Saturday"), effects: { psyche: 5, energy: -20, boss: 5, colleagues: 10 } }, right: { label: L("Заклеить скотчем", "Duct tape it"), effects: { psyche: 5, energy: 5, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "ps_reboot",
+      who: L("Телефон", "Phone"),
+      text: L("Звонок: «Ничего не грузится!» Вы спрашиваете: «Перезагрузить пробовали?» В трубке долгая обиженная тишина.", 'A call: "Nothing\'s loading!" You ask: "Have you tried turning it off and on again?" A long, offended silence follows.'),
+      answers: { left: { label: L("Прийти лично", "Go over in person"), effects: { psyche: 0, energy: -15, boss: 0, colleagues: 10 } }, right: { label: L("Настоять на перезагрузке", "Insist on a reboot"), effects: { psyche: 10, energy: 5, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "ps_update",
+      who: L("Обновление", "Update"),
+      text: L("Система требует обновиться прямо сейчас. Через десять минут у Босса презентация для инвесторов.", "The system demands an update right now. In ten minutes the Boss is presenting to investors."),
+      answers: { left: { label: L("Отложить обновление", "Postpone the update"), effects: { psyche: -10, energy: 0, boss: 10, colleagues: 0 } }, right: { label: L("Обновлять: безопасность!", "Update: security first!"), effects: { psyche: 10, energy: 0, boss: -20, colleagues: 5 } } }
+    },
+    {
+      id: "ps_rights",
+      who: L("Маркетолог", "Marketer"),
+      text: L("Маркетолог просит права администратора: «Мне только шрифт поставить». В прошлый раз «шрифт» майнил криптовалюту.", 'The marketer wants admin rights: "Just to install one font." Last time the "font" was mining crypto.'),
+      answers: { left: { label: L("Выдать права", "Grant admin rights"), effects: { psyche: -15, energy: 0, boss: 0, colleagues: 15 } }, right: { label: L("Отказать по регламенту", "Deny per policy"), effects: { psyche: 10, energy: 0, boss: 5, colleagues: -15 } } }
+    },
+    {
+      id: "ps_weekend",
+      who: L("Суббота, 23:00", "Saturday, 11 p.m."),
+      text: L("Звонок директора: «Почта не работает, а мне срочно нужно поздравить партнёров с праздником!»", 'The director calls: "Email\'s down and I urgently need to send holiday greetings to our partners!"'),
+      answers: { left: { label: L("Подключиться из дома", "Remote in from home"), effects: { psyche: -5, energy: -15, boss: 15, colleagues: 0 } }, right: { label: L("Не брать трубку", "Don't pick up"), effects: { psyche: 15, energy: 5, boss: -20, colleagues: 0 } } }
+    }
+  ],
+  cooler: [
+    // Хранитель кулера
+    {
+      id: "pk_bottle",
+      who: L("Пустой кулер", "Empty water cooler"),
+      text: L("Кулер издаёт последний «бульк». Новая 19-литровая бутыль стоит в коридоре. Весь отдел молча смотрит на вас.", 'The cooler makes its final "glug". A new 5-gallon jug stands in the hallway. The whole department silently looks at you.'),
+      answers: { left: { label: L("Поменять самостоятельно", "Change it yourself"), effects: { psyche: 5, energy: -15, boss: 0, colleagues: 10 } }, right: { label: L("Объявить конкурс силачей", "Hold a strongman contest"), effects: { psyche: 5, energy: 5, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "pk_hot",
+      who: L("Красный краник", "Red tap"),
+      text: L("Кто-то снова оставил горячий кран открытым. На полу лужа, в чате паника. Требуется расследование.", "Someone left the hot tap open again. Puddle on the floor, panic in the chat. An investigation is required."),
+      answers: { left: { label: L("Найти виновного", "Find the culprit"), effects: { psyche: 10, energy: -10, boss: 5, colleagues: -10 } }, right: { label: L("Молча вытереть", "Quietly mop it up"), effects: { psyche: -10, energy: -5, boss: 0, colleagues: 10 } } }
+    },
+    {
+      id: "pk_cups",
+      who: L("Бухгалтерия", "Accounting"),
+      text: L("Осталось три стаканчика, поставка — в понедельник. Бухгалтерия просит выдать им сразу все три «под отчёт».", 'Three paper cups left, delivery on Monday. Accounting asks for all three at once, "to be accounted for".'),
+      answers: { left: { label: L("Ввести талоны на воду", "Introduce water vouchers"), effects: { psyche: 5, energy: -5, boss: 10, colleagues: -15 } }, right: { label: L("Отдать бухгалтерии", "Give them to Accounting"), effects: { psyche: -10, energy: 0, boss: -5, colleagues: 10 } } }
+    },
+    {
+      id: "pk_gossip",
+      who: L("Маркетолог", "Marketer"),
+      text: L("У кулера вам по секрету сообщают, что отдел продаж переезжает в подвал. Через минуту к кулеру подходит отдел продаж.", "At the cooler, someone secretly tells you Sales is moving to the basement. A minute later, Sales walks up to the cooler."),
+      answers: { left: { label: L("Сохранить тайну", "Keep the secret"), effects: { psyche: -10, energy: 0, boss: 5, colleagues: 0 } }, right: { label: L("Тонко намекнуть", "Drop a subtle hint"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 10 } } }
+    },
+    {
+      id: "pk_boss",
+      who: L("Босс", "Boss"),
+      text: L("Босс замечает, что вы сорок минут стоите у кулера. «Это ваша работа?» — «Да», — честно отвечаете вы.", 'The Boss notices you\'ve been standing at the cooler for forty minutes. "Is this your job?" "Yes," you honestly reply.'),
+      answers: { left: { label: L("Показать журнал бульков", "Show the glug log"), effects: { psyche: -5, energy: -10, boss: 10, colleagues: 0 } }, right: { label: L("Предложить стаканчик", "Offer a cup"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 5 } } }
+    },
+    {
+      id: "pk_supplier",
+      who: L("Поставщик воды", "Water supplier"),
+      text: L("Поставщик поднял цену и предлагает «премиальную воду с ледников». От обычной она отличается только этикеткой.", 'The supplier raised prices and offers "premium glacier water". It differs from the regular kind only by the label.'),
+      answers: { left: { label: L("Торговаться до победы", "Haggle till you win"), effects: { psyche: -5, energy: -15, boss: 15, colleagues: 0 } }, right: { label: L("Взять ледниковую", "Go glacier"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 5 } } }
+    },
+    {
+      id: "pk_chat",
+      who: L("Кулерный чат", "Cooler chat"),
+      text: L("В «кулерном» чате 214 сообщений о том, где вода вкуснее: в левом кране или в правом. Бак у них один.", "The cooler group chat has 214 messages about which tap tastes better: left or right. It's the same tank."),
+      answers: { left: { label: L("Раскрыть правду", "Reveal the truth"), effects: { psyche: 5, energy: 0, boss: 0, colleagues: -15 } }, right: { label: L("Провести дегустацию", "Host a tasting"), effects: { psyche: -5, energy: -10, boss: -5, colleagues: 15 } } }
+    },
+    {
+      id: "pk_mug",
+      who: L("Новенький", "New guy"),
+      text: L("Новичок наливает воду в личную кружку размером с ведро. Очередь из девяти человек начинает нервничать.", "A newbie is filling a personal mug the size of a bucket. The line of nine people is getting nervous."),
+      answers: { left: { label: L("Ввести лимит на кружки", "Set a mug size limit"), effects: { psyche: 5, energy: -5, boss: 5, colleagues: -10 } }, right: { label: L("Не вмешиваться", "Don't interfere"), effects: { psyche: -10, energy: 5, boss: 0, colleagues: 5 } } }
+    },
+    {
+      id: "pk_audit",
+      who: L("Охрана труда", "Health & Safety"),
+      text: L("Охрана труда требует журнал санобработки кулера за год. Журнал существует только в вашей голове.", "Health & Safety wants a year of cooler sanitation logs. The log exists only in your head."),
+      answers: { left: { label: L("Восстановить по памяти", "Recreate it from memory"), effects: { psyche: -10, energy: -15, boss: 10, colleagues: 0 } }, right: { label: L("Свалить всё на мышь", "Blame it on a mouse"), effects: { psyche: 10, energy: 5, boss: -15, colleagues: 0 } } }
+    },
+    {
+      id: "pk_ghost",
+      who: L("Уборщица", "Janitor"),
+      text: L("Кулер булькает по ночам. Уборщица уверена, что в нём кто-то живёт. Айтишники советуют его перезагрузить.", "The cooler gurgles at night. The janitor is sure something lives in it. IT suggests rebooting it."),
+      answers: { left: { label: L("Выдернуть из розетки", "Unplug it"), effects: { psyche: 5, energy: 5, boss: 0, colleagues: -10 } }, right: { label: L("Вызвать мастера", "Call a repairman"), effects: { psyche: -10, energy: 0, boss: 10, colleagues: 5 } } }
+    },
+    {
+      id: "pk_vacation",
+      who: L("Отпуск", "Vacation"),
+      text: L("Вы уходите в отпуск, но никто в офисе не умеет ставить бутыль, не облившись с головы до ног.", "You're going on vacation, but nobody in the office can change the jug without getting soaked head to toe."),
+      answers: { left: { label: L("Провести мастер-класс", "Run a masterclass"), effects: { psyche: 0, energy: -15, boss: 5, colleagues: 10 } }, right: { label: L("Отложить отпуск", "Postpone vacation"), effects: { psyche: -15, energy: -10, boss: 15, colleagues: 5 } } }
+    },
+    {
+      id: "pk_rival",
+      who: L("Офис-менеджер", "Office manager"),
+      text: L("Офис-менеджер намекает, что кулер — её зона ответственности. В офисе начинается холодная война.", "The office manager hints that the cooler is her area of responsibility. A cold war breaks out in the office."),
+      answers: { left: { label: L("Уступить кулер", "Surrender the cooler"), effects: { psyche: -15, energy: 10, boss: 0, colleagues: 5 } }, right: { label: L("Отстоять кулер", "Defend the cooler"), effects: { psyche: 10, energy: -10, boss: -5, colleagues: 5 } } }
+    }
+  ],
+  intern: [
+    // Вечный стажёр
+    {
+      id: "pi_coffee",
+      who: L("Тимлид", "Team lead"),
+      text: L("Тимлид просит сходить за кофе на всю команду. Опять. В списке одиннадцать позиций и одно загадочное «как обычно».", 'The team lead sends you on a coffee run for the whole team. Again. Eleven orders and one mysterious "the usual".'),
+      answers: { left: { label: L("Сходить и всё запомнить", "Go and memorize it all"), effects: { psyche: -5, energy: -10, boss: 0, colleagues: 15 } }, right: { label: L("Предложить кофемашину", "Suggest a coffee machine"), effects: { psyche: 10, energy: 0, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "pi_extend",
+      who: "HR",
+      text: L("Вам продлили стажировку «ещё на три месяца». Это двенадцатое продление. В конце письма — смайлик.", "Your internship has been extended \"for three more months\". That's the twelfth extension. There's a smiley at the end of the email."),
+      answers: { left: { label: L("Поблагодарить за доверие", "Thank them for the trust"), effects: { psyche: -15, energy: 0, boss: 10, colleagues: 0 } }, right: { label: L("Спросить про оффер", "Ask about a job offer"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: 5 } } }
+    },
+    {
+      id: "pi_onboard",
+      who: L("Новичок", "New hire"),
+      text: L("Вас онбордит сотрудник, который пришёл в компанию на прошлой неделе. Он с гордостью показывает, где кулер.", "You're being onboarded by someone who joined the company last week. He proudly shows you where the water cooler is."),
+      answers: { left: { label: L("Слушать с интересом", "Listen with interest"), effects: { psyche: -10, energy: -5, boss: 0, colleagues: 10 } }, right: { label: L("Показать, где всё лежит", "Show him where things are"), effects: { psyche: 10, energy: 0, boss: 0, colleagues: -10 } } }
+    },
+    {
+      id: "pi_mentor",
+      who: L("Ментор", "Mentor"),
+      text: L("Вашему ментору 22 года. Он просит вас заполнить его отчёт о менторстве: «Вы же лучше знаете, чему научились».", 'Your mentor is 22. He asks you to fill out his mentoring report: "You know better what you learned."'),
+      answers: { left: { label: L("Написать честно", "Write it honestly"), effects: { psyche: 5, energy: -10, boss: -5, colleagues: 0 } }, right: { label: L("Написать красиво", "Make it look good"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 5 } } }
+    },
+    {
+      id: "pi_access",
+      who: L("Коллега", "Colleague"),
+      text: L("Коллега просит открыть ему общую папку. Прав у вас нет третий год, зато вы точно знаете, кто их выдаёт.", "A colleague asks you to give him access to a shared folder. You haven't had access for three years, but you know exactly who grants it."),
+      answers: { left: { label: L("Сходить и выпросить", "Go and beg for it"), effects: { psyche: -5, energy: -10, boss: 0, colleagues: 15 } }, right: { label: L("Дать контакт админа", "Give him the admin's contact"), effects: { psyche: 5, energy: 5, boss: 0, colleagues: -10 } } }
+    },
+    {
+      id: "pi_rename",
+      who: L("Руководитель", "Manager"),
+      text: L("Вам поручили вручную переименовать три тысячи файлов. «Чтобы вы прочувствовали процесс».", 'You\'ve been told to manually rename three thousand files. "So you really get a feel for the process."'),
+      answers: { left: { label: L("Написать скрипт", "Write a script"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: 0 } }, right: { label: L("Прочувствовать процесс", "Feel the process"), effects: { psyche: -10, energy: -15, boss: 15, colleagues: 0 } } }
+    },
+    {
+      id: "pi_salary",
+      who: L("Бухгалтерия", "Accounting"),
+      text: L("Бухгалтерия спрашивает, почему вас нет в зарплатной ведомости. Вы работаете «за опыт» уже четыре года.", "Accounting asks why you're not on the payroll. You've been working \"for the experience\" for four years."),
+      answers: { left: { label: L("Попросить оплату", "Ask to be paid"), effects: { psyche: 10, energy: -5, boss: -15, colleagues: 0 } }, right: { label: L("Опыт — тоже валюта", "Experience is currency too"), effects: { psyche: -10, energy: 0, boss: 10, colleagues: 0 } } }
+    },
+    {
+      id: "pi_photo",
+      who: L("Маркетинг", "Marketing"),
+      text: L("Для сайта снимают фото команды. Вас просят встать с краю — «на всякий случай, чтобы потом легко обрезать».", "They're shooting a team photo for the website. You're asked to stand at the edge — \"just in case, so it's easy to crop later\"."),
+      answers: { left: { label: L("Встать с краю", "Stand at the edge"), effects: { psyche: -10, energy: 0, boss: 5, colleagues: 5 } }, right: { label: L("Встать в центр", "Stand in the center"), effects: { psyche: 10, energy: 0, boss: -5, colleagues: -10 } } }
+    },
+    {
+      id: "pi_badge",
+      who: L("Охрана", "Security"),
+      text: L("Ваш временный пропуск снова истёк. Охранник узнаёт вас в лицо, здоровается по имени, но пустить не может.", "Your temporary badge expired again. The guard knows you by face, greets you by name, but can't let you in."),
+      answers: { left: { label: L("Ждать у турникета", "Wait at the turnstile"), effects: { psyche: -5, energy: -10, boss: 0, colleagues: 10 } }, right: { label: L("Пройти за курьером", "Tailgate a courier"), effects: { psyche: 10, energy: 5, boss: -15, colleagues: 0 } } }
+    },
+    {
+      id: "pi_party",
+      who: L("Офис-менеджер", "Office manager"),
+      text: L("На корпоративе вам доверили самое ответственное: следить, чтобы не закончились салфетки.", "At the office party you've been trusted with the most important job: making sure the napkins don't run out."),
+      answers: { left: { label: L("Следить за салфетками", "Guard the napkins"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 5 } }, right: { label: L("Пойти танцевать", "Go dance"), effects: { psyche: 15, energy: -10, boss: -10, colleagues: 5 } } }
+    },
+    {
+      id: "pi_meeting",
+      who: L("Планёрка", "Stand-up"),
+      text: L("Впервые за три года стажёра спрашивают на планёрке. Вы точно знаете, почему горит проект.", "For the first time in three years, someone asks the intern a question at stand-up. You know exactly why the project is on fire."),
+      answers: { left: { label: L("Сказать правду", "Tell the truth"), effects: { psyche: 10, energy: 0, boss: -10, colleagues: -5 } }, right: { label: L("«Мне ещё рано судить»", '"Too early for me to judge"'), effects: { psyche: -10, energy: 0, boss: 5, colleagues: 5 } } }
+    },
+    {
+      id: "pi_review",
+      who: "HR",
+      text: L("Итоги стажировки: «Есть потенциал, но пока рано». Слово в слово как три года назад.", 'Internship review: "Shows potential, but not yet." Word for word, same as three years ago.'),
+      answers: { left: { label: L("Попросить план роста", "Ask for a growth plan"), effects: { psyche: 5, energy: -10, boss: 5, colleagues: 0 } }, right: { label: L("Обновить резюме", "Update your résumé"), effects: { psyche: 15, energy: -5, boss: -15, colleagues: 0 } } }
+    }
+  ]
+};
+const ITEMS = {
+  coffee: { name: L("Кофе", "Coffee"), stat: "energy", text: L("отменит удар по Энергии", "blocks an Energy hit") },
+  headphones: { name: L("Наушники", "Headphones"), stat: "psyche", text: L("отменят удар по Кукухе", "blocks a Sanity hit") },
+  sicknote: { name: L("Справка от врача", "Doctor's note"), stat: "boss", text: L("отменит удар по Боссу", "blocks a Boss hit") },
+  cookies: { name: L("Печеньки", "Cookies"), stat: "colleagues", text: L("отменят удар по Коллегам", "blocks a Team hit") }
+};
+const TRAITS = {
+  workaholic: {
+    name: L("Трудоголик", "Workaholic"),
+    desc: L("Живёт работой", "Lives for work"),
+    win: L("Вы закрыли неделю и уже открыли задачи на следующую. Ноутбук остался включённым — на всякий случай.", "You wrapped up the week and already opened next week's tasks. The laptop stays on — just in case."),
+    lose: L("Даже увольнение вы восприняли как задачу: резюме обновлено за 15 минут, сопроводительное — за 10.", "Even getting fired was just another task: résumé updated in 15 minutes, cover letter in 10."),
+    year: L("Год пролетел как один длинный рабочий день. Отпуск? Какой отпуск?", "The year flew by like one long workday. Vacation? What vacation?")
+  },
+  soul: {
+    name: L("Душа компании", "Life of the office"),
+    desc: L("Знает всех по имени", "Knows everyone by name"),
+    win: L("Пятница, 18:00 — и весь отдел ждёт вас в баре. Без вас не начинают.", "Friday, 6 p.m. — and the whole department is waiting for you at the bar. They won't start without you."),
+    lose: L("Коллеги скинулись на прощальный торт и плакали громче всех.", "The team chipped in for a farewell cake and cried the loudest."),
+    year: L("За год вы организовали 14 дней рождения и знаете, как зовут кота каждого коллеги.", "In a year you organized 14 birthdays and know the name of every coworker's cat.")
+  },
+  saboteur: {
+    name: L("Тихий саботажник", "Quiet quitter"),
+    desc: L("Делает ровно сколько нужно", "Does exactly what's required"),
+    win: L("Вы пережили неделю, ни разу не сделав больше необходимого. Это мастерство.", "You survived the week without doing a single thing more than necessary. That's mastery."),
+    lose: L("Уходя, вы тихо поменяли пароль от Wi‑Fi на «пятница».", 'On your way out, you quietly changed the Wi‑Fi password to "friday".'),
+    year: L("За год никто так и не понял, чем именно вы занимаетесь. И это успех.", "A whole year, and nobody figured out what exactly you do. That's success.")
+  }
+};
+const REACTIONS = {
+  boss: { name: L("Босс", "Boss"), color: "#ff3b6b", pos: [L("Вот это подход!", "Now that's the spirit!"), L("Отлично, так держать.", "Great, keep it up."), L("Запишу в вашу характеристику.", "I'll note that in your review.")], neg: [L("Мы ещё поговорим.", "We'll talk later."), L("Хм. Неожиданно.", "Hm. Unexpected."), L("Зайдите ко мне потом.", "Stop by my office later.")], posBig: [L("Вот это я понимаю — сотрудник месяца!", "Now that's employee of the month!"), L("Готовлю вам премию. Не шучу.", "I'm drafting your bonus. Not kidding.")], negBig: [L("Зайдите ко мне. Сейчас же.", "My office. Now."), L("Это будет в вашей характеристике. Навсегда.", "This goes in your file. Forever.")] },
+  colleagues: { name: L("Коллеги", "Team"), color: "#2de2e6", pos: [L("Вот это по-нашему!", "That's our guy!"), L("С нас пицца!", "Pizza's on us!"), L("Ты супер!", "You rock!")], neg: [L("Ну спасибо…", "Well, thanks a lot…"), L("Запомним.", "We'll remember that."), L("Обидно, вообще-то.", "Kinda hurtful, actually.")], posBig: [L("Качаем! Все на руки!", "Lift 'em up! Everyone!"), L("Легенда отдела, без вопросов.", "Department legend, no question.")], negBig: [L("С тобой больше не обедаем.", "We're not having lunch with you anymore."), L("Мы удалили тебя из общего чата.", "We removed you from the group chat.")] },
+  hr: { name: "HR", color: "#ff8be6", pos: [L("Отличная вовлечённость!", "Great engagement!"), L("Отмечу в опросе.", "I'll note it in the survey.")], neg: [L("Это повлияет на ваш eNPS.", "This will affect your eNPS."), L("Пройдите тренинг, пожалуйста.", "Please complete the training.")], posBig: [L("Вы — лицо нашего бренда работодателя!", "You're the face of our employer brand!"), L("Вешаем вас на доску почёта.", "You're going on the Wall of Fame.")], negBig: [L("Назначаю встречу один на один. С юристом.", "Scheduling a one-on-one. With Legal."), L("Это уже служебная записка.", "This is going in a formal memo.")] },
+  client: { name: L("Клиент", "Client"), color: "#b26bff", pos: [L("Приятно работать с профессионалами.", "A pleasure working with professionals."), L("Подписываем!", "Let's sign!")], neg: [L("Я буду жаловаться.", "I'll be filing a complaint."), L("Рассмотрим других подрядчиков.", "We'll consider other vendors.")], posBig: [L("Продлеваем контракт на три года!", "We're extending the contract for three years!"), L("Расскажу о вас всем партнёрам.", "I'll tell all our partners about you.")], negBig: [L("Расторгаем договор. Сегодня.", "We're terminating the contract. Today."), L("Ждите письмо от нашего юриста.", "Expect a letter from our lawyer.")] },
+  self: { name: L("Внутренний голос", "Inner voice"), color: "#d4ff3a", pos: [L("Так держать.", "Keep it up."), L("Красиво.", "Smooth."), L("Вот это я понимаю.", "Now we're talking.")], neg: [L("Ну зачем…", "Why though…"), L("Мы это ещё вспомним.", "We'll remember this."), L("Ой.", "Oops.")], posBig: [L("Вот это мощно. Я горжусь собой.", "That was powerful. I'm proud of me."), L("Лучшее решение за неделю.", "Best decision all week.")], negBig: [L("Это было больно. Очень.", "That hurt. A lot."), L("Кажется, только что всё сломалось.", "I think everything just broke.")] }
+};
+const ENDINGS = [
+  { id: "cake", title: L("Увольнение за торт бухгалтерии", "Fired over Accounting's cake"), hint: L("Отрезать кусочек торта и не дожить до пятницы", "Cut a slice of cake and don't make it to Friday") },
+  { id: "boss_fri", title: L("В боссы к пятнице", "Boss by Friday"), hint: L("Довести Босса до 100% в пятницу", "Get the Boss to 100% on Friday") },
+  { id: "party", title: L("Король корпоративов", "Party King"), hint: L("Коллеги на 100%", "Team at 100%") },
+  { id: "zen", title: L("Просветление в переговорке", "Enlightened in the conference room"), hint: L("Кукуха на 100%", "Sanity at 100%") },
+  { id: "battery", title: L("Вечный двигатель", "Perpetual motion machine"), hint: L("Энергия на 100%", "Energy at 100%") },
+  { id: "cooler", title: L("Кулер перевёрнут", "Cooler knocked over"), hint: L("Кукуха упала до нуля", "Sanity dropped to zero") },
+  { id: "zoom", title: L("Сон на зуме с инвесторами", "Asleep on Zoom with investors"), hint: L("Энергия упала до нуля", "Energy dropped to zero") },
+  { id: "two_words", title: L("На пару слов", '"Got a minute?"'), hint: L("Босс упал до нуля", "Boss dropped to zero") },
+  { id: "wifi", title: L("Без пароля от Wi‑Fi", "No Wi‑Fi password for you"), hint: L("Коллеги упали до нуля", "Team dropped to zero") },
+  { id: "monday", title: L("Понедельник — день тяжёлый", "Case of the Mondays"), hint: L("Проиграть в понедельник", "Lose on Monday") },
+  { id: "almost", title: L("Пятница была так близко", "Friday was so close"), hint: L("Проиграть в пятницу вечером", "Lose on Friday evening") },
+  { id: "zen_week", title: L("Идеальный баланс", "Perfect balance"), hint: L("Закрыть неделю со всеми шкалами от 40 до 60%", "Finish a week with every meter between 40 and 60%") },
+  { id: "edge", title: L("Неделя на краю", "Living on the edge"), hint: L("Закрыть неделю со шкалой ниже 10% или выше 90%", "Finish a week with a meter below 10% or above 90%") },
+  { id: "items2", title: L("Мастер отговорок", "Master of excuses"), hint: L("Использовать за неделю два предмета", "Use two items in one week") },
+  { id: "perfect_iv", title: L("Звезда собеседований", "Interview star"), hint: L("Набрать максимум баллов на собеседовании", "Get a perfect score in an interview") },
+  { id: "nomad", title: L("Перекати-поле", "Rolling stone"), hint: L("Поработать в пяти компаниях за год", "Work at five companies in one year") },
+  { id: "iron", title: L("Железный сотрудник года", "Iron employee of the year"), hint: L("Отработать все 52 недели без увольнений", "Work all 52 weeks without getting fired") },
+  { id: "quiz_saved", title: L("Спасение эрудицией", "Saved by trivia"), hint: L("Ответить на вопрос второго шанса и остаться на работе", "Answer the second-chance question and keep your job") },
+  { id: "quiz_fail", title: L("Знание — не всегда сила", "Knowledge isn't always power"), hint: L("Не ответить на вопрос второго шанса", "Fail the second-chance question") },
+  { id: "recruiter", title: L("Сарафанное радио", "Word of mouth"), hint: L("Позвать в игру трёх человек по своей ссылке", "Invite three people to the game with your link") },
+  { id: "streak7", title: L("Семь дней подряд", "Seven days straight"), hint: L("Сыграть неделю дня семь дней подряд", "Play the Daily Week seven days in a row") }
+];
+const SEASONS = [
+  {
+    id: "yearclose",
+    title: L("Закрытие года", "Year-end close"),
+    from: "12-15",
+    to: "12-23",
+    accent: "#d4ff3a",
+    rule: L("Конец года: все сдают отчёты, а бухгалтерия не спит.", "End of the year: everyone's filing reports, and Accounting never sleeps."),
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "sz_yc_plan",
+        who: L("Босс", "Boss"),
+        text: L("Босс напоминает: «Годовой план нужно закрыть до 25-го». Закрыто пока 70%.", 'The Boss reminds you: "The annual plan must be closed by the 25th." So far it\'s 70% done.'),
+        answers: { left: { label: L("Честно показать 70%", "Honestly show the 70%"), effects: { psyche: 5, energy: 0, boss: -15, colleagues: 0 } }, right: { label: L("Дожать за неделю", "Push it over the line this week"), effects: { psyche: -10, energy: -15, boss: 15, colleagues: 0 } } }
+      },
+      {
+        day: "Среда",
+        phase: "День",
+        id: "sz_yc_acts",
+        who: L("Бухгалтерия", "Accounting"),
+        text: L("Бухгалтерия просит до вечера собрать акты за весь год. Половина — в почте, половина — в памяти.", "Accounting needs all of this year's invoices by tonight. Half are in your inbox, half are in your memory."),
+        answers: { left: { label: L("Принести, что нашлось", "Bring what you found"), effects: { psyche: 5, energy: 0, boss: 0, colleagues: -15 } }, right: { label: L("Перерыть весь архив", "Dig through the whole archive"), effects: { psyche: -10, energy: -15, boss: 0, colleagues: 15 } } }
+      },
+      {
+        day: "Четверг",
+        phase: "Вечер",
+        id: "sz_yc_review",
+        who: "HR",
+        text: L("Годовая оценка: заполнить самооценку по 24 компетенциям. Пример ответа: «Проявляю проактивность».", 'Annual review: fill out a self-assessment on 24 competencies. Sample answer: "I demonstrate proactivity."'),
+        answers: { left: { label: L("Скопировать прошлогоднюю", "Copy last year's"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: 0 } }, right: { label: L("Написать от души", "Write from the heart"), effects: { psyche: -5, energy: -10, boss: 10, colleagues: 0 } } }
+      },
+      {
+        day: "Пятница",
+        phase: "День",
+        id: "sz_yc_budget",
+        who: L("Финансист", "Finance"),
+        text: L("Остался неиспользованный бюджет. Если не потратить до пятницы, в следующем году его урежут.", "There's unspent budget left. If it's not spent by Friday, it gets cut next year."),
+        answers: { left: { label: L("Пусть урезают", "Let them cut it"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: -5 } }, right: { label: L("Срочно купить кресла", "Buy new chairs, stat"), effects: { psyche: -5, energy: -10, boss: 5, colleagues: 15 } } }
+      }
+    ]
+  },
+  {
+    id: "newyear",
+    title: L("Новогодняя неделя", "Holiday week"),
+    from: "12-24",
+    to: "01-08",
+    accent: "#2de2e6",
+    rule: L("Гирлянды, мандарины и корпоратив. Работать сложно, но кто-то должен.", "String lights, eggnog and the office party. It's hard to work, but someone has to."),
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "sz_ny_tree",
+        who: L("Офис-менеджер", "Office manager"),
+        text: L("Офис-менеджер просит помочь нарядить ёлку. Гирлянда одна, распутывать её — полдня.", "The office manager asks for help decorating the tree. There's one string of lights, and untangling it takes half a day."),
+        answers: { left: { label: L("Сослаться на дедлайн", "Cite a deadline"), effects: { psyche: 0, energy: 5, boss: 5, colleagues: -10 } }, right: { label: L("Распутывать гирлянду", "Untangle the lights"), effects: { psyche: 10, energy: -10, boss: -5, colleagues: 10 } } }
+      },
+      {
+        day: "Вторник",
+        phase: "День",
+        id: "sz_ny_santa",
+        who: L("Коллеги", "Team"),
+        text: L("Тайный Санта: вам выпал коллега, с которым вы ни разу не разговаривали. Бюджет — 500 ₽.", "Secret Santa: you drew a coworker you've never spoken to. Budget: $20."),
+        answers: { left: { label: L("Подарить шоколадку", "Gift a chocolate bar"), effects: { psyche: 5, energy: 0, boss: 0, colleagues: -5 } }, right: { label: L("Выведать, что он любит", "Find out what they like"), effects: { psyche: -5, energy: -10, boss: 0, colleagues: 15 } } }
+      },
+      {
+        day: "Четверг",
+        phase: "Вечер",
+        id: "sz_ny_party",
+        who: L("Корпоратив", "Office party"),
+        text: L("Новогодний корпоратив. Ведущий зовёт вас на сцену участвовать в конкурсе с воздушными шарами.", "The holiday party. The host calls you on stage for a balloon game."),
+        answers: { left: { label: L("Спрятаться за колонной", "Hide behind a pillar"), effects: { psyche: 5, energy: 5, boss: 0, colleagues: -10 } }, right: { label: L("Выйти на сцену", "Get on stage"), effects: { psyche: -10, energy: -10, boss: 5, colleagues: 20 } } }
+      },
+      {
+        day: "Пятница",
+        phase: "Утро",
+        id: "sz_ny_duty",
+        who: L("Босс", "Boss"),
+        text: L("Кто-то должен дежурить 2 января. Босс оглядывает отдел и останавливает взгляд на вас.", "Someone has to be on call January 2nd. The Boss scans the department and his gaze stops on you."),
+        answers: { left: { label: L("У меня билеты на дачу", "I have tickets to the lake house"), effects: { psyche: 10, energy: 0, boss: -15, colleagues: 0 } }, right: { label: L("Подежурю", "I'll take the shift"), effects: { psyche: -15, energy: -5, boss: 15, colleagues: 10 } } }
+      }
+    ]
+  },
+  {
+    id: "may",
+    title: L("Неделя перед майскими", "Long weekend ahead"),
+    from: "04-25",
+    to: "05-10",
+    accent: "#ff8be6",
+    rule: L("Все мыслями уже на даче и в отпуске. Работа идёт медленно, а сроки — быстро.", "Everyone's mind is already at the lake. Work moves slowly, deadlines move fast."),
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "Утро",
+        id: "sz_may_bridge",
+        who: "HR",
+        text: L("HR предлагает взять отгул на «мост» между праздниками. Но тогда проект сдвинется.", "HR suggests taking the bridge day off between the holidays. But then the project slips."),
+        answers: { left: { label: L("Работать в мост", "Work the bridge day"), effects: { psyche: -10, energy: -5, boss: 15, colleagues: 0 } }, right: { label: L("Взять отгул", "Take the day off"), effects: { psyche: 15, energy: 10, boss: -10, colleagues: 0 } } }
+      },
+      {
+        day: "Среда",
+        phase: "День",
+        id: "sz_may_seedlings",
+        who: L("Коллега", "Colleague"),
+        text: L("Коллега принёс рассаду помидоров и просит поливать её на вашем подоконнике до праздников.", "A colleague brought tomato seedlings and asks you to water them on your windowsill until the holidays."),
+        answers: { left: { label: L("Отказать вежливо", "Politely decline"), effects: { psyche: 0, energy: 5, boss: 0, colleagues: -10 } }, right: { label: L("Стать фермером", "Become a farmer"), effects: { psyche: 10, energy: -5, boss: -5, colleagues: 10 } } }
+      },
+      {
+        day: "Четверг",
+        phase: "Вечер",
+        id: "sz_may_bbq",
+        who: L("Коллеги", "Team"),
+        text: L("Отдел зовёт на шашлыки в первый выходной. Мангал везёте вы — у вас машина.", "The department is planning a BBQ on the first day off. You're bringing the grill — you have the car."),
+        answers: { left: { label: L("Сказать, что машина в ремонте", "Say the car's in the shop"), effects: { psyche: 5, energy: 5, boss: 0, colleagues: -15 } }, right: { label: L("Везти мангал", "Haul the grill"), effects: { psyche: 5, energy: -15, boss: 0, colleagues: 15 } } }
+      },
+      {
+        day: "Пятница",
+        phase: "Вечер",
+        id: "sz_may_handover",
+        time: "17:40",
+        who: L("Босс", "Boss"),
+        text: L("17:40. Босс просит перед праздниками «просто оставить подробную инструкцию, что где лежит».", '5:40 p.m. Before the holidays, the Boss asks you to "just leave a detailed write-up of where everything is".'),
+        answers: { left: { label: L("Три строчки и бегом", "Three lines and run"), effects: { psyche: 10, energy: 5, boss: -10, colleagues: -5 } }, right: { label: L("Инструкция на 8 страниц", "An 8-page manual"), effects: { psyche: -10, energy: -15, boss: 10, colleagues: 10 } } }
+      }
+    ]
+  },
+  {
+    id: "summer",
+    title: L("Летняя жара", "Summer heat"),
+    from: "07-01",
+    to: "08-15",
+    accent: "#ff9a1f",
+    rule: L("Жара, кондиционер на всех один, а половина отдела в отпуске.", "Heat wave, one AC for everyone, and half the department on vacation."),
+    cards: [
+      {
+        day: "Понедельник",
+        phase: "День",
+        id: "sz_su_ac",
+        who: L("Кондиционер", "Air conditioner"),
+        text: L("Кондиционер в опенспейсе один. За пульт идёт тихая война между «+18» и «+26».", 'There\'s one AC in the open space. A silent war over the remote rages between "64°F" and "79°F".'),
+        answers: { left: { label: L("Не вмешиваться", "Stay out of it"), effects: { psyche: -10, energy: -5, boss: 0, colleagues: 5 } }, right: { label: L("Предложить расписание", "Propose a schedule"), effects: { psyche: 5, energy: -5, boss: 5, colleagues: -5 } } }
+      },
+      {
+        day: "Вторник",
+        phase: "Утро",
+        id: "sz_su_cover",
+        who: L("Босс", "Boss"),
+        text: L("Трое коллег в отпуске. Босс просит «временно» вести их задачи тоже.", 'Three coworkers are on vacation. The Boss asks you to "temporarily" cover their tasks too.'),
+        answers: { left: { label: L("Взять только срочное", "Only the urgent stuff"), effects: { psyche: 5, energy: 0, boss: -10, colleagues: -5 } }, right: { label: L("Вести всё", "Cover everything"), effects: { psyche: -15, energy: -15, boss: 15, colleagues: 10 } } }
+      },
+      {
+        day: "Четверг",
+        phase: "День",
+        id: "sz_su_icecream",
+        who: L("Офис-менеджер", "Office manager"),
+        text: L("Офис-менеджер купила мороженое на весь отдел, но коробка одна на 40 человек.", "The office manager bought ice cream for the whole department, but it's one box for 40 people."),
+        answers: { left: { label: L("Уступить коллегам", "Let others go first"), effects: { psyche: -5, energy: -5, boss: 0, colleagues: 15 } }, right: { label: L("Бежать в первых рядах", "Sprint to the front"), effects: { psyche: 10, energy: 10, boss: 0, colleagues: -10 } } }
+      },
+      {
+        day: "Пятница",
+        phase: "Утро",
+        id: "sz_su_dress",
+        who: "HR",
+        text: L("HR разрешила шорты по пятницам. Но у клиента сегодня визит в 11:00.", "HR allowed shorts on Fridays. But a client is visiting at 11:00 today."),
+        answers: { left: { label: L("Прийти в костюме", "Wear a suit"), effects: { psyche: -10, energy: -5, boss: 10, colleagues: 0 } }, right: { label: L("Шорты, будь что будет", "Shorts, come what may"), effects: { psyche: 10, energy: 5, boss: -15, colleagues: 5 } } }
+      }
+    ]
+  }
+];

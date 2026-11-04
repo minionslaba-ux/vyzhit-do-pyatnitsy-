@@ -1,0 +1,22 @@
+/* сгенерировано tools/make-legacy.js из js/config.js — не править */
+window.SUPABASE_CONFIG = {
+  url: "https://auequuxfcwdshblqrwbd.supabase.co",
+  anonKey: "sb_publishable_ZF67r4UX91_n180NPFQuvA_0D_-8Ya2",
+  // Telegram Mini App (необязательно): имя бота без @ и короткое имя приложения из BotFather.
+  // Ссылки-приглашения открывают игру прямо в Telegram: t.me/<bot>/<app>?startapp=… или, без app, t.me/<bot>?startapp=…
+  // botId — номер бота (первая часть токена, не секрет) для кнопки «Войти через Telegram» на сайте; домен бота задаётся в BotFather → /setdomain
+  telegram: { bot: "Survivefridaybot", app: "", botId: 9083461235 },
+  // главное мини-приложение бота: t.me/Survivefridaybot?startapp=… открывает игру сразу
+  // VK ID (необязательно): ID приложения с id.vk.com (не секрет). Пусто — кнопки «Войти через VK» нет
+  // group — короткий адрес группы ВКонтакте (vk.ru/<group>). Пусто — кнопки «Мы во ВКонтакте» в меню нет
+  // pay — оплата у.е. голосами внутри мини-приложения ВК (Edge Function vk-pay). Включать (true) после подключения платежей
+  // в настройках приложения ВК и заполнения цен в supabase/functions/vk-pay/index.ts (VK_PRICES). На сайте и в Telegram не влияет
+  vk: { app: "54866781", group: "survivefriday", pay: true },
+  // Реклама за награду (Рекламная сеть Яндекса): блок из кабинета РСЯ. type: 'rewarded' — блок «с вознаграждением»
+  // (награда только за досмотр), 'fullscreen' — полноэкранный (награда после закрытия). Пусто — кнопок рекламы нет
+  // blocks — свой блок для телефонов (touch) и для компьютеров (desktop); где номера нет — там нет и кнопки рекламы.
+  // Тип: fullscreen — Яндекс сам открывает рекламу на весь экран; banner — баннер в нашем окне с отсчётом 10 секунд
+  // Пуш-уведомления браузера: открытый ключ VAPID (закрытый — только на сервере, в закрытой таблице push_keys)
+  push: { pub: "BFod69QYYT_V09dWTc3W0nbmXsiBcXcuaZqqZrEt9T5poQ1qkX8hGecS6UVaxZRWVRcwGmOVHVp0Mrg6DINMZjQ" },
+  ads: { blocks: { touch: { id: "R-A-20310847-1", type: "fullscreen" }, desktop: { id: "R-A-20310847-2", type: "banner" } } }
+};

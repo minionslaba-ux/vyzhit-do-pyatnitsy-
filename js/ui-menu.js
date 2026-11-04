@@ -828,7 +828,7 @@ function personPop(p) {
 }
 
 // ---------- приглашения в игру: ссылки с ID, плашка, бонус за пришедших ----------
-const gameUrl = () => /^https?:/.test(location.href) ? location.origin + location.pathname : 'https://survivefriday.com/';
+const gameUrl = () => /^https?:/.test(location.href) ? location.origin + location.pathname.replace(/old(-en)?\.html$/, (m, en) => en ? 'en.html' : '') : 'https://survivefriday.com/';  // со страницы для старых браузеров (old.html) делимся обычной ссылкой
 async function referralLink(kind) {
   const ref = shortId(await myTag);
   let team = null;

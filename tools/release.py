@@ -81,6 +81,32 @@ def old_browsers():
             problems.append(f'{tool}: есть правила без запасного варианта для старых браузеров — запустите python3 {tool}\n' + r.stdout.strip()[-600:])
 
 
+def legacy_build():
+    # Копия игры для старых браузеров (old.html, legacy/js — tools/make-legacy.js): пересобрать вместе с версией
+    if not os.path.exists('tools/node_modules/esbuild'):
+        subprocess.run(['npm', 'install', '--silent', '--no-audit', '--no-fund'], cwd='tools', check=False, capture_output=True)
+    r = subprocess.run(['node', 'tools/make-legacy.js'], capture_output=True, text=True)
+    if r.returncode:
+        problems.append('tools/make-legacy.js (копия для старых браузеров) не собралась:\n' + (r.stderr or r.stdout).strip()[-600:])
+
+
+def legacy_check():
+    idx = open('index.html', encoding='utf-8').read()
+    if 'id="legacyGate"' not in idx:
+        problems.append('index.html: нет проверки старого браузера (<script id="legacyGate">) — старые телефоны не попадут на old.html')
+    for page in ('old.html', 'old-en.html'):
+        if not os.path.exists(page):
+            problems.append(f'{page} нет — запустите node tools/make-legacy.js'); continue
+        old = open(page, encoding='utf-8').read()
+        want = ['legacy/' + x for x in re.findall(r'<script src="(js/[^"]+)"', idx)]
+        have = re.findall(r'<script src="(legacy/js/[^"]+)"', old)
+        if want != have:
+            problems.append(f'{page} отстаёт от index.html по скриптам — запустите node tools/make-legacy.js')
+        for f in have:
+            if not os.path.exists(f):
+                problems.append(f'нет {f} — запустите node tools/make-legacy.js')
+
+
 def lists_check():
     idx = open('index.html', encoding='utf-8').read()
     en = open('en.html', encoding='utf-8').read()
@@ -133,11 +159,13 @@ def main():
     if not check_only and v is not None and not problems:
         v = bump(v)
         subprocess.run([sys.executable, 'tools/make-en.py'], check=False, capture_output=True)
+        legacy_build()
     js, js_ok = node_check(), None
     nj = json_check()
     ne = en_check()
     psy_check()
     old_browsers()
+    legacy_check()
     vk_market()
     ns = lists_check()
     print(f'Версия: v{v} · JS-файлов: {js} · JSON: {nj} · переводов карточек: {ne} · скриптов в index.html: {ns}')

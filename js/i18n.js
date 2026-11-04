@@ -19,7 +19,7 @@ if (window.MAX_APP) {
 window.NO_PAY = !!(window.RUSTORE || window.ITCH);  // MAX: Робокасса разрешена (владелец, 03.11.2026) — оплата как на сайте
 if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v195';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v196';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');
@@ -88,7 +88,7 @@ function setLang(l) {
   try { localStorage.setItem('vdp-lang', l); } catch {}
   const q = new URLSearchParams(location.search); q.delete('lang');
   const site = /survivefriday\.com$|^localhost$/.test(location.hostname) && !window.VDP_PLATFORM;
-  const path = site ? location.pathname.replace(/(en\.html|index\.html)?$/, l === 'en' ? 'en.html' : '') : location.pathname;
+  const path = site ? location.pathname.replace(/(old-en\.html|old\.html|en\.html|index\.html)?$/, l === 'en' ? 'en.html' : '') : location.pathname;
   location.href = path + (q.toString() ? '?' + q : '') + location.hash;
 }
 if (EN && /^Выжить/.test(document.title)) document.title = 'Survive till Friday — free office survival game';
