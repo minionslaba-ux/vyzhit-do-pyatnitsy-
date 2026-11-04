@@ -17,7 +17,7 @@
 - Все тексты в игре — двуязычные: `L('по-русски', 'in English')`.
 
 ## Устройство
-- Ванильный JS без сборки, общий глобальный скоуп. **Порядок `<script>` в `index.html` важен.** `en.html` генерируется: `python3 tools/make-en.py` (не править руками).
+- Ванильный JS без сборки, общий глобальный скоуп. **Порядок `<script>` в `index.html` важен.** `en.html` генерируется: `python3 tools/make-en.py` (не править руками). `old.html`, `old-en.html` и `legacy/js/` — копия для старых браузеров (Honor/Huawei без Google, старые Android/iOS), собирает `tools/make-legacy.js` (esbuild) при `/release`; не править руками. Проверка в начале `index.html` (`legacyGate`) сама отправляет туда старый браузер.
 - Ключевые файлы: `js/engine.js` (данные, уровни, `dataReady`), `js/game.js` (неделя, карточки, `choose`, экраны итогов, `track`), `js/ui-menu.js` (меню, профиль, «Поделиться» + `vkShare`), `js/meta.js` (задания, `addCash`), `js/hero.js` + `js/hero3d.js` + `js/wish.js` (персонаж, потребности `NEEDS`, мультики `playToon`), `js/voice.js` + `js/voice-more.js` (реплики), `js/break.js` + `js/break/b1…b6.js` (мини-игры; 51 — в pause.js), `js/pause.js` (серия пауз, «Тяжёлый день», дыхание), `js/hooks.js` (реванш, учебная неделя, золотая карточка, быстрая смена), `js/stories.js`, `js/session.js`, `js/retention.js`, `js/ads.js` (реклама РСЯ), `js/shop.js`, `js/social.js`, `js/guest.js` (`needReg`).
 - Данные: `data/pool*.json` (карточки по уровням, `LEVEL_FILES` в engine.js), `data/en/*.json` — переводы по id (карточки без перевода в английскую игру не попадают), `data/bot/*.json` — тексты бота и пушей.
 - Шина событий: `bus.on('deck'|'answer'|'weekEnd'|'menu'|'breakEnd', …)` — новые механики лучше вешать на неё, а не вписывать в game.js.
