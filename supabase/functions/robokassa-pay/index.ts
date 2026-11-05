@@ -56,11 +56,18 @@ Deno.serve(async req => {
     const { data: row, error } = await db.from('purchases').insert({ player_id: user.id, ue: n, rub, bonus, product: prod ? product : null }).select('inv_id').single();
     if (error) return json({ error: error.message }, 500);
     const inv = String(row.inv_id), sum = `${rub}.00`;
+    const desc = (prod ? prod.title : `Игровая валюта «Выжить до пятницы»: ${n} у.е.${bonus ? ` + ${bonus} в подарок` : ''}`).slice(0, 100);
+    // Состав чека (Receipt): без него Робокасса не может сама зарегистрировать доход самозанятого в «Мой налог»
+    // («Не удалось сформировать чек… Вы не передали нам состав чека»). По документации: в подпись — после InvId,
+    // URL-кодированная строка (MerchantLogin:OutSum:InvId:Receipt:Пароль#1), в запросе — та же строка.
+    // Выключить, если Робокасса станет отвечать ошибкой 29 из-за чека: секрет ROBOKASSA_RECEIPT=0.
+    const withReceipt = (Deno.env.get('ROBOKASSA_RECEIPT') || '1').trim() !== '0';
+    const receipt = withReceipt ? encodeURIComponent(JSON.stringify({ items: [{ name: desc.slice(0, 128), quantity: 1, sum: rub, tax: 'none', payment_method: 'full_payment', payment_object: 'service' }] })) : '';
     const q = new URLSearchParams({
-      MerchantLogin: login, OutSum: sum, InvId: inv, Culture: 'ru',
-      Description: (prod ? prod.title : `Игровая валюта «Выжить до пятницы»: ${n} у.е.${bonus ? ` + ${bonus} в подарок` : ''}`).slice(0, 100),
-      SignatureValue: md5(`${login}:${sum}:${inv}:${pass1}`),
+      MerchantLogin: login, OutSum: sum, InvId: inv, Culture: 'ru', Description: desc,
+      SignatureValue: md5(withReceipt ? `${login}:${sum}:${inv}:${receipt}:${pass1}` : `${login}:${sum}:${inv}:${pass1}`),
     });
+    if (withReceipt) q.set('Receipt', receipt);
     const mail = typeof email === 'string' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && !/@(tg|vk)\.survivefriday\.com$/.test(email) ? email : '';
     if (mail) q.set('Email', mail);
     if (Deno.env.get('ROBOKASSA_TEST') === '1') q.set('IsTest', '1');
