@@ -27,7 +27,18 @@ Deno.serve(async req => {
   try {
     const login = (Deno.env.get('ROBOKASSA_LOGIN') || 'survivefriday.com').trim(), pass1 = (Deno.env.get('ROBOKASSA_PASS1') || '').trim();  // пробел/перенос при копировании → ошибка 29 (неверная подпись)
     if (!login || !pass1) return json({ error: 'not_configured' }, 503);
-    const { access_token, ue, email, product } = await req.json();
+    const body = await req.json();
+    // Диагностика настроек для владельца (ошибка 29 — неверная подпись): только длина и состав паролей, сами пароли не выдаём.
+    // Вызов — только из SQL с ключом сервера (push_keys.cron_key), как у tg-notify.
+    if (body?.diag) {
+      const db0 = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, { auth: { persistSession: false, autoRefreshToken: false } });
+      const { data: k } = await db0.from('push_keys').select('cron_key').eq('id', 1).maybeSingle();
+      if (!k?.cron_key || body.diag !== k.cron_key) return json({ error: 'forbidden' }, 403);
+      const raw1 = Deno.env.get('ROBOKASSA_PASS1') || '', raw2 = Deno.env.get('ROBOKASSA_PASS2') || '';
+      const info = (r: string) => ({ len: r.trim().length, spaces_around: r !== r.trim(), only_letters_digits: /^[A-Za-z0-9]+$/.test(r.trim()), has_quotes: /["'«»]/.test(r) });
+      return json({ login, login_from_secret: !!Deno.env.get('ROBOKASSA_LOGIN'), pass1: info(raw1), pass2: info(raw2), same: raw1.trim() === raw2.trim(), test_mode: Deno.env.get('ROBOKASSA_TEST') || null });
+    }
+    const { access_token, ue, email, product } = body;
     const prod = typeof product === 'string' && product ? PRODUCTS[product] : null;
     if (product && !prod) return json({ error: 'bad_product' }, 400);
     const n = prod ? prod.ue : Math.floor(Number(ue));
