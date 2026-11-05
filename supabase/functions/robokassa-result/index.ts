@@ -9,7 +9,7 @@ const text = (s: string, status = 200) => new Response(s, { status, headers: { '
 
 Deno.serve(async req => {
   try {
-    const pass2 = Deno.env.get('ROBOKASSA_PASS2');
+    const pass2 = (Deno.env.get('ROBOKASSA_PASS2') || '').trim();
     if (!pass2) return text('not configured', 503);
     // Робокасса шлёт POST (form) или GET — в зависимости от настройки «Метод отсылки данных по Result Url»
     const p = req.method === 'POST' ? new URLSearchParams(await req.text()) : new URL(req.url).searchParams;

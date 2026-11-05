@@ -25,7 +25,7 @@ const FIRST_BONUS = 0.5;  // +50% у.е. к первому оплаченном�
 Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
   try {
-    const login = Deno.env.get('ROBOKASSA_LOGIN') || 'survivefriday.com', pass1 = Deno.env.get('ROBOKASSA_PASS1');
+    const login = (Deno.env.get('ROBOKASSA_LOGIN') || 'survivefriday.com').trim(), pass1 = (Deno.env.get('ROBOKASSA_PASS1') || '').trim();  // пробел/перенос при копировании → ошибка 29 (неверная подпись)
     if (!login || !pass1) return json({ error: 'not_configured' }, 503);
     const { access_token, ue, email, product } = await req.json();
     const prod = typeof product === 'string' && product ? PRODUCTS[product] : null;
