@@ -5,7 +5,8 @@
 // ---------- DOM ----------
 const $ = id => document.getElementById(id);
 const views = { join: $('join'), menu: $('menu'), game: $('game'), end: $('end'), board: $('board') };
-const show = v => { Object.entries(views).forEach(([k, el]) => el.hidden = k !== v); if (v !== 'menu') $('viralPop').hidden = true; window.VDP_PLATFORM?.view?.(v); };
+const show = v => { if (!window.__booted) { window.__booted = 1; $('boot')?.remove(); }  // заставка загрузки (index.html #boot)
+  Object.entries(views).forEach(([k, el]) => el.hidden = k !== v); if (v !== 'menu') $('viralPop').hidden = true; window.VDP_PLATFORM?.view?.(v); };
 const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 const rnd = (a, r = Math.random) => a[Math.floor(r() * a.length)];
 const shuffle = (a, r = Math.random) => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };

@@ -69,6 +69,23 @@
 <!-- /Yandex.Metrika counter -->
 </head>
 <body data-phase="day">
+<!-- Заставка загрузки: пока качаются скрипты (медленный мобильный интернет — до 10–30 с), экраны игры скрыты и был просто тёмный экран.
+     Убирает show() в js/game.js, когда игра показала первый экран. Через 15 с — «Долго грузится» с кнопками и текстом ошибки (если была). ES5, без style.css -->
+<div id="boot" style="position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;background:#07070d;color:#f2f0ff;font:700 16px/1.4 system-ui,sans-serif;text-align:center">
+  <div style="width:42px;height:42px;border:4px solid rgba(255,255,255,.15);border-top-color:#5ee7ff;border-radius:50%;animation:bootspin 1s linear infinite"></div>
+  <div data-en="Loading the game…">Загружаем игру…</div>
+  <div id="bootSlow" hidden style="max-width:340px;font-weight:400;font-size:14px;color:#c9c6e6">
+    <p data-en="It’s taking a while. Check your internet connection or reload the page.">Загрузка идёт долго. Проверьте интернет или обновите страницу.</p>
+    <p><button type="button" id="bootReload" style="font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;background:#5ee7ff;color:#07070d" data-en="Reload">Обновить</button></p>
+    <p><a id="bootOld" href="old.html" style="color:#5ee7ff" data-en="Open the simple version">Открыть упрощённую версию</a></p>
+    <small id="bootErr" style="display:block;opacity:.6;word-break:break-word"></small>
+  </div>
+</div>
+<style>@keyframes bootspin{to{transform:rotate(360deg)}}</style>
+<script>(function(){var b=document.getElementById('boot'),t0=Date.now();if(/en\.html$/.test(location.pathname))document.getElementById('bootOld').href='old-en.html';if(document.documentElement.getAttribute('data-legacy'))document.getElementById('bootOld').style.display='none';
+document.getElementById('bootReload').onclick=function(){location.reload();};
+var iv=setInterval(function(){if(window.__booted||!b.parentNode){clearInterval(iv);return;}
+if(Date.now()-t0>15000){document.getElementById('bootSlow').hidden=false;var e=window.__errLog&&window.__errLog.length?window.__errLog.join(' · '):'';document.getElementById('bootErr').textContent=e;}},300);})();</script>
 <noscript><div style="padding:24px;color:#f2f0ff;font-family:sans-serif"><h1>Выжить до пятницы — офисная игра онлайн</h1><p>Карточная игра про офис в духе Reigns: 25 решений с понедельника до пятницы, четыре шкалы — Кукуха, Энергия, Босс и Коллеги. Для игры включите JavaScript.</p><p lang="en">Survive till Friday: a Reigns-style office card game. 25 decisions from Monday to Friday, four meters: Sanity, Energy, Boss and Team. Please enable JavaScript to play.</p><p><a href="igra-pro-ofis.html" style="color:#7df9ff">Об игре</a></p></div></noscript>
 <!-- Офис за окном: меняется по фазе дня -->
 <div class="office" id="office" aria-hidden="true"></div>

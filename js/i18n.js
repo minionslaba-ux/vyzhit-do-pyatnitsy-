@@ -19,14 +19,14 @@ if (window.MAX_APP) {
 window.NO_PAY = !!(window.RUSTORE || window.ITCH);  // MAX: Робокасса разрешена (владелец, 03.11.2026) — оплата как на сайте
 if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v200';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v202';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');
 // Ошибки скриптов — копим с самого начала и отправляем в статистику (js/app.js), чтобы видеть поломки в конкретных браузерах
-window.__errs = [];
-addEventListener('error', e => { if (window.__errs.length < 5) window.__errs.push(`${(e.message || 'error').slice(0, 90)} @${(e.filename || '').split('/').pop()}:${e.lineno || 0}`); window.__errFlush?.(); });
-addEventListener('unhandledrejection', e => { const m = String(e.reason?.message || e.reason || ''); if (/fetch|network|load|abort/i.test(m)) return; if (window.__errs.length < 5) window.__errs.push(('promise: ' + m).slice(0, 100)); window.__errFlush?.(); });
+window.__errs = []; window.__errLog = [];  // __errLog — копия для заставки загрузки (index.html #boot), __errs уходит в статистику
+addEventListener('error', e => { { const m = `${(e.message || 'error').slice(0, 90)} @${(e.filename || '').split('/').pop()}:${e.lineno || 0}`; if (window.__errLog.length < 3) window.__errLog.push(m); if (window.__errs.length < 5) window.__errs.push(m); } window.__errFlush?.(); });
+addEventListener('unhandledrejection', e => { const m = String(e.reason?.message || e.reason || ''); if (/fetch|network|load|abort/i.test(m)) return; if (window.__errLog.length < 3) window.__errLog.push(('promise: ' + m).slice(0, 100)); if (window.__errs.length < 5) window.__errs.push(('promise: ' + m).slice(0, 100)); window.__errFlush?.(); });
 // Высота экрана для вёрстки (--app-h): реально видимая область. 100dvh в Telegram на iPhone и в части браузеров бывает
 // больше видимого — тогда низ экрана (кнопки ответов) уезжал за край, а прокрутки нет. Берём высоту из Telegram или visualViewport.
 (() => {

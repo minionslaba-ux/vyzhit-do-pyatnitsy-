@@ -3,10 +3,14 @@ var _a, _b, _c, _d, _e;
 const $ = (id) => document.getElementById(id);
 const views = { join: $("join"), menu: $("menu"), game: $("game"), end: $("end"), board: $("board") };
 const show = (v) => {
-  var _a2, _b2;
+  var _a2, _b2, _c2;
+  if (!window.__booted) {
+    window.__booted = 1;
+    (_a2 = $("boot")) == null ? void 0 : _a2.remove();
+  }
   Object.entries(views).forEach(([k, el]) => el.hidden = k !== v);
   if (v !== "menu") $("viralPop").hidden = true;
-  (_b2 = (_a2 = window.VDP_PLATFORM) == null ? void 0 : _a2.view) == null ? void 0 : _b2.call(_a2, v);
+  (_c2 = (_b2 = window.VDP_PLATFORM) == null ? void 0 : _b2.view) == null ? void 0 : _c2.call(_b2, v);
 };
 const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]);
 const rnd = (a, r = Math.random) => a[Math.floor(r() * a.length)];

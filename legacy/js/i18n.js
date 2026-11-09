@@ -61,18 +61,24 @@ if (window.MAX_APP) {
 window.NO_PAY = !!(window.RUSTORE || window.ITCH);
 if (window.ITCH) document.documentElement.classList.add("itch");
 if (window.NO_PAY) document.documentElement.classList.add("no-pay");
-window.APP_VER = "v200";
+window.APP_VER = "v202";
 window.BROWSER = ((ua) => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? "yandex" : /SamsungBrowser/i.test(ua) ? "samsung" : /MiuiBrowser|XiaoMi/i.test(ua) ? "miui" : /OPR\/|Opera/i.test(ua) ? "opera" : /Edg/i.test(ua) ? "edge" : /Firefox|FxiOS/i.test(ua) ? "firefox" : /CriOS|Chrome/i.test(ua) ? "chrome" : /Safari/i.test(ua) ? "safari" : "other")(navigator.userAgent || "");
 window.__errs = [];
+window.__errLog = [];
 addEventListener("error", (e) => {
   var _a;
-  if (window.__errs.length < 5) window.__errs.push("".concat((e.message || "error").slice(0, 90), " @").concat((e.filename || "").split("/").pop(), ":").concat(e.lineno || 0));
+  {
+    const m = "".concat((e.message || "error").slice(0, 90), " @").concat((e.filename || "").split("/").pop(), ":").concat(e.lineno || 0);
+    if (window.__errLog.length < 3) window.__errLog.push(m);
+    if (window.__errs.length < 5) window.__errs.push(m);
+  }
   (_a = window.__errFlush) == null ? void 0 : _a.call(window);
 });
 addEventListener("unhandledrejection", (e) => {
   var _a, _b;
   const m = String(((_a = e.reason) == null ? void 0 : _a.message) || e.reason || "");
   if (/fetch|network|load|abort/i.test(m)) return;
+  if (window.__errLog.length < 3) window.__errLog.push(("promise: " + m).slice(0, 100));
   if (window.__errs.length < 5) window.__errs.push(("promise: " + m).slice(0, 100));
   (_b = window.__errFlush) == null ? void 0 : _b.call(window);
 });
