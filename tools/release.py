@@ -159,6 +159,7 @@ def main():
     if not check_only and v is not None and not problems:
         v = bump(v)
         subprocess.run([sys.executable, 'tools/make-en.py'], check=False, capture_output=True)
+        subprocess.run([sys.executable, 'tools/make-pikabu.py'], check=False, capture_output=True)  # pikabu/index.html — страница для Пикабу Игр
         legacy_build()
     js, js_ok = node_check(), None
     nj = json_check()
