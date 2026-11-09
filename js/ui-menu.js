@@ -36,7 +36,7 @@ function renderMenu() {
   $('record').textContent = (best.wins ? L(`недель закрыто: ${best.wins}`, `weeks survived: ${best.wins}`) : best.step ? L(`дольше всего: ${dayName(dayOf(best.step))}, ${phaseName(slotPh(best.step)).toLowerCase()}`, `longest run: ${dayName(dayOf(best.step))}, ${phaseName(slotPh(best.step)).toLowerCase()}`) : L('пока нет', 'none yet'))
     + L(` · карточек открыто: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`, ` · cards discovered: ${Math.min(seenN, TOTAL_CARDS)}/${TOTAL_CARDS}`);
   const save = store.get(KEY.save, null);
-  if (dataLoaded && save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
+  if (poolDone && save && !save.deck?.every(x => byId[x.id])) store.del(KEY.save); // сохранение от старой колоды
   const Cm = store.get(KEY.career, null), careerSave = save && (save.mode || 'career') === 'career';
   // Постоянные коллеги: портрет, кто это и как к вам относятся (только в карьере)
   $('castList').hidden = !Cm;
@@ -263,7 +263,7 @@ $('profLogout').onclick = logoutClick;
 $('langRu').onclick = () => EN && setLang('ru');
 $('langEn').onclick = () => !EN && setLang('en');
 $(EN ? 'langEn' : 'langRu').classList.add('on');
-$('start').onclick = async () => { await whenReady($('start')); continueCareer(); };
+$('start').onclick = async () => { await whenReady($('start'), levelOf(C || store.get(KEY.career, null)) > 1); continueCareer(); };
 // «Мой профиль»: плашка справа вверху открывает панель — данные игрока, аккаунт, справка, второстепенные кнопки.
 // Кнопки, которые продвигают игру (позвать друзей, группа в Telegram, установка), — и в меню, и здесь
 const profSheet = $('profSheet');
@@ -281,7 +281,7 @@ profSheet.addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProfile(); });
 $('psInvite').onclick = () => openShare(registered() ? 'team' : 'friends');
 $('psGroup').onclick = () => $('tgGroup').click();
-$('startDaily').onclick = async () => { await whenReady($('startDaily')); startDaily(); };
+$('startDaily').onclick = async () => { await whenReady($('startDaily'), true); startDaily(); };
 $('startPack').onclick = async () => { await whenReady($('startPack')); startPack(); };
 // «Начать заново» срабатывает со второго нажатия: окна подтверждения в браузере тут нет
 $('newCareer').onclick = () => {
@@ -645,7 +645,7 @@ async function renderTourBox(team) {
     ${t ? `<button class="btn-ghost" id="tourScreen">${L('Экран итогов для проектора', 'Results screen for the projector')}</button>` : ''}
     ${team.is_owner ? `<form class="inline-form" id="tourForm"><input id="tourAt" type="datetime-local" value="${def}" aria-label="${L('Время старта турнира', 'Tournament start time')}"><button class="btn-ghost" type="submit">${t ? L('Новый турнир', 'New tournament') : L('Назначить', 'Schedule')}</button></form>` : t ? '' : `<p class="field-note">${L('Назначить турнир может создатель офиса.', 'Only the office founder can schedule a tournament.')}</p>`}
     <p class="join-err" id="tourErr" role="alert"></p>`;
-  if ($('tourPlay')) $('tourPlay').onclick = async () => { await whenReady($('tourPlay')); startTournament(t, !played); };
+  if ($('tourPlay')) $('tourPlay').onclick = async () => { await whenReady($('tourPlay'), true); startTournament(t, !played); };
   if ($('tourScreen')) $('tourScreen').onclick = () => openScreen(t.code);
   if ($('tourForm')) $('tourForm').onsubmit = async e => { e.preventDefault();
     try { await board.rpc('set_tournament', { p_id: prefs.playerId, p_starts: new Date($('tourAt').value).toISOString() }); toast(L('Турнир назначен — коллеги увидят его в «Мой офис» и в меню', 'Tournament scheduled — your coworkers will see it in “My Office” and in the menu')); renderTourBox(team); }
@@ -654,6 +654,7 @@ async function renderTourBox(team) {
   if (t && !started) tourTimer = setTimeout(() => renderTourBox(team), 30000);
 }
 function startTournament(t, ranked) {
+  if (!poolDone) return void poolFull().then(() => startTournament(t, ranked));  // колода по seed — нужны все карточки
   const rng = seeded('vdp-tour-' + t.seed);
   C = null;
   S = newWeekState({ mode: 'tour', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { tourId: t.tour_id, tourCode: t.code, tourTeam: t.team_name } });
@@ -869,7 +870,7 @@ async function renderChallengeCta() {
     if (p?.name) { c.by = p.name; store.set(KEY.prefs, prefs); }
   }
   el.querySelector('span').innerHTML = L(`<b>Вызов: ${esc(chName(c))}</b> ${chResult(c)}. Неделя дня ${dayLabel(c.day)} — та же самая. Сможете лучше?`, `<b>Challenge: ${esc(chName(c))}</b> ${chResult(c)}. Same Daily Week ${dayLabel(c.day)}. Can you beat it?`);
-  $('chGo').onclick = async () => { await whenReady($('chGo')); startDaily(c.day); };
+  $('chGo').onclick = async () => { await whenReady($('chGo'), true); startDaily(c.day); };
 }
 function shareText(kind, team) {
   return kind === 'team'

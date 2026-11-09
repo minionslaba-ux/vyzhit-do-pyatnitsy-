@@ -352,7 +352,7 @@ if(Date.now()-t0>15000){document.getElementById('bootSlow').hidden=false;var e=w
     if (tg) document.write('<script src="https://telegram.org/js/telegram-web-app.js"><\/script>');
   })();
 </script>
-<script>/* ранняя регистрация офлайн-режима — только на сайте (каталоги игр и ВК без него; основная логика — js/app.js) */if("serviceWorker"in navigator&&/(^|\.)survivefriday\.com$/.test(location.hostname)&&!/[?&]vk_app_id=/.test(location.search))navigator.serviceWorker.register("sw.js").catch(function(){});</script>
+<script>/* ранняя регистрация офлайн-режима (при первом визите — через 4 с после загрузки страницы) — только на сайте (каталоги игр и ВК без него; основная логика — js/app.js) */if("serviceWorker"in navigator&&/(^|\.)survivefriday\.com$/.test(location.hostname)&&!/[?&]vk_app_id=/.test(location.search)){var swr=function(){navigator.serviceWorker.register("sw.js").catch(function(){});};/* первый визит: офлайн-копия качается после загрузки игры, а не вместе с ней */if(navigator.serviceWorker.controller)swr();else addEventListener("load",function(){setTimeout(swr,4000);});}</script>
 <script src="js/i18n.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cards.js"></script>

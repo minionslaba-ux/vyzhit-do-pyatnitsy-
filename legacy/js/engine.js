@@ -71,7 +71,7 @@ function activeSeason(d = /* @__PURE__ */ new Date()) {
   return (typeof SEASONS === "undefined" ? [] : SEASONS).find((z) => z.from <= z.to ? md >= z.from && md <= z.to : md >= z.from || md <= z.to) || null;
 }
 const PROF_ALL = Object.values(PROF_CARDS).flat().map((c) => ({ ...norm(c), profCard: true }));
-let POOL = [], QUIZ = [], dataLoaded = false;
+let POOL = [], QUIZ = [], dataLoaded = false, poolDone = false;
 const SUGGESTED = [];
 let PACK = null, PACK_CARDS = [];
 const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...SEASON_CARDS].map((c) => [c.id, c]));
@@ -123,15 +123,25 @@ let CAST_CARDS = [];
 let STORIES = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: "base_" + i, ...x })), { id: "last_base", last: true, ...INTERVIEW_LAST }];
 let MONTH_CARDS = [];
+let poolRest = null, poolRestGo = null;
 const dataReady = (async () => {
   var _a;
   const get = async (name, global) => window[global] || (await fetch("data/".concat(name, ".json"))).json();
   const en = async (name) => EN ? window["EN_".concat(name.toUpperCase(), "_JSON")] || await fetch("data/en/".concat(name, ".json")).then((r) => r.ok ? r.json() : []).catch(() => []) : null;
   try {
+    let lazy = false;
+    await 0;
+    try {
+      lazy = !window.POOL2_JSON && levelOf(store.get(KEY.career, null)) <= 1 && !store.get(KEY.save, null);
+    } catch (e) {
+    }
+    const later = new Promise((go) => {
+      poolRestGo = go;
+    });
     let [p, p2, p3, q, ch, iv, cast, st] = await Promise.all([
       get("pool", "POOL_JSON"),
-      get("pool2", "POOL2_JSON").catch(() => []),
-      get("pool3", "POOL3_JSON").catch(() => []),
+      lazy ? [] : get("pool2", "POOL2_JSON").catch(() => []),
+      lazy ? [] : get("pool3", "POOL3_JSON").catch(() => []),
       get("quiz", "QUIZ_JSON"),
       get("chains", "CHAINS_JSON").catch(() => []),
       get("interview", "INTERVIEW_JSON").catch(() => []),
@@ -141,7 +151,7 @@ const dataReady = (async () => {
     let mc = await get("season_cards", "SEASON_CARDS_JSON").catch(() => []);
     if (EN) mc = enCards(mc, await en("season_cards"));
     if (EN) {
-      const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(["pool", "pool2", "pool3", "quiz", "chains", "interview", "cast"].map(en));
+      const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(["pool", lazy ? "" : "pool2", lazy ? "" : "pool3", "quiz", "chains", "interview", "cast"].map((n) => n ? en(n) : []));
       p = enCards(p, ep);
       p2 = enCards(p2, ep2);
       p3 = enCards(p3, ep3);
@@ -153,9 +163,29 @@ const dataReady = (async () => {
       }) }));
       q = enById(q, eq, (x, t) => ({ ...x, ...t }));
     }
-    const extra = await Promise.all(LEVEL_FILES.map(([f]) => fetch("data/".concat(f, ".json")).then((r) => r.ok ? r.json() : []).catch(() => [])));
-    const extraEn = EN ? await Promise.all(LEVEL_FILES.map(([f]) => en(f))) : [];
-    const lvlCards = LEVEL_FILES.flatMap(([, lvl], i) => (EN ? enCards(extra[i], extraEn[i]) : extra[i]).map((c) => ({ ...boost(norm(c), lvl > 1 ? POOL2_DOWN : 1), lvl })));
+    const files = lazy ? LEVEL_FILES.filter(([, lvl]) => lvl === 1) : LEVEL_FILES;
+    const levelCards = async (list) => {
+      const extra = await Promise.all(list.map(([f]) => fetch("data/".concat(f, ".json")).then((r) => r.ok ? r.json() : []).catch(() => [])));
+      const extraEn = EN ? await Promise.all(list.map(([f]) => en(f))) : [];
+      return list.flatMap(([, lvl], i) => (EN ? enCards(extra[i], extraEn[i]) : extra[i]).map((c) => ({ ...boost(norm(c), lvl > 1 ? POOL2_DOWN : 1), lvl })));
+    };
+    const lvlCards = await levelCards(files);
+    if (lazy) poolRest = later.then(async () => {
+      let [r2, r3] = await Promise.all([get("pool2", "POOL2_JSON").catch(() => []), get("pool3", "POOL3_JSON").catch(() => [])]);
+      if (EN) {
+        const [e2, e3] = await Promise.all(["pool2", "pool3"].map(en));
+        r2 = enCards(r2, e2);
+        r3 = enCards(r3, e3);
+      }
+      const mid = r2.map((c) => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })).concat(r3.map((c) => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })));
+      const tail = await levelCards(LEVEL_FILES.filter(([, lvl]) => lvl > 1));
+      const n1 = p.length, n2 = n1 + lvlCards.length;
+      POOL = POOL.slice(0, n1).concat(mid, POOL.slice(n1, n2), tail, POOL.slice(n2));
+      for (const c of mid.concat(tail)) byId[c.id] = c;
+      TOTAL_CARDS = TOTAL_BASE + POOL.length;
+    }).finally(() => {
+      poolDone = true;
+    });
     POOL = p.map((c) => ({ ...boost(norm(c)), lvl: 1 })).concat(p2.map((c) => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })), p3.map((c) => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })), lvlCards);
     QUIZ = q;
     const ivq = new Set(IV.map((x) => x.q));
@@ -178,7 +208,18 @@ const dataReady = (async () => {
   } catch (e) {
   }
   dataLoaded = true;
+  if (poolRest) setTimeout(poolRestGo, 1500);
+  else poolDone = true;
 })();
+const poolFull = () => dataReady.then(() => {
+  if (!poolRest) {
+    poolDone = true;
+    return;
+  }
+  poolRestGo == null ? void 0 : poolRestGo();
+  return poolRest.catch(() => {
+  });
+});
 const levelLoaded = {};
 function loadLevel(lvl) {
   if (lvl < LEVEL_LAZY || lvl > LEVEL_MAX) return Promise.resolve();
@@ -199,14 +240,14 @@ function loadLevel(lvl) {
     TOTAL_CARDS = TOTAL_BASE + POOL.length;
   })());
 }
-async function whenReady(btn) {
-  if (dataLoaded) return;
+async function whenReady(btn, full = false) {
+  if (dataLoaded && (!full || poolDone)) return;
   const t = btn == null ? void 0 : btn.textContent;
   if (btn) {
     btn.textContent = L("Загружаю карточки…", "Loading cards…");
     btn.disabled = true;
   }
-  await dataReady;
+  await (full ? poolFull() : dataReady);
   if (btn) {
     btn.textContent = t;
     btn.disabled = false;

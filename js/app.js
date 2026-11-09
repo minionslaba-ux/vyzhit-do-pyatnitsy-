@@ -82,7 +82,9 @@ if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !windo
   bus.on('menu', () => { if (swPending && !swReloaded) { swReloaded = true; location.reload(); } });
   // приложение с экрана «Домой» на iPhone не перезапускается, а просыпается — проверяем обновление при каждом возвращении
   document.addEventListener('visibilitychange', () => { if (!document.hidden) navigator.serviceWorker.getRegistration().then(r => r?.update()).catch(() => {}); });
-  navigator.serviceWorker.register('sw.js').then(r => r.update?.()).catch(() => {});
+  const swReg = () => navigator.serviceWorker.register('sw.js').then(r => r.update?.()).catch(() => {});
+  // первый визит: офлайн-копия игры (sw.js SHELL — все карточки, мини-игры) качается после загрузки, а не отнимает интернет у неё
+  if (hadSw) swReg(); else if (document.readyState === 'complete') setTimeout(swReg, 4000); else addEventListener('load', () => setTimeout(swReg, 4000));
 }
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);

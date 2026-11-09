@@ -463,6 +463,7 @@ async function liveTick() {
 // ---------- неделя дня и брендированная неделя ----------
 // day — дата недели дня; прошлые даты (по ссылке-вызову) играются вне зачёта
 function startDaily(day = today()) {
+  if (!poolDone) return void poolFull().then(() => startDaily(day));  // колода по дате одинакова у всех — нужны все карточки
   const rng = seeded('vdp-daily-' + day);
   C = null;
   S = newWeekState({ mode: 'daily', res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: 'normal', rng, extra: { day } });

@@ -44,7 +44,7 @@ function renderMenu() {
   const seenN = store.get(KEY.seen, []).filter((id) => byId[id]).length;
   $("record").textContent = (best.wins ? L("недель закрыто: ".concat(best.wins), "weeks survived: ".concat(best.wins)) : best.step ? L("дольше всего: ".concat(dayName(dayOf(best.step)), ", ").concat(phaseName(slotPh(best.step)).toLowerCase()), "longest run: ".concat(dayName(dayOf(best.step)), ", ").concat(phaseName(slotPh(best.step)).toLowerCase())) : L("пока нет", "none yet")) + L(" · карточек открыто: ".concat(Math.min(seenN, TOTAL_CARDS), "/").concat(TOTAL_CARDS), " · cards discovered: ".concat(Math.min(seenN, TOTAL_CARDS), "/").concat(TOTAL_CARDS));
   const save = store.get(KEY.save, null);
-  if (dataLoaded && save && !((_a = save.deck) == null ? void 0 : _a.every((x) => byId[x.id]))) store.del(KEY.save);
+  if (poolDone && save && !((_a = save.deck) == null ? void 0 : _a.every((x) => byId[x.id]))) store.del(KEY.save);
   const Cm = store.get(KEY.career, null), careerSave = save && (save.mode || "career") === "career";
   $("castList").hidden = !Cm;
   if (Cm) $("castList").innerHTML = '<b class="cast-title">'.concat(L("Коллеги по работе", "Your coworkers"), "</b>").concat(Object.entries(CAST).map(([k, p]) => {
@@ -378,7 +378,7 @@ $("langRu").onclick = () => EN && setLang("ru");
 $("langEn").onclick = () => !EN && setLang("en");
 $(EN ? "langEn" : "langRu").classList.add("on");
 $("start").onclick = async () => {
-  await whenReady($("start"));
+  await whenReady($("start"), levelOf(C || store.get(KEY.career, null)) > 1);
   continueCareer();
 };
 const profSheet = $("profSheet");
@@ -410,7 +410,7 @@ document.addEventListener("keydown", (e) => {
 $("psInvite").onclick = () => openShare(registered() ? "team" : "friends");
 $("psGroup").onclick = () => $("tgGroup").click();
 $("startDaily").onclick = async () => {
-  await whenReady($("startDaily"));
+  await whenReady($("startDaily"), true);
   startDaily();
 };
 $("startPack").onclick = async () => {
@@ -889,7 +889,7 @@ async function renderTourBox(team) {
   const def = "".concat(soon.getFullYear(), "-").concat(pad(soon.getMonth() + 1), "-").concat(pad(soon.getDate()), "T").concat(pad(soon.getHours()), ":00");
   box.innerHTML = '<span class="kicker">'.concat(L("Турнир офиса", "Office tournament"), "</span>\n    ").concat(t ? '<p class="tour-when"><b>'.concat(started ? L("Турнир идёт", "Tournament is on") : L("Старт ".concat(until(t.starts_at)), "Starts ".concat(until(t.starts_at))), "</b><span>").concat(fmtTime(t.starts_at), "</span></p>") : '<p class="field-note">'.concat(L("Одна и та же неделя для всего офиса, общий старт и таблица итогов на большом экране.", "Same week for the whole office, one start time, and a results table for the big screen."), "</p>"), "\n    ").concat(t && started ? '<button class="btn-main" id="tourPlay">'.concat(played ? L("Сыграть ещё раз (не в зачёт)", "Play again (won’t count)") : L("Играть турнир", "Play the tournament"), "</button>") : "", "\n    ").concat(t ? '<button class="btn-ghost" id="tourScreen">'.concat(L("Экран итогов для проектора", "Results screen for the projector"), "</button>") : "", "\n    ").concat(team.is_owner ? '<form class="inline-form" id="tourForm"><input id="tourAt" type="datetime-local" value="'.concat(def, '" aria-label="').concat(L("Время старта турнира", "Tournament start time"), '"><button class="btn-ghost" type="submit">').concat(t ? L("Новый турнир", "New tournament") : L("Назначить", "Schedule"), "</button></form>") : t ? "" : '<p class="field-note">'.concat(L("Назначить турнир может создатель офиса.", "Only the office founder can schedule a tournament."), "</p>"), '\n    <p class="join-err" id="tourErr" role="alert"></p>');
   if ($("tourPlay")) $("tourPlay").onclick = async () => {
-    await whenReady($("tourPlay"));
+    await whenReady($("tourPlay"), true);
     startTournament(t, !played);
   };
   if ($("tourScreen")) $("tourScreen").onclick = () => openScreen(t.code);
@@ -907,6 +907,7 @@ async function renderTourBox(team) {
   if (t && !started) tourTimer = setTimeout(() => renderTourBox(team), 3e4);
 }
 function startTournament(t, ranked) {
+  if (!poolDone) return void poolFull().then(() => startTournament(t, ranked));
   const rng = seeded("vdp-tour-" + t.seed);
   C = null;
   S = newWeekState({ mode: "tour", res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: "normal", rng, extra: { tourId: t.tour_id, tourCode: t.code, tourTeam: t.team_name } });
@@ -1219,7 +1220,7 @@ async function renderChallengeCta() {
   }
   el.querySelector("span").innerHTML = L("<b>Вызов: ".concat(esc(chName(c)), "</b> ").concat(chResult(c), ". Неделя дня ").concat(dayLabel(c.day), " — та же самая. Сможете лучше?"), "<b>Challenge: ".concat(esc(chName(c)), "</b> ").concat(chResult(c), ". Same Daily Week ").concat(dayLabel(c.day), ". Can you beat it?"));
   $("chGo").onclick = async () => {
-    await whenReady($("chGo"));
+    await whenReady($("chGo"), true);
     startDaily(c.day);
   };
 }

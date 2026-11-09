@@ -122,11 +122,14 @@ if ("serviceWorker" in navigator && /^https?:/.test(location.protocol) && !windo
     if (!document.hidden) navigator.serviceWorker.getRegistration().then((r) => r == null ? void 0 : r.update()).catch(() => {
     });
   });
-  navigator.serviceWorker.register("sw.js").then((r) => {
+  const swReg = () => navigator.serviceWorker.register("sw.js").then((r) => {
     var _a2;
     return (_a2 = r.update) == null ? void 0 : _a2.call(r);
   }).catch(() => {
   });
+  if (hadSw) swReg();
+  else if (document.readyState === "complete") setTimeout(swReg, 4e3);
+  else addEventListener("load", () => setTimeout(swReg, 4e3));
 }
 const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);

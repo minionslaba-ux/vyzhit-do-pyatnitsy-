@@ -600,6 +600,7 @@ async function liveTick() {
   liveT = setTimeout(liveTick, 3e4);
 }
 function startDaily(day = today()) {
+  if (!poolDone) return void poolFull().then(() => startDaily(day));
   const rng = seeded("vdp-daily-" + day);
   C = null;
   S = newWeekState({ mode: "daily", res: { psyche: 50, energy: 50, boss: 50, colleagues: 50 }, type: "normal", rng, extra: { day } });

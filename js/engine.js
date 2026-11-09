@@ -78,7 +78,7 @@ function activeSeason(d = new Date()) {
 }
 const PROF_ALL = Object.values(PROF_CARDS).flat().map(c => ({ ...norm(c), profCard: true }));
 // Большой пул карточек (data/pool.json — 1000, data/pool2.json — ещё 2000, data/pool3.json — ещё 1000) и вопросы второго шанса грузятся в фоне из data/*.json — меню открывается сразу
-let POOL = [], QUIZ = [], dataLoaded = false;
+let POOL = [], QUIZ = [], dataLoaded = false, poolDone = false;  // poolDone — загружены карточки всех уровней (см. dataReady)
 const SUGGESTED = [];  // одобренные карточки от коллег, загружаются из Supabase
 let PACK = null, PACK_CARDS = [];
 const byId = Object.fromEntries([...CARDS, ...RANDOM_CARDS, ...CHAIN_CARDS, ...TYPE_CARDS, ...PROF_ALL, ...SEASON_CARDS].map(c => [c.id, c]));
@@ -139,17 +139,24 @@ let STORIES = [];
 let IV = [...INTERVIEW.map((x, i) => ({ id: 'base_' + i, ...x })), { id: 'last_base', last: true, ...INTERVIEW_LAST }];
 // Карточки темы месяца (data/season_cards.json, формат как у pool.json; id mthММ_NN — месяц в id): в карьеру их подмешивает js/retention.js
 let MONTH_CARDS = [];
+let poolRest = null, poolRestGo = null;  // фоновая догрузка 2-го и 3-го уровней (быстрый первый запуск)
 const dataReady = (async () => {
   const get = async (name, global) => window[global] || (await fetch(`data/${name}.json`)).json();
   // Английский: data/en/<имя>.json — только тексты, по id поверх русских. Карточки без перевода в английскую игру не попадают
   const en = async name => EN ? (window[`EN_${name.toUpperCase()}_JSON`] || (await fetch(`data/en/${name}.json`).then(r => r.ok ? r.json() : []).catch(() => []))) : null;
   try {
-    let [p, p2, p3, q, ch, iv, cast, st] = await Promise.all([get('pool', 'POOL_JSON'), get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
+    // Быстрый первый запуск: без карьеры выше 1-го уровня и без сохранённой недели сначала грузим только карточки 1-го уровня (~2 МБ вместо ~7),
+    // а 2-й и 3-й — в фоне сразу после (poolRest). Неделе дня и турниру нужен весь набор (колода по дате одинакова у всех) — они ждут poolFull
+    let lazy = false;
+    await 0;  // store и KEY объявлены ниже в этом файле — читаем их после того, как файл выполнился целиком
+    try { lazy = !window.POOL2_JSON && levelOf(store.get(KEY.career, null)) <= 1 && !store.get(KEY.save, null); } catch {}
+    const later = new Promise(go => { poolRestGo = go; });
+    let [p, p2, p3, q, ch, iv, cast, st] = await Promise.all([get('pool', 'POOL_JSON'), lazy ? [] : get('pool2', 'POOL2_JSON').catch(() => []), lazy ? [] : get('pool3', 'POOL3_JSON').catch(() => []), get('quiz', 'QUIZ_JSON'),
       get('chains', 'CHAINS_JSON').catch(() => []), get('interview', 'INTERVIEW_JSON').catch(() => []), get('cast', 'CAST_JSON').catch(() => []), get('stories', 'STORIES_JSON').catch(() => [])]);
     let mc = await get('season_cards', 'SEASON_CARDS_JSON').catch(() => []);
     if (EN) mc = enCards(mc, await en('season_cards'));
     if (EN) {
-      const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(['pool', 'pool2', 'pool3', 'quiz', 'chains', 'interview', 'cast'].map(en));
+      const [ep, ep2, ep3, eq, ech, eiv, ecast] = await Promise.all(['pool', lazy ? '' : 'pool2', lazy ? '' : 'pool3', 'quiz', 'chains', 'interview', 'cast'].map(n => n ? en(n) : []));
       p = enCards(p, ep); p2 = enCards(p2, ep2); p3 = enCards(p3, ep3); cast = enCards(cast, ecast);
       ch = enCards(ch.map(x => ({ ...x.card, _chain: x })), ech).map(c => ({ ...c._chain, origin: c.origin || c._chain.origin, card: { ...c, _chain: undefined, origin: undefined } }));
       iv = enById(iv, eiv, (x, t) => ({ ...x, q: t.q, a: x.a.map((a, i) => ({ ...a, ...(t.a?.[i] || {}) })) }));
@@ -157,9 +164,24 @@ const dataReady = (async () => {
     }
     // уровень карьеры: у каждого свои карточки — 1-й год pool.json, 2-й pool2.json, 3-й pool3.json (LEVELS ниже)
     // дополнительные наборы уровней (data/pool_l1a…l3c.json): 1-й уровень — 3000 карточек, 2-й и 3-й — по 2500
-    const extra = await Promise.all(LEVEL_FILES.map(([f]) => fetch(`data/${f}.json`).then(r => r.ok ? r.json() : []).catch(() => [])));
-    const extraEn = EN ? await Promise.all(LEVEL_FILES.map(([f]) => en(f))) : [];
-    const lvlCards = LEVEL_FILES.flatMap(([, lvl], i) => (EN ? enCards(extra[i], extraEn[i]) : extra[i]).map(c => ({ ...boost(norm(c), lvl > 1 ? POOL2_DOWN : 1), lvl })));
+    const files = lazy ? LEVEL_FILES.filter(([, lvl]) => lvl === 1) : LEVEL_FILES;
+    const levelCards = async list => {
+      const extra = await Promise.all(list.map(([f]) => fetch(`data/${f}.json`).then(r => r.ok ? r.json() : []).catch(() => [])));
+      const extraEn = EN ? await Promise.all(list.map(([f]) => en(f))) : [];
+      return list.flatMap(([, lvl], i) => (EN ? enCards(extra[i], extraEn[i]) : extra[i]).map(c => ({ ...boost(norm(c), lvl > 1 ? POOL2_DOWN : 1), lvl })));
+    };
+    const lvlCards = await levelCards(files);
+    if (lazy) poolRest = later.then(async () => {
+      let [r2, r3] = await Promise.all([get('pool2', 'POOL2_JSON').catch(() => []), get('pool3', 'POOL3_JSON').catch(() => [])]);
+      if (EN) { const [e2, e3] = await Promise.all(['pool2', 'pool3'].map(en)); r2 = enCards(r2, e2); r3 = enCards(r3, e3); }
+      const mid = r2.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })).concat(r3.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })));
+      const tail = await levelCards(LEVEL_FILES.filter(([, lvl]) => lvl > 1));
+      // порядок — как при полной загрузке (pool, pool2, pool3, pool_l1a…l3c): от него зависит колода недели дня и турнира по seed
+      const n1 = p.length, n2 = n1 + lvlCards.length;
+      POOL = POOL.slice(0, n1).concat(mid, POOL.slice(n1, n2), tail, POOL.slice(n2));
+      for (const c of mid.concat(tail)) byId[c.id] = c;
+      TOTAL_CARDS = TOTAL_BASE + POOL.length;
+    }).finally(() => { poolDone = true; });
     POOL = p.map(c => ({ ...boost(norm(c)), lvl: 1 })).concat(p2.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 2 })), p3.map(c => ({ ...boost(norm(c), POOL2_DOWN), lvl: 3 })), lvlCards); QUIZ = q;
     const ivq = new Set(IV.map(x => x.q)); IV = IV.concat(iv.filter(x => !ivq.has(x.q) && ivq.add(x.q)));  // один и тот же вопрос — только один раз
     CAST_CARDS = cast.map(norm); for (const c of CAST_CARDS) byId[c.id] = c;
@@ -173,7 +195,10 @@ const dataReady = (async () => {
   // продолжение карьеры на уровне 4+: его карточки нужны до восстановления сохранённой недели
   try { const lv = (store.get(KEY.career, null) || {}).level || 1; if (lv >= LEVEL_LAZY) await loadLevel(lv); } catch {}
   dataLoaded = true;
+  if (poolRest) setTimeout(poolRestGo, 1500); else poolDone = true;  // остальные уровни — чуть позже, когда первый экран уже показан
 })();
+// Все карточки (2-й и 3-й уровни могли ещё догружаться в фоне)
+const poolFull = () => dataReady.then(() => { if (!poolRest) { poolDone = true; return; } poolRestGo?.(); return poolRest.catch(() => {}); });
 // Карточки уровня 4+ (по 1000 на уровень): загрузить один раз, перед первой неделей этого уровня
 const levelLoaded = {};
 function loadLevel(lvl) {
@@ -189,10 +214,11 @@ function loadLevel(lvl) {
   })();
 }
 // Перед стартом недели ждём данные; кнопка показывает, что идёт загрузка
-async function whenReady(btn) {
-  if (dataLoaded) return;
+// full — нужны карточки всех уровней (неделя дня, турнир, карьера со 2-го уровня)
+async function whenReady(btn, full = false) {
+  if (dataLoaded && (!full || poolDone)) return;
   const t = btn?.textContent; if (btn) { btn.textContent = L('Загружаю карточки…', 'Loading cards…'); btn.disabled = true; }
-  await dataReady;
+  await (full ? poolFull() : dataReady);
   if (btn) { btn.textContent = t; btn.disabled = false; }
 }
 
