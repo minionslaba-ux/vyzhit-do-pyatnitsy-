@@ -69,7 +69,11 @@ function remindCardHtml() {
 document.addEventListener("click", async (e) => {
   const b = e.target.closest("[data-remind]");
   if (!b) return;
-  const a = b.dataset.remind, card = b.closest(".remind-card");
+  const a = b.dataset.remind, card0 = b.closest(".remind-card");
+  const card = card0 && { remove: () => {
+    if (card0.closest("#modal")) $("modal").hidden = true;
+    card0.remove();
+  } };
   track("remind_click", { detail: a });
   if (a === "no") {
     card == null ? void 0 : card.remove();
@@ -111,6 +115,25 @@ bus.on("weekEnd", () => {
     st.insertAdjacentHTML("beforebegin", remindCardHtml());
     track("remind_ask", { detail: remindChannel() });
   }, 1600);
+});
+let remindWinPending = false;
+bus.on("weekEnd", (x) => {
+  if (x.won && !prefs.remindWinAsked && remindAllowed() && !remindActive() && !prefs.remindNever) remindWinPending = true;
+});
+bus.on("menu", () => {
+  if (!remindWinPending) return;
+  setTimeout(() => {
+    const m = $("modal");
+    if (!remindWinPending || !m.hidden || views.menu.hidden || remindActive()) return;
+    if (window.VK_MINI && Date.now() - (prefs.remindAskAt || 0) < 30 * 864e5) return;
+    remindWinPending = false;
+    prefs.remindWinAsked = 1;
+    prefs.remindAskAt = Date.now();
+    store.set(KEY.prefs, prefs);
+    m.innerHTML = '<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="rwTitle"><span class="lvl-ico" aria-hidden="true">🎉</span>\n      <h2 id="rwTitle">'.concat(L("Неделя пройдена!", "Week survived!"), "</h2>\n      <p>").concat(L("Чтобы не терять серию, включите напоминание — раз в день, про неделю дня и разминку.", "To keep your streak going, turn on a reminder — once a day, about the Daily Week and a break."), "</p>\n      ").concat(remindCardHtml(), "</div>");
+    m.hidden = false;
+    track("remind_ask", { detail: "win-" + remindChannel() });
+  }, 1800);
 });
 bus.on("menu", () => {
   remindGrant();

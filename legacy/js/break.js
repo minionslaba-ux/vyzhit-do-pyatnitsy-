@@ -86,7 +86,7 @@ const brkLoad = (n) => {
 };
 function openBreaks() {
   const m = $("modal"), best = brkBest(), t = brkToday();
-  m.innerHTML = '<div class="modal-box glass brk-box" role="dialog" aria-modal="true" aria-labelledby="brkTitle">\n    <h2 id="brkTitle">☕ '.concat(L("Разминка", "Break time"), '</h2>\n    <p class="hero-lead">').concat(L("Мини-игры для перерыва. Награда — ещё ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " из ").concat(BREAK_DAY_REWARDS, " сегодня: +1 у.е. и бодрость на следующую неделю (+").concat(BREAK_BUFF, " к Энергии и Кукухе)."), "Mini-games for your break. Rewards left today: ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " of ").concat(BREAK_DAY_REWARDS, " — +$1 and a boost for next week (+").concat(BREAK_BUFF, " Energy and Sanity)."))).concat(prefs.breakBuff ? " <b>".concat(L("Бодрость: +".concat(prefs.breakBuff), "Boost: +".concat(prefs.breakBuff)), "</b>") : "", "</p>\n    ").concat(BREAK_CATS.map(([c, ico, name]) => '<h3 class="hs-h">'.concat(ico, " ").concat(esc(name), '</h3><div class="brk-grid">').concat(BREAKS.filter((b) => b[1] === c).map(([n, , i, title]) => '<button type="button" class="brk-card brk-c-'.concat(c, '" data-brk="').concat(n, '" style="animation-delay:').concat(n % 10 * 25, 'ms"><span class="brk-ico" aria-hidden="true">').concat(i, "</span><b>").concat(esc(title), "</b>").concat(best[n] != null ? "<small>🏆 ".concat(esc(String(best[n])), "</small>") : "", "</button>")).join(""), "</div>")).join(""), '\n    <button class="btn-ghost" type="button" id="brkClose">').concat(L("Закрыть", "Close"), "</button></div>");
+  m.innerHTML = '<div class="modal-box glass brk-box" role="dialog" aria-modal="true" aria-labelledby="brkTitle">\n    <h2 id="brkTitle">☕ '.concat(L("Разминка", "Break time"), '</h2>\n    <p class="hero-lead">').concat(L("Мини-игры для перерыва. Награда — ещё ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " из ").concat(BREAK_DAY_REWARDS, " сегодня: +1 у.е. и бодрость на следующую неделю (+").concat(BREAK_BUFF, " к Энергии и Кукухе)."), "Mini-games for your break. Rewards left today: ".concat(Math.max(0, BREAK_DAY_REWARDS - t.n), " of ").concat(BREAK_DAY_REWARDS, " — +$1 and a boost for next week (+").concat(BREAK_BUFF, " Energy and Sanity)."))).concat(prefs.breakBuff ? " <b>".concat(L("Бодрость: +".concat(prefs.breakBuff), "Boost: +".concat(prefs.breakBuff)), "</b>") : "", "</p>\n    ").concat(BREAK_CATS.map(([c, ico, name]) => '<h3 class="hs-h">'.concat(ico, " ").concat(esc(name), '</h3><div class="brk-grid">').concat(BREAKS.filter((b) => b[1] === c).map(([n, , i, title]) => '<button type="button" class="brk-card brk-c-'.concat(c, '" data-brk="').concat(n, '" style="animation-delay:').concat(n % 10 * 25, 'ms"><span class="brk-ico" aria-hidden="true">').concat(i, "</span><b>").concat(esc(title), "</b>").concat(BREAK_NEW.includes(n) && best[n] == null ? '<small class="brk-fresh">'.concat(L("Новая", "New"), "</small>") : "").concat(best[n] != null ? "<small>🏆 ".concat(esc(String(best[n])), "</small>") : "", "</button>")).join(""), "</div>")).join(""), '\n    <button class="btn-ghost" type="button" id="brkClose">').concat(L("Закрыть", "Close"), "</button></div>");
   m.hidden = false;
   m.querySelectorAll("[data-brk]").forEach((b) => b.onclick = () => {
     m.hidden = true;
@@ -340,7 +340,9 @@ bus.on("weekEnd", (x) => {
     };
   }, 1800);
 });
-const brkOfDay = () => BREAK_QUICK[Math.floor(seeded("brk-day-".concat(today()))() * BREAK_QUICK.length)];
+const BREAK_DAY_FIXED = { "2026-11-10": 52, "2026-11-11": 53, "2026-11-12": 54 };
+const BREAK_NEW = [52, 53, 54];
+const brkOfDay = () => BREAK_DAY_FIXED[today()] || BREAK_QUICK[Math.floor(seeded("brk-day-".concat(today()))() * BREAK_QUICK.length)];
 function renderBreakDay() {
   const box = $("brkDay");
   if (!box) return;

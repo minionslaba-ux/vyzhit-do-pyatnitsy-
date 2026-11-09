@@ -1545,6 +1545,7 @@ body.ad-pause .app { pointer-events: none; }
 .brk-card:active { transform: scale(.96); }
 .brk-card b { font-weight: 800; }
 .brk-card small { color: #d4ff3a; font-size: 11px; font-weight: 800; }
+.brk-card small.brk-fresh { color: #07070d; background: #d4ff3a; border-radius: 6px; padding: 1px 6px; }
 .brk-ico { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; font-size: 26px; line-height: 1;
   background: radial-gradient(circle at 35% 30%, rgba(var(--cc),.45), rgba(var(--cc),.12) 70%); box-shadow: 0 0 18px rgba(var(--cc),.35), inset 0 1px 0 rgba(255,255,255,.25); }
 .brk-c-logic { --cc: 255,59,212; } .brk-c-puzzle { --cc: 178,107,255; } .brk-c-arcade { --cc: 255,170,40; }

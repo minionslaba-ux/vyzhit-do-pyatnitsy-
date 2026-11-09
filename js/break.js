@@ -80,7 +80,7 @@ function openBreaks() {
   m.innerHTML = `<div class="modal-box glass brk-box" role="dialog" aria-modal="true" aria-labelledby="brkTitle">
     <h2 id="brkTitle">☕ ${L('Разминка', 'Break time')}</h2>
     <p class="hero-lead">${L(`Мини-игры для перерыва. Награда — ещё ${Math.max(0, BREAK_DAY_REWARDS - t.n)} из ${BREAK_DAY_REWARDS} сегодня: +1 у.е. и бодрость на следующую неделю (+${BREAK_BUFF} к Энергии и Кукухе).`, `Mini-games for your break. Rewards left today: ${Math.max(0, BREAK_DAY_REWARDS - t.n)} of ${BREAK_DAY_REWARDS} — +$1 and a boost for next week (+${BREAK_BUFF} Energy and Sanity).`)}${prefs.breakBuff ? ` <b>${L(`Бодрость: +${prefs.breakBuff}`, `Boost: +${prefs.breakBuff}`)}</b>` : ''}</p>
-    ${BREAK_CATS.map(([c, ico, name]) => `<h3 class="hs-h">${ico} ${esc(name)}</h3><div class="brk-grid">${BREAKS.filter(b => b[1] === c).map(([n, , i, title]) => `<button type="button" class="brk-card brk-c-${c}" data-brk="${n}" style="animation-delay:${(n % 10) * 25}ms"><span class="brk-ico" aria-hidden="true">${i}</span><b>${esc(title)}</b>${best[n] != null ? `<small>🏆 ${esc(String(best[n]))}</small>` : ''}</button>`).join('')}</div>`).join('')}
+    ${BREAK_CATS.map(([c, ico, name]) => `<h3 class="hs-h">${ico} ${esc(name)}</h3><div class="brk-grid">${BREAKS.filter(b => b[1] === c).map(([n, , i, title]) => `<button type="button" class="brk-card brk-c-${c}" data-brk="${n}" style="animation-delay:${(n % 10) * 25}ms"><span class="brk-ico" aria-hidden="true">${i}</span><b>${esc(title)}</b>${BREAK_NEW.includes(n) && best[n] == null ? `<small class="brk-fresh">${L('Новая', 'New')}</small>` : ''}${best[n] != null ? `<small>🏆 ${esc(String(best[n]))}</small>` : ''}</button>`).join('')}</div>`).join('')}
     <button class="btn-ghost" type="button" id="brkClose">${L('Закрыть', 'Close')}</button></div>`;
   m.hidden = false;
   m.querySelectorAll('[data-brk]').forEach(b => b.onclick = () => { m.hidden = true; playBreak(+b.dataset.brk); });
@@ -236,7 +236,10 @@ bus.on('weekEnd', x => {
 
 // ---------- «Разминка дня» в главном меню ----------
 // Одна короткая игра на день — одинаковая у всех (по дате), сыграть в одно касание; ниже — ссылка на все 50
-const brkOfDay = () => BREAK_QUICK[Math.floor(seeded(`brk-day-${today()}`)() * BREAK_QUICK.length)];
+// Разминка дня по дате; BREAK_DAY_FIXED — назначенные вручную (новые разминки), то же в supabase/functions/tg-daily/index.ts
+const BREAK_DAY_FIXED = { '2026-11-10': 52, '2026-11-11': 53, '2026-11-12': 54 };
+const BREAK_NEW = [52, 53, 54];  // значок «Новая» в списке разминок
+const brkOfDay = () => BREAK_DAY_FIXED[today()] || BREAK_QUICK[Math.floor(seeded(`brk-day-${today()}`)() * BREAK_QUICK.length)];
 function renderBreakDay() {
   const box = $('brkDay'); if (!box) return;
   const n = brkOfDay(), b = BREAKS.find(x => x[0] === n); if (!b) return;

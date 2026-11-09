@@ -65,7 +65,9 @@ function remindCardHtml() {
 }
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-remind]'); if (!b) return;
-  const a = b.dataset.remind, card = b.closest('.remind-card');
+  const a = b.dataset.remind, card0 = b.closest('.remind-card');
+  // карточка в окне (после первой выигранной недели) — закрываем окно целиком
+  const card = card0 && { remove: () => { if (card0.closest('#modal')) $('modal').hidden = true; card0.remove(); } };
   track('remind_click', { detail: a });
   if (a === 'no') { card?.remove(); return; }
   if (a === 'ios') return pushIosHelp();
@@ -86,6 +88,24 @@ bus.on('weekEnd', () => {
     prefs.remindAskAt = Date.now(); store.set(KEY.prefs, prefs);
     st.insertAdjacentHTML('beforebegin', remindCardHtml()); track('remind_ask', { detail: remindChannel() });
   }, 1600);
+});
+// После первой выигранной недели — один раз окно в меню (карточку на экране итогов часто пролистывают: 1 показ на 11 недель за 2–9 ноября)
+let remindWinPending = false;
+bus.on('weekEnd', x => { if (x.won && !prefs.remindWinAsked && remindAllowed() && !remindActive() && !prefs.remindNever) remindWinPending = true; });
+bus.on('menu', () => {
+  if (!remindWinPending) return;
+  setTimeout(() => {
+    const m = $('modal');
+    if (!remindWinPending || !m.hidden || views.menu.hidden || remindActive()) return;
+    if (window.VK_MINI && Date.now() - (prefs.remindAskAt || 0) < 30 * 864e5) return;  // ВК: не чаще раза в месяц (правила 2.6.3)
+    remindWinPending = false; prefs.remindWinAsked = 1; prefs.remindAskAt = Date.now(); store.set(KEY.prefs, prefs);
+    m.innerHTML = `<div class="modal-box glass lvl-box" role="dialog" aria-modal="true" aria-labelledby="rwTitle"><span class="lvl-ico" aria-hidden="true">🎉</span>
+      <h2 id="rwTitle">${L('Неделя пройдена!', 'Week survived!')}</h2>
+      <p>${L('Чтобы не терять серию, включите напоминание — раз в день, про неделю дня и разминку.', 'To keep your streak going, turn on a reminder — once a day, about the Daily Week and a break.')}</p>
+      ${remindCardHtml()}</div>`;
+    m.hidden = false;
+    track('remind_ask', { detail: 'win-' + remindChannel() });
+  }, 1800);
 });
 // Меню: бонус за напоминания, включённые кнопками в профиле; окно «Включить напоминания?» — не только раз при запуске
 bus.on('menu', () => {

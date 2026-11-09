@@ -128,7 +128,10 @@ const BRK_QUICK: [number, string, string, string][] = [[5, '🗂️', 'Пятн�
   [45, '🙃', 'Кто лишний', 'Odd one out'], [49, '🫧', 'Пупырка', 'Bubble wrap']];
 const seeded = (str: string) => { let h = 1779033703 ^ str.length; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = h << 13 | h >>> 19;
   let a = h >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
-const brkOfDay = (mskDate: string) => BRK_QUICK[Math.floor(seeded(`brk-day-${mskDate}`)() * BRK_QUICK.length)];
+// назначенные вручную — как BREAK_DAY_FIXED в js/break.js
+const BRK_FIXED: Record<string, [number, string, string, string]> = { '2026-11-10': [52, '🗄️', 'Кофе против завала (новая!)', 'Coffee vs the pile-up (new!)'],
+  '2026-11-11': [53, '🙈', 'Прятки от коллег (новая!)', 'Hide from coworkers (new!)'], '2026-11-12': [54, '🧐', 'Умный вид на созвоне (новая!)', 'Look smart on the call (new!)'] };
+const brkOfDay = (mskDate: string) => BRK_FIXED[mskDate] || BRK_QUICK[Math.floor(seeded(`brk-day-${mskDate}`)() * BRK_QUICK.length)];
 
 Deno.serve(async req => {
   const token = Deno.env.get('TELEGRAM_BOT_TOKEN');
