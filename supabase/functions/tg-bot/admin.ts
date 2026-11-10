@@ -13,9 +13,27 @@ export const ADMIN_COMMANDS = [
   { command: 'stats', description: 'Отчёт за сегодня' },
   { command: 'yesterday', description: 'Отчёт за вчера' },
   { command: 'week', description: 'Отчёт за 7 дней' },
-  { command: 'mut', description: '«Мутация» сегодня' },
-  { command: 'mut_yesterday', description: '«Мутация» вчера' },
-  { command: 'mut_week', description: '«Мутация» за 7 дней' },
+  { command: 'mut', description: '«Мутация»: отчёт за сегодня' },
+  { command: 'mut_yesterday', description: '«Мутация»: вчера' },
+  { command: 'mut_week', description: '«Мутация»: 7 дней' },
+  { command: 'mut_month', description: '«Мутация»: 30 дней' },
+  { command: 'mut_online', description: '«Мутация»: кто сейчас в игре' },
+  { command: 'mut_new', description: '«Мутация»: новые игроки сегодня' },
+  { command: 'mut_top', description: '«Мутация»: таблица рекордов' },
+  { command: 'mut_find', description: '«Мутация»: найти игрока: /mut_find Имя' },
+  { command: 'mut_player', description: '«Мутация»: карточка игрока: /mut_player ID' },
+  { command: 'mut_export', description: '«Мутация»: игроки в CSV' },
+  { command: 'mut_funnel', description: '«Мутация»: воронка' },
+  { command: 'mut_retention', description: '«Мутация»: удержание' },
+  { command: 'mut_modes', description: '«Мутация»: режимы и испытания' },
+  { command: 'mut_deaths', description: '«Мутация»: чем кончаются партии' },
+  { command: 'mut_forms', description: '«Мутация»: мутанты и скримеры' },
+  { command: 'mut_devices', description: '«Мутация»: устройства и настройки' },
+  { command: 'mut_health', description: '«Мутация»: всё ли работает' },
+  { command: 'mut_errors', description: '«Мутация»: ошибки JS у игроков' },
+  { command: 'mut_promo', description: '«Мутация»: пост дня рассылки' },
+  { command: 'mut_hide', description: '«Мутация»: сбросить имя: /mut_hide ID' },
+  { command: 'mut_help', description: '«Мутация»: все команды' },
   { command: 'online', description: 'Кто сейчас в игре' },
   { command: 'top', description: 'Лучшие игроки недели' },
   { command: 'sales', description: 'Покупки и деньги' },
@@ -37,7 +55,7 @@ const HELP = `🛠 <b>Команды разработчика</b>
 
 📊 <b>Статистика</b>
 /stats — сегодня · /yesterday — вчера · /week — 7 дней
-/mut · /mut_yesterday · /mut_week — отчёты по «Мутации»
+🧪 «Мутация»: /mut_help — все команды отчётов по игре
 /online — кто сейчас в игре
 /top — лучшие игроки недели дня
 /sales — покупки (сегодня и 7 дней)

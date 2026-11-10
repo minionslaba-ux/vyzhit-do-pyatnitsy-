@@ -112,16 +112,21 @@ async function onMessage(msg: any) {
       await api('sendMessage', { chat_id: chat.id, text, parse_mode: 'HTML', reply_markup: reportMarkup });
       return;
     }
-    // отчёты по «Мутации» (другая игра владельца): текст собирает public.mutaciya_report_period (только чтение, вызов — service_role).
-    // Текст обычный, без HTML: в нём бывают имена игроков из таблицы рекордов
-    if (cmd === 'mut' || cmd === 'mut_yesterday' || cmd === 'mut_week') {
+    // «Мутация» (другая игра владельца): все команды /mut… — логика в базе, public.mutaciya_bot(p_cmd, p_arg) → {text} или {text, file_name, file_csv}
+    // (security definer, вызов только service_role). Текст обычный, без HTML: в нём бывают имена игроков
+    if (/^mut(_|$)/.test(cmd)) {
       const { data: admin } = await db.from('dev_admins').select('tg_id').eq('tg_id', msg.from?.id).maybeSingle();
       if (!admin) return;
-      const d = (shift: number) => new Date(mskDay(shift).getTime() + 3 * 3600e3).toISOString().slice(0, 10);  // дата по Москве
-      const [from, to] = cmd === 'mut_week' ? [d(-7), d(-1)] : cmd === 'mut_yesterday' ? [d(-1), d(-1)] : [d(0), d(0)];
-      const { data: text, error } = await db.rpc('mutaciya_report_period', { p_from: from, p_to: to });
-      await api('sendMessage', { chat_id: chat.id, text: String(text || (error ? `Не получилось собрать отчёт: ${error.message}` : 'Не получилось собрать отчёт')).slice(0, 4000),
-        disable_web_page_preview: true, reply_markup: { inline_keyboard: [[{ text: '🧪 Открыть «Мутацию»', url: 'https://mutaciya.com/' }]] } });
+      const { data: r, error } = await db.rpc('mutaciya_bot', { p_cmd: cmd, p_arg: rest });
+      const text = String(r?.text || (error ? 'Ошибка: ' + error.message : 'Нет ответа')).slice(0, 4000);
+      if (r?.file_csv != null) {
+        const fd = new FormData(); fd.append('chat_id', String(chat.id)); fd.append('caption', text.slice(0, 1000));
+        fd.append('document', new Blob(['\uFEFF' + r.file_csv], { type: 'text/csv' }), String(r.file_name || 'mutaciya.csv'));
+        await fetch(`https://api.telegram.org/bot${token}/sendDocument`, { method: 'POST', body: fd });
+      } else {
+        await api('sendMessage', { chat_id: chat.id, text, disable_web_page_preview: true,
+          reply_markup: { inline_keyboard: [[{ text: '🧪 Открыть «Мутацию»', url: 'https://mutaciya.com/' }]] } });
+      }
       return;
     }
     if (cmd !== 'start') {  // команды разработчика (/help, /push, /news, /event…) — только dev_admins
