@@ -13,6 +13,9 @@ export const ADMIN_COMMANDS = [
   { command: 'stats', description: 'Отчёт за сегодня' },
   { command: 'yesterday', description: 'Отчёт за вчера' },
   { command: 'week', description: 'Отчёт за 7 дней' },
+  { command: 'mut', description: '«Мутация» сегодня' },
+  { command: 'mut_yesterday', description: '«Мутация» вчера' },
+  { command: 'mut_week', description: '«Мутация» за 7 дней' },
   { command: 'online', description: 'Кто сейчас в игре' },
   { command: 'top', description: 'Лучшие игроки недели' },
   { command: 'sales', description: 'Покупки и деньги' },
@@ -34,6 +37,7 @@ const HELP = `🛠 <b>Команды разработчика</b>
 
 📊 <b>Статистика</b>
 /stats — сегодня · /yesterday — вчера · /week — 7 дней
+/mut · /mut_yesterday · /mut_week — отчёты по «Мутации»
 /online — кто сейчас в игре
 /top — лучшие игроки недели дня
 /sales — покупки (сегодня и 7 дней)
