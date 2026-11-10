@@ -11,7 +11,7 @@ import { vkAlbum, vkDaily } from './vk.ts';
 import { maxBroadcast } from './max.ts';
 import { maxPromo } from './promo.ts';
 import { msgReminders } from './remind.ts';
-import { crossPromo } from './cross.ts';
+import { crossPromo, crossOnce } from './cross.ts';
 
 const TEXT = {
   ru: ['📅 Неделя дня готова: 25 решений до пятницы, 18:00. Коллеги уже играют — сравним?',
@@ -140,6 +140,14 @@ Deno.serve(async req => {
   const body = await req.json().catch(() => ({}));
   if (typeof body.test === 'string') return testGroup(db, token, body.test);
   if (typeof body.announce === 'string') return announceEn(db, token, body.announce);
+  // разовый пост о другой игре владельца: { cross_once: одноразовый код из bot_test_tokens, slug } — data/bot/cross_once.json, больше ничего не рассылает
+  if (typeof body.cross_once === 'string' && typeof body.slug === 'string') {
+    const { data: t } = await db.from('bot_test_tokens').delete().eq('token', body.cross_once).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
+    if (!t?.length) return new Response('forbidden', { status: 403 });
+    const d = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+    const res = await crossOnce(db, token, body.slug, d).catch(e => ({ error: String(e) }));
+    return new Response(JSON.stringify(res), { headers: { 'Content-Type': 'application/json' } });
+  }
   // пробный пост в ВК: { vk_test: одноразовый код из bot_test_tokens, kind?: 0|1|2 } — больше ничего не рассылает
   if (typeof body.vk_test === 'string') {
     const { data: t } = await db.from('bot_test_tokens').delete().eq('token', body.vk_test).gt('created_at', new Date(Date.now() - 600e3).toISOString()).select();
