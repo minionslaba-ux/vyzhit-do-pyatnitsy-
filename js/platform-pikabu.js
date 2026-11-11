@@ -9,7 +9,8 @@ window.VDP_PLATFORM = {
 };
 document.head.insertAdjacentHTML('beforeend', `<style>#openInvite, #installApp, #installCta, #installPop, #viralPop, #remindDaily, .viral, .share-grid,
   .legal-top, .site-legal, .join-consent, #maxPlay, #maxChannel, #remind2, #bootOld, a[target="_blank"], a[href^="http"],
-  #share, #shareImg, .btn-share, .brk-share, .oc-share, .qt-share, .qt-vk, #welcome .perks, #welcome .welcome-lead, #wNote, #wVideo, #joinNote { display: none !important; }</style>`);
+  #share, #shareImg, .btn-share, .brk-share, .oc-share, .qt-share, .qt-vk, #welcome .perks, #welcome .welcome-lead, #wNote, #wVideo, #joinNote,
+  #paneOffice .row2, #officeCta, #socLive, #onlineBox, #socProfile, #toBoard, #place, #meId, .lang-row { display: none !important; }</style>`);
 
 // Реклама Пикабу в виде adv Яндекс Игр: showRewardedVideo / showFullscreenAdv с callbacks
 const pkAdv = pk => ({
@@ -76,7 +77,9 @@ const pkStart = async () => {
 };
 // файл стоит до скриптов игры: подписки — когда они загружены (bus, prefs, cloudSnapshot уже есть)
 document.addEventListener('DOMContentLoaded', () => {
-  const g = document.getElementById('wGuest'); if (g) g.textContent = 'Играть';  // своих аккаунтов на Пикабу нет — просто «Играть»
+  const g = document.getElementById('wGuest'); if (g) g.textContent = 'Играть';
+  // своих аккаунтов на Пикабу нет: раздел профиля «Аккаунт» → «Настройки» (там «Начать карьеру заново»)
+  document.querySelectorAll('.ps-cap[data-en="Account"]').forEach(x => { x.textContent = 'Настройки'; });  // своих аккаунтов на Пикабу нет — просто «Играть»
   bus.on('weekEnd', () => pkSave());
   bus.on('menu', () => pkSave());
   bus.on('breakEnd', () => pkSave());
