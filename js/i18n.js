@@ -16,10 +16,18 @@ if (window.MAX_APP) {
   s.onload = () => { try { window.WebApp?.ready?.(); window.WebApp?.expand?.(); } catch {} };
   document.head.append(s);
 }
-window.NO_PAY = !!(window.RUSTORE || window.ITCH);  // MAX: Робокасса разрешена (владелец, 03.11.2026) — оплата как на сайте
+window.NO_PAY = !!(window.RUSTORE || window.ITCH);
+// RuStore (Android-приложение): по правилам модерации (п. 8.2) приложение не должно выглядеть «перенаправлением на сайт» —
+// внутри не показываем ссылок, уводящих в браузер: документы сайта, соцсети и мессенджеры, вход через Telegram/VK/MAX, «Установить»
+if (window.RUSTORE) {
+  document.documentElement.classList.add('rustore');
+  document.head.insertAdjacentHTML('beforeend', `<style>html.rustore :is(.legal-top, .site-legal, .join-consent, .lnk-itch, #vkGroup, #vkInvite, #maxPlay, #maxChannel,
+    #tgGroup, #installApp, #installCta, #installPop, #viralPop, #tgRemind, #remind2, #qtVk, .btn-tg, .btn-vk, .btn-maxlogin, .maxlogin-note,
+    [data-remind="tg"], a[href^="mailto:"], a[href$="pravila.html"], a[target="_blank"]) { display: none !important; }</style>`);
+}  // MAX: Робокасса разрешена (владелец, 03.11.2026) — оплата как на сайте
 if (window.ITCH) document.documentElement.classList.add('itch');
 if (window.NO_PAY) document.documentElement.classList.add('no-pay');
-window.APP_VER = 'v209';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
+window.APP_VER = 'v210';  // версия игры — та же, что CACHE в sw.js (видна в профиле)
 // Браузер — для статистики и обходов: Яндекс Браузер, Samsung Internet, MIUI и т. д.
 window.BROWSER = (ua => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? 'yandex' : /SamsungBrowser/i.test(ua) ? 'samsung' : /MiuiBrowser|XiaoMi/i.test(ua) ? 'miui'
   : /OPR\/|Opera/i.test(ua) ? 'opera' : /Edg/i.test(ua) ? 'edge' : /Firefox|FxiOS/i.test(ua) ? 'firefox' : /CriOS|Chrome/i.test(ua) ? 'chrome' : /Safari/i.test(ua) ? 'safari' : 'other')(navigator.userAgent || '');

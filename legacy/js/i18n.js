@@ -59,9 +59,13 @@ if (window.MAX_APP) {
   document.head.append(s);
 }
 window.NO_PAY = !!(window.RUSTORE || window.ITCH);
+if (window.RUSTORE) {
+  document.documentElement.classList.add("rustore");
+  document.head.insertAdjacentHTML("beforeend", '<style>html.rustore :is(.legal-top, .site-legal, .join-consent, .lnk-itch, #vkGroup, #vkInvite, #maxPlay, #maxChannel,\n    #tgGroup, #installApp, #installCta, #installPop, #viralPop, #tgRemind, #remind2, #qtVk, .btn-tg, .btn-vk, .btn-maxlogin, .maxlogin-note,\n    [data-remind="tg"], a[href^="mailto:"], a[href$="pravila.html"], a[target="_blank"]) { display: none !important; }</style>');
+}
 if (window.ITCH) document.documentElement.classList.add("itch");
 if (window.NO_PAY) document.documentElement.classList.add("no-pay");
-window.APP_VER = "v209";
+window.APP_VER = "v210";
 window.BROWSER = ((ua) => /YaBrowser|YaSearchBrowser|YandexSearch/i.test(ua) ? "yandex" : /SamsungBrowser/i.test(ua) ? "samsung" : /MiuiBrowser|XiaoMi/i.test(ua) ? "miui" : /OPR\/|Opera/i.test(ua) ? "opera" : /Edg/i.test(ua) ? "edge" : /Firefox|FxiOS/i.test(ua) ? "firefox" : /CriOS|Chrome/i.test(ua) ? "chrome" : /Safari/i.test(ua) ? "safari" : "other")(navigator.userAgent || "");
 window.__errs = [];
 window.__errLog = [];

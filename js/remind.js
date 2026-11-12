@@ -6,7 +6,7 @@
 //  • ?startapp=remind в Telegram — включить сразу (js/app.js → remindTgOn).
 const REMIND_BONUS = 5, REMIND_GAP = 2 * 864e5;
 const remindActive = () => (typeof pushOn === 'function' && pushOn()) || !!prefs.tgRemind || (window.VK_MINI && !!prefs.vkRemind) || (window.MAX_APP && !!prefs.maxRemind);
-const remindAllowed = () => !window.VDP_PLATFORM && board.online && !!prefs.name;
+const remindAllowed = () => !window.VDP_PLATFORM && board.online && !!prefs.name && !(window.RUSTORE && remindChannel() === 'tg-open');  // RuStore: в Telegram из приложения не уводим
 function remindGrant() {
   if (prefs.remindBonus || !remindActive() || window.VK_MINI) return;  // ВК: без бонуса за согласие на уведомления (правила VK Mini Apps 2.6)
   prefs.remindBonus = 1; store.set(KEY.prefs, prefs);

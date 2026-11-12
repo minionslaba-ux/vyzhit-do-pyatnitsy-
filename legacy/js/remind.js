@@ -1,7 +1,7 @@
 /* сгенерировано tools/make-legacy.js из js/remind.js — не править */
 const REMIND_BONUS = 5, REMIND_GAP = 2 * 864e5;
 const remindActive = () => typeof pushOn === "function" && pushOn() || !!prefs.tgRemind || window.VK_MINI && !!prefs.vkRemind || window.MAX_APP && !!prefs.maxRemind;
-const remindAllowed = () => !window.VDP_PLATFORM && board.online && !!prefs.name;
+const remindAllowed = () => !window.VDP_PLATFORM && board.online && !!prefs.name && !(window.RUSTORE && remindChannel() === "tg-open");
 function remindGrant() {
   if (prefs.remindBonus || !remindActive() || window.VK_MINI) return;
   prefs.remindBonus = 1;
