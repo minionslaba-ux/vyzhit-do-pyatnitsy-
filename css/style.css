@@ -107,6 +107,7 @@ button { cursor: pointer; }
 
 /* ---------- пропуск ---------- */
 .join { justify-content: flex-start; overflow-y: auto; }
+.join > * { flex-shrink: 0; }  /* панели входа не сжимаются по высоте экрана (иначе низ обрезался — кнопка «Играть как гость» пропадала): прокручивается сам экран */
 .pass { overflow: hidden; }
 .pass-top { position: relative; padding: 24px 16px 14px; text-align: center; border-bottom: 1.5px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
 .pass-top b { font-family: var(--f-display); font-weight: 800; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; color: var(--hi); text-shadow: 0 0 18px rgba(var(--m-rgb),.8); }
