@@ -37,7 +37,8 @@ body = cut(body, '<script>/* ранняя регистрация офлайн-р
 # без нашего сервера: board.online = false (js/board.js читает SUPABASE_CONFIG при загрузке)
 cfg = '<script src="js/config.js"></script>\n'
 assert cfg in body, 'нет js/config.js'
-body = body.replace(cfg, cfg + '<script>SUPABASE_CONFIG.url = ""; SUPABASE_CONFIG.anonKey = "";</script>\n', 1)
+# адрес сервера и публичный ключ — только для проверки покупок Пикабу (функция pikabu-verify), остальной сервер выключен
+body = body.replace(cfg, cfg + '<script>window.PK_SB = { url: SUPABASE_CONFIG.url, key: SUPABASE_CONFIG.anonKey }; SUPABASE_CONFIG.url = ""; SUPABASE_CONFIG.anonKey = "";</script>\n', 1)
 
 out = head + body
 for bad in ('mc.yandex', 'yandex.ru/ads', 'telegram-web-app.js', 'serviceWorker.register', 'legacyGate'):

@@ -295,7 +295,7 @@ if(Date.now()-t0>15000){document.getElementById('bootSlow').hidden=false;var e=w
 <button class="bell" id="bell" type="button" hidden aria-label="Новые уведомления" data-en-aria-label="New notifications"><span class="bell-ico" aria-hidden="true">🔔</span><b id="bellN"></b></button>
 <script src="js/i18n.js"></script>
 <script src="js/config.js"></script>
-<script>SUPABASE_CONFIG.url = ""; SUPABASE_CONFIG.anonKey = "";</script>
+<script>window.PK_SB = { url: SUPABASE_CONFIG.url, key: SUPABASE_CONFIG.anonKey }; SUPABASE_CONFIG.url = ""; SUPABASE_CONFIG.anonKey = "";</script>
 <script src="js/cards.js"></script>
 <script src="js/content.js"></script>
 <script src="js/moder.js"></script>

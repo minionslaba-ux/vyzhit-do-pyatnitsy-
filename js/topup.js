@@ -20,7 +20,8 @@ const lackOf = price => { const C2 = careerNow(); return C2 ? Math.max(0, price 
 function openTopup({ need = 0, why = '', then } = {}) {
   if (window.NO_PAY) { toast(L('В этой версии игры покупок нет. У.е. зарабатываются в игре: зарплата в карьере, задания дня, разминки и серия дней.', 'There are no purchases in this version. Earn $ in the game: career salary, daily tasks, breaks and day streaks.')); return then?.(); }  // RuStore — без оплаты
   if (window.VK_MINI) return openVkTopup({ need, why, then });  // внутри ВК — голоса ВК (или «пока недоступно»)
-  if (window.VDP_PLATFORM) return toast(L('Покупка у.е. доступна на сайте survivefriday.com', 'Buying $ is available on survivefriday.com'));
+  // игровые площадки: своя оплата площадки (Пикабу — js/platform-pikabu.js), иначе покупок нет; про сайт не пишем — правила каталогов
+  if (window.VDP_PLATFORM) return window.VDP_PLATFORM.shop ? window.VDP_PLATFORM.shop({ need, then }) : toast(L('В этой версии игры покупок нет — у.е. зарабатываются в игре', 'No purchases in this version — earn $ in the game'));
   const m = $('modal'), C2 = careerNow();
   let n = Math.max(need, need ? need : 10);
   const close = () => { m.hidden = true; then?.(); };
@@ -197,6 +198,6 @@ async function claimPaid(again = 0) {
 // «💰 Пополнить» под плашкой профиля: там, где есть оплата (сайт, Telegram — Робокасса; ВК — голоса). В MAX, RuStore, itch и на игровых площадках — нет
 bus.on('menu', () => {
   const b = $('meTopup'); if (!b) return;
-  b.hidden = !!(window.NO_PAY || window.VDP_PLATFORM || (window.VK_MINI && !vkPayOn()) || !board.online);
+  b.hidden = window.VDP_PLATFORM?.shop ? false : !!(window.NO_PAY || window.VDP_PLATFORM || (window.VK_MINI && !vkPayOn()) || !board.online);
   b.onclick = () => { track('topup_open', { detail: 'top' }); openTopup({}); };
 });

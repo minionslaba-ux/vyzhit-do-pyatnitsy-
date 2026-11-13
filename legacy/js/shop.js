@@ -154,7 +154,7 @@ async function productPay(btn) {
   if (agree && !agree.checked) return say(L("Отметьте согласие с офертой.", "Please accept the public offer."));
   if (window.NO_PAY) return toast(L("В этой версии игры покупок нет. У.е. зарабатываются в игре: зарплата в карьере, задания дня, разминки и серия дней.", "There are no purchases in this version. Earn $ in the game: career salary, daily tasks, breaks and day streaks."));
   if (window.VK_MINI) return toast(L("Покупки в приложении ВКонтакте пока недоступны — играть можно бесплатно", "Purchases aren’t available in the VK app yet — the game is free to play"));
-  if (window.VDP_PLATFORM) return toast(L("Покупка доступна на сайте survivefriday.com", "Purchases are available on survivefriday.com"));
+  if (window.VDP_PLATFORM) return window.VDP_PLATFORM.shop ? window.VDP_PLATFORM.shop({ product }) : toast(L("В этой версии игры покупок нет — у.е. зарабатываются в игре", "No purchases in this version — earn $ in the game"));
   if (!(typeof registered === "function" && registered())) {
     $("modal").hidden = true;
     $("profSheet") && ($("profSheet").hidden = true);

@@ -15,7 +15,7 @@ function openTopup({ need = 0, why = "", then } = {}) {
     return then == null ? void 0 : then();
   }
   if (window.VK_MINI) return openVkTopup({ need, why, then });
-  if (window.VDP_PLATFORM) return toast(L("Покупка у.е. доступна на сайте survivefriday.com", "Buying $ is available on survivefriday.com"));
+  if (window.VDP_PLATFORM) return window.VDP_PLATFORM.shop ? window.VDP_PLATFORM.shop({ need, then }) : toast(L("В этой версии игры покупок нет — у.е. зарабатываются в игре", "No purchases in this version — earn $ in the game"));
   const m = $("modal"), C2 = careerNow();
   let n = Math.max(need, need ? need : 10);
   const close = () => {
@@ -193,9 +193,10 @@ async function claimPaid(again = 0) {
   setTimeout(() => claimPaid(pay === "ok" || pend && Date.now() - pend.at < 36e5 ? 5 : 0), 2500);
 })();
 bus.on("menu", () => {
+  var _a;
   const b = $("meTopup");
   if (!b) return;
-  b.hidden = !!(window.NO_PAY || window.VDP_PLATFORM || window.VK_MINI && !vkPayOn() || !board.online);
+  b.hidden = ((_a = window.VDP_PLATFORM) == null ? void 0 : _a.shop) ? false : !!(window.NO_PAY || window.VDP_PLATFORM || window.VK_MINI && !vkPayOn() || !board.online);
   b.onclick = () => {
     track("topup_open", { detail: "top" });
     openTopup({});
