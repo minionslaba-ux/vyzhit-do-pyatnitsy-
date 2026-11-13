@@ -207,6 +207,13 @@ button { cursor: pointer; }
   .ans { padding: 18px 20px; font-size: 18px; gap: 12px; }
   .hint { position: absolute; bottom: 0; left: 0; right: 0; }
 }
+/* ноутбук 1024×768, 1366×768 (окно браузера ~650–800 px): длинный текст карточки выталкивал кнопки ответов за экран —
+   карточка может сжиматься, шрифт подгоняет fitCardText (js/game.js) */
+@media (min-width: 1000px) and (min-height: 660px) and (max-height: 860px) {
+  .g-center { display: flex; flex-direction: column; align-items: center; gap: 22px; top: 176px; }
+  .card { flex: 0 1 auto; min-height: 0; padding: 28px 34px; gap: 16px; }
+  .answers { flex: none; }
+}
 
 /* ---------- заставка дня ---------- */
 .splash { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; padding: 24px; cursor: pointer; background: rgba(var(--bg-rgb),.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fadein .2s; }
@@ -565,11 +572,11 @@ html.light .btn-tggroup { color: #0b6fa8; }
 @keyframes slidein { from { transform: translateY(14px); opacity: 0; } }
 @keyframes neonon { 0% { opacity: 0; } 20% { opacity: .9; } 28% { opacity: .2; } 40% { opacity: 1; } 52% { opacity: .5; } 64%, 100% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
-@media (max-height: 700px) and (max-width: 999px) { .g-clock .time { font-size: 34px; } .tube { height: 60px; } .card .text { font-size: 18px; } .hint { display: none; } .menu .logo { display: none; } }
+@media (max-height: 700px) and (max-width: 999px), (max-height: 659px) { .g-clock .time { font-size: 34px; } .tube { height: 60px; } .card .text { font-size: 18px; } .hint { display: none; } .menu .logo { display: none; } }
 @media (max-width: 370px) { .segs i { width: 12px; } .tube-wrap { width: 58px; } }
 
 /* ---------- маленькие телефоны (iPhone SE и т. п.) ---------- */
-@media (max-width: 999px) and (max-height: 620px) {
+@media (max-height: 620px) {
   body { padding-block: 8px; }
   .game { gap: 8px; }
   .g-top { gap: 4px 10px; }
@@ -586,7 +593,7 @@ html.light .btn-tggroup { color: #0b6fa8; }
   .hint { display: none; }
 }
 /* ---------- телефон горизонтально: две колонки ---------- */
-@media (orientation: landscape) and (max-height: 520px) and (max-width: 999px) {
+@media (orientation: landscape) and (max-height: 520px) {
   .app:has(#game:not([hidden])) { max-width: 900px; }
 /* без :has */ html.v-game .app { max-width: 900px; }
   .game { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); grid-template-rows: auto 1fr; gap: 8px 18px; }
@@ -1492,8 +1499,9 @@ html.light .tu-btn { color: #8a6400 !important; }
   .ct-btn { min-height: 36px; padding: 5px 6px; font-size: 13.5px; }
 }
 @media (max-width: 600px) and (max-height: 760px) { .live-strip { display: none; } }
-/* экран недели не помещается по высоте (js fitGame): карточка сжимается, верх ужимается в два шага; кнопки ответов всегда видны */
-@media (max-width: 999px) {
+/* экран недели не помещается по высоте (js fitGame): карточка сжимается, верх ужимается в два шага; кнопки ответов всегда видны.
+   Невысокий широкий экран (ноутбук 1366×768, окно игры на Пикабу) — так же, иначе шкалы в полный рост съедали карточку */
+@media (max-width: 999px), (max-height: 659px) {
   .game .card { flex: 1 1 0; min-height: 0; }
   .game .answers, .game .dl-bar, .game .live-strip { flex: none; }
   .game.tight .live-strip { display: none; }

@@ -422,8 +422,10 @@ async function heroViewer(canvas, preset, { framing = 'full', emotion = 'neutral
   };
 }
 
-// Картинки-превью всех персонажей одним рендером (для выбора — не держим 10 WebGL-сцен)
-async function heroSnapshots(presets, w = 160, h = 200) {
+// Картинки-превью всех персонажей одним рендером (для выбора — не держим 10 WebGL-сцен).
+// По одному персонажу за кадр: все сразу замораживали экран на ~1 с на обычном ПК (на слабом — до 3–4 с; модерация Пикабу)
+// onEach(i, url) — картинка готова, её можно сразу показать
+async function heroSnapshots(presets, w = 160, h = 200, onEach = null) {
   const T = await three(), canvas = document.createElement('canvas');
   canvas.width = w; canvas.height = h; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   const { renderer, scene, cam } = makeScene(T, canvas, 'face');
@@ -436,6 +438,8 @@ async function heroSnapshots(presets, w = 160, h = 200) {
     u.setMouth('happy');
     renderer.render(scene, cam); out.push(canvas.toDataURL('image/png'));
     scene.remove(hero);
+    onEach?.(out.length - 1, out[out.length - 1]);
+    await new Promise(res => requestAnimationFrame(() => setTimeout(res, 0)));  // отдать кадр интерфейсу
   }
   renderer.dispose(); renderer.forceContextLoss?.();
   return out;

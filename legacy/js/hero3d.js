@@ -691,7 +691,7 @@ async function heroViewer(canvas, preset, { framing = "full", emotion = "neutral
     }
   };
 }
-async function heroSnapshots(presets, w = 160, h = 200) {
+async function heroSnapshots(presets, w = 160, h = 200, onEach = null) {
   var _a;
   const T = await three(), canvas = document.createElement("canvas");
   canvas.width = w;
@@ -715,6 +715,8 @@ async function heroSnapshots(presets, w = 160, h = 200) {
     renderer.render(scene, cam);
     out.push(canvas.toDataURL("image/png"));
     scene.remove(hero);
+    onEach == null ? void 0 : onEach(out.length - 1, out[out.length - 1]);
+    await new Promise((res) => requestAnimationFrame(() => setTimeout(res, 0)));
   }
   renderer.dispose();
   (_a = renderer.forceContextLoss) == null ? void 0 : _a.call(renderer);

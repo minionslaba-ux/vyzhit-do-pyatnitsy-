@@ -142,9 +142,8 @@ function heroCreate(done, change = false) {
     heroView == null ? void 0 : heroView.setPreset(pick);
     show();
   });
-  heroSnapshots(HERO_PRESETS).then((imgs) => m.querySelectorAll(".hero-thumb img").forEach((im, i) => {
-    im.src = imgs[i];
-  })).catch(() => {
+  m.querySelectorAll(".hero-thumb img").forEach((im, i) => {
+    im.src = "icons/heroes/".concat(HERO_PRESETS[i].id, ".png");
   });
   $("hcGo").onclick = () => {
     var _a2, _b, _c;

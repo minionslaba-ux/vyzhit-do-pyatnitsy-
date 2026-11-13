@@ -577,8 +577,13 @@ window.visualViewport?.addEventListener('resize', () => requestAnimationFrame(fi
 function fitCardText() {
   const t = $('card')?.querySelector('.text'); if (!t) return;
   t.style.fontSize = '';
-  let fs = parseFloat(getComputedStyle(t).fontSize);
-  for (let i = 0; i < 24 && t.scrollHeight > t.clientHeight + 1 && fs > 14; i++) { fs -= 1; t.style.fontSize = fs + 'px'; }
+  const fits = () => t.scrollHeight <= t.clientHeight + 1;
+  if (fits()) return;
+  // двоичный поиск наибольшего размера, при котором влезает (было по 1 px — до 24 пересчётов раскладки, на низком окне заметно тормозило)
+  let hi = Math.floor(parseFloat(getComputedStyle(t).fontSize)) - 1, lo = 14;
+  if (hi <= lo) { t.style.fontSize = lo + 'px'; return; }
+  while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); t.style.fontSize = mid + 'px'; if (fits()) lo = mid; else hi = mid - 1; }
+  t.style.fontSize = lo + 'px';
 }
 addEventListener('resize', () => requestAnimationFrame(fitGame));
 // панель подсказки под текстом меняет высоту — подогнать ещё раз

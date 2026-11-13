@@ -125,7 +125,8 @@ function heroCreate(done, change = false) {
     if (!nameTouched) $('hcInput').value = pick.name;
     heroView?.setPreset(pick); show();
   });
-  heroSnapshots(HERO_PRESETS).then(imgs => m.querySelectorAll('.hero-thumb img').forEach((im, i) => { im.src = imgs[i]; })).catch(() => {});
+  // превью — готовые картинки icons/heroes/<id>.png (рисовать их 3D при открытии — заметная пауза на старте, особенно на слабых ПК)
+  m.querySelectorAll('.hero-thumb img').forEach((im, i) => { im.src = `icons/heroes/${HERO_PRESETS[i].id}.png`; });
   $('hcGo').onclick = () => {
     const name = ($('hcInput').value || pick.name).trim().replace(/\s+/g, ' ').slice(0, 16) || pick.name;
     const C2 = careerNow();
