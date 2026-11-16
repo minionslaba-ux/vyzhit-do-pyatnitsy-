@@ -844,8 +844,20 @@
     const ok = M => { const d = flood(cols, rows, M, root0, 1); return cupsI.every(i => d[i] >= 0 && (M[i] & 4)); };
     let M; do M = scramble(sol, R); while (ok(M));
     const h = hud(root);
-    const sw = stopwatch(api, () => upd());
-    const upd = () => { h.innerHTML = chip(`🥤 ${L('Стаканы', 'Cups')}: <b>${wet.filter(Boolean).length}/${cupsI.length}</b>`) + chip(`🔄 <b>${st ? st.moves : 0}</b>`) + chip(`⏱ <b>${fmt(sw.get())}</b>`); };
+    // твист (каталог миссий): вода уже под давлением — не соединили трубы за LIMIT секунд, кулер переливается
+    const LIMIT = 50 + 15 * nCups;
+    let flood0 = false;
+    const sw = stopwatch(api, () => {
+      upd();
+      if (!flood0 && st && !st.done && sw.get() >= LIMIT) {
+        flood0 = true; sw.stop(); api.sfx.sigh?.();
+        later(api, 600, () => api.end({ score: null, won: false, text: L(`Перелив! Кулер не выдержал давления. Стаканов с водой: ${wet.filter(Boolean).length} из ${cupsI.length}`, `Overflow! The cooler couldn’t hold the pressure. Cups with water: ${wet.filter(Boolean).length} of ${cupsI.length}`) }));
+      }
+    });
+    const upd = () => {
+      const left = Math.max(0, Math.ceil(LIMIT - sw.get()));
+      h.innerHTML = chip(`🥤 ${L('Стаканы', 'Cups')}: <b>${wet.filter(Boolean).length}/${cupsI.length}</b>`) + chip(`🔄 <b>${st ? st.moves : 0}</b>`) + chip(`💧 ${L('до перелива', 'overflow in')} <b>${left} ${L('с', 's')}</b>`);
+    };
     let dist = [], wet = [], st = null;
     const recalc = s => { dist = flood(cols, rows, s.M, root0, 1); wet = cupsI.map(i => dist[i] >= 0 && !!(s.M[i] & 4)); };
     st = rotGame(root, api, {
@@ -921,7 +933,7 @@
         });
       },
     });
-    root.append(el('p', 'bgb2-tip', L('Нажимайте на трубы, чтобы повернуть. Вода должна дойти до каждого стакана.', 'Tap pipes to rotate them. Water must reach every cup.')));
+    root.append(el('p', 'bgb2-tip', L('Нажимайте на трубы, чтобы повернуть. Вода должна дойти до каждого стакана, пока кулер не перелился.', 'Tap pipes to rotate them. Water must reach every cup before the cooler overflows.')));
     recalc(st); upd();
   });
 

@@ -54,17 +54,35 @@ const QUESTS = [
   { id: "boss_no", need: 2, text: L("Скажите «нет» Боссу", "Say “no” to the Boss"), on: { answer: (x) => /босс|boss|директор|director|ceo/i.test(x.card.who || "") && (x.eff.boss || 0) < 0 } },
   { id: "work", need: 6, text: L("Выберите рабочих ответов (радуют Босса или стоят Энергии)", "Pick work answers (please the Boss or cost Energy)"), on: { answer: (x) => workAnswer(x.card, x.side) } },
   { id: "team", need: 6, text: L("Порадуйте коллег", "Make your team happy"), on: { answer: (x) => (x.eff.colleagues || 0) > 0 } },
-  { id: "self", need: 5, text: L("Позаботьтесь о себе (ответы с плюсом к Кукухе)", "Take care of yourself (answers that raise Sanity)"), on: { answer: (x) => (x.eff.psyche || 0) > 0 } },
-  { id: "cards", need: 20, text: L("Ответьте на карточки", "Answer cards"), on: { answer: () => true } },
+  // «Спасение»: шкала побывала в красной зоне (≤20%) и вы вытащили её до 40% и выше — в той же неделе
+  { id: "rescue", need: 1, text: L("Спасите шкалу: вытащите её из красной зоны (20% и ниже) до 40%", "Rescue a meter: pull it from the red zone (20% or less) up to 40%"), on: { answer: () => {
+    if (typeof S === "undefined" || !(S == null ? void 0 : S.res)) return false;
+    const low = S.questLow || (S.questLow = {});
+    let ok = false;
+    for (const r of RES) {
+      const v = S.res[r.k];
+      if (v <= 20) low[r.k] = 1;
+      else if (low[r.k] && v >= 40) {
+        delete low[r.k];
+        ok = true;
+      }
+    }
+    return ok;
+  } } },
+  { id: "quick", need: 1, text: L("Сыграйте быструю смену", "Play a Quick shift"), on: { weekEnd: (x) => x.mode === "quick" } },
   { id: "win", need: 1, text: L("Закройте любую неделю", "Survive any week"), on: { weekEnd: (x) => x.won } },
-  { id: "calm", need: 1, text: L("Закройте неделю с Кукухой выше 50%", "Survive a week with Sanity above 50%"), on: { weekEnd: (x) => x.won && x.res.psyche > 50 } },
-  { id: "energy", need: 1, text: L("Закройте неделю с Энергией выше 50%", "Survive a week with Energy above 50%"), on: { weekEnd: (x) => x.won && x.res.energy > 50 } },
+  // «Без помощи»: в сумке были предметы, но ни один не понадобился
+  { id: "noitems", need: 1, text: L("Закройте неделю, не потратив ни одного предмета из сумки", "Survive a week without using a single item from your bag"), on: { weekEnd: (x) => {
+    var _a, _b;
+    return x.won && typeof S !== "undefined" && ((_a = S == null ? void 0 : S.items) == null ? void 0 : _a.length) && !((_b = S.used) == null ? void 0 : _b.length);
+  } } },
   { id: "balance", need: 1, text: L("Закройте неделю, когда все шкалы между 30% и 70%", "Survive a week with every meter between 30% and 70%"), on: { weekEnd: (x) => x.won && Object.values(x.res).every((v) => v >= 30 && v <= 70) } },
   { id: "daily", need: 1, text: L("Сыграйте неделю дня", "Play the Daily Week"), on: { weekEnd: (x) => x.mode === "daily" } },
   { id: "deadline", need: 1, text: L("Выполните дедлайн", "Complete a deadline"), on: { deadlineDone: () => true } },
-  { id: "hint", need: 1, text: L("Купите подсказку", "Buy a hint"), on: { hint: () => true } },
-  { id: "shop", need: 1, text: L("Купите предмет в магазине", "Buy an item in the shop"), on: { buy: () => true } },
-  { id: "dm", need: 1, text: L("Напишите кому-нибудь из ленты «в игре»", "Message someone from the live strip"), on: { dm: () => true } },
+  { id: "spend", need: 1, text: L("Потратьте у.е.: подсказка или предмет в магазине", "Spend some $: a hint or a shop item"), on: { hint: () => true, buy: () => true } },
+  { id: "brkday", need: 1, text: L("Сыграйте разминку дня", "Play the break of the day"), on: { breakEnd: (x) => typeof brkOfDay === "function" && (x == null ? void 0 : x.n) === brkOfDay() } },
+  { id: "dm", need: 1, text: L("Напишите кому-нибудь из ленты «в игре»", "Message someone from the live strip"), on: { dm: () => true }, when: () => board.online },
+  // без нашего сервера (Пикабу) чата нет
   // «Остынь»: снизить перегрев персонажа (js/burnout.js шлёт 'cool' при разминке, дыхании, разговоре с Мирой, отпуске).
   // Только когда перегрев есть (от 10%); от 30% — задание дня обязательно среди трёх
   {
@@ -78,7 +96,7 @@ const QUESTS = [
 ];
 function todayQuests() {
   const day = today(), q = prefs.quests;
-  if ((q == null ? void 0 : q.day) === day) return q;
+  if ((q == null ? void 0 : q.day) === day && q.list.every((it) => QUESTS.some((x) => x.id === it.id))) return q;
   const rnd = seeded("quests-" + day + prefs.playerId), ids = shuffle(QUESTS.filter((x) => !x.when || x.when()).map((x) => x.id), rnd);
   const must = QUESTS.filter((x) => {
     var _a;
@@ -119,7 +137,7 @@ function questEvent(kind, x) {
   }
   if (changed) store.set(KEY.prefs, prefs);
 }
-for (const k of ["answer", "weekEnd", "deadlineDone", "hint", "buy", "dm", "cool"]) bus.on(k, (x) => questEvent(k, x));
+for (const k of ["answer", "weekEnd", "deadlineDone", "hint", "buy", "dm", "cool", "breakEnd"]) bus.on(k, (x) => questEvent(k, x));
 bus.on("answer", () => addXp(1));
 bus.on("deadlineDone", () => addXp(15));
 bus.on("weekEnd", (x) => addXp(x.won ? 20 : 5, "week"));

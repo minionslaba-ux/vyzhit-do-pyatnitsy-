@@ -86,8 +86,8 @@ const WEEK_TYPES = {
   normal: { title: L("Обычная неделя", "Regular week"), rule: L("Ничего особенного. Ну, почти.", "Nothing special. Well, almost."), rules: {} },
   reports: {
     title: L("Неделя отчётов", "Report week"),
-    rule: L("Конец квартала: всё про Босса весит в полтора раза больше, а на случайности нет времени.", "End of quarter: everything Boss-related weighs 1.5x more, and there's no time for random events."),
-    rules: { bossMul: 1.5, randomChance: 0 },
+    rule: L("Конец квартала: в понедельник приходит «Квартальный отчёт» на всю неделю, всё про Босса весит в полтора раза больше, а на случайности нет времени.", "End of quarter: the Quarterly report lands on Monday for the whole week, everything Boss-related weighs 1.5x more, and there's no time for random events."),
+    rules: { bossMul: 1.5, randomChance: 0, mondayReport: true },
     cards: [
       {
         day: "Понедельник",
@@ -187,10 +187,16 @@ const WEEK_TYPES = {
       }
     ]
   },
+  // Удалёнка: команда в чатах — настроение Коллег не видно (как Босс у нового босса), а Энергии на дорогу не тратится
+  remote: {
+    title: L("Удалёнка", "Remote week"),
+    rule: L("Все по домам: что думают Коллеги, не видно — вместо стрелок «?». Зато без дороги в офис: Энергия +10 на старте.", "Everyone works from home: you can't see how the Team feels — a “?” instead of arrows. But no commute: Energy +10 at the start."),
+    rules: { hide: ["colleagues"], start: { energy: 10 } }
+  },
   newboss: {
     title: L("Неделя с новым боссом", "New boss week"),
     rule: L("Новый босс непредсказуем: подсказки по шкале «Босс» скрыты, а сама шкала начинает с 50%.", "The new boss is unpredictable: Boss hints are hidden, and the Boss meter starts at 50%."),
-    rules: { hideBoss: true, bossStart: 50 },
+    rules: { hide: ["boss"], bossStart: 50 },
     cards: [
       {
         day: "Понедельник",

@@ -23,7 +23,7 @@ const BREAKS = [
   [13, "puzzle", "🔍", L("Найди 10 отличий", "Spot the difference"), L("Два снимка одного кабинета — найдите отличия", "Two pictures of an office — find the differences")],
   [14, "puzzle", "📎", L("Где степлер?", "Where’s the stapler?"), L("Найдите предмет в захламлённом опенспейсе", "Find the item in a cluttered open space")],
   [15, "puzzle", "🔌", L("Собери кабель", "Wire it up"), L("Поверните плитки, чтобы ток дошёл до принтера", "Rotate tiles so power reaches the printer")],
-  [16, "puzzle", "🚿", L("Трубы кулера", "Cooler pipes"), L("Соедините трубы от бутыли к стаканам", "Connect the pipes from the bottle to the cups")],
+  [16, "puzzle", "🚿", L("Трубы кулера", "Cooler pipes"), L("Соедините трубы от бутыли к стаканам, пока кулер не перелился", "Connect the pipes from the bottle to the cups before it overflows")],
   [17, "puzzle", "🔷", L("Танграм «Логотип»", "Logo tangram"), L("Сложите силуэт из семи фигур", "Make the silhouette from seven pieces")],
   [18, "puzzle", "🎨", L("Раскраска по номерам", "Paint by numbers"), L("Раскрасьте пиксельный портрет начальника", "Colour the pixel portrait of the boss")],
   [19, "puzzle", "🟨", L("Сложи стикеры", "Sticky notes fit"), L("Заполните доску стикерами разной формы без зазоров", "Fill the board with sticky notes, no gaps")],

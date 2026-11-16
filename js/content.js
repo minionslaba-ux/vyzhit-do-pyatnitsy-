@@ -37,12 +37,12 @@ const CHAINS = [
 
 // ---------- Виды недель: свои карточки и правила ----------
 // rules: bossMul — во сколько раз сильнее эффекты по Боссу, psycheNegMul — множитель минусов по Кукухе,
-// hideBoss — скрыть подсказки по Боссу, bossStart — Босс в начале недели, start — бонусы на старте,
+// hide — шкалы, по которым подсказки скрыты (['boss'] — новый босс, ['colleagues'] — удалёнка), bossStart — Босс в начале недели, start — бонусы на старте,
 // randomChance — шанс случайного события в процентах, items — сколько предметов выдать
 const WEEK_TYPES = {
   normal: { title: L('Обычная неделя', 'Regular week'), rule: L('Ничего особенного. Ну, почти.', 'Nothing special. Well, almost.'), rules: {} },
-  reports: { title: L('Неделя отчётов', 'Report week'), rule: L('Конец квартала: всё про Босса весит в полтора раза больше, а на случайности нет времени.', 'End of quarter: everything Boss-related weighs 1.5x more, and there\'s no time for random events.'),
-    rules: { bossMul: 1.5, randomChance: 0 },
+  reports: { title: L('Неделя отчётов', 'Report week'), rule: L('Конец квартала: в понедельник приходит «Квартальный отчёт» на всю неделю, всё про Босса весит в полтора раза больше, а на случайности нет времени.', 'End of quarter: the Quarterly report lands on Monday for the whole week, everything Boss-related weighs 1.5x more, and there\'s no time for random events.'),
+    rules: { bossMul: 1.5, randomChance: 0, mondayReport: true },
     cards: [
       { day: 'Понедельник', phase: 'Утро', id: 'rep_template', who: L('Босс', 'Boss'), text: L('Квартальный отчёт нужен к пятнице. Шаблон снова поменяли — теперь 40 вкладок.', 'The quarterly report is due Friday. They changed the template again — it now has 40 tabs.'),
         answers: { left: { label: L('Сделать в старом шаблоне', 'Use the old template'), effects: { psyche: 5, energy: 5, boss: -15, colleagues: 0 } },
@@ -73,8 +73,11 @@ const WEEK_TYPES = {
         answers: { left: { label: L('Ещё разок проверю почту', 'Check email one more time'), effects: { psyche: -15, energy: -5, boss: 10, colleagues: 0 } },
                    right: { label: L('Автоответ и бегом', 'Out-of-office and run'), effects: { psyche: 20, energy: 10, boss: -10, colleagues: 0 } } } },
     ] },
+  // Удалёнка: команда в чатах — настроение Коллег не видно (как Босс у нового босса), а Энергии на дорогу не тратится
+  remote: { title: L('Удалёнка', 'Remote week'), rule: L('Все по домам: что думают Коллеги, не видно — вместо стрелок «?». Зато без дороги в офис: Энергия +10 на старте.', 'Everyone works from home: you can\'t see how the Team feels — a “?” instead of arrows. But no commute: Energy +10 at the start.'),
+    rules: { hide: ['colleagues'], start: { energy: 10 } } },
   newboss: { title: L('Неделя с новым боссом', 'New boss week'), rule: L('Новый босс непредсказуем: подсказки по шкале «Босс» скрыты, а сама шкала начинает с 50%.', 'The new boss is unpredictable: Boss hints are hidden, and the Boss meter starts at 50%.'),
-    rules: { hideBoss: true, bossStart: 50 },
+    rules: { hide: ['boss'], bossStart: 50 },
     cards: [
       { day: 'Понедельник', phase: 'Утро', id: 'nb_intro', who: L('Новый босс', 'New boss'), text: L('Новый босс собирает всех и просит рассказать, «чем вы тут вообще занимаетесь».', 'The new boss gathers everyone and asks you to explain "what exactly you all do here".'),
         answers: { left: { label: L('Скромно, в двух словах', 'Modestly, in two words'), effects: { psyche: 5, energy: 0, boss: -10, colleagues: 0 } },

@@ -313,9 +313,14 @@ function buildDeck({ prof, type = "normal", rng = Math.random, extraRandom = [],
   return deck;
 }
 const giveItems = (n, rng = Math.random) => shuffle(Object.keys(ITEMS), rng).slice(0, n);
+const hiddenRes = (k) => {
+  var _a2;
+  return (((_a2 = WEEK_TYPES[S == null ? void 0 : S.type]) == null ? void 0 : _a2.rules.hide) || []).includes(k);
+};
 function weekTypeFor(week, newJob) {
   if (newJob) return "newboss";
   if (week % 13 === 0) return "reports";
+  if (week % 13 === 7) return "remote";
   if (week === 25 || week === 51) return "vacation";
   return "normal";
 }
@@ -707,6 +712,7 @@ function renderCard() {
   deadlineBadges(c);
   answerWarn();
   deadlineOffer();
+  S.cardAt = Date.now();
   if (S.step % PER_DAY === 0 && splashFor !== S.step) {
     splashFor = S.step;
     showSplash(d);
@@ -803,7 +809,8 @@ const COACH = [
   ["zones", () => S.step >= 1, L("Держите шкалы между 20% и 80%. Ниже 20% — «на грани», выше 80% — «перегрев»: и 0%, и 100% заканчивают неделю.", "Keep the meters between 20% and 80%. Below 20% you’re “on the edge”, above 80% it’s “overheat” — hit 0% or 100% and your week is over.")],
   ["items", () => S.step >= 2 && S.items.length, () => L("В сумке ".concat(S.items.map((i) => ITEMS[i].name).join(", "), ": предмет сам отменит один удар −10 и сильнее по своей шкале. Значок ◆ — удар погасит предмет."), "In your bag: ".concat(S.items.map((i) => ITEMS[i].name).join(", "), ". Each item automatically blocks one hit of −10 or worse to its meter. A ◆ means an item will absorb the hit."))],
   ["chain", (slot) => slot.origin, L("Карточка со стрелкой ← — последствие вашего прошлого решения. Решения возвращаются.", "A card with a ← arrow is the fallout of an earlier decision. Choices come back to bite.")],
-  ["hide", () => WEEK_TYPES[S.type].rules.hideBoss, L("На этой неделе настроение Босса скрыто: вместо стрелок — «?».", "This week the Boss’s mood is hidden: you get a “?” instead of arrows.")]
+  ["hide", () => hiddenRes("boss"), L("На этой неделе настроение Босса скрыто: вместо стрелок — «?».", "This week the Boss’s mood is hidden: you get a “?” instead of arrows.")],
+  ["hideC", () => hiddenRes("colleagues"), L("Удалёнка: настроение Коллег скрыто — вместо стрелок «?».", "Remote week: the Team’s mood is hidden — you get a “?” instead of arrows.")]
 ];
 function coachFor(slot) {
   const el = $("coach"), seen = prefs.coach || (prefs.coach = []);
@@ -863,11 +870,11 @@ function effectsOf(side) {
   return { eff, blocked };
 }
 function preview(side) {
-  const { eff, blocked } = effectsOf(side), hide = WEEK_TYPES[S.type].rules.hideBoss;
+  const { eff, blocked } = effectsOf(side);
   for (const r of RES) {
     const v = eff[r.k], m = $("mk-" + r.k);
     if (blocked.some((b) => b.stat === r.k)) m.innerHTML = '<span class="s" title="'.concat(L("Удар погасит предмет", "An item will block this hit"), '">◆</span>');
-    else if (hide && r.k === "boss" && (current().answers[side].effects.boss || 0)) m.innerHTML = '<span class="q">?</span>';
+    else if (hiddenRes(r.k) && (current().answers[side].effects[r.k] || 0)) m.innerHTML = '<span class="q">?</span>';
     else m.innerHTML = v > 0 ? '<span class="u">'.concat(v >= 20 ? "▲▲" : "▲", "</span>") : v < 0 ? '<span class="d">'.concat(v <= -20 ? "▼▼" : "▼", "</span>") : "";
   }
   $("card").dataset.hot = side;
@@ -1035,22 +1042,22 @@ const workAnswer = (c, side) => {
   return (e.boss || 0) > 0 || (e.energy || 0) < 0;
 };
 const dueText = (d) => L("до ".concat(["понедельника", "вторника", "среды", "четверга", "пятницы"][d], ", 18:00"), "by ".concat(dayName(d), ", 6 PM"));
+const dlKind = (d) => (d == null ? void 0 : d.kind) || "work";
 function deadlineBadges(c) {
   var _a2;
   for (const [side, id] of [["left", "btnL"], ["right", "btnR"]]) {
     (_a2 = $(id).querySelector(".dl-badge")) == null ? void 0 : _a2.remove();
-    if ((S == null ? void 0 : S.deadline) && workAnswer(c, side)) $(id).insertAdjacentHTML("beforeend", '<span class="dl-badge" title="'.concat(L("Этот ответ засчитается в задачу", "This answer counts toward your task"), '">📋 ').concat(L("в задачу", "counts"), "</span>"));
+    if ((S == null ? void 0 : S.deadline) && dlKind(S.deadline) === "work" && workAnswer(c, side)) $(id).insertAdjacentHTML("beforeend", '<span class="dl-badge" title="'.concat(L("Этот ответ засчитается в задачу", "This answer counts toward your task"), '">📋 ').concat(L("в задачу", "counts"), "</span>"));
   }
   renderDeadlineChip();
 }
 function answerWarn() {
   var _a2, _b2;
   if (!((_a2 = S == null ? void 0 : S.deck) == null ? void 0 : _a2[S.step])) return;
-  const hide = WEEK_TYPES[S.type].rules.hideBoss;
   for (const [side, id] of [["left", "btnL"], ["right", "btnR"]]) {
     const b = $(id), { eff } = effectsOf(side);
     (_b2 = b.querySelector(".dz-badge")) == null ? void 0 : _b2.remove();
-    const bad = RES.filter((r) => !(hide && r.k === "boss") && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
+    const bad = RES.filter((r) => !hiddenRes(r.k) && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
     b.classList.toggle("dz", bad.length > 0);
     if (!bad.length) continue;
     const why = bad.map((r) => "".concat(r.name, " ").concat(S.res[r.k] <= 20 ? L("ближе к 0%", "closer to 0%") : L("ближе к 100%", "closer to 100%"))).join(", ");
@@ -1077,8 +1084,8 @@ function dzExplain(why) {
 function dzRisk(side) {
   var _a2;
   if (!((_a2 = S == null ? void 0 : S.deck) == null ? void 0 : _a2[S.step])) return [];
-  const hide = WEEK_TYPES[S.type].rules.hideBoss, { eff } = effectsOf(side);
-  return RES.filter((r) => !(hide && r.k === "boss") && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
+  const { eff } = effectsOf(side);
+  return RES.filter((r) => !hiddenRes(r.k) && (S.res[r.k] <= 20 && eff[r.k] < 0 || S.res[r.k] >= 80 && eff[r.k] > 0));
 }
 function dzConfirm(side) {
   const bad = dzRisk(side), m = $("modal"), card = $("card");
@@ -1165,6 +1172,13 @@ function renderDeadlineChip() {
   $("dlChip").hidden = true;
   el.hidden = !d;
   if (!d) return;
+  if (dlKind(d) !== "work") {
+    const team = dlKind(d) === "team", v = S.res.colleagues;
+    el.innerHTML = team ? '<span class="dl-top"><b>🤝 '.concat(esc(d.title), '</b><span class="dl-n">').concat(L("Коллеги", "Team"), " ").concat(v, "% · ").concat(L("не ниже", "min"), ' 40%</span><span class="dl-due">').concat(dueText(d.due), '</span></span>\n      <span class="dl-prog"><i style="width:').concat(Math.min(100, Math.round(v / 40 * 100)), '%"></i></span>') : '<span class="dl-top"><b>⚡ '.concat(esc(d.title), '</b><span class="dl-n">').concat(d.got, "/").concat(d.need, '</span><span class="dl-due">').concat(L("каждый ответ быстрее 5 с", "each answer under 5 s"), '</span></span>\n      <span class="dl-prog"><i style="width:').concat(Math.round(d.got / d.need * 100), '%"></i></span>');
+    el.title = "";
+    el.onclick = () => toast(team ? L("«".concat(d.title, "»: держите Коллег не ниже 40% ").concat(dueText(d.due), ". Успеете — +").concat(money(d.reward), ", упадут ниже — −").concat(money(d.fine)), "“".concat(d.title, "”: keep Team at 40% or more ").concat(dueText(d.due), ". Make it — +").concat(money(d.reward), ", drop below — −").concat(money(d.fine))) : L("«".concat(d.title, "»: ещё ").concat(d.need - d.got, " ответа, каждый быстрее 5 секунд. Успеете — +").concat(money(d.reward), ", задумаетесь — −").concat(money(d.fine)), "“".concat(d.title, "”: ").concat(d.need - d.got, " more answers, each under 5 seconds. Make it — +").concat(money(d.reward), ", hesitate — −").concat(money(d.fine))));
+    return;
+  }
   const c = current(), l = workAnswer(c, "left"), r = workAnswer(c, "right");
   const here = l && r ? L("тут засчитаются оба ответа", "both answers count here") : l ? L("← в задачу засчитается левый ответ", "← the left answer counts") : r ? L("в задачу засчитается правый ответ →", "the right answer counts →") : L("на этой карточке рабочего ответа нет", "no work answer on this card");
   el.innerHTML = '<span class="dl-top"><b>📋 '.concat(esc(d.title), '</b><span class="dl-n">').concat(d.got, "/").concat(d.need, '</span><span class="dl-due">').concat(dueText(d.due), '</span></span>\n    <span class="dl-prog"><i style="width:').concat(Math.round(d.got / d.need * 100), '%"></i></span>');
@@ -1178,32 +1192,48 @@ function deadlineOffer() {
   if (!((S == null ? void 0 : S.mode) === "career" && C) || S.deadline || S.step % PER_DAY || S.dlAsked === S.step || (S.dlOffers || 0) >= 2) return;
   S.dlAsked = S.step;
   const day = S.step / PER_DAY, rnd2 = Math.random;
-  if (!S.forceDeadline && rnd2() > (S.step ? 0.4 : 0.25)) return;
+  const report = !S.step && WEEK_TYPES[S.type].rules.mondayReport;
+  if (!report && !S.forceDeadline && rnd2() > (S.step ? 0.4 : 0.25)) return;
   S.forceDeadline = false;
-  const tiers = DEADLINE_TIERS.filter((t2) => day + t2.days <= 4), t = tiers[Math.floor(rnd2() * tiers.length)];
-  const [who, title] = t.days ? DEADLINE_TASKS[Math.floor(rnd2() * (DEADLINE_TASKS.length - 1))] : DEADLINE_TASKS[10];
+  const tiers = DEADLINE_TIERS.filter((t2) => day + t2.days <= 4), t = report ? DEADLINE_TIERS[3] : tiers[Math.floor(rnd2() * tiers.length)];
+  let [who, title] = report ? DEADLINE_TASKS[0] : t.days ? DEADLINE_TASKS[Math.floor(rnd2() * (DEADLINE_TASKS.length - 1))] : DEADLINE_TASKS[10];
+  const kind = report ? "work" : !t.days && rnd2() < 0.5 ? "rush" : t.days === 2 && S.res.colleagues >= 50 && rnd2() < 0.5 ? "team" : "work";
+  let need = t.need;
+  if (kind === "rush") {
+    [who, title, need] = [L("Почта", "Inbox"), L("Срочно ответить на письма", "Reply to urgent emails"), 3];
+  }
+  if (kind === "team") {
+    [who, title, need] = [L("Коллеги", "Team"), L("Командный проект", "Team project"), 0];
+  }
   S.dlOffers = (S.dlOffers || 0) + 1;
   setTimeout(() => {
-    if (S && !busy && !views.game.hidden && S.step === day * PER_DAY) showDeadlineOffer({ who, title, need: t.need, got: 0, due: day + t.days, reward: t.reward, fine: t.fine, tier: t.name });
+    if (S && !busy && !views.game.hidden && S.step === day * PER_DAY) showDeadlineOffer({ kind, who, title, need, got: 0, due: day + t.days, reward: t.reward, fine: t.fine, tier: t.name });
   }, splashOn ? 4600 : 2100);
 }
 function showDeadlineOffer(d) {
   var _a2;
   const m = $("modal");
   if (!m.hidden) return;
-  m.innerHTML = '<div class="modal-box glass dl-box" role="dialog" aria-modal="true" aria-labelledby="dlTitle">\n    <span class="dl-kicker">📋 '.concat(L("Дедлайн", "Deadline"), " · ").concat(d.tier, " · ").concat(L("от", "from"), ": ").concat(esc(d.who), '</span>\n    <h2 id="dlTitle">').concat(esc(d.title), '</h2>\n    <ol class="dl-how">').concat(L(
+  m.innerHTML = '<div class="modal-box glass dl-box" role="dialog" aria-modal="true" aria-labelledby="dlTitle">\n    <span class="dl-kicker">📋 '.concat(L("Дедлайн", "Deadline"), " · ").concat(d.tier, " · ").concat(L("от", "from"), ": ").concat(esc(d.who), '</span>\n    <h2 id="dlTitle">').concat(esc(d.title), '</h2>\n    <ol class="dl-how">').concat(dlKind(d) === "team" ? L(
+    "<li>Отвечайте на карточки как обычно.</li><li>Держите шкалу <b>Коллеги не ниже 40% ".concat(dueText(d.due), "</b> — сейчас ").concat(S.res.colleagues, "%.</li><li>Упадёт ниже — задача сорвана сразу.</li>"),
+    "<li>Answer cards as usual.</li><li>Keep <b>Team at 40% or more ".concat(dueText(d.due), "</b> — now ").concat(S.res.colleagues, "%.</li><li>Drop below and the task fails right away.</li>")
+  ) : dlKind(d) === "rush" ? L(
+    "<li>Следующие <b>".concat(d.need, " ответа</b> — каждый быстрее <b>5 секунд</b>.</li><li>Счётчик — над карточкой.</li><li>Задумались дольше — задача сорвана.</li>"),
+    "<li>Your next <b>".concat(d.need, " answers</b> — each in under <b>5 seconds</b>.</li><li>The counter is above the card.</li><li>Take longer and the task fails.</li>")
+  ) : L(
     '<li>Отвечайте на карточки как обычно.</li><li>На «рабочих» ответах — взяться, задержаться, помочь Боссу — будет значок <span class="nowrap">📋 в задачу</span>.</li><li>Выберите <b>'.concat(d.need, " таких ответов ").concat(dueText(d.due), "</b> — счётчик над карточкой.</li>"),
     '<li>Answer cards as usual.</li><li>“Work” answers — take it on, stay late, help the Boss — carry a <span class="nowrap">📋 counts</span> badge.</li><li>Pick <b>'.concat(d.need, " of those ").concat(dueText(d.due), "</b> — the counter is above the card.</li>")
-  ), '</ol>\n    <p class="dl-warn">').concat(L("Рабочие ответы стоят сил и нервов — следите за шкалами.", "Work answers cost energy and nerves — watch your meters."), '</p>\n    <div class="money"><div><b>+').concat(money(d.reward), "</b><span>").concat(L("премия, если успеете", "bonus if you make it"), "</span></div><div><b>−").concat(money(d.fine), "</b><span>").concat(L("штраф, если сорвёте", "penalty if you miss it"), '</span></div></div>\n    <div class="row2"><button class="btn-main" type="button" id="dlYes">').concat(L("Взять задачу", "Take it on"), '</button><button class="btn-ghost" type="button" id="dlNo">').concat(L("Отказаться", "Decline"), "</button></div></div>");
+  ), "</ol>\n    ").concat(dlKind(d) === "work" ? '<p class="dl-warn">'.concat(L("Рабочие ответы стоят сил и нервов — следите за шкалами.", "Work answers cost energy and nerves — watch your meters."), "</p>") : "", '\n    <div class="money"><div><b>+').concat(money(d.reward), "</b><span>").concat(L("премия, если успеете", "bonus if you make it"), "</span></div><div><b>−").concat(money(d.fine), "</b><span>").concat(L("штраф, если сорвёте", "penalty if you miss it"), '</span></div></div>\n    <div class="row2"><button class="btn-main" type="button" id="dlYes">').concat(L("Взять задачу", "Take it on"), '</button><button class="btn-ghost" type="button" id="dlNo">').concat(L("Отказаться", "Decline"), "</button></div></div>");
   m.hidden = false;
   (_a2 = sfx.item) == null ? void 0 : _a2.call(sfx);
   $("dlYes").onclick = () => {
     m.hidden = true;
     S.deadline = d;
     S.dlTaken = (S.dlTaken || 0) + 1;
+    S.cardAt = Date.now();
     store.set(KEY.save, S);
     deadlineBadges(current());
-    toast(L("Задача взята: «".concat(d.title, "» — ").concat(d.need, " раб. решений ").concat(dueText(d.due)), "Task accepted: “".concat(d.title, "” — ").concat(d.need, " work decisions ").concat(dueText(d.due))));
+    toast(dlKind(d) === "team" ? L("Задача взята: Коллеги не ниже 40% ".concat(dueText(d.due)), "Task accepted: Team at 40%+ ".concat(dueText(d.due))) : dlKind(d) === "rush" ? L("Задача взята: ".concat(d.need, " ответа, каждый быстрее 5 секунд — время пошло!"), "Task accepted: ".concat(d.need, " answers, each under 5 seconds — go!")) : L("Задача взята: «".concat(d.title, "» — ").concat(d.need, " раб. решений ").concat(dueText(d.due)), "Task accepted: “".concat(d.title, "” — ").concat(d.need, " work decisions ").concat(dueText(d.due))));
   };
   $("dlNo").onclick = () => {
     m.hidden = true;
@@ -1212,13 +1242,31 @@ function showDeadlineOffer(d) {
 }
 function deadlineWork(c, side) {
   const d = S == null ? void 0 : S.deadline;
-  if (!d || !workAnswer(c, side)) return;
+  if (!d) return;
+  if (dlKind(d) === "team") {
+    if (S.res.colleagues < 40) deadlineFail(d);
+    else renderDeadlineChip();
+    return;
+  }
+  if (dlKind(d) === "rush") {
+    if (!S.cardAt || Date.now() - S.cardAt > 5e3) return deadlineFail(d);
+    if (++d.got < d.need) {
+      toast(L("⚡ ".concat(d.got, " из ").concat(d.need, " — быстрее 5 секунд!"), "⚡ ".concat(d.got, " of ").concat(d.need, " — under 5 seconds!")));
+      renderDeadlineChip();
+      return;
+    }
+    return deadlineDone(d);
+  }
+  if (!workAnswer(c, side)) return;
   d.got++;
   if (d.got < d.need) {
     toast(L("📋 +1 к задаче «".concat(d.title, "»: ").concat(d.got, " из ").concat(d.need), "📋 +1 to “".concat(d.title, "”: ").concat(d.got, " of ").concat(d.need)));
     renderDeadlineChip();
     return;
   }
+  deadlineDone(d);
+}
+function deadlineDone(d) {
   S.deadline = null;
   S.dlWon = (S.dlWon || 0) + 1;
   bus.emit("deadlineDone", d);
@@ -1235,6 +1283,10 @@ function deadlineWork(c, side) {
 function deadlineDue(day) {
   const d = S == null ? void 0 : S.deadline;
   if (!d || day < d.due) return;
+  if (dlKind(d) === "team") return deadlineDone(d);
+  deadlineFail(d);
+}
+function deadlineFail(d) {
   S.deadline = null;
   S.dlLost = (S.dlLost || 0) + 1;
   C.bank -= d.fine;
@@ -1246,11 +1298,12 @@ function deadlineDue(day) {
     var _a2;
     (_a2 = sfx.sigh) == null ? void 0 : _a2.call(sfx);
     buzz("danger");
+    const n = dlKind(d) === "team" ? L("Коллеги ниже 40%", "Team below 40%") : "".concat(d.got, "/").concat(d.need);
     smsPop(L("Банк", "Bank"), L(
-      "Штраф за сорванный дедлайн «".concat(d.title, "» (").concat(d.got, "/").concat(d.need, "): −").concat(money(d.fine), " · баланс ").concat(money(C.bank)),
-      "Penalty for missing “".concat(d.title, "” (").concat(d.got, "/").concat(d.need, "): −").concat(money(d.fine), " · balance ").concat(money(C.bank))
+      "Штраф за сорванный дедлайн «".concat(d.title, "» (").concat(n, "): −").concat(money(d.fine), " · баланс ").concat(money(C.bank)),
+      "Penalty for missing “".concat(d.title, "” (").concat(n, "): −").concat(money(d.fine), " · balance ").concat(money(C.bank))
     ));
-  }, 3600);
+  }, dlKind(d) === "work" ? 3600 : 600);
 }
 let smsT = 0;
 function smsPop(from, text) {
