@@ -242,7 +242,7 @@ bus.on('weekEnd', x => {
   if (inv) { inv.querySelector('.expr').innerHTML = exprSvg(say[1]); inv.onclick = () => openPsy('end', cat); }
   // Тяжёлое — Мира приходит сама, не чаще раза в день
   const heavy = ['stress', 'tired', 'fired', 'streak'].includes(cat);
-  if (!heavy || prefs.psyQuiet || store.get('vdp-psy-day', '') === today()) return;
+  if (!heavy || prefs.psyQuiet || calmOn() || store.get('vdp-psy-day', '') === today()) return;  // «Меньше сообщений» — только приглашение на экране итогов, без окна
   setTimeout(async () => {
     if (!(await psyLoad()) || views.end.hidden || !$('modal').hidden) return;
     store.set('vdp-psy-day', today());

@@ -775,7 +775,7 @@ function fitCardText() {
   t.style.fontSize = "";
   const fits = () => t.scrollHeight <= t.clientHeight + 1;
   if (fits()) return;
-  let hi = Math.floor(parseFloat(getComputedStyle(t).fontSize)) - 1, lo = 14;
+  let hi = Math.floor(parseFloat(getComputedStyle(t).fontSize)) - 1, lo = innerHeight < 560 ? 12 : 14;
   if (hi <= lo) {
     t.style.fontSize = lo + "px";
     return;

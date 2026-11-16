@@ -587,7 +587,7 @@ function fitCardText() {
   const fits = () => t.scrollHeight <= t.clientHeight + 1;
   if (fits()) return;
   // двоичный поиск наибольшего размера, при котором влезает (было по 1 px — до 24 пересчётов раскладки, на низком окне заметно тормозило)
-  let hi = Math.floor(parseFloat(getComputedStyle(t).fontSize)) - 1, lo = 14;
+  let hi = Math.floor(parseFloat(getComputedStyle(t).fontSize)) - 1, lo = innerHeight < 560 ? 12 : 14;  // низкое окно (Пикабу ~475 px) — можно мельче; не влезло и так — текст листается
   if (hi <= lo) { t.style.fontSize = lo + 'px'; return; }
   while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); t.style.fontSize = mid + 'px'; if (fits()) lo = mid; else hi = mid - 1; }
   t.style.fontSize = lo + 'px';

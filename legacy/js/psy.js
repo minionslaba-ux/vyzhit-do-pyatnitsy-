@@ -261,7 +261,7 @@ bus.on("weekEnd", (x) => {
     inv.onclick = () => openPsy("end", cat);
   }
   const heavy = ["stress", "tired", "fired", "streak"].includes(cat);
-  if (!heavy || prefs.psyQuiet || store.get("vdp-psy-day", "") === today()) return;
+  if (!heavy || prefs.psyQuiet || calmOn() || store.get("vdp-psy-day", "") === today()) return;
   setTimeout(async () => {
     if (!await psyLoad() || views.end.hidden || !$("modal").hidden) return;
     store.set("vdp-psy-day", today());

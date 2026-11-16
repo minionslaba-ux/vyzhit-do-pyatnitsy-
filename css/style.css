@@ -2585,3 +2585,18 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
   .end-sheet > .stack:last-child .btn-main, .end-sheet > .stack:last-child .btn-ghost { min-height: 42px; padding-top: 8px; padding-bottom: 8px; }
 }
 .pk-auto { font-size: 12px; color: var(--text-2); text-align: center; margin-top: -4px; }
+/* Очень низкое окно (Пикабу на телефоне ~360×475): кнопки «Подсказка/Магазин» в карточке и отступы — компактнее, чтобы влез текст */
+@media (max-height: 560px) {
+  .ct-btn { min-height: 34px; padding: 4px 6px; font-size: 13px; border-radius: 11px; }
+  .ct-btn b { font-size: 12px; }
+  .card-tools { gap: 6px; }
+  .card.has-tools { gap: 6px; padding: 12px 14px 10px; }
+  .card:has(.card-tools) { gap: 6px; padding: 12px 14px 10px; }
+/* без :has */ .card.has-tools { gap: 6px; padding: 12px 14px 10px; }
+}
+/* Шапка карточки на тесном экране (js fitGame → .tight): в одну строку — портрет, имя с «…», метка; иначе у сюжетных карточек
+   с длинным именем шапка занимала 3 строки и на низком окне (Пикабу ~475 px) тексту не оставалось места вовсе */
+.game.tight .card-head { flex-wrap: nowrap; gap: 6px; }
+.game.tight .card-head .who { min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; padding: 4px 9px; }
+.game.tight .card-head .rnd-tag, .game.tight .card-head .rel-tag { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; }
+.game.tight .card-head .face { flex: none; }
