@@ -38,5 +38,8 @@ Playwright предустановлен: `python3 -m http.server 8765` + `requir
 ## Идеи владельца из бота
 `/idea текст` в боте → таблица `public.dev_ideas` (status new/in_progress/done/skipped/question, reply, commit). Разбор: сделать понятные правки фронтенда, неоднозначное — `question` с вопросом, рискованное (платежи, данные игроков, схема БД, секреты) — `skipped` с причиной; отчёт владельцу — `net.http_post` в `tg-notify` с `cron_key`. Владелец может попросить «посмотри идеи из бота».
 
+## Миссии
+Миссии, уровни, задания, боссы — только по скиллу .claude/skills/raznoobraznye-missii (каталог docs/missii-katalog.md, таблица новых миссий владельцу до кода, проверка check_missions.py)
+
 ## Хуки (`.claude/settings.json`)
 После правки: JSON в `data/` проверяется на валидность (+ `tools/check-en.py` для переводов), JS — `node --check`. До правки: блок `schema.sql`, закоммиченных миграций и секретных ключей в браузерном коде.
