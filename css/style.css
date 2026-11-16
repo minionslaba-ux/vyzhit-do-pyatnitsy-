@@ -2560,3 +2560,14 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
   .exit-btn::before { font-size: 17px; }
   .g-brand { padding-left: 38px; font-size: 12px; }
 }
+/* знакомство (6 слайдов) в низком окне — Пикабу на телефоне показывает игру в окне ~360×475: «Далее» уходила под край */
+@media (max-height: 600px) {
+  .intro { padding: 8px; }
+  .intro-box { padding: 14px 16px 0; gap: 6px; }
+  .intro-art { min-height: 0; margin-top: 12px; }
+  .intro-box > * { flex-shrink: 0; }
+  .intro h2 { font-size: 19px; }
+  .intro p { font-size: 14px; line-height: 1.4; }
+  .in-clock { font-size: 30px; } .in-tubes .tube { height: 64px; }
+  .intro-nav { position: sticky; bottom: 0; margin: 0 -16px; padding: 8px 16px 12px; background: linear-gradient(rgba(var(--bg-rgb),0), rgba(var(--bg-rgb),.96) 30%); }
+}
