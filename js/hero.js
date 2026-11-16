@@ -96,6 +96,13 @@ function heroModal(html, preset, emotion) {
 // change — сменить персонажа в идущей карьере: внешность и имя новые, настроение, покупки, дети и деньги остаются
 function heroCreate(done, change = false) {
   if (change && !needReg('hero')) return;
+  // быстрый старт на игровой площадке: первый персонаж — без окна выбора (сменить можно потом в «Персонаже»)
+  if (!change && window.VDP_PLATFORM?.fastStart && !careerNow()?.hero) {
+    const C2 = careerNow(), pick = HERO_PRESETS[0];
+    C2.hero = { preset: pick.id, name: pick.name, married: pick.married, mood: 70, owned: [], last: {}, pending: null, xpWeek: 0, breaks: 0 };
+    ensureKids(C2.hero); careerSave(C2);
+    return done?.();
+  }
   const old = change ? careerNow()?.hero : null;
   let pick = old ? heroPreset(old) : HERO_PRESETS[0], nameTouched = false;
   const profOpts = Object.entries(PROF).map(([k, p]) => `<option value="${k}" ${k === (prefs.prof || 'marketer') ? 'selected' : ''}>${p.icon} ${esc(p.name)}</option>`).join('');

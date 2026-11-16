@@ -115,9 +115,16 @@ function heroModal(html, preset, emotion) {
   return { m, close };
 }
 function heroCreate(done, change = false) {
-  var _a;
+  var _a, _b, _c;
   if (change && !needReg("hero")) return;
-  const old = change ? (_a = careerNow()) == null ? void 0 : _a.hero : null;
+  if (!change && ((_a = window.VDP_PLATFORM) == null ? void 0 : _a.fastStart) && !((_b = careerNow()) == null ? void 0 : _b.hero)) {
+    const C2 = careerNow(), pick2 = HERO_PRESETS[0];
+    C2.hero = { preset: pick2.id, name: pick2.name, married: pick2.married, mood: 70, owned: [], last: {}, pending: null, xpWeek: 0, breaks: 0 };
+    ensureKids(C2.hero);
+    careerSave(C2);
+    return done == null ? void 0 : done();
+  }
+  const old = change ? (_c = careerNow()) == null ? void 0 : _c.hero : null;
   let pick = old ? heroPreset(old) : HERO_PRESETS[0], nameTouched = false;
   const profOpts = Object.entries(PROF).map(([k, p]) => '<option value="'.concat(k, '" ').concat(k === (prefs.prof || "marketer") ? "selected" : "", ">").concat(p.icon, " ").concat(esc(p.name), "</option>")).join("");
   const { m, close } = heroModal('\n    <h2 id="heroTitle">'.concat(old ? L("Сменить персонажа", "Change character") : L("Ваш персонаж", "Your character"), '</h2>\n    <p class="hero-lead">').concat(old ? L("Выберите другую внешность и имя. Настроение, покупки, дети и деньги останутся; одежда — по новой.", "Pick a new look and name. Mood, purchases, kids and money stay; the outfit resets.") : L("Он будет жить вашей карьерой: просить еду, жильё, машину, отпуск — всё стоит денег. Покрутите пальцем, чтобы рассмотреть.", "They live off your career: food, a home, a car, vacations — it all costs money. Drag to look around."), '</p>\n    <div class="hero-pick">\n      <canvas class="hero-cv" data-framing="full" aria-label="').concat(L("Персонаж в 3D", "3D character"), '"></canvas>\n      <div class="hero-side">\n        <b class="hero-nm" id="hcName"></b><small id="hcSub"></small>\n        <label class="field"><span>').concat(L("Имя", "Name"), '</span><input type="text" id="hcInput" maxlength="16" autocomplete="off"></label>\n        ').concat(old ? "" : '<label class="field"><span>'.concat(L("Профессия", "Job"), '</span><select id="hcProf">').concat(profOpts, "</select></label>"), '\n      </div>\n    </div>\n    <div class="hero-grid" id="hcGrid">').concat(HERO_PRESETS.map((p, i) => '<button type="button" class="hero-thumb'.concat(p === pick ? " on" : "", '" data-i="').concat(i, '" aria-label="').concat(esc(p.name), '"><img alt=""><span>').concat(esc(p.name), "<small>").concat(p.married ? "💍" : "", "</small></span></button>")).join(""), '</div>\n    <button class="btn-main" type="button" id="hcGo">').concat(old ? L("Сменить", "Change") : L("Начать карьеру", "Start the career"), "</button>").concat(old ? '<button class="btn-ghost" type="button" id="hcCancel">'.concat(L("Отмена", "Cancel"), "</button>") : ""), pick, "happy");
@@ -146,7 +153,7 @@ function heroCreate(done, change = false) {
     im.src = "icons/heroes/".concat(HERO_PRESETS[i].id, ".png");
   });
   $("hcGo").onclick = () => {
-    var _a2, _b, _c;
+    var _a2, _b2, _c2;
     const name = ($("hcInput").value || pick.name).trim().replace(/\s+/g, " ").slice(0, 16) || pick.name;
     const C2 = careerNow();
     if (old) {
@@ -163,10 +170,10 @@ function heroCreate(done, change = false) {
     store.set(KEY.prefs, prefs);
     C2.hero = { preset: pick.id, name, married: pick.married, mood: 70, owned: [], last: {}, pending: null, xpWeek: 0, breaks: 0 };
     ensureKids(C2.hero);
-    C2.res = freshRes((_b = VACANCIES.find((v) => v.name === C2.company)) == null ? void 0 : _b.perk);
+    C2.res = freshRes((_b2 = VACANCIES.find((v) => v.name === C2.company)) == null ? void 0 : _b2.perk);
     careerSave(C2);
     close();
-    (_c = sfx.win) == null ? void 0 : _c.call(sfx);
+    (_c2 = sfx.win) == null ? void 0 : _c2.call(sfx);
     toast(L("Знакомьтесь: ".concat(name, ". Берегите настроение — и кошелёк"), "Meet ".concat(name, ". Mind their mood — and your wallet")));
     done == null ? void 0 : done();
   };

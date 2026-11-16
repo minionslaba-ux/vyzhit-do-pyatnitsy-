@@ -193,7 +193,7 @@ const psyFreeScreen = () => !busy && !splashOn && $('modal').hidden && !window.v
 // Короткая реплика Миры поверх игры: не мешает, исчезает сама
 function psyWhisper(cat, delay = 900) {
   setTimeout(async () => {
-    if (!(await psyLoad()) || views.game.hidden) return;
+    if (!(await psyLoad()) || views.game.hidden || calmOn()) return;
     let tries = 0;
     const go = () => { if (psyFreeScreen()) toast(`🛋️ ${L('Мира', 'Mira')}: ${psyT(psyTip(cat))}`); else if (++tries < 20) setTimeout(go, 700); };
     go();

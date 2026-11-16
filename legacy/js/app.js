@@ -278,7 +278,7 @@ bus.on("menu", () => {
   }, 600);
 });
 finishLogin().then((reloading) => {
-  var _a2, _b2, _c2;
+  var _a2, _b2, _c2, _d2;
   if (reloading) return;
   if (new URLSearchParams(location.search).has("stats") && board.online) return showStats();
   const tgUtm = (_b2 = (((_a2 = TG == null ? void 0 : TG.initDataUnsafe) == null ? void 0 : _a2.start_param) || "").match(/utm_([\w-]+)/)) == null ? void 0 : _b2[1];
@@ -296,6 +296,7 @@ finishLogin().then((reloading) => {
   if (prefs.loggedOut) renderWelcome();
   else if (prefs.email && !prefs.name) renderJoin("profile", L("Вход выполнен. Осталось представиться коллегам.", "You’re signed in. Now just introduce yourself to your coworkers."));
   else if (prefs.name) renderMenu();
+  else if ((_d2 = window.VDP_PLATFORM) == null ? void 0 : _d2.fastStart) fastStart();
   else renderWelcome();
   if (prefs.loginWelcome && prefs.name) loginWelcome();
   setTimeout(checkDelete, prefs.loginWelcome ? 1500 : 300);
@@ -304,6 +305,15 @@ finishLogin().then((reloading) => {
   flushOutbox();
   pollSocial();
 });
+function fastStart() {
+  prefs.name = L("Гость", "Guest");
+  prefs.autoName = 1;
+  prefs.introSeen = 1;
+  delete prefs.loggedOut;
+  store.set(KEY.prefs, prefs);
+  renderMenu();
+  if (!store.get(KEY.career, null)) setTimeout(() => $("start").click(), 150);
+}
 window.__errFlush = () => {
   var _a2;
   const list = (window.__errs || []).splice(0);

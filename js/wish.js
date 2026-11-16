@@ -139,7 +139,7 @@ bus.on('weekEnd', x => {
     const t = lineFor(x.won ? 'week_win' : 'week_fired', fem), sheet = views.end.querySelector('.end-sheet');
     if (sheet && !views.end.hidden) { sheet.querySelector('.hero-says')?.remove(); sheet.querySelector('h1')?.insertAdjacentHTML('afterend', `<p class="hero-says">💬 ${esc(nm)}: «${esc(t)}»</p>`); say(t, heroVoice(h)); }
   }, 900);
-  setTimeout(() => { if (h.pending && h.seenWeek !== C2.week && $('modal').hidden && !views.end.hidden) heroAsk(); }, 3400);
+  if (!calmOn()) setTimeout(() => { if (h.pending && h.seenWeek !== C2.week && $('modal').hidden && !views.end.hidden) heroAsk(); }, 3400);  // «Меньше сообщений» — просьба подождёт до меню
 });
 
 function breakModal(why, back, from, to, h) {
@@ -179,12 +179,13 @@ const genderize = (s, h) => s.replace(/\(а\)/g, heroFem(h) ? 'а' : '').replace
 // В начале недели — в какие моменты аватар напишет (1–2 раза, середина дня)
 bus.on('deck', S2 => {
   if (S2.mode !== 'career' || !C?.hero) return;
-  const n = (C.hero.mood ?? 70) < 55 || Math.random() < 0.5 ? 2 : 1, at = new Set();
+  if (calmOn() && C.week === 1 && !C.firings && !prefs.trainDone) { S2.wishAt = []; return; }  // «Меньше сообщений»: в учебную неделю персонаж не пишет
+  const n = calmOn() ? 1 : (C.hero.mood ?? 70) < 55 || Math.random() < 0.5 ? 2 : 1, at = new Set();
   while (at.size < n) at.add(3 + Math.floor(Math.random() * (WEEK_LEN - 7)));
   S2.wishAt = [...at];
 });
 bus.on('answer', () => {
-  if (S?.mode === 'career' && C?.hero && S.step === PER_DAY * 2 && !S.wishAt?.includes(S.step)) setTimeout(() => { const t = lineFor('cheer', heroFem(C.hero)); say(t, heroVoice(C.hero)); toast(`${C.hero.name}: «${t}»`); }, 700);  // среда — поддержка
+  if (S?.mode === 'career' && C?.hero && S.step === PER_DAY * 2 && !S.wishAt?.includes(S.step) && !calmOn()) setTimeout(() => { const t = lineFor('cheer', heroFem(C.hero)); say(t, heroVoice(C.hero)); toast(`${C.hero.name}: «${t}»`); }, 700);  // среда — поддержка
   if (S?.mode !== 'career' || !C?.hero || !S.wishAt?.includes(S.step)) return;
   const step = S.step;
   setTimeout(() => {

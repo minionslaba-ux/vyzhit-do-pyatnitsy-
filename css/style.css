@@ -2183,8 +2183,9 @@ html.light .rnd-tag.ret-mtag { color: #8a5a00; }
    Неделя игры остаётся «один экран без прокрутки», как раньше. */
 html.docscroll:has(#game[hidden]), html.docscroll:has(#game[hidden]) body { height: auto; min-height: var(--app-h, 100dvh); }
 /* без :has */ html.nohas.docscroll:not(.v-game), html.nohas.docscroll:not(.v-game) body { height: auto; min-height: var(--app-h, 100dvh); }
-html.docscroll:has(#game[hidden]) body { overflow-x: hidden; overflow-y: visible; }
-/* без :has */ html.nohas.docscroll:not(.v-game) body { overflow-x: hidden; overflow-y: visible; }
+/* overflow-x: clip — не делает body прокручиваемым: работают «прилипшие» кнопки (position: sticky) */
+html.docscroll:has(#game[hidden]) body { overflow-x: hidden; overflow-x: clip; overflow-y: visible; }
+/* без :has */ html.nohas.docscroll:not(.v-game) body { overflow-x: hidden; overflow-x: clip; overflow-y: visible; }
 html.docscroll:has(#game[hidden]) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
 /* без :has */ html.nohas.docscroll:not(.v-game) .app { flex: none; min-height: calc(var(--app-h, 100dvh) - 28px); }
 html.docscroll:has(#game[hidden]) .view.menu, html.docscroll:has(#game[hidden]) .view.join, html.docscroll:has(#game[hidden]) .view.end { flex: none; overflow: visible; }
@@ -2571,3 +2572,16 @@ html.vk-mini #maxPlay, html.max-app #maxPlay, html[lang="en"] #maxPlay { display
   .in-clock { font-size: 30px; } .in-tubes .tube { height: 64px; }
   .intro-nav { position: sticky; bottom: 0; margin: 0 -16px; padding: 8px 16px 12px; background: linear-gradient(rgba(var(--bg-rgb),0), rgba(var(--bg-rgb),.96) 30%); }
 }
+/* Низкое окно (Пикабу: телефон ~360×475, ПК ~490 px): главная кнопка меню «Играть» и кнопки итогов недели
+   прилипают к низу — их видно сразу, остальное прокручивается под ними (на телефоне — при любой высоте: меню длинное) */
+@media (max-height: 760px), (max-width: 999px) {
+  .play2 { position: sticky; bottom: 0; z-index: 6; margin-left: -6px; margin-right: -6px; padding: 10px 6px calc(10px + env(safe-area-inset-bottom));
+    background: linear-gradient(rgba(var(--bg-rgb),0), rgba(var(--bg-rgb),.94) 22%); }
+  .end-sheet > .stack:last-child { position: sticky; bottom: 0; z-index: 6; width: calc(100% + 40px); margin: 0 -20px -24px; padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+    background: linear-gradient(rgba(var(--bg-rgb),0), rgba(var(--bg-rgb),.95) 18%); border-radius: 0 0 inherit inherit; }
+}
+@media (max-height: 560px) {
+  .end-sheet > .stack:last-child { gap: 6px; padding-top: 10px; }
+  .end-sheet > .stack:last-child .btn-main, .end-sheet > .stack:last-child .btn-ghost { min-height: 42px; padding-top: 8px; padding-bottom: 8px; }
+}
+.pk-auto { font-size: 12px; color: var(--text-2); text-align: center; margin-top: -4px; }

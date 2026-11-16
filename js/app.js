@@ -186,6 +186,7 @@ finishLogin().then(reloading => {
   if (prefs.loggedOut) renderWelcome();  // вышли из аккаунта — сначала вход
   else if (prefs.email && !prefs.name) renderJoin('profile', L('Вход выполнен. Осталось представиться коллегам.', 'You’re signed in. Now just introduce yourself to your coworkers.'));
   else if (prefs.name) renderMenu();
+  else if (window.VDP_PLATFORM?.fastStart) fastStart();
   else renderWelcome();
   if (prefs.loginWelcome && prefs.name) loginWelcome();
   setTimeout(checkDelete, prefs.loginWelcome ? 1500 : 300);  // подтверждённый запрос на удаление аккаунта — спросить окончательно
@@ -194,6 +195,15 @@ finishLogin().then(reloading => {
   flushOutbox();
   pollSocial();
 });
+
+// Игровые площадки (Пикабу): новичок сразу попадает в первую неделю — без анкеты гостя, слайдов обучения и выбора персонажа.
+// Учебная неделя (js/hooks.js) и подсказки на первых карточках (coachFor) объясняют правила по ходу. «Как играть» — в профиле.
+function fastStart() {
+  prefs.name = L('Гость', 'Guest'); prefs.autoName = 1; prefs.introSeen = 1; delete prefs.loggedOut;
+  store.set(KEY.prefs, prefs);
+  renderMenu();
+  if (!store.get(KEY.career, null)) setTimeout(() => $('start').click(), 150);
+}
 
 // Ошибки скриптов (собирает js/i18n.js) — в статистику и в Яндекс Метрику, с браузером и версией игры
 window.__errFlush = () => {

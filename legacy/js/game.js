@@ -254,6 +254,10 @@ if ($("sndToggle")) $("sndToggle").onclick = toggleSound;
   (_a2 = sfx.click) == null ? void 0 : _a2.call(sfx);
 });
 let toastT;
+const calmOn = () => {
+  var _a2, _b2;
+  return (_b2 = prefs.calm) != null ? _b2 : !!((_a2 = window.VDP_PLATFORM) == null ? void 0 : _a2.fastStart);
+};
 function toast(text) {
   const t = $("toastBar");
   t.textContent = text;
@@ -926,7 +930,7 @@ function react(card, eff, side) {
 function choose(side, sure) {
   var _a2;
   if (busy || splashOn || !S) return;
-  if (!sure && !prefs.dzNoAsk && dzRisk(side).length && $("modal").hidden) return dzConfirm(side);
+  if (!sure && !prefs.dzNoAsk && !calmOn() && !S.training && dzRisk(side).length && $("modal").hidden) return dzConfirm(side);
   busy = true;
   (_a2 = sfx.swipe) == null ? void 0 : _a2.call(sfx);
   sfx.stapler();
@@ -1122,6 +1126,20 @@ function dzConfirm(side) {
     }
   };
 }
+(() => {
+  const cb = $("calmMsg");
+  if (!cb) return;
+  const sync = () => {
+    cb.checked = calmOn();
+  };
+  sync();
+  bus.on("menu", sync);
+  cb.onchange = () => {
+    prefs.calm = cb.checked;
+    store.set(KEY.prefs, prefs);
+    toast(cb.checked ? L("Меньше сообщений: без лишних окон посреди недели", "Fewer messages: no extra pop-ups mid-week") : L("Все сообщения и окна — как обычно", "All messages and pop-ups are back"));
+  };
+})();
 (() => {
   const cb = $("dzAsk");
   if (!cb) return;

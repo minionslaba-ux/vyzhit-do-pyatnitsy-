@@ -202,6 +202,9 @@ $('sndVol')?.addEventListener('input', e => {
 $('sndVol')?.addEventListener('change', () => { store.set(KEY.prefs, prefs); sfx.click?.(); });
 
 let toastT;
+// «Меньше сообщений» (профиль → переключатель #calmMsg): посреди недели без окон «Опасный ответ», просьб персонажа и
+// второстепенных реплик; после недели — без окна просьбы. По умолчанию включено на игровых площадках (Пикабу), на сайте — выключено.
+const calmOn = () => prefs.calm ?? !!window.VDP_PLATFORM?.fastStart;
 function toast(text) { const t = $('toastBar'); t.textContent = text; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), Math.min(7000, Math.max(2600, String(text).length * 55))); }  // длинный текст держим дольше
 
 // ---------- концовки-ачивки ----------
@@ -714,7 +717,7 @@ function react(card, eff, side) {
 
 function choose(side, sure) {
   if (busy || splashOn || !S) return;
-  if (!sure && !prefs.dzNoAsk && dzRisk(side).length && $('modal').hidden) return dzConfirm(side);  // ответ с ⚠ — сначала «Вы уверены?»
+  if (!sure && !prefs.dzNoAsk && !calmOn() && !S.training && dzRisk(side).length && $('modal').hidden) return dzConfirm(side);  // ответ с ⚠ — сначала «Вы уверены?» (не в учебную неделю: шкалы и так не уйдут за край)
   busy = true; sfx.swipe?.(); sfx.stapler(); buzz('tap');
   const card = $('card'), dir = side === 'left' ? -1 : 1, c = current();
   card.style.transition = RM.matches ? 'opacity .12s' : `transform .38s ${EASE}, opacity .38s`;
@@ -834,6 +837,9 @@ function dzConfirm(side) {
   $('dzNo').onclick = () => { close(); back(); track('dz_cancel', { detail: bad.map(r => r.k).join(',') }); };
   m.onclick = e => { if (e.target === m) { close(); back(); } };
 }
+// Переключатель в профиле: «Меньше сообщений во время недели»
+(() => { const cb = $('calmMsg'); if (!cb) return; const sync = () => { cb.checked = calmOn(); }; sync(); bus.on('menu', sync);
+  cb.onchange = () => { prefs.calm = cb.checked; store.set(KEY.prefs, prefs); toast(cb.checked ? L('Меньше сообщений: без лишних окон посреди недели', 'Fewer messages: no extra pop-ups mid-week') : L('Все сообщения и окна — как обычно', 'All messages and pop-ups are back')); }; })();
 // Переключатель в профиле: «Спрашивать перед опасным ответом» (по умолчанию включён)
 (() => { const cb = $('dzAsk'); if (!cb) return; const sync = () => { cb.checked = !prefs.dzNoAsk; }; sync(); bus.on('menu', sync);
   cb.onchange = () => { prefs.dzNoAsk = !cb.checked; store.set(KEY.prefs, prefs); toast(cb.checked ? L('Будем спрашивать перед опасным ответом', 'We’ll ask before a risky answer') : L('Больше не спрашиваем — метка ⚠ на ответах останется', 'No more questions — the ⚠ badge stays on answers')); }; })();

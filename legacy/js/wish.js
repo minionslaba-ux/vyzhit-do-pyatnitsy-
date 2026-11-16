@@ -160,7 +160,7 @@ bus.on("weekEnd", (x) => {
       say(t, heroVoice(h));
     }
   }, 900);
-  setTimeout(() => {
+  if (!calmOn()) setTimeout(() => {
     if (h.pending && h.seenWeek !== C2.week && $("modal").hidden && !views.end.hidden) heroAsk();
   }, 3400);
 });
@@ -201,13 +201,17 @@ const genderize = (s, h) => s.replace(/\(а\)/g, heroFem(h) ? "а" : "").replace
 bus.on("deck", (S2) => {
   var _a;
   if (S2.mode !== "career" || !(C == null ? void 0 : C.hero)) return;
-  const n = ((_a = C.hero.mood) != null ? _a : 70) < 55 || Math.random() < 0.5 ? 2 : 1, at = /* @__PURE__ */ new Set();
+  if (calmOn() && C.week === 1 && !C.firings && !prefs.trainDone) {
+    S2.wishAt = [];
+    return;
+  }
+  const n = calmOn() ? 1 : ((_a = C.hero.mood) != null ? _a : 70) < 55 || Math.random() < 0.5 ? 2 : 1, at = /* @__PURE__ */ new Set();
   while (at.size < n) at.add(3 + Math.floor(Math.random() * (WEEK_LEN - 7)));
   S2.wishAt = [...at];
 });
 bus.on("answer", () => {
   var _a, _b;
-  if ((S == null ? void 0 : S.mode) === "career" && (C == null ? void 0 : C.hero) && S.step === PER_DAY * 2 && !((_a = S.wishAt) == null ? void 0 : _a.includes(S.step))) setTimeout(() => {
+  if ((S == null ? void 0 : S.mode) === "career" && (C == null ? void 0 : C.hero) && S.step === PER_DAY * 2 && !((_a = S.wishAt) == null ? void 0 : _a.includes(S.step)) && !calmOn()) setTimeout(() => {
     const t = lineFor("cheer", heroFem(C.hero));
     say(t, heroVoice(C.hero));
     toast("".concat(C.hero.name, ": «").concat(t, "»"));

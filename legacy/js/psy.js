@@ -208,7 +208,7 @@ const psyCall = (cat) => {
 const psyFreeScreen = () => !busy && !splashOn && $("modal").hidden && !window.vdpPaused && !($("quiz") && !$("quiz").hidden);
 function psyWhisper(cat, delay = 900) {
   setTimeout(async () => {
-    if (!await psyLoad() || views.game.hidden) return;
+    if (!await psyLoad() || views.game.hidden || calmOn()) return;
     let tries = 0;
     const go = () => {
       if (psyFreeScreen()) toast("🛋️ ".concat(L("Мира", "Mira"), ": ").concat(psyT(psyTip(cat))));
