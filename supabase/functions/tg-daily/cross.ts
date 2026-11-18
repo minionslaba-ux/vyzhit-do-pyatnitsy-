@@ -41,13 +41,27 @@ export async function maxPost(chatId: number | string, text: string, btn: string
   const r = await send([kbd]);
   return { ok: !r?.error, mid: r?.message?.body?.mid, how: photo ? 'text' : 'text (no photo)', err: r?.error ? JSON.stringify(r.error).slice(0, 150) : errs.join('; ') || undefined };
 }
-// Пост в группу Telegram: фото с подписью (HTML) → иначе текстом с превью картинки
+// Пост в группу Telegram: фото с подписью (HTML) по ссылке → не вышло — файлом (скачиваем сами) → иначе текстом с превью картинки
 export async function tgPost(tgToken: string, chatId: number | string, html: string, btn: string, url: string, photo = ''): Promise<{ ok: boolean; msg?: number; how: string; err?: string }> {
   const kb = { inline_keyboard: [[{ text: btn, url }]] };
   const send = (m: string, body: Record<string, unknown>) => fetch(`https://api.telegram.org/bot${tgToken}/${m}`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: chatId, parse_mode: 'HTML', reply_markup: kb, ...body }) }).then(r => r.json()).catch(e => ({ ok: false, description: String(e) }));
   let r: any = photo ? await send('sendPhoto', { photo, caption: html.slice(0, 1024) }) : null, how = 'photo', e1 = '';
-  if (!r?.ok) { e1 = r?.description || ''; r = await send('sendMessage', { text: html, link_preview_options: { url: photo || url, prefer_large_media: true } }); how = 'text'; }
+  // Telegram не смог скачать картинку по ссылке («failed to get HTTP URL content», 18.11.2026) — скачиваем сами и отправляем файлом
+  if (photo && !r?.ok) {
+    e1 = r?.description || '';
+    try {
+      const img = await fetch(photo);
+      if (img.ok) {
+        const fd = new FormData();
+        fd.append('chat_id', String(chatId)); fd.append('parse_mode', 'HTML'); fd.append('caption', html.slice(0, 1024));
+        fd.append('reply_markup', JSON.stringify(kb)); fd.append('photo', await img.blob(), photo.split('/').pop() || 'image.jpg');
+        r = await fetch(`https://api.telegram.org/bot${tgToken}/sendPhoto`, { method: 'POST', body: fd }).then(x => x.json()).catch(e => ({ ok: false, description: String(e) }));
+        if (r?.ok) how = 'photo upload'; else e1 += ' / upload: ' + (r?.description || '');
+      } else e1 += ` / fetch ${img.status}`;
+    } catch (e) { e1 += ' / upload: ' + String(e).slice(0, 80); }
+  }
+  if (!r?.ok) { if (r && !e1) e1 = r?.description || ''; r = await send('sendMessage', { text: html, link_preview_options: { url: photo || url, prefer_large_media: true } }); how = 'text'; }
   return { ok: !!r?.ok, msg: r?.result?.message_id, how, err: r?.ok ? (e1 ? `photo: ${e1}` : undefined) : r?.description };
 }
 
