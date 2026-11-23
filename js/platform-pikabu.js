@@ -56,7 +56,8 @@ function pkLog(kind, detail = '', step = null, once = false) {
       body: JSON.stringify({ p_id: pkDev, p_kind: 'pk_' + kind, p_mode: 'pikabu', p_card: window.APP_VER || null, p_won: null, p_step: step, p_detail: String(detail).slice(0, 60) }) }).catch(() => {});
   } catch {}
 }
-pkLog('open', (matchMedia('(pointer:coarse)').matches ? 'touch ' : 'desk ') + innerWidth + 'x' + innerHeight);
+// адрес сервера (window.PK_SB) задаётся в теле страницы, после этого файла — пишем «запуск», когда страница разобрана
+document.addEventListener('DOMContentLoaded', () => pkLog('open', (matchMedia('(pointer:coarse)').matches ? 'touch ' : 'desk ') + innerWidth + 'x' + innerHeight));
 
 // Облачное сохранение: тот же набор, что и на сайте (js/cloud.js: cloudSnapshot / cloudScore / cloudApply), ключ 'vdp'.
 // Лимит хранилища Пикабу — 200 КБ: если не влезает, без списка показанных карточек (vdp-seen) — он не обязателен.
