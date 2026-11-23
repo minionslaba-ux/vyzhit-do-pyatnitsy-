@@ -50,7 +50,7 @@ const pkSent = new Set();
 function pkLog(kind, detail = '', step = null, once = false) {
   try {
     if (!pkDev || !window.PK_SB?.url) return;
-    if (once) { const k = kind + ':' + detail; if (pkSent.has(k)) return; pkSent.add(k); }
+    if (once) { const k = kind + ':' + detail + ':' + step; if (pkSent.has(k)) return; pkSent.add(k); }
     fetch(window.PK_SB.url.replace(/\/+$/, '') + '/rest/v1/rpc/log_event', { method: 'POST', keepalive: true,
       headers: { 'Content-Type': 'application/json', apikey: window.PK_SB.key, Authorization: 'Bearer ' + window.PK_SB.key },
       body: JSON.stringify({ p_id: pkDev, p_kind: 'pk_' + kind, p_mode: 'pikabu', p_card: window.APP_VER || null, p_won: null, p_step: step, p_detail: String(detail).slice(0, 60) }) }).catch(() => {});
